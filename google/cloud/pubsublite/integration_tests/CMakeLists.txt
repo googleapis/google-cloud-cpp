@@ -1,5 +1,5 @@
 # ~~~
-# Copyright 2020 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,9 +21,8 @@ function (google_cloud_cpp_pubsublite_define_integration_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    set(pubsublite_client_integration_tests
-        # cmake-format: sort
-        publisher_integration_test.cc)
+    set(pubsublite_client_integration_tests # cmake-format: sort
+                                            publisher_integration_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

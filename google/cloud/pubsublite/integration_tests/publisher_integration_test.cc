@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsublite/message_metadata.h"
+#include "google/cloud/pubsublite/publisher_connection.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 
@@ -21,7 +23,44 @@ namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using google::cloud::pubsub::MessageBuilder;
 
+unsigned int constexpr kNumMessages = 500;
+
+TEST(PublisherIntegrationTest, BasicGoodWithoutKey) {
+  auto publisher =
+      *MakePublisherConnection(Topic{"<good>", "<good>", "<good>"}, Options{});
+  std::vector<future<StatusOr<std::string>>> results;
+  for (unsigned int i = 0; i != kNumMessages; ++i) {
+    results.push_back(publisher->Publish(
+        {MessageBuilder{}.SetData("abcd-" + std::to_string(i)).Build()}));
+  }
+  for (unsigned i = 0; i != kNumMessages; ++i) {
+    EXPECT_TRUE(results[i].get());
+  }
+}
+
+TEST(PublisherIntegrationTest, BasicGoodWithKey) {
+  auto publisher =
+      *MakePublisherConnection(Topic{"<good>", "<good>", "<good>"}, Options{});
+  std::vector<future<StatusOr<std::string>>> results;
+  for (unsigned int i = 0; i != kNumMessages; ++i) {
+    results.push_back(
+        publisher->Publish({MessageBuilder{}
+                                .SetData("abcd-" + std::to_string(i))
+                                .SetOrderingKey("key")
+                                .Build()}));
+  }
+  for (unsigned i = 0; i != kNumMessages; ++i) {
+    EXPECT_TRUE(results[i].get());
+  }
+}
+
+TEST(PublisherIntegrationTest, InvalidTopic) {
+  auto publisher =
+      *MakePublisherConnection(Topic{"<bad>", "<bad>", "<bad>"}, Options{});
+  EXPECT_FALSE(publisher->Publish({MessageBuilder{}.Build()}).get());
+}
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
