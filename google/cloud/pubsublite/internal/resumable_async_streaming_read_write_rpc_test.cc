@@ -250,10 +250,10 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(stream1_ref, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
 
-  auto* stream = stream_.get();
+  auto& stream = *stream_;
   StrictMock<MockFunction<void()>> placeholder_func;
   Loop loop{std::move(stream_), placeholder_func.AsStdFunction(),
-            stream->Start()};
+            stream.Start()};
   loop.InvokeLoop();
 
   EXPECT_CALL(stream1_ref, Finish)
@@ -264,7 +264,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(placeholder_func, Call);
 
   start_promise.set_value(false);
-  auto shutdown = stream->Shutdown();
+  auto shutdown = stream.Shutdown();
   shutdown.get();
 }
 
