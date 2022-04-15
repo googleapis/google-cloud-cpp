@@ -62,6 +62,19 @@ future<Status> MultipartitionPublisher::Start() {
   return start;
 }
 
+void MultipartitionPublisher::CleanupOutstandingResources(
+    Status const& status) {
+  cancel_token_ = nullptr;
+  std::vector<PublishState> initial_publish_buffer;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    initial_publish_buffer.swap(initial_publish_buffer_);
+  }
+  for (auto& state : initial_publish_buffer) {
+    state.publish_promise.set_value(status);
+  }
+}
+
 future<StatusOr<std::uint32_t>> MultipartitionPublisher::GetNumPartitions() {
   return admin_connection_->AsyncGetTopicPartitions(topic_partitions_request_)
       .then([](future<StatusOr<TopicPartitions>> f) -> StatusOr<std::uint32_t> {
@@ -127,6 +140,7 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
         }
         if (first_poll) {
           // fail client if first poll fails
+          CleanupOutstandingResources(num_partitions.status());
           return service_composite_.Abort(num_partitions.status());
         }
       })
@@ -205,17 +219,8 @@ void MultipartitionPublisher::Flush() {
 }
 
 future<void> MultipartitionPublisher::Shutdown() {
-  cancel_token_ = nullptr;
-  std::vector<PublishState> initial_publish_buffer;
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    initial_publish_buffer.swap(initial_publish_buffer_);
-  }
-  for (auto& state : initial_publish_buffer) {
-    state.publish_promise.set_value(Status{
-        StatusCode::kFailedPrecondition, "Multipartition publisher shutdown."});
-  }
-
+  CleanupOutstandingResources(Status{StatusCode::kFailedPrecondition,
+                                     "Multipartition publisher shutdown."});
   auto shutdown = service_composite_.Shutdown();
   std::lock_guard<std::mutex> g{mu_};
   if (outstanding_num_partitions_req_) {
