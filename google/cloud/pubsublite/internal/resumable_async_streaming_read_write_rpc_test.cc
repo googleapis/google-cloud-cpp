@@ -215,6 +215,60 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 }
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
+       SingleStartFailurePermanentErrorWithAsyncLoop) {
+  struct Loop {
+    // this should run if and only if the stream is not shutdown
+    void InvokeLoop() {
+      stream->Read().then([this](future<absl::optional<FakeResponse>>) {
+        to_call();
+        if (status_future.is_ready() && !status_future.get().ok()) return;
+        InvokeLoop();
+      });
+    }
+    ResumableAsyncReadWriteStream stream;
+    std::function<void()> to_call;
+    future<Status> status_future;
+  };
+  InSequence seq;
+
+  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto& stream1_ref = *stream1;
+
+  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto& retry_policy_ref = *mock_retry_policy;
+  EXPECT_CALL(retry_policy_factory_, Call)
+      .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
+
+  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  EXPECT_CALL(*backoff_policy_, clone)
+      .WillOnce(Return(ByMove(std::move(backoff_policy))));
+
+  EXPECT_CALL(stream_factory_, Call)
+      .WillOnce(Return(ByMove(std::move(stream1))));
+
+  promise<bool> start_promise;
+  EXPECT_CALL(stream1_ref, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  auto* stream = stream_.get();
+  StrictMock<MockFunction<void()>> placeholder_func;
+  Loop loop{std::move(stream_), placeholder_func.AsStdFunction(),
+            stream->Start()};
+  loop.InvokeLoop();
+
+  EXPECT_CALL(stream1_ref, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(FailStatus()))));
+  EXPECT_CALL(retry_policy_ref, IsExhausted).WillOnce(Return(false));
+  EXPECT_CALL(retry_policy_ref, OnFailure(FailStatus()))
+      .WillOnce(Return(false));
+  EXPECT_CALL(placeholder_func, Call);
+
+  start_promise.set_value(false);
+  auto shutdown = stream->Shutdown();
+  shutdown.get();
+}
+
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        SingleStartFailureExhaustedPermanentError) {
   InSequence seq;
 
