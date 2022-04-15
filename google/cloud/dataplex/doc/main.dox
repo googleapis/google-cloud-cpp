@@ -2,8 +2,9 @@
 
 @mainpage Cloud Dataplex API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Dataplex API][cloud-service-docs], a service
-to Dataplex API is used to manage the lifecycle of data lakes.
+An idiomatic C++ client library for the [Cloud Dataplex API][cloud-service-docs],
+an intelligent data fabric that helps you unify distributed data and automate
+data management and governance across that data to power analytics at scale.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
