@@ -166,7 +166,7 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
       in.project(), generator_,
       [](google::spanner::admin::instance::v1::InstanceConfig const&
              instance_config) {
-        return absl::StrContains(instance_config.name(), "us-west");
+        return absl::StrContains(instance_config.name(), "/regional-us-west");
       });
   ASSERT_FALSE(instance_config_name.empty())
       << "could not get an instance config";
