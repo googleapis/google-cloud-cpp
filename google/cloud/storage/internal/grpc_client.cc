@@ -119,17 +119,16 @@ std::unique_ptr<GrpcClient::WriteObjectStream> GrpcClient::CreateUploadWriter(
 
 StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableSession(
     QueryResumableUploadRequest const& request) {
-  OptionsSpan span(options_);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "resource");
-  auto const timeout = options_.get<TransferStallTimeoutOption>();
-  if (timeout.count() != 0) {
-    context.set_deadline(std::chrono::system_clock::now() + timeout);
-  }
-  auto response = stub_->QueryWriteStatus(
-      context, GrpcObjectRequestParser::ToProto(request));
+  auto response = QueryResumableUpload(request);
   if (!response) return std::move(response).status();
-  return GrpcObjectRequestParser::FromProto(*response, options());
+  auto const state = response->payload.has_value()
+                         ? ResumableUploadResponse::kDone
+                         : ResumableUploadResponse::kInProgress;
+  return ResumableUploadResponse{request.upload_session_url(),
+                                 state,
+                                 std::move(response->committed_size),
+                                 std::move(response->payload),
+                                 {}};
 }
 
 StatusOr<CreateResumableSessionResponse>
@@ -445,6 +444,25 @@ StatusOr<CreateResumableSessionResponse> GrpcClient::CreateResumableSession(
     return FullyRestoreResumableSession(request, session_id);
   }
 
+  auto create = CreateResumableUpload(request);
+  if (!create) return std::move(create).status();
+
+  auto self = shared_from_this();
+  // We need a temporary to sequence `std::move(create->upload_id)`
+  auto session = absl::make_unique<GrpcResumableUploadSession>(
+      self, request, ResumableUploadSessionGrpcParams{create->upload_id});
+  return CreateResumableSessionResponse{
+      std::move(session),
+      ResumableUploadResponse{std::move(create->upload_id),
+                              ResumableUploadResponse::kInProgress,
+                              /*.committed_size=*/0, /*.payload=*/absl::nullopt,
+                              /*.annotations=*/{}}};
+}
+
+StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(
+    ResumableUploadRequest const& request) {
+  OptionsSpan span(options_);
+
   auto proto_request = GrpcObjectRequestParser::ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
 
@@ -457,26 +475,22 @@ StatusOr<CreateResumableSessionResponse> GrpcClient::CreateResumableSession(
   auto response = stub_->StartResumableWrite(context, *proto_request);
   if (!response.ok()) return std::move(response).status();
 
-  auto self = shared_from_this();
-  return CreateResumableSessionResponse{
-      absl::make_unique<GrpcResumableUploadSession>(
-          self, request,
-          ResumableUploadSessionGrpcParams{response->upload_id()}),
-      ResumableUploadResponse{/*.upload_session_url=*/std::string{},
-                              ResumableUploadResponse::kInProgress,
-                              /*.committed_size=*/0,
-                              /*.payload=*/absl::nullopt,
-                              /*.annotations=*/std::string{}}};
-}
-
-StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(
-    ResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+  return CreateResumableUploadResponse{response->upload_id()};
 }
 
 StatusOr<QueryResumableUploadResponse> GrpcClient::QueryResumableUpload(
-    QueryResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    QueryResumableUploadRequest const& request) {
+  OptionsSpan span(options_);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request, "resource");
+  auto const timeout = options_.get<TransferStallTimeoutOption>();
+  if (timeout.count() != 0) {
+    context.set_deadline(std::chrono::system_clock::now() + timeout);
+  }
+  auto response = stub_->QueryWriteStatus(
+      context, GrpcObjectRequestParser::ToProto(request));
+  if (!response) return std::move(response).status();
+  return GrpcObjectRequestParser::FromProto(*response, options());
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
