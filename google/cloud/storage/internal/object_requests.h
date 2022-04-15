@@ -26,6 +26,7 @@
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "absl/types/optional.h"
 #include "absl/types/span.h"
 #include <numeric>
 #include <string>
@@ -428,6 +429,13 @@ class UploadChunkRequest
   bool last_chunk() const { return upload_size_.has_value(); }
   std::size_t payload_size() const { return TotalBytes(payload_); }
   std::string RangeHeader() const;
+
+  /**
+   * Returns the request to continue writing at @p new_offset.
+   *
+   * @note the result of calling this with an out of range value is undefined
+   *     behavior.
+   */
   UploadChunkRequest RemainingChunk(std::uint64_t new_offset) const;
 
   // Chunks must be multiples of 256 KiB:

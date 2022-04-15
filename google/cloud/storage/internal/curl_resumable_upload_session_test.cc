@@ -86,6 +86,7 @@ TEST(CurlResumableUploadSessionTest, Simple) {
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_THAT(request.payload(), MatchesPayload(payload));
+        EXPECT_TRUE(request.upload_size().has_value());
         EXPECT_EQ(2 * size, request.upload_size().value_or(0));
         EXPECT_EQ(size, request.offset());
         return make_status_or(ResumableUploadResponse{
