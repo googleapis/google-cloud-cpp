@@ -76,6 +76,8 @@ class MultipartitionPublisher
 
   void HandleNumPartitions(std::uint32_t num_partitions);
 
+  void CleanupOutstandingResources(Status const& status);
+
   PartitionPublisherFactory publisher_factory_;
 
   std::mutex mu_;

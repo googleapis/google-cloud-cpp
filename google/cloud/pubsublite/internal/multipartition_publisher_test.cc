@@ -116,13 +116,65 @@ TEST_F(MultipartitionPublisherNoneInitializedTest,
               AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
       .WillOnce(
           Return(ByMove(ReadyTopicPartitionsFuture(kOutOfBoundsPartition))));
+  EXPECT_CALL(alarm_token_, Destroy);
   auto start = multipartition_publisher_->Start();
 
   EXPECT_EQ(start.get(), Status(StatusCode::kInternal,
                                 "Returned partition count is too big: " +
                                     std::to_string(kOutOfBoundsPartition)));
 
+  multipartition_publisher_->Shutdown().get();
+}
+
+TEST_F(MultipartitionPublisherNoneInitializedTest,
+       FirstPollInvalidValuePublisherAbortsAfterPublishing) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+  auto start = multipartition_publisher_->Start();
+  future<StatusOr<MessageMetadata>> publish_response =
+      multipartition_publisher_->Publish(PubSubMessage{});
+
+  // failing client should destroy alarm
   EXPECT_CALL(alarm_token_, Destroy);
+  num_partitions.set_value(ExamplePartitionsResponse(kOutOfBoundsPartition));
+
+  EXPECT_EQ(publish_response.get().status(),
+            (Status{StatusCode::kInternal,
+                    "Returned partition count is too big: " +
+                        std::to_string(kOutOfBoundsPartition)}));
+  EXPECT_EQ(start.get(), Status(StatusCode::kInternal,
+                                "Returned partition count is too big: " +
+                                    std::to_string(kOutOfBoundsPartition)));
+
+  multipartition_publisher_->Shutdown().get();
+}
+
+TEST_F(MultipartitionPublisherNoneInitializedTest,
+       FirstPollInvalidValuePublisherAbortsThenPublish) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+  auto start = multipartition_publisher_->Start();
+
+  // failing client should destroy alarm
+  EXPECT_CALL(alarm_token_, Destroy);
+  num_partitions.set_value(ExamplePartitionsResponse(kOutOfBoundsPartition));
+
+  EXPECT_EQ(multipartition_publisher_->Publish(PubSubMessage{}).get().status(),
+            (Status{StatusCode::kInternal,
+                    "Returned partition count is too big: " +
+                        std::to_string(kOutOfBoundsPartition)}));
+  EXPECT_EQ(start.get(), Status(StatusCode::kInternal,
+                                "Returned partition count is too big: " +
+                                    std::to_string(kOutOfBoundsPartition)));
+
   multipartition_publisher_->Shutdown().get();
 }
 
