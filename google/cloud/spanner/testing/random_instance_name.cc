@@ -21,23 +21,27 @@ namespace cloud {
 namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Generate a random instance name for InstanceAdminClient CRUD tests.
- */
-std::string RandomInstanceName(
-    google::cloud::internal::DefaultPRNG& generator) {
-  // An instance ID must be between 2 and 64 characters, fitting the regular
-  // expression `[a-z][-a-z0-9]*[a-z0-9]`
-  std::size_t const max_size = 64;
+namespace {
+
+std::string RandomId(std::string prefix, std::size_t max_size,
+                     internal::DefaultPRNG& generator) {
   auto now = std::chrono::system_clock::now();
-  std::string date = google::cloud::internal::FormatUtcDate(now);
-  std::string prefix = "temporary-instance-" + date + "-";
+  prefix.push_back('-');
+  prefix.append(internal::FormatUtcDate(now));
+  prefix.push_back('-');
   auto size = static_cast<int>(max_size - 1 - prefix.size());
   return prefix +
-         google::cloud::internal::Sample(
-             generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789-") +
-         google::cloud::internal::Sample(generator, 1,
-                                         "abcdefghijlkmnopqrstuvwxyz");
+         internal::Sample(generator, size,
+                          "abcdefghijlkmnopqrstuvwxyz0123456789-") +
+         internal::Sample(generator, 1, "abcdefghijlkmnopqrstuvwxyz");
+}
+
+}  // namespace
+
+std::string RandomInstanceName(internal::DefaultPRNG& generator) {
+  // An instance ID must be between 2 and 64 characters, matching the
+  // regular expression `[a-z][-a-z0-9]*[a-z0-9]`.
+  return RandomId("temporary-instance", 64, generator);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
