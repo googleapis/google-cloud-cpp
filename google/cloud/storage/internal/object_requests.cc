@@ -421,12 +421,15 @@ std::string UploadChunkRequest::RangeHeader() const {
 UploadChunkRequest UploadChunkRequest::RemainingChunk(
     std::uint64_t new_offset) const {
   UploadChunkRequest result = *this;
-  if (new_offset < offset_) {
+  if (new_offset < offset_ || new_offset >= offset_ + payload_size()) {
     result.offset_ = new_offset;
     result.payload_.clear();
     return result;
   }
-  PopFrontBytes(result.payload_, new_offset - result.offset_);
+  // No chunk can be larger than what fits in memory, and because `new_offset`
+  // is the [offset_, offset_ + payload_size()], this static_cast<> is safe:
+  PopFrontBytes(result.payload_,
+                static_cast<std::size_t>(new_offset - result.offset_));
   result.offset_ = new_offset;
   return result;
 }
