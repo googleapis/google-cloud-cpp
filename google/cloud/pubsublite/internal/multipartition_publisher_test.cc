@@ -154,6 +154,31 @@ TEST_F(MultipartitionPublisherNoneInitializedTest,
 }
 
 TEST_F(MultipartitionPublisherNoneInitializedTest,
+       FirstPollInvalidValuePublisherAbortsThenPublish) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+  auto start = multipartition_publisher_->Start();
+
+  // failing client should destroy alarm
+  EXPECT_CALL(alarm_token_, Destroy);
+  num_partitions.set_value(ExamplePartitionsResponse(kOutOfBoundsPartition));
+
+  EXPECT_EQ(multipartition_publisher_->Publish(PubSubMessage{}).get().status(),
+            (Status{StatusCode::kInternal,
+                    "Returned partition count is too big: " +
+                        std::to_string(kOutOfBoundsPartition)}));
+  EXPECT_EQ(start.get(), Status(StatusCode::kInternal,
+                                "Returned partition count is too big: " +
+                                    std::to_string(kOutOfBoundsPartition)));
+
+  multipartition_publisher_->Shutdown().get();
+}
+
+TEST_F(MultipartitionPublisherNoneInitializedTest,
        PublishAndShutdownBeforePublisherCreated) {
   InSequence seq;
 
