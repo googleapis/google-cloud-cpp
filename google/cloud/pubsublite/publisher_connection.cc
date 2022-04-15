@@ -49,7 +49,6 @@ using google::cloud::pubsublite_internal::AlarmRegistryImpl;
 using google::cloud::pubsublite_internal::AsyncSleeper;
 using google::cloud::pubsublite_internal::BatchingOptions;
 using google::cloud::pubsublite_internal::ClientMetadata;
-using google::cloud::pubsublite_internal::CreateDefaultAdminServiceStub;
 using google::cloud::pubsublite_internal::CreateDefaultPublisherServiceStub;
 using google::cloud::pubsublite_internal::DefaultPublishMessageTransformer;
 using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
