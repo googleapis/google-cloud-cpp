@@ -146,7 +146,7 @@ TEST_P(CurlClientTest, UploadChunk) {
   auto actual = client_
                     ->UploadSessionChunk(UploadChunkRequest(
                         "http://localhost:1/invalid-session-id", 0,
-                        {ConstBuffer{std::string{}}}, 0))
+                        {ConstBuffer{std::string{}}}))
                     .status();
   CheckStatus(actual);
 }
