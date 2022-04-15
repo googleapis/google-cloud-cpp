@@ -34,7 +34,7 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options VersionsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_VERSIONS_ENDPOINT", "",
+      std::move(options), "GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT", "",
       "dialogflow.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

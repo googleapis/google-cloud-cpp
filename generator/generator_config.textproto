@@ -356,6 +356,7 @@ service {
   additional_proto_files: ["google/protobuf/struct.proto"]
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENT_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -378,6 +379,7 @@ service {
   additional_proto_files: ["google/protobuf/struct.proto"]
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -479,6 +481,7 @@ service {
   service_proto_path: "google/cloud/dialogflow/v2/environment.proto"
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENTS_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -493,6 +496,7 @@ service {
   service_proto_path: "google/cloud/dialogflow/v2/version.proto"
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
 }
 
