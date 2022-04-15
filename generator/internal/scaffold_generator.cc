@@ -635,9 +635,6 @@ which should give you a taste of the $title$ C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_ EDIT HERE _ENDPOINT=...` changes the default endpoint
-  ( EDIT HERE .googleapis.com) used by ` EDIT HERE Connection`.
-
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,
