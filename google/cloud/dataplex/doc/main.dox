@@ -39,8 +39,14 @@ which should give you a taste of the Cloud Dataplex API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_ EDIT HERE _ENDPOINT=...` changes the default endpoint
-  ( EDIT HERE .googleapis.com) used by ` EDIT HERE Connection`.
+- `GOOGLE_CLOUD_CPP_CONTENT_SERVICE_ENDPOINT=...` changes the default endpoint
+  (dataplex.googleapis.com) used by `ContentServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_DATAPLEX_SERVICE_ENDPOINT=...` changes the default endpoint
+  (dataplex.googleapis.com) used by `DataplexServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_METADATA_SERVICE_ENDPOINT=...` changes the default endpoint
+  (dataplex.googleapis.com) used by `MetadataServiceConnection`.
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
