@@ -188,13 +188,18 @@ not always valid. Find the correct urls and update the links.
 ```shell
 lib="google/cloud/${library}"
 services=$(ls ${lib}/*_connection.h | xargs -I {} basename {} _connection.h)
-for service in ${services[@]}; do
-  env_var=$(grep -o "GOOGLE_CLOUD_CPP_.*_ENDPOINT" ${lib}/internal/${service}_option_defaults.cc); \
-  endpoint=$(grep -ro "\"[[:alnum:]]*\.googleapis\.com" ${lib}/internal/${service}_option_defaults.cc); \
-  connection=$(grep -ro "\~[[:alnum:]]*()" ${lib}/${service}_connection.h); \
-  text="- \`${env_var}=...\` changes the default endpoint\n  (${endpoint:1}) used by \`${connection:1:-2}\`."; \
-  sed -i "s/\(- \`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc\`\)/${text}\n\n\1/" ${lib}/doc/main.dox; \
-done
+(
+  sed '/<!-- inject-endpoint-env-vars-start -->/q' "${lib}/doc/main.dox"
+  echo ""
+  for service in ${services[@]}; do
+    env_var=$(grep -o "GOOGLE_CLOUD_CPP_.*_ENDPOINT" ${lib}/internal/${service}_option_defaults.cc)
+    endpoint=$(grep -ro "\"[[:alnum:]]*\.googleapis\.com" ${lib}/internal/${service}_option_defaults.cc)
+    connection=$(grep -ro "\~[[:alnum:]]*()" ${lib}/${service}_connection.h)
+    echo -e "- \`${env_var}=...\` changes the default endpoint\n  (${endpoint:1}) used by \`${connection:1:-2}\`.\n"
+  done
+  sed -n '/<!-- inject-endpoint-env-vars-end -->/,$p' "${lib}/doc/main.dox"
+) >"main.dox.tmp"
+mv "main.dox.tmp" "${lib}/doc/main.dox"
 ```
 
 ## Update the root files
