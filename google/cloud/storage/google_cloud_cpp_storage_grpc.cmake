@@ -104,9 +104,6 @@ else ()
     create_bazel_config(google_cloud_cpp_storage_grpc)
 endif ()
 
-google_cloud_cpp_install_headers(google_cloud_cpp_storage_grpc
-                                 include/google/cloud/storage)
-
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The GCS (Google Cloud Storage) gRPC plugin")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
@@ -150,6 +147,9 @@ install(
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_install_headers(google_cloud_cpp_storage_grpc
+                                 include/google/cloud/storage)
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     # This is a bit weird, we add an additional link library to
