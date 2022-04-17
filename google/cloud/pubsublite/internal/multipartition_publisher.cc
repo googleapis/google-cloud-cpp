@@ -180,7 +180,8 @@ void MultipartitionPublisher::PublishLoop() {
       messages_.pop_front();
       messages_left = !messages_.empty();
       if (!messages_left) in_publish_loop_ = false;
-      state.num_partitions = partition_publishers_.size();
+      state.num_partitions =
+          static_cast<std::uint32_t>(partition_publishers_.size());
     }
     RouteAndPublish(std::move(state));
   }
