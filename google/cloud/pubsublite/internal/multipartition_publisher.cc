@@ -93,17 +93,17 @@ void MultipartitionPublisher::HandleNumPartitions(
     new_partition_publishers.push_back(publisher_factory_(partition));
     service_composite_.AddServiceObject(new_partition_publishers.back().get());
   }
-  std::vector<PublishState> initial_publish_buffer;
   {
     std::lock_guard<std::mutex> g{mu_};
     std::move(new_partition_publishers.begin(), new_partition_publishers.end(),
               std::back_inserter(partition_publishers_));
-    initial_publish_buffer.swap(initial_publish_buffer_);
+    for (auto& state : initial_publish_buffer_) {
+      state.num_partitions = num_partitions;
+      messages_.push_back(std::move(state));
+    }
+    initial_publish_buffer_.clear();
   }
-  for (auto& state : initial_publish_buffer) {
-    state.num_partitions = num_partitions;
-    RouteAndPublish(std::move(state));
-  }
+  PublishLoop();
 }
 
 void MultipartitionPublisher::TriggerPublisherCreation() {
@@ -169,10 +169,32 @@ void MultipartitionPublisher::RouteAndPublish(PublishState state) {
       .then(OnPublish{std::move(state.publish_promise), partition});
 }
 
+void MultipartitionPublisher::PublishLoop() {
+  bool messages_left;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    if (in_publish_loop_) return;
+    messages_left = !messages_.empty();
+    if (messages_left) in_publish_loop_ = true;
+  }
+  while (messages_left) {
+    PublishState state;
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      state = std::move(messages_.front());
+      messages_.pop_front();
+      messages_left = !messages_.empty();
+      if (!messages_left) in_publish_loop_ = false;
+    }
+    RouteAndPublish(std::move(state));
+  }
+}
+
 future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
     PubSubMessage m) {
   PublishState state;
   state.message = std::move(m);
+  future<StatusOr<MessageMetadata>> to_return;
   {
     std::lock_guard<std::mutex> g{mu_};
     // performing this under lock to guarantee that all of
@@ -183,10 +205,10 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
     }
     state.num_partitions =
         static_cast<std::uint32_t>(partition_publishers_.size());
+    to_return = state.publish_promise.get_future();
+    messages_.push_back(std::move(state));
   }
-
-  auto to_return = state.publish_promise.get_future();
-  RouteAndPublish(std::move(state));
+  PublishLoop();
   return to_return;
 }
 
