@@ -97,11 +97,6 @@ void MultipartitionPublisher::HandleNumPartitions(
     std::lock_guard<std::mutex> g{mu_};
     std::move(new_partition_publishers.begin(), new_partition_publishers.end(),
               std::back_inserter(partition_publishers_));
-    for (auto& state : initial_publish_buffer_) {
-      state.num_partitions = num_partitions;
-      messages_.push_back(std::move(state));
-    }
-    initial_publish_buffer_.clear();
   }
   PublishLoop();
 }
@@ -185,6 +180,7 @@ void MultipartitionPublisher::PublishLoop() {
       messages_.pop_front();
       messages_left = !messages_.empty();
       if (!messages_left) in_publish_loop_ = false;
+      state.num_partitions = partition_publishers_.size();
     }
     RouteAndPublish(std::move(state));
   }
@@ -200,11 +196,9 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
     // performing this under lock to guarantee that all of
     // `initial_publish_buffer_` is flushed when publishers are created
     if (partition_publishers_.empty()) {
-      initial_publish_buffer_.push_back(std::move(state));
-      return initial_publish_buffer_.back().publish_promise.get_future();
+      messages_.push_back(std::move(state));
+      return messages_.back().publish_promise.get_future();
     }
-    state.num_partitions =
-        static_cast<std::uint32_t>(partition_publishers_.size());
     to_return = state.publish_promise.get_future();
     messages_.push_back(std::move(state));
   }
@@ -228,12 +222,12 @@ void MultipartitionPublisher::Flush() {
 
 future<void> MultipartitionPublisher::Shutdown() {
   cancel_token_ = nullptr;
-  std::vector<PublishState> initial_publish_buffer;
+  std::deque<PublishState> messages;
   {
     std::lock_guard<std::mutex> g{mu_};
-    initial_publish_buffer.swap(initial_publish_buffer_);
+    messages.swap(messages_);
   }
-  for (auto& state : initial_publish_buffer) {
+  for (auto& state : messages) {
     state.publish_promise.set_value(Status{
         StatusCode::kFailedPrecondition, "Multipartition publisher shutdown."});
   }
