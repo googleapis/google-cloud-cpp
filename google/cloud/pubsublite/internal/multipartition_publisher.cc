@@ -198,6 +198,8 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
     std::lock_guard<std::mutex> g{mu_};
     to_return = state.publish_promise.get_future();
     messages_.push_back(std::move(state));
+    // message will be published whenever we successfully read the number of
+    // partitions and publishers are created
     if (partition_publishers_.empty()) return to_return;
   }
   TryPublishMessages();
