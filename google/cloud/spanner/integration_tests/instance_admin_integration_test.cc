@@ -73,21 +73,8 @@ bool Emulator() {
 class CleanupStaleInstances : public ::testing::Environment {
  public:
   void SetUp() override {
-    std::regex instance_name_regex(
-        R"(projects/.+/instances/)"
-        R"((temporary-instance-(\d{4}-\d{2}-\d{2})-.+))");
-
-    // Make sure we're using a correct regex.
-    EXPECT_EQ(2, instance_name_regex.mark_count());
-    auto generator = internal::MakeDefaultPRNG();
-    Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator));
-    auto fq_instance_name = in.FullName();
-    std::smatch m;
-    EXPECT_TRUE(std::regex_match(fq_instance_name, m, instance_name_regex));
-    EXPECT_EQ(3, m.size());
-
-    EXPECT_STATUS_OK(spanner_testing::CleanupStaleInstances(
-        in.project_id(), instance_name_regex));
+    EXPECT_STATUS_OK(
+        spanner_testing::CleanupStaleInstances(Project(ProjectId())));
   }
 };
 
