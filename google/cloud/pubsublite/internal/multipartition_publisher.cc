@@ -98,7 +98,7 @@ void MultipartitionPublisher::HandleNumPartitions(
     std::move(new_partition_publishers.begin(), new_partition_publishers.end(),
               std::back_inserter(partition_publishers_));
   }
-  PublishLoop();
+  TryPublishMessages();
 }
 
 void MultipartitionPublisher::TriggerPublisherCreation() {
@@ -164,26 +164,28 @@ void MultipartitionPublisher::RouteAndPublish(PublishState state) {
       .then(OnPublish{std::move(state.publish_promise), partition});
 }
 
-void MultipartitionPublisher::PublishLoop() {
-  bool messages_left;
+void MultipartitionPublisher::TryPublishMessages() {
   {
     std::lock_guard<std::mutex> g{mu_};
     if (in_publish_loop_) return;
-    messages_left = !messages_.empty();
-    if (messages_left) in_publish_loop_ = true;
+    in_publish_loop_ = true;
   }
-  while (messages_left) {
-    PublishState state;
+  while (true) {
+    std::deque<PublishState> messages;
+    uint32_t num_partitions;
     {
       std::lock_guard<std::mutex> g{mu_};
-      state = std::move(messages_.front());
-      messages_.pop_front();
-      messages_left = !messages_.empty();
-      if (!messages_left) in_publish_loop_ = false;
-      state.num_partitions =
-          static_cast<std::uint32_t>(partition_publishers_.size());
+      if (messages_.empty()) {
+        in_publish_loop_ = false;
+        return;
+      }
+      messages.swap(messages_);
+      num_partitions = static_cast<std::uint32_t>(partition_publishers_.size());
     }
-    RouteAndPublish(std::move(state));
+    for (PublishState& state : messages) {
+      state.num_partitions = num_partitions;
+      RouteAndPublish(std::move(state));
+    }
   }
 }
 
@@ -194,16 +196,11 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
   future<StatusOr<MessageMetadata>> to_return;
   {
     std::lock_guard<std::mutex> g{mu_};
-    // performing this under lock to guarantee that all of
-    // `initial_publish_buffer_` is flushed when publishers are created
-    if (partition_publishers_.empty()) {
-      messages_.push_back(std::move(state));
-      return messages_.back().publish_promise.get_future();
-    }
     to_return = state.publish_promise.get_future();
     messages_.push_back(std::move(state));
+    if (partition_publishers_.empty()) return to_return;
   }
-  PublishLoop();
+  TryPublishMessages();
   return to_return;
 }
 

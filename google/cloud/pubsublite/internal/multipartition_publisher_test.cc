@@ -453,7 +453,9 @@ TEST_F(MultipartitionPublisherTest,
   *m2.mutable_data() = "data2";
   future<StatusOr<MessageMetadata>> message2;
   message0 = message0.then([&](future<StatusOr<MessageMetadata>> res) {
-    // should be the third message published
+    // should be the third message published (no race) as we know that
+    // `message0` shouldn't be satisfied yet and this test case executes in a
+    // single thread
     message2 = multipartition_publisher_->Publish(m2);
     return make_ready_future(res.get());
   });

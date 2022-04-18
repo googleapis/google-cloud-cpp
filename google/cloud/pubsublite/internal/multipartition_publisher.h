@@ -75,7 +75,7 @@ class MultipartitionPublisher
 
   void RouteAndPublish(PublishState state);
 
-  void PublishLoop();
+  void TryPublishMessages();
 
   void HandleNumPartitions(std::uint32_t num_partitions);
 
