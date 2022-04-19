@@ -70,7 +70,7 @@ struct GrpcObjectRequestParser {
 
   static google::storage::v2::QueryWriteStatusRequest ToProto(
       QueryResumableUploadRequest const& request);
-  static ResumableUploadResponse FromProto(
+  static QueryResumableUploadResponse FromProto(
       google::storage::v2::QueryWriteStatusResponse const& response,
       Options const& options);
 };

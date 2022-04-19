@@ -15,10 +15,14 @@
 #include "google/cloud/spanner/testing/cleanup_stale_instances.h"
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/admin/instance_admin_client.h"
+#include "google/cloud/spanner/instance.h"
+#include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/format_time_point.h"
-#include "google/cloud/project.h"
+#include "google/cloud/internal/random.h"
 #include <chrono>
+#include <regex>
+#include <string>
 #include <vector>
 
 namespace google {
@@ -26,39 +30,58 @@ namespace cloud {
 namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Status CleanupStaleInstances(std::string const& project_id,
-                             std::regex const& instance_name_regex) {
-  Project project(project_id);
+namespace {
+
+// The cutoff date for resources considered stale.
+std::string CutoffDate() {
+  auto cutoff_time = std::chrono::system_clock::now() - std::chrono::hours(24);
+  return internal::FormatRfc3339(cutoff_time).substr(0, 10);  // YYYY-MM-DD
+}
+
+}  // namespace
+
+Status CleanupStaleInstances(Project const& project) {
+  std::regex name_regex(R"(projects/.+/instances/)"
+                        R"(temporary-instance-(\d{4}-\d{2}-\d{2})-.+)");
+
+  // Make sure we're using a regex that matches a random instance name.
+  if (name_regex.mark_count() != 1) {
+    return Status(StatusCode::kInternal,
+                  "Instance regex must have a single capture group");
+  }
+  auto generator = internal::MakeDefaultPRNG();
+  auto random_id = spanner_testing::RandomInstanceName(generator);
+  auto full_name = spanner::Instance(project, random_id).FullName();
+  std::smatch m;
+  if (!std::regex_match(full_name, m, name_regex)) {
+    return Status(StatusCode::kInternal,
+                  "Instance regex does not match a random instance name");
+  }
+
   spanner_admin::InstanceAdminClient instance_admin_client(
       spanner_admin::MakeInstanceAdminConnection());
-  std::vector<std::string> instances = [&]() -> std::vector<std::string> {
-    std::vector<std::string> instances;
-    for (auto const& instance :
-         instance_admin_client.ListInstances(project.FullName())) {
-      if (!instance) break;
-      auto name = instance->name();
-      std::smatch m;
-      if (std::regex_match(name, m, instance_name_regex)) {
-        auto date_str = m[2];
-        auto cutoff_date =
-            google::cloud::internal::FormatRfc3339(
-                std::chrono::system_clock::now() - std::chrono::hours(24))
-                .substr(0, 10);
-        // Compare the strings
-        if (date_str < cutoff_date) {
-          instances.push_back(name);
-        }
+  auto cutoff_date = CutoffDate();
+  std::vector<std::string> instances;
+  for (auto const& instance :
+       instance_admin_client.ListInstances(project.FullName())) {
+    if (!instance) break;
+    auto name = instance->name();
+    std::smatch m;
+    if (std::regex_match(name, m, name_regex)) {
+      auto date_str = m[1];
+      if (date_str < cutoff_date) {
+        instances.push_back(name);
       }
     }
-    return instances;
-  }();
+  }
   // Let it fail if we have too many leaks.
   if (instances.size() > 20) {
-    return Status(StatusCode::kInternal, "too many stale instances");
+    return Status(StatusCode::kInternal, "Too many stale instances");
   }
+
+  // We ignore failures here.
   spanner_admin::DatabaseAdminClient database_admin_client(
       spanner_admin::MakeDatabaseAdminConnection());
-  // We ignore failures here.
   for (auto const& instance : instances) {
     for (auto const& backup : database_admin_client.ListBackups(instance)) {
       database_admin_client.DeleteBackup(backup->name());

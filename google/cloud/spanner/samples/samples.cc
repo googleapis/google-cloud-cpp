@@ -51,6 +51,60 @@
 
 namespace {
 
+//! [START spanner_get_instance_config] [get-instance-config]
+void GetInstanceConfig(google::cloud::spanner_admin::InstanceAdminClient client,
+                       std::string const& project_id,
+                       std::string const& config_id) {
+  auto project = google::cloud::Project(project_id);
+  auto config = client.GetInstanceConfig(project.FullName() +
+                                         "/instanceConfigs/" + config_id);
+  if (!config) {
+    throw std::runtime_error(config.status().message());
+  }
+  std::cout << "The instanceConfig " << config->name()
+            << " exists and its metadata is:\n"
+            << config->DebugString();
+}
+//! [END spanner_get_instance_config] [get-instance-config]
+
+void GetInstanceConfigCommand(std::vector<std::string> argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("get-instance-config <project-id> <config-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  GetInstanceConfig(std::move(client), argv[0], argv[1]);
+}
+
+//! [START spanner_list_instance_configs] [list-instance-configs]
+void ListInstanceConfigs(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id) {
+  int count = 0;
+  auto project = google::cloud::Project(project_id);
+  for (auto const& config : client.ListInstanceConfigs(project.FullName())) {
+    if (!config) {
+      throw std::runtime_error(config.status().message());
+    }
+    ++count;
+    std::cout << "Instance config [" << count << "]:\n"
+              << config->DebugString();
+  }
+  if (count == 0) {
+    std::cout << "No instance configs found in project " << project_id << "\n";
+  }
+}
+//! [END spanner_list_instance_configs] [list-instance-configs]
+
+void ListInstanceConfigsCommand(std::vector<std::string> argv) {
+  if (argv.size() != 1) {
+    throw std::runtime_error("list-instance-configs <project-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  ListInstanceConfigs(std::move(client), argv[0]);
+}
+
 //! [get-instance]
 void GetInstance(google::cloud::spanner_admin::InstanceAdminClient client,
                  std::string const& project_id,
@@ -74,6 +128,31 @@ void GetInstanceCommand(std::vector<std::string> argv) {
   GetInstance(std::move(client), argv[0], argv[1]);
 }
 
+//! [list-instances]
+void ListInstances(google::cloud::spanner_admin::InstanceAdminClient client,
+                   std::string const& project_id) {
+  int count = 0;
+  auto project = google::cloud::Project(project_id);
+  for (auto const& instance : client.ListInstances(project.FullName())) {
+    if (!instance) throw std::runtime_error(instance.status().message());
+    ++count;
+    std::cout << "Instance [" << count << "]:\n" << instance->DebugString();
+  }
+  if (count == 0) {
+    std::cout << "No instances found in project " << project_id << "\n";
+  }
+}
+//! [list-instances]
+
+void ListInstancesCommand(std::vector<std::string> argv) {
+  if (argv.size() != 1) {
+    throw std::runtime_error("list-instances <project-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  ListInstances(std::move(client), argv[0]);
+}
+
 //! [START spanner_create_instance] [create-instance]
 void CreateInstance(google::cloud::spanner_admin::InstanceAdminClient client,
                     std::string const& project_id,
@@ -84,16 +163,15 @@ void CreateInstance(google::cloud::spanner_admin::InstanceAdminClient client,
   spanner::Instance in(project_id, instance_id);
 
   auto project = google::cloud::Project(project_id);
-  std::string instance_config =
+  std::string config_name =
       project.FullName() + "/instanceConfigs/" + config_id;
   auto instance =
       client
-          .CreateInstance(
-              spanner::CreateInstanceRequestBuilder(in, instance_config)
-                  .SetDisplayName(display_name)
-                  .SetNodeCount(1)
-                  .SetLabels({{"cloud_spanner_samples", "true"}})
-                  .Build())
+          .CreateInstance(spanner::CreateInstanceRequestBuilder(in, config_name)
+                              .SetDisplayName(display_name)
+                              .SetNodeCount(1)
+                              .SetLabels({{"cloud_spanner_samples", "true"}})
+                              .Build())
           .get();
   if (!instance) throw std::runtime_error(instance.status().message());
   std::cout << "Created instance [" << in << "]:\n" << instance->DebugString();
@@ -109,16 +187,15 @@ void CreateInstanceWithProcessingUnits(
   spanner::Instance in(project_id, instance_id);
 
   auto project = google::cloud::Project(project_id);
-  std::string instance_config =
+  std::string config_name =
       project.FullName() + "/instanceConfigs/" + config_id;
   auto instance =
       client
-          .CreateInstance(
-              spanner::CreateInstanceRequestBuilder(in, instance_config)
-                  .SetDisplayName(display_name)
-                  .SetProcessingUnits(500)
-                  .SetLabels({{"cloud_spanner_samples", "true"}})
-                  .Build())
+          .CreateInstance(spanner::CreateInstanceRequestBuilder(in, config_name)
+                              .SetDisplayName(display_name)
+                              .SetProcessingUnits(500)
+                              .SetLabels({{"cloud_spanner_samples", "true"}})
+                              .Build())
           .get();
   if (!instance) throw std::runtime_error(instance.status().message());
   std::cout << "Created instance [" << in << "]:\n" << instance->DebugString();
@@ -195,87 +272,6 @@ void DeleteInstanceCommand(std::vector<std::string> argv) {
   google::cloud::spanner_admin::InstanceAdminClient client(
       google::cloud::spanner_admin::MakeInstanceAdminConnection());
   DeleteInstance(std::move(client), argv[0], argv[1]);
-}
-
-//! [START spanner_list_instance_configs] [list-instance-configs]
-void ListInstanceConfigs(
-    google::cloud::spanner_admin::InstanceAdminClient client,
-    std::string const& project_id) {
-  int count = 0;
-  auto project = google::cloud::Project(project_id);
-  for (auto const& instance_config :
-       client.ListInstanceConfigs(project.FullName())) {
-    if (!instance_config) {
-      throw std::runtime_error(instance_config.status().message());
-    }
-    ++count;
-    std::cout << "Instance config [" << count << "]:\n"
-              << instance_config->DebugString();
-  }
-  if (count == 0) {
-    std::cout << "No instance configs found in project " << project_id << "\n";
-  }
-}
-//! [END spanner_list_instance_configs] [list-instance-configs]
-
-void ListInstanceConfigsCommand(std::vector<std::string> argv) {
-  if (argv.size() != 1) {
-    throw std::runtime_error("list-instance-configs <project-id>");
-  }
-  google::cloud::spanner_admin::InstanceAdminClient client(
-      google::cloud::spanner_admin::MakeInstanceAdminConnection());
-  ListInstanceConfigs(std::move(client), argv[0]);
-}
-
-//! [START spanner_get_instance_config] [get-instance-config]
-void GetInstanceConfig(google::cloud::spanner_admin::InstanceAdminClient client,
-                       std::string const& project_id,
-                       std::string const& config_id) {
-  auto project = google::cloud::Project(project_id);
-  auto instance_config = client.GetInstanceConfig(
-      project.FullName() + "/instanceConfigs/" + config_id);
-  if (!instance_config) {
-    throw std::runtime_error(instance_config.status().message());
-  }
-
-  std::cout << "The instanceConfig " << instance_config->name()
-            << " exists and its metadata is:\n"
-            << instance_config->DebugString();
-}
-//! [END spanner_get_instance_config] [get-instance-config]
-
-void GetInstanceConfigCommand(std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw std::runtime_error("get-instance-config <project-id> <config-id>");
-  }
-  google::cloud::spanner_admin::InstanceAdminClient client(
-      google::cloud::spanner_admin::MakeInstanceAdminConnection());
-  GetInstanceConfig(std::move(client), argv[0], argv[1]);
-}
-
-//! [list-instances]
-void ListInstances(google::cloud::spanner_admin::InstanceAdminClient client,
-                   std::string const& project_id) {
-  int count = 0;
-  auto project = google::cloud::Project(project_id);
-  for (auto const& instance : client.ListInstances(project.FullName())) {
-    if (!instance) throw std::runtime_error(instance.status().message());
-    ++count;
-    std::cout << "Instance [" << count << "]:\n" << instance->DebugString();
-  }
-  if (count == 0) {
-    std::cout << "No instances found in project " << project_id << "\n";
-  }
-}
-//! [list-instances]
-
-void ListInstancesCommand(std::vector<std::string> argv) {
-  if (argv.size() != 1) {
-    throw std::runtime_error("list-instances <project-id>");
-  }
-  google::cloud::spanner_admin::InstanceAdminClient client(
-      google::cloud::spanner_admin::MakeInstanceAdminConnection());
-  ListInstances(std::move(client), argv[0]);
 }
 
 //! [instance-get-iam-policy]
@@ -3515,13 +3511,13 @@ int RunOneCommand(std::vector<std::string> argv) {
   };
 
   CommandMap commands = {
+      {"get-instance-config", GetInstanceConfigCommand},
+      {"list-instance-configs", ListInstanceConfigsCommand},
       {"get-instance", GetInstanceCommand},
+      {"list-instances", ListInstancesCommand},
       {"create-instance", CreateInstanceCommand},
       {"update-instance", UpdateInstanceCommand},
       {"delete-instance", DeleteInstanceCommand},
-      {"list-instance-configs", ListInstanceConfigsCommand},
-      {"get-instance-config", GetInstanceConfigCommand},
-      {"list-instances", ListInstancesCommand},
       {"instance-get-iam-policy", InstanceGetIamPolicyCommand},
       {"add-database-reader", AddDatabaseReaderCommand},
       {"remove-database-reader", RemoveDatabaseReaderCommand},
@@ -3732,12 +3728,12 @@ void RunAllSlowInstanceTests(
 
   if (!run_slow_instance_tests) return;
 
-  auto const config =
+  auto const config_id =
       Basename(google::cloud::spanner_testing::PickInstanceConfig(
           google::cloud::Project(project_id), generator,
           [](google::spanner::admin::instance::v1::InstanceConfig const&
-                 instance_config) {
-            auto config_id = Basename(instance_config.name());
+                 config) {
+            auto config_id = Basename(config.name());
             // Skip non-US configs. They are too slow.
             if (absl::StartsWith(config_id, "regional-us-")) {
               // Exclude US configs where we keep most test instances.
@@ -3748,7 +3744,7 @@ void RunAllSlowInstanceTests(
             }
             return false;
           }));
-  if (config.empty()) throw std::runtime_error("Failed to pick a config");
+  if (config_id.empty()) throw std::runtime_error("Failed to pick a config");
 
   auto const crud_instance_id =
       google::cloud::spanner_testing::RandomInstanceName(generator);
@@ -3757,7 +3753,7 @@ void RunAllSlowInstanceTests(
 
   SampleBanner("spanner_create_instance");
   CreateInstance(instance_admin_client, project_id, crud_instance_id,
-                 "Test Instance", config);
+                 "Test Instance", config_id);
 
   if (!emulator) {
     SampleBanner("update-instance");
@@ -3885,7 +3881,7 @@ void RunAllSlowInstanceTests(
     SampleBanner("spanner_create_instance_with_processing_units");
     CreateInstanceWithProcessingUnits(instance_admin_client, project_id,
                                       crud_instance_id,
-                                      "Test Low-Cost Instance", config);
+                                      "Test Low-Cost Instance", config_id);
 
     SampleBanner("delete-instance");
     DeleteInstance(instance_admin_client, project_id, crud_instance_id);

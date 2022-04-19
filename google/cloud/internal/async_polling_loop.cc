@@ -139,16 +139,14 @@ class AsyncPollingLoopImpl
         // We should not be fabricating a `Status` value here. Rather, we
         // should cancel the operation and wait for the next poll to return
         // an accurate status to the user, otherwise they will have no idea
-        // how to react.
+        // how to react. But for now, we leave the operation running. It
+        // may eventually complete.
         return promise_.set_value(Status(
             StatusCode::kDeadlineExceeded,
             location_ + "() - polling loop terminated by polling policy"));
       }
+      // This could be a transient error if the policy is exhausted.
       return promise_.set_value(std::move(op).status());
-    }
-    if (op) {
-      std::unique_lock<std::mutex> lk(mu_);
-      op_name_ = std::move(*op->mutable_name());
     }
     return Wait();
   }
