@@ -166,7 +166,7 @@ CommitSubscriberImpl::Initializer(
       .then([shared_stream](future<Status> f)
                 -> StatusOr<ResumableStreamImpl::UnderlyingStream> {
         Status status = f.get();
-        if (!status.ok()) return std::move(status);
+        if (!status.ok()) return status;
         return std::move(*shared_stream);
       });
 }
