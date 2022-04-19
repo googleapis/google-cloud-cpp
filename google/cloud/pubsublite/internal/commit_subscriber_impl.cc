@@ -96,7 +96,8 @@ void CommitSubscriberImpl::OnRead(
         absl::StrCat("Invalid `Read` response: ", response->DebugString())));
   }
 
-  auto num_commits_acked = response->commit().acknowledged_commits();
+  auto num_commits_acked =
+      static_cast<std::uint64_t>(response->commit().acknowledged_commits());
 
   {
     std::lock_guard<std::mutex> g{mu_};
