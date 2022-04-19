@@ -175,7 +175,7 @@ CommitSubscriber::Initializer(ResumableStreamImpl::UnderlyingStream stream) {
             }
             return (*shared_stream)->Finish();
           })
-      .then([this, shared_stream](future<Status> f)
+      .then([shared_stream](future<Status> f)
                 -> StatusOr<ResumableStreamImpl::UnderlyingStream> {
         Status status = f.get();
         if (!status.ok()) return status;
