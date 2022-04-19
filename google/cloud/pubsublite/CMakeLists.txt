@@ -93,8 +93,9 @@ add_library(
     internal/cloud_region.h
     internal/cloud_zone.cc
     internal/cloud_zone.h
-    internal/commit_subscriber.cc
     internal/commit_subscriber.h
+    internal/commit_subscriber_impl.cc
+    internal/commit_subscriber_impl.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
     internal/cursor_logging_decorator.cc
