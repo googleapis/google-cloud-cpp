@@ -155,6 +155,9 @@ CommitSubscriberImpl::Initializer(
         StreamingCommitCursorRequest req;
         {
           std::lock_guard<std::mutex> g{mu_};
+          // this can happen if we're initializing the first stream and haven't
+          // called `Commit` yet
+          if (!last_outstanding_commit_) return make_ready_future(true);
           *req.mutable_commit()->mutable_cursor() = *last_outstanding_commit_;
         }
         return (*shared_stream)->Write(std::move(req), grpc::WriteOptions());

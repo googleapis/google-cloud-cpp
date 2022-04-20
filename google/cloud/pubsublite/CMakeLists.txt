@@ -264,6 +264,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         # cmake-format: sort
         endpoint_test.cc
         internal/alarm_registry_impl_test.cc
+        internal/commit_subscriber_test.cc
         internal/default_routing_policy_test.cc
         internal/location_test.cc
         internal/multipartition_publisher_test.cc
