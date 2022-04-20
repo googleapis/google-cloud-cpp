@@ -160,55 +160,151 @@ TEST_F(CommitSubscriberTest, BasicInitialization) {
   EXPECT_EQ(subscriber_start_future.get(), Status());
 }
 
-TEST_F(CommitSubscriberTest, BasicInitializationAfterCommit) {
+class InitializedCommitSubscriberTest : public CommitSubscriberTest {
+ protected:
+  InitializedCommitSubscriberTest() {
+    InSequence seq;
+
+    EXPECT_CALL(resumable_stream_ref_, Start)
+        .WillOnce(Return(ByMove(start_promise_.get_future())));
+
+    promise<absl::optional<StreamingCommitCursorResponse>> read_promise_0;
+    // first `Read` response is nullopt because resumable stream in retry loop
+    EXPECT_CALL(resumable_stream_ref_, Read)
+        .WillOnce(Return(ByMove(read_promise_0.get_future())));
+
+    subscriber_start_future_ = subscriber_.Start();
+
+    EXPECT_CALL(resumable_stream_ref_,
+                Write(IsProtoEqual(GetCommitRequestFromCursor(c0_))))
+        .WillOnce(Return(ByMove(write_0_.get_future())));
+    subscriber_.Commit(c0_);
+
+    auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+    EXPECT_CALL(*underlying_stream,
+                Write(IsProtoEqual(GetInitializerCommitRequest()), _))
+        .WillOnce(Return(ByMove(make_ready_future(true))));
+    EXPECT_CALL(*underlying_stream, Read)
+        .WillOnce(Return(ByMove(make_ready_future(
+            absl::make_optional(GetInitializerCommitResponse())))));
+    EXPECT_CALL(*underlying_stream,
+                Write(IsProtoEqual(GetCommitRequestFromCursor(c0_)), _))
+        .WillOnce(Return(ByMove(make_ready_future(true))));
+    initializer_(std::move(underlying_stream));
+
+    EXPECT_CALL(resumable_stream_ref_, Read)
+        .WillOnce(Return(ByMove(read_promise_1_.get_future())));
+    read_promise_0.set_value(absl::nullopt);
+  }
+
+  promise<Status> start_promise_;
+  future<Status> subscriber_start_future_;
+  promise<absl::optional<StreamingCommitCursorResponse>> read_promise_1_;
+  Cursor c0_ = GetCursor(42);
+  promise<bool> write_0_;
+};
+
+TEST_F(InitializedCommitSubscriberTest, BasicInitializationAfterCommit) {
   InSequence seq;
-
-  promise<Status> start_promise;
-  EXPECT_CALL(resumable_stream_ref_, Start)
-      .WillOnce(Return(ByMove(start_promise.get_future())));
-
-  promise<absl::optional<StreamingCommitCursorResponse>> read_promise_0;
-  // first `Read` response is nullopt because resumable stream in retry loop
-  EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(read_promise_0.get_future())));
-
-  future<Status> subscriber_start_future = subscriber_.Start();
-
-  Cursor c = GetCursor(42);
-  promise<bool> write;
-  EXPECT_CALL(resumable_stream_ref_,
-              Write(IsProtoEqual(GetCommitRequestFromCursor(c))))
-      .WillOnce(Return(ByMove(write.get_future())));
-  subscriber_.Commit(c);
-
-  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-  EXPECT_CALL(*underlying_stream,
-              Write(IsProtoEqual(GetInitializerCommitRequest()), _))
-      .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
-      .WillOnce(Return(ByMove(make_ready_future(
-          absl::make_optional(GetInitializerCommitResponse())))));
-  EXPECT_CALL(*underlying_stream,
-              Write(IsProtoEqual(GetCommitRequestFromCursor(c)), _))
-      .WillOnce(Return(ByMove(make_ready_future(true))));
-  initializer_(std::move(underlying_stream));
-
-  promise<absl::optional<StreamingCommitCursorResponse>> read_promise_1;
-  EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(read_promise_1.get_future())));
-  read_promise_0.set_value(absl::nullopt);
 
   promise<void> shutdown;
   EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(shutdown.get_future())));
-  write.set_value(false);
+  write_0_.set_value(false);
   auto shutdown_res = subscriber_.Shutdown();
-  read_promise_1.set_value(GetCommitResponse(1));
+  read_promise_1_.set_value(GetCommitResponse(1));
   shutdown.set_value();
-  start_promise.set_value(Status());
+  start_promise_.set_value(Status());
 
   shutdown_res.get();
-  EXPECT_EQ(subscriber_start_future.get(), Status());
+  EXPECT_EQ(subscriber_start_future_.get(), Status());
+}
+
+TEST_F(InitializedCommitSubscriberTest,
+       CommitThenBasicInitializationThenCommit) {
+  InSequence seq;
+
+  promise<bool> write_1;
+  Cursor c1 = GetCursor(43);
+  subscriber_.Commit(c1);
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c1))))
+      .WillOnce(Return(ByMove(write_1.get_future())));
+  write_0_.set_value(false);
+  write_1.set_value(true);
+
+  promise<void> shutdown;
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(shutdown.get_future())));
+
+  auto shutdown_res = subscriber_.Shutdown();
+  read_promise_1_.set_value(GetCommitResponse(2));
+  shutdown.set_value();
+  start_promise_.set_value(Status());
+
+  shutdown_res.get();
+  EXPECT_EQ(subscriber_start_future_.get(), Status());
+}
+
+TEST_F(InitializedCommitSubscriberTest,
+       CommitThenBasicInitializationThenOverriddenCommit) {
+  InSequence seq;
+
+  promise<bool> write_1;
+  subscriber_.Commit(GetCursor(43));
+  Cursor c1 = GetCursor(100);
+  subscriber_.Commit(c1);
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c1))))
+      .WillOnce(Return(ByMove(write_1.get_future())));
+  write_0_.set_value(false);
+  write_1.set_value(true);
+
+  promise<void> shutdown;
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(shutdown.get_future())));
+
+  auto shutdown_res = subscriber_.Shutdown();
+  read_promise_1_.set_value(GetCommitResponse(2));
+  shutdown.set_value();
+  start_promise_.set_value(Status());
+
+  shutdown_res.get();
+  EXPECT_EQ(subscriber_start_future_.get(), Status());
+}
+
+TEST_F(InitializedCommitSubscriberTest, MultipleReads) {
+  InSequence seq;
+
+  promise<bool> write_1;
+  Cursor c1 = GetCursor(100);
+  subscriber_.Commit(c1);
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c1))))
+      .WillOnce(Return(ByMove(write_1.get_future())));
+  write_0_.set_value(false);
+  write_1.set_value(true);
+
+  promise<absl::optional<StreamingCommitCursorResponse>> read_promise_2;
+  EXPECT_CALL(resumable_stream_ref_, Read)
+      .WillOnce(Return(ByMove(read_promise_2.get_future())));
+  read_promise_1_.set_value(GetCommitResponse(1));
+
+  promise<absl::optional<StreamingCommitCursorResponse>> read_promise_3;
+  EXPECT_CALL(resumable_stream_ref_, Read)
+      .WillOnce(Return(ByMove(read_promise_3.get_future())));
+  read_promise_2.set_value(GetCommitResponse(1));
+
+  promise<void> shutdown;
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(shutdown.get_future())));
+  auto shutdown_res = subscriber_.Shutdown();
+  read_promise_3.set_value(absl::nullopt);
+  shutdown.set_value();
+  start_promise_.set_value(Status());
+
+  shutdown_res.get();
+  EXPECT_EQ(subscriber_start_future_.get(), Status());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
