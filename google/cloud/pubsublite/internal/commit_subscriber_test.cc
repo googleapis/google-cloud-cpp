@@ -72,6 +72,24 @@ StreamingCommitCursorResponse GetInitializerCommitResponse() {
   return response;
 }
 
+Cursor GetCursor(std::int64_t offset) {
+  Cursor c;
+  c.set_offset(offset);
+  return c;
+}
+
+StreamingCommitCursorRequest GetCommitRequestFromCursor(Cursor& c) {
+  StreamingCommitCursorRequest request;
+  *request.mutable_commit()->mutable_cursor() = c;
+  return request;
+}
+
+StreamingCommitCursorResponse GetCommitResponse(std::int64_t num_acks) {
+  StreamingCommitCursorResponse response;
+  response.mutable_commit()->set_acknowledged_commits(num_acks);
+  return response;
+}
+
 class CommitSubscriberTest : public ::testing::Test {
  protected:
   CommitSubscriberTest()
@@ -112,8 +130,6 @@ TEST_F(CommitSubscriberTest, BasicInitialization) {
   promise<absl::optional<StreamingCommitCursorResponse>> read_promise_0;
   // first `Read` response is nullopt because resumable stream in retry loop
   EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(
-          make_ready_future(absl::optional<StreamingCommitCursorResponse>()))))
       .WillOnce(Return(ByMove(read_promise_0.get_future())));
 
   future<Status> subscriber_start_future = subscriber_.Start();
@@ -127,11 +143,67 @@ TEST_F(CommitSubscriberTest, BasicInitialization) {
           absl::make_optional(GetInitializerCommitResponse())))));
   initializer_(std::move(underlying_stream));
 
+  promise<absl::optional<StreamingCommitCursorResponse>> read_promise_1;
+  EXPECT_CALL(resumable_stream_ref_, Read)
+      .WillOnce(Return(ByMove(read_promise_1.get_future())));
+  read_promise_0.set_value(absl::nullopt);
+
   promise<void> shutdown;
   EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(shutdown.get_future())));
   auto shutdown_res = subscriber_.Shutdown();
+  read_promise_1.set_value(GetInitializerCommitResponse());
+  shutdown.set_value();
+  start_promise.set_value(Status());
+
+  shutdown_res.get();
+  EXPECT_EQ(subscriber_start_future.get(), Status());
+}
+
+TEST_F(CommitSubscriberTest, BasicInitializationAfterCommit) {
+  InSequence seq;
+
+  promise<Status> start_promise;
+  EXPECT_CALL(resumable_stream_ref_, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  promise<absl::optional<StreamingCommitCursorResponse>> read_promise_0;
+  // first `Read` response is nullopt because resumable stream in retry loop
+  EXPECT_CALL(resumable_stream_ref_, Read)
+      .WillOnce(Return(ByMove(read_promise_0.get_future())));
+
+  future<Status> subscriber_start_future = subscriber_.Start();
+
+  Cursor c = GetCursor(42);
+  promise<bool> write;
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c))))
+      .WillOnce(Return(ByMove(write.get_future())));
+  subscriber_.Commit(c);
+
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerCommitRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerCommitResponse())))));
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c)), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  initializer_(std::move(underlying_stream));
+
+  promise<absl::optional<StreamingCommitCursorResponse>> read_promise_1;
+  EXPECT_CALL(resumable_stream_ref_, Read)
+      .WillOnce(Return(ByMove(read_promise_1.get_future())));
   read_promise_0.set_value(absl::nullopt);
+
+  promise<void> shutdown;
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(shutdown.get_future())));
+  write.set_value(false);
+  auto shutdown_res = subscriber_.Shutdown();
+  read_promise_1.set_value(GetCommitResponse(1));
   shutdown.set_value();
   start_promise.set_value(Status());
 
