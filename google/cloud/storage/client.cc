@@ -16,9 +16,11 @@
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/internal/rest_client.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/filesystem.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
 #include <openssl/md5.h>
@@ -54,6 +56,12 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
     Options const& opts) {
+  if (google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT")
+          .has_value()) {
+    return CreateDefaultInternalClient(opts,
+                                       internal::RestClient::Create(opts));
+  }
   return CreateDefaultInternalClient(opts, internal::CurlClient::Create(opts));
 }
 

@@ -14,10 +14,12 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_client.h"
+#include "google/cloud/storage/internal/rest_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
@@ -163,8 +165,15 @@ TEST_F(ClientTest, DefaultDecorators) {
       ClientImplDetails::GetRawClient(tested).get());
   ASSERT_TRUE(retry != nullptr);
 
-  auto* curl = dynamic_cast<internal::CurlClient*>(retry->client().get());
-  ASSERT_TRUE(curl != nullptr);
+  if (google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT")
+          .has_value()) {
+    auto* rest = dynamic_cast<internal::RestClient*>(retry->client().get());
+    ASSERT_TRUE(rest != nullptr);
+  } else {
+    auto* curl = dynamic_cast<internal::CurlClient*>(retry->client().get());
+    ASSERT_TRUE(curl != nullptr);
+  }
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -184,8 +193,15 @@ TEST_F(ClientTest, LoggingDecorators) {
   auto* logging = dynamic_cast<internal::LoggingClient*>(retry->client().get());
   ASSERT_TRUE(logging != nullptr);
 
-  auto* curl = dynamic_cast<internal::CurlClient*>(logging->client().get());
-  ASSERT_TRUE(curl != nullptr);
+  if (google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT")
+          .has_value()) {
+    auto* rest = dynamic_cast<internal::RestClient*>(logging->client().get());
+    ASSERT_TRUE(rest != nullptr);
+  } else {
+    auto* curl = dynamic_cast<internal::CurlClient*>(logging->client().get());
+    ASSERT_TRUE(curl != nullptr);
+  }
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"

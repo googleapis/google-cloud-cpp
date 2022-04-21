@@ -1,0 +1,13 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^(master|main|v\d+\..*)$
+name: cmake-gcs-rest-install-ci
+substitutions:
+  _BUILD_NAME: cmake-gcs-rest-install
+  _DISTRO: fedora-35
+  _TRIGGER_TYPE: ci
+tags:
+- ci
