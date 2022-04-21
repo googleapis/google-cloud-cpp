@@ -158,6 +158,8 @@ CommitSubscriberImpl::Initializer(
           // this can happen if we're initializing the first stream and haven't
           // called `Commit` yet
           if (!sending_commits_) return make_ready_future(true);
+          // we can disregard all but last outstanding commits on last stream
+          num_outstanding_commits_ = 1;
           *req.mutable_commit()->mutable_cursor() = *last_outstanding_commit_;
         }
         return (*shared_stream)->Write(std::move(req), grpc::WriteOptions());

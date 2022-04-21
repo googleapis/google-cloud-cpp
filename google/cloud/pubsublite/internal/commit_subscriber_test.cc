@@ -273,6 +273,83 @@ TEST_F(InitializedCommitSubscriberTest,
   EXPECT_EQ(subscriber_start_future_.get(), Status());
 }
 
+TEST_F(InitializedCommitSubscriberTest, RetryLoop) {
+  InSequence seq;
+
+  promise<bool> write_1;
+  Cursor c1 = GetCursor(43);
+  subscriber_.Commit(c1);
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c1))))
+      .WillOnce(Return(ByMove(write_1.get_future())));
+  write_0_.set_value(false);
+
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerCommitRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerCommitResponse())))));
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c1)), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  initializer_(std::move(underlying_stream));
+
+  write_1.set_value(false);
+
+  promise<void> shutdown;
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(shutdown.get_future())));
+
+  auto shutdown_res = subscriber_.Shutdown();
+  read_promise_1_.set_value(GetCommitResponse(1));
+  shutdown.set_value();
+  start_promise_.set_value(Status());
+
+  shutdown_res.get();
+  EXPECT_EQ(subscriber_start_future_.get(), Status());
+}
+
+TEST_F(InitializedCommitSubscriberTest, RetryLoopInvalidReadResponse) {
+  InSequence seq;
+
+  promise<bool> write_1;
+  Cursor c1 = GetCursor(43);
+  subscriber_.Commit(c1);
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c1))))
+      .WillOnce(Return(ByMove(write_1.get_future())));
+  write_0_.set_value(false);
+
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerCommitRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerCommitResponse())))));
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c1)), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  initializer_(std::move(underlying_stream));
+
+  write_1.set_value(false);
+
+  promise<void> shutdown;
+  read_promise_1_.set_value(GetCommitResponse(2));
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  auto shutdown_res = subscriber_.Shutdown();
+  start_promise_.set_value(Status());
+
+  shutdown_res.get();
+  EXPECT_EQ(subscriber_start_future_.get(),
+            Status(StatusCode::kInternal,
+                   absl::StrCat("Number commits acked: ", 2,
+                                " > num outstanding commits: ", 1)));
+}
+
 TEST_F(InitializedCommitSubscriberTest, MultipleReads) {
   InSequence seq;
 
