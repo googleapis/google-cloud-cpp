@@ -51,10 +51,10 @@ void CommitSubscriberImpl::Commit(Cursor cursor) {
          cursor.offset() <= to_be_sent_commit_->offset()) ||
         (last_outstanding_commit_ &&
          cursor.offset() <= last_outstanding_commit_->offset())) {
-      return service_composite_.Abort(
-          Status(StatusCode::kFailedPrecondition,
-                 absl::StrCat(
-                     "offset is less than or equal to previous sent offsets")));
+      return service_composite_.Abort(Status(
+          StatusCode::kFailedPrecondition,
+          absl::StrCat("offset ", cursor.offset(),
+                       " is less than or equal to previous sent offsets")));
     }
     to_be_sent_commit_ = std::move(cursor);
     if (sending_commits_) return;
@@ -92,7 +92,7 @@ void CommitSubscriberImpl::OnRead(
   if (!response) return Read();
   if (!response->has_commit()) {
     return service_composite_.Abort(Status(
-        StatusCode::kAborted,
+        StatusCode::kInternal,
         absl::StrCat("Invalid `Read` response: ", response->DebugString())));
   }
 

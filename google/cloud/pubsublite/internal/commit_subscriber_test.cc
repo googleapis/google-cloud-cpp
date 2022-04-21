@@ -175,10 +175,11 @@ class InitializedCommitSubscriberTest : public CommitSubscriberTest {
 
     subscriber_start_future_ = subscriber_.Start();
 
+    Cursor c0 = GetCursor(42);
     EXPECT_CALL(resumable_stream_ref_,
-                Write(IsProtoEqual(GetCommitRequestFromCursor(c0_))))
+                Write(IsProtoEqual(GetCommitRequestFromCursor(c0))))
         .WillOnce(Return(ByMove(write_0_.get_future())));
-    subscriber_.Commit(c0_);
+    subscriber_.Commit(c0);
 
     auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
     EXPECT_CALL(*underlying_stream,
@@ -188,7 +189,7 @@ class InitializedCommitSubscriberTest : public CommitSubscriberTest {
         .WillOnce(Return(ByMove(make_ready_future(
             absl::make_optional(GetInitializerCommitResponse())))));
     EXPECT_CALL(*underlying_stream,
-                Write(IsProtoEqual(GetCommitRequestFromCursor(c0_)), _))
+                Write(IsProtoEqual(GetCommitRequestFromCursor(c0)), _))
         .WillOnce(Return(ByMove(make_ready_future(true))));
     initializer_(std::move(underlying_stream));
 
@@ -200,7 +201,6 @@ class InitializedCommitSubscriberTest : public CommitSubscriberTest {
   promise<Status> start_promise_;
   future<Status> subscriber_start_future_;
   promise<absl::optional<StreamingCommitCursorResponse>> read_promise_1_;
-  Cursor c0_ = GetCursor(42);
   promise<bool> write_0_;
 };
 
@@ -305,6 +305,64 @@ TEST_F(InitializedCommitSubscriberTest, MultipleReads) {
 
   shutdown_res.get();
   EXPECT_EQ(subscriber_start_future_.get(), Status());
+}
+
+TEST_F(InitializedCommitSubscriberTest, InvalidCommit) {
+  InSequence seq;
+
+  Cursor c1 = GetCursor(41);
+  subscriber_.Commit(c1);
+
+  promise<void> shutdown;
+  write_0_.set_value(false);
+  read_promise_1_.set_value(GetCommitResponse(1));
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  auto shutdown_res = subscriber_.Shutdown();
+  start_promise_.set_value(Status());
+
+  shutdown_res.get();
+  EXPECT_EQ(
+      subscriber_start_future_.get(),
+      Status(StatusCode::kFailedPrecondition,
+             absl::StrCat("offset ", c1.offset(),
+                          " is less than or equal to previous sent offsets")));
+}
+
+TEST_F(InitializedCommitSubscriberTest, InvalidReadResponseInitialResponse) {
+  InSequence seq;
+
+  promise<void> shutdown;
+  write_0_.set_value(false);
+  read_promise_1_.set_value(GetInitializerCommitResponse());
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  auto shutdown_res = subscriber_.Shutdown();
+  start_promise_.set_value(Status());
+
+  shutdown_res.get();
+  EXPECT_EQ(subscriber_start_future_.get(),
+            Status(StatusCode::kInternal,
+                   absl::StrCat("Invalid `Read` response: ",
+                                GetInitializerCommitResponse().DebugString())));
+}
+
+TEST_F(InitializedCommitSubscriberTest, InvalidReadResponseTooManyAcked) {
+  InSequence seq;
+
+  promise<void> shutdown;
+  write_0_.set_value(false);
+  read_promise_1_.set_value(GetCommitResponse(2));
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  auto shutdown_res = subscriber_.Shutdown();
+  start_promise_.set_value(Status());
+
+  shutdown_res.get();
+  EXPECT_EQ(subscriber_start_future_.get(),
+            Status(StatusCode::kInternal,
+                   absl::StrCat("Number commits acked: ", 2,
+                                " > num outstanding commits: ", 1)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
