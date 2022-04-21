@@ -151,7 +151,9 @@ CommitSubscriberImpl::Initializer(
                 future<absl::optional<StreamingCommitCursorResponse>>
                     read_response) {
         auto response = read_response.get();
-        if (!response) return make_ready_future(false);
+        if (!response || !response->has_initial()) {
+          return make_ready_future(false);
+        }
         StreamingCommitCursorRequest req;
         {
           std::lock_guard<std::mutex> g{mu_};
