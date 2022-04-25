@@ -43,7 +43,9 @@ google_cloud_cpp_grpcpp_library(
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/datacatalog/v1/common.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/datacatalog/v1/data_source.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/datacatalog/v1/datacatalog.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/datacatalog/v1/dataplex_spec.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/datacatalog/v1/gcs_fileset_spec.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/datacatalog/v1/physical_schema.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/datacatalog/v1/policytagmanager.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/datacatalog/v1/policytagmanagerserialization.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/datacatalog/v1/schema.proto
