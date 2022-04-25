@@ -172,7 +172,7 @@ void MultipartitionPublisher::TryPublishMessages() {
   }
   while (true) {
     std::deque<PublishState> messages;
-    uint32_t num_partitions;
+    std::uint32_t num_partitions;
     {
       std::lock_guard<std::mutex> g{mu_};
       if (messages_.empty()) {
