@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsublite/internal/commit_subscriber_impl.h"
+#include "google/cloud/pubsublite/internal/committer_impl.h"
 #include "google/cloud/pubsublite/testing/mock_async_reader_writer.h"
 #include "google/cloud/pubsublite/testing/mock_resumable_async_reader_writer_stream.h"
 #include "google/cloud/future.h"
@@ -47,7 +47,7 @@ using ::google::cloud::pubsublite_testing::MockResumableAsyncReaderWriter;
 using AsyncReaderWriter = MockAsyncReaderWriter<StreamingCommitCursorRequest,
                                                 StreamingCommitCursorResponse>;
 
-using AsyncReadWriteStreamReturnType =
+using UnderlyingStream =
     std::unique_ptr<AsyncStreamingReadWriteRpc<StreamingCommitCursorRequest,
                                                StreamingCommitCursorResponse>>;
 
@@ -110,7 +110,7 @@ class CommitSubscriberTestScaffold : public ::testing::Test {
   StrictMock<MockResumableAsyncReaderWriter<StreamingCommitCursorRequest,
                                             StreamingCommitCursorResponse>>&
       resumable_stream_ref_;
-  CommitSubscriberImpl subscriber_;
+  CommitterImpl subscriber_;
 };
 
 TEST_F(CommitSubscriberTestScaffold, StartNotCalled) {}
@@ -281,6 +281,48 @@ TEST_F(CommitSubscriberTest, InitializationBadCommitWrite) {
   EXPECT_EQ(subscriber_start_future_.get(), status);
 }
 
+TEST_F(CommitSubscriberTest, OverrideCommitDuringInitialization) {
+  InSequence seq;
+
+  promise<bool> write_0;
+  Cursor c0 = GetCursor(42);
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c0))))
+      .WillOnce(Return(ByMove(write_0.get_future())));
+  subscriber_.Commit(c0);
+  Cursor c1 = GetCursor(43);
+  subscriber_.Commit(c1);
+
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerCommitRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerCommitResponse())))));
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetCommitRequestFromCursor(c1)), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  initializer_(std::move(underlying_stream));
+
+  promise<absl::optional<StreamingCommitCursorResponse>> read_promise_1;
+  EXPECT_CALL(resumable_stream_ref_, Read)
+      .WillOnce(Return(ByMove(read_promise_1.get_future())));
+  read_promise_0_.set_value(absl::nullopt);
+
+  promise<void> shutdown;
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(shutdown.get_future())));
+  write_0.set_value(false);
+  auto shutdown_res = subscriber_.Shutdown();
+  read_promise_1.set_value(GetCommitResponse(1));
+  shutdown.set_value();
+  start_promise_.set_value(Status());
+
+  shutdown_res.get();
+  EXPECT_EQ(subscriber_start_future_.get(), Status());
+}
+
 class InitializedCommitSubscriberTest : public CommitSubscriberTest {
  protected:
   InitializedCommitSubscriberTest() {
@@ -329,8 +371,7 @@ TEST_F(InitializedCommitSubscriberTest, BasicInitializationAfterCommit) {
   EXPECT_EQ(subscriber_start_future_.get(), Status());
 }
 
-TEST_F(InitializedCommitSubscriberTest,
-       CommitThenBasicInitializationThenCommit) {
+TEST_F(InitializedCommitSubscriberTest, CommitAfterInitialization) {
   InSequence seq;
 
   promise<bool> write_1;
@@ -355,8 +396,7 @@ TEST_F(InitializedCommitSubscriberTest,
   EXPECT_EQ(subscriber_start_future_.get(), Status());
 }
 
-TEST_F(InitializedCommitSubscriberTest,
-       CommitThenBasicInitializationThenOverriddenCommit) {
+TEST_F(InitializedCommitSubscriberTest, OverriddenCommit) {
   InSequence seq;
 
   promise<bool> write_1;

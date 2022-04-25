@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMIT_SUBSCRIBER_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMIT_SUBSCRIBER_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMITTER_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMITTER_IMPL_H
 
-#include "google/cloud/pubsublite/internal/commit_subscriber.h"
+#include "google/cloud/pubsublite/internal/committer.h"
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
 #include "google/cloud/pubsublite/internal/service_composite.h"
 #include "absl/functional/function_ref.h"
@@ -27,17 +27,17 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CommitSubscriberImpl : CommitSubscriber {
+class CommitterImpl : public Committer {
  private:
   using ResumableStream = ResumableAsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>;
-  using ResumableStreamImpl = ResumableAsyncStreamingReadWriteRpcImpl<
+  using UnderlyingStream = std::unique_ptr<AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
-      google::cloud::pubsublite::v1::StreamingCommitCursorResponse>;
+      google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>;
 
  public:
-  explicit CommitSubscriberImpl(
+  explicit CommitterImpl(
       absl::FunctionRef<std::unique_ptr<ResumableStream>(
           StreamInitializer<
               google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
@@ -65,22 +65,22 @@ class CommitSubscriberImpl : CommitSubscriber {
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>::
                       UnderlyingStream>>
-  Initializer(ResumableStreamImpl::UnderlyingStream stream);
+  Initializer(UnderlyingStream stream);
 
   google::cloud::pubsublite::v1::InitialCommitCursorRequest const
       initial_commit_request_;
+  std::unique_ptr<ResumableStream> const
+      resumable_stream_;  // ABSL_GUARDED_BY(mu_)
 
   std::mutex mu_;
 
-  std::unique_ptr<ResumableStream> const
-      resumable_stream_;  // ABSL_GUARDED_BY(mu_)
-  ServiceComposite service_composite_;
   absl::optional<google::cloud::pubsublite::v1::Cursor>
-      last_outstanding_commit_;                // ABSL_GUARDED_BY(mu_)
-  std::uint64_t num_outstanding_commits_ = 0;  // ABSL_GUARDED_BY(mu_)
+      last_sent_commit_;                      // ABSL_GUARDED_BY(mu_)
+  std::int64_t num_outstanding_commits_ = 0;  // ABSL_GUARDED_BY(mu_)
   absl::optional<google::cloud::pubsublite::v1::Cursor>
       to_be_sent_commit_;         // ABSL_GUARDED_BY(mu_)
   bool sending_commits_ = false;  // ABSL_GUARDED_BY(mu_)
+  ServiceComposite service_composite_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -88,4 +88,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMIT_SUBSCRIBER_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMITTER_IMPL_H

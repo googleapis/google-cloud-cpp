@@ -58,7 +58,7 @@ using ::google::cloud::pubsublite_testing::MockResumableAsyncReaderWriter;
 using AsyncReaderWriter =
     MockAsyncReaderWriter<PublishRequest, PublishResponse>;
 
-using AsyncReadWriteStreamReturnType = std::unique_ptr<
+using UnderlyingStream = std::unique_ptr<
     AsyncStreamingReadWriteRpc<PublishRequest, PublishResponse>>;
 
 using ResumableAsyncReadWriteStream = std::unique_ptr<

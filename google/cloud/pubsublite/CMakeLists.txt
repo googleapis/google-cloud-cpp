@@ -93,9 +93,9 @@ add_library(
     internal/cloud_region.h
     internal/cloud_zone.cc
     internal/cloud_zone.h
-    internal/commit_subscriber.h
-    internal/commit_subscriber_impl.cc
-    internal/commit_subscriber_impl.h
+    internal/committer.h
+    internal/committer_impl.cc
+    internal/committer_impl.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
     internal/cursor_logging_decorator.cc
@@ -264,7 +264,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         # cmake-format: sort
         endpoint_test.cc
         internal/alarm_registry_impl_test.cc
-        internal/commit_subscriber_test.cc
+        internal/committer_test.cc
         internal/default_routing_policy_test.cc
         internal/location_test.cc
         internal/multipartition_publisher_test.cc

@@ -67,7 +67,7 @@ using AsyncReaderWriter =
     ::google::cloud::pubsublite_testing::MockAsyncReaderWriter<FakeRequest,
                                                                FakeResponse>;
 
-using AsyncReadWriteStreamReturnType =
+using UnderlyingStream =
     std::unique_ptr<AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>;
 
 using ResumableAsyncReadWriteStream = std::unique_ptr<
@@ -81,9 +81,8 @@ const FakeRequest kBasicRequest = FakeRequest{"key0"};
 Status FailStatus() { return Status(StatusCode::kUnavailable, "Unavailable"); }
 
 StreamInitializer<FakeRequest, FakeResponse> InitializeInline() {
-  return [](AsyncReadWriteStreamReturnType stream) {
-    return make_ready_future(
-        StatusOr<AsyncReadWriteStreamReturnType>(std::move(stream)));
+  return [](UnderlyingStream stream) {
+    return make_ready_future(StatusOr<UnderlyingStream>(std::move(stream)));
   };
 }
 
@@ -107,11 +106,10 @@ class ResumableAsyncReadWriteStreamingRpcTest : public ::testing::Test {
             initializer_.AsStdFunction())} {}
 
   StrictMock<MockFunction<future<void>(std::chrono::milliseconds)>> sleeper_;
-  StrictMock<MockFunction<AsyncReadWriteStreamReturnType()>> stream_factory_;
+  StrictMock<MockFunction<UnderlyingStream()>> stream_factory_;
   StrictMock<MockFunction<std::unique_ptr<MockRetryPolicy>()>>
       retry_policy_factory_;
-  StrictMock<MockFunction<future<StatusOr<AsyncReadWriteStreamReturnType>>(
-      AsyncReadWriteStreamReturnType)>>
+  StrictMock<MockFunction<future<StatusOr<UnderlyingStream>>(UnderlyingStream)>>
       initializer_;
   std::shared_ptr<StrictMock<MockBackoffPolicy>> backoff_policy_;
   ResumableAsyncReadWriteStream stream_;
@@ -323,7 +321,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(stream1_ref, Start)
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
-  promise<StatusOr<AsyncReadWriteStreamReturnType>> initializer_promise;
+  promise<StatusOr<UnderlyingStream>> initializer_promise;
   EXPECT_CALL(initializer_, Call)
       .WillOnce(Return(ByMove(initializer_promise.get_future())));
   EXPECT_CALL(retry_policy_ref, IsExhausted).WillOnce(Return(false));
@@ -332,8 +330,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 
   auto status_future = stream_->Start();
 
-  initializer_promise.set_value(
-      StatusOr<AsyncReadWriteStreamReturnType>(FailStatus()));
+  initializer_promise.set_value(StatusOr<UnderlyingStream>(FailStatus()));
 
   EXPECT_EQ(status_future.get(), FailStatus());
   auto shutdown = stream_->Shutdown();
@@ -361,7 +358,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, InitializerFailureThenGood) {
 
   EXPECT_CALL(stream1_ref, Start)
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  promise<StatusOr<AsyncReadWriteStreamReturnType>> initializer_promise;
+  promise<StatusOr<UnderlyingStream>> initializer_promise;
   EXPECT_CALL(initializer_, Call)
       .WillOnce(Return(ByMove(initializer_promise.get_future())));
 
@@ -382,8 +379,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, InitializerFailureThenGood) {
 
   EXPECT_CALL(initializer_, Call).WillOnce(InitializeInline());
 
-  initializer_promise.set_value(
-      StatusOr<AsyncReadWriteStreamReturnType>(FailStatus()));
+  initializer_promise.set_value(StatusOr<UnderlyingStream>(FailStatus()));
 
   // start future doesn't finish until
   // permanent error or `Finish`is called
@@ -439,7 +435,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(stream2_ref, Start)
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
-  promise<StatusOr<AsyncReadWriteStreamReturnType>> initializer_promise;
+  promise<StatusOr<UnderlyingStream>> initializer_promise;
   EXPECT_CALL(initializer_, Call)
       .WillOnce(Return(ByMove(initializer_promise.get_future())));
 
@@ -465,8 +461,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(retry_policy_ref, OnFailure(FailStatus()))
       .WillOnce(Return(false));
 
-  initializer_promise.set_value(
-      StatusOr<AsyncReadWriteStreamReturnType>(FailStatus()));
+  initializer_promise.set_value(StatusOr<UnderlyingStream>(FailStatus()));
 
   EXPECT_EQ(status_future.get(), FailStatus());
   auto shutdown = stream_->Shutdown();
@@ -624,7 +619,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(stream2_ref, Start)
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
-  promise<StatusOr<AsyncReadWriteStreamReturnType>> initializer_promise;
+  promise<StatusOr<UnderlyingStream>> initializer_promise;
   EXPECT_CALL(initializer_, Call)
       .WillOnce(Return(ByMove(initializer_promise.get_future())));
 
@@ -635,8 +630,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   // `Shutdown` shouldn't finish until retry loop terminates
   EXPECT_EQ(shutdown.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
-  initializer_promise.set_value(
-      StatusOr<AsyncReadWriteStreamReturnType>(FailStatus()));
+  initializer_promise.set_value(StatusOr<UnderlyingStream>(FailStatus()));
 
   shutdown.get();
   EXPECT_THAT(status_future.get(), IsOk());

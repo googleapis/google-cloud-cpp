@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMIT_SUBSCRIBER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMIT_SUBSCRIBER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMITTER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMITTER_H
 
 #include "google/cloud/pubsublite/internal/service.h"
 #include <google/cloud/pubsublite/v1/cursor.pb.h>
@@ -23,7 +23,7 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CommitSubscriber : Service {
+class Committer : Service {
  public:
   virtual void Commit(google::cloud::pubsublite::v1::Cursor cursor) = 0;
 };
@@ -33,4 +33,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMIT_SUBSCRIBER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_COMMITTER_H

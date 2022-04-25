@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsublite/internal/commit_subscriber_impl.h"
+#include "google/cloud/pubsublite/internal/committer_impl.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 
 namespace google {
@@ -25,7 +25,7 @@ using google::cloud::pubsublite::v1::InitialCommitCursorRequest;
 using google::cloud::pubsublite::v1::StreamingCommitCursorRequest;
 using google::cloud::pubsublite::v1::StreamingCommitCursorResponse;
 
-CommitSubscriberImpl::CommitSubscriberImpl(
+CommitterImpl::CommitterImpl(
     absl::FunctionRef<std::unique_ptr<ResumableStream>(
         StreamInitializer<
             google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
@@ -34,23 +34,22 @@ CommitSubscriberImpl::CommitSubscriberImpl(
     google::cloud::pubsublite::v1::InitialCommitCursorRequest
         initial_commit_request)
     : initial_commit_request_{std::move(initial_commit_request)},
-      resumable_stream_{resumable_stream_factory(std::bind(
-          &CommitSubscriberImpl::Initializer, this, std::placeholders::_1))},
+      resumable_stream_{resumable_stream_factory(
+          std::bind(&CommitterImpl::Initializer, this, std::placeholders::_1))},
       service_composite_{resumable_stream_.get()} {}
 
-future<Status> CommitSubscriberImpl::Start() {
+future<Status> CommitterImpl::Start() {
   auto start_return = service_composite_.Start();
   Read();
   return start_return;
 }
 
-void CommitSubscriberImpl::Commit(Cursor cursor) {
+void CommitterImpl::Commit(Cursor cursor) {
   {
     std::lock_guard<std::mutex> g{mu_};
     if ((to_be_sent_commit_ &&
          cursor.offset() <= to_be_sent_commit_->offset()) ||
-        (last_outstanding_commit_ &&
-         cursor.offset() <= last_outstanding_commit_->offset())) {
+        (last_sent_commit_ && cursor.offset() <= last_sent_commit_->offset())) {
       return service_composite_.Abort(Status(
           StatusCode::kFailedPrecondition,
           absl::StrCat("offset ", cursor.offset(),
@@ -63,30 +62,29 @@ void CommitSubscriberImpl::Commit(Cursor cursor) {
   SendCommits();
 }
 
-future<void> CommitSubscriberImpl::Shutdown() {
-  return service_composite_.Shutdown();
-}
+future<void> CommitterImpl::Shutdown() { return service_composite_.Shutdown(); }
 
-void CommitSubscriberImpl::SendCommits() {
+void CommitterImpl::SendCommits() {
   StreamingCommitCursorRequest req;
   bool service_ok = service_composite_.status().ok();
-  AsyncRoot root;
-  std::lock_guard<std::mutex> g{mu_};
-  if (!to_be_sent_commit_ || !service_ok) {
-    sending_commits_ = false;
-    return;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    if (!to_be_sent_commit_ || !service_ok) {
+      sending_commits_ = false;
+      return;
+    }
+    *req.mutable_commit()->mutable_cursor() = *to_be_sent_commit_;
+    last_sent_commit_ = std::move(to_be_sent_commit_);
+    to_be_sent_commit_.reset();
+    ++num_outstanding_commits_;
   }
-  *req.mutable_commit()->mutable_cursor() = *to_be_sent_commit_;
-  last_outstanding_commit_ = *std::move(to_be_sent_commit_);
-  ++num_outstanding_commits_;
-  to_be_sent_commit_.reset();
 
-  root.get_future()
-      .then(ChainFuture(resumable_stream_->Write(std::move(req))))
-      .then([this](future<bool>) { SendCommits(); });
+  resumable_stream_->Write(std::move(req)).then([this](future<bool>) {
+    SendCommits();
+  });
 }
 
-void CommitSubscriberImpl::OnRead(
+void CommitterImpl::OnRead(
     absl::optional<StreamingCommitCursorResponse> response) {
   // optional not engaged implies that the retry loop has finished
   if (!response) return Read();
@@ -96,8 +94,7 @@ void CommitSubscriberImpl::OnRead(
         absl::StrCat("Invalid `Read` response: ", response->DebugString())));
   }
 
-  auto num_commits_acked =
-      static_cast<std::uint64_t>(response->commit().acknowledged_commits());
+  auto num_commits_acked = response->commit().acknowledged_commits();
 
   {
     std::lock_guard<std::mutex> g{mu_};
@@ -113,29 +110,21 @@ void CommitSubscriberImpl::OnRead(
   Read();
 }
 
-void CommitSubscriberImpl::Read() {
+void CommitterImpl::Read() {
   if (!service_composite_.status().ok()) return;
-  AsyncRoot root;
-  // need lock because calling `resumable_stream_->Read()`
-  std::lock_guard<std::mutex> g{mu_};
-  root.get_future()
-      .then(ChainFuture(resumable_stream_->Read()))
-      .then(
-          [this](
-              future<absl::optional<StreamingCommitCursorResponse>> response) {
-            OnRead(response.get());
-          });
+  resumable_stream_->Read().then(
+      [this](future<absl::optional<StreamingCommitCursorResponse>> response) {
+        OnRead(response.get());
+      });
 }
 
 future<StatusOr<ResumableAsyncStreamingReadWriteRpcImpl<
     StreamingCommitCursorRequest,
     StreamingCommitCursorResponse>::UnderlyingStream>>
-CommitSubscriberImpl::Initializer(
-    ResumableStreamImpl::UnderlyingStream stream) {
+CommitterImpl::Initializer(UnderlyingStream stream) {
   // By the time initializer is called, no outstanding Read() or Write()
   // futures will be outstanding.
-  auto shared_stream = std::make_shared<ResumableStreamImpl::UnderlyingStream>(
-      std::move(stream));
+  auto shared_stream = std::make_shared<UnderlyingStream>(std::move(stream));
   StreamingCommitCursorRequest commit_request;
   *commit_request.mutable_initial() = initial_commit_request_;
   return (*shared_stream)
@@ -159,10 +148,14 @@ CommitSubscriberImpl::Initializer(
           std::lock_guard<std::mutex> g{mu_};
           // this can happen if we're initializing the first stream and haven't
           // called `Commit` yet
-          if (!sending_commits_) return make_ready_future(true);
+          if (num_outstanding_commits_ == 0) return make_ready_future(true);
           // we can disregard all but last outstanding commits on last stream
           num_outstanding_commits_ = 1;
-          *req.mutable_commit()->mutable_cursor() = *last_outstanding_commit_;
+          if (to_be_sent_commit_) {
+            last_sent_commit_ = std::move(to_be_sent_commit_);
+            to_be_sent_commit_.reset();
+          }
+          *req.mutable_commit()->mutable_cursor() = *last_sent_commit_;
         }
         return (*shared_stream)->Write(std::move(req), grpc::WriteOptions());
       })
@@ -170,8 +163,7 @@ CommitSubscriberImpl::Initializer(
         if (!res.get()) return (*shared_stream)->Finish();
         return make_ready_future(Status());
       })
-      .then([shared_stream](future<Status> f)
-                -> StatusOr<ResumableStreamImpl::UnderlyingStream> {
+      .then([shared_stream](future<Status> f) -> StatusOr<UnderlyingStream> {
         Status status = f.get();
         if (!status.ok()) return status;
         return std::move(*shared_stream);
