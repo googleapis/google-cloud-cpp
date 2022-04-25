@@ -42,9 +42,11 @@ google_cloud_cpp_grpcpp_library(
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/access.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/asset.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/bigquery_export.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/connection.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/external_system.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/finding.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/folder.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/iam_binding.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/indicator.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/mitre_attack.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/mute_config.proto
