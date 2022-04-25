@@ -34,6 +34,11 @@ cc_library(
         include = [HEADER_GLOB],
         exclude = [MOCK_HEADER_GLOB],
     ),
+    # TODO(#8785): Enable on macOS and windows.
+    target_compatible_with = select({
+        "@platforms//os:macos": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
