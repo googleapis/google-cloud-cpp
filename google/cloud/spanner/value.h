@@ -228,9 +228,10 @@ class Value {
    * Constructs a non-null instance if `opt` has a value, otherwise constructs
    * a null instance with the specified type `T`.
    */
-  template <typename T>
-  explicit Value(absl::optional<T> opt)
-      : Value(PrivateConstructor{}, std::move(opt)) {}
+  template <typename T, typename... Args>
+  explicit Value(absl::optional<T> opt, Args&&... args)
+      : Value(PrivateConstructor{}, std::move(opt),
+              std::forward<Args>(args)...) {}
 
   /**
    * Constructs an instance from a Spanner ARRAY of the specified type and
@@ -244,8 +245,9 @@ class Value {
    *   vector's elements must have exactly the same field names. Any mismatch
    *   in in field names results in undefined behavior.
    */
-  template <typename T>
-  explicit Value(std::vector<T> v) : Value(PrivateConstructor{}, std::move(v)) {
+  template <typename T, typename... Args>
+  explicit Value(std::vector<T> v, Args&&... args)
+      : Value(PrivateConstructor{}, std::move(v), std::forward<Args>(args)...) {
     static_assert(!IsVector<typename std::decay<T>::type>::value,
                   "vector of vector not allowed. See value.h documentation.");
   }
@@ -353,7 +355,7 @@ class Value {
   struct IsVector<std::vector<Ts...>> : std::true_type {};
 
   // Tag-dispatch overloads to check if a C++ type matches the type specified
-  // by the given `Type` proto.
+  // by the given `Type` proto. Ignores `Type.type_annotation`.
   static bool TypeProtoIs(bool, google::spanner::v1::Type const&);
   static bool TypeProtoIs(std::int64_t, google::spanner::v1::Type const&);
   static bool TypeProtoIs(double, google::spanner::v1::Type const&);
@@ -403,7 +405,9 @@ class Value {
   };
 
   // Tag-dispatch overloads to convert a C++ type to a `Type` protobuf. The
-  // argument type is the tag, the argument value is ignored.
+  // argument type maps directly to a `TypeCode`. The argument value may be
+  // used to set the `TypeAnnotationCode`, which is necessary when a single
+  // `TypeCode` can be mapped to different SQL types depending on the dialect.
   static google::spanner::v1::Type MakeTypeProto(bool);
   static google::spanner::v1::Type MakeTypeProto(std::int64_t);
   static google::spanner::v1::Type MakeTypeProto(double);
@@ -416,15 +420,49 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(absl::CivilDay);
   static google::spanner::v1::Type MakeTypeProto(int);
   static google::spanner::v1::Type MakeTypeProto(char const*);
-  template <typename T>
-  static google::spanner::v1::Type MakeTypeProto(absl::optional<T> const&) {
-    return MakeTypeProto(T{});
+  template <typename T, typename... Args>
+  static google::spanner::v1::Type MakeTypeProto(
+      absl::optional<std::vector<T>> const& opt, Args&&... args) {
+    return MakeTypeProto(opt.has_value() ? *opt : std::vector<T>{},
+                         std::forward<Args>(args)...);
   }
-  template <typename T>
-  static google::spanner::v1::Type MakeTypeProto(std::vector<T> const& v) {
+  template <typename T, typename... Args>
+  static google::spanner::v1::Type MakeTypeProto(absl::optional<T> const& opt,
+                                                 Args&&... args) {
+    return MakeTypeProto(opt.has_value() ? *opt
+                                         : T{std::forward<Args>(args)...});
+  }
+  template <typename T, typename... Args>
+  static google::spanner::v1::Type MakeTypeProto(
+      std::vector<absl::optional<T>> const& v, Args&&... args) {
     google::spanner::v1::Type t;
     t.set_code(google::spanner::v1::TypeCode::ARRAY);
-    *t.mutable_array_element_type() = MakeTypeProto(v.empty() ? T{} : v[0]);
+    google::spanner::v1::Type* element_type = nullptr;
+    for (auto&& e : v) {
+      if (!e.has_value()) continue;
+      if (element_type == nullptr) {
+        element_type = t.mutable_array_element_type();
+        *element_type = MakeTypeProto(*e);
+      } else {
+        if (!google::protobuf::util::MessageDifferencer::Equals(
+                MakeTypeProto(*e), *element_type)) {
+          google::cloud::internal::ThrowInvalidArgument("Mismatched types");
+        }
+      }
+    }
+    if (element_type == nullptr) {
+      *t.mutable_array_element_type() =
+          MakeTypeProto(T{std::forward<Args>(args)...});
+    }
+    return t;
+  }
+  template <typename T, typename... Args>
+  static google::spanner::v1::Type MakeTypeProto(std::vector<T> const& v,
+                                                 Args&&... args) {
+    google::spanner::v1::Type t;
+    t.set_code(google::spanner::v1::TypeCode::ARRAY);
+    *t.mutable_array_element_type() =
+        MakeTypeProto(v.empty() ? T{std::forward<Args>(args)...} : v[0]);
     // Checks that vector elements have exactly the same proto Type, which
     // includes field names. This is documented UB.
     for (auto&& e : v) {
@@ -641,9 +679,10 @@ class Value {
   // apply after overload resolution, users could get weird error messages if
   // this constructor matched their arguments best.
   struct PrivateConstructor {};
-  template <typename T>
-  Value(PrivateConstructor, T&& t)
-      : type_(MakeTypeProto(t)), value_(MakeValueProto(std::forward<T>(t))) {}
+  template <typename T, typename... Args>
+  Value(PrivateConstructor, T&& t, Args&&... args)
+      : type_(MakeTypeProto(t, std::forward<Args>(args)...)),
+        value_(MakeValueProto(std::forward<T>(t))) {}
 
   Value(google::spanner::v1::Type t, google::protobuf::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
@@ -661,9 +700,9 @@ class Value {
  * the constructor, though this factory may be easier to invoke and result
  * in clearer code at the call site.
  */
-template <typename T>
-Value MakeNullValue() {
-  return Value(absl::optional<T>{});
+template <typename T, typename... Args>
+Value MakeNullValue(Args&&... args) {
+  return Value(absl::optional<T>{}, std::forward<Args>(args)...);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -242,6 +242,10 @@ TEST(Value, Equality) {
       EXPECT_NE(tc.first, tc2.second);
     }
   }
+
+  // Equality of null values is based only on the type code/annotation, not
+  // on any part of the value used to set the type code/annotation.
+  EXPECT_EQ(MakeNullValue<std::int64_t>(0), MakeNullValue<std::int64_t>(1));
 }
 
 // NOTE: This test relies on unspecified behavior about the moved-from state
@@ -1148,6 +1152,18 @@ TEST(Value, OutputStream) {
       {MakeNullValue<absl::CivilDay>(), "NULL", normal},
       {MakeNullValue<Timestamp>(), "NULL", normal},
 
+      // Tests null values with ctor args
+      {MakeNullValue<bool>(true), "NULL", normal},
+      {MakeNullValue<std::int64_t>(1), "NULL", normal},
+      {MakeNullValue<double>(1.25), "NULL", normal},
+      {MakeNullValue<std::string>("junk"), "NULL", normal},
+      {MakeNullValue<Bytes>("trash"), "NULL", normal},
+      {MakeNullValue<Json>("debris"), "NULL", normal},
+      {MakeNullValue<Numeric>(Numeric{}), "NULL", normal},
+      {MakeNullValue<absl::CivilDay>(2022, 2, 24), "NULL", normal},
+      {MakeNullValue<Timestamp>(MakeTimestamp(absl::UnixEpoch()).value()),
+       "NULL", normal},
+
       // Tests arrays
       {Value(std::vector<bool>{false, true}), "[0, 1]", normal},
       {Value(std::vector<bool>{false, true}), "[false, true]", boolalpha},
@@ -1162,8 +1178,23 @@ TEST(Value, OutputStream) {
       {Value(std::vector<absl::CivilDay>{2}), "[1970-01-01, 1970-01-01]",
        normal},
       {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
+
+      // Tests arrays with null elements
       {Value(std::vector<absl::optional<double>>{1, {}, 2}), "[1, NULL, 2]",
        normal},
+
+      // Tests (empty) arrays with ctor args
+      {Value(std::vector<bool>{}, true), "[]", boolalpha},
+      {Value(std::vector<std::int64_t>{}, 1), "[]", normal},
+      {Value(std::vector<double>{}, 1.25), "[]", normal},
+      {Value(std::vector<std::string>{}, "junk"), "[]", normal},
+      {Value(std::vector<Bytes>{}, "trash"), "[]", normal},
+      {Value(std::vector<Json>{}, "debris"), "[]", normal},
+      {Value(std::vector<Numeric>{}, Numeric{}), "[]", normal},
+      {Value(std::vector<absl::CivilDay>{}, 2022, 2, 24), "[]", normal},
+      {Value(std::vector<Timestamp>{},
+             MakeTimestamp(absl::UnixEpoch()).value()),
+       "[]", normal},
 
       // Tests null arrays
       {MakeNullValue<std::vector<bool>>(), "NULL", normal},
@@ -1175,6 +1206,19 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::vector<Numeric>>(), "NULL", normal},
       {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", normal},
       {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
+
+      // Tests null arrays with ctor args
+      {MakeNullValue<std::vector<bool>>(true), "NULL", normal},
+      {MakeNullValue<std::vector<std::int64_t>>(1), "NULL", normal},
+      {MakeNullValue<std::vector<double>>(1.25), "NULL", normal},
+      {MakeNullValue<std::vector<std::string>>("junk"), "NULL", normal},
+      {MakeNullValue<std::vector<Bytes>>("trash"), "NULL", normal},
+      {MakeNullValue<std::vector<Json>>("debris"), "NULL", normal},
+      {MakeNullValue<std::vector<Numeric>>(Numeric{}), "NULL", normal},
+      {MakeNullValue<std::vector<absl::CivilDay>>(2022, 2, 24), "NULL", normal},
+      {MakeNullValue<std::vector<Timestamp>>(
+           MakeTimestamp(absl::UnixEpoch()).value()),
+       "NULL", normal},
 
       // Tests structs
       {Value(std::make_tuple(true, 123)), "(1, 123)", normal},
