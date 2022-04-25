@@ -14,7 +14,7 @@
 # limitations under the License.
 # ~~~
 
-# TODO(8785): Enable on macOS.
+# TODO(#8785): Enable on macOS.
 if (APPLE)
     message(
         WARNING
