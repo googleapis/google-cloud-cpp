@@ -86,6 +86,31 @@ class DefaultStorageTransferServiceConnectionIdempotencyPolicy
       google::storagetransfer::v1::RunTransferJobRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
+
+  Idempotency CreateAgentPool(
+      google::storagetransfer::v1::CreateAgentPoolRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UpdateAgentPool(
+      google::storagetransfer::v1::UpdateAgentPoolRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency GetAgentPool(
+      google::storagetransfer::v1::GetAgentPoolRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListAgentPools(
+      google::storagetransfer::v1::ListAgentPoolsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency DeleteAgentPool(
+      google::storagetransfer::v1::DeleteAgentPoolRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
 };
 }  // namespace
 

@@ -104,7 +104,7 @@ class PolicyTagManagerClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   /// [google.cloud.datacatalog.v1.CreateTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L303}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L305}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -119,14 +119,14 @@ class PolicyTagManagerClient {
   /// The taxonomy is initially empty, that is, it doesn't contain policy tags.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::CreateTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L303}
+  /// @googleapis_link{google::cloud::datacatalog::v1::CreateTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L305}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   /// [google.cloud.datacatalog.v1.CreateTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L303}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L305}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -145,7 +145,7 @@ class PolicyTagManagerClient {
   ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L318}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L320}
   ///
   Status DeleteTaxonomy(std::string const& name, Options opts = {});
 
@@ -155,12 +155,12 @@ class PolicyTagManagerClient {
   /// BigQuery columns.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L318}
+  /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L320}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L318}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L320}
   ///
   Status DeleteTaxonomy(
       google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request,
@@ -179,7 +179,7 @@ class PolicyTagManagerClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L332}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L334}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -192,14 +192,14 @@ class PolicyTagManagerClient {
   /// description, and activated policy types.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L332}
+  /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L334}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L332}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L334}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -219,7 +219,7 @@ class PolicyTagManagerClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   /// [google.cloud.datacatalog.v1.ListTaxonomiesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L347}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L349}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -231,14 +231,14 @@ class PolicyTagManagerClient {
   /// have a permission to view.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ListTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L347}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ListTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L349}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   /// [google.cloud.datacatalog.v1.ListTaxonomiesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L347}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L349}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -256,7 +256,7 @@ class PolicyTagManagerClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   /// [google.cloud.datacatalog.v1.GetTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L380}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L382}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -267,14 +267,14 @@ class PolicyTagManagerClient {
   /// Gets a taxonomy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::GetTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L380}
+  /// @googleapis_link{google::cloud::datacatalog::v1::GetTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L382}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   /// [google.cloud.datacatalog.v1.GetTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L380}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L382}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -291,12 +291,12 @@ class PolicyTagManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   /// [google.cloud.datacatalog.v1.CreatePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L392}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L394}
   /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
       std::string const& parent,
@@ -307,16 +307,16 @@ class PolicyTagManagerClient {
   /// Creates a policy tag in a taxonomy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::CreatePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L392}
+  /// @googleapis_link{google::cloud::datacatalog::v1::CreatePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L394}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   /// [google.cloud.datacatalog.v1.CreatePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L392}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L394}
   /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
       google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request,
@@ -336,7 +336,7 @@ class PolicyTagManagerClient {
   ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeletePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L407}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L409}
   ///
   Status DeletePolicyTag(std::string const& name, Options opts = {});
 
@@ -349,12 +349,12 @@ class PolicyTagManagerClient {
   ///   descendants
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::DeletePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L407}
+  /// @googleapis_link{google::cloud::datacatalog::v1::DeletePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L409}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeletePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L407}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L409}
   ///
   Status DeletePolicyTag(
       google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request,
@@ -370,12 +370,12 @@ class PolicyTagManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   /// [google.cloud.datacatalog.v1.UpdatePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L421}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L423}
   /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
       google::cloud::datacatalog::v1::PolicyTag const& policy_tag,
@@ -386,16 +386,16 @@ class PolicyTagManagerClient {
   /// name, description, and parent policy tag.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::UpdatePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L421}
+  /// @googleapis_link{google::cloud::datacatalog::v1::UpdatePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L423}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   /// [google.cloud.datacatalog.v1.UpdatePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L421}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L423}
   /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
       google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request,
@@ -409,12 +409,12 @@ class PolicyTagManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   /// [google.cloud.datacatalog.v1.ListPolicyTagsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L437}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L439}
   /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   StreamRange<google::cloud::datacatalog::v1::PolicyTag> ListPolicyTags(
       std::string const& parent, Options opts = {});
@@ -423,16 +423,16 @@ class PolicyTagManagerClient {
   /// Lists all policy tags in a taxonomy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ListPolicyTagsRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L437}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ListPolicyTagsRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L439}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   /// [google.cloud.datacatalog.v1.ListPolicyTagsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L437}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L439}
   /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   StreamRange<google::cloud::datacatalog::v1::PolicyTag> ListPolicyTags(
       google::cloud::datacatalog::v1::ListPolicyTagsRequest request,
@@ -445,12 +445,12 @@ class PolicyTagManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   /// [google.cloud.datacatalog.v1.GetPolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L471}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L473}
   /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
       std::string const& name, Options opts = {});
@@ -459,16 +459,16 @@ class PolicyTagManagerClient {
   /// Gets a policy tag.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::GetPolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L471}
+  /// @googleapis_link{google::cloud::datacatalog::v1::GetPolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L473}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   /// [google.cloud.datacatalog.v1.GetPolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L471}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L473}
   /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L264}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
       google::cloud::datacatalog::v1::GetPolicyTagRequest const& request,
@@ -478,16 +478,16 @@ class PolicyTagManagerClient {
   /// Gets the IAM policy for a policy tag or a taxonomy.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
@@ -496,16 +496,16 @@ class PolicyTagManagerClient {
   /// Sets the IAM policy for a policy tag or a taxonomy.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -515,16 +515,16 @@ class PolicyTagManagerClient {
   /// taxonomy.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
   /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,

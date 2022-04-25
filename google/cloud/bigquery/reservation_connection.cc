@@ -156,6 +156,12 @@ ReservationServiceConnection::MoveAssignment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceConnection::UpdateAssignment(
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceConnection::GetBiReservation(
     google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&) {

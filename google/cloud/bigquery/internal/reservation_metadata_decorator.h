@@ -141,6 +141,12 @@ class ReservationServiceMetadata : public ReservationServiceStub {
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
           request) override;
 
+  StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+  UpdateAssignment(
+      grpc::ClientContext& context,
+      google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+          request) override;
+
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   GetBiReservation(
       grpc::ClientContext& context,
