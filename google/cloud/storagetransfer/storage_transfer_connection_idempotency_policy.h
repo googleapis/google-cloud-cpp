@@ -64,6 +64,21 @@ class StorageTransferServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency RunTransferJob(
       google::storagetransfer::v1::RunTransferJobRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency CreateAgentPool(
+      google::storagetransfer::v1::CreateAgentPoolRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency UpdateAgentPool(
+      google::storagetransfer::v1::UpdateAgentPoolRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency GetAgentPool(
+      google::storagetransfer::v1::GetAgentPoolRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency ListAgentPools(
+      google::storagetransfer::v1::ListAgentPoolsRequest request) = 0;
+
+  virtual google::cloud::Idempotency DeleteAgentPool(
+      google::storagetransfer::v1::DeleteAgentPoolRequest const& request) = 0;
 };
 
 std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy>

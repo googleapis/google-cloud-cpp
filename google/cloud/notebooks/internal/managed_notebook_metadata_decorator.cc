@@ -113,6 +113,15 @@ ManagedNotebookServiceMetadata::AsyncReportRuntimeEvent(
   return child_->AsyncReportRuntimeEvent(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+ManagedNotebookServiceMetadata::RefreshRuntimeTokenInternal(
+    grpc::ClientContext& context,
+    google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->RefreshRuntimeTokenInternal(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

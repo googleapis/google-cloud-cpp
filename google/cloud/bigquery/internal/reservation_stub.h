@@ -142,6 +142,12 @@ class ReservationServiceStub {
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+  UpdateAssignment(
+      grpc::ClientContext& context,
+      google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   GetBiReservation(
       grpc::ClientContext& context,
@@ -266,6 +272,12 @@ class DefaultReservationServiceStub : public ReservationServiceStub {
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
       grpc::ClientContext& client_context,
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
+          request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+  UpdateAssignment(
+      grpc::ClientContext& client_context,
+      google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>

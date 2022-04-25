@@ -281,6 +281,20 @@ DefaultReservationServiceStub::MoveAssignment(
   return response;
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+DefaultReservationServiceStub::UpdateAssignment(
+    grpc::ClientContext& client_context,
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+        request) {
+  google::cloud::bigquery::reservation::v1::Assignment response;
+  auto status =
+      grpc_stub_->UpdateAssignment(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 DefaultReservationServiceStub::GetBiReservation(
     grpc::ClientContext& client_context,

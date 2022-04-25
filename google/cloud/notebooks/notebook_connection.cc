@@ -104,6 +104,12 @@ NotebookServiceConnection::SetInstanceLabels(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+NotebookServiceConnection::UpdateInstanceMetadataItems(
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceConnection::DeleteInstance(
     google::cloud::notebooks::v1::DeleteInstanceRequest const&) {

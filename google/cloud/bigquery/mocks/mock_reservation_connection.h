@@ -154,6 +154,13 @@ class MockReservationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::reservation::v1::Assignment>,
+      UpdateAssignment,
+      (google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>,
       GetBiReservation,
       (google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&

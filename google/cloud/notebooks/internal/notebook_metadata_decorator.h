@@ -87,6 +87,12 @@ class NotebookServiceMetadata : public NotebookServiceStub {
       google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request)
       override;
 
+  StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+  UpdateInstanceMetadataItems(
+      grpc::ClientContext& context,
+      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

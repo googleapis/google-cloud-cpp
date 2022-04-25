@@ -55,6 +55,12 @@ class PublisherConnection {
   PublishChannelConnectionEvents(
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+  PublishEvents(
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+          request);
 };
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(

@@ -84,6 +84,37 @@ StorageTransferServiceConnection::RunTransferJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnection::CreateAgentPool(
+    google::storagetransfer::v1::CreateAgentPoolRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnection::UpdateAgentPool(
+    google::storagetransfer::v1::UpdateAgentPoolRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnection::GetAgentPool(
+    google::storagetransfer::v1::GetAgentPoolRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnection::ListAgentPools(
+    google::storagetransfer::v1::
+        ListAgentPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::storagetransfer::v1::AgentPool>>();
+}
+
+Status StorageTransferServiceConnection::DeleteAgentPool(
+    google::storagetransfer::v1::DeleteAgentPoolRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<StorageTransferServiceConnection>
 MakeStorageTransferServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

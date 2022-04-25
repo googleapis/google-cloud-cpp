@@ -99,7 +99,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.ListRuntimesRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L157}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L168}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -110,14 +110,14 @@ class ManagedNotebookServiceClient {
   /// Lists Runtimes in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::notebooks::v1::ListRuntimesRequest,google/cloud/notebooks/v1/managed_service.proto#L157}
+  /// @googleapis_link{google::cloud::notebooks::v1::ListRuntimesRequest,google/cloud/notebooks/v1/managed_service.proto#L168}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.ListRuntimesRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L157}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L168}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -137,7 +137,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.GetRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L191}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L202}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -149,14 +149,14 @@ class ManagedNotebookServiceClient {
   /// rather than zonal.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::notebooks::v1::GetRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L191}
+  /// @googleapis_link{google::cloud::notebooks::v1::GetRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L202}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.GetRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L191}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L202}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -177,7 +177,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.CreateRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L203}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L214}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -189,14 +189,14 @@ class ManagedNotebookServiceClient {
   /// Creates a new Runtime in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::notebooks::v1::CreateRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L203}
+  /// @googleapis_link{google::cloud::notebooks::v1::CreateRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L214}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.CreateRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L203}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L214}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -212,12 +212,12 @@ class ManagedNotebookServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::notebooks::v1::OperationMetadata,google/cloud/notebooks/v1/service.proto#L400}
+  /// @googleapis_link{google::cloud::notebooks::v1::OperationMetadata,google/cloud/notebooks/v1/service.proto#L408}
   ///
   /// [google.cloud.notebooks.v1.DeleteRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L221}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L235}
   /// [google.cloud.notebooks.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L400}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L408}
   ///
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteRuntime(std::string const& name, Options opts = {});
@@ -226,16 +226,16 @@ class ManagedNotebookServiceClient {
   /// Deletes a single Runtime.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::notebooks::v1::DeleteRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L221}
+  /// @googleapis_link{google::cloud::notebooks::v1::DeleteRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L235}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::notebooks::v1::OperationMetadata,google/cloud/notebooks/v1/service.proto#L400}
+  /// @googleapis_link{google::cloud::notebooks::v1::OperationMetadata,google/cloud/notebooks/v1/service.proto#L408}
   ///
   /// [google.cloud.notebooks.v1.DeleteRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L221}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L235}
   /// [google.cloud.notebooks.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L400}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L408}
   ///
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteRuntime(
@@ -257,7 +257,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.StartRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L233}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L250}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -272,14 +272,14 @@ class ManagedNotebookServiceClient {
   /// https://cloud.google.com/compute/docs/instances/suspend-resume-instance
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::notebooks::v1::StartRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L233}
+  /// @googleapis_link{google::cloud::notebooks::v1::StartRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L250}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.StartRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L233}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L250}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -302,7 +302,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.StopRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L240}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L260}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -317,14 +317,14 @@ class ManagedNotebookServiceClient {
   /// https://cloud.google.com/compute/docs/instances/suspend-resume-instance
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::notebooks::v1::StopRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L240}
+  /// @googleapis_link{google::cloud::notebooks::v1::StopRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L260}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.StopRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L240}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L260}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -343,7 +343,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.SwitchRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L247}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L270}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -354,14 +354,14 @@ class ManagedNotebookServiceClient {
   /// Switch a Managed Notebook Runtime.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::notebooks::v1::SwitchRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L247}
+  /// @googleapis_link{google::cloud::notebooks::v1::SwitchRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L270}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.SwitchRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L247}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L270}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -380,7 +380,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.ResetRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L260}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L286}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -391,14 +391,14 @@ class ManagedNotebookServiceClient {
   /// Resets a Managed Notebook Runtime.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::notebooks::v1::ResetRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L260}
+  /// @googleapis_link{google::cloud::notebooks::v1::ResetRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L286}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.ResetRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L260}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L286}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -417,7 +417,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.ReportRuntimeEventRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L267}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L296}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -428,19 +428,63 @@ class ManagedNotebookServiceClient {
   /// Report and process a runtime event.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::notebooks::v1::ReportRuntimeEventRequest,google/cloud/notebooks/v1/managed_service.proto#L267}
+  /// @googleapis_link{google::cloud::notebooks::v1::ReportRuntimeEventRequest,google/cloud/notebooks/v1/managed_service.proto#L296}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   /// [google.cloud.notebooks.v1.ReportRuntimeEventRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L267}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L296}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> ReportRuntimeEvent(
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Gets an access token for the consumer service account that the customer
+  /// attached to the runtime. Only accessible from the tenant instance.
+  ///
+  /// @param name  Required. Format:
+  ///  `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`
+  /// @param vm_id  Required. The VM hardware token for authenticating the VM.
+  ///  https://cloud.google.com/compute/docs/instances/verifying-instance-identity
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse,google/cloud/notebooks/v1/managed_service.proto#L331}
+  ///
+  /// [google.cloud.notebooks.v1.RefreshRuntimeTokenInternalRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L315}
+  /// [google.cloud.notebooks.v1.RefreshRuntimeTokenInternalResponse]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L331}
+  ///
+  StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+  RefreshRuntimeTokenInternal(std::string const& name, std::string const& vm_id,
+                              Options opts = {});
+
+  ///
+  /// Gets an access token for the consumer service account that the customer
+  /// attached to the runtime. Only accessible from the tenant instance.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest,google/cloud/notebooks/v1/managed_service.proto#L315}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse,google/cloud/notebooks/v1/managed_service.proto#L331}
+  ///
+  /// [google.cloud.notebooks.v1.RefreshRuntimeTokenInternalRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L315}
+  /// [google.cloud.notebooks.v1.RefreshRuntimeTokenInternalResponse]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L331}
+  ///
+  StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+  RefreshRuntimeTokenInternal(
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+          request,
       Options opts = {});
 
  private:

@@ -134,6 +134,15 @@ NotebookServiceClient::SetInstanceLabels(
   return connection_->SetInstanceLabels(request);
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+NotebookServiceClient::UpdateInstanceMetadataItems(
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstanceMetadataItems(request);
+}
+
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceClient::DeleteInstance(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

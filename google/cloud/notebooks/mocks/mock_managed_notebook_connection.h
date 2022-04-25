@@ -76,6 +76,14 @@ class MockManagedNotebookServiceConnection
       ReportRuntimeEvent,
       (google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>,
+      RefreshRuntimeTokenInternal,
+      (google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

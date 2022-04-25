@@ -41,6 +41,16 @@ PublisherAuth::PublishChannelConnectionEvents(
   return child_->PublishChannelConnectionEvents(context, request);
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+PublisherAuth::PublishEvents(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PublishEvents(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
 }  // namespace cloud

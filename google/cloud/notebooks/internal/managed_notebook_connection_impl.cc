@@ -290,6 +290,21 @@ ManagedNotebookServiceConnectionImpl::ReportRuntimeEvent(
       __func__);
 }
 
+StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+ManagedNotebookServiceConnectionImpl::RefreshRuntimeTokenInternal(
+    google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RefreshRuntimeTokenInternal(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::notebooks::v1::
+                 RefreshRuntimeTokenInternalRequest const& request) {
+        return stub_->RefreshRuntimeTokenInternal(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
 }  // namespace cloud

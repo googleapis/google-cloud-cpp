@@ -41,6 +41,12 @@ PublisherConnection::PublishChannelConnectionEvents(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+PublisherConnection::PublishEvents(
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<PublisherConnection> MakePublisherConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  PublisherPolicyOptionList>(options, __func__);

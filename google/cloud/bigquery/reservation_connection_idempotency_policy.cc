@@ -151,6 +151,12 @@ class DefaultReservationServiceConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency UpdateAssignment(
+      google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency GetBiReservation(
       google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&)
       override {

@@ -86,6 +86,14 @@ class MockNotebookServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<
+          google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>,
+      UpdateInstanceMetadataItems,
+      (google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
       DeleteInstance,
       (google::cloud::notebooks::v1::DeleteInstanceRequest const& request),

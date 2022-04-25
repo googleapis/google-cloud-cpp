@@ -85,6 +85,11 @@ class ManagedNotebookServiceConnectionImpl
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
       override;
 
+  StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+  RefreshRuntimeTokenInternal(
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+          request) override;
+
  private:
   std::unique_ptr<notebooks::ManagedNotebookServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

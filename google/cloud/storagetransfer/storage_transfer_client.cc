@@ -96,6 +96,94 @@ StorageTransferServiceClient::RunTransferJob(
   return connection_->RunTransferJob(request);
 }
 
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceClient::CreateAgentPool(
+    std::string const& project_id,
+    google::storagetransfer::v1::AgentPool const& agent_pool,
+    std::string const& agent_pool_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storagetransfer::v1::CreateAgentPoolRequest request;
+  request.set_project_id(project_id);
+  *request.mutable_agent_pool() = agent_pool;
+  request.set_agent_pool_id(agent_pool_id);
+  return connection_->CreateAgentPool(request);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceClient::CreateAgentPool(
+    google::storagetransfer::v1::CreateAgentPoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAgentPool(request);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceClient::UpdateAgentPool(
+    google::storagetransfer::v1::AgentPool const& agent_pool,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storagetransfer::v1::UpdateAgentPoolRequest request;
+  *request.mutable_agent_pool() = agent_pool;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAgentPool(request);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceClient::UpdateAgentPool(
+    google::storagetransfer::v1::UpdateAgentPoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAgentPool(request);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceClient::GetAgentPool(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storagetransfer::v1::GetAgentPoolRequest request;
+  request.set_name(name);
+  return connection_->GetAgentPool(request);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceClient::GetAgentPool(
+    google::storagetransfer::v1::GetAgentPoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAgentPool(request);
+}
+
+StreamRange<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceClient::ListAgentPools(std::string const& project_id,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storagetransfer::v1::ListAgentPoolsRequest request;
+  request.set_project_id(project_id);
+  return connection_->ListAgentPools(request);
+}
+
+StreamRange<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceClient::ListAgentPools(
+    google::storagetransfer::v1::ListAgentPoolsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAgentPools(std::move(request));
+}
+
+Status StorageTransferServiceClient::DeleteAgentPool(std::string const& name,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storagetransfer::v1::DeleteAgentPoolRequest request;
+  request.set_name(name);
+  return connection_->DeleteAgentPool(request);
+}
+
+Status StorageTransferServiceClient::DeleteAgentPool(
+    google::storagetransfer::v1::DeleteAgentPoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAgentPool(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer
 }  // namespace cloud

@@ -109,22 +109,43 @@ class PublisherClient {
   /// Publish events to a ChannelConnection in a partner's project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest,google/cloud/eventarc/publishing/v1/publisher.proto#L69}
+  /// @googleapis_link{google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest,google/cloud/eventarc/publishing/v1/publisher.proto#L77}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse,google/cloud/eventarc/publishing/v1/publisher.proto#L79}
+  /// @googleapis_link{google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse,google/cloud/eventarc/publishing/v1/publisher.proto#L87}
   ///
   /// [google.cloud.eventarc.publishing.v1.PublishChannelConnectionEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L69}
+  /// @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L77}
   /// [google.cloud.eventarc.publishing.v1.PublishChannelConnectionEventsResponse]:
-  /// @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L79}
+  /// @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L87}
   ///
   StatusOr<google::cloud::eventarc::publishing::v1::
                PublishChannelConnectionEventsResponse>
   PublishChannelConnectionEvents(
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Publish events to a subscriber's channel.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::eventarc::publishing::v1::PublishEventsRequest,google/cloud/eventarc/publishing/v1/publisher.proto#L92}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::publishing::v1::PublishEventsResponse,google/cloud/eventarc/publishing/v1/publisher.proto#L102}
+  ///
+  /// [google.cloud.eventarc.publishing.v1.PublishEventsRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L92}
+  /// [google.cloud.eventarc.publishing.v1.PublishEventsResponse]:
+  /// @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L102}
+  ///
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+  PublishEvents(
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+          request,
       Options opts = {});
 
  private:

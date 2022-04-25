@@ -45,6 +45,12 @@ class PublisherLogging : public PublisherStub {
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request) override;
 
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+  PublishEvents(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+          request) override;
+
  private:
   std::shared_ptr<PublisherStub> child_;
   TracingOptions tracing_options_;

@@ -171,6 +171,20 @@ NotebookServiceLogging::AsyncSetInstanceLabels(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+NotebookServiceLogging::UpdateInstanceMetadataItems(
+    grpc::ClientContext& context,
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::notebooks::v1::
+                 UpdateInstanceMetadataItemsRequest const& request) {
+        return child_->UpdateInstanceMetadataItems(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceLogging::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,

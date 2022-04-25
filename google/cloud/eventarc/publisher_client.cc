@@ -44,6 +44,15 @@ PublisherClient::PublishChannelConnectionEvents(
   return connection_->PublishChannelConnectionEvents(request);
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+PublisherClient::PublishEvents(
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PublishEvents(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
 }  // namespace cloud

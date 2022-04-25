@@ -108,14 +108,14 @@ class PolicyTagManagerSerializationClient {
   /// - Updates policy tags with valid resources names accordingly.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ReplaceTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L132}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ReplaceTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L131}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   /// [google.cloud.datacatalog.v1.ReplaceTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L132}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L131}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -134,16 +134,16 @@ class PolicyTagManagerSerializationClient {
   /// using nested protocol buffer structures.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L147}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L146}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L186}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L185}
   ///
   /// [google.cloud.datacatalog.v1.ImportTaxonomiesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L147}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L146}
   /// [google.cloud.datacatalog.v1.ImportTaxonomiesResponse]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L186}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L185}
   ///
   StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
   ImportTaxonomies(
@@ -159,16 +159,16 @@ class PolicyTagManagerSerializationClient {
   /// policy tags that can be used as input for `ImportTaxonomies` calls.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L193}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L192}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L220}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L219}
   ///
   /// [google.cloud.datacatalog.v1.ExportTaxonomiesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L193}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L192}
   /// [google.cloud.datacatalog.v1.ExportTaxonomiesResponse]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L220}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L219}
   ///
   StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
   ExportTaxonomies(

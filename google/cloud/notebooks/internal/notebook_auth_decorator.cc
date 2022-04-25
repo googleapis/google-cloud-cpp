@@ -188,6 +188,16 @@ NotebookServiceAuth::AsyncSetInstanceLabels(
       });
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+NotebookServiceAuth::UpdateInstanceMetadataItems(
+    grpc::ClientContext& context,
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstanceMetadataItems(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,

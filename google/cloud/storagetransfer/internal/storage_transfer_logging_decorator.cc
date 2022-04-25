@@ -140,6 +140,69 @@ StorageTransferServiceLogging::AsyncRunTransferJob(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceLogging::CreateAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
+        return child_->CreateAgentPool(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceLogging::UpdateAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
+        return child_->UpdateAgentPool(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceLogging::GetAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::GetAgentPoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storagetransfer::v1::GetAgentPoolRequest const& request) {
+        return child_->GetAgentPool(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
+StorageTransferServiceLogging::ListAgentPools(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
+        return child_->ListAgentPools(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status StorageTransferServiceLogging::DeleteAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
+        return child_->DeleteAgentPool(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -92,6 +92,12 @@ class DefaultNotebookServiceConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency UpdateInstanceMetadataItems(
+      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency DeleteInstance(
       google::cloud::notebooks::v1::DeleteInstanceRequest const&) override {
     return Idempotency::kNonIdempotent;

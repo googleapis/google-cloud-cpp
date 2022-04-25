@@ -196,6 +196,15 @@ ReservationServiceMetadata::MoveAssignment(
   return child_->MoveAssignment(context, request);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceMetadata::UpdateAssignment(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+        request) {
+  SetMetadata(context, "assignment.name=" + request.assignment().name());
+  return child_->UpdateAssignment(context, request);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceMetadata::GetBiReservation(
     grpc::ClientContext& context,

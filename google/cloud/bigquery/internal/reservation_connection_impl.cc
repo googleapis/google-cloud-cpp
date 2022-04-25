@@ -409,6 +409,21 @@ ReservationServiceConnectionImpl::MoveAssignment(
       request, __func__);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceConnectionImpl::UpdateAssignment(
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateAssignment(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::bigquery::reservation::v1::
+                 UpdateAssignmentRequest const& request) {
+        return stub_->UpdateAssignment(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceConnectionImpl::GetBiReservation(
     google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&

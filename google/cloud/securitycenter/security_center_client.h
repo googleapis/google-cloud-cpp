@@ -93,18 +93,18 @@ class SecurityCenterClient {
   /// matched by the filter will be muted after the LRO is done.
   ///
   /// @param parent  Required. The parent, at which bulk action needs to be
-  /// applied. Its format
-  ///  is "organizations/[organization_id]", "folders/[folder_id]",
+  /// applied. Its format is
+  ///  "organizations/[organization_id]", "folders/[folder_id]",
   ///  "projects/[project_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BulkMuteFindingsResponse,google/cloud/securitycenter/v1/securitycenter_service.proto#L591}
+  /// @googleapis_link{google::cloud::securitycenter::v1::BulkMuteFindingsResponse,google/cloud/securitycenter/v1/securitycenter_service.proto#L607}
   ///
   /// [google.cloud.securitycenter.v1.BulkMuteFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L554}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L568}
   /// [google.cloud.securitycenter.v1.BulkMuteFindingsResponse]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L591}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L607}
   ///
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
   BulkMuteFindings(std::string const& parent, Options opts = {});
@@ -115,16 +115,16 @@ class SecurityCenterClient {
   /// matched by the filter will be muted after the LRO is done.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::BulkMuteFindingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L554}
+  /// @googleapis_link{google::cloud::securitycenter::v1::BulkMuteFindingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L568}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BulkMuteFindingsResponse,google/cloud/securitycenter/v1/securitycenter_service.proto#L591}
+  /// @googleapis_link{google::cloud::securitycenter::v1::BulkMuteFindingsResponse,google/cloud/securitycenter/v1/securitycenter_service.proto#L607}
   ///
   /// [google.cloud.securitycenter.v1.BulkMuteFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L554}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L568}
   /// [google.cloud.securitycenter.v1.BulkMuteFindingsResponse]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L591}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L607}
   ///
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
   BulkMuteFindings(
@@ -138,15 +138,15 @@ class SecurityCenterClient {
   /// format should be
   ///  "organizations/[organization_id]".
   /// @param source  Required. The Source being created, only the display_name
-  /// and description
-  ///  will be used. All other fields will be ignored.
+  /// and description will be
+  ///  used. All other fields will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.CreateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L661}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L677}
   /// [google.cloud.securitycenter.v1.Source]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
@@ -159,14 +159,14 @@ class SecurityCenterClient {
   /// Creates a source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateSourceRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L661}
+  /// @googleapis_link{google::cloud::securitycenter::v1::CreateSourceRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L677}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.CreateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L661}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L677}
   /// [google.cloud.securitycenter.v1.Source]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
@@ -186,17 +186,17 @@ class SecurityCenterClient {
   ///  It must be alphanumeric and less than or equal to 32 characters and
   ///  greater than 0 characters in length.
   /// @param finding  Required. The Finding being created. The name and
-  /// security_marks will be
-  ///  ignored as they are both output only fields on this resource.
+  /// security_marks will be ignored as
+  ///  they are both output only fields on this resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   /// [google.cloud.securitycenter.v1.CreateFindingRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L594}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L612}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> CreateFinding(
       std::string const& parent, std::string const& finding_id,
@@ -208,16 +208,16 @@ class SecurityCenterClient {
   /// creation to succeed.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateFindingRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L594}
+  /// @googleapis_link{google::cloud::securitycenter::v1::CreateFindingRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L612}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   /// [google.cloud.securitycenter.v1.CreateFindingRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L594}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L612}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> CreateFinding(
       google::cloud::securitycenter::v1::CreateFindingRequest const& request,
@@ -237,7 +237,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L615}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L633}
   /// [google.cloud.securitycenter.v1.MuteConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
@@ -265,7 +265,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L615}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L633}
   /// [google.cloud.securitycenter.v1.MuteConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
@@ -278,14 +278,14 @@ class SecurityCenterClient {
   /// Creates a mute config.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L615}
+  /// @googleapis_link{google::cloud::securitycenter::v1::CreateMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L633}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L615}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L633}
   /// [google.cloud.securitycenter.v1.MuteConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
@@ -297,23 +297,22 @@ class SecurityCenterClient {
   /// Creates a notification config.
   ///
   /// @param parent  Required. Resource name of the new notification config's
-  /// parent. Its format
-  ///  is "organizations/[organization_id]".
+  /// parent. Its format is
+  ///  "organizations/[organization_id]".
   /// @param config_id  Required.
   ///  Unique identifier provided by the client within the parent scope.
   ///  It must be between 1 and 128 characters, and contains alphanumeric
   ///  characters, underscores or hyphens only.
   /// @param notification_config  Required. The notification config being
-  /// created. The name and the service
-  ///  account will be ignored as they are both output only fields on this
-  ///  resource.
+  /// created. The name and the service account
+  ///  will be ignored as they are both output only fields on this resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L637}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L655}
   /// [google.cloud.securitycenter.v1.NotificationConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
@@ -328,19 +327,18 @@ class SecurityCenterClient {
   /// Creates a notification config.
   ///
   /// @param parent  Required. Resource name of the new notification config's
-  /// parent. Its format
-  ///  is "organizations/[organization_id]".
+  /// parent. Its format is
+  ///  "organizations/[organization_id]".
   /// @param notification_config  Required. The notification config being
-  /// created. The name and the service
-  ///  account will be ignored as they are both output only fields on this
-  ///  resource.
+  /// created. The name and the service account
+  ///  will be ignored as they are both output only fields on this resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L637}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L655}
   /// [google.cloud.securitycenter.v1.NotificationConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
@@ -355,14 +353,14 @@ class SecurityCenterClient {
   /// Creates a notification config.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L637}
+  /// @googleapis_link{google::cloud::securitycenter::v1::CreateNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L655}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L637}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L655}
   /// [google.cloud.securitycenter.v1.NotificationConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
@@ -383,7 +381,7 @@ class SecurityCenterClient {
   ///     backoff policies.
   ///
   /// [google.cloud.securitycenter.v1.DeleteMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L677}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L693}
   ///
   Status DeleteMuteConfig(std::string const& name, Options opts = {});
 
@@ -391,12 +389,12 @@ class SecurityCenterClient {
   /// Deletes an existing mute config.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::DeleteMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L677}
+  /// @googleapis_link{google::cloud::securitycenter::v1::DeleteMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L693}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.securitycenter.v1.DeleteMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L677}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L693}
   ///
   Status DeleteMuteConfig(
       google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request,
@@ -412,7 +410,7 @@ class SecurityCenterClient {
   ///     backoff policies.
   ///
   /// [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L691}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L707}
   ///
   Status DeleteNotificationConfig(std::string const& name, Options opts = {});
 
@@ -420,12 +418,12 @@ class SecurityCenterClient {
   /// Deletes a notification config.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::DeleteNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L691}
+  /// @googleapis_link{google::cloud::securitycenter::v1::DeleteNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L707}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L691}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L707}
   ///
   Status DeleteNotificationConfig(
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
@@ -446,7 +444,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.GetBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L703}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L719}
   /// [google.cloud.securitycenter.v1.BigQueryExport]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
@@ -457,14 +455,14 @@ class SecurityCenterClient {
   /// Gets a big query export.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L703}
+  /// @googleapis_link{google::cloud::securitycenter::v1::GetBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L719}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.GetBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L703}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L719}
   /// [google.cloud.securitycenter.v1.BigQueryExport]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
@@ -482,12 +480,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
@@ -496,16 +494,16 @@ class SecurityCenterClient {
   /// Gets the access control policy on the specified Source.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
@@ -523,7 +521,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   /// [google.cloud.securitycenter.v1.GetMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L717}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L733}
   /// [google.cloud.securitycenter.v1.MuteConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
@@ -534,14 +532,14 @@ class SecurityCenterClient {
   /// Gets a mute config.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L717}
+  /// @googleapis_link{google::cloud::securitycenter::v1::GetMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L733}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   /// [google.cloud.securitycenter.v1.GetMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L717}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L733}
   /// [google.cloud.securitycenter.v1.MuteConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
@@ -561,7 +559,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   /// [google.cloud.securitycenter.v1.GetNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L731}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L747}
   /// [google.cloud.securitycenter.v1.NotificationConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
@@ -572,14 +570,14 @@ class SecurityCenterClient {
   /// Gets a notification config.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L731}
+  /// @googleapis_link{google::cloud::securitycenter::v1::GetNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L747}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   /// [google.cloud.securitycenter.v1.GetNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L731}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L747}
   /// [google.cloud.securitycenter.v1.NotificationConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
@@ -593,15 +591,15 @@ class SecurityCenterClient {
   /// Gets the settings for an organization.
   ///
   /// @param name  Required. Name of the organization to get organization
-  /// settings for. Its
-  ///  format is "organizations/[organization_id]/organizationSettings".
+  /// settings for. Its format is
+  ///  "organizations/[organization_id]/organizationSettings".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::OrganizationSettings,google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
   /// [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L743}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L759}
   /// [google.cloud.securitycenter.v1.OrganizationSettings]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
@@ -612,14 +610,14 @@ class SecurityCenterClient {
   /// Gets the settings for an organization.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetOrganizationSettingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L743}
+  /// @googleapis_link{google::cloud::securitycenter::v1::GetOrganizationSettingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L759}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::OrganizationSettings,google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
   /// [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L743}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L759}
   /// [google.cloud.securitycenter.v1.OrganizationSettings]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
@@ -640,7 +638,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.GetSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L755}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L771}
   /// [google.cloud.securitycenter.v1.Source]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
@@ -651,14 +649,14 @@ class SecurityCenterClient {
   /// Gets a source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetSourceRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L755}
+  /// @googleapis_link{google::cloud::securitycenter::v1::GetSourceRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L771}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.GetSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L755}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L771}
   /// [google.cloud.securitycenter.v1.Source]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
@@ -671,16 +669,16 @@ class SecurityCenterClient {
   /// properties.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GroupAssetsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L767}
+  /// @googleapis_link{google::cloud::securitycenter::v1::GroupAssetsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L783}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::GroupResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1088}
+  /// @googleapis_link{google::cloud::securitycenter::v1::GroupResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1104}
   ///
   /// [google.cloud.securitycenter.v1.GroupAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L767}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L783}
   /// [google.cloud.securitycenter.v1.GroupResult]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1088}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1104}
   ///
   StreamRange<google::cloud::securitycenter::v1::GroupResult> GroupAssets(
       google::cloud::securitycenter::v1::GroupAssetsRequest request,
@@ -703,10 +701,10 @@ class SecurityCenterClient {
   ///  organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-,
   ///  or projects/{project_id}/sources/-
   /// @param group_by  Required. Expression that defines what assets fields to
-  /// use for grouping
-  ///  (including `state_change`). The string value should follow SQL syntax:
-  ///  comma separated list of fields. For example: "parent,resource_name".
-  ///  The following fields are supported:
+  /// use for grouping (including
+  ///  `state_change`). The string value should follow SQL syntax: comma
+  ///  separated list of fields. For example: "parent,resource_name". The
+  ///  following fields are supported:
   ///  * resource_name
   ///  * category
   ///  * state
@@ -717,12 +715,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::GroupResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1088}
+  /// @googleapis_link{google::cloud::securitycenter::v1::GroupResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1104}
   ///
   /// [google.cloud.securitycenter.v1.GroupFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L926}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L942}
   /// [google.cloud.securitycenter.v1.GroupResult]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1088}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1104}
   ///
   StreamRange<google::cloud::securitycenter::v1::GroupResult> GroupFindings(
       std::string const& parent, std::string const& group_by,
@@ -738,16 +736,16 @@ class SecurityCenterClient {
   /// /v1/projects/{project_id}/sources/-/findings
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GroupFindingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L926}
+  /// @googleapis_link{google::cloud::securitycenter::v1::GroupFindingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L942}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::GroupResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1088}
+  /// @googleapis_link{google::cloud::securitycenter::v1::GroupResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1104}
   ///
   /// [google.cloud.securitycenter.v1.GroupFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L926}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L942}
   /// [google.cloud.securitycenter.v1.GroupResult]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1088}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1104}
   ///
   StreamRange<google::cloud::securitycenter::v1::GroupResult> GroupFindings(
       google::cloud::securitycenter::v1::GroupFindingsRequest request,
@@ -757,16 +755,16 @@ class SecurityCenterClient {
   /// Lists an organization's assets.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListAssetsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1197}
+  /// @googleapis_link{google::cloud::securitycenter::v1::ListAssetsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1213}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1345}
+  /// @googleapis_link{google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1361}
   ///
   /// [google.cloud.securitycenter.v1.ListAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1197}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1213}
   /// [google.cloud.securitycenter.v1.ListAssetsResponse.ListAssetsResult]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1345}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1361}
   ///
   StreamRange<
       google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>
@@ -780,16 +778,16 @@ class SecurityCenterClient {
   /// Example: /v1/organizations/{organization_id}/sources/-/findings
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListFindingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1388}
+  /// @googleapis_link{google::cloud::securitycenter::v1::ListFindingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1404}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1541}
+  /// @googleapis_link{google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1557}
   ///
   /// [google.cloud.securitycenter.v1.ListFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1388}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1404}
   /// [google.cloud.securitycenter.v1.ListFindingsResponse.ListFindingsResult]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1541}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1557}
   ///
   StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::
                   ListFindingsResult>
@@ -800,8 +798,8 @@ class SecurityCenterClient {
   /// Lists mute configs.
   ///
   /// @param parent  Required. The parent, which owns the collection of mute
-  /// configs. Its format
-  ///  is "organizations/[organization_id]", "folders/[folder_id]",
+  /// configs. Its format is
+  ///  "organizations/[organization_id]", "folders/[folder_id]",
   ///  "projects/[project_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -809,7 +807,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   /// [google.cloud.securitycenter.v1.ListMuteConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1098}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1114}
   /// [google.cloud.securitycenter.v1.MuteConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
@@ -820,14 +818,14 @@ class SecurityCenterClient {
   /// Lists mute configs.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListMuteConfigsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1098}
+  /// @googleapis_link{google::cloud::securitycenter::v1::ListMuteConfigsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1114}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   /// [google.cloud.securitycenter.v1.ListMuteConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1098}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1114}
   /// [google.cloud.securitycenter.v1.MuteConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
@@ -847,7 +845,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   /// [google.cloud.securitycenter.v1.ListNotificationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1134}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1150}
   /// [google.cloud.securitycenter.v1.NotificationConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
@@ -858,14 +856,14 @@ class SecurityCenterClient {
   /// Lists notification configs.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListNotificationConfigsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1134}
+  /// @googleapis_link{google::cloud::securitycenter::v1::ListNotificationConfigsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1150}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   /// [google.cloud.securitycenter.v1.ListNotificationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1134}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1150}
   /// [google.cloud.securitycenter.v1.NotificationConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
@@ -878,8 +876,8 @@ class SecurityCenterClient {
   /// Lists all sources belonging to an organization.
   ///
   /// @param parent  Required. Resource name of the parent of sources to list.
-  /// Its format should
-  ///  be "organizations/[organization_id], folders/[folder_id], or
+  /// Its format should be
+  ///  "organizations/[organization_id], folders/[folder_id], or
   ///  projects/[project_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -887,7 +885,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.ListSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1165}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1181}
   /// [google.cloud.securitycenter.v1.Source]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
@@ -898,14 +896,14 @@ class SecurityCenterClient {
   /// Lists all sources belonging to an organization.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListSourcesRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1165}
+  /// @googleapis_link{google::cloud::securitycenter::v1::ListSourcesRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1181}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.ListSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1165}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1181}
   /// [google.cloud.securitycenter.v1.Source]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
@@ -922,15 +920,15 @@ class SecurityCenterClient {
   /// error.
   ///
   /// @param parent  Required. Name of the organization to run asset discovery
-  /// for. Its format
-  ///  is "organizations/[organization_id]".
+  /// for. Its format is
+  ///  "organizations/[organization_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::RunAssetDiscoveryResponse,google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
   ///
   /// [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1666}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1681}
   /// [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
   ///
@@ -946,14 +944,14 @@ class SecurityCenterClient {
   /// error.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::RunAssetDiscoveryRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1666}
+  /// @googleapis_link{google::cloud::securitycenter::v1::RunAssetDiscoveryRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1681}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::RunAssetDiscoveryResponse,google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
   ///
   /// [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1666}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1681}
   /// [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
   ///
@@ -976,12 +974,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   /// [google.cloud.securitycenter.v1.SetFindingStateRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1626}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1642}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
       std::string const& name,
@@ -992,16 +990,16 @@ class SecurityCenterClient {
   /// Updates the state of a finding.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::SetFindingStateRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1626}
+  /// @googleapis_link{google::cloud::securitycenter::v1::SetFindingStateRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1642}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   /// [google.cloud.securitycenter.v1.SetFindingStateRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1626}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1642}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
       google::cloud::securitycenter::v1::SetFindingStateRequest const& request,
@@ -1020,12 +1018,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   /// [google.cloud.securitycenter.v1.SetMuteRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1647}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1662}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> SetMute(
       std::string const& name,
@@ -1035,16 +1033,16 @@ class SecurityCenterClient {
   /// Updates the mute state of a finding.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::SetMuteRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1647}
+  /// @googleapis_link{google::cloud::securitycenter::v1::SetMuteRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1662}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   /// [google.cloud.securitycenter.v1.SetMuteRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1647}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1662}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> SetMute(
       google::cloud::securitycenter::v1::SetMuteRequest const& request,
@@ -1064,12 +1062,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -1103,16 +1101,16 @@ class SecurityCenterClient {
   /// Sets the access control policy on the specified Source.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -1131,12 +1129,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
   /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
@@ -1146,16 +1144,16 @@ class SecurityCenterClient {
   /// Returns the permissions that a caller has on the specified source.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
   /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
@@ -1174,7 +1172,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::ExternalSystem,google/cloud/securitycenter/v1/external_system.proto#L31}
   ///
   /// [google.cloud.securitycenter.v1.UpdateExternalSystemRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1678}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1693}
   /// [google.cloud.securitycenter.v1.ExternalSystem]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/external_system.proto#L31}
   ///
@@ -1187,14 +1185,14 @@ class SecurityCenterClient {
   /// Updates external system. This is for a given finding.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateExternalSystemRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1678}
+  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateExternalSystemRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1693}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::ExternalSystem,google/cloud/securitycenter/v1/external_system.proto#L31}
   ///
   /// [google.cloud.securitycenter.v1.UpdateExternalSystemRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1678}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1693}
   /// [google.cloud.securitycenter.v1.ExternalSystem]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/external_system.proto#L31}
   ///
@@ -1209,20 +1207,20 @@ class SecurityCenterClient {
   /// finding creation to succeed.
   ///
   /// @param finding  Required. The finding resource to update or create if it
-  /// does not already
-  ///  exist. parent, security_marks, and update_time will be ignored.
+  /// does not already exist.
+  ///  parent, security_marks, and update_time will be ignored.
   ///  In the case of creation, the finding id portion of the name must be
   ///  alphanumeric and less than or equal to 32 characters and greater than 0
   ///  characters in length.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   /// [google.cloud.securitycenter.v1.UpdateFindingRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1689}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1704}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> UpdateFinding(
       google::cloud::securitycenter::v1::Finding const& finding,
@@ -1233,16 +1231,16 @@ class SecurityCenterClient {
   /// finding creation to succeed.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateFindingRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1689}
+  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateFindingRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1704}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   /// [google.cloud.securitycenter.v1.UpdateFindingRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1689}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1704}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L44}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L46}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> UpdateFinding(
       google::cloud::securitycenter::v1::UpdateFindingRequest const& request,
@@ -1260,7 +1258,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   /// [google.cloud.securitycenter.v1.UpdateMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1709}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1724}
   /// [google.cloud.securitycenter.v1.MuteConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
@@ -1272,14 +1270,14 @@ class SecurityCenterClient {
   /// Updates a mute config.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1709}
+  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1724}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   /// [google.cloud.securitycenter.v1.UpdateMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1709}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1724}
   /// [google.cloud.securitycenter.v1.MuteConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
@@ -1299,7 +1297,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1719}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1734}
   /// [google.cloud.securitycenter.v1.NotificationConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
@@ -1324,7 +1322,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1719}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1734}
   /// [google.cloud.securitycenter.v1.NotificationConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
@@ -1340,14 +1338,14 @@ class SecurityCenterClient {
   /// fields are allowed: description, pubsub_topic, streaming_config.filter
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1719}
+  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1734}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1719}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1734}
   /// [google.cloud.securitycenter.v1.NotificationConfig]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
@@ -1368,7 +1366,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::OrganizationSettings,google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
   /// [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1731}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1745}
   /// [google.cloud.securitycenter.v1.OrganizationSettings]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
@@ -1382,14 +1380,14 @@ class SecurityCenterClient {
   /// Updates an organization's settings.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1731}
+  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1745}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::OrganizationSettings,google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
   /// [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1731}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1745}
   /// [google.cloud.securitycenter.v1.OrganizationSettings]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
@@ -1409,7 +1407,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.UpdateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1743}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1756}
   /// [google.cloud.securitycenter.v1.Source]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
@@ -1421,14 +1419,14 @@ class SecurityCenterClient {
   /// Updates a source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateSourceRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1743}
+  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateSourceRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1756}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.UpdateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1743}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1756}
   /// [google.cloud.securitycenter.v1.Source]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
@@ -1446,7 +1444,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::SecurityMarks,google/cloud/securitycenter/v1/security_marks.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1754}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1767}
   /// [google.cloud.securitycenter.v1.SecurityMarks]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_marks.proto#L32}
   ///
@@ -1459,14 +1457,14 @@ class SecurityCenterClient {
   /// Updates security marks.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateSecurityMarksRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1754}
+  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateSecurityMarksRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1767}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::SecurityMarks,google/cloud/securitycenter/v1/security_marks.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1754}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1767}
   /// [google.cloud.securitycenter.v1.SecurityMarks]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_marks.proto#L32}
   ///
@@ -1495,7 +1493,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.CreateBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1773}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1786}
   /// [google.cloud.securitycenter.v1.BigQueryExport]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
@@ -1509,14 +1507,14 @@ class SecurityCenterClient {
   /// Creates a big query export.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1773}
+  /// @googleapis_link{google::cloud::securitycenter::v1::CreateBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1786}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.CreateBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1773}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1786}
   /// [google.cloud.securitycenter.v1.BigQueryExport]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
@@ -1538,7 +1536,7 @@ class SecurityCenterClient {
   ///     backoff policies.
   ///
   /// [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1841}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1854}
   ///
   Status DeleteBigQueryExport(std::string const& name, Options opts = {});
 
@@ -1546,12 +1544,12 @@ class SecurityCenterClient {
   /// Deletes an existing big query export.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::DeleteBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1841}
+  /// @googleapis_link{google::cloud::securitycenter::v1::DeleteBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1854}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1841}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1854}
   ///
   Status DeleteBigQueryExport(
       google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
@@ -1570,7 +1568,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1795}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1808}
   /// [google.cloud.securitycenter.v1.BigQueryExport]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
@@ -1583,14 +1581,14 @@ class SecurityCenterClient {
   /// Updates a BigQuery export.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1795}
+  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1808}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1795}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1808}
   /// [google.cloud.securitycenter.v1.BigQueryExport]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
@@ -1608,8 +1606,8 @@ class SecurityCenterClient {
   /// within the folder are returned.
   ///
   /// @param parent  Required. The parent, which owns the collection of BigQuery
-  /// exports. Its
-  ///  format is "organizations/[organization_id]", "folders/[folder_id]",
+  /// exports. Its format is
+  ///  "organizations/[organization_id]", "folders/[folder_id]",
   ///  "projects/[project_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1617,7 +1615,7 @@ class SecurityCenterClient {
   /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.ListBigQueryExportsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1806}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1819}
   /// [google.cloud.securitycenter.v1.BigQueryExport]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
@@ -1632,14 +1630,14 @@ class SecurityCenterClient {
   /// within the folder are returned.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListBigQueryExportsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1806}
+  /// @googleapis_link{google::cloud::securitycenter::v1::ListBigQueryExportsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1819}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///
   /// [google.cloud.securitycenter.v1.ListBigQueryExportsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1806}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1819}
   /// [google.cloud.securitycenter.v1.BigQueryExport]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
   ///

@@ -47,6 +47,12 @@ class DefaultPublisherConnectionIdempotencyPolicy
           PublishChannelConnectionEventsRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
+
+  Idempotency PublishEvents(
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
 };
 }  // namespace
 

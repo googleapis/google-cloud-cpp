@@ -117,6 +117,15 @@ NotebookServiceMetadata::AsyncSetInstanceLabels(
   return child_->AsyncSetInstanceLabels(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+NotebookServiceMetadata::UpdateInstanceMetadataItems(
+    grpc::ClientContext& context,
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->UpdateInstanceMetadataItems(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,

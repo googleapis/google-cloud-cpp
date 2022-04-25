@@ -43,6 +43,15 @@ PublisherMetadata::PublishChannelConnectionEvents(
   return child_->PublishChannelConnectionEvents(context, request);
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+PublisherMetadata::PublishEvents(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+        request) {
+  SetMetadata(context, "channel=" + request.channel());
+  return child_->PublishEvents(context, request);
+}
+
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context,
                                     std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

@@ -25,6 +25,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 
 namespace google {
@@ -99,12 +100,12 @@ class DashboardsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
+  /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
   /// [google.monitoring.dashboard.v1.CreateDashboardRequest]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L100}
   /// [google.monitoring.dashboard.v1.Dashboard]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L33}
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
   StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
       google::monitoring::dashboard::v1::CreateDashboardRequest const& request,
@@ -122,12 +123,12 @@ class DashboardsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
+  /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
   /// [google.monitoring.dashboard.v1.ListDashboardsRequest]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L117}
   /// [google.monitoring.dashboard.v1.Dashboard]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L33}
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
   StreamRange<google::monitoring::dashboard::v1::Dashboard> ListDashboards(
       google::monitoring::dashboard::v1::ListDashboardsRequest request,
@@ -145,12 +146,12 @@ class DashboardsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
+  /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
   /// [google.monitoring.dashboard.v1.GetDashboardRequest]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L150}
   /// [google.monitoring.dashboard.v1.Dashboard]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L33}
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
   StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
       google::monitoring::dashboard::v1::GetDashboardRequest const& request,
@@ -187,12 +188,12 @@ class DashboardsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
+  /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
   /// [google.monitoring.dashboard.v1.UpdateDashboardRequest]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L178}
   /// [google.monitoring.dashboard.v1.Dashboard]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L33}
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
   StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
       google::monitoring::dashboard::v1::UpdateDashboardRequest const& request,

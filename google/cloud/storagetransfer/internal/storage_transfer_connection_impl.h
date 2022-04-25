@@ -85,6 +85,24 @@ class StorageTransferServiceConnectionImpl
   RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const&
                      request) override;
 
+  StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
+      google::storagetransfer::v1::CreateAgentPoolRequest const& request)
+      override;
+
+  StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
+      google::storagetransfer::v1::UpdateAgentPoolRequest const& request)
+      override;
+
+  StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
+      google::storagetransfer::v1::GetAgentPoolRequest const& request) override;
+
+  StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
+      google::storagetransfer::v1::ListAgentPoolsRequest request) override;
+
+  Status DeleteAgentPool(
+      google::storagetransfer::v1::DeleteAgentPoolRequest const& request)
+      override;
+
  private:
   std::unique_ptr<storagetransfer::StorageTransferServiceRetryPolicy>
   retry_policy() {

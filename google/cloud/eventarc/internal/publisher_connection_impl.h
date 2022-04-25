@@ -52,6 +52,11 @@ class PublisherConnectionImpl : public eventarc::PublisherConnection {
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request) override;
 
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+  PublishEvents(
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+          request) override;
+
  private:
   std::unique_ptr<eventarc::PublisherRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

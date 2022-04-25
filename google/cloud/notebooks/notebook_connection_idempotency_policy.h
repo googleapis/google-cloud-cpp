@@ -70,6 +70,10 @@ class NotebookServiceConnectionIdempotencyPolicy {
       google::cloud::notebooks::v1::SetInstanceLabelsRequest const&
           request) = 0;
 
+  virtual google::cloud::Idempotency UpdateInstanceMetadataItems(
+      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency DeleteInstance(
       google::cloud::notebooks::v1::DeleteInstanceRequest const& request) = 0;
 
