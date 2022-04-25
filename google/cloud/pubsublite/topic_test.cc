@@ -30,9 +30,9 @@ TEST(Topic, BasicTopic) {
   std::string topic_name = "topic_name";
 
   Topic topic{project, location, topic_name};
-  EXPECT_EQ(project, topic.project());
+  EXPECT_EQ(project, topic.project_id());
   EXPECT_EQ(location, topic.location());
-  EXPECT_EQ(topic_name, topic.topic_name());
+  EXPECT_EQ(topic_name, topic.topic_id());
   EXPECT_EQ(topic.FullName(),
             "projects/project/locations/location/topics/topic_name");
 }
