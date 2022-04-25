@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Topic {
  public:
   Topic(std::string project_id, std::string location_id, std::string topic_id)
-      : project_id_(std::move(project_id)),
+      : project_id_{std::move(project_id)},
         location_id_{std::move(location_id)},
-        topic_id_(std::move(topic_id)) {}
+        topic_id_{std::move(topic_id)} {}
 
   std::string const& project_id() const { return project_id_; }
 
