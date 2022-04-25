@@ -47,7 +47,7 @@ using ::google::cloud::pubsublite_testing::MockResumableAsyncReaderWriter;
 using AsyncReaderWriter = MockAsyncReaderWriter<StreamingCommitCursorRequest,
                                                 StreamingCommitCursorResponse>;
 
-using UnderlyingStream =
+using AsyncReadWriteStreamReturnType =
     std::unique_ptr<AsyncStreamingReadWriteRpc<StreamingCommitCursorRequest,
                                                StreamingCommitCursorResponse>>;
 
