@@ -65,6 +65,10 @@ class ManagedNotebookServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ReportRuntimeEvent(
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const&
           request) = 0;
+
+  virtual google::cloud::Idempotency RefreshRuntimeTokenInternal(
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<ManagedNotebookServiceConnectionIdempotencyPolicy>

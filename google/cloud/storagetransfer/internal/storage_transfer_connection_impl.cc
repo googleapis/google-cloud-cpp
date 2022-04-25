@@ -190,6 +190,94 @@ StorageTransferServiceConnectionImpl::RunTransferJob(
       __func__);
 }
 
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnectionImpl::CreateAgentPool(
+    google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateAgentPool(request),
+      [this](
+          grpc::ClientContext& context,
+          google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
+        return stub_->CreateAgentPool(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnectionImpl::UpdateAgentPool(
+    google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateAgentPool(request),
+      [this](
+          grpc::ClientContext& context,
+          google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
+        return stub_->UpdateAgentPool(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnectionImpl::GetAgentPool(
+    google::storagetransfer::v1::GetAgentPoolRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetAgentPool(request),
+      [this](grpc::ClientContext& context,
+             google::storagetransfer::v1::GetAgentPoolRequest const& request) {
+        return stub_->GetAgentPool(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnectionImpl::ListAgentPools(
+    google::storagetransfer::v1::ListAgentPoolsRequest request) {
+  request.clear_page_token();
+  auto stub = stub_;
+  auto retry =
+      std::shared_ptr<storagetransfer::StorageTransferServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListAgentPools(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::storagetransfer::v1::AgentPool>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::storagetransfer::v1::ListAgentPoolsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::storagetransfer::v1::ListAgentPoolsRequest const&
+                       request) {
+              return stub->ListAgentPools(context, request);
+            },
+            r, function_name);
+      },
+      [](google::storagetransfer::v1::ListAgentPoolsResponse r) {
+        std::vector<google::storagetransfer::v1::AgentPool> result(
+            r.agent_pools().size());
+        auto& messages = *r.mutable_agent_pools();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+Status StorageTransferServiceConnectionImpl::DeleteAgentPool(
+    google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteAgentPool(request),
+      [this](
+          grpc::ClientContext& context,
+          google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
+        return stub_->DeleteAgentPool(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_internal
 }  // namespace cloud

@@ -160,6 +160,20 @@ ManagedNotebookServiceLogging::AsyncReportRuntimeEvent(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+ManagedNotebookServiceLogging::RefreshRuntimeTokenInternal(
+    grpc::ClientContext& context,
+    google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::notebooks::v1::
+                 RefreshRuntimeTokenInternalRequest const& request) {
+        return child_->RefreshRuntimeTokenInternal(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

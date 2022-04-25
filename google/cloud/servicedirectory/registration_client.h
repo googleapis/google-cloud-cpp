@@ -120,12 +120,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   /// [google.cloud.servicedirectory.v1.CreateNamespaceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L230}
   /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
       std::string const& parent,
@@ -140,12 +140,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   /// [google.cloud.servicedirectory.v1.CreateNamespaceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L230}
   /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
       google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
@@ -161,12 +161,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   /// [google.cloud.servicedirectory.v1.ListNamespacesRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L255}
   /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   StreamRange<google::cloud::servicedirectory::v1::Namespace> ListNamespaces(
       std::string const& parent, Options opts = {});
@@ -179,12 +179,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   /// [google.cloud.servicedirectory.v1.ListNamespacesRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L255}
   /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   StreamRange<google::cloud::servicedirectory::v1::Namespace> ListNamespaces(
       google::cloud::servicedirectory::v1::ListNamespacesRequest request,
@@ -197,12 +197,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L322}
   /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
       std::string const& name, Options opts = {});
@@ -215,12 +215,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L322}
   /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
       google::cloud::servicedirectory::v1::GetNamespaceRequest const& request,
@@ -235,12 +235,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
   /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
       google::cloud::servicedirectory::v1::Namespace const& namespace_,
@@ -254,12 +254,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
   /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L35}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
       google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
@@ -314,12 +314,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   /// [google.cloud.servicedirectory.v1.CreateServiceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L357}
   /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
       std::string const& parent,
@@ -334,12 +334,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   /// [google.cloud.servicedirectory.v1.CreateServiceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L357}
   /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
       google::cloud::servicedirectory::v1::CreateServiceRequest const& request,
@@ -354,12 +354,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   /// [google.cloud.servicedirectory.v1.ListServicesRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L381}
   /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   StreamRange<google::cloud::servicedirectory::v1::Service> ListServices(
       std::string const& parent, Options opts = {});
@@ -372,12 +372,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   /// [google.cloud.servicedirectory.v1.ListServicesRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L381}
   /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   StreamRange<google::cloud::servicedirectory::v1::Service> ListServices(
       google::cloud::servicedirectory::v1::ListServicesRequest request,
@@ -390,12 +390,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   /// [google.cloud.servicedirectory.v1.GetServiceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L442}
   /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
       std::string const& name, Options opts = {});
@@ -408,12 +408,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   /// [google.cloud.servicedirectory.v1.GetServiceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L442}
   /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
       google::cloud::servicedirectory::v1::GetServiceRequest const& request,
@@ -428,12 +428,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
   /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
       google::cloud::servicedirectory::v1::Service const& service,
@@ -447,12 +447,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
   /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
       google::cloud::servicedirectory::v1::UpdateServiceRequest const& request,
@@ -505,12 +505,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   /// [google.cloud.servicedirectory.v1.CreateEndpointRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L477}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
       std::string const& parent,
@@ -525,12 +525,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   /// [google.cloud.servicedirectory.v1.CreateEndpointRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L477}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
       google::cloud::servicedirectory::v1::CreateEndpointRequest const& request,
@@ -545,12 +545,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
       std::string const& parent, Options opts = {});
@@ -563,12 +563,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
       google::cloud::servicedirectory::v1::ListEndpointsRequest request,
@@ -581,12 +581,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   /// [google.cloud.servicedirectory.v1.GetEndpointRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
       std::string const& name, Options opts = {});
@@ -599,12 +599,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   /// [google.cloud.servicedirectory.v1.GetEndpointRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
       google::cloud::servicedirectory::v1::GetEndpointRequest const& request,
@@ -619,12 +619,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
       google::cloud::servicedirectory::v1::Endpoint const& endpoint,
@@ -638,12 +638,12 @@ class RegistrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L34}
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
       google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request,
@@ -680,16 +680,16 @@ class RegistrationServiceClient {
   /// Gets the IAM Policy for a resource (namespace or service only).
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
@@ -698,16 +698,16 @@ class RegistrationServiceClient {
   /// Sets the IAM Policy for a resource (namespace or service only).
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -716,16 +716,16 @@ class RegistrationServiceClient {
   /// Tests IAM permissions for a resource (namespace or service only).
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
   /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,

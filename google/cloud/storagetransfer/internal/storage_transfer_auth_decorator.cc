@@ -112,6 +112,50 @@ StorageTransferServiceAuth::AsyncRunTransferJob(
       });
 }
 
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceAuth::CreateAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAgentPool(context, request);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceAuth::UpdateAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAgentPool(context, request);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceAuth::GetAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::GetAgentPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAgentPool(context, request);
+}
+
+StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
+StorageTransferServiceAuth::ListAgentPools(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAgentPools(context, request);
+}
+
+Status StorageTransferServiceAuth::DeleteAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAgentPool(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

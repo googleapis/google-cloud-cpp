@@ -92,6 +92,12 @@ class NotebookServiceConnection {
   SetInstanceLabels(
       google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request);
 
+  virtual StatusOr<
+      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+  UpdateInstanceMetadataItems(
+      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+          request);
+
   virtual future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteInstance(
       google::cloud::notebooks::v1::DeleteInstanceRequest const& request);
