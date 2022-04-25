@@ -31,7 +31,7 @@ TEST(Topic, BasicTopic) {
 
   Topic topic{project, location, topic_name};
   EXPECT_EQ(project, topic.project_id());
-  EXPECT_EQ(location, topic.location());
+  EXPECT_EQ(location, topic.location_id());
   EXPECT_EQ(topic_name, topic.topic_id());
   EXPECT_EQ(topic.FullName(),
             "projects/project/locations/location/topics/topic_name");

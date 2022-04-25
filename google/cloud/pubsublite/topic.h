@@ -32,14 +32,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class Topic {
  public:
-  Topic(std::string project_id, std::string location, std::string topic_id)
+  Topic(std::string project_id, std::string location_id, std::string topic_id)
       : project_id_(std::move(project_id)),
-        location_{std::move(location)},
+        location_id_{std::move(location_id)},
         topic_id_(std::move(topic_id)) {}
 
   std::string const& project_id() const { return project_id_; }
 
-  std::string const& location() const { return location_; }
+  std::string const& location_id() const { return location_id_; }
 
   std::string const& topic_id() const { return topic_id_; }
 
@@ -48,19 +48,19 @@ class Topic {
    * "projects/<project-id>/locations/<location>/topics/<topic-id>"
    */
   std::string FullName() const {
-    return absl::StrCat("projects/", project_id_, "/locations/", location_,
+    return absl::StrCat("projects/", project_id_, "/locations/", location_id_,
                         "/topics/", topic_id_);
   }
 
  private:
   std::string project_id_;
-  std::string location_;
+  std::string location_id_;
   std::string topic_id_;
 };
 
 inline bool operator==(Topic const& a, Topic const& b) {
-  return a.project_id() == b.project_id() && a.location() == b.location() &&
-         a.topic_id() == b.topic_id();
+  return a.project_id() == b.project_id() &&
+         a.location_id() == b.location_id() && a.topic_id() == b.topic_id();
 }
 
 inline bool operator!=(Topic const& a, Topic const& b) { return !(a == b); }
