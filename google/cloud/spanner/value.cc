@@ -44,12 +44,11 @@ bool Equal(google::spanner::v1::Type const& pt1,  // NOLINT(misc-no-recursion)
     case google::spanner::v1::TypeCode::INT64:
       return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::FLOAT64:
-      // NaN should always compare not equal, even to itself.
-      if (pv1.string_value() == "NaN" || pv2.string_value() == "NaN") {
-        return false;
+      if (pv1.kind_case() == google::protobuf::Value::kNumberValue) {
+        return pv1.number_value() == pv2.number_value();
       }
-      return pv1.string_value() == pv2.string_value() &&
-             pv1.number_value() == pv2.number_value();
+      // FLOAT64 NaN values are considered equal for sorting purposes.
+      return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::STRING:
     case google::spanner::v1::TypeCode::BYTES:
     case google::spanner::v1::TypeCode::JSON:
