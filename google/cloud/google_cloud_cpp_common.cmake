@@ -99,6 +99,7 @@ add_library(
     internal/throw_delegate.h
     internal/tuple.h
     internal/type_list.h
+    internal/type_traits.h
     internal/user_agent_prefix.cc
     internal/user_agent_prefix.h
     internal/utility.h
