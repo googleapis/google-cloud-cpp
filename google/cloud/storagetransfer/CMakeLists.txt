@@ -45,27 +45,19 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/storagetransfer.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/storagetransfer.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_storagetransfer_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/storagetransfer/v1/transfer.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/storagetransfer/v1/transfer_types.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_storagetransfer_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(storagetransfer_protos)
-target_link_libraries(
-    google_cloud_cpp_storagetransfer_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_code_protos
-           google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::type_date_protos
-           google-cloud-cpp::type_timeofday_protos)
+target_link_libraries(google_cloud_cpp_storagetransfer_protos
+                      PUBLIC ${proto_deps})
 
 file(
     GLOB source_files
