@@ -47,33 +47,8 @@ std::string SiteRoot(
   return LibraryName(service);
 }
 
-std::vector<std::string> ProtoList(std::string const& project_root,
-                                   std::string const& library) {
-  auto const filename =
-      project_root + "/external/googleapis/protolists/" + library + ".list";
-  auto status = google::cloud::internal::status(filename);
-  if (!exists(status)) {
-    std::cout << "Cannot find " << filename << "\n";
-    return {};
-  }
-  std::ifstream is(filename);
-  return absl::StrSplit(
-      std::string{std::istreambuf_iterator<char>(is.rdbuf()), {}}, "\n");
-}
-
-std::vector<std::string> ProtoDependencies(std::string const& project_root,
-                                           std::string const& library) {
-  auto const filename =
-      project_root + "/external/googleapis/protodeps/" + library + ".deps";
-  auto status = google::cloud::internal::status(filename);
-  if (!exists(status)) return {};
-  std::ifstream is(filename);
-  return absl::StrSplit(
-      std::string{std::istreambuf_iterator<char>(is.rdbuf()), {}}, "\n");
-}
-
 std::map<std::string, std::string> ScaffoldVars(
-    std::string const& googleapis_path, std::string const& project_root,
+    std::string const& googleapis_path,
     google::cloud::cpp::generator::ServiceConfiguration const& service) {
   auto const api_index_path = googleapis_path + "/" + kApiIndexFilename;
   auto status = google::cloud::internal::status(api_index_path);
@@ -106,39 +81,6 @@ std::map<std::string, std::string> ScaffoldVars(
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
   vars["site_root"] = SiteRoot(service);
-
-  auto const proto_list = ProtoList(project_root, library);
-  std::vector<std::string> protos(proto_list.size());
-  std::transform(proto_list.begin(), proto_list.end(), protos.begin(),
-                 [](std::string x) {
-                   x.erase(0, std::strlen("@com_google_googleapis//"));
-                   std::replace(x.begin(), x.end(), ':', '/');
-                   if (x.empty()) return x;
-                   return "${EXTERNAL_GOOGLEAPIS_SOURCE}/" + x;
-                 });
-  auto end = std::remove_if(protos.begin(), protos.end(),
-                            [](std::string const& x) { return x.empty(); });
-  vars["proto_files"] = absl::StrJoin(protos.begin(), end, "\n    ");
-
-  auto const dep_list = ProtoDependencies(project_root, library);
-  std::vector<std::string> deps(dep_list.size());
-  std::transform(
-      dep_list.begin(), dep_list.end(), deps.begin(), [](std::string x) {
-        x.erase(0, std::strlen("@com_google_googleapis//"));
-        std::replace(x.begin(), x.end(), ':', '_');
-        std::replace(x.begin(), x.end(), '/', '_');
-        if (x.rfind("google_", 0) == 0) {
-          x = "google-cloud-cpp::" + x.substr(std::strlen("google_"));
-        }
-        if (x.empty()) return x;
-        // Our libraries end with _protos, the Bazel libraries end
-        // with _proto.
-        x += "s";
-        return x;
-      });
-  end = std::remove_if(deps.begin(), deps.end(),
-                       [](std::string const& x) { return x.empty(); });
-  vars["proto_deps"] = absl::StrJoin(deps.begin(), end, "\n    ");
 
   return vars;
 }
@@ -175,7 +117,7 @@ void GenerateScaffold(
       {"quickstart/.bazelrc", GenerateQuickstartBazelrc},
   };
 
-  auto const vars = ScaffoldVars(googleapis_path, output_path, service);
+  auto const vars = ScaffoldVars(googleapis_path, service);
   MakeDirectory(output_path + "/");
   auto const destination = output_path + "/" + service.product_path() + "/";
   MakeDirectory(destination);
