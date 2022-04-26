@@ -19,8 +19,10 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "google/cloud/internal/type_traits.h"
 #include <iostream>
 #include <string>
+#include <type_traits>
 #include <utility>
 
 namespace google {
@@ -94,7 +96,7 @@ class GenericRequestBase<Derived, Option> {
   }
 
   template <typename Callable>
-  void ForEachOption(Callable& c) const {
+  void ForEachOption(Callable&& c) const {
     c(option_);
   }
 
@@ -144,7 +146,7 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
   }
 
   template <typename Callable>
-  void ForEachOption(Callable& c) const {
+  void ForEachOption(Callable&& c) const {
     c(option_);
     GenericRequestBase<Derived, Options...>::ForEachOption(c);
   }
@@ -259,6 +261,43 @@ class GenericRequest
     return Super::template GetOption<Option>();
   }
 };
+
+template <typename Request, typename Option, typename AlwaysVoid = void>
+struct SupportsOption {
+  using type = std::false_type;
+};
+
+template <typename Request, typename Option>
+struct SupportsOption<
+    Request, Option,
+    google::cloud::internal::void_t<decltype(std::declval<Request>().set_option(
+        std::declval<Option>()))>> {
+  using type = std::true_type;
+};
+
+template <typename Destination>
+struct CopyCommonOptionsFunctor {
+  Destination& destination;
+
+  template <typename Option>
+  void impl(std::false_type, Option const&) {}
+
+  template <typename Option>
+  void impl(std::true_type, Option const& o) {
+    destination.set_option(o);
+  }
+
+  template <typename Option>
+  void operator()(Option const& o) {
+    using supported = typename SupportsOption<Destination, Option>::type;
+    impl(supported{}, o);
+  }
+};
+
+template <typename Destination>
+CopyCommonOptionsFunctor<Destination> CopyCommonOptions(Destination& d) {
+  return CopyCommonOptionsFunctor<Destination>{d};
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
