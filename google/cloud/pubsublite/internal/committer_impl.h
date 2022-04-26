@@ -69,8 +69,7 @@ class CommitterImpl : public Committer {
 
   google::cloud::pubsublite::v1::InitialCommitCursorRequest const
       initial_commit_request_;
-  std::unique_ptr<ResumableStream> const
-      resumable_stream_;  // ABSL_GUARDED_BY(mu_)
+  std::unique_ptr<ResumableStream> const resumable_stream_;
 
   std::mutex mu_;
 
