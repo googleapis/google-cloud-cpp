@@ -21,7 +21,6 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
-#include <openssl/md5.h>
 #include <fstream>
 #include <thread>
 
@@ -224,66 +223,59 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
 // NOLINTNEXTLINE(readability-make-member-function-const)
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     std::istream& source, internal::ResumableUploadRequest const& request) {
-  auto create = raw_client_->CreateResumableSession(request);
-  if (!create) return std::move(create).status();
+  auto response = internal::CreateOrResume(*raw_client_, request);
+  if (!response) return std::move(response).status();
 
-  // The upload is already done.
-  if (create->state.payload) return *std::move(create->state.payload);
+  if (response->metadata.has_value()) return *std::move(response->metadata);
 
   // How many bytes of the local file are uploaded to the GCS server.
-  auto server_size = create->state.committed_size.value_or(0);
+  auto upload_id = std::move(response->upload_id);
+  auto committed_size = response->committed_size;
   auto upload_limit = request.GetOption<UploadLimit>().value_or(
       (std::numeric_limits<std::uint64_t>::max)());
   // If `server_size == upload_limit`, we will upload an empty string and
   // finalize the upload.
-  if (server_size > upload_limit) {
+  if (committed_size > upload_limit) {
     return Status(StatusCode::kOutOfRange,
                   "UploadLimit (" + std::to_string(upload_limit) +
                       ") is not bigger than the uploaded size (" +
-                      std::to_string(server_size) + ") on GCS server");
+                      std::to_string(committed_size) + ") on GCS server");
   }
-  source.seekg(server_size, std::ios::cur);
+  source.seekg(committed_size, std::ios::cur);
 
   // GCS requires chunks to be a multiple of 256KiB.
   auto chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(
       raw_client_->client_options().upload_buffer_size());
 
-  auto session = std::move(create->session);
-  StatusOr<internal::ResumableUploadResponse> upload_response =
-      std::move(create->state);
   // We iterate while `source` is good, the upload size does not reach the
   // `UploadLimit` and the retry policy has not been exhausted.
   bool reach_upload_limit = false;
   internal::ConstBufferSequence buffers(1);
   std::vector<char> buffer(chunk_size);
-  while (!source.eof() && upload_response &&
-         !upload_response->payload.has_value() && !reach_upload_limit) {
+  while (!source.eof() && !reach_upload_limit) {
     // Read a chunk of data from the source file.
-    if (upload_limit - server_size <= chunk_size) {
+    if (upload_limit - committed_size <= chunk_size) {
       // We don't want the `source_size` to exceed `upload_limit`.
-      chunk_size = static_cast<std::size_t>(upload_limit - server_size);
+      chunk_size = static_cast<std::size_t>(upload_limit - committed_size);
       reach_upload_limit = true;
     }
     source.read(buffer.data(), buffer.size());
     auto gcount = static_cast<std::size_t>(source.gcount());
-    bool final_chunk = (gcount < buffer.size()) || reach_upload_limit;
-    auto source_size = upload_response->committed_size.value_or(0) + gcount;
-    auto expected = source_size;
+    auto expected = committed_size + gcount;
     buffers[0] = internal::ConstBuffer{buffer.data(), gcount};
-    if (final_chunk) {
-      upload_response = session->UploadFinalChunk(buffers, source_size, {});
-    } else {
-      upload_response = session->UploadChunk(buffers);
-    }
-    if (!upload_response) {
-      return std::move(upload_response).status();
-    }
-    if (upload_response->upload_state ==
-        internal::ResumableUploadResponse::kDone) {
-      break;
-    }
-    auto const actual_committed_size =
-        upload_response->committed_size.value_or(0);
+    auto upload_request = [&] {
+      bool final_chunk = (gcount < buffer.size()) || reach_upload_limit;
+      if (!final_chunk) {
+        return internal::UploadChunkRequest(upload_id, committed_size, buffers);
+      }
+      return internal::UploadChunkRequest(upload_id, committed_size, buffers,
+                                          internal::HashValues{});
+    }();
+    request.ForEachOption(internal::CopyCommonOptions(upload_request));
+    auto upload = raw_client_->UploadChunk(upload_request);
+    if (!upload) return std::move(upload).status();
+    if (upload->payload.has_value()) return *std::move(upload->payload);
+    auto const actual_committed_size = upload->committed_size.value_or(0);
     if (actual_committed_size != expected) {
       // Defensive programming: unless there is a bug, this should be dead code.
       return Status(
@@ -294,15 +286,11 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
               "https://github.com/googleapis/google-cloud-cpp/issues/new");
     }
 
-    // We only update `server_size` when uploading is successful.
-    server_size = expected;
+    // We only update `committed_size` when uploading is successful.
+    committed_size = expected;
   }
-
-  if (!upload_response) {
-    return std::move(upload_response).status();
-  }
-
-  return *std::move(upload_response->payload);
+  return Status(StatusCode::kInternal,
+                "Upload did not complete but source is exhausted");
 }
 
 Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
