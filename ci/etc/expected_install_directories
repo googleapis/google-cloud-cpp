@@ -13,6 +13,7 @@
 ./include/google/bigtable
 ./include/google/bigtable/admin
 ./include/google/bigtable/admin/v2
+./include/google/bigtable/v2
 ./include/google/cloud
 ./include/google/cloud/accessapproval
 ./include/google/cloud/accessapproval/internal
@@ -62,6 +63,7 @@
 ./include/google/cloud/bigtable
 ./include/google/cloud/bigtable/admin
 ./include/google/cloud/bigtable/admin/internal
+./include/google/cloud/bigtable/internal
 ./include/google/cloud/billing
 ./include/google/cloud/billing/budgets
 ./include/google/cloud/billing/budgets/v1
@@ -402,6 +404,7 @@
 ./lib64/cmake/google_cloud_cpp_assuredworkloads
 ./lib64/cmake/google_cloud_cpp_automl
 ./lib64/cmake/google_cloud_cpp_bigquery
+./lib64/cmake/google_cloud_cpp_bigtable
 ./lib64/cmake/google_cloud_cpp_billing
 ./lib64/cmake/google_cloud_cpp_binaryauthorization
 ./lib64/cmake/google_cloud_cpp_channel
