@@ -8,6 +8,7 @@ asset
 assuredworkloads
 automl
 bigquery
+bigtable
 billing
 binaryauthorization
 channel

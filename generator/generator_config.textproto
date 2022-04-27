@@ -146,6 +146,19 @@ service {
 
 # Bigtable
 service {
+  service_proto_path: "google/bigtable/v2/bigtable.proto"
+  product_path: "google/cloud/bigtable"
+  initial_copyright_year: "2022"
+  omit_client: true
+  omit_connection: true
+  gen_async_rpcs: [
+   "CheckAndMutateRow",
+   "MutateRow",
+   "ReadModifyWriteRow"
+  ]
+}
+
+service {
   service_proto_path: "google/bigtable/admin/v2/bigtable_instance_admin.proto"
   product_path: "google/cloud/bigtable/admin"
   initial_copyright_year: "2021"

@@ -262,8 +262,23 @@ endfunction ()
 #
 function (google_cloud_cpp_load_protodeps var file)
     file(READ "${file}" contents)
-    string(REGEX REPLACE "\n" ";" contents "${contents}")
+    string(REPLACE "\n" ";" contents "${contents}")
     set(deps)
+
+    # Omit a target from deps.
+    set(targets_to_omit
+        "google-cloud-cpp::cloud_orgpolicy_v1_orgpolicy_protos"
+        "google-cloud-cpp::cloud_oslogin_common_common_protos"
+        "google-cloud-cpp::identity_accesscontextmanager_type_type_protos")
+    # Replace "google-cloud-cpp::$1" with "google-cloud-cpp:$2" in deps.
+    set(target_substitutions
+        "grafeas_v1_grafeas_protos\;grafeas_protos"
+        "identity_accesscontextmanager_v1_accesscontextmanager_protos\;accesscontextmanager_protos"
+        "cloud_osconfig_v1_osconfig_protos\;osconfig_protos"
+        "cloud_recommender_v1_recommender_protos\;recommender_protos"
+        "devtools_source_v1_source_protos\;devtools_source_v1_source_context_protos"
+    )
+
     foreach (line IN LISTS contents)
         if ("${line}" STREQUAL "")
             continue()
@@ -276,6 +291,16 @@ function (google_cloud_cpp_load_protodeps var file)
         string(REPLACE "google-cloud-cpp::google/" "google-cloud-cpp::" line
                        "${line}")
         string(REPLACE "/" "_" line "${line}")
+        if ("${line}" IN_LIST targets_to_omit)
+            continue()
+        endif ()
+        foreach (substitution IN LISTS target_substitutions)
+            set(from_to "${substitution}")
+            list(GET from_to 0 from)
+            list(GET from_to 1 to)
+            string(REPLACE "google-cloud-cpp::${from}"
+                           "google-cloud-cpp::${to}" line "${line}")
+        endforeach ()
         list(APPEND deps "${line}")
     endforeach ()
     set(${var}

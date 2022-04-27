@@ -150,6 +150,16 @@ add_library(
     internal/async_retry_op.h
     internal/async_row_sampler.cc
     internal/async_row_sampler.h
+    internal/bigtable_auth_decorator.cc
+    internal/bigtable_auth_decorator.h
+    internal/bigtable_logging_decorator.cc
+    internal/bigtable_logging_decorator.h
+    internal/bigtable_metadata_decorator.cc
+    internal/bigtable_metadata_decorator.h
+    internal/bigtable_stub.cc
+    internal/bigtable_stub.h
+    internal/bigtable_stub_factory.cc
+    internal/bigtable_stub_factory.h
     internal/bulk_mutator.cc
     internal/bulk_mutator.h
     internal/client_options_defaults.h
