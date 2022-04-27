@@ -75,6 +75,14 @@ BigtableMetadata::CheckAndMutateRow(
   return child_->CheckAndMutateRow(context, request);
 }
 
+StatusOr<google::bigtable::v2::PingAndWarmResponse>
+BigtableMetadata::PingAndWarm(
+    grpc::ClientContext& context,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->PingAndWarm(context, request);
+}
+
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableMetadata::ReadModifyWriteRow(
     grpc::ClientContext& context,

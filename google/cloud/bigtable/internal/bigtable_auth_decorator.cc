@@ -82,6 +82,14 @@ BigtableAuth::CheckAndMutateRow(
   return child_->CheckAndMutateRow(context, request);
 }
 
+StatusOr<google::bigtable::v2::PingAndWarmResponse> BigtableAuth::PingAndWarm(
+    grpc::ClientContext& context,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PingAndWarm(context, request);
+}
+
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableAuth::ReadModifyWriteRow(
     grpc::ClientContext& context,

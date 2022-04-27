@@ -60,6 +60,10 @@ class BigtableStub {
       grpc::ClientContext& context,
       google::bigtable::v2::CheckAndMutateRowRequest const& request) = 0;
 
+  virtual StatusOr<google::bigtable::v2::PingAndWarmResponse> PingAndWarm(
+      grpc::ClientContext& context,
+      google::bigtable::v2::PingAndWarmRequest const& request) = 0;
+
   virtual StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
   ReadModifyWriteRow(
       grpc::ClientContext& context,
@@ -112,6 +116,10 @@ class DefaultBigtableStub : public BigtableStub {
   StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> CheckAndMutateRow(
       grpc::ClientContext& client_context,
       google::bigtable::v2::CheckAndMutateRowRequest const& request) override;
+
+  StatusOr<google::bigtable::v2::PingAndWarmResponse> PingAndWarm(
+      grpc::ClientContext& client_context,
+      google::bigtable::v2::PingAndWarmRequest const& request) override;
 
   StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse> ReadModifyWriteRow(
       grpc::ClientContext& client_context,

@@ -127,6 +127,18 @@ BigtableLogging::CheckAndMutateRow(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::bigtable::v2::PingAndWarmResponse>
+BigtableLogging::PingAndWarm(
+    grpc::ClientContext& context,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::bigtable::v2::PingAndWarmRequest const& request) {
+        return child_->PingAndWarm(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableLogging::ReadModifyWriteRow(
     grpc::ClientContext& context,

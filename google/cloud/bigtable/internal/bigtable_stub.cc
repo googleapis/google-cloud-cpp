@@ -88,6 +88,18 @@ DefaultBigtableStub::CheckAndMutateRow(
   return response;
 }
 
+StatusOr<google::bigtable::v2::PingAndWarmResponse>
+DefaultBigtableStub::PingAndWarm(
+    grpc::ClientContext& client_context,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  google::bigtable::v2::PingAndWarmResponse response;
+  auto status = grpc_stub_->PingAndWarm(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 DefaultBigtableStub::ReadModifyWriteRow(
     grpc::ClientContext& client_context,

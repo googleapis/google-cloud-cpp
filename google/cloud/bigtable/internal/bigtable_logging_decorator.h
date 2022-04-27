@@ -62,6 +62,10 @@ class BigtableLogging : public BigtableStub {
       grpc::ClientContext& context,
       google::bigtable::v2::CheckAndMutateRowRequest const& request) override;
 
+  StatusOr<google::bigtable::v2::PingAndWarmResponse> PingAndWarm(
+      grpc::ClientContext& context,
+      google::bigtable::v2::PingAndWarmRequest const& request) override;
+
   StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse> ReadModifyWriteRow(
       grpc::ClientContext& context,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) override;
