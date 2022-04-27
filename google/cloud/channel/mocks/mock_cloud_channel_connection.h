@@ -182,6 +182,72 @@ class MockCloudChannelServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>,
+      GetCustomerRepricingConfig,
+      (google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>,
+      ListCustomerRepricingConfigs,
+      (google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>,
+      CreateCustomerRepricingConfig,
+      (google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>,
+      UpdateCustomerRepricingConfig,
+      (google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteCustomerRepricingConfig,
+      (google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      GetChannelPartnerRepricingConfig,
+      (google::cloud::channel::v1::
+           GetChannelPartnerRepricingConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      ListChannelPartnerRepricingConfigs,
+      (google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      CreateChannelPartnerRepricingConfig,
+      (google::cloud::channel::v1::
+           CreateChannelPartnerRepricingConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      UpdateChannelPartnerRepricingConfig,
+      (google::cloud::channel::v1::
+           UpdateChannelPartnerRepricingConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(Status, DeleteChannelPartnerRepricingConfig,
+              (google::cloud::channel::v1::
+                   DeleteChannelPartnerRepricingConfigRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::channel::v1::Offer>, LookupOffer,
               (google::cloud::channel::v1::LookupOfferRequest const& request),
               (override));

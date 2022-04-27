@@ -179,6 +179,33 @@ TEST_F(MultipartitionPublisherNoneInitializedTest,
 }
 
 TEST_F(MultipartitionPublisherNoneInitializedTest,
+       PublishThenFirstPollInvalidValuePublisherAborts) {
+  InSequence seq;
+
+  PubSubMessage m0;
+  *m0.mutable_data() = "data1";
+  future<StatusOr<MessageMetadata>> message0 =
+      multipartition_publisher_->Publish(m0);
+
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
+      .WillOnce(
+          Return(ByMove(ReadyTopicPartitionsFuture(kOutOfBoundsPartition))));
+  auto start = multipartition_publisher_->Start();
+
+  Status expected_status =
+      Status(StatusCode::kInternal, "Returned partition count is too big: " +
+                                        std::to_string(kOutOfBoundsPartition));
+
+  EXPECT_EQ(start.get(), expected_status);
+
+  EXPECT_CALL(alarm_token_, Destroy);
+  multipartition_publisher_->Shutdown().get();
+
+  EXPECT_EQ(message0.get().status(), expected_status);
+}
+
+TEST_F(MultipartitionPublisherNoneInitializedTest,
        PublishAndShutdownBeforePublisherCreated) {
   InSequence seq;
 
@@ -206,11 +233,9 @@ TEST_F(MultipartitionPublisherNoneInitializedTest,
       ExamplePartitionsResponse(1));  // shouldn't do anything
 
   EXPECT_EQ(message0.get().status(),
-            Status(StatusCode::kFailedPrecondition,
-                   "Multipartition publisher shutdown."));
+            (Status{StatusCode::kAborted, "`Shutdown` called"}));
   EXPECT_EQ(message1.get().status(),
-            Status(StatusCode::kFailedPrecondition,
-                   "Multipartition publisher shutdown."));
+            (Status{StatusCode::kAborted, "`Shutdown` called"}));
 
   EXPECT_EQ(start.get(), Status());
 }
