@@ -23,6 +23,7 @@ pubsublite_unit_tests = [
     "internal/location_test.cc",
     "internal/multipartition_publisher_test.cc",
     "internal/partition_publisher_test.cc",
+    "internal/publisher_connection_impl_test.cc",
     "internal/resumable_async_streaming_read_write_rpc_test.cc",
     "internal/service_composite_test.cc",
     "internal/stream_factory_test.cc",
