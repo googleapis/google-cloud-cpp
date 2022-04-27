@@ -32,8 +32,9 @@ using ::google::cloud::rest_internal::BinaryDataAsDebugString;
 
 std::size_t const kMaxDataDebugSize = 48;
 
-extern "C" int CurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
-                                       std::size_t size, void* userptr) {
+extern "C" int RestCurlHandleDebugCallback(CURL*, curl_infotype type,
+                                           char* data, std::size_t size,
+                                           void* userptr) {
   auto* debug_info = reinterpret_cast<CurlHandle::DebugInfo*>(userptr);
   switch (type) {
     case CURLINFO_TEXT:
@@ -76,8 +77,8 @@ extern "C" int CurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
   return 0;
 }
 
-extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
-                                    curlsocktype purpose) {
+extern "C" int RestCurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
+                                        curlsocktype purpose) {
   auto errno_msg = [] { return google::cloud::internal::strerror(errno); };
   auto* options = reinterpret_cast<CurlHandle::SocketOptions*>(userdata);
   switch (purpose) {
@@ -146,7 +147,7 @@ CurlHandle::~CurlHandle() { FlushDebug(__func__); }
 void CurlHandle::SetSocketCallback(SocketOptions const& options) {
   socket_options_ = options;
   SetOption(CURLOPT_SOCKOPTDATA, &socket_options_);
-  SetOption(CURLOPT_SOCKOPTFUNCTION, &CurlSetSocketOptions);
+  SetOption(CURLOPT_SOCKOPTFUNCTION, &RestCurlSetSocketOptions);
 }
 
 std::int32_t CurlHandle::GetResponseCode() {
@@ -176,7 +177,7 @@ void CurlHandle::EnableLogging(bool enabled) {
   if (enabled) {
     debug_info_ = std::make_shared<DebugInfo>();
     SetOption(CURLOPT_DEBUGDATA, debug_info_.get());
-    SetOption(CURLOPT_DEBUGFUNCTION, &CurlHandleDebugCallback);
+    SetOption(CURLOPT_DEBUGFUNCTION, &RestCurlHandleDebugCallback);
     SetOption(CURLOPT_VERBOSE, 1L);
   } else {
     SetOption(CURLOPT_DEBUGDATA, nullptr);

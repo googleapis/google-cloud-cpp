@@ -24,6 +24,7 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #include <fstream>
 
@@ -523,6 +524,12 @@ TEST_F(GoogleCredentialsTest, LoadP12Credentials) {
   ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
   auto creds = GoogleDefaultCredentials();
+  if (creds.status().code() == StatusCode::kInvalidArgument &&
+      absl::StrContains(creds.status().message(), "error:0308010C")) {
+    // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
+    (void)std::remove(filename.c_str());
+    GTEST_SKIP();
+  }
   ASSERT_STATUS_OK(creds);
   auto* ptr = creds->get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));

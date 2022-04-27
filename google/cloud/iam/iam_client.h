@@ -111,12 +111,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L459}
   ///
   /// [google.iam.admin.v1.ListServiceAccountsRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L544}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L542}
   /// [google.iam.admin.v1.ServiceAccount]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L459}
   ///
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
       std::string const& name, Options opts = {});
@@ -126,16 +126,16 @@ class IAMClient {
   /// belongs to a specific project.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountsRequest,google/iam/admin/v1/iam.proto#L544}
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountsRequest,google/iam/admin/v1/iam.proto#L542}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L459}
   ///
   /// [google.iam.admin.v1.ListServiceAccountsRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L544}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L542}
   /// [google.iam.admin.v1.ServiceAccount]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L459}
   ///
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
       google::iam::admin::v1::ListServiceAccountsRequest request,
@@ -153,12 +153,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L459}
   ///
   /// [google.iam.admin.v1.GetServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L579}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L577}
   /// [google.iam.admin.v1.ServiceAccount]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L459}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
       std::string const& name, Options opts = {});
@@ -167,16 +167,16 @@ class IAMClient {
   /// Gets a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::GetServiceAccountRequest,google/iam/admin/v1/iam.proto#L579}
+  /// @googleapis_link{google::iam::admin::v1::GetServiceAccountRequest,google/iam/admin/v1/iam.proto#L577}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L459}
   ///
   /// [google.iam.admin.v1.GetServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L579}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L577}
   /// [google.iam.admin.v1.ServiceAccount]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L459}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
       google::iam::admin::v1::GetServiceAccountRequest const& request,
@@ -200,12 +200,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L459}
   ///
   /// [google.iam.admin.v1.CreateServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L521}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L519}
   /// [google.iam.admin.v1.ServiceAccount]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L459}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
       std::string const& name, std::string const& account_id,
@@ -216,16 +216,16 @@ class IAMClient {
   /// Creates a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::CreateServiceAccountRequest,google/iam/admin/v1/iam.proto#L521}
+  /// @googleapis_link{google::iam::admin::v1::CreateServiceAccountRequest,google/iam/admin/v1/iam.proto#L519}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L459}
   ///
   /// [google.iam.admin.v1.CreateServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L521}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L519}
   /// [google.iam.admin.v1.ServiceAccount]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L459}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
       google::iam::admin::v1::CreateServiceAccountRequest const& request,
@@ -235,16 +235,16 @@ class IAMClient {
   /// Patches a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::PatchServiceAccountRequest,google/iam/admin/v1/iam.proto#L616}
+  /// @googleapis_link{google::iam::admin::v1::PatchServiceAccountRequest,google/iam/admin/v1/iam.proto#L614}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L459}
   ///
   /// [google.iam.admin.v1.PatchServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L616}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L614}
   /// [google.iam.admin.v1.ServiceAccount]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L459}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
       google::iam::admin::v1::PatchServiceAccountRequest const& request,
@@ -280,7 +280,7 @@ class IAMClient {
   ///     backoff policies.
   ///
   /// [google.iam.admin.v1.DeleteServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L594}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L592}
   ///
   Status DeleteServiceAccount(std::string const& name, Options opts = {});
 
@@ -305,12 +305,12 @@ class IAMClient {
   /// delete the service account.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountRequest,google/iam/admin/v1/iam.proto#L594}
+  /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountRequest,google/iam/admin/v1/iam.proto#L592}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.iam.admin.v1.DeleteServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L594}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L592}
   ///
   Status DeleteServiceAccount(
       google::iam::admin::v1::DeleteServiceAccountRequest const& request,
@@ -327,16 +327,16 @@ class IAMClient {
   /// account that has been permanently removed.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::UndeleteServiceAccountRequest,google/iam/admin/v1/iam.proto#L623}
+  /// @googleapis_link{google::iam::admin::v1::UndeleteServiceAccountRequest,google/iam/admin/v1/iam.proto#L621}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::UndeleteServiceAccountResponse,google/iam/admin/v1/iam.proto#L631}
+  /// @googleapis_link{google::iam::admin::v1::UndeleteServiceAccountResponse,google/iam/admin/v1/iam.proto#L629}
   ///
   /// [google.iam.admin.v1.UndeleteServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L623}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L621}
   /// [google.iam.admin.v1.UndeleteServiceAccountResponse]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L631}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L629}
   ///
   StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
   UndeleteServiceAccount(
@@ -355,12 +355,12 @@ class IAMClient {
   /// this method to enable the service account.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::EnableServiceAccountRequest,google/iam/admin/v1/iam.proto#L637}
+  /// @googleapis_link{google::iam::admin::v1::EnableServiceAccountRequest,google/iam/admin/v1/iam.proto#L635}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.iam.admin.v1.EnableServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L637}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L635}
   ///
   Status EnableServiceAccount(
       google::iam::admin::v1::EnableServiceAccountRequest const& request,
@@ -388,12 +388,12 @@ class IAMClient {
   /// [DeleteServiceAccount][google.iam.admin.v1.IAM.DeleteServiceAccount].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::DisableServiceAccountRequest,google/iam/admin/v1/iam.proto#L647}
+  /// @googleapis_link{google::iam::admin::v1::DisableServiceAccountRequest,google/iam/admin/v1/iam.proto#L645}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.iam.admin.v1.DisableServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L647}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L645}
   ///
   Status DisableServiceAccount(
       google::iam::admin::v1::DisableServiceAccountRequest const& request,
@@ -416,12 +416,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L692}
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L690}
   ///
   /// [google.iam.admin.v1.ListServiceAccountKeysRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L657}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L655}
   /// [google.iam.admin.v1.ListServiceAccountKeysResponse]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L692}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L690}
   ///
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
@@ -436,16 +436,16 @@ class IAMClient {
   /// a service account.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysRequest,google/iam/admin/v1/iam.proto#L657}
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysRequest,google/iam/admin/v1/iam.proto#L655}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L692}
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L690}
   ///
   /// [google.iam.admin.v1.ListServiceAccountKeysRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L657}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L655}
   /// [google.iam.admin.v1.ListServiceAccountKeysResponse]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L692}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L690}
   ///
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
@@ -466,12 +466,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L739}
   ///
   /// [google.iam.admin.v1.GetServiceAccountKeyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L698}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L696}
   /// [google.iam.admin.v1.ServiceAccountKey]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L739}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
       std::string const& name,
@@ -482,16 +482,16 @@ class IAMClient {
   /// Gets a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::GetServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L698}
+  /// @googleapis_link{google::iam::admin::v1::GetServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L696}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L739}
   ///
   /// [google.iam.admin.v1.GetServiceAccountKeyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L698}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L696}
   /// [google.iam.admin.v1.ServiceAccountKey]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L739}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
       google::iam::admin::v1::GetServiceAccountKeyRequest const& request,
@@ -516,12 +516,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L739}
   ///
   /// [google.iam.admin.v1.CreateServiceAccountKeyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L791}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L789}
   /// [google.iam.admin.v1.ServiceAccountKey]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L739}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
       std::string const& name,
@@ -533,16 +533,16 @@ class IAMClient {
   /// Creates a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::CreateServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L791}
+  /// @googleapis_link{google::iam::admin::v1::CreateServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L789}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L739}
   ///
   /// [google.iam.admin.v1.CreateServiceAccountKeyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L791}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L789}
   /// [google.iam.admin.v1.ServiceAccountKey]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L739}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
       google::iam::admin::v1::CreateServiceAccountKeyRequest const& request,
@@ -553,16 +553,16 @@ class IAMClient {
   /// using a public key that you provide.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::UploadServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L816}
+  /// @googleapis_link{google::iam::admin::v1::UploadServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L814}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L739}
   ///
   /// [google.iam.admin.v1.UploadServiceAccountKeyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L816}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L814}
   /// [google.iam.admin.v1.ServiceAccountKey]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L739}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> UploadServiceAccountKey(
       google::iam::admin::v1::UploadServiceAccountKeyRequest const& request,
@@ -583,7 +583,7 @@ class IAMClient {
   ///     backoff policies.
   ///
   /// [google.iam.admin.v1.DeleteServiceAccountKeyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L832}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L830}
   ///
   Status DeleteServiceAccountKey(std::string const& name, Options opts = {});
 
@@ -593,12 +593,12 @@ class IAMClient {
   /// that have been issued based on the service account key.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L832}
+  /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L830}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.iam.admin.v1.DeleteServiceAccountKeyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L832}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L830}
   ///
   Status DeleteServiceAccountKey(
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request,
@@ -623,12 +623,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
@@ -647,16 +647,16 @@ class IAMClient {
   /// method.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
@@ -693,12 +693,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -750,16 +750,16 @@ class IAMClient {
   /// resources](https://cloud.google.com/iam/help/service-accounts/granting-access-to-service-accounts).
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -779,12 +779,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
   /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
@@ -795,16 +795,16 @@ class IAMClient {
   /// [ServiceAccount][google.iam.admin.v1.ServiceAccount].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
   /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
@@ -823,12 +823,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1002}
   ///
   /// [google.iam.admin.v1.QueryGrantableRolesRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1062}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1060}
   /// [google.iam.admin.v1.Role]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1002}
   ///
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
       std::string const& full_resource_name, Options opts = {});
@@ -839,16 +839,16 @@ class IAMClient {
   /// role.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::QueryGrantableRolesRequest,google/iam/admin/v1/iam.proto#L1062}
+  /// @googleapis_link{google::iam::admin::v1::QueryGrantableRolesRequest,google/iam/admin/v1/iam.proto#L1060}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1002}
   ///
   /// [google.iam.admin.v1.QueryGrantableRolesRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1062}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1060}
   /// [google.iam.admin.v1.Role]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1002}
   ///
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
       google::iam::admin::v1::QueryGrantableRolesRequest request,
@@ -859,16 +859,16 @@ class IAMClient {
   /// or every custom role that is defined for an organization or project.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::ListRolesRequest,google/iam/admin/v1/iam.proto#L1093}
+  /// @googleapis_link{google::iam::admin::v1::ListRolesRequest,google/iam/admin/v1/iam.proto#L1091}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1002}
   ///
   /// [google.iam.admin.v1.ListRolesRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1093}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1091}
   /// [google.iam.admin.v1.Role]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1002}
   ///
   StreamRange<google::iam::admin::v1::Role> ListRoles(
       google::iam::admin::v1::ListRolesRequest request, Options opts = {});
@@ -877,16 +877,16 @@ class IAMClient {
   /// Gets the definition of a [Role][google.iam.admin.v1.Role].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::GetRoleRequest,google/iam/admin/v1/iam.proto#L1152}
+  /// @googleapis_link{google::iam::admin::v1::GetRoleRequest,google/iam/admin/v1/iam.proto#L1150}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1002}
   ///
   /// [google.iam.admin.v1.GetRoleRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1152}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1150}
   /// [google.iam.admin.v1.Role]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1002}
   ///
   StatusOr<google::iam::admin::v1::Role> GetRole(
       google::iam::admin::v1::GetRoleRequest const& request, Options opts = {});
@@ -895,16 +895,16 @@ class IAMClient {
   /// Creates a new custom [Role][google.iam.admin.v1.Role].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::CreateRoleRequest,google/iam/admin/v1/iam.proto#L1184}
+  /// @googleapis_link{google::iam::admin::v1::CreateRoleRequest,google/iam/admin/v1/iam.proto#L1182}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1002}
   ///
   /// [google.iam.admin.v1.CreateRoleRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1184}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1182}
   /// [google.iam.admin.v1.Role]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1002}
   ///
   StatusOr<google::iam::admin::v1::Role> CreateRole(
       google::iam::admin::v1::CreateRoleRequest const& request,
@@ -914,16 +914,16 @@ class IAMClient {
   /// Updates the definition of a custom [Role][google.iam.admin.v1.Role].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::UpdateRoleRequest,google/iam/admin/v1/iam.proto#L1219}
+  /// @googleapis_link{google::iam::admin::v1::UpdateRoleRequest,google/iam/admin/v1/iam.proto#L1217}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1002}
   ///
   /// [google.iam.admin.v1.UpdateRoleRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1219}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1217}
   /// [google.iam.admin.v1.Role]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1002}
   ///
   StatusOr<google::iam::admin::v1::Role> UpdateRole(
       google::iam::admin::v1::UpdateRoleRequest const& request,
@@ -950,16 +950,16 @@ class IAMClient {
   /// permanently removed.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::DeleteRoleRequest,google/iam/admin/v1/iam.proto#L1250}
+  /// @googleapis_link{google::iam::admin::v1::DeleteRoleRequest,google/iam/admin/v1/iam.proto#L1248}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1002}
   ///
   /// [google.iam.admin.v1.DeleteRoleRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1250}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1248}
   /// [google.iam.admin.v1.Role]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1002}
   ///
   StatusOr<google::iam::admin::v1::Role> DeleteRole(
       google::iam::admin::v1::DeleteRoleRequest const& request,
@@ -969,16 +969,16 @@ class IAMClient {
   /// Undeletes a custom [Role][google.iam.admin.v1.Role].
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::UndeleteRoleRequest,google/iam/admin/v1/iam.proto#L1278}
+  /// @googleapis_link{google::iam::admin::v1::UndeleteRoleRequest,google/iam/admin/v1/iam.proto#L1276}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1002}
   ///
   /// [google.iam.admin.v1.UndeleteRoleRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1278}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1276}
   /// [google.iam.admin.v1.Role]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1002}
   ///
   StatusOr<google::iam::admin::v1::Role> UndeleteRole(
       google::iam::admin::v1::UndeleteRoleRequest const& request,
@@ -990,16 +990,16 @@ class IAMClient {
   /// resource.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::QueryTestablePermissionsRequest,google/iam/admin/v1/iam.proto#L1361}
+  /// @googleapis_link{google::iam::admin::v1::QueryTestablePermissionsRequest,google/iam/admin/v1/iam.proto#L1359}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::Permission,google/iam/admin/v1/iam.proto#L1306}
+  /// @googleapis_link{google::iam::admin::v1::Permission,google/iam/admin/v1/iam.proto#L1304}
   ///
   /// [google.iam.admin.v1.QueryTestablePermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1361}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1359}
   /// [google.iam.admin.v1.Permission]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1306}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1304}
   ///
   StreamRange<google::iam::admin::v1::Permission> QueryTestablePermissions(
       google::iam::admin::v1::QueryTestablePermissionsRequest request,
@@ -1013,16 +1013,16 @@ class IAMClient {
   /// documentation](https://cloud.google.com/logging/docs/audit).
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::QueryAuditableServicesRequest,google/iam/admin/v1/iam.proto#L1391}
+  /// @googleapis_link{google::iam::admin::v1::QueryAuditableServicesRequest,google/iam/admin/v1/iam.proto#L1389}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::QueryAuditableServicesResponse,google/iam/admin/v1/iam.proto#L1402}
+  /// @googleapis_link{google::iam::admin::v1::QueryAuditableServicesResponse,google/iam/admin/v1/iam.proto#L1400}
   ///
   /// [google.iam.admin.v1.QueryAuditableServicesRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1391}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1389}
   /// [google.iam.admin.v1.QueryAuditableServicesResponse]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1402}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1400}
   ///
   StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
   QueryAuditableServices(
@@ -1038,16 +1038,16 @@ class IAMClient {
   /// code, even if the linter detects an issue in the IAM policy.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::admin::v1::LintPolicyRequest,google/iam/admin/v1/iam.proto#L1415}
+  /// @googleapis_link{google::iam::admin::v1::LintPolicyRequest,google/iam/admin/v1/iam.proto#L1413}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::admin::v1::LintPolicyResponse,google/iam/admin/v1/iam.proto#L1513}
+  /// @googleapis_link{google::iam::admin::v1::LintPolicyResponse,google/iam/admin/v1/iam.proto#L1511}
   ///
   /// [google.iam.admin.v1.LintPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1415}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1413}
   /// [google.iam.admin.v1.LintPolicyResponse]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1513}
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1511}
   ///
   StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
       google::iam::admin::v1::LintPolicyRequest const& request,

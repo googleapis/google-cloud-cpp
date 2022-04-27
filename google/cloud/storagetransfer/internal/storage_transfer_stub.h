@@ -74,6 +74,27 @@ class StorageTransferServiceStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::storagetransfer::v1::RunTransferJobRequest const& request) = 0;
 
+  virtual StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
+      grpc::ClientContext& context,
+      google::storagetransfer::v1::CreateAgentPoolRequest const& request) = 0;
+
+  virtual StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
+      grpc::ClientContext& context,
+      google::storagetransfer::v1::UpdateAgentPoolRequest const& request) = 0;
+
+  virtual StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
+      grpc::ClientContext& context,
+      google::storagetransfer::v1::GetAgentPoolRequest const& request) = 0;
+
+  virtual StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
+  ListAgentPools(
+      grpc::ClientContext& context,
+      google::storagetransfer::v1::ListAgentPoolsRequest const& request) = 0;
+
+  virtual Status DeleteAgentPool(
+      grpc::ClientContext& context,
+      google::storagetransfer::v1::DeleteAgentPoolRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -135,6 +156,30 @@ class DefaultStorageTransferServiceStub : public StorageTransferServiceStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::storagetransfer::v1::RunTransferJobRequest const& request)
+      override;
+
+  StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
+      grpc::ClientContext& client_context,
+      google::storagetransfer::v1::CreateAgentPoolRequest const& request)
+      override;
+
+  StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
+      grpc::ClientContext& client_context,
+      google::storagetransfer::v1::UpdateAgentPoolRequest const& request)
+      override;
+
+  StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
+      grpc::ClientContext& client_context,
+      google::storagetransfer::v1::GetAgentPoolRequest const& request) override;
+
+  StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse> ListAgentPools(
+      grpc::ClientContext& client_context,
+      google::storagetransfer::v1::ListAgentPoolsRequest const& request)
+      override;
+
+  Status DeleteAgentPool(
+      grpc::ClientContext& client_context,
+      google::storagetransfer::v1::DeleteAgentPoolRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

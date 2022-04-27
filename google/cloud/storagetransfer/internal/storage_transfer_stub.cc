@@ -134,6 +134,68 @@ DefaultStorageTransferServiceStub::AsyncRunTransferJob(
       request, std::move(context));
 }
 
+StatusOr<google::storagetransfer::v1::AgentPool>
+DefaultStorageTransferServiceStub::CreateAgentPool(
+    grpc::ClientContext& client_context,
+    google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
+  google::storagetransfer::v1::AgentPool response;
+  auto status =
+      grpc_stub_->CreateAgentPool(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+DefaultStorageTransferServiceStub::UpdateAgentPool(
+    grpc::ClientContext& client_context,
+    google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
+  google::storagetransfer::v1::AgentPool response;
+  auto status =
+      grpc_stub_->UpdateAgentPool(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+DefaultStorageTransferServiceStub::GetAgentPool(
+    grpc::ClientContext& client_context,
+    google::storagetransfer::v1::GetAgentPoolRequest const& request) {
+  google::storagetransfer::v1::AgentPool response;
+  auto status = grpc_stub_->GetAgentPool(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
+DefaultStorageTransferServiceStub::ListAgentPools(
+    grpc::ClientContext& client_context,
+    google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
+  google::storagetransfer::v1::ListAgentPoolsResponse response;
+  auto status = grpc_stub_->ListAgentPools(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultStorageTransferServiceStub::DeleteAgentPool(
+    grpc::ClientContext& client_context,
+    google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteAgentPool(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageTransferServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -41,6 +41,10 @@ class PublisherConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency PublishChannelConnectionEvents(
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency PublishEvents(
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<PublisherConnectionIdempotencyPolicy>

@@ -69,9 +69,14 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
         pubsub_internal::DefaultBatchSink::Create(stub, cq, opts);
     if (opts.get<pubsub::MessageOrderingOption>()) {
       auto factory = [topic, opts, sink, cq](std::string const& key) {
+        auto used_sink = sink;
+        if (!key.empty()) {
+          // Only wrap the sink if there is an ordering key.
+          used_sink = pubsub_internal::SequentialBatchSink::Create(
+              std::move(used_sink));
+        }
         return pubsub_internal::BatchingPublisherConnection::Create(
-            topic, opts, key,
-            pubsub_internal::SequentialBatchSink::Create(sink), cq);
+            topic, opts, key, std::move(used_sink), cq);
       };
       return pubsub_internal::OrderingKeyPublisherConnection::Create(
           std::move(factory));

@@ -19,7 +19,6 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using google::cloud::pubsublite::FailureHandler;
 using google::cloud::pubsublite::MessageMetadata;
 using google::cloud::pubsublite::PublishMessageTransformer;
 
@@ -27,20 +26,38 @@ PublisherConnectionImpl::PublisherConnectionImpl(
     std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
         google::cloud::pubsublite::MessageMetadata>>
         publisher,
-    PublishMessageTransformer transformer,
-    FailureHandler const& failure_handler)
+    PublishMessageTransformer transformer)
     : publisher_{std::move(publisher)},
-      service_composite_{publisher_.get()},
-      message_transformer_{std::move(transformer)} {
-  service_composite_.Start().then([=](future<Status> f) {
-    auto status = f.get();
-    if (status.ok()) return;
-    failure_handler(std::move(status));
+      message_transformer_{std::move(transformer)},
+      service_composite_{publisher_.get()} {
+  // memory safe since this will at latest occur in the downcall of
+  // `ServiceComposite::Shutdown`
+  service_composite_.Start().then([this](future<Status> f) {
+    Status status = f.get();
+    if (!status.ok()) {
+      GCP_LOG(WARNING) << "Publisher failed permanently: " << status;
+    }
+    // shutdown in case of failure to finish all outstanding `Publish` futures
+    auto shutdown = service_composite_.Shutdown();
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      if (!shutdown_) {
+        shutdown_ = std::move(shutdown);
+      }
+    }
   });
 }
 
 PublisherConnectionImpl::~PublisherConnectionImpl() {
-  service_composite_.Shutdown().get();
+  absl::optional<future<void>> shutdown;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    if (shutdown_) {
+      shutdown = std::move(shutdown_);
+    }
+  }
+  if (!shutdown) shutdown = service_composite_.Shutdown();
+  shutdown->get();
 }
 
 future<StatusOr<std::string>> PublisherConnectionImpl::Publish(

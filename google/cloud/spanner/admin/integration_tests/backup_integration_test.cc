@@ -166,17 +166,6 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
 
   auto backup = backup_future.get();
   {
-    // TODO(#8594): Remove this when we know how to deal with the issue.
-    auto matcher = testing_util::StatusIs(
-        StatusCode::kFailedPrecondition,
-        testing::HasSubstr("exceeded the maximum timestamp staleness"));
-    testing::StringMatchResultListener listener;
-    if (matcher.impl().MatchAndExplain(backup, &listener)) {
-      EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db.FullName()));
-      GTEST_SKIP();
-    }
-  }
-  {
     // TODO(#8616): Remove this when we know how to deal with the issue.
     auto matcher = testing_util::StatusIs(
         StatusCode::kDeadlineExceeded,

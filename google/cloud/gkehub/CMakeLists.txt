@@ -35,28 +35,18 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/gkehub.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/gkehub.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_gkehub_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/gkehub/v1/configmanagement/configmanagement.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/gkehub/v1/multiclusteringress/multiclusteringress.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/gkehub/v1/feature.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/gkehub/v1/membership.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/gkehub/v1/service.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_gkehub_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(gkehub_protos)
-target_link_libraries(
-    google_cloud_cpp_gkehub_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos)
+target_link_libraries(google_cloud_cpp_gkehub_protos PUBLIC ${proto_deps})
 
 file(
     GLOB source_files

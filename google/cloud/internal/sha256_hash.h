@@ -27,13 +27,14 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-/// Return the SHA256 hash (as raw bytes) of @p str.
 // (8 bits per byte) * 32 bytes = 256 bits
-std::array<std::uint8_t, 32> Sha256Hash(std::string const& str);
+using Sha256Type = std::array<std::uint8_t, 32>;
+
+/// Return the SHA256 hash (as raw bytes) of @p str.
+Sha256Type Sha256Hash(std::string const& str);
 
 /// Return the SHA256 hash (as raw bytes) of @p bytes.
-// (8 bits per byte) * 32 bytes = 256 bits
-std::array<std::uint8_t, 32> Sha256Hash(std::vector<std::uint8_t> const& bytes);
+Sha256Type Sha256Hash(std::vector<std::uint8_t> const& bytes);
 
 /// Return @p bytes encoded as a lowercase hexadecimal string.
 std::string HexEncode(absl::Span<std::uint8_t const> bytes);

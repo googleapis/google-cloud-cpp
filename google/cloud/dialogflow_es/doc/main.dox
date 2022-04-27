@@ -41,8 +41,56 @@ which should give you a taste of the Dialogflow API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_ EDIT HERE _ENDPOINT=...` changes the default endpoint
-  ( EDIT HERE .googleapis.com) used by ` EDIT HERE Connection`.
+- `GOOGLE_CLOUD_CPP_AGENTS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `AgentsConnection`.
+
+- `GOOGLE_CLOUD_CPP_ANSWER_RECORDS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `AnswerRecordsConnection`.
+
+- `GOOGLE_CLOUD_CPP_CONTEXTS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `ContextsConnection`.
+
+- `GOOGLE_CLOUD_CPP_CONVERSATION_DATASETS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `ConversationDatasetsConnection`.
+
+- `GOOGLE_CLOUD_CPP_CONVERSATION_MODELS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `ConversationModelsConnection`.
+
+- `GOOGLE_CLOUD_CPP_CONVERSATION_PROFILES_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `ConversationProfilesConnection`.
+
+- `GOOGLE_CLOUD_CPP_CONVERSATIONS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `ConversationsConnection`.
+
+- `GOOGLE_CLOUD_CPP_DOCUMENTS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `DocumentsConnection`.
+
+- `GOOGLE_CLOUD_CPP_ENTITY_TYPES_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `EntityTypesConnection`.
+
+- `GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENTS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `EnvironmentsConnection`.
+
+- `GOOGLE_CLOUD_CPP_FULFILLMENTS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `FulfillmentsConnection`.
+
+- `GOOGLE_CLOUD_CPP_INTENTS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `IntentsConnection`.
+
+- `GOOGLE_CLOUD_CPP_KNOWLEDGE_BASES_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `KnowledgeBasesConnection`.
+
+- `GOOGLE_CLOUD_CPP_PARTICIPANTS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `ParticipantsConnection`.
+
+- `GOOGLE_CLOUD_CPP_SESSION_ENTITY_TYPES_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `SessionEntityTypesConnection`.
+
+- `GOOGLE_CLOUD_CPP_SESSIONS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `SessionsConnection`.
+
+- `GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT=...` changes the default endpoint
+  (dialogflow.googleapis.com) used by `VersionsConnection`.
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

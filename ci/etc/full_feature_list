@@ -18,6 +18,7 @@ container
 containeranalysis
 datacatalog
 datamigration
+dataplex
 dataproc
 debugger
 dialogflow_cx

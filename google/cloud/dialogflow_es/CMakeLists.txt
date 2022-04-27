@@ -107,11 +107,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(dialogflow_es_quickstart)
     add_test(
         NAME dialogflow_es_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:dialogflow_es_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:dialogflow_es_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(dialogflow_es_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

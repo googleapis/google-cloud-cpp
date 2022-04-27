@@ -32,7 +32,7 @@ using ::testing::Eq;
 using ::testing::UnorderedPointwise;
 
 TEST(SqlStatementTest, SqlAccessor) {
-  char const* statement = "select * from foo";
+  char const* statement = "SELECT * FROM foo";
   SqlStatement stmt(statement);
   EXPECT_EQ(statement, stmt.sql());
 }
@@ -40,7 +40,7 @@ TEST(SqlStatementTest, SqlAccessor) {
 TEST(SqlStatementTest, ParamsAccessor) {
   SqlStatement::ParamType params = {{"last", Value("Blues")},
                                     {"first", Value("Elwood")}};
-  SqlStatement stmt("select * from foo", params);
+  SqlStatement stmt("SELECT * FROM foo", params);
   EXPECT_TRUE(params == stmt.params());
 }
 
@@ -48,7 +48,7 @@ TEST(SqlStatementTest, ParameterNames) {
   std::vector<std::string> expected = {"first", "last"};
   SqlStatement::ParamType params = {{"last", Value("Blues")},
                                     {"first", Value("Elwood")}};
-  SqlStatement stmt("select * from foo", params);
+  SqlStatement stmt("SELECT * FROM foo", params);
   auto results = stmt.ParameterNames();
   EXPECT_THAT(expected, UnorderedPointwise(Eq(), results));
 }
@@ -57,7 +57,7 @@ TEST(SqlStatementTest, GetParameterExists) {
   auto expected = Value("Elwood");
   SqlStatement::ParamType params = {{"last", Value("Blues")},
                                     {"first", Value("Elwood")}};
-  SqlStatement stmt("select * from foo", params);
+  SqlStatement stmt("SELECT * FROM foo", params);
   auto results = stmt.GetParameter("first");
   ASSERT_STATUS_OK(results);
   EXPECT_EQ(expected, *results);
@@ -67,14 +67,14 @@ TEST(SqlStatementTest, GetParameterExists) {
 TEST(SqlStatementTest, GetParameterNotExist) {
   SqlStatement::ParamType params = {{"last", Value("Blues")},
                                     {"first", Value("Elwood")}};
-  SqlStatement stmt("select * from foo", params);
+  SqlStatement stmt("SELECT * FROM foo", params);
   auto results = stmt.GetParameter("middle");
   EXPECT_THAT(results,
               StatusIs(StatusCode::kNotFound, "No such parameter: middle"));
 }
 
 TEST(SqlStatementTest, OStreamOperatorNoParams) {
-  SqlStatement s1("SELECT * FROM TABLE FOO;");
+  SqlStatement s1("SELECT * FROM foo;");
   std::stringstream ss;
   ss << s1;
   EXPECT_EQ(s1.sql(), ss.str());
@@ -83,13 +83,13 @@ TEST(SqlStatementTest, OStreamOperatorNoParams) {
 TEST(SqlStatementTest, OStreamOperatorWithParams) {
   SqlStatement::ParamType params = {{"last", Value("Blues")},
                                     {"first", Value("Elwood")}};
-  SqlStatement stmt("select * from foo", params);
+  SqlStatement stmt("SELECT * FROM foo", params);
   std::string expected1(
-      "select * from foo\n"
+      "SELECT * FROM foo\n"
       "[param]: {first=Elwood}\n"
       "[param]: {last=Blues}");
   std::string expected2(
-      "select * from foo\n"
+      "SELECT * FROM foo\n"
       "[param]: {last=Blues}\n"
       "[param]: {first=Elwood}");
   std::stringstream ss;
@@ -112,8 +112,8 @@ TEST(SqlStatementTest, Equality) {
 }
 
 TEST(SqlStatementTest, ToProtoStatementOnly) {
-  SqlStatement stmt("select * from foo");
-  auto constexpr kText = R"pb(sql: "select * from foo")pb";
+  SqlStatement stmt("SELECT * FROM foo");
+  auto constexpr kText = R"pb(sql: "SELECT * FROM foo")pb";
   spanner_internal::SqlStatementProto expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(spanner_internal::ToProto(std::move(stmt)),

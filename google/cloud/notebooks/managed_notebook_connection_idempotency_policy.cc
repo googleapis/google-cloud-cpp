@@ -88,6 +88,12 @@ class DefaultManagedNotebookServiceConnectionIdempotencyPolicy
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
+
+  Idempotency RefreshRuntimeTokenInternal(
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
 };
 }  // namespace
 

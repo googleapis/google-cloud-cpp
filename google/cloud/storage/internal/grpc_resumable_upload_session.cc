@@ -45,13 +45,24 @@ GrpcResumableUploadSession::GrpcResumableUploadSession(
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadChunk(
     ConstBufferSequence const& payload) {
-  return UploadGeneric(payload, false, {});
+  auto request = UploadChunkRequest(session_id_params_.upload_id,
+                                    committed_size_, payload);
+  request.set_multiple_options(
+      request_.GetOption<UserProject>(), request_.GetOption<Fields>(),
+      request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
+  return HandleResponse(client_->UploadChunk(request));
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
     ConstBufferSequence const& payload, std::uint64_t,
     HashValues const& full_object_hashes) {
-  return UploadGeneric(payload, true, full_object_hashes);
+  auto request =
+      UploadChunkRequest(session_id_params_.upload_id, committed_size_, payload,
+                         full_object_hashes);
+  request.set_multiple_options(
+      request_.GetOption<UserProject>(), request_.GetOption<Fields>(),
+      request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
+  return HandleResponse(client_->UploadChunk(request));
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
@@ -67,85 +78,20 @@ std::string const& GrpcResumableUploadSession::session_id() const {
   return session_url_;
 }
 
-StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
-    ConstBufferSequence buffers, bool final_chunk, HashValues const& hashes) {
-  auto context = absl::make_unique<grpc::ClientContext>();
-  ApplyQueryParameters(*context, request_, "resource");
-  auto writer = client_->CreateUploadWriter(std::move(context));
+StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::HandleResponse(
+    StatusOr<QueryResumableUploadResponse> response) {
+  if (!response) return std::move(response).status();
+  committed_size_ = response->committed_size.value_or(0);
 
-  std::size_t const maximum_chunk_size =
-      google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
-  std::string chunk;
-  chunk.reserve(maximum_chunk_size);
-  auto flush_chunk = [&](bool has_more) {
-    if (chunk.size() < maximum_chunk_size && has_more) return true;
-    if (chunk.empty() && !final_chunk) return true;
-
-    google::storage::v2::WriteObjectRequest request;
-    request.set_upload_id(session_id_params_.upload_id);
-    request.set_write_offset(
-        static_cast<google::protobuf::int64>(committed_size_));
-    request.set_finish_write(false);
-
-    auto& data = *request.mutable_checksummed_data();
-    auto const n = chunk.size();
-    data.set_content(std::move(chunk));
-    chunk.clear();
-    chunk.reserve(maximum_chunk_size);
-    data.set_crc32c(crc32c::Crc32c(data.content()));
-
-    auto options = grpc::WriteOptions();
-    if (final_chunk && !has_more) {
-      if (!hashes.md5.empty()) {
-        auto md5 = GrpcObjectMetadataParser::MD5ToProto(hashes.md5);
-        if (md5) {
-          request.mutable_object_checksums()->set_md5_hash(*std::move(md5));
-        }
-      }
-      if (!hashes.crc32c.empty()) {
-        auto crc32c = GrpcObjectMetadataParser::Crc32cToProto(hashes.crc32c);
-        if (crc32c) {
-          request.mutable_object_checksums()->set_crc32c(*std::move(crc32c));
-        }
-      }
-      request.set_finish_write(true);
-      options.set_last_message();
-    }
-
-    if (!writer->Write(request, options)) return false;
-    // After the first message, clear the object specification and checksums,
-    // there is no need to resend it.
-    request.clear_write_object_spec();
-    request.clear_object_checksums();
-
-    committed_size_ += n;
-    return true;
-  };
-
-  auto close_writer = [&]() -> StatusOr<ResumableUploadResponse> {
-    auto result = writer->Close();
-    writer.reset();
-    if (!result) return std::move(result).status();
-    return GrpcObjectRequestParser::FromProto(*std::move(result),
-                                              client_->options());
-  };
-
-  do {
-    std::size_t consumed = 0;
-    for (auto const& b : buffers) {
-      // flush_chunk() guarantees that maximum_chunk_size < chunk.size()
-      auto capacity = maximum_chunk_size - chunk.size();
-      if (capacity == 0) break;
-      auto n = (std::min)(capacity, b.size());
-      chunk.append(b.data(), b.data() + n);
-      consumed += n;
-    }
-    PopFrontBytes(buffers, consumed);
-
-    if (!flush_chunk(!buffers.empty())) return close_writer();
-  } while (!buffers.empty());
-
-  return close_writer();
+  auto const upload_state = response->payload.has_value()
+                                ? ResumableUploadResponse::kDone
+                                : ResumableUploadResponse::kInProgress;
+  return ResumableUploadResponse{
+      /*.upload_session_url=*/session_url_,
+      /*.upload_state=*/upload_state,
+      /*.committed_size=*/std::move(response->committed_size),
+      /*.payload=*/std::move(response->payload),
+      /*.annotations=*/std::string{}};
 }
 
 }  // namespace internal
