@@ -168,6 +168,7 @@ class ParallelUploadTest
       absl::optional<std::string> const& resumable_session_id =
           absl::optional<std::string>()) {
     auto id = resumable_session_id.value_or(CreateSessionId());
+    auto saved = SaveSessionId(id);
     EXPECT_CALL(*mock_, CreateResumableSession(Property(
                             &ResumableUploadRequest::object_name, object_name)))
         .WillOnce([=](internal::ResumableUploadRequest const& request) {
@@ -175,7 +176,6 @@ class ParallelUploadTest
 
           auto session =
               absl::make_unique<testing::MockResumableUploadSession>();
-          auto saved = SaveSessionId(id);
           EXPECT_CALL(*session, session_id).WillRepeatedly(ReturnRef(*saved));
           EXPECT_CALL(*session, UploadFinalChunk)
               .WillRepeatedly(Return(status));
@@ -194,6 +194,7 @@ class ParallelUploadTest
       std::string const& object_name, int generation,
       absl::optional<std::string> const& expected_content = absl::nullopt) {
     auto id = CreateSessionId();
+    auto saved = SaveSessionId(id);
     EXPECT_CALL(*mock_, CreateResumableSession(Property(
                             &ResumableUploadRequest::object_name, object_name)))
         .WillOnce([=](internal::ResumableUploadRequest const& request) {
@@ -201,7 +202,6 @@ class ParallelUploadTest
 
           auto session =
               absl::make_unique<testing::MockResumableUploadSession>();
-          auto saved = SaveSessionId(id);
           EXPECT_CALL(*session, session_id).WillRepeatedly(ReturnRef(*saved));
           EXPECT_CALL(*session, UploadFinalChunk)
               .WillRepeatedly([=](ConstBufferSequence const& content,
@@ -231,6 +231,7 @@ class ParallelUploadTest
       std::string const& object_name, int generation, std::string id,
       absl::optional<std::uint64_t> const& committed_size = absl::nullopt,
       absl::optional<std::string> const& expected_content = absl::nullopt) {
+    auto saved = SaveSessionId(id);
     EXPECT_CALL(*mock_, CreateResumableSession(Property(
                             &ResumableUploadRequest::object_name, object_name)))
         .WillOnce([=](internal::ResumableUploadRequest const& request) {
@@ -240,7 +241,6 @@ class ParallelUploadTest
 
           auto session =
               absl::make_unique<testing::MockResumableUploadSession>();
-          auto saved = SaveSessionId(id);
           EXPECT_CALL(*session, session_id).WillRepeatedly(ReturnRef(*saved));
           EXPECT_CALL(*session, UploadFinalChunk)
               .WillRepeatedly([=](ConstBufferSequence const& content,
@@ -282,6 +282,7 @@ class ParallelUploadTest
 
   std::string ExpectCreateSessionToSuspend(std::string const& object_name) {
     auto id = CreateSessionId();
+    auto saved = SaveSessionId(id);
     EXPECT_CALL(*mock_, CreateResumableSession(Property(
                             &ResumableUploadRequest::object_name, object_name)))
         .WillOnce([=](internal::ResumableUploadRequest const& request) {
@@ -289,7 +290,6 @@ class ParallelUploadTest
 
           auto session =
               absl::make_unique<testing::MockResumableUploadSession>();
-          auto saved = SaveSessionId(id);
           EXPECT_CALL(*session, session_id).WillRepeatedly(ReturnRef(*saved));
           return CreateResumableSessionResponse{
               std::move(session),
@@ -305,6 +305,7 @@ class ParallelUploadTest
   std::string ExpectResumeSessionToSuspend(
       std::string const& object_name, std::string id,
       absl::optional<std::uint64_t> committed_size) {
+    auto saved = SaveSessionId(id);
     EXPECT_CALL(*mock_, CreateResumableSession(Property(
                             &ResumableUploadRequest::object_name, object_name)))
         .WillOnce([=](ResumableUploadRequest const& r) {
@@ -312,7 +313,6 @@ class ParallelUploadTest
                       id);
           auto session =
               absl::make_unique<testing::MockResumableUploadSession>();
-          auto saved = SaveSessionId(id);
           EXPECT_CALL(*session, session_id).WillRepeatedly(ReturnRef(*saved));
           return CreateResumableSessionResponse{
               std::move(session),
