@@ -33,6 +33,83 @@ BigtableMetadata::BigtableMetadata(std::shared_ptr<BigtableStub> child)
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::ReadRowsResponse>>
+BigtableMetadata::ReadRows(
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::ReadRowsRequest const& request) {
+  SetMetadata(*context, "table_name=" + request.table_name());
+  return child_->ReadRows(std::move(context), request);
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::SampleRowKeysResponse>>
+BigtableMetadata::SampleRowKeys(
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::SampleRowKeysRequest const& request) {
+  SetMetadata(*context, "table_name=" + request.table_name());
+  return child_->SampleRowKeys(std::move(context), request);
+}
+
+StatusOr<google::bigtable::v2::MutateRowResponse> BigtableMetadata::MutateRow(
+    grpc::ClientContext& context,
+    google::bigtable::v2::MutateRowRequest const& request) {
+  SetMetadata(context, "table_name=" + request.table_name());
+  return child_->MutateRow(context, request);
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::MutateRowsResponse>>
+BigtableMetadata::MutateRows(
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::MutateRowsRequest const& request) {
+  SetMetadata(*context, "table_name=" + request.table_name());
+  return child_->MutateRows(std::move(context), request);
+}
+
+StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
+BigtableMetadata::CheckAndMutateRow(
+    grpc::ClientContext& context,
+    google::bigtable::v2::CheckAndMutateRowRequest const& request) {
+  SetMetadata(context, "table_name=" + request.table_name());
+  return child_->CheckAndMutateRow(context, request);
+}
+
+StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
+BigtableMetadata::ReadModifyWriteRow(
+    grpc::ClientContext& context,
+    google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+  SetMetadata(context, "table_name=" + request.table_name());
+  return child_->ReadModifyWriteRow(context, request);
+}
+
+future<StatusOr<google::bigtable::v2::MutateRowResponse>>
+BigtableMetadata::AsyncMutateRow(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::MutateRowRequest const& request) {
+  SetMetadata(*context, "table_name=" + request.table_name());
+  return child_->AsyncMutateRow(cq, std::move(context), request);
+}
+
+future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
+BigtableMetadata::AsyncCheckAndMutateRow(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::CheckAndMutateRowRequest const& request) {
+  SetMetadata(*context, "table_name=" + request.table_name());
+  return child_->AsyncCheckAndMutateRow(cq, std::move(context), request);
+}
+
+future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
+BigtableMetadata::AsyncReadModifyWriteRow(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+  SetMetadata(*context, "table_name=" + request.table_name());
+  return child_->AsyncReadModifyWriteRow(cq, std::move(context), request);
+}
+
 void BigtableMetadata::SetMetadata(grpc::ClientContext& context,
                                    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
