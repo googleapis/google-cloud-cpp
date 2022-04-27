@@ -25,8 +25,7 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-constexpr char kEventTimestampAttribute[] =
-    "x-goog-pubsublite-event-time-timestamp-proto";
+std::string EventTimestampAttribute();
 
 StatusOr<google::cloud::pubsublite::v1::PubSubMessage>
 DefaultPublishMessageTransformer(const google::cloud::pubsub::Message& message);

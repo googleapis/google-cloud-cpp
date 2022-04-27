@@ -41,13 +41,16 @@ class StreamRetryPolicy : public google::cloud::internal::RetryPolicy {
   class StatusCodeHash {
    public:
     std::size_t operator()(StatusCode const& code) const {
-      return std::hash<std::uint8_t>{}(static_cast<std::uint8_t>(code));
+      return std::hash<int>{}(static_cast<int>(code));
     }
   };
+  // referenced
+  // https://github.com/googleapis/java-pubsublite/blob/main/google-cloud-pubsublite/src/main/java/com/google/cloud/pubsublite/ErrorCodes.java
   std::unordered_set<StatusCode, StatusCodeHash> retryable_codes_{
       StatusCode::kDeadlineExceeded, StatusCode::kAborted,
       StatusCode::kInternal,         StatusCode::kUnavailable,
-      StatusCode::kUnknown,          StatusCode::kResourceExhausted};
+      StatusCode::kUnknown,          StatusCode::kResourceExhausted,
+      StatusCode::kCancelled};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

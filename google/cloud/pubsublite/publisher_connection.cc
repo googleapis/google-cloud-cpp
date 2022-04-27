@@ -40,7 +40,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using google::cloud::internal::Base64Encoder;
 using google::cloud::internal::MakeBackgroundThreadsFactory;
-
 using google::cloud::pubsub::PublisherConnection;
 using google::cloud::pubsub_internal::ContainingPublisherConnection;
 
@@ -68,7 +67,7 @@ using google::cloud::pubsublite::v1::PublishResponse;
 
 using google::protobuf::Struct;
 
-BatchingOptions CreateBatchingOptions(Options const& opts) {
+BatchingOptions MakeBatchingOptions(Options const& opts) {
   BatchingOptions batching_options;
   if (opts.has<MaxBatchMessagesOption>()) {
     batching_options.set_maximum_batch_message_count(
@@ -126,18 +125,18 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
     opts.set<EndpointOption>(*std::move(endpoint));
   }
   opts = google::cloud::internal::PopulateCommonOptions(
-      std::move(opts), "GOOGLE_CLOUD_PUBSUBLITE_IGNORED_OVERRIDE", "",
+      std::move(opts), /*endpoint_env_var=*/{}, /*emulator_env_var=*/{},
       "pubsublite.googleapis.com");
 
   std::unique_ptr<BackgroundThreads> background_threads =
       MakeBackgroundThreadsFactory(opts)();
   CompletionQueue cq = background_threads->cq();
-  std::shared_ptr<BackoffPolicy const> backoff_policy =
-      std::make_shared<ExponentialBackoffPolicy>(std::chrono::milliseconds{10},
-                                                 std::chrono::seconds{10}, 2.0);
-  AsyncSleeper sleeper = [cq](
-                             std::chrono::milliseconds sleep_duration) mutable {
-    return cq.MakeRelativeTimer(sleep_duration)
+
+  // TODO(18suresha): consider supporting `BackoffPolicyOption`
+  auto const backoff_policy = std::make_shared<ExponentialBackoffPolicy>(
+      std::chrono::milliseconds{10}, std::chrono::seconds{10}, 2.0);
+  AsyncSleeper sleeper = [cq](std::chrono::milliseconds backoff_time) mutable {
+    return cq.MakeRelativeTimer(backoff_time)
         .then([](future<StatusOr<std::chrono::system_clock::time_point>> f) {
           auto status = f.get();
           if (!status.ok()) {
@@ -148,7 +147,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
   };
 
   auto publisher_service_stub = CreateDefaultPublisherServiceStub(cq, opts);
-  auto batching_options = CreateBatchingOptions(opts);
+  auto batching_options = MakeBatchingOptions(opts);
 
   auto partition_publisher_factory = [=](std::uint32_t partition) {
     InitialPublishRequest request;
@@ -173,7 +172,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
     transformer = opts.get<PublishMessageTransformerOption>();
   }
 
-  return static_cast<std::unique_ptr<PublisherConnection>>(
+  return std::unique_ptr<PublisherConnection>(
       absl::make_unique<ContainingPublisherConnection>(
           std::move(background_threads),
           absl::make_unique<PublisherConnectionImpl>(
