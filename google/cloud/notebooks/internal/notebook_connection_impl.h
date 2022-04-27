@@ -89,6 +89,11 @@ class NotebookServiceConnectionImpl
       google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request)
       override;
 
+  StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+  UpdateInstanceMetadataItems(
+      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteInstance(google::cloud::notebooks::v1::DeleteInstanceRequest const&
                      request) override;

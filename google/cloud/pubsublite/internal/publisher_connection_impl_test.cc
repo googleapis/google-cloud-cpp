@@ -50,19 +50,12 @@ class PublisherConnectionImplTest : public ::testing::Test {
     EXPECT_CALL(publisher_ref_, Start)
         .WillOnce(Return(ByMove(status_promise_.get_future())));
     conn_ = absl::make_unique<PublisherConnectionImpl>(
-        absl::WrapUnique(&publisher_ref_), transformer_.AsStdFunction(),
-        failure_handler_.AsStdFunction());
-  }
-
-  ~PublisherConnectionImplTest() override {
-    EXPECT_CALL(publisher_ref_, Shutdown)
-        .WillOnce(Return(ByMove(make_ready_future())));
+        absl::WrapUnique(&publisher_ref_), transformer_.AsStdFunction());
   }
 
   promise<Status> status_promise_;
   StrictMock<MockPublisher<MessageMetadata>>& publisher_ref_;
   StrictMock<MockFunction<StatusOr<PubSubMessage>(Message)>> transformer_;
-  StrictMock<MockFunction<void(Status)>> failure_handler_;
   std::unique_ptr<google::cloud::pubsub::PublisherConnection> conn_;
 };
 
@@ -71,7 +64,8 @@ TEST_F(PublisherConnectionImplTest, BadMessage) {
   Status status = Status{StatusCode::kAborted, "uh ohhh"};
 
   EXPECT_CALL(transformer_, Call).WillOnce(Return(status));
-  EXPECT_CALL(failure_handler_, Call(status));
+  EXPECT_CALL(publisher_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
   auto received = conn_->Publish(PublishParams{FromProto(PubsubMessage{})});
   auto error = received.get().status();
   EXPECT_EQ(error, status);
@@ -88,6 +82,8 @@ TEST_F(PublisherConnectionImplTest, GoodMessageBadPublish) {
   EXPECT_CALL(publisher_ref_, Publish(IsProtoEqual(message)))
       .WillOnce(
           Return(ByMove(make_ready_future(StatusOr<MessageMetadata>(status)))));
+  EXPECT_CALL(publisher_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
   auto received = conn_->Publish(PublishParams{FromProto(PubsubMessage{})});
   auto error = received.get().status();
   EXPECT_EQ(error, status);
@@ -107,6 +103,8 @@ TEST_F(PublisherConnectionImplTest, GoodMessageGoodPublish) {
   auto received =
       conn_->Publish(PublishParams{FromProto(PubsubMessage{})}).get();
   EXPECT_EQ(*received, mm.Serialize());
+  EXPECT_CALL(publisher_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
 }
 
 TEST_F(PublisherConnectionImplTest, Flush) {
@@ -114,6 +112,8 @@ TEST_F(PublisherConnectionImplTest, Flush) {
 
   EXPECT_CALL(publisher_ref_, Flush);
   conn_->Flush(FlushParams{});
+  EXPECT_CALL(publisher_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
 }
 
 }  // namespace

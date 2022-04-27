@@ -15,7 +15,6 @@
 #include "google/cloud/pubsublite/publisher_connection.h"
 #include "google/cloud/pubsub/internal/containing_publisher_connection.h"
 #include "google/cloud/pubsublite/internal/admin_connection_impl.h"
-#include "google/cloud/pubsublite/internal/admin_stub_factory.h"
 #include "google/cloud/pubsublite/internal/alarm_registry_impl.h"
 #include "google/cloud/pubsublite/internal/batching_options.h"
 #include "google/cloud/pubsublite/internal/default_publish_message_transformer.h"
@@ -120,7 +119,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
 
   opts = google::cloud::internal::PopulateGrpcOptions(std::move(opts), "");
   if (!opts.has<EndpointOption>()) {
-    auto endpoint = GetEndpoint(topic.location());
+    auto endpoint = GetEndpoint(topic.location_id());
     if (!endpoint) {
       return Status{StatusCode::kInvalidArgument, "`topic` not valid"};
     }
@@ -173,12 +172,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
   if (opts.has<PublishMessageTransformerOption>()) {
     transformer = opts.get<PublishMessageTransformerOption>();
   }
-  FailureHandler failure_handler = [](Status const& s) {
-    GCP_LOG(WARNING) << "Pub/Sub Lite connection failed: " << s;
-  };
-  if (opts.has<FailureHandlerOption>()) {
-    failure_handler = opts.get<FailureHandlerOption>();
-  }
+
   return static_cast<std::unique_ptr<PublisherConnection>>(
       absl::make_unique<ContainingPublisherConnection>(
           std::move(background_threads),
@@ -187,7 +181,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
                   partition_publisher_factory, MakeAdminServiceConnection(opts),
                   alarm_registry, absl::make_unique<DefaultRoutingPolicy>(),
                   std::move(topic)),
-              transformer, failure_handler)));
+              transformer)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

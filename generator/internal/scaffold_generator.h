@@ -39,7 +39,7 @@ std::string LibraryName(
     google::cloud::cpp::generator::ServiceConfiguration const& service);
 
 std::map<std::string, std::string> ScaffoldVars(
-    std::string const& googleapis_path, std::string const& project_root,
+    std::string const& googleapis_path,
     google::cloud::cpp::generator::ServiceConfiguration const& service);
 
 void MakeDirectory(std::string const& path);

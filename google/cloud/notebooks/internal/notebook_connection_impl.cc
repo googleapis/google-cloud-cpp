@@ -303,6 +303,21 @@ NotebookServiceConnectionImpl::SetInstanceLabels(
       __func__);
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+NotebookServiceConnectionImpl::UpdateInstanceMetadataItems(
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateInstanceMetadataItems(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::notebooks::v1::
+                 UpdateInstanceMetadataItemsRequest const& request) {
+        return stub_->UpdateInstanceMetadataItems(context, request);
+      },
+      request, __func__);
+}
+
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceConnectionImpl::DeleteInstance(
     google::cloud::notebooks::v1::DeleteInstanceRequest const& request) {

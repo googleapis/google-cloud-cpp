@@ -30,14 +30,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A connection implementation for publishing messages to a single `Topic`.
  */
 class PublisherConnectionImpl
-    : public ::google::cloud::pubsub::PublisherConnection {
+    : public google::cloud::pubsub::PublisherConnection {
  public:
   PublisherConnectionImpl(
-      std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
-          google::cloud::pubsublite::MessageMetadata>>
+      std::unique_ptr<Publisher<google::cloud::pubsublite::MessageMetadata>>
           publisher,
-      google::cloud::pubsublite::PublishMessageTransformer transformer,
-      google::cloud::pubsublite::FailureHandler const& failure_handler);
+      google::cloud::pubsublite::PublishMessageTransformer transformer);
 
   ~PublisherConnectionImpl() override;
 
@@ -50,9 +48,13 @@ class PublisherConnectionImpl
  private:
   std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
       google::cloud::pubsublite::MessageMetadata>> const publisher_;
-  google::cloud::pubsublite_internal::ServiceComposite service_composite_;
   google::cloud::pubsublite::PublishMessageTransformer const
       message_transformer_;
+
+  std::mutex mu_;
+
+  absl::optional<future<void>> shutdown_;  // ABSL_GUARDED_BY(mu_)
+  google::cloud::pubsublite_internal::ServiceComposite service_composite_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

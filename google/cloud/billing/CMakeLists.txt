@@ -36,31 +36,18 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/billing.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/billing.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_billing_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/billing/budgets/v1/budget_model.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/billing/budgets/v1/budget_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/billing/v1/cloud_billing.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/billing/v1/cloud_catalog.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_billing_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(billing_protos)
-target_link_libraries(
-    google_cloud_cpp_billing_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::iam_v1_iam_policy_protos
-           google-cloud-cpp::iam_v1_options_protos
-           google-cloud-cpp::iam_v1_policy_protos
-           google-cloud-cpp::type_date_protos
-           google-cloud-cpp::type_expr_protos
-           google-cloud-cpp::type_money_protos)
+target_link_libraries(google_cloud_cpp_billing_protos PUBLIC ${proto_deps})
 
 file(
     GLOB source_files

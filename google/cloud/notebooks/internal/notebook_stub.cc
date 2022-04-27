@@ -162,6 +162,20 @@ DefaultNotebookServiceStub::AsyncSetInstanceLabels(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+DefaultNotebookServiceStub::UpdateInstanceMetadataItems(
+    grpc::ClientContext& client_context,
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+        request) {
+  google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse response;
+  auto status = grpc_stub_->UpdateInstanceMetadataItems(&client_context,
+                                                        request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,

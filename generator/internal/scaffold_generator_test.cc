@@ -119,7 +119,7 @@ TEST_F(ScaffoldGenerator, LibraryName) {
 }
 
 TEST_F(ScaffoldGenerator, Vars) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   EXPECT_THAT(
       vars, AllOf(Contains(Pair("title", "Test Only API")),
                   Contains(Pair("description",
@@ -129,7 +129,7 @@ TEST_F(ScaffoldGenerator, Vars) {
 }
 
 TEST_F(ScaffoldGenerator, CmakeConfigIn) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateCmakeConfigIn(os, vars);
   auto const actual = std::move(os).str();
@@ -142,7 +142,7 @@ TEST_F(ScaffoldGenerator, CmakeConfigIn) {
 }
 
 TEST_F(ScaffoldGenerator, ConfigPcIn) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateConfigPcIn(os, vars);
   auto const actual = std::move(os).str();
@@ -152,7 +152,7 @@ TEST_F(ScaffoldGenerator, ConfigPcIn) {
 }
 
 TEST_F(ScaffoldGenerator, Readme) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateReadme(os, vars);
   auto const actual = std::move(os).str();
@@ -164,7 +164,7 @@ TEST_F(ScaffoldGenerator, Readme) {
 }
 
 TEST_F(ScaffoldGenerator, Build) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateBuild(os, vars);
   auto const actual = std::move(os).str();
@@ -178,7 +178,7 @@ TEST_F(ScaffoldGenerator, Build) {
 }
 
 TEST_F(ScaffoldGenerator, CMakeLists) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateCMakeLists(os, vars);
   auto const actual = std::move(os).str();
@@ -205,7 +205,7 @@ target_link_libraries(google_cloud_cpp_test_protos PUBLIC ${proto_deps})
 }
 
 TEST_F(ScaffoldGenerator, DoxygenMainPage) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateDoxygenMainPage(os, vars);
   auto const actual = std::move(os).str();
@@ -219,7 +219,7 @@ to Provides a placeholder to write this test.
 }
 
 TEST_F(ScaffoldGenerator, QuickstartReadme) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateQuickstartReadme(os, vars);
   auto const actual = std::move(os).str();
@@ -230,7 +230,7 @@ TEST_F(ScaffoldGenerator, QuickstartReadme) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartSkeleton) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateQuickstartSkeleton(os, vars);
   auto const actual = std::move(os).str();
@@ -239,7 +239,7 @@ TEST_F(ScaffoldGenerator, QuickstartSkeleton) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartCMake) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateQuickstartCMake(os, vars);
   auto const actual = std::move(os).str();
@@ -248,7 +248,7 @@ TEST_F(ScaffoldGenerator, QuickstartCMake) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartMakefile) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateQuickstartMakefile(os, vars);
   auto const actual = std::move(os).str();
@@ -258,7 +258,7 @@ TEST_F(ScaffoldGenerator, QuickstartMakefile) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartWorkspace) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateQuickstartWorkspace(os, vars);
   auto const actual = std::move(os).str();
@@ -267,7 +267,7 @@ TEST_F(ScaffoldGenerator, QuickstartWorkspace) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartBuild) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateQuickstartBuild(os, vars);
   auto const actual = std::move(os).str();
@@ -276,7 +276,7 @@ TEST_F(ScaffoldGenerator, QuickstartBuild) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartBazelrc) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
   GenerateQuickstartBazelrc(os, vars);
   auto const actual = std::move(os).str();

@@ -1,9 +1,11 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:access.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:asset.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:bigquery_export.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:connection.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:external_system.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:finding.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:folder.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:iam_binding.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:indicator.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:mitre_attack.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:mute_config.proto

@@ -35,46 +35,21 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/servicemanagement.list"
+)
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/servicemanagement.deps"
+)
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_servicemanagement_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicemanagement/v1/resources.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicemanagement/v1/servicemanager.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_servicemanagement_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(servicemanagement_protos)
-target_link_libraries(
-    google_cloud_cpp_servicemanagement_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_auth_protos
-           google-cloud-cpp::api_backend_protos
-           google-cloud-cpp::api_billing_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_config_change_protos
-           google-cloud-cpp::api_context_protos
-           google-cloud-cpp::api_control_protos
-           google-cloud-cpp::api_documentation_protos
-           google-cloud-cpp::api_endpoint_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::api_label_protos
-           google-cloud-cpp::api_launch_stage_protos
-           google-cloud-cpp::api_log_protos
-           google-cloud-cpp::api_logging_protos
-           google-cloud-cpp::api_metric_protos
-           google-cloud-cpp::api_monitored_resource_protos
-           google-cloud-cpp::api_monitoring_protos
-           google-cloud-cpp::api_quota_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::api_service_protos
-           google-cloud-cpp::api_source_info_protos
-           google-cloud-cpp::api_system_parameter_protos
-           google-cloud-cpp::api_usage_protos
-           google-cloud-cpp::api_visibility_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos)
+target_link_libraries(google_cloud_cpp_servicemanagement_protos
+                      PUBLIC ${proto_deps})
 
 file(
     GLOB source_files

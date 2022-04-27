@@ -41,15 +41,6 @@ struct PublishMessageTransformerOption {
 };
 
 /**
- * Handler to be called if a connection fails with a permanent error.
- */
-using FailureHandler = std::function<void(Status)>;
-
-struct FailureHandlerOption {
-  using Type = FailureHandler;
-};
-
-/**
  * Publish a batch when it has this many messages. The default is 1000 messages.
  */
 struct MaxBatchMessagesOption {

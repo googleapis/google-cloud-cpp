@@ -110,6 +110,10 @@ class ReservationServiceConnectionIdempotencyPolicy {
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
           request) = 0;
 
+  virtual google::cloud::Idempotency UpdateAssignment(
+      google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency GetBiReservation(
       google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
           request) = 0;

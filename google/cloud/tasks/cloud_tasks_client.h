@@ -94,12 +94,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.ListQueuesRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L308}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
       std::string const& parent, Options opts = {});
@@ -114,12 +114,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.ListQueuesRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L308}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
       google::cloud::tasks::v2::ListQueuesRequest request, Options opts = {});
@@ -132,12 +132,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.GetQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L369}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(std::string const& name,
                                                      Options opts = {});
@@ -150,12 +150,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.GetQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L369}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
       google::cloud::tasks::v2::GetQueueRequest const& request,
@@ -186,12 +186,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.CreateQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L381}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
       std::string const& parent, google::cloud::tasks::v2::Queue const& queue,
@@ -215,12 +215,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.CreateQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L381}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
       google::cloud::tasks::v2::CreateQueueRequest const& request,
@@ -253,12 +253,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.UpdateQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L402}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
       google::cloud::tasks::v2::Queue const& queue,
@@ -285,12 +285,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.UpdateQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L402}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
       google::cloud::tasks::v2::UpdateQueueRequest const& request,
@@ -360,12 +360,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.PurgeQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L431}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(std::string const& name,
                                                        Options opts = {});
@@ -384,12 +384,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.PurgeQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L431}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
       google::cloud::tasks::v2::PurgeQueueRequest const& request,
@@ -410,12 +410,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.PauseQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L443}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(std::string const& name,
                                                        Options opts = {});
@@ -435,12 +435,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.PauseQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L443}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
       google::cloud::tasks::v2::PauseQueueRequest const& request,
@@ -467,12 +467,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.ResumeQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(std::string const& name,
                                                         Options opts = {});
@@ -498,12 +498,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
   /// [google.cloud.tasks.v2.ResumeQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
   /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
       google::cloud::tasks::v2::ResumeQueueRequest const& request,
@@ -526,12 +526,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
@@ -548,16 +548,16 @@ class CloudTasksClient {
   /// * `cloudtasks.queues.getIamPolicy`
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
@@ -586,12 +586,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -635,16 +635,16 @@ class CloudTasksClient {
   /// * `cloudtasks.queues.setIamPolicy`
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -670,12 +670,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
   /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
@@ -692,16 +692,16 @@ class CloudTasksClient {
   /// may "fail open" without warning.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
   /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
@@ -723,12 +723,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L32}
   ///
   /// [google.cloud.tasks.v2.ListTasksRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L467}
   /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   ///
   StreamRange<google::cloud::tasks::v2::Task> ListTasks(
       std::string const& parent, Options opts = {});
@@ -749,12 +749,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L32}
   ///
   /// [google.cloud.tasks.v2.ListTasksRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L467}
   /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   ///
   StreamRange<google::cloud::tasks::v2::Task> ListTasks(
       google::cloud::tasks::v2::ListTasksRequest request, Options opts = {});
@@ -767,12 +767,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L32}
   ///
   /// [google.cloud.tasks.v2.GetTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L529}
   /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   ///
   StatusOr<google::cloud::tasks::v2::Task> GetTask(std::string const& name,
                                                    Options opts = {});
@@ -785,12 +785,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L32}
   ///
   /// [google.cloud.tasks.v2.GetTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L529}
   /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   ///
   StatusOr<google::cloud::tasks::v2::Task> GetTask(
       google::cloud::tasks::v2::GetTaskRequest const& request,
@@ -836,12 +836,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L32}
   ///
   /// [google.cloud.tasks.v2.CreateTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L555}
   /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   ///
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
       std::string const& parent, google::cloud::tasks::v2::Task const& task,
@@ -859,12 +859,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L32}
   ///
   /// [google.cloud.tasks.v2.CreateTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L555}
   /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   ///
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
       google::cloud::tasks::v2::CreateTaskRequest const& request,
@@ -938,12 +938,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L32}
   ///
   /// [google.cloud.tasks.v2.RunTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L632}
   /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   ///
   StatusOr<google::cloud::tasks::v2::Task> RunTask(std::string const& name,
                                                    Options opts = {});
@@ -981,12 +981,12 @@ class CloudTasksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L32}
   ///
   /// [google.cloud.tasks.v2.RunTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L632}
   /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   ///
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
       google::cloud::tasks::v2::RunTaskRequest const& request,
