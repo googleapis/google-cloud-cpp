@@ -50,8 +50,7 @@ class PublisherConnectionImplTest : public ::testing::Test {
     EXPECT_CALL(publisher_ref_, Start)
         .WillOnce(Return(ByMove(status_promise_.get_future())));
     conn_ = absl::make_unique<PublisherConnectionImpl>(
-        absl::WrapUnique(&publisher_ref_), transformer_.AsStdFunction(),
-        failure_handler_.AsStdFunction());
+        absl::WrapUnique(&publisher_ref_), transformer_.AsStdFunction());
   }
 
   ~PublisherConnectionImplTest() override {
@@ -62,7 +61,6 @@ class PublisherConnectionImplTest : public ::testing::Test {
   promise<Status> status_promise_;
   StrictMock<MockPublisher<MessageMetadata>>& publisher_ref_;
   StrictMock<MockFunction<StatusOr<PubSubMessage>(Message)>> transformer_;
-  StrictMock<MockFunction<void(Status)>> failure_handler_;
   std::unique_ptr<google::cloud::pubsub::PublisherConnection> conn_;
 };
 
@@ -71,7 +69,6 @@ TEST_F(PublisherConnectionImplTest, BadMessage) {
   Status status = Status{StatusCode::kAborted, "uh ohhh"};
 
   EXPECT_CALL(transformer_, Call).WillOnce(Return(status));
-  EXPECT_CALL(failure_handler_, Call(status));
   auto received = conn_->Publish(PublishParams{FromProto(PubsubMessage{})});
   auto error = received.get().status();
   EXPECT_EQ(error, status);

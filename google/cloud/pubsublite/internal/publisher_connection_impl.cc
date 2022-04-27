@@ -27,15 +27,14 @@ PublisherConnectionImpl::PublisherConnectionImpl(
     std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
         google::cloud::pubsublite::MessageMetadata>>
         publisher,
-    PublishMessageTransformer transformer,
-    FailureHandler const& failure_handler)
+    PublishMessageTransformer transformer)
     : publisher_{std::move(publisher)},
-      service_composite_{publisher_.get()},
-      message_transformer_{std::move(transformer)} {
+      message_transformer_{std::move(transformer)},
+      service_composite_{publisher_.get()} {
   service_composite_.Start().then([=](future<Status> f) {
     auto status = f.get();
     if (status.ok()) return;
-    failure_handler(std::move(status));
+    GCP_LOG(WARNING) << "Publisher failed: " << status << std::endl;
   });
 }
 

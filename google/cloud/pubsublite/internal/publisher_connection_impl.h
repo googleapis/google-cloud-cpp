@@ -36,8 +36,7 @@ class PublisherConnectionImpl
       std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
           google::cloud::pubsublite::MessageMetadata>>
           publisher,
-      google::cloud::pubsublite::PublishMessageTransformer transformer,
-      google::cloud::pubsublite::FailureHandler const& failure_handler);
+      google::cloud::pubsublite::PublishMessageTransformer transformer);
 
   ~PublisherConnectionImpl() override;
 
@@ -50,9 +49,9 @@ class PublisherConnectionImpl
  private:
   std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
       google::cloud::pubsublite::MessageMetadata>> const publisher_;
-  google::cloud::pubsublite_internal::ServiceComposite service_composite_;
   google::cloud::pubsublite::PublishMessageTransformer const
       message_transformer_;
+  google::cloud::pubsublite_internal::ServiceComposite service_composite_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
