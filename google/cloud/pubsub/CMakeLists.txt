@@ -45,6 +45,7 @@ add_library(
     internal/batch_sink.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h
+    internal/containing_publisher_connection.h
     internal/create_channel.cc
     internal/create_channel.h
     internal/default_batch_sink.cc
