@@ -19,8 +19,6 @@ namespace google {
 namespace cloud {
 namespace pubsublite_internal {
 
-constexpr unsigned int kNumStatusCodes = 17;
-
 TEST(StreamRetryPolicyTest, Codes) {
   StreamRetryPolicy retry_policy;
   struct Case {
