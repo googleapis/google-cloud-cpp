@@ -180,6 +180,66 @@ class DefaultCloudChannelServiceConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency GetCustomerRepricingConfig(
+      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListCustomerRepricingConfigs(
+      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency CreateCustomerRepricingConfig(
+      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UpdateCustomerRepricingConfig(
+      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeleteCustomerRepricingConfig(
+      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency GetChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          GetChannelPartnerRepricingConfigRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListChannelPartnerRepricingConfigs(
+      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency CreateChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          CreateChannelPartnerRepricingConfigRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UpdateChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          UpdateChannelPartnerRepricingConfigRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeleteChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          DeleteChannelPartnerRepricingConfigRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency LookupOffer(
       google::cloud::channel::v1::LookupOfferRequest const&) override {
     return Idempotency::kIdempotent;
