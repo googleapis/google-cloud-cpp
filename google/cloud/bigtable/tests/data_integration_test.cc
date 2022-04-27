@@ -559,7 +559,7 @@ TEST(ConnectionRefresh, Disabled) {
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
   for (int i = 0; i < internal::DefaultConnectionPoolSize(); ++i) {
-    auto channel = data_client->Channel();
+    auto channel = internal::DataClientTester::Channel(data_client);
     EXPECT_EQ(GRPC_CHANNEL_IDLE, channel->GetState(false));
   }
   // Make sure things still work.
@@ -572,7 +572,8 @@ TEST(ConnectionRefresh, Disabled) {
   // state.
   auto check_if_some_channel_is_ready = [&] {
     for (int i = 0; i < internal::DefaultConnectionPoolSize(); ++i) {
-      if (data_client->Channel()->GetState(false) == GRPC_CHANNEL_READY) {
+      auto channel = internal::DataClientTester::Channel(data_client);
+      if (channel->GetState(false) == GRPC_CHANNEL_READY) {
         return true;
       }
     }
@@ -590,7 +591,8 @@ TEST(ConnectionRefresh, Frequent) {
           .set<MinConnectionRefreshOption>(std::chrono::milliseconds(100)));
 
   for (;;) {
-    if (data_client->Channel()->GetState(false) == GRPC_CHANNEL_READY) {
+    auto channel = internal::DataClientTester::Channel(data_client);
+    if (channel->GetState(false) == GRPC_CHANNEL_READY) {
       // We've found a channel which changed its state from IDLE to READY,
       // which means that our refreshing mechanism works.
       break;
