@@ -118,6 +118,8 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
 
   opts = google::cloud::internal::PopulateGrpcOptions(std::move(opts), "");
   if (!opts.has<EndpointOption>()) {
+    // need to parse the location because if it's a zone we need to extract the
+    // region to form the endpoint
     auto endpoint = GetEndpoint(topic.location_id());
     if (!endpoint) {
       return Status{StatusCode::kInvalidArgument, "`topic` not valid"};
