@@ -254,6 +254,57 @@ TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteXml) {
   EXPECT_EQ(expected, actual);
 }
 
+/// @test Verify inserting an object does not set the customTime attribute.
+TEST_F(ObjectBasicCRUDIntegrationTest, InsertWithoutCustomTime) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+  auto insert = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
+                                     IfGenerationMatch(0), Projection("full"));
+  ASSERT_STATUS_OK(insert);
+  EXPECT_FALSE(insert->has_custom_time());
+
+  auto get = client->GetObjectMetadata(bucket_name_, object_name);
+  ASSERT_STATUS_OK(get);
+  EXPECT_FALSE(get->has_custom_time());
+
+  auto patch = client->PatchObject(
+      bucket_name_, object_name,
+      ObjectMetadataPatchBuilder().SetContentType("text/plain"));
+  ASSERT_STATUS_OK(patch);
+  EXPECT_FALSE(patch->has_custom_time());
+
+  get = client->GetObjectMetadata(bucket_name_, object_name);
+  ASSERT_STATUS_OK(get);
+  EXPECT_FALSE(get->has_custom_time());
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  ASSERT_STATUS_OK(status);
+}
+
+/// @test Verify writing an object does not set the customTime attribute.
+TEST_F(ObjectBasicCRUDIntegrationTest, WriteWithoutCustomTime) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
+                                Projection("full"));
+  os << LoremIpsum();
+  os.Close();
+  auto metadata = os.metadata();
+  ASSERT_STATUS_OK(metadata);
+  EXPECT_FALSE(metadata->has_custom_time());
+
+  auto get = client->GetObjectMetadata(bucket_name_, object_name);
+  ASSERT_STATUS_OK(get);
+  EXPECT_FALSE(get->has_custom_time());
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  ASSERT_STATUS_OK(status);
+}
+
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
