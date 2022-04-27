@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *       - `google::cloud::GrpcOptionList`
  */
 StatusOr<std::unique_ptr<google::cloud::pubsub::PublisherConnection>>
-MakePublisherConnection(Topic backoff_time, Options opts);
+MakePublisherConnection(Topic topic, Options opts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
