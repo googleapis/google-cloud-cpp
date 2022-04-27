@@ -51,6 +51,10 @@ class PublisherConnectionImpl
       google::cloud::pubsublite::MessageMetadata>> const publisher_;
   google::cloud::pubsublite::PublishMessageTransformer const
       message_transformer_;
+
+  std::mutex mu_;
+
+  absl::optional<future<void>> shutdown_;  // ABSL_GUARDED_BY(mu_)
   google::cloud::pubsublite_internal::ServiceComposite service_composite_;
 };
 

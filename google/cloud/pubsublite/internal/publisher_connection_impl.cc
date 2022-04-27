@@ -31,15 +31,29 @@ PublisherConnectionImpl::PublisherConnectionImpl(
     : publisher_{std::move(publisher)},
       message_transformer_{std::move(transformer)},
       service_composite_{publisher_.get()} {
-  service_composite_.Start().then([=](future<Status> f) {
-    auto status = f.get();
-    if (status.ok()) return;
-    GCP_LOG(WARNING) << "Publisher failed: " << status << std::endl;
+  // memory safe since this will at latest occur in the downcall of
+  // `ServiceComposite::Shutdown`
+  service_composite_.Start().then([this](future<Status>) {
+    // shutdown in case of failure to finish all outstanding `Publish` futures
+    auto shutdown = service_composite_.Shutdown();
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      if (!shutdown_) {
+        shutdown_ = std::move(shutdown);
+      }
+    }
   });
 }
 
 PublisherConnectionImpl::~PublisherConnectionImpl() {
-  service_composite_.Shutdown().get();
+  future<void> shutdown = service_composite_.Shutdown();
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    if (shutdown_) {
+      shutdown = *std::move(shutdown_);
+    }
+  }
+  shutdown.get();
 }
 
 future<StatusOr<std::string>> PublisherConnectionImpl::Publish(
