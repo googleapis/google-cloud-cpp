@@ -33,8 +33,7 @@ class PublisherConnectionImpl
     : public google::cloud::pubsub::PublisherConnection {
  public:
   PublisherConnectionImpl(
-      std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
-          google::cloud::pubsublite::MessageMetadata>>
+      std::unique_ptr<Publisher<google::cloud::pubsublite::MessageMetadata>>
           publisher,
       google::cloud::pubsublite::PublishMessageTransformer transformer);
 

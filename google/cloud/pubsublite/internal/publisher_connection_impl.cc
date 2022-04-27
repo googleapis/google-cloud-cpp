@@ -19,7 +19,6 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using google::cloud::pubsublite::FailureHandler;
 using google::cloud::pubsublite::MessageMetadata;
 using google::cloud::pubsublite::PublishMessageTransformer;
 
@@ -33,7 +32,11 @@ PublisherConnectionImpl::PublisherConnectionImpl(
       service_composite_{publisher_.get()} {
   // memory safe since this will at latest occur in the downcall of
   // `ServiceComposite::Shutdown`
-  service_composite_.Start().then([this](future<Status>) {
+  service_composite_.Start().then([this](future<Status> f) {
+    Status status = f.get();
+    if (!status.ok()) {
+      GCP_LOG(WARNING) << "Publisher failed permanently: " << status;
+    }
     // shutdown in case of failure to finish all outstanding `Publish` futures
     auto shutdown = service_composite_.Shutdown();
     {

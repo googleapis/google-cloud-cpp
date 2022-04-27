@@ -34,11 +34,6 @@ using PublishMessageTransformer =
     std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
         google::cloud::pubsub::Message)>;
 
-/**
- * Handler to be called if a connection fails with a permanent error.
- */
-using FailureHandler = std::function<void(Status)>;
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud
