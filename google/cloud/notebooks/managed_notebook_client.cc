@@ -189,6 +189,25 @@ ManagedNotebookServiceClient::ReportRuntimeEvent(
   return connection_->ReportRuntimeEvent(request);
 }
 
+StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+ManagedNotebookServiceClient::RefreshRuntimeTokenInternal(
+    std::string const& name, std::string const& vm_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest request;
+  request.set_name(name);
+  request.set_vm_id(vm_id);
+  return connection_->RefreshRuntimeTokenInternal(request);
+}
+
+StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+ManagedNotebookServiceClient::RefreshRuntimeTokenInternal(
+    google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RefreshRuntimeTokenInternal(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
 }  // namespace cloud

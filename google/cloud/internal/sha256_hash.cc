@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/sha256_hash.h"
-#include "absl/base/casts.h"
-#include <openssl/sha.h>
-#include <array>
-#include <cassert>
+#include <openssl/evp.h>
+#include <algorithm>
 
 namespace google {
 namespace cloud {
@@ -24,28 +22,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 namespace {
-template <typename Byte,
-          typename std::enable_if<sizeof(Byte) == 1, int>::type = 0>
-std::array<std::uint8_t, 32> Sha256Hash(Byte const* data, std::size_t count) {
-  SHA256_CTX sha256;
-  SHA256_Init(&sha256);
-  SHA256_Update(&sha256, data, count);
+Sha256Type Sha256Hash(void const* data, std::size_t count) {
+  std::array<unsigned char, EVP_MAX_MD_SIZE> digest;
+  Sha256Type hash;
+  static_assert(EVP_MAX_MD_SIZE >= hash.size(), "EVP_MAX_MD_SIZE is too small");
 
-  std::array<unsigned char, SHA256_DIGEST_LENGTH> hash{};
-  SHA256_Final(hash.data(), &sha256);
-  // absl::bit_cast is a backport of std::bit_cast from c++20 that checks that
-  // the types are trivially copyable
-  // and the same size and converts between them in a way that is not UB.
-  return absl::bit_cast<std::array<std::uint8_t, 32>>(hash);
+  unsigned int size = 0;
+  EVP_Digest(data, count, digest.data(), &size, EVP_sha256(), nullptr);
+  std::copy_n(digest.begin(), std::min<std::size_t>(size, hash.size()),
+              hash.begin());
+  return hash;
 }
 }  // namespace
 
-std::array<std::uint8_t, 32> Sha256Hash(std::string const& str) {
+Sha256Type Sha256Hash(std::string const& str) {
   return Sha256Hash(str.data(), str.size());
 }
 
-std::array<std::uint8_t, 32> Sha256Hash(
-    std::vector<std::uint8_t> const& bytes) {
+Sha256Type Sha256Hash(std::vector<std::uint8_t> const& bytes) {
   return Sha256Hash(bytes.data(), bytes.size());
 }
 

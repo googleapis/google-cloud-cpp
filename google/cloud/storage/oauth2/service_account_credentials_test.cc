@@ -22,6 +22,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/mock_fake_clock.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
@@ -616,6 +617,11 @@ TEST_F(ServiceAccountCredentialsTest, ParseSimpleP12) {
   WriteBase64AsBinary(filename, kP12KeyFileContents);
 
   auto info = ParseServiceAccountP12File(filename);
+  if (info.status().code() == StatusCode::kInvalidArgument &&
+      absl::StrContains(info.status().message(), "error:0308010C")) {
+    // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
+    GTEST_SKIP();
+  }
   ASSERT_STATUS_OK(info);
 
   EXPECT_EQ(kP12ServiceAccountId, info->client_email);
@@ -665,8 +671,12 @@ TEST_F(ServiceAccountCredentialsTest, CreateFromP12ValidFile) {
   std::string filename = CreateRandomFileName() + ".p12";
   WriteBase64AsBinary(filename, kP12KeyFileContents);
 
-  // Loading an empty file should fail.
   auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
+  if (actual.status().code() == StatusCode::kInvalidArgument &&
+      absl::StrContains(actual.status().message(), "error:0308010C")) {
+    // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
+    GTEST_SKIP();
+  }
   EXPECT_STATUS_OK(actual);
 
   EXPECT_EQ(0, std::remove(filename.c_str()));

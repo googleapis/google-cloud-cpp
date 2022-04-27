@@ -350,10 +350,11 @@ TEST(Value, DoubleNaN) {
   Value v{nan};
   EXPECT_TRUE(std::isnan(*v.get<double>()));
 
-  // Since IEEE 754 defines that nan is not equal to itself, then a Value with
-  // NaN should not be equal to itself.
+  // Unlike IEEE 754, which defines that NaN is not equal to itself,
+  // Spanner NaN values are considered equal (for easy sorting), so
+  // spanner::Value behaves the same way.
   EXPECT_NE(nan, nan);
-  EXPECT_NE(v, v);
+  EXPECT_EQ(v, v);
 }
 
 TEST(Value, BytesDecodingError) {
@@ -655,9 +656,9 @@ TEST(Value, ProtoConversionFloat64) {
   auto const nan = std::nan("NaN");
   v = Value(nan);
   p = spanner_internal::ToProto(v);
-  // Note: NaN is defined to be not equal to everything, including itself, so
-  // we instead ensure that it is not equal with EXPECT_NE.
-  EXPECT_NE(v, spanner_internal::FromProto(p.first, p.second));
+  // Note: Unlike IEEE 754, Spanner NaN values are considered equal
+  // (for easy sorting), so spanner::Value behaves the same way.
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
   EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
   EXPECT_EQ("NaN", p.second.string_value());
 }

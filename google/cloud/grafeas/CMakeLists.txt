@@ -35,7 +35,6 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
-
 google_cloud_cpp_load_protolist(
     grafeas_list
     "${CMAKE_SOURCE_DIR}/external/googleapis/protolists/grafeas.list")

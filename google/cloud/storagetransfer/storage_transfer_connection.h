@@ -84,6 +84,21 @@ class StorageTransferServiceConnection {
   virtual future<StatusOr<google::storagetransfer::v1::TransferOperation>>
   RunTransferJob(
       google::storagetransfer::v1::RunTransferJobRequest const& request);
+
+  virtual StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
+      google::storagetransfer::v1::CreateAgentPoolRequest const& request);
+
+  virtual StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
+      google::storagetransfer::v1::UpdateAgentPoolRequest const& request);
+
+  virtual StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
+      google::storagetransfer::v1::GetAgentPoolRequest const& request);
+
+  virtual StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
+      google::storagetransfer::v1::ListAgentPoolsRequest request);
+
+  virtual Status DeleteAgentPool(
+      google::storagetransfer::v1::DeleteAgentPoolRequest const& request);
 };
 
 std::shared_ptr<StorageTransferServiceConnection>

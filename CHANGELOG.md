@@ -5,6 +5,18 @@
 <!-- Keep these sorted by estimated date -->
 
 <details>
+<summary>2022-06-01: last release with C++11 support</summary>
+
+* The release on 2022-06-01 (tentatively v1.41.0) will be the last release
+  supporting C++11, future releases will require C++ >= 14. We plan to backport
+  critical (P0) bugs and security fixes to this release for a year, that is,
+  until 2023-06-01.
+  The release following will be v2.0.0, to more clearly communicate this change.
+  There are no immediate plans to start using C++14 features. However, some of
+  our dependencies do plan to use C++14 features.
+</details>
+
+<details>
 <summary>2022-10-01: retiring legacy Spanner admin APIs</summary>
 <br>
 
@@ -55,6 +67,19 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 ## v1.40.0 - TBD
 
+We are happy to announce that the following GA libraries.  Unless specifically
+noted, the APIs in these libraries are stable, and are ready for production use.
+
+<details>
+<summary> Expand to see the full list of new GA libraries...</summary>
+<br>
+
+* [Compute Engine OS Login](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/oslogin/README.md)
+* [Cloud Speech-to-Text](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/speech/README.md)
+* [Google Cloud Logging](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/logging/README.md)
+
+</details>
+
 ### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
 
 **BREAKING CHANGES**
@@ -64,6 +89,13 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
   not breaking changes, but any application mocking the storage library
   necessarily depends on these implementation details. We updated the
   [mocking examples][storage-mocking-link] to guide you in changing any tests.
+
+### [Storage Transfer Service](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storagetransfer/README.md)
+
+**BREAKING CHANGES**
+
+The library has been disabled on macOS due to a protobuf naming clash. See
+[#8785](https://github.com/googleapis/google-cloud-cpp/issues/8785) for details.
 
 ### New Libraries
 

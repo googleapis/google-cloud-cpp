@@ -54,6 +54,20 @@ PublisherConnectionImpl::PublishChannelConnectionEvents(
       request, __func__);
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+PublisherConnectionImpl::PublishEvents(
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->PublishEvents(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+              request) { return stub_->PublishEvents(context, request); },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
 }  // namespace cloud

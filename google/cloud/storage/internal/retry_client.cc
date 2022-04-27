@@ -91,6 +91,7 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
      << last_status.message();
   return error(std::move(os).str());
 }
+
 }  // namespace
 
 std::shared_ptr<RetryClient> RetryClient::Create(
@@ -364,13 +365,23 @@ StatusOr<CreateResumableSessionResponse> RetryClient::CreateResumableSession(
 }
 
 StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(
-    ResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    ResumableUploadRequest const& request) {
+  auto retry_policy = retry_policy_prototype_->clone();
+  auto backoff_policy = backoff_policy_prototype_->clone();
+  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+                               ? Idempotency::kIdempotent
+                               : Idempotency::kNonIdempotent;
+  return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
+                  &RawClient::CreateResumableUpload, request, __func__);
 }
 
 StatusOr<QueryResumableUploadResponse> RetryClient::QueryResumableUpload(
-    QueryResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    QueryResumableUploadRequest const& request) {
+  auto retry_policy = retry_policy_prototype_->clone();
+  auto backoff_policy = backoff_policy_prototype_->clone();
+  auto const idempotency = Idempotency::kIdempotent;
+  return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
+                  &RawClient::QueryResumableUpload, request, __func__);
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
@@ -382,9 +393,188 @@ StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
                   __func__);
 }
 
+// Implements the retry loop for a resumable upload session.
+//
+// A description of resumable uploads can be found at:
+//     https://cloud.google.com/storage/docs/performing-resumable-uploads
+//
+// A description of the gRPC analog can be found in the proto file. Pay
+// particular attention to the documentation for `WriteObject()`,
+// `WriteObjectRequest`, `StartResumablewrite()` and `QueryResumableWrite()`:
+//    https://github.com/googleapis/googleapis/blob/master/google/storage/v2/storage.proto
+//
+// At a high level one starts a resumable upload by creating a "session". These
+// sessions are persistent (they survive disconnections from the service). One
+// can even resume uploads after shutting down and restarting an application.
+// Their current state can be queried using a simple RPC (or a PUT request
+// without payload).
+//
+// Resumable uploads make progress by sending "chunks", either a single PUT
+// request in REST-based transports, or a client-side streaming RPC for
+// gRPC-based transports.
+//
+// Resumable uploads complete when the application sends the last bytes of the
+// object. In the client library we mostly start uploads without knowing the
+// number of bytes until a "final" chunk.  In this final chunk we set the
+// `Content-Range:` header to the `bytes X-N/N` format (there is an equivalent
+// form in gRPC).  In some cases the application can short-circuit this by
+// setting the X-Upload-Content-Length header when the upload is created.
+//
+// When a chunk upload fails the application should query the state of the
+// session before continuing.
+//
+// There are a couple of subtle cases:
+// - A chunk uploads can "succeed", but report that 0 bytes were committed,
+//   or not report how many bytes were committed.  The application should
+//   query the state of the upload in this case:
+//       https://cloud.google.com/storage/docs/performing-resumable-uploads#status-check
+//   > If Cloud Storage has not yet persisted any bytes, the 308 response does
+//   > **not have a Range header**. In this case, you should start your upload
+//   > from the beginning.
+// - A chunk upload can partially succeed, in this case the application should
+//   resend the remaining bytes.
+// - Resending already persisted bytes is safe:
+//       https://cloud.google.com/storage/docs/performing-resumable-uploads#resume-upload
+//   > Cloud Storage ignores any bytes you send at an offset that
+//   > Cloud Storage has already persisted.
+//
+// In summary, after a failed upload operation the retry loop may need to query
+// the status of the session before uploading more data. Note that the query
+// operations themselves may fail with transients, and thus need to be performed
+// as part of the retry loop.
+//
+// To simplify the loop we keep a pointer to the current "operation" that the
+// retry loop is trying to get to succeed. First we try an upload, if that
+// fails (a transient failure, or a 0-committed-bytes success) we switch to
+// trying the ResetSession() operation until it succeeds, at which point we
+// can start the upload operations again.
+//
 StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
-    UploadChunkRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    UploadChunkRequest const& request) {
+  Status last_status(StatusCode::kDeadlineExceeded,
+                     "Retry policy exhausted before first attempt was made.");
+
+  auto retry_policy = retry_policy_prototype_->clone();
+  auto backoff_policy = backoff_policy_prototype_->clone();
+
+  // `operation` represents the RPC we will make. In the happy case it is just
+  // calls to `upload()`, but on a transient error we switch to calling
+  // `ResetSession()` until there is a successful result.
+  using Action =
+      std::function<StatusOr<QueryResumableUploadResponse>(std::uint64_t)>;
+
+  auto upload = Action([&request, this](std::uint64_t committed_size) {
+    return client_->UploadChunk(request.RemainingChunk(committed_size));
+  });
+  auto reset = Action([&request, this](std::uint64_t) {
+    QueryResumableUploadRequest query(request.upload_session_url());
+    query.set_multiple_options(request.GetOption<QuotaUser>(),
+                               request.GetOption<UserIp>());
+    return this->QueryResumableUpload(query);
+  });
+
+  auto return_error = [](Status const& last_status,
+                         RetryPolicy const& retry_policy,
+                         char const* error_message) {
+    std::ostringstream os;
+    if (retry_policy.IsExhausted()) {
+      os << "Retry policy exhausted in " << error_message << ": "
+         << last_status.message();
+    } else {
+      os << "Permanent error in " << error_message << ": "
+         << last_status.message();
+    }
+    return Status(last_status.code(), std::move(os).str());
+  };
+
+  auto* operation = &upload;
+  auto committed_size = request.offset();
+  auto const expected_committed_size =
+      request.offset() + request.payload_size();
+
+  while (!retry_policy->IsExhausted()) {
+    auto result = (*operation)(committed_size);
+    if (!result) {
+      // On a failure we preserve the error, query if retry policy, backoff, and
+      // switch to calling QueryResumableUpload().
+      last_status = std::move(result).status();
+      if (!retry_policy->OnFailure(last_status)) {
+        return return_error(std::move(last_status), *retry_policy, __func__);
+      }
+
+      auto delay = backoff_policy->OnCompletion();
+      std::this_thread::sleep_for(delay);
+      operation = &reset;
+      continue;
+    }
+
+    // While normally a `UploadFinalChunk()` call completes an upload, sometimes
+    // the upload can complete in a regular `UploadChunk()` or a
+    // `ResetSession()` call. For example, the server can detect a completed
+    // upload "early" if the application includes the X-Upload-Content-Length`
+    // header.
+    if (result->payload.has_value()) return result;
+
+    // This indicates that the response was missing a `Range:` header, or that
+    // the range header was in the wrong format. Either way, treat that as a
+    // (transient) failure and query the current status to find out what to do
+    // next.
+    if (!result->committed_size.has_value()) {
+      if (operation != &reset) {
+        operation = &reset;
+        continue;
+      }
+      // When a reset returns a response without a committed size we can safely
+      // treat that as 0.
+      result->committed_size = 0;
+    }
+
+    // With a successful operation, we can continue (or go back to) uploading.
+    operation = &upload;
+
+    // This should not happen, it indicates an invalid sequence of responses
+    // from the server.
+    if (*result->committed_size < request.offset()) {
+      std::stringstream os;
+      os << __func__ << ": server previously confirmed " << request.offset()
+         << " bytes as committed, but the current response only reports "
+         << result->committed_size.value_or(0) << " bytes as committed."
+         << " This is most likely a bug in the GCS client library, possibly"
+         << " related to parsing the server response."
+         << " Please contact support or report the problem at"
+         << " https://github.com/googleapis/google-cloud-cpp/issues/new"
+         << " Include as much information as you can including this message";
+      os << ", session_id=" << request.upload_session_url();
+      os << ", result=" << *result;
+      os << ", request=" << request;
+      return Status(StatusCode::kInternal, os.str());
+    }
+    if (*result->committed_size > expected_committed_size) {
+      std::stringstream os;
+      os << __func__ << ": the server indicates that "
+         << result->committed_size.value_or(0) << " bytes are committed "
+         << " but given the current request no more than "
+         << expected_committed_size << " should be."
+         << " This could be caused by multiple applications trying to use the"
+         << " same resumable upload, but could be a bug in the library or"
+         << " the service. If you believe this is a bug, please contact support"
+         << " or report the bug at"
+         << " https://github.com/googleapis/google-cloud-cpp/issues/new"
+         << " Include as much information as you can including this message";
+      os << ", session_id=" << request.upload_session_url();
+      os << ", result=" << *result;
+      os << ", request=" << request;
+      return Status(StatusCode::kInternal, os.str());
+    }
+
+    committed_size = *result->committed_size;
+    // On a full write we can return immediately.
+    if (committed_size == expected_committed_size) return result;
+  }
+  std::ostringstream os;
+  os << "Retry policy exhausted in " << __func__ << ": "
+     << last_status.message();
+  return Status(last_status.code(), std::move(os).str());
 }
 
 StatusOr<ListBucketAclResponse> RetryClient::ListBucketAcl(

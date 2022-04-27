@@ -83,6 +83,12 @@ class ManagedNotebookServiceConnection {
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
   ReportRuntimeEvent(
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+  RefreshRuntimeTokenInternal(
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+          request);
 };
 
 std::shared_ptr<ManagedNotebookServiceConnection>

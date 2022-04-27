@@ -24,8 +24,8 @@ namespace cloud {
 namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Create a random instance name given a PRNG generator.
-std::string RandomInstanceName(google::cloud::internal::DefaultPRNG& generator);
+/// Returns a random instance ID given a PRNG generator.
+std::string RandomInstanceName(internal::DefaultPRNG&);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing

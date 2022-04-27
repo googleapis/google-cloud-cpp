@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Logging C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Logging")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "logging_internal" "logging_testing"
                             "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -65,14 +65,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_logging)
 set_target_properties(
     google_cloud_cpp_logging
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-logging
+    PROPERTIES EXPORT_NAME google-cloud-cpp::logging
                VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_logging
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-logging ALIAS
-            google_cloud_cpp_logging)
+add_library(google-cloud-cpp::logging ALIAS google_cloud_cpp_logging)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
@@ -90,11 +89,10 @@ target_sources(
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_logging_service_v2_connection.h)
 target_link_libraries(
     google_cloud_cpp_logging_mocks
-    INTERFACE google-cloud-cpp::experimental-logging GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_logging_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-logging_mocks)
+    INTERFACE google-cloud-cpp::logging GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_logging_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::logging_mocks)
 create_bazel_config(google_cloud_cpp_logging_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_logging_mocks
@@ -109,8 +107,7 @@ add_subdirectory(integration_tests)
 include(CTest)
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(logging_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(logging_quickstart
-                          PRIVATE google-cloud-cpp::experimental-logging)
+    target_link_libraries(logging_quickstart PRIVATE google-cloud-cpp::logging)
     google_cloud_cpp_add_common_options(logging_quickstart)
     add_test(
         NAME logging_quickstart

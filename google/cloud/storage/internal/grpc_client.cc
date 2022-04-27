@@ -119,17 +119,16 @@ std::unique_ptr<GrpcClient::WriteObjectStream> GrpcClient::CreateUploadWriter(
 
 StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableSession(
     QueryResumableUploadRequest const& request) {
-  OptionsSpan span(options_);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "resource");
-  auto const timeout = options_.get<TransferStallTimeoutOption>();
-  if (timeout.count() != 0) {
-    context.set_deadline(std::chrono::system_clock::now() + timeout);
-  }
-  auto response = stub_->QueryWriteStatus(
-      context, GrpcObjectRequestParser::ToProto(request));
+  auto response = QueryResumableUpload(request);
   if (!response) return std::move(response).status();
-  return GrpcObjectRequestParser::FromProto(*response, options());
+  auto const state = response->payload.has_value()
+                         ? ResumableUploadResponse::kDone
+                         : ResumableUploadResponse::kInProgress;
+  return ResumableUploadResponse{request.upload_session_url(),
+                                 state,
+                                 std::move(response->committed_size),
+                                 std::move(response->payload),
+                                 {}};
 }
 
 StatusOr<CreateResumableSessionResponse>
@@ -445,6 +444,25 @@ StatusOr<CreateResumableSessionResponse> GrpcClient::CreateResumableSession(
     return FullyRestoreResumableSession(request, session_id);
   }
 
+  auto create = CreateResumableUpload(request);
+  if (!create) return std::move(create).status();
+
+  auto self = shared_from_this();
+  // We need a temporary to sequence `std::move(create->upload_id)`
+  auto session = absl::make_unique<GrpcResumableUploadSession>(
+      self, request, ResumableUploadSessionGrpcParams{create->upload_id});
+  return CreateResumableSessionResponse{
+      std::move(session),
+      ResumableUploadResponse{std::move(create->upload_id),
+                              ResumableUploadResponse::kInProgress,
+                              /*.committed_size=*/0, /*.payload=*/absl::nullopt,
+                              /*.annotations=*/{}}};
+}
+
+StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(
+    ResumableUploadRequest const& request) {
+  OptionsSpan span(options_);
+
   auto proto_request = GrpcObjectRequestParser::ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
 
@@ -457,26 +475,22 @@ StatusOr<CreateResumableSessionResponse> GrpcClient::CreateResumableSession(
   auto response = stub_->StartResumableWrite(context, *proto_request);
   if (!response.ok()) return std::move(response).status();
 
-  auto self = shared_from_this();
-  return CreateResumableSessionResponse{
-      absl::make_unique<GrpcResumableUploadSession>(
-          self, request,
-          ResumableUploadSessionGrpcParams{response->upload_id()}),
-      ResumableUploadResponse{/*.upload_session_url=*/std::string{},
-                              ResumableUploadResponse::kInProgress,
-                              /*.committed_size=*/0,
-                              /*.payload=*/absl::nullopt,
-                              /*.annotations=*/std::string{}}};
-}
-
-StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(
-    ResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+  return CreateResumableUploadResponse{response->upload_id()};
 }
 
 StatusOr<QueryResumableUploadResponse> GrpcClient::QueryResumableUpload(
-    QueryResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    QueryResumableUploadRequest const& request) {
+  OptionsSpan span(options_);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request, "resource");
+  auto const timeout = options_.get<TransferStallTimeoutOption>();
+  if (timeout.count() != 0) {
+    context.set_deadline(std::chrono::system_clock::now() + timeout);
+  }
+  auto response = stub_->QueryWriteStatus(
+      context, GrpcObjectRequestParser::ToProto(request));
+  if (!response) return std::move(response).status();
+  return GrpcObjectRequestParser::FromProto(*response, options());
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
@@ -485,8 +499,88 @@ StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
 }
 
 StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
-    UploadChunkRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    UploadChunkRequest const& request) {
+  auto context = absl::make_unique<grpc::ClientContext>();
+  ApplyQueryParameters(*context, request, "resource");
+  auto writer = CreateUploadWriter(std::move(context));
+
+  std::size_t const maximum_chunk_size =
+      google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
+  std::string chunk;
+  chunk.reserve(maximum_chunk_size);
+  auto offset = static_cast<google::protobuf::int64>(request.offset());
+
+  auto flush_chunk = [&](bool has_more) {
+    if (chunk.size() < maximum_chunk_size && has_more) return true;
+    if (chunk.empty() && !request.last_chunk()) return true;
+
+    google::storage::v2::WriteObjectRequest write_request;
+    write_request.set_upload_id(request.upload_session_url());
+    write_request.set_write_offset(offset);
+    write_request.set_finish_write(false);
+    auto write_size = chunk.size();
+
+    auto& data = *write_request.mutable_checksummed_data();
+    data.set_content(std::move(chunk));
+    chunk.clear();
+    chunk.reserve(maximum_chunk_size);
+    data.set_crc32c(crc32c::Crc32c(data.content()));
+
+    auto options = grpc::WriteOptions();
+    if (request.last_chunk() && !has_more) {
+      auto const& hashes = request.full_object_hashes();
+      if (!hashes.md5.empty()) {
+        auto md5 = GrpcObjectMetadataParser::MD5ToProto(hashes.md5);
+        if (md5) {
+          write_request.mutable_object_checksums()->set_md5_hash(
+              *std::move(md5));
+        }
+      }
+      if (!hashes.crc32c.empty()) {
+        auto crc32c = GrpcObjectMetadataParser::Crc32cToProto(hashes.crc32c);
+        if (crc32c) {
+          write_request.mutable_object_checksums()->set_crc32c(
+              *std::move(crc32c));
+        }
+      }
+      write_request.set_finish_write(true);
+      options.set_last_message();
+    }
+
+    if (!writer->Write(write_request, options)) return false;
+    // After the first message, clear the object specification and checksums,
+    // there is no need to resend it.
+    write_request.clear_write_object_spec();
+    write_request.clear_object_checksums();
+    offset += write_size;
+
+    return true;
+  };
+
+  auto close_writer = [&]() -> StatusOr<QueryResumableUploadResponse> {
+    auto result = writer->Close();
+    writer.reset();
+    if (!result) return std::move(result).status();
+    return GrpcObjectRequestParser::FromProto(*std::move(result), options());
+  };
+
+  auto buffers = request.payload();
+  do {
+    std::size_t consumed = 0;
+    for (auto const& b : buffers) {
+      // flush_chunk() guarantees that maximum_chunk_size < chunk.size()
+      auto capacity = maximum_chunk_size - chunk.size();
+      if (capacity == 0) break;
+      auto n = (std::min)(capacity, b.size());
+      chunk.append(b.data(), b.data() + n);
+      consumed += n;
+    }
+    PopFrontBytes(buffers, consumed);
+
+    if (!flush_chunk(!buffers.empty())) return close_writer();
+  } while (!buffers.empty());
+
+  return close_writer();
 }
 
 StatusOr<ListBucketAclResponse> GrpcClient::ListBucketAcl(

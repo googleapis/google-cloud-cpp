@@ -384,6 +384,26 @@ ReservationServiceClient::MoveAssignment(
   return connection_->MoveAssignment(request);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceClient::UpdateAssignment(
+    google::cloud::bigquery::reservation::v1::Assignment const& assignment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest request;
+  *request.mutable_assignment() = assignment;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAssignment(request);
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceClient::UpdateAssignment(
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAssignment(request);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceClient::GetBiReservation(std::string const& name,
                                            Options opts) {

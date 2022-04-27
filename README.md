@@ -28,6 +28,13 @@
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
+> Please check the [CHANGELOG] for important announcements and upcoming
+> changes.<br>
+> In particular, note that on (or about) **2022-06-01** this library will
+> require C++ >= 14.
+
+[CHANGELOG]: CHANGELOG.md
+
 <!-- inject-GA-libraries-start -->
 * [Access Approval API](google/cloud/accessapproval/README.md)
   [[quickstart]](google/cloud/accessapproval/quickstart/README.md)
@@ -137,6 +144,9 @@ This repository contains idiomatic C++ client libraries for the following
 * [Cloud Natural Language API](google/cloud/language/README.md)
   [[quickstart]](google/cloud/language/quickstart/README.md)
   [[reference]](https://googleapis.dev/cpp/google-cloud-language/latest)
+* [Google Cloud Logging](google/cloud/logging/README.md)
+  [[quickstart]](google/cloud/logging/quickstart/README.md)
+  [[reference]](https://googleapis.dev/cpp/google-cloud-logging/latest)
 * [Managed Service for Microsoft Active Directory API](google/cloud/managedidentities/README.md)
   [[quickstart]](google/cloud/managedidentities/quickstart/README.md)
   [[reference]](https://googleapis.dev/cpp/google-cloud-managedidentities/latest)
@@ -155,6 +165,9 @@ This repository contains idiomatic C++ client libraries for the following
 * [Organization Policy API](google/cloud/orgpolicy/README.md)
   [[quickstart]](google/cloud/orgpolicy/quickstart/README.md)
   [[reference]](https://googleapis.dev/cpp/google-cloud-orgpolicy/latest)
+* [OS Config API](google/cloud/osconfig/README.md)
+  [[quickstart]](google/cloud/osconfig/quickstart/README.md)
+  [[reference]](https://googleapis.dev/cpp/google-cloud-osconfig/latest)
 * [Cloud OS Login API](google/cloud/oslogin/README.md)
   [[quickstart]](google/cloud/oslogin/quickstart/README.md)
   [[reference]](https://googleapis.dev/cpp/google-cloud-oslogin/latest)
@@ -212,6 +225,9 @@ This repository contains idiomatic C++ client libraries for the following
 * [Google Cloud Spanner](google/cloud/spanner/README.md)
   [[quickstart]](google/cloud/spanner/quickstart/README.md)
   [[reference]](https://googleapis.dev/cpp/google-cloud-spanner/latest)
+* [Cloud Speech-to-Text API](google/cloud/speech/README.md)
+  [[quickstart]](google/cloud/speech/quickstart/README.md)
+  [[reference]](https://googleapis.dev/cpp/google-cloud-speech/latest)
 * [Google Cloud Storage](google/cloud/storage/README.md)
   [[quickstart]](google/cloud/storage/quickstart/README.md)
   [[reference]](https://googleapis.dev/cpp/google-cloud-storage/latest)

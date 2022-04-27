@@ -32,10 +32,11 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-extern "C" std::size_t CurlRequestWrite(char* ptr, size_t size, size_t nmemb,
-                                        void* userdata);
-extern "C" std::size_t CurlRequestHeader(char* contents, std::size_t size,
-                                         std::size_t nitems, void* userdata);
+extern "C" std::size_t RestCurlRequestWrite(char* ptr, size_t size,
+                                            size_t nmemb, void* userdata);
+extern "C" std::size_t RestCurlRequestHeader(char* contents, std::size_t size,
+                                             std::size_t nitems,
+                                             void* userdata);
 
 // This class encapsulates use of libcurl and manages all the necessary state
 // of a request and its associated response.
@@ -76,10 +77,10 @@ class CurlImpl {
   StatusOr<std::size_t> Read(absl::Span<char> output);
 
  private:
-  friend std::size_t CurlRequestWrite(char* ptr, size_t size, size_t nmemb,
-                                      void* userdata);
-  friend std::size_t CurlRequestHeader(char* contents, std::size_t size,
-                                       std::size_t nitems, void* userdata);
+  friend std::size_t RestCurlRequestWrite(char* ptr, size_t size, size_t nmemb,
+                                          void* userdata);
+  friend std::size_t RestCurlRequestHeader(char* contents, std::size_t size,
+                                           std::size_t nitems, void* userdata);
 
   // Called by libcurl to show that more data is available in the request.
   std::size_t WriteCallback(void* ptr, std::size_t size, std::size_t nmemb);

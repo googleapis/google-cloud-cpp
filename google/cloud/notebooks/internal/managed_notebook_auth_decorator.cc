@@ -181,6 +181,16 @@ ManagedNotebookServiceAuth::AsyncReportRuntimeEvent(
       });
 }
 
+StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+ManagedNotebookServiceAuth::RefreshRuntimeTokenInternal(
+    grpc::ClientContext& context,
+    google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RefreshRuntimeTokenInternal(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

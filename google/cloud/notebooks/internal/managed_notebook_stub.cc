@@ -153,6 +153,20 @@ DefaultManagedNotebookServiceStub::AsyncReportRuntimeEvent(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+DefaultManagedNotebookServiceStub::RefreshRuntimeTokenInternal(
+    grpc::ClientContext& client_context,
+    google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+        request) {
+  google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse response;
+  auto status = grpc_stub_->RefreshRuntimeTokenInternal(&client_context,
+                                                        request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedNotebookServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
