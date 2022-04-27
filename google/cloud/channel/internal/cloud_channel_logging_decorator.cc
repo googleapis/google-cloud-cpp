@@ -395,6 +395,146 @@ CloudChannelServiceLogging::UpdateChannelPartnerLink(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceLogging::GetCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+              request) {
+        return child_->GetCustomerRepricingConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
+CloudChannelServiceLogging::ListCustomerRepricingConfigs(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
+              request) {
+        return child_->ListCustomerRepricingConfigs(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceLogging::CreateCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::
+                 CreateCustomerRepricingConfigRequest const& request) {
+        return child_->CreateCustomerRepricingConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceLogging::UpdateCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::
+                 UpdateCustomerRepricingConfigRequest const& request) {
+        return child_->UpdateCustomerRepricingConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status CloudChannelServiceLogging::DeleteCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::
+                 DeleteCustomerRepricingConfigRequest const& request) {
+        return child_->DeleteCustomerRepricingConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceLogging::GetChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::
+                 GetChannelPartnerRepricingConfigRequest const& request) {
+        return child_->GetChannelPartnerRepricingConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
+CloudChannelServiceLogging::ListChannelPartnerRepricingConfigs(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::
+                 ListChannelPartnerRepricingConfigsRequest const& request) {
+        return child_->ListChannelPartnerRepricingConfigs(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceLogging::CreateChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        CreateChannelPartnerRepricingConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::
+                 CreateChannelPartnerRepricingConfigRequest const& request) {
+        return child_->CreateChannelPartnerRepricingConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceLogging::UpdateChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        UpdateChannelPartnerRepricingConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::
+                 UpdateChannelPartnerRepricingConfigRequest const& request) {
+        return child_->UpdateChannelPartnerRepricingConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status CloudChannelServiceLogging::DeleteChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        DeleteChannelPartnerRepricingConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::
+                 DeleteChannelPartnerRepricingConfigRequest const& request) {
+        return child_->DeleteChannelPartnerRepricingConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceLogging::LookupOffer(
     grpc::ClientContext& context,

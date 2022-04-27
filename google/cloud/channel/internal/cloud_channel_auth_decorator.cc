@@ -382,6 +382,104 @@ CloudChannelServiceAuth::UpdateChannelPartnerLink(
   return child_->UpdateChannelPartnerLink(context, request);
 }
 
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceAuth::GetCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetCustomerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
+CloudChannelServiceAuth::ListCustomerRepricingConfigs(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListCustomerRepricingConfigs(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceAuth::CreateCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCustomerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceAuth::UpdateCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCustomerRepricingConfig(context, request);
+}
+
+Status CloudChannelServiceAuth::DeleteCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCustomerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceAuth::GetChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetChannelPartnerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
+CloudChannelServiceAuth::ListChannelPartnerRepricingConfigs(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListChannelPartnerRepricingConfigs(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceAuth::CreateChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        CreateChannelPartnerRepricingConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateChannelPartnerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceAuth::UpdateChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        UpdateChannelPartnerRepricingConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateChannelPartnerRepricingConfig(context, request);
+}
+
+Status CloudChannelServiceAuth::DeleteChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        DeleteChannelPartnerRepricingConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteChannelPartnerRepricingConfig(context, request);
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceAuth::LookupOffer(
     grpc::ClientContext& context,

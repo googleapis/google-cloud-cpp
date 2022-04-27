@@ -125,6 +125,46 @@ class CloudChannelServiceConnectionIdempotencyPolicy {
       google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
           request) = 0;
 
+  virtual google::cloud::Idempotency GetCustomerRepricingConfig(
+      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListCustomerRepricingConfigs(
+      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest
+          request) = 0;
+
+  virtual google::cloud::Idempotency CreateCustomerRepricingConfig(
+      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency UpdateCustomerRepricingConfig(
+      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency DeleteCustomerRepricingConfig(
+      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency GetChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListChannelPartnerRepricingConfigs(
+      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
+          request) = 0;
+
+  virtual google::cloud::Idempotency CreateChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          CreateChannelPartnerRepricingConfigRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency UpdateChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          UpdateChannelPartnerRepricingConfigRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency DeleteChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          DeleteChannelPartnerRepricingConfigRequest const& request) = 0;
+
   virtual google::cloud::Idempotency LookupOffer(
       google::cloud::channel::v1::LookupOfferRequest const& request) = 0;
 

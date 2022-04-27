@@ -111,8 +111,7 @@ ClientMetadata MakeClientMetadata(Topic const& topic, std::uint32_t partition) {
 StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
     Topic topic, Options opts) {
   if (!opts.has<GrpcNumChannelsOption>()) {
-    // Default to 20 channels per client to avoid limitations on streams and
-    // requests per-channel.
+    // Each channel has a limit of 100 outstanding RPCs, so 20 allows up to 2000 partitions without reaching this limit
     opts.set<GrpcNumChannelsOption>(20);
   }
 

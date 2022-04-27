@@ -156,6 +156,53 @@ class CloudChannelServiceConnection {
       google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
           request);
 
+  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  GetCustomerRepricingConfig(
+      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
+  ListCustomerRepricingConfigs(
+      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request);
+
+  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  CreateCustomerRepricingConfig(
+      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  UpdateCustomerRepricingConfig(
+      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+          request);
+
+  virtual Status DeleteCustomerRepricingConfig(
+      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  GetChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  ListChannelPartnerRepricingConfigs(
+      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
+          request);
+
+  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  CreateChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          CreateChannelPartnerRepricingConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  UpdateChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          UpdateChannelPartnerRepricingConfigRequest const& request);
+
+  virtual Status DeleteChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          DeleteChannelPartnerRepricingConfigRequest const& request);
+
   virtual StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       google::cloud::channel::v1::LookupOfferRequest const& request);
 

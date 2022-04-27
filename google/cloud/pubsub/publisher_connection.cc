@@ -91,8 +91,7 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
     connection = pubsub_internal::FlowControlledPublisherConnection::Create(
         std::move(opts), std::move(connection));
   }
-  return std::make_shared<
-      google::cloud::pubsub_internal::ContainingPublisherConnection>(
+  return std::make_shared<pubsub_internal::ContainingPublisherConnection>(
       std::move(background), std::move(connection));
 }
 }  // namespace
