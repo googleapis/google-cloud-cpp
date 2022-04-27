@@ -151,14 +151,11 @@ service {
   initial_copyright_year: "2022"
   omit_client: true
   omit_connection: true
-  omitted_rpcs: [
+  omitted_rpcs: ["PingAndWarm"]
+  gen_async_rpcs: [
    "CheckAndMutateRow",
    "MutateRow",
-   "MutateRows",
-   "PingAndWarm",
-   "ReadModifyWriteRow",
-   "ReadRows",
-   "SampleRowKeys"
+   "ReadModifyWriteRow"
   ]
 }
 
