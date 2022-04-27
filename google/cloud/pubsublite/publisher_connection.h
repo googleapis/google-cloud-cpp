@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Creates a new `PublisherConnection` object to work with `Publisher`.
  *
- * @param backoff_time the Cloud Pub/Sub Lite topic used by the returned
+ * @param topic the Cloud Pub/Sub Lite topic used by the returned
  *     `PublisherConnection`.
  * @param opts The options to use for this call. Expected options are any of
  *     the types in the following option lists and in
