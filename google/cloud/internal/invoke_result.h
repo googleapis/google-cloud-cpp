@@ -23,6 +23,7 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
 /**
  * A helper class to determine the result type of a function-like object.
  *
