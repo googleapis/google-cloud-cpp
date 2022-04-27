@@ -24,9 +24,6 @@ namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::testing::MockFunction;
-using ::testing::StrictMock;
-
 using google::cloud::pubsub::MessageBuilder;
 
 unsigned int constexpr kNumMessages = 500;
@@ -61,14 +58,10 @@ TEST(PublisherIntegrationTest, BasicGoodWithKey) {
 }
 
 TEST(PublisherIntegrationTest, InvalidTopic) {
-  StrictMock<MockFunction<void(Status)>> failure_handler;
-  auto publisher = *MakePublisherConnection(
-      Topic{"123456", "us-up1-b", "tpc"},
-      Options{}.set<FailureHandlerOption>(failure_handler.AsStdFunction()));
-  EXPECT_CALL(failure_handler, Call);
-  EXPECT_EQ(publisher->Publish({MessageBuilder{}.Build()})
-                .wait_for(std::chrono::seconds(2)),
-            std::future_status::timeout);
+  auto publisher =
+      *MakePublisherConnection(Topic{"123456", "us-up1-b", "tpc"}, Options{});
+
+  EXPECT_FALSE(publisher->Publish({MessageBuilder{}.Build()}).get());
 }
 
 }  // namespace
