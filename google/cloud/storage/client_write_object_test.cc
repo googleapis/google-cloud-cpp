@@ -221,7 +221,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
       });
 
   EXPECT_CALL(*mock_, UploadChunk)
-      .WillOnce([expected](internal::UploadChunkRequest const& r) {
+      .WillOnce([&](internal::UploadChunkRequest const& r) {
         EXPECT_TRUE(r.last_chunk());
         return internal::QueryResumableUploadResponse{
             quantum + r.payload_size(), expected};
