@@ -25,6 +25,10 @@ using google::cloud::pubsub::Message;
 using google::cloud::pubsublite::v1::AttributeValues;
 using google::cloud::pubsublite::v1::PubSubMessage;
 
+std::string EventTimestampAttribute() {
+  return "x-goog-pubsublite-event-time-timestamp-proto";
+}
+
 StatusOr<PubSubMessage> DefaultPublishMessageTransformer(
     Message const& message) {
   PubSubMessage m;
@@ -32,7 +36,7 @@ StatusOr<PubSubMessage> DefaultPublishMessageTransformer(
   m.set_data(std::string{message.data()});  // Handle PubsubMessageDataType by
                                             // forcing conversion to std::string
   for (auto const& kv : message.attributes()) {
-    if (kv.first == kEventTimestampAttribute) {
+    if (kv.first == EventTimestampAttribute()) {
       Base64Decoder decoder{kv.second};
       bool valid = m.mutable_event_time()->ParseFromString(
           std::string{decoder.begin(), decoder.end()});
@@ -40,11 +44,11 @@ StatusOr<PubSubMessage> DefaultPublishMessageTransformer(
         return Status{StatusCode::kInvalidArgument,
                       "Not able to parse event time."};
       }
-    } else {
-      AttributeValues av;
-      av.add_values(std::move(kv.second));
-      (*m.mutable_attributes())[kv.first].add_values(kv.second);
+      continue;
     }
+    AttributeValues av;
+    av.add_values(std::move(kv.second));
+    (*m.mutable_attributes())[kv.first].add_values(kv.second);
   }
   return m;
 }

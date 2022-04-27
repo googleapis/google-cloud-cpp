@@ -19,23 +19,35 @@ namespace google {
 namespace cloud {
 namespace pubsublite_internal {
 
-constexpr unsigned int kNumStatusCodes = 16;
-
 TEST(StreamRetryPolicyTest, Codes) {
   StreamRetryPolicy retry_policy;
-  for (unsigned int i = 0; i != kNumStatusCodes; ++i) {
-    auto code = static_cast<StatusCode>(i);
-    if (code == StatusCode::kDeadlineExceeded || code == StatusCode::kAborted ||
-        code == StatusCode::kInternal || code == StatusCode::kUnavailable ||
-        code == StatusCode::kUnknown ||
-        code == StatusCode::kResourceExhausted) {
-      EXPECT_TRUE(retry_policy.OnFailure(Status(code, "")));
-      EXPECT_FALSE(retry_policy.IsPermanentFailure(Status(code, "")));
-    } else {
-      EXPECT_FALSE(retry_policy.OnFailure(Status(code, "")));
-      EXPECT_TRUE(retry_policy.IsPermanentFailure(Status(code, "")));
-    }
-    // always false
+  struct Case {
+    StatusCode code;
+    bool expected;
+  } cases[] = {
+      {StatusCode::kOk, false},
+      {StatusCode::kCancelled, true},
+      {StatusCode::kUnknown, true},
+      {StatusCode::kInvalidArgument, false},
+      {StatusCode::kDeadlineExceeded, true},
+      {StatusCode::kNotFound, false},
+      {StatusCode::kAlreadyExists, false},
+      {StatusCode::kPermissionDenied, false},
+      {StatusCode::kUnauthenticated, false},
+      {StatusCode::kResourceExhausted, true},
+      {StatusCode::kFailedPrecondition, false},
+      {StatusCode::kAborted, true},
+      {StatusCode::kOutOfRange, false},
+      {StatusCode::kUnimplemented, false},
+      {StatusCode::kInternal, true},
+      {StatusCode::kUnavailable, true},
+      {StatusCode::kDataLoss, false},
+  };
+
+  for (auto const& c : cases) {
+    SCOPED_TRACE("Testing " + StatusCodeToString(c.code));
+    EXPECT_EQ(retry_policy.OnFailure(Status(c.code, "")), c.expected);
+    EXPECT_EQ(retry_policy.IsPermanentFailure(Status(c.code, "")), !c.expected);
     EXPECT_FALSE(retry_policy.IsExhausted());
   }
 }

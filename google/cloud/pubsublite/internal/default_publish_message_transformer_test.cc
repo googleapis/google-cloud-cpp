@@ -62,7 +62,7 @@ TEST(DefaultPublishMessageTransformerTest, Timestamp) {
   *psl_message.mutable_event_time() = std::move(t);
   EXPECT_THAT(*DefaultPublishMessageTransformer(
                   ExamplePubSubMessageBuilder()
-                      .InsertAttribute(kEventTimestampAttribute,
+                      .InsertAttribute(EventTimestampAttribute(),
                                        std::move(encoder).FlushAndPad())
                       .Build()),
               IsProtoEqual(psl_message));
@@ -74,7 +74,7 @@ TEST(DefaultPublishMessageTransformerTest, InvalidTimestamp) {
   EXPECT_EQ(
       DefaultPublishMessageTransformer(
           ExamplePubSubMessageBuilder()
-              .InsertAttribute(kEventTimestampAttribute, "oops")
+              .InsertAttribute(EventTimestampAttribute(), "oops")
               .Build())
           .status(),
       (Status{StatusCode::kInvalidArgument, "Not able to parse event time."}));
