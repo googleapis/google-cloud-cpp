@@ -49,14 +49,15 @@ PublisherConnectionImpl::PublisherConnectionImpl(
 }
 
 PublisherConnectionImpl::~PublisherConnectionImpl() {
-  future<void> shutdown = service_composite_.Shutdown();
+  absl::optional<future<void>> shutdown;
   {
     std::lock_guard<std::mutex> g{mu_};
     if (shutdown_) {
-      shutdown = *std::move(shutdown_);
+      shutdown = std::move(shutdown_);
     }
   }
-  shutdown.get();
+  if (!shutdown) shutdown = service_composite_.Shutdown();
+  shutdown->get();
 }
 
 future<StatusOr<std::string>> PublisherConnectionImpl::Publish(
