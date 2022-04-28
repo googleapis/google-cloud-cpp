@@ -5,9 +5,9 @@ github:
   pullRequest:
     branch: ^(master|main|v\d+\..*)$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: cmake-gcs-rest-install-pr
+name: cmake-gcs-rest-pr
 substitutions:
-  _BUILD_NAME: cmake-gcs-rest-install
+  _BUILD_NAME: cmake-gcs-rest
   _DISTRO: fedora-35
   _TRIGGER_TYPE: pr
 tags:

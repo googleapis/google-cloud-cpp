@@ -4,9 +4,9 @@ github:
   owner: googleapis
   push:
     branch: ^(master|main|v\d+\..*)$
-name: cmake-gcs-rest-install-ci
+name: cmake-gcs-rest-ci
 substitutions:
-  _BUILD_NAME: cmake-gcs-rest-install
+  _BUILD_NAME: cmake-gcs-rest
   _DISTRO: fedora-35
   _TRIGGER_TYPE: ci
 tags:
