@@ -29,5 +29,4 @@ endif ()
 
 # Define your targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart
-                      google-cloud-cpp::experimental-artifactregistry)
+target_link_libraries(quickstart google-cloud-cpp::artifactregistry)
