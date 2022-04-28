@@ -59,6 +59,7 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   srand(static_cast<unsigned int>(time(nullptr)));
   location_id_ = locs[rand() % locs.size()];
+
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto topic_id =
       google::cloud::pubsub_testing::RandomTopicId(generator);
@@ -71,6 +72,9 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
               ""),
           /*endpoint_env_var=*/{}, /*emulator_env_var=*/{},
           "pubsublite.googleapis.com"));
+
+  GarbageCollect();
+
   CreateTopicRequest req;
   req.set_parent("projects/" + project_id_ + "/locations/" + location_id_);
   req.set_topic_id(topic_id);
