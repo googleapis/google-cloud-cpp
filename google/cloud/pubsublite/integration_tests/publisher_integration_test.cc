@@ -55,7 +55,7 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
         project_id_{google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT")
                         .value_or("")},
         location_id_{
-            google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TEST_REGION")
+            google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TEST_ZONE")
                 .value_or("")},
         admin_connection_{MakeAdminServiceConnection(
             google::cloud::internal::PopulateCommonOptions(
