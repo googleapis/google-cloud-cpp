@@ -42,7 +42,9 @@ using google::cloud::internal::Base64Encoder;
 using google::cloud::internal::MakeBackgroundThreadsFactory;
 using google::cloud::pubsub::PublisherConnection;
 using google::cloud::pubsub_internal::ContainingPublisherConnection;
-
+using google::cloud::pubsublite::v1::InitialPublishRequest;
+using google::cloud::pubsublite::v1::PublishRequest;
+using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite_internal::AlarmRegistryImpl;
 using google::cloud::pubsublite_internal::AsyncSleeper;
 using google::cloud::pubsublite_internal::BatchingOptions;
@@ -60,11 +62,6 @@ using google::cloud::pubsublite_internal::
 using google::cloud::pubsublite_internal::RetryPolicyFactory;
 using google::cloud::pubsublite_internal::StreamInitializer;
 using google::cloud::pubsublite_internal::StreamRetryPolicy;
-
-using google::cloud::pubsublite::v1::InitialPublishRequest;
-using google::cloud::pubsublite::v1::PublishRequest;
-using google::cloud::pubsublite::v1::PublishResponse;
-
 using google::protobuf::Struct;
 
 BatchingOptions MakeBatchingOptions(Options const& opts) {
@@ -134,7 +131,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
       MakeBackgroundThreadsFactory(opts)();
   CompletionQueue cq = background_threads->cq();
 
-  // TODO(18suresha): consider supporting `BackoffPolicyOption`
+  // TODO(#8819): consider supporting `BackoffPolicyOption`
   auto const backoff_policy = std::make_shared<ExponentialBackoffPolicy>(
       std::chrono::milliseconds{10}, std::chrono::seconds{10}, 2.0);
   AsyncSleeper sleeper = [cq](std::chrono::milliseconds backoff_time) mutable {
