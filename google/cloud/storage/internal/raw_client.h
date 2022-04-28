@@ -188,6 +188,15 @@ class RawClient {
   //@}
 };
 
+struct CreateOrResumeResponse {
+  std::string upload_id;
+  std::uint64_t committed_size;
+  absl::optional<ObjectMetadata> metadata;
+};
+
+StatusOr<CreateOrResumeResponse> CreateOrResume(
+    RawClient& client, ResumableUploadRequest const& request);
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
