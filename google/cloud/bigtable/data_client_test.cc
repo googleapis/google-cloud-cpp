@@ -31,14 +31,14 @@ TEST(DataClientTest, Default) {
   EXPECT_EQ("test-project", data_client->project_id());
   EXPECT_EQ("test-instance", data_client->instance_id());
 
-  auto channel0 = data_client->Channel();
+  auto channel0 = internal::DataClientTester::Channel(data_client);
   EXPECT_TRUE(channel0);
 
-  auto channel1 = data_client->Channel();
+  auto channel1 = internal::DataClientTester::Channel(data_client);
   EXPECT_EQ(channel0.get(), channel1.get());
 
-  data_client->reset();
-  channel1 = data_client->Channel();
+  internal::DataClientTester::reset(data_client);
+  channel1 = internal::DataClientTester::Channel(data_client);
   EXPECT_TRUE(channel1);
   EXPECT_NE(channel0.get(), channel1.get());
 }
@@ -50,14 +50,14 @@ TEST(DataClientTest, MakeClient) {
   EXPECT_EQ("test-project", data_client->project_id());
   EXPECT_EQ("test-instance", data_client->instance_id());
 
-  auto channel0 = data_client->Channel();
+  auto channel0 = internal::DataClientTester::Channel(data_client);
   EXPECT_TRUE(channel0);
 
-  auto channel1 = data_client->Channel();
+  auto channel1 = internal::DataClientTester::Channel(data_client);
   EXPECT_EQ(channel0.get(), channel1.get());
 
-  data_client->reset();
-  channel1 = data_client->Channel();
+  internal::DataClientTester::reset(data_client);
+  channel1 = internal::DataClientTester::Channel(data_client);
   EXPECT_TRUE(channel1);
   EXPECT_NE(channel0.get(), channel1.get());
 }

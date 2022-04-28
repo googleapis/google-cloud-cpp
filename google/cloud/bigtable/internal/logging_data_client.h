@@ -48,10 +48,14 @@ class LoggingDataClient : public DataClient {
   }
 
   std::shared_ptr<grpc::Channel> Channel() override {
-    return child_->Channel();
+    return child_->ChannelImpl();
+  }
+  std::shared_ptr<grpc::Channel> ChannelImpl() override {
+    return child_->ChannelImpl();
   }
 
-  void reset() override { child_->reset(); }
+  void reset() override { child_->resetImpl(); }
+  void resetImpl() override { child_->resetImpl(); }
 
   grpc::Status MutateRow(grpc::ClientContext* context,
                          btproto::MutateRowRequest const& request,
