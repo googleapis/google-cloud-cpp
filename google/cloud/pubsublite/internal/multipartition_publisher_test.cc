@@ -152,16 +152,16 @@ TEST_F(MultipartitionPublisherNoneInitializedTest,
        PublishThenFirstPollInvalidValuePublisherAborts) {
   InSequence seq;
 
-  PubSubMessage m0;
-  *m0.mutable_data() = "data1";
-  future<StatusOr<MessageMetadata>> message0 =
-      multipartition_publisher_->Publish(m0);
-
   EXPECT_CALL(*admin_connection_,
               AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
       .WillOnce(
           Return(ByMove(ReadyTopicPartitionsFuture(kOutOfBoundsPartition))));
   auto start = multipartition_publisher_->Start();
+
+  PubSubMessage m0;
+  *m0.mutable_data() = "data1";
+  future<StatusOr<MessageMetadata>> message0 =
+      multipartition_publisher_->Publish(m0);
 
   Status expected_status =
       Status(StatusCode::kInternal, "Returned partition count is too big: " +
