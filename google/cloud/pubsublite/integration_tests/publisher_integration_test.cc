@@ -25,7 +25,6 @@
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/admin.pb.h>
 #include <gmock/gmock.h>
-#include <algorithm>
 #include <regex>
 
 namespace google {
@@ -52,29 +51,23 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
   PublisherIntegrationTest()
       : tp_{std::chrono::system_clock::now()},
         topic_prefix_{"pub-int-test-" +
-                      google::cloud::internal::FormatUtcDate(tp_) + "-"} {
-    auto locs = std::vector<std::string>{
-        "us-central1-a", "us-central1-b", "us-central1-c", "us-east1-b",
-        "us-east1-c",    "us-east4-b",    "us-east4-c",    "us-west1-a",
-        "us-west1-c",    "us-west2-b",    "us-west2-c",    "us-west3-a",
-        "us-west3-b",    "us-west4-a",    "us-west4-b",
-    };
-    project_id_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    srand(static_cast<unsigned int>(time(nullptr)));
-    location_id_ = locs[rand() % locs.size()];
-
+                      google::cloud::internal::FormatUtcDate(tp_) + "-"},
+        project_id_{google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT")
+                        .value_or("")},
+        location_id_{
+            google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TEST_REGION")
+                .value_or("")},
+        admin_connection_{MakeAdminServiceConnection(
+            google::cloud::internal::PopulateCommonOptions(
+                google::cloud::internal::PopulateGrpcOptions(
+                    Options{}.set<EndpointOption>(MakeLocation(location_id_)
+                                                      ->GetCloudRegion()
+                                                      .ToString() +
+                                                  "-pubsublite.googleapis.com"),
+                    ""),
+                /*endpoint_env_var=*/{}, /*emulator_env_var=*/{},
+                "pubsublite.googleapis.com"))} {
     auto topic_id = RandomTopicName();
-
-    admin_connection_ = MakeAdminServiceConnection(
-        google::cloud::internal::PopulateCommonOptions(
-            google::cloud::internal::PopulateGrpcOptions(
-                Options{}.set<EndpointOption>(
-                    MakeLocation(location_id_)->GetCloudRegion().ToString() +
-                    "-pubsublite.googleapis.com"),
-                ""),
-            /*endpoint_env_var=*/{}, /*emulator_env_var=*/{},
-            "pubsublite.googleapis.com"));
 
     GarbageCollect();
 
@@ -135,10 +128,10 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
   std::chrono::system_clock::time_point tp_;
   std::regex topic_regex_ = std::regex{
       R"re(^projects\/\d*\/locations\/[a-z0-9\-]*\/topics\/pub-int-test[-_]\d{4}[-_]\d{2}[-_]\d{2}[-_])re"};
-  std::shared_ptr<AdminServiceConnection> admin_connection_;
+  std::string topic_prefix_;
   std::string project_id_;
   std::string location_id_;
-  std::string topic_prefix_;
+  std::shared_ptr<AdminServiceConnection> admin_connection_;
   std::string topic_name_;
   std::unique_ptr<PublisherConnection> publisher_;
 };
