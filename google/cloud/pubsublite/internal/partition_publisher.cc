@@ -62,8 +62,9 @@ future<Status> PartitionPublisher::Start() {
 
 future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage m) {
   std::lock_guard<std::mutex> g{mu_};
-  // need to check under lock to prevent race of adding message after service
-  // shut down
+  // Check the composite status under lock to ensure that we don't push to the
+  // messages buffer after the composite is shut down in
+  // PartitionPublisher::Shutdown.
   auto status = service_composite_.status();
   if (!status.ok()) {
     return make_ready_future(StatusOr<Cursor>(std::move(status)));
