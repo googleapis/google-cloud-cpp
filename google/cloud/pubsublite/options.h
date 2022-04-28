@@ -16,9 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_OPTIONS_H
 
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/common.pb.h>
+#include <chrono>
 #include <functional>
 
 namespace google {
@@ -33,6 +35,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using PublishMessageTransformer =
     std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
         google::cloud::pubsub::Message)>;
+
+struct PublishMessageTransformerOption {
+  using Type = PublishMessageTransformer;
+};
+
+/**
+ * Publish a batch when it has this many messages. The default is 1000 messages.
+ */
+struct MaxBatchMessagesOption {
+  using Type = std::int64_t;
+};
+
+/**
+ * Publish a batch when its size in bytes reaches this value. The default
+ * is 3.5MiB.
+ */
+struct MaxBatchBytesOption {
+  using Type = std::int64_t;
+};
+
+/**
+ * The interval at which `Flush` will be called on single-partition `Publisher`s
+ * to publish all remaining messages. The default is 50 milliseconds.
+ */
+struct PublishFlushAlarmPeriodOption {
+  using Type = std::chrono::milliseconds;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite

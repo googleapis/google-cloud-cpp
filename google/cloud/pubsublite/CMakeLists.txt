@@ -92,6 +92,8 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
+    internal/default_publish_message_transformer.cc
+    internal/default_publish_message_transformer.h
     internal/default_routing_policy.cc
     internal/default_routing_policy.h
     internal/futures.h
@@ -129,6 +131,7 @@ add_library(
     internal/service.h
     internal/service_composite.h
     internal/stream_factory.h
+    internal/stream_retry_policy.h
     internal/subscriber_auth_decorator.cc
     internal/subscriber_auth_decorator.h
     internal/subscriber_logging_decorator.cc
@@ -157,6 +160,8 @@ add_library(
     message_metadata.cc
     message_metadata.h
     options.h
+    publisher_connection.cc
+    publisher_connection.h
     topic.h
     topic_stats_client.cc
     topic_stats_client.h
@@ -253,6 +258,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         # cmake-format: sort
         endpoint_test.cc
         internal/alarm_registry_impl_test.cc
+        internal/default_publish_message_transformer_test.cc
         internal/default_routing_policy_test.cc
         internal/location_test.cc
         internal/multipartition_publisher_test.cc
@@ -261,6 +267,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc
         internal/stream_factory_test.cc
+        internal/stream_retry_policy_test.cc
         message_metadata_test.cc
         topic_test.cc)
 
