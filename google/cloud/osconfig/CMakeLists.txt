@@ -35,43 +35,18 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/osconfig.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/osconfig.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_osconfig_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/config_common.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/inventory.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/os_policy.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/patch_jobs.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/tasks.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/inventory.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/os_policy.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/os_policy_assignment_reports.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/os_policy_assignments.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/osconfig_common.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/osconfig_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/osconfig_zonal_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/patch_deployments.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/patch_jobs.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/vulnerability.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_osconfig_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(osconfig_protos)
-target_link_libraries(
-    google_cloud_cpp_osconfig_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::type_date_protos
-           google-cloud-cpp::type_datetime_protos
-           google-cloud-cpp::type_dayofweek_protos
-           google-cloud-cpp::type_timeofday_protos)
+target_link_libraries(google_cloud_cpp_osconfig_protos PUBLIC ${proto_deps})
 
 file(
     GLOB source_files

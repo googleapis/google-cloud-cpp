@@ -27,7 +27,6 @@
 #include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #include <algorithm>
-#include <regex>
 #include <string>
 #include <vector>
 
@@ -41,6 +40,8 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::Not;
 using ::testing::NotNull;
 using ::testing::UnorderedElementsAre;
 
@@ -149,18 +150,16 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
   ASSERT_FALSE(in.project_id().empty());
   ASSERT_FALSE(in.instance_id().empty());
 
-  auto instance_config_name = spanner_testing::PickInstanceConfig(
+  auto config_name = spanner_testing::PickInstanceConfig(
       in.project(), generator_,
-      [](google::spanner::admin::instance::v1::InstanceConfig const&
-             instance_config) {
-        return absl::StrContains(instance_config.name(), "/regional-us-west");
+      [](google::spanner::admin::instance::v1::InstanceConfig const& config) {
+        return absl::StrContains(config.name(), "/regional-us-west");
       });
-  ASSERT_FALSE(instance_config_name.empty())
-      << "could not get an instance config";
+  ASSERT_FALSE(config_name.empty()) << "could not get an instance config";
 
   auto instance =
       client_
-          .CreateInstance(CreateInstanceRequestBuilder(in, instance_config_name)
+          .CreateInstance(CreateInstanceRequestBuilder(in, config_name)
                               .SetDisplayName("test-display-name")
                               .SetNodeCount(1)
                               .SetLabels({{"label-key", "label-value"}})
@@ -171,7 +170,7 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
   EXPECT_EQ(instance->name(), in.FullName());
   EXPECT_EQ(instance->display_name(), "test-display-name");
   EXPECT_NE(instance->node_count(), 0);
-  EXPECT_EQ(instance->config(), instance_config_name);
+  EXPECT_EQ(instance->config(), config_name);
   EXPECT_EQ(instance->labels().at("label-key"), "label-value");
 
   // Then update the instance
@@ -199,24 +198,23 @@ TEST_F(InstanceAdminClientTest, InstanceConfig) {
   auto project_id = ProjectId();
   ASSERT_FALSE(project_id.empty());
 
-  auto instance_config_names = [&project_id, this]() mutable {
+  auto config_names = [&project_id, this]() mutable {
     std::vector<std::string> names;
-    for (auto const& instance_config :
-         client_.ListInstanceConfigs(project_id)) {
-      EXPECT_STATUS_OK(instance_config);
-      if (!instance_config) break;
-      names.push_back(instance_config->name());
+    for (auto const& config : client_.ListInstanceConfigs(project_id)) {
+      EXPECT_STATUS_OK(config);
+      if (!config) break;
+      names.push_back(config->name());
     }
     return names;
   }();
-  ASSERT_FALSE(instance_config_names.empty());
+  ASSERT_FALSE(config_names.empty());
 
   // Use the name of the first element from the list of instance configs.
-  auto instance_config = client_.GetInstanceConfig(instance_config_names[0]);
-  EXPECT_THAT(instance_config->name(), HasSubstr(project_id));
+  auto config = client_.GetInstanceConfig(config_names[0]);
+  ASSERT_STATUS_OK(config);
+  EXPECT_THAT(config->name(), HasSubstr(project_id));
   EXPECT_EQ(
-      1, std::count(instance_config_names.begin(), instance_config_names.end(),
-                    instance_config->name()));
+      1, std::count(config_names.begin(), config_names.end(), config->name()));
 }
 
 TEST_F(InstanceAdminClientTest, InstanceIam) {
@@ -242,14 +240,14 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
     auto updated_policy = client_.SetIamPolicy(in, *actual_policy);
     ASSERT_THAT(updated_policy, AnyOf(IsOk(), StatusIs(StatusCode::kAborted)));
     if (updated_policy) {
-      EXPECT_FALSE(updated_policy->etag().empty());
+      EXPECT_THAT(updated_policy->etag(), Not(IsEmpty()));
     }
 
     // Repeat the test using the OCC API.
     updated_policy =
         client_.SetIamPolicy(in, [](google::iam::v1::Policy p) { return p; });
     ASSERT_STATUS_OK(updated_policy);
-    EXPECT_FALSE(updated_policy->etag().empty());
+    EXPECT_THAT(updated_policy->etag(), Not(IsEmpty()));
   }
 
   auto actual = client_.TestIamPermissions(

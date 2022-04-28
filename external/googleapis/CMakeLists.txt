@@ -73,6 +73,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/type/date.proto"
     "google/type/datetime.proto"
     "google/type/dayofweek.proto"
+    "google/type/decimal.proto"
     "google/type/expr.proto"
     "google/type/fraction.proto"
     "google/type/interval.proto"

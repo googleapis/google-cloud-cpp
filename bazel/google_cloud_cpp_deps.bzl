@@ -85,10 +85,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/536a2d8a2435fadffbe6dc120219623c4e54b9a2.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/a0d4c5c2a714a7317714ba6f0066a74ec8a9c10b.tar.gz",
             ],
-            strip_prefix = "googleapis-536a2d8a2435fadffbe6dc120219623c4e54b9a2",
-            sha256 = "2b57d817914f3dc0d5c49bf909e648a0f418ae8cc0b7b0483b31097b32fb8871",
+            strip_prefix = "googleapis-a0d4c5c2a714a7317714ba6f0066a74ec8a9c10b",
+            sha256 = "523e5986bdb7f001807a96373f1f6a05833cebb98314bc34d0defd9126772285",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
             # Scaffolding for patching googleapis after download. For example:
             #   patches = ["googleapis.patch"]
@@ -104,11 +104,11 @@ def google_cloud_cpp_deps():
     if "com_google_protobuf" not in native.existing_rules():
         http_archive(
             name = "com_google_protobuf",
-            strip_prefix = "protobuf-3.19.4",
+            strip_prefix = "protobuf-3.20.1",
             urls = [
-                "https://github.com/protocolbuffers/protobuf/archive/v3.19.4.tar.gz",
+                "https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz",
             ],
-            sha256 = "3bd7828aa5af4b13b99c191e8b1e884ebfa9ad371b0ce264605d347f135d2568",
+            sha256 = "8b28fdd45bab62d15db232ec404248901842e5340299a57765e48abe8a80d930",
         )
 
     # Load BoringSSL, this is used by gRPC, but as I write this (2021-06-03, circa gRPC-1.37.1), the version used by

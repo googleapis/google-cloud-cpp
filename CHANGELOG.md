@@ -90,6 +90,13 @@ noted, the APIs in these libraries are stable, and are ready for production use.
   necessarily depends on these implementation details. We updated the
   [mocking examples][storage-mocking-link] to guide you in changing any tests.
 
+### [Storage Transfer Service](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storagetransfer/README.md)
+
+**BREAKING CHANGES**
+
+The library has been disabled on macOS due to a protobuf naming clash. See
+[#8785](https://github.com/googleapis/google-cloud-cpp/issues/8785) for details.
+
 ### New Libraries
 
 We are introducing 2 new client libraries for GCP services. While we do not

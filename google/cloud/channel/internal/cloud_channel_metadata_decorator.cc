@@ -257,6 +257,96 @@ CloudChannelServiceMetadata::UpdateChannelPartnerLink(
   return child_->UpdateChannelPartnerLink(context, request);
 }
 
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceMetadata::GetCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetCustomerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
+CloudChannelServiceMetadata::ListCustomerRepricingConfigs(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListCustomerRepricingConfigs(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceMetadata::CreateCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateCustomerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceMetadata::UpdateCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+        request) {
+  SetMetadata(context, "customer_repricing_config.name=" +
+                           request.customer_repricing_config().name());
+  return child_->UpdateCustomerRepricingConfig(context, request);
+}
+
+Status CloudChannelServiceMetadata::DeleteCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteCustomerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceMetadata::GetChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetChannelPartnerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
+CloudChannelServiceMetadata::ListChannelPartnerRepricingConfigs(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListChannelPartnerRepricingConfigs(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceMetadata::CreateChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        CreateChannelPartnerRepricingConfigRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateChannelPartnerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceMetadata::UpdateChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        UpdateChannelPartnerRepricingConfigRequest const& request) {
+  SetMetadata(context, "channel_partner_repricing_config.name=" +
+                           request.channel_partner_repricing_config().name());
+  return child_->UpdateChannelPartnerRepricingConfig(context, request);
+}
+
+Status CloudChannelServiceMetadata::DeleteChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        DeleteChannelPartnerRepricingConfigRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteChannelPartnerRepricingConfig(context, request);
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceMetadata::LookupOffer(
     grpc::ClientContext& context,

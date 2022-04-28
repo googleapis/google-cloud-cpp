@@ -8,6 +8,14 @@ coverage:
 # Ignore generated code that lives with handcrafted code.
 ignore:
   - "google/cloud/bigtable/admin"
+  - "google/cloud/bigtable/internal/bigtable_auth_decorator.cc"
+  - "google/cloud/bigtable/internal/bigtable_auth_decorator.h"
+  - "google/cloud/bigtable/internal/bigtable_logging_decorator.cc"
+  - "google/cloud/bigtable/internal/bigtable_logging_decorator.h"
+  - "google/cloud/bigtable/internal/bigtable_metadata_decorator.cc"
+  - "google/cloud/bigtable/internal/bigtable_metadata_decorator.h"
+  - "google/cloud/bigtable/internal/bigtable_stub.cc"
+  - "google/cloud/bigtable/internal/bigtable_stub.h"
   - "google/cloud/spanner/admin"
   - "google/cloud/storage/internal/storage_auth_decorator.cc"
   - "google/cloud/storage/internal/storage_auth_decorator.h"

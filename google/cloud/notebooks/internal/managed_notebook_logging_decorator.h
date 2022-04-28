@@ -89,6 +89,12 @@ class ManagedNotebookServiceLogging : public ManagedNotebookServiceStub {
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
       override;
 
+  StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+  RefreshRuntimeTokenInternal(
+      grpc::ClientContext& context,
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

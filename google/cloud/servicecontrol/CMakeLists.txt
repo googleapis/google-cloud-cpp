@@ -35,30 +35,19 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/servicecontrol.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/servicecontrol.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_servicecontrol_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/check_error.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/distribution.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/http_request.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/log_entry.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/metric_value.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/operation.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/quota_controller.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/service_controller.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_servicecontrol_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(servicecontrol_protos)
-target_link_libraries(
-    google_cloud_cpp_servicecontrol_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_distribution_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::logging_type_type_protos
-           google-cloud-cpp::rpc_status_protos)
+target_link_libraries(google_cloud_cpp_servicecontrol_protos
+                      PUBLIC ${proto_deps})
 
 file(
     GLOB source_files

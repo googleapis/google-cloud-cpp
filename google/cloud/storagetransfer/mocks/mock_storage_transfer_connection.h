@@ -75,6 +75,30 @@ class MockStorageTransferServiceConnection
       RunTransferJob,
       (google::storagetransfer::v1::RunTransferJobRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::storagetransfer::v1::AgentPool>, CreateAgentPool,
+      (google::storagetransfer::v1::CreateAgentPoolRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::storagetransfer::v1::AgentPool>, UpdateAgentPool,
+      (google::storagetransfer::v1::UpdateAgentPoolRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::storagetransfer::v1::AgentPool>, GetAgentPool,
+              (google::storagetransfer::v1::GetAgentPoolRequest const& request),
+              (override));
+
+  MOCK_METHOD(StreamRange<google::storagetransfer::v1::AgentPool>,
+              ListAgentPools,
+              (google::storagetransfer::v1::ListAgentPoolsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      Status, DeleteAgentPool,
+      (google::storagetransfer::v1::DeleteAgentPoolRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -59,11 +59,9 @@ expected_dirs+=(
   # no RPC services in google/cloud/appengine/logging
   ./include/google/appengine/logging
   ./include/google/appengine/logging/v1
-  ./include/google/bigtable/v2
   ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
   ./include/google/cloud/bigtable/admin/mocks
-  ./include/google/cloud/bigtable/internal
   # no RPC services in google/cloud/clouddms
   ./include/google/cloud/clouddms/logging
   ./include/google/cloud/clouddms/logging/v1
@@ -109,7 +107,6 @@ expected_dirs+=(
   ./include/google/type
   ./include/grafeas
   ./include/grafeas/v1
-  ./lib64/cmake/google_cloud_cpp_bigtable
   ./lib64/cmake/google_cloud_cpp_common
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grafeas
