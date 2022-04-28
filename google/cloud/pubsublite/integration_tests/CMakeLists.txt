@@ -59,9 +59,6 @@ function (google_cloud_cpp_pubsublite_define_integration_tests)
         add_dependencies(pubsublite-client-integration-tests ${target})
     endforeach ()
 
-    if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-        return()
-    endif ()
 endfunction ()
 
 # Only define the tests if testing is enabled. Package maintainers may not want

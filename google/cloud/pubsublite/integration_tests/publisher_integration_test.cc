@@ -22,6 +22,7 @@
 #include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/admin.pb.h>
 #include <gmock/gmock.h>
@@ -41,10 +42,10 @@ using google::cloud::pubsublite::v1::DeleteTopicRequest;
 using google::cloud::pubsublite::v1::ListTopicsRequest;
 using google::cloud::pubsublite_internal::MakeLocation;
 
-int constexpr kNumMessages = 10000;
-int constexpr kThroughputCapacityMiB = 4;
-std::int64_t constexpr kPartitionStorage =
-    static_cast<std::int64_t>(1024) * 1024 * 1024 * 30;
+auto constexpr kNumMessages = 5000;
+auto constexpr kThroughputCapacityMiB = 4;
+auto constexpr kGiB = static_cast<std::int64_t>(1024 * 1024 * 1024LL);
+auto constexpr kPartitionStorage = 30 * kGiB;
 
 class PublisherIntegrationTest : public testing_util::IntegrationTest {
  protected:
@@ -85,7 +86,7 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
         ->set_subscribe_mib_per_sec(kThroughputCapacityMiB);
     req.mutable_topic()->mutable_retention_config()->set_per_partition_bytes(
         kPartitionStorage);
-    EXPECT_TRUE(admin_connection_->CreateTopic(std::move(req)));
+    EXPECT_STATUS_OK(admin_connection_->CreateTopic(std::move(req)));
     auto topic = Topic{project_id_, location_id_, topic_id};
     topic_name_ = topic.FullName();
     publisher_ = *MakePublisherConnection(topic, Options{});
@@ -101,8 +102,12 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     ListTopicsRequest req;
     req.set_parent("projects/" + project_id_ + "/locations/" + location_id_);
     auto topics = admin_connection_->ListTopics(std::move(req));
-    std::string full_topic_prefix = "projects/" + project_id_ + "/locations/" +
-                                    location_id_ + "/topics/" + topic_prefix_;
+    std::string full_topic_prefix =
+        "projects/" + project_id_ + "/locations/" + location_id_ + "/topics/" +
+        "pub-int-test-" +
+        google::cloud::internal::FormatUtcDate(
+            std::chrono::system_clock::now() - std::chrono::hours(48)) +
+        "-";
     for (auto const& topic : topics) {
       if (!std::regex_search(topic->name(), topic_regex_)) continue;
       if (topic->name() < full_topic_prefix) {
@@ -141,7 +146,7 @@ TEST_F(PublisherIntegrationTest, BasicGoodWithoutKey) {
         {MessageBuilder{}.SetData("abcded-" + std::to_string(i)).Build()}));
   }
   for (unsigned i = 0; i != kNumMessages; ++i) {
-    EXPECT_TRUE(results[i].get());
+    EXPECT_STATUS_OK(results[i].get());
   }
 }
 
@@ -155,7 +160,7 @@ TEST_F(PublisherIntegrationTest, BasicGoodWithKey) {
                                  .Build()}));
   }
   for (unsigned i = 0; i != kNumMessages; ++i) {
-    EXPECT_TRUE(results[i].get());
+    EXPECT_STATUS_OK(results[i].get());
   }
 }
 
