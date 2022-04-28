@@ -226,17 +226,17 @@ void MultipartitionPublisher::Flush() {
 
 future<void> MultipartitionPublisher::Shutdown() {
   cancel_token_ = nullptr;
+  auto shutdown = service_composite_.Shutdown();
+
   std::deque<PublishState> messages;
   {
     std::lock_guard<std::mutex> g{mu_};
     messages.swap(messages_);
   }
   for (auto& state : messages) {
-    state.publish_promise.set_value(Status{
-        StatusCode::kFailedPrecondition, "Multipartition publisher shutdown."});
+    state.publish_promise.set_value(service_composite_.status());
   }
 
-  auto shutdown = service_composite_.Shutdown();
   std::lock_guard<std::mutex> g{mu_};
   if (outstanding_num_partitions_req_) {
     return outstanding_num_partitions_req_->get_future().then(

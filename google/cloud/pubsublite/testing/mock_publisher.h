@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_PARTITION_PUBLISHER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_PARTITION_PUBLISHER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_PUBLISHER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_PUBLISHER_H
 
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
 #include "google/cloud/version.h"
@@ -24,12 +24,12 @@ namespace cloud {
 namespace pubsublite_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockPartitionPublisher
-    : public google::cloud::pubsublite_internal::Publisher<
-          google::cloud::pubsublite::v1::Cursor> {
+template <class ResponseT>
+class MockPublisher
+    : public google::cloud::pubsublite_internal::Publisher<ResponseT> {
  public:
   MOCK_METHOD(future<Status>, Start, (), (override));
-  MOCK_METHOD(future<StatusOr<google::cloud::pubsublite::v1::Cursor>>, Publish,
+  MOCK_METHOD(future<StatusOr<ResponseT>>, Publish,
               (google::cloud::pubsublite::v1::PubSubMessage), (override));
   MOCK_METHOD(void, Flush, (), (override));
   MOCK_METHOD(future<void>, Shutdown, (), (override));
@@ -40,4 +40,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_PARTITION_PUBLISHER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_PUBLISHER_H

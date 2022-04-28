@@ -47,9 +47,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadChunk(
     ConstBufferSequence const& payload) {
   auto request = UploadChunkRequest(session_id_params_.upload_id,
                                     committed_size_, payload);
-  request.set_multiple_options(
-      request_.GetOption<UserProject>(), request_.GetOption<Fields>(),
-      request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
+  request_.ForEachOption(CopyCommonOptions(request));
   return HandleResponse(client_->UploadChunk(request));
 }
 
@@ -59,14 +57,13 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
   auto request =
       UploadChunkRequest(session_id_params_.upload_id, committed_size_, payload,
                          full_object_hashes);
-  request.set_multiple_options(
-      request_.GetOption<UserProject>(), request_.GetOption<Fields>(),
-      request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
+  request_.ForEachOption(CopyCommonOptions(request));
   return HandleResponse(client_->UploadChunk(request));
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
   QueryResumableUploadRequest request(session_id_params_.upload_id);
+  request_.ForEachOption(CopyCommonOptions(request));
   auto result = client_->QueryResumableSession(request);
   if (!result) return result;
 

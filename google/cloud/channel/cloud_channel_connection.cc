@@ -221,6 +221,72 @@ CloudChannelServiceConnection::UpdateChannelPartnerLink(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceConnection::GetCustomerRepricingConfig(
+    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceConnection::ListCustomerRepricingConfigs(
+    google::cloud::channel::v1::
+        ListCustomerRepricingConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>>();
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceConnection::CreateCustomerRepricingConfig(
+    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceConnection::UpdateCustomerRepricingConfig(
+    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status CloudChannelServiceConnection::DeleteCustomerRepricingConfig(
+    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceConnection::GetChannelPartnerRepricingConfig(
+    google::cloud::channel::v1::
+        GetChannelPartnerRepricingConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceConnection::ListChannelPartnerRepricingConfigs(
+    google::cloud::channel::v1::
+        ListChannelPartnerRepricingConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>>();
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceConnection::CreateChannelPartnerRepricingConfig(
+    google::cloud::channel::v1::
+        CreateChannelPartnerRepricingConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceConnection::UpdateChannelPartnerRepricingConfig(
+    google::cloud::channel::v1::
+        UpdateChannelPartnerRepricingConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status CloudChannelServiceConnection::DeleteChannelPartnerRepricingConfig(
+    google::cloud::channel::v1::
+        DeleteChannelPartnerRepricingConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceConnection::LookupOffer(
     google::cloud::channel::v1::LookupOfferRequest const&) {

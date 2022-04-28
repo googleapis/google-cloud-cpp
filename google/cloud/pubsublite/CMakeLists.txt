@@ -92,6 +92,8 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
+    internal/default_publish_message_transformer.cc
+    internal/default_publish_message_transformer.h
     internal/default_routing_policy.cc
     internal/default_routing_policy.h
     internal/futures.h
@@ -114,6 +116,8 @@ add_library(
     internal/publisher.h
     internal/publisher_auth_decorator.cc
     internal/publisher_auth_decorator.h
+    internal/publisher_connection_impl.cc
+    internal/publisher_connection_impl.h
     internal/publisher_logging_decorator.cc
     internal/publisher_logging_decorator.h
     internal/publisher_metadata_decorator.cc
@@ -127,6 +131,7 @@ add_library(
     internal/service.h
     internal/service_composite.h
     internal/stream_factory.h
+    internal/stream_retry_policy.h
     internal/subscriber_auth_decorator.cc
     internal/subscriber_auth_decorator.h
     internal/subscriber_logging_decorator.cc
@@ -154,6 +159,9 @@ add_library(
     internal/topic_stats_stub_factory.h
     message_metadata.cc
     message_metadata.h
+    options.h
+    publisher_connection.cc
+    publisher_connection.h
     topic.h
     topic_stats_client.cc
     topic_stats_client.h
@@ -170,7 +178,7 @@ target_include_directories(
 target_link_libraries(
     google_cloud_cpp_pubsublite
     PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-           google-cloud-cpp::pubsublite_protos)
+           google-cloud-cpp::pubsublite_protos google-cloud-cpp::pubsub)
 google_cloud_cpp_add_common_options(google_cloud_cpp_pubsublite)
 set_target_properties(
     google_cloud_cpp_pubsublite
@@ -227,7 +235,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_alarm_registry.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_async_reader_writer.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_backoff_policy.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_partition_publisher.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_publisher.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_resumable_async_reader_writer_stream.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_retry_policy.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_routing_policy.h
@@ -250,13 +258,16 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         # cmake-format: sort
         endpoint_test.cc
         internal/alarm_registry_impl_test.cc
+        internal/default_publish_message_transformer_test.cc
         internal/default_routing_policy_test.cc
         internal/location_test.cc
         internal/multipartition_publisher_test.cc
         internal/partition_publisher_test.cc
+        internal/publisher_connection_impl_test.cc
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc
         internal/stream_factory_test.cc
+        internal/stream_retry_policy_test.cc
         message_metadata_test.cc
         topic_test.cc)
 
