@@ -204,8 +204,8 @@ class MockFilebuf : public std::filebuf {
 };
 
 TEST_F(WriteObjectTest, UploadStreamResumable) {
+  auto rng = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const quantum = internal::UploadChunkRequest::kChunkSizeQuantum;
-  auto rng = google::cloud::internal::MakeDefaultPRNG();
   google::cloud::storage::testing::TempFile temp_file(
       google::cloud::storage::testing::MakeRandomData(rng, 2 * quantum + 10));
 
@@ -214,42 +214,21 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  // Simulate situation when a quantum has already been uploaded.
-  std::size_t bytes_written = quantum;
-  EXPECT_CALL(*mock_, CreateResumableSession)
-      .WillOnce([&](internal::ResumableUploadRequest const& request) {
-        EXPECT_EQ("test-bucket-name", request.bucket_name());
-        EXPECT_EQ("test-object-name", request.object_name());
+  EXPECT_CALL(*mock_, QueryResumableUpload)
+      .WillOnce([&](internal::QueryResumableUploadRequest const& request) {
+        EXPECT_EQ("test-only-upload-id", request.upload_session_url());
+        return internal::QueryResumableUploadResponse{quantum, absl::nullopt};
+      });
 
-        auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-        using internal::ResumableUploadResponse;
-
-        EXPECT_CALL(*mock, UploadFinalChunk)
-            .WillOnce([expected, &bytes_written](
-                          internal::ConstBufferSequence const& data,
-                          std::uint64_t size, internal::HashValues const&) {
-              bytes_written += internal::TotalBytes(data);
-              EXPECT_EQ(bytes_written, size);
-              return make_status_or(
-                  ResumableUploadResponse{"fake-url",
-                                          ResumableUploadResponse::kDone,
-                                          bytes_written,
-                                          expected,
-                                          {}});
-            });
-
-        return make_status_or(internal::CreateResumableSessionResponse{
-            std::move(mock),
-            internal::ResumableUploadResponse{
-                "fake-url", internal::ResumableUploadResponse::kInProgress,
-                /*.committed_size=*/quantum,
-                /*.object_metadata=*/absl::nullopt,
-                /*.annotations=*/std::string{}}});
+  EXPECT_CALL(*mock_, UploadChunk)
+      .WillOnce([&](internal::UploadChunkRequest const& r) {
+        EXPECT_TRUE(r.last_chunk());
+        return internal::QueryResumableUploadResponse{
+            quantum + r.payload_size(), expected};
       });
 
   MockFilebuf filebuf;
-  // Don't expect any seekoff events
-  EXPECT_CALL(filebuf, SeekoffEvent).WillOnce([quantum](std::streamoff off) {
+  EXPECT_CALL(filebuf, SeekoffEvent).WillOnce([&](std::streamoff off) {
     EXPECT_EQ(quantum, off);
   });
   ASSERT_NE(nullptr, filebuf.open(temp_file.name().c_str(), std::ios_base::in));
@@ -259,62 +238,78 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
   auto client = ClientForMock();
   auto res = internal::ClientImplDetails::UploadStreamResumable(
       client, stream,
-      internal::ResumableUploadRequest("test-bucket-name", "test-object-name"));
+      internal::ResumableUploadRequest("test-bucket-name", "test-object-name")
+          .set_option(RestoreResumableUploadSession("test-only-upload-id")));
   ASSERT_STATUS_OK(res);
   EXPECT_EQ(expected, *res);
 }
 
 TEST_F(WriteObjectTest, UploadFile) {
-  auto rng = google::cloud::internal::MakeDefaultPRNG();
+  auto rng = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const quantum = internal::UploadChunkRequest::kChunkSizeQuantum;
   auto const initial_size = quantum;
   auto const file_size = initial_size + 10;
   google::cloud::storage::testing::TempFile temp_file(
       google::cloud::storage::testing::MakeRandomData(rng, file_size));
 
-  std::string text = R"""({
-      "name": "test-bucket-name/test-object-name/1"
-})""";
+  std::string text = R"""({"name": "test-bucket-name/test-object-name/1"})""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  // Simulate situation when a quantum has already been uploaded.
-  std::uint64_t bytes_written = initial_size;
-  EXPECT_CALL(*mock_, CreateResumableSession)
+  EXPECT_CALL(*mock_, CreateResumableUpload)
       .WillOnce([&](internal::ResumableUploadRequest const& request) {
         EXPECT_TRUE(request.HasOption<UploadContentLength>());
         EXPECT_EQ(file_size, request.GetOption<UploadContentLength>().value());
         EXPECT_EQ("test-bucket-name", request.bucket_name());
         EXPECT_EQ("test-object-name", request.object_name());
+        return internal::CreateResumableUploadResponse{"test-only-upload-id"};
+      });
 
-        auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-        using internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock, UploadFinalChunk)
-            .WillOnce([&](internal::ConstBufferSequence const& data,
-                          std::uint64_t size, internal::HashValues const&) {
-              auto const data_size = internal::TotalBytes(data);
-              EXPECT_EQ(size, file_size);
-              EXPECT_EQ(data_size, file_size - initial_size);
-              bytes_written += data_size;
-              return make_status_or(
-                  ResumableUploadResponse{"fake-url",
-                                          ResumableUploadResponse::kDone,
-                                          bytes_written,
-                                          expected,
-                                          {}});
-            });
-
-        return make_status_or(internal::CreateResumableSessionResponse{
-            std::move(mock),
-            internal::ResumableUploadResponse{
-                "fake-url", internal::ResumableUploadResponse::kInProgress,
-                /*committed_size=*/initial_size,
-                /*object_metadata=*/absl::nullopt,
-                /*.annotations=*/std::string{}}});
+  EXPECT_CALL(*mock_, UploadChunk)
+      .WillOnce([&](internal::UploadChunkRequest const& r) {
+        EXPECT_TRUE(r.last_chunk());
+        return internal::QueryResumableUploadResponse{file_size, expected};
       });
 
   auto client = ClientForMock();
   auto res = client.UploadFile(temp_file.name(), "test-bucket-name",
                                "test-object-name", UseResumableUploadSession());
+  ASSERT_STATUS_OK(res);
+  EXPECT_EQ(expected, *res);
+}
+
+/// @test Verify custom headers are preserved in UploadChunk() requests.
+TEST_F(WriteObjectTest, UploadStreamResumableWithCustomHeader) {
+  auto rng = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const quantum = internal::UploadChunkRequest::kChunkSizeQuantum;
+  auto const initial_size = quantum;
+  auto const file_size = initial_size + 10;
+  google::cloud::storage::testing::TempFile temp_file(
+      google::cloud::storage::testing::MakeRandomData(rng, file_size));
+
+  std::string text = R"""({"name": "test-bucket-name/test-object-name/1"})""";
+  auto expected = internal::ObjectMetadataParser::FromString(text).value();
+
+  EXPECT_CALL(*mock_, CreateResumableUpload)
+      .WillOnce([&](internal::ResumableUploadRequest const& request) {
+        EXPECT_TRUE(request.HasOption<UploadContentLength>());
+        EXPECT_EQ(file_size, request.GetOption<UploadContentLength>().value());
+        EXPECT_EQ("test-bucket-name", request.bucket_name());
+        EXPECT_EQ("test-object-name", request.object_name());
+        return internal::CreateResumableUploadResponse{"test-only-upload-id"};
+      });
+
+  EXPECT_CALL(*mock_, UploadChunk)
+      .WillOnce([&](internal::UploadChunkRequest const& r) {
+        EXPECT_TRUE(r.last_chunk());
+        EXPECT_EQ("header-value", r.GetOption<CustomHeader>().value_or(""));
+        return internal::QueryResumableUploadResponse{file_size, expected};
+      });
+
+  auto client = ClientForMock();
+  auto res =
+      client.UploadFile(temp_file.name(), "test-bucket-name",
+                        "test-object-name", UseResumableUploadSession(),
+                        CustomHeader("x-test-custom-header", "header-value"));
   ASSERT_STATUS_OK(res);
   EXPECT_EQ(expected, *res);
 }
