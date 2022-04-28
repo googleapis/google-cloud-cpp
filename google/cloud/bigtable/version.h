@@ -19,6 +19,12 @@
 #include "google/cloud/version.h"
 #include <string>
 
+#define GOOGLE_CLOUD_CPP_BIGTABLE_DATA_CLIENT_DEPRECATED(name)              \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                              \
+      "google::cloud::bigtable::DataClient::" name                          \
+      " is deprecated, and will be removed on or shortly after 2023-05-01." \
+      " See GitHub issue #8800 for more information.")
+
 // This preprocessor symbol is deprecated and should never be used anywhere. It
 // exists solely for backward compatibility to avoid breaking anyone who may
 // have been using it.
