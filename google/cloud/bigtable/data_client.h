@@ -32,7 +32,6 @@ namespace internal {
 class AsyncRetryBulkApply;
 class AsyncRowSampler;
 class BulkMutator;
-class DataClientTester;
 class LoggingDataClient;
 }  // namespace internal
 
@@ -110,7 +109,6 @@ class DataClient {
   friend class internal::AsyncRetryBulkApply;
   friend class internal::AsyncRowSampler;
   friend class internal::BulkMutator;
-  friend class internal::DataClientTester;
   friend class RowReader;
   template <typename RowFunctor, typename FinishFunctor>
   friend class AsyncRowReader;
@@ -191,18 +189,6 @@ class DataClient {
                          google::bigtable::v2::MutateRowsRequest const& request,
                          grpc::CompletionQueue* cq) = 0;
   //@}
-
-  /**
-   * The client library calls this method to avoid deprecation warnings from
-   * calling `Channel()` directly.
-   */
-  virtual std::shared_ptr<grpc::Channel> ChannelImpl() { return nullptr; }
-
-  /**
-   * The client library calls this method to avoid deprecation warnings from
-   * calling `reset()` directly.
-   */
-  virtual void resetImpl() {}
 };
 
 /// Create a new data client configured via @p options.
@@ -231,16 +217,6 @@ inline std::string InstanceName(std::shared_ptr<DataClient> const& client) {
          client->instance_id();
 }
 
-namespace internal {
-class DataClientTester {
- public:
-  static std::shared_ptr<grpc::Channel> Channel(
-      std::shared_ptr<DataClient> const& c) {
-    return c->ChannelImpl();
-  }
-  static void reset(std::shared_ptr<DataClient> const& c) { c->resetImpl(); }
-};
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud

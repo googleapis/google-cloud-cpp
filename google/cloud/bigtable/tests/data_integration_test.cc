@@ -540,6 +540,9 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("MutateRow"))));
 }
 
+// TODO(#8800) - remove after deprecation is complete
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
 TEST(ConnectionRefresh, Disabled) {
   auto data_client = bigtable::MakeDataClient(
       testing::TableTestEnvironment::project_id(),
@@ -559,7 +562,7 @@ TEST(ConnectionRefresh, Disabled) {
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
   for (int i = 0; i < internal::DefaultConnectionPoolSize(); ++i) {
-    auto channel = internal::DataClientTester::Channel(data_client);
+    auto channel = data_client->Channel();
     EXPECT_EQ(GRPC_CHANNEL_IDLE, channel->GetState(false));
   }
   // Make sure things still work.
@@ -572,8 +575,7 @@ TEST(ConnectionRefresh, Disabled) {
   // state.
   auto check_if_some_channel_is_ready = [&] {
     for (int i = 0; i < internal::DefaultConnectionPoolSize(); ++i) {
-      auto channel = internal::DataClientTester::Channel(data_client);
-      if (channel->GetState(false) == GRPC_CHANNEL_READY) {
+      if (data_client->Channel()->GetState(false) == GRPC_CHANNEL_READY) {
         return true;
       }
     }
@@ -591,8 +593,7 @@ TEST(ConnectionRefresh, Frequent) {
           .set<MinConnectionRefreshOption>(std::chrono::milliseconds(100)));
 
   for (;;) {
-    auto channel = internal::DataClientTester::Channel(data_client);
-    if (channel->GetState(false) == GRPC_CHANNEL_READY) {
+    if (data_client->Channel()->GetState(false) == GRPC_CHANNEL_READY) {
       // We've found a channel which changed its state from IDLE to READY,
       // which means that our refreshing mechanism works.
       break;
@@ -607,6 +608,9 @@ TEST(ConnectionRefresh, Frequent) {
                             {row_key, kFamily4, "c1", 2000, "v2000"}};
   Apply(table, row_key, created);
 }
+
+// TODO(#8800) - remove after deprecation is complete
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
