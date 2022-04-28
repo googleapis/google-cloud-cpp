@@ -41,7 +41,8 @@ using google::cloud::pubsublite_internal::MakeLocation;
 
 int constexpr kNumMessages = 10000;
 int constexpr kThroughputCapacityMiB = 4;
-std::int64_t constexpr kPartitionStorage = static_cast<std::int64_t>(1024) * 1024 * 1024 * 30;
+std::int64_t constexpr kPartitionStorage =
+    static_cast<std::int64_t>(1024) * 1024 * 1024 * 30;
 
 std::unique_ptr<PublisherConnection> MakePublisher() {
   auto locs = std::vector<std::string>{
@@ -52,7 +53,7 @@ std::unique_ptr<PublisherConnection> MakePublisher() {
   };
   std::string project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  srand (static_cast<unsigned int>(time(nullptr)));
+  srand(static_cast<unsigned int>(time(nullptr)));
   std::string location_id = locs[rand() % locs.size()];
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   std::string topic_id =
