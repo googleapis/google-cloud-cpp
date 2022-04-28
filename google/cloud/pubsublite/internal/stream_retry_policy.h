@@ -46,6 +46,7 @@ class StreamRetryPolicy : public google::cloud::internal::RetryPolicy {
   };
   // referenced
   // https://github.com/googleapis/java-pubsublite/blob/main/google-cloud-pubsublite/src/main/java/com/google/cloud/pubsublite/ErrorCodes.java
+  // TODO(#8820): resolve error code inconsistencies
   std::unordered_set<StatusCode, StatusCodeHash> retryable_codes_{
       StatusCode::kDeadlineExceeded, StatusCode::kAborted,
       StatusCode::kInternal,         StatusCode::kUnavailable,
