@@ -20,7 +20,3 @@ find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_memcache-targets.cmake")
-
-if (NOT TARGET google-cloud-cpp::experimental-memcache)
-    add_library(google-cloud-cpp::experimental-memcache ALIAS google-cloud-cpp::memcache)
-endif ()

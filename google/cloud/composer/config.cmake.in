@@ -20,7 +20,3 @@ find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_composer-targets.cmake")
-
-if (NOT TARGET google-cloud-cpp::experimental-composer)
-    add_library(google-cloud-cpp::experimental-composer ALIAS google-cloud-cpp::composer)
-endif ()
