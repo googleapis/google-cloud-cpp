@@ -34,26 +34,29 @@ namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using google::cloud::pubsub::MessageBuilder;
+using ::google::cloud::pubsub::MessageBuilder;
+using ::google::cloud::pubsub::PublisherConnection;
+using ::google::cloud::pubsublite::v1::CreateTopicRequest;
+using ::google::cloud::pubsublite::v1::DeleteTopicRequest;
+using ::google::cloud::pubsublite::v1::ListTopicsRequest;
+using ::google::cloud::pubsublite_internal::MakeLocation;
+using ::std::chrono::hours;
+using ::std::chrono::system_clock;
 
-using google::cloud::pubsub::PublisherConnection;
-using google::cloud::pubsublite::v1::CreateTopicRequest;
-using google::cloud::pubsublite::v1::DeleteTopicRequest;
-using google::cloud::pubsublite::v1::ListTopicsRequest;
-using google::cloud::pubsublite_internal::MakeLocation;
-
-auto constexpr kNumMessages = 1250;
+auto constexpr kNumMessages = 125;
 auto constexpr kThroughputCapacityMiB = 4;
 auto constexpr kGiB = static_cast<std::int64_t>(1024 * 1024 * 1024LL);
 auto constexpr kPartitionStorage = 30 * kGiB;
-auto constexpr kMaxNumMessagesPerBatch = 250;
+auto constexpr kMaxNumMessagesPerBatch = 25;
+
+std::string TestTopicPrefix(std::chrono::system_clock::time_point tp) {
+  return "pub-int-test-" + google::cloud::internal::FormatUtcDate(tp) + "-";
+}
 
 class PublisherIntegrationTest : public testing_util::IntegrationTest {
  protected:
   PublisherIntegrationTest()
-      : tp_{std::chrono::system_clock::now()},
-        topic_prefix_{"pub-int-test-" +
-                      google::cloud::internal::FormatUtcDate(tp_) + "-"},
+      : topic_prefix_{TestTopicPrefix(system_clock::now())},
         project_id_{google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT")
                         .value_or("")},
         location_id_{
@@ -106,10 +109,8 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     auto topics = admin_connection_->ListTopics(std::move(req));
     std::string full_topic_prefix =
         "projects/" + project_id_ + "/locations/" + location_id_ + "/topics/" +
-        "pub-int-test-" +
-        google::cloud::internal::FormatUtcDate(
-            std::chrono::system_clock::now() - std::chrono::hours(48)) +
-        "-";
+        TestTopicPrefix(std::chrono::system_clock::now() -
+                        std::chrono::hours(48));
     for (auto const& topic : topics) {
       if (!std::regex_search(topic->name(), topic_regex_)) continue;
       if (topic->name() < full_topic_prefix) {
@@ -130,7 +131,6 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
                generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
   }
 
-  std::chrono::system_clock::time_point tp_;
   std::regex topic_regex_ = std::regex{
       R"re(^projects\/\d*\/locations\/[a-z0-9\-]*\/topics\/pub-int-test[-_]\d{4}[-_]\d{2}[-_]\d{2}[-_])re"};
   std::string topic_prefix_;
@@ -143,25 +143,25 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
 
 TEST_F(PublisherIntegrationTest, BasicGoodWithoutKey) {
   std::vector<future<StatusOr<std::string>>> results;
-  for (unsigned int i = 0; i != kNumMessages; ++i) {
+  for (int i = 0; i != kNumMessages; ++i) {
     results.push_back(publisher_->Publish(
         {MessageBuilder{}.SetData("abcded-" + std::to_string(i)).Build()}));
   }
-  for (unsigned i = 0; i != kNumMessages; ++i) {
+  for (int i = 0; i != kNumMessages; ++i) {
     EXPECT_STATUS_OK(results[i].get());
   }
 }
 
 TEST_F(PublisherIntegrationTest, BasicGoodWithKey) {
   std::vector<future<StatusOr<std::string>>> results;
-  for (unsigned int i = 0; i != kNumMessages; ++i) {
+  for (int i = 0; i != kNumMessages; ++i) {
     results.push_back(
         publisher_->Publish({MessageBuilder{}
                                  .SetData("abcded-" + std::to_string(i))
                                  .SetOrderingKey("key")
                                  .Build()}));
   }
-  for (unsigned i = 0; i != kNumMessages; ++i) {
+  for (int i = 0; i != kNumMessages; ++i) {
     EXPECT_STATUS_OK(results[i].get());
   }
 }
