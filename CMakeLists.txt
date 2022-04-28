@@ -272,6 +272,15 @@ cmake_dependent_option(
     ON "GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_REST)
 
+# Prevent users for setting incompatible flags.
+if (GOOGLE_CLOUD_CPP_ENABLE_STORAGE AND NOT GOOGLE_CLOUD_CPP_ENABLE_REST)
+    message(
+        FATAL_ERROR
+            "If storage is enabled (e.g. -DGOOGLE_CLOUD_ENABLE=storage), "
+            "the REST library cannot be disabled "
+            "(e.g. -DGOOGLE_CLOUD_CPP_ENABLE_REST=OFF)")
+endif ()
+
 # Enable testing in this directory so we can do a top-level `make test`. This
 # also includes the BUILD_TESTING option, which is on by default.
 include(CTest)

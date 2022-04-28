@@ -13,6 +13,7 @@
 # limitations under the License.
 
 include(CMakeFindDependencyMacro)
+find_dependency(google_cloud_cpp_rest_internal)
 find_dependency(google_cloud_cpp_common)
 find_dependency(absl)
 find_dependency(CURL)
