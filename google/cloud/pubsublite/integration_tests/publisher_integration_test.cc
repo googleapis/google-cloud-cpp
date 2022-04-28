@@ -38,6 +38,7 @@ using google::cloud::pubsub::MessageBuilder;
 using google::cloud::pubsub::PublisherConnection;
 using google::cloud::pubsublite::v1::CreateTopicRequest;
 using google::cloud::pubsublite::v1::DeleteTopicRequest;
+using google::cloud::pubsublite::v1::ListTopicsRequest;
 using google::cloud::pubsublite_internal::MakeLocation;
 
 int constexpr kNumMessages = 10000;
@@ -54,10 +55,10 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
       "us-west1-c",    "us-west2-b",    "us-west2-c",    "us-west3-a",
       "us-west3-b",    "us-west4-a",    "us-west4-b",
   };
-  std::string project_id =
+  project_id_ =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   srand(static_cast<unsigned int>(time(nullptr)));
-  std::string location_id = locs[rand() % locs.size()];
+  location_id_ = locs[rand() % locs.size()];
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto topic_id =
       google::cloud::pubsub_testing::RandomTopicId(generator);
@@ -65,13 +66,13 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
       MakeAdminServiceConnection(google::cloud::internal::PopulateCommonOptions(
           google::cloud::internal::PopulateGrpcOptions(
               Options{}.set<EndpointOption>(
-                  MakeLocation(location_id)->GetCloudRegion().ToString() +
+                  MakeLocation(location_id_)->GetCloudRegion().ToString() +
                   "-pubsublite.googleapis.com"),
               ""),
           /*endpoint_env_var=*/{}, /*emulator_env_var=*/{},
           "pubsublite.googleapis.com"));
   CreateTopicRequest req;
-  req.set_parent("projects/" + project_id + "/locations/" + location_id);
+  req.set_parent("projects/" + project_id_ + "/locations/" + location_id_);
   req.set_topic_id(topic_id);
   req.mutable_topic()->mutable_partition_config()->set_count(3);
   req.mutable_topic()
@@ -85,7 +86,7 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
   req.mutable_topic()->mutable_retention_config()->set_per_partition_bytes(
       kPartitionStorage);
   EXPECT_TRUE(admin_connection_->CreateTopic(std::move(req)));
-  auto topic = Topic{project_id, location_id, topic_id};
+  auto topic = Topic{project_id_, location_id_, topic_id};
   topic_name_ = topic.FullName();
   publisher_ = *MakePublisherConnection(topic,
                                   Options{});
@@ -97,7 +98,20 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     admin_connection_->DeleteTopic(std::move(req));
   }
 
+  void GarbageCollect() {
+    ListTopicsRequest req;
+    req.set_parent("projects/" + project_id_ + "/locations/" + location_id_);
+    auto topics = admin_connection_->ListTopics(std::move(req));
+    for (auto const& topic : topics) {
+      DeleteTopicRequest delete_req;
+      delete_req.set_name(topic->name());
+      admin_connection_->DeleteTopic(std::move(delete_req));
+    }
+  }
+
   std::shared_ptr<AdminServiceConnection> admin_connection_;
+  std::string project_id_;
+  std::string location_id_;
   std::string topic_name_;
   std::unique_ptr<PublisherConnection> publisher_;
 };
