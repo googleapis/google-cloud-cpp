@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsublite/admin_connection.h"
 #include "google/cloud/pubsublite/internal/location.h"
 #include "google/cloud/pubsublite/options.h"
 #include "google/cloud/pubsublite/publisher_connection.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
@@ -26,6 +26,7 @@
 #include <google/cloud/pubsublite/v1/admin.pb.h>
 #include <gmock/gmock.h>
 #include <algorithm>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -48,7 +49,10 @@ std::int64_t constexpr kPartitionStorage =
 
 class PublisherIntegrationTest : public testing_util::IntegrationTest {
  protected:
-  PublisherIntegrationTest() {
+  PublisherIntegrationTest()
+      : tp_{std::chrono::system_clock::now()},
+        topic_prefix_{"pub-int-test-" +
+                      google::cloud::internal::FormatUtcDate(tp_) + "-"} {
     auto locs = std::vector<std::string>{
         "us-central1-a", "us-central1-b", "us-central1-c", "us-east1-b",
         "us-east1-c",    "us-east4-b",    "us-east4-c",    "us-west1-a",
@@ -60,9 +64,8 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     srand(static_cast<unsigned int>(time(nullptr)));
     location_id_ = locs[rand() % locs.size()];
 
-    auto generator =
-        google::cloud::internal::DefaultPRNG(std::random_device{}());
-    auto topic_id = google::cloud::pubsub_testing::RandomTopicId(generator);
+    auto topic_id = RandomTopicName();
+
     admin_connection_ = MakeAdminServiceConnection(
         google::cloud::internal::PopulateCommonOptions(
             google::cloud::internal::PopulateGrpcOptions(
@@ -105,16 +108,37 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     ListTopicsRequest req;
     req.set_parent("projects/" + project_id_ + "/locations/" + location_id_);
     auto topics = admin_connection_->ListTopics(std::move(req));
+    std::string full_topic_prefix = "projects/" + project_id_ + "/locations/" +
+                                    location_id_ + "/topics/" + topic_prefix_;
     for (auto const& topic : topics) {
-      DeleteTopicRequest delete_req;
-      delete_req.set_name(topic->name());
-      admin_connection_->DeleteTopic(std::move(delete_req));
+      if (!std::regex_search(topic->name(), topic_regex_)) continue;
+      if (topic->name() < full_topic_prefix) {
+        DeleteTopicRequest delete_req;
+        delete_req.set_name(topic->name());
+        admin_connection_->DeleteTopic(std::move(delete_req));
+      }
     }
   }
 
+  std::string RandomTopicName() {
+    std::size_t const max_size = 42;  // just because
+    auto size = static_cast<int>(max_size - 1 - topic_prefix_.size());
+    auto generator =
+        google::cloud::internal::DefaultPRNG(std::random_device{}());
+    return topic_prefix_ +
+           google::cloud::internal::Sample(
+               generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
+           google::cloud::internal::Sample(
+               generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
+  }
+
+  std::chrono::system_clock::time_point tp_;
+  std::regex topic_regex_ = std::regex{
+      R"re(^projects\/\d*\/locations\/[a-z0-9\-]*\/topics\/pub-int-test[-_]\d{4}[-_]\d{2}[-_]\d{2}[-_])re"};
   std::shared_ptr<AdminServiceConnection> admin_connection_;
   std::string project_id_;
   std::string location_id_;
+  std::string topic_prefix_;
   std::string topic_name_;
   std::unique_ptr<PublisherConnection> publisher_;
 };

@@ -44,7 +44,6 @@ cc_library(
     hdrs = pubsub_client_testing_hdrs,
     visibility = [
         ":__subpackages__",
-        "//google/cloud/pubsublite/integration_tests:__pkg__",
     ],
     deps = [
         ":google_cloud_cpp_pubsub",

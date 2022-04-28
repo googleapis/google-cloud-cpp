@@ -39,7 +39,6 @@ function (google_cloud_cpp_pubsublite_define_integration_tests)
             ${target}
             PRIVATE pubsublite_testing
                     google-cloud-cpp::pubsublite
-                    google-cloud-cpp::pubsub_client_testing
                     google_cloud_cpp_testing_grpc
                     google_cloud_cpp_testing
                     GTest::gmock_main
