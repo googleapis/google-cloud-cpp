@@ -50,7 +50,8 @@ std::unique_ptr<PublisherConnection> MakePublisher() {
   };
   std::string project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  srand(time(nullptr));
+  time_t t{0};
+  srand(time(&t));
   std::string location_id = locs[rand() % locs.size()];
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   std::string topic_id =
