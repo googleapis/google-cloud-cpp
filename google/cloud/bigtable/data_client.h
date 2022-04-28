@@ -196,7 +196,7 @@ class DataClient {
    * The client library calls this method to avoid deprecation warnings from
    * calling `Channel()` directly.
    */
-  virtual std::shared_ptr<grpc::Channel> ChannelImpl() { return {}; }
+  virtual std::shared_ptr<grpc::Channel> ChannelImpl() { return nullptr; }
 
   /**
    * The client library calls this method to avoid deprecation warnings from
@@ -234,10 +234,11 @@ inline std::string InstanceName(std::shared_ptr<DataClient> const& client) {
 namespace internal {
 class DataClientTester {
  public:
-  static std::shared_ptr<grpc::Channel> Channel(std::shared_ptr<DataClient> c) {
+  static std::shared_ptr<grpc::Channel> Channel(
+      std::shared_ptr<DataClient> const& c) {
     return c->ChannelImpl();
   }
-  static void reset(std::shared_ptr<DataClient> c) { c->resetImpl(); }
+  static void reset(std::shared_ptr<DataClient> const& c) { c->resetImpl(); }
 };
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
