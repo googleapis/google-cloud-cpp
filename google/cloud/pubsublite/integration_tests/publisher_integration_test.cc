@@ -39,7 +39,9 @@ using google::cloud::pubsub::PublisherConnection;
 using google::cloud::pubsublite::v1::CreateTopicRequest;
 using google::cloud::pubsublite_internal::MakeLocation;
 
-unsigned int constexpr kNumMessages = 10000;
+int constexpr kNumMessages = 10000;
+int constexpr kThroughputCapacityMiB = 4;
+std::int64_t constexpr kPartitionStorage = 1024 * 1024 * 1024 * 30L;
 
 std::unique_ptr<PublisherConnection> MakePublisher() {
   auto locs = std::vector<std::string>{
@@ -72,13 +74,13 @@ std::unique_ptr<PublisherConnection> MakePublisher() {
   req.mutable_topic()
       ->mutable_partition_config()
       ->mutable_capacity()
-      ->set_publish_mib_per_sec(4);
+      ->set_publish_mib_per_sec(kThroughputCapacityMiB);
   req.mutable_topic()
       ->mutable_partition_config()
       ->mutable_capacity()
-      ->set_subscribe_mib_per_sec(4);
+      ->set_subscribe_mib_per_sec(kThroughputCapacityMiB);
   req.mutable_topic()->mutable_retention_config()->set_per_partition_bytes(
-      32212254720);
+      kPartitionStorage);
   EXPECT_TRUE(admin->CreateTopic(std::move(req)));
   return *MakePublisherConnection(Topic{project_id, location_id, topic_id},
                                   Options{});
