@@ -37,6 +37,7 @@ using google::cloud::pubsub::MessageBuilder;
 
 using google::cloud::pubsub::PublisherConnection;
 using google::cloud::pubsublite::v1::CreateTopicRequest;
+using google::cloud::pubsublite::v1::DeleteTopicRequest;
 using google::cloud::pubsublite_internal::MakeLocation;
 
 int constexpr kNumMessages = 10000;
@@ -44,8 +45,10 @@ int constexpr kThroughputCapacityMiB = 4;
 std::int64_t constexpr kPartitionStorage =
     static_cast<std::int64_t>(1024) * 1024 * 1024 * 30;
 
-std::unique_ptr<PublisherConnection> MakePublisher() {
-  auto locs = std::vector<std::string>{
+class PublisherIntegrationTest : public testing_util::IntegrationTest {
+ protected:
+  PublisherIntegrationTest()  {
+    auto locs = std::vector<std::string>{
       "us-central1-a", "us-central1-b", "us-central1-c", "us-east1-b",
       "us-east1-c",    "us-east4-b",    "us-east4-c",    "us-west1-a",
       "us-west1-c",    "us-west2-b",    "us-west2-c",    "us-west3-a",
@@ -56,9 +59,9 @@ std::unique_ptr<PublisherConnection> MakePublisher() {
   srand(static_cast<unsigned int>(time(nullptr)));
   std::string location_id = locs[rand() % locs.size()];
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  std::string topic_id =
+  auto topic_id =
       google::cloud::pubsub_testing::RandomTopicId(generator);
-  auto admin =
+  admin_connection_ =
       MakeAdminServiceConnection(google::cloud::internal::PopulateCommonOptions(
           google::cloud::internal::PopulateGrpcOptions(
               Options{}.set<EndpointOption>(
@@ -81,15 +84,21 @@ std::unique_ptr<PublisherConnection> MakePublisher() {
       ->set_subscribe_mib_per_sec(kThroughputCapacityMiB);
   req.mutable_topic()->mutable_retention_config()->set_per_partition_bytes(
       kPartitionStorage);
-  EXPECT_TRUE(admin->CreateTopic(std::move(req)));
-  return *MakePublisherConnection(Topic{project_id, location_id, topic_id},
+  EXPECT_TRUE(admin_connection_->CreateTopic(std::move(req)));
+  auto topic = Topic{project_id, location_id, topic_id};
+  topic_name_ = topic.FullName();
+  publisher_ = *MakePublisherConnection(topic,
                                   Options{});
-}
+  }
 
-class PublisherIntegrationTest : public testing_util::IntegrationTest {
- protected:
-  PublisherIntegrationTest() : publisher_{MakePublisher()} {}
+  ~PublisherIntegrationTest() override {
+    DeleteTopicRequest req;
+    req.set_name(topic_name_);
+    admin_connection_->DeleteTopic(std::move(req));
+  }
 
+  std::shared_ptr<AdminServiceConnection> admin_connection_;
+  std::string topic_name_;
   std::unique_ptr<PublisherConnection> publisher_;
 };
 
