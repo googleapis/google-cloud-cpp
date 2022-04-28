@@ -108,6 +108,28 @@ TEST_F(MultipartitionPublisherNoneInitializedTest, StartNotCalled) {
   EXPECT_CALL(alarm_token_, Destroy);
 }
 
+TEST_F(MultipartitionPublisherNoneInitializedTest, PublishAfterShutdown) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+  auto start = multipartition_publisher_->Start();
+
+  EXPECT_CALL(alarm_token_, Destroy);
+  auto shutdown = multipartition_publisher_->Shutdown();
+
+  num_partitions.set_value(ExamplePartitionsResponse(1));
+
+  shutdown.get();
+
+  EXPECT_EQ(multipartition_publisher_->Publish(PubSubMessage{}).get().status(),
+            (Status{StatusCode::kAborted, "`Shutdown` called"}));
+
+  EXPECT_EQ(start.get(), Status());
+}
+
 TEST_F(MultipartitionPublisherNoneInitializedTest,
        FirstPollInvalidValuePublisherAborts) {
   InSequence seq;

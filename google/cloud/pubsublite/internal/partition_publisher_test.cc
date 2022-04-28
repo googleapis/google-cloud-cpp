@@ -588,7 +588,7 @@ TEST_F(PartitionPublisherTest, PublishAfterShutdown) {
   auto invalid_publish_response = publish_future.get();
   EXPECT_FALSE(invalid_publish_response.ok());
   EXPECT_EQ(invalid_publish_response.status(),
-            Status(StatusCode::kAborted, "Already shut down."));
+            (Status{StatusCode::kAborted, "`Shutdown` called"}));
 }
 
 TEST_F(PartitionPublisherTest, InitializerWriteFailureThenGood) {

@@ -62,8 +62,7 @@ future<Status> PartitionPublisher::Start() {
 
 future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage m) {
   if (!service_composite_.status().ok()) {
-    return make_ready_future(
-        StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
+    return make_ready_future(StatusOr<Cursor>(service_composite_.status()));
   }
   MessageWithPromise unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
   future<StatusOr<Cursor>> message_future =

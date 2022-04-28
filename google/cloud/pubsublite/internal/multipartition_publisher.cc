@@ -191,6 +191,10 @@ void MultipartitionPublisher::TryPublishMessages() {
 
 future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
     PubSubMessage m) {
+  if (!service_composite_.status().ok()) {
+    return make_ready_future(
+        StatusOr<MessageMetadata>(service_composite_.status()));
+  }
   PublishState state;
   state.message = std::move(m);
   future<StatusOr<MessageMetadata>> to_return;
