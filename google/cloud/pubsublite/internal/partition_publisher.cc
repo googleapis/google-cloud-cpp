@@ -61,13 +61,16 @@ future<Status> PartitionPublisher::Start() {
 }
 
 future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage m) {
-  if (!service_composite_.status().ok()) {
-    return make_ready_future(StatusOr<Cursor>(service_composite_.status()));
+  std::lock_guard<std::mutex> g{mu_};
+  // need to check under lock to prevent race of adding message after service
+  // shut down
+  auto status = service_composite_.status();
+  if (!status.ok()) {
+    return make_ready_future(StatusOr<Cursor>(std::move(status)));
   }
   MessageWithPromise unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
   future<StatusOr<Cursor>> message_future =
       unbatched.message_promise.get_future();
-  std::lock_guard<std::mutex> g{mu_};
   unbatched_messages_.emplace_back(std::move(unbatched));
   return message_future;
 }

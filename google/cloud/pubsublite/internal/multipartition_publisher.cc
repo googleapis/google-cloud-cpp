@@ -191,15 +191,17 @@ void MultipartitionPublisher::TryPublishMessages() {
 
 future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
     PubSubMessage m) {
-  if (!service_composite_.status().ok()) {
-    return make_ready_future(
-        StatusOr<MessageMetadata>(service_composite_.status()));
-  }
   PublishState state;
   state.message = std::move(m);
   future<StatusOr<MessageMetadata>> to_return;
   {
     std::lock_guard<std::mutex> g{mu_};
+    // need to check under lock to prevent race of adding message after service
+    // shut down
+    auto status = service_composite_.status();
+    if (!status.ok()) {
+      return make_ready_future(StatusOr<MessageMetadata>(std::move(status)));
+    }
     to_return = state.publish_promise.get_future();
     messages_.push_back(std::move(state));
     // message will be published whenever we successfully read the number of
