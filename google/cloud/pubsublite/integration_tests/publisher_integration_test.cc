@@ -42,10 +42,11 @@ using google::cloud::pubsublite::v1::DeleteTopicRequest;
 using google::cloud::pubsublite::v1::ListTopicsRequest;
 using google::cloud::pubsublite_internal::MakeLocation;
 
-auto constexpr kNumMessages = 5000;
+auto constexpr kNumMessages = 1250;
 auto constexpr kThroughputCapacityMiB = 4;
 auto constexpr kGiB = static_cast<std::int64_t>(1024 * 1024 * 1024LL);
 auto constexpr kPartitionStorage = 30 * kGiB;
+auto constexpr kMaxNumMessagesPerBatch = 250;
 
 class PublisherIntegrationTest : public testing_util::IntegrationTest {
  protected:
@@ -89,7 +90,8 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     EXPECT_STATUS_OK(admin_connection_->CreateTopic(std::move(req)));
     auto topic = Topic{project_id_, location_id_, topic_id};
     topic_name_ = topic.FullName();
-    publisher_ = *MakePublisherConnection(topic, Options{});
+    publisher_ = *MakePublisherConnection(
+        topic, Options{}.set<MaxBatchMessagesOption>(kMaxNumMessagesPerBatch));
   }
 
   ~PublisherIntegrationTest() override {
