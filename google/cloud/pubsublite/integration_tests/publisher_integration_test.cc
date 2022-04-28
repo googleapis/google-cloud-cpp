@@ -49,7 +49,7 @@ auto constexpr kGiB = static_cast<std::int64_t>(1024 * 1024 * 1024LL);
 auto constexpr kPartitionStorage = 30 * kGiB;
 auto constexpr kMaxNumMessagesPerBatch = 25;
 
-std::string TestTopicPrefix(std::chrono::system_clock::time_point tp) {
+std::string TestTopicPrefix(system_clock::time_point tp) {
   return "pub-int-test-" + google::cloud::internal::FormatUtcDate(tp) + "-";
 }
 
@@ -109,8 +109,7 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     auto topics = admin_connection_->ListTopics(std::move(req));
     std::string full_topic_prefix =
         "projects/" + project_id_ + "/locations/" + location_id_ + "/topics/" +
-        TestTopicPrefix(std::chrono::system_clock::now() -
-                        std::chrono::hours(48));
+        TestTopicPrefix(system_clock::now() - hours(48));
     for (auto const& topic : topics) {
       if (!std::regex_search(topic->name(), topic_regex_)) continue;
       if (topic->name() < full_topic_prefix) {
@@ -124,9 +123,11 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
   std::string RandomTopicName() {
     auto generator =
         google::cloud::internal::DefaultPRNG(std::random_device{}());
+    std::size_t const max_topic_size = 255;
+    auto size = static_cast<int>(max_topic_size - 1 - topic_prefix_.size());
     return topic_prefix_ +
            google::cloud::internal::Sample(
-               generator, 42, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
+               generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
            google::cloud::internal::Sample(
                generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
   }
