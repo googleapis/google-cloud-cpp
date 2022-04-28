@@ -48,52 +48,51 @@ std::int64_t constexpr kPartitionStorage =
 
 class PublisherIntegrationTest : public testing_util::IntegrationTest {
  protected:
-  PublisherIntegrationTest()  {
+  PublisherIntegrationTest() {
     auto locs = std::vector<std::string>{
-      "us-central1-a", "us-central1-b", "us-central1-c", "us-east1-b",
-      "us-east1-c",    "us-east4-b",    "us-east4-c",    "us-west1-a",
-      "us-west1-c",    "us-west2-b",    "us-west2-c",    "us-west3-a",
-      "us-west3-b",    "us-west4-a",    "us-west4-b",
-  };
-  project_id_ =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  srand(static_cast<unsigned int>(time(nullptr)));
-  location_id_ = locs[rand() % locs.size()];
+        "us-central1-a", "us-central1-b", "us-central1-c", "us-east1-b",
+        "us-east1-c",    "us-east4-b",    "us-east4-c",    "us-west1-a",
+        "us-west1-c",    "us-west2-b",    "us-west2-c",    "us-west3-a",
+        "us-west3-b",    "us-west4-a",    "us-west4-b",
+    };
+    project_id_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    srand(static_cast<unsigned int>(time(nullptr)));
+    location_id_ = locs[rand() % locs.size()];
 
-  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto topic_id =
-      google::cloud::pubsub_testing::RandomTopicId(generator);
-  admin_connection_ =
-      MakeAdminServiceConnection(google::cloud::internal::PopulateCommonOptions(
-          google::cloud::internal::PopulateGrpcOptions(
-              Options{}.set<EndpointOption>(
-                  MakeLocation(location_id_)->GetCloudRegion().ToString() +
-                  "-pubsublite.googleapis.com"),
-              ""),
-          /*endpoint_env_var=*/{}, /*emulator_env_var=*/{},
-          "pubsublite.googleapis.com"));
+    auto generator =
+        google::cloud::internal::DefaultPRNG(std::random_device{}());
+    auto topic_id = google::cloud::pubsub_testing::RandomTopicId(generator);
+    admin_connection_ = MakeAdminServiceConnection(
+        google::cloud::internal::PopulateCommonOptions(
+            google::cloud::internal::PopulateGrpcOptions(
+                Options{}.set<EndpointOption>(
+                    MakeLocation(location_id_)->GetCloudRegion().ToString() +
+                    "-pubsublite.googleapis.com"),
+                ""),
+            /*endpoint_env_var=*/{}, /*emulator_env_var=*/{},
+            "pubsublite.googleapis.com"));
 
-  GarbageCollect();
+    GarbageCollect();
 
-  CreateTopicRequest req;
-  req.set_parent("projects/" + project_id_ + "/locations/" + location_id_);
-  req.set_topic_id(topic_id);
-  req.mutable_topic()->mutable_partition_config()->set_count(3);
-  req.mutable_topic()
-      ->mutable_partition_config()
-      ->mutable_capacity()
-      ->set_publish_mib_per_sec(kThroughputCapacityMiB);
-  req.mutable_topic()
-      ->mutable_partition_config()
-      ->mutable_capacity()
-      ->set_subscribe_mib_per_sec(kThroughputCapacityMiB);
-  req.mutable_topic()->mutable_retention_config()->set_per_partition_bytes(
-      kPartitionStorage);
-  EXPECT_TRUE(admin_connection_->CreateTopic(std::move(req)));
-  auto topic = Topic{project_id_, location_id_, topic_id};
-  topic_name_ = topic.FullName();
-  publisher_ = *MakePublisherConnection(topic,
-                                  Options{});
+    CreateTopicRequest req;
+    req.set_parent("projects/" + project_id_ + "/locations/" + location_id_);
+    req.set_topic_id(topic_id);
+    req.mutable_topic()->mutable_partition_config()->set_count(3);
+    req.mutable_topic()
+        ->mutable_partition_config()
+        ->mutable_capacity()
+        ->set_publish_mib_per_sec(kThroughputCapacityMiB);
+    req.mutable_topic()
+        ->mutable_partition_config()
+        ->mutable_capacity()
+        ->set_subscribe_mib_per_sec(kThroughputCapacityMiB);
+    req.mutable_topic()->mutable_retention_config()->set_per_partition_bytes(
+        kPartitionStorage);
+    EXPECT_TRUE(admin_connection_->CreateTopic(std::move(req)));
+    auto topic = Topic{project_id_, location_id_, topic_id};
+    topic_name_ = topic.FullName();
+    publisher_ = *MakePublisherConnection(topic, Options{});
   }
 
   ~PublisherIntegrationTest() override {
