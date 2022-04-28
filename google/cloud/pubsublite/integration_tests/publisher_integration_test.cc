@@ -114,13 +114,11 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
   }
 
   std::string RandomTopicName() {
-    std::size_t const max_size = 42;
-    auto size = static_cast<int>(max_size - 1 - topic_prefix_.size());
     auto generator =
         google::cloud::internal::DefaultPRNG(std::random_device{}());
     return topic_prefix_ +
            google::cloud::internal::Sample(
-               generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
+               generator, 42, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
            google::cloud::internal::Sample(
                generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
   }
