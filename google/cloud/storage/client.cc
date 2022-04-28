@@ -233,7 +233,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   auto committed_size = response->committed_size;
   auto upload_limit = request.GetOption<UploadLimit>().value_or(
       (std::numeric_limits<std::uint64_t>::max)());
-  // If `server_size == upload_limit`, we will upload an empty string and
+  // If `committed_size == upload_limit`, we will upload an empty string and
   // finalize the upload.
   if (committed_size > upload_limit) {
     return Status(StatusCode::kOutOfRange,
