@@ -28,6 +28,7 @@ load(":pubsublite_client_integration_tests.bzl", "pubsublite_client_integration_
     deps = [
         "//:common",
         "//:pubsub",
+        "//google/cloud/pubsub:pubsub_client_testing",
         "//google/cloud/pubsublite:pubsublite_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",

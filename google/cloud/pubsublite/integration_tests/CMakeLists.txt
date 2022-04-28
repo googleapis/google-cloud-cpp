@@ -34,7 +34,7 @@ function (google_cloud_cpp_pubsublite_define_integration_tests)
 
     # Generate a target for each unit test.
     foreach (fname ${pubsublite_client_integration_tests})
-        google_cloud_cpp_add_executable(target "pubsub" ${fname})
+        google_cloud_cpp_add_executable(target "pubsublite" ${fname})
         target_link_libraries(
             ${target}
             PRIVATE pubsublite_testing
