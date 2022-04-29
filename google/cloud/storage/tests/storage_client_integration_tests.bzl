@@ -24,6 +24,7 @@ storage_client_integration_tests = [
     "curl_download_request_integration_test.cc",
     "curl_request_integration_test.cc",
     "curl_sign_blob_integration_test.cc",
+    "decompressive_transcoding_integration_test.cc",
     "error_injection_integration_test.cc",
     "grpc_bucket_metadata_integration_test.cc",
     "grpc_integration_test.cc",

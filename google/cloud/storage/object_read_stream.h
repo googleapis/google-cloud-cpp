@@ -148,7 +148,7 @@ class ObjectReadStream : public std::basic_istream<char> {
    * want to use the generation number to guarantee all the downloads are
    * actually referencing the same object.  One could do this by first querying
    * the metadata before the first download, but this is less efficient as it
-   * requires one additional server roundtrip.
+   * requires one additional server round trip.
    *
    * Note that all these attributes are `absl::optional<>`, as the attributes
    * may not be known (or exist) if there is an error during the download. If

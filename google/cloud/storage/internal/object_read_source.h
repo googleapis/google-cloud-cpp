@@ -53,6 +53,7 @@ struct ReadSourceResult {
   absl::optional<std::int64_t> metageneration;
   absl::optional<std::string> storage_class;
   absl::optional<std::uint64_t> size;
+  absl::optional<std::string> transformation;
 
   ReadSourceResult() = default;
   ReadSourceResult(std::size_t b, HttpResponse r)

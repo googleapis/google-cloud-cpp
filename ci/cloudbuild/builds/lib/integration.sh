@@ -90,6 +90,7 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM=/dev/shm/roots.pem"
     # We only set these environment variables on GCB-based builds, as the
     # corresponding endpoints (e.g., https://private.googleapis.com) are not
