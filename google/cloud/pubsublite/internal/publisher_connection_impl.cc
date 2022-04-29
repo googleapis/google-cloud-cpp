@@ -37,10 +37,10 @@ PublisherConnectionImpl::PublisherConnectionImpl(
     if (!status.ok()) {
       GCP_LOG(WARNING) << "Publisher failed permanently: " << status;
     }
-    // shutdown in case of failure to finish all outstanding `Publish` futures
-    auto shutdown = service_composite_.Shutdown();
     {
       std::lock_guard<std::mutex> g{mu_};
+      // shutdown in case of failure to finish all outstanding `Publish` futures
+      auto shutdown = service_composite_.Shutdown();
       if (!shutdown_) {
         shutdown_ = std::move(shutdown);
       }
@@ -65,11 +65,19 @@ future<StatusOr<std::string>> PublisherConnectionImpl::Publish(
   auto pubsub_message = message_transformer_(std::move(p.message));
   if (!pubsub_message) {
     service_composite_.Abort(pubsub_message.status());
-    return make_ready_future(
-        StatusOr<std::string>{std::move(pubsub_message).status()});
   }
-  return publisher_->Publish(*std::move(pubsub_message))
-      .then([](future<StatusOr<MessageMetadata>> f) -> StatusOr<std::string> {
+  future<StatusOr<MessageMetadata>> publish;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    auto status = service_composite_.status();
+    if (!status.ok()) {
+      return make_ready_future(StatusOr<std::string>(std::move(status)));
+    }
+    publish = publisher_->Publish(*std::move(pubsub_message));
+  }
+
+  return publish.then(
+      [](future<StatusOr<MessageMetadata>> f) -> StatusOr<std::string> {
         auto message_metadata = f.get();
         if (!message_metadata) return std::move(message_metadata).status();
         return message_metadata->Serialize();
