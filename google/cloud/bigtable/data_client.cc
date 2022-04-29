@@ -189,11 +189,6 @@ class DefaultDataClient : public DataClient {
     return impl_.BackgroundThreadsFactory();
   }
 
-  std::shared_ptr<grpc::Channel> ChannelImpl() override {
-    return impl_.Channel();
-  }
-  void resetImpl() override { impl_.reset(); }
-
   void ApplyOptions(grpc::ClientContext* context) {
     if (!authority_.empty()) context->set_authority(authority_);
     if (user_project_) {
