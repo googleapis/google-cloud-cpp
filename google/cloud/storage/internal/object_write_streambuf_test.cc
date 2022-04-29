@@ -109,7 +109,7 @@ TEST(ObjectWriteStreambufTest, SmallStream) {
   EXPECT_STATUS_OK(response);
 }
 
-/// @test Verify that uploading a stream which ends on a upload chunk quantum
+/// @test Verify that uploading a stream which ends on an upload chunk quantum
 /// works as expected.
 TEST(ObjectWriteStreambufTest, EmptyTrailer) {
   auto mock = absl::make_unique<testing::MockClient>();
@@ -151,21 +151,20 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const p0(3 * quantum, '*');
   std::string const p1("trailer");
-  {
-    ::testing::InSequence seq;
-    EXPECT_CALL(*mock, UploadChunk)
-        .WillOnce([&](UploadChunkRequest const& r) {
-          EXPECT_FALSE(r.last_chunk());
-          EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{p0}));
-          return QueryResumableUploadResponse{p0.size(), absl::nullopt};
-        })
-        .WillOnce([&](UploadChunkRequest const& r) {
-          EXPECT_TRUE(r.last_chunk());
-          EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{p1}));
-          return QueryResumableUploadResponse{r.offset() + r.payload_size(),
-                                              ObjectMetadata()};
-        });
-  }
+
+  ::testing::InSequence seq;
+  EXPECT_CALL(*mock, UploadChunk)
+      .WillOnce([&](UploadChunkRequest const& r) {
+        EXPECT_FALSE(r.last_chunk());
+        EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{p0}));
+        return QueryResumableUploadResponse{p0.size(), absl::nullopt};
+      })
+      .WillOnce([&](UploadChunkRequest const& r) {
+        EXPECT_TRUE(r.last_chunk());
+        EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{p1}));
+        return QueryResumableUploadResponse{r.offset() + r.payload_size(),
+                                            ObjectMetadata()};
+      });
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
@@ -285,7 +284,7 @@ TEST(ObjectWriteStreambufTest, SomeBytesNotAccepted) {
   EXPECT_STATUS_OK(response);
 }
 
-/// @test verify that the upload steam transitions to a bad state if the
+/// @test verify that the upload stream transitions to a bad state if the
 /// committed size jumps ahead.
 TEST(ObjectWriteStreambufTest, CommittedSizeJumpsAhead) {
   auto mock = absl::make_unique<testing::MockClient>();
@@ -312,7 +311,7 @@ TEST(ObjectWriteStreambufTest, CommittedSizeJumpsAhead) {
   EXPECT_THAT(streambuf.last_status(), StatusIs(StatusCode::kAborted));
 }
 
-/// @test verify that the upload steam transitions to a bad state if the next
+/// @test verify that the upload stream transitions to a bad state if the next
 /// expected byte decreases.
 TEST(ObjectWriteStreambufTest, CommittedSizeDecreases) {
   auto mock = absl::make_unique<testing::MockClient>();
@@ -336,7 +335,7 @@ TEST(ObjectWriteStreambufTest, CommittedSizeDecreases) {
   EXPECT_THAT(streambuf.last_status(), StatusIs(StatusCode::kAborted));
 }
 
-/// @test verify that the upload steam transitions to a bad state on a partial
+/// @test verify that the upload stream transitions to a bad state on a partial
 /// write.
 TEST(ObjectWriteStreambufTest, PartialUploadChunk) {
   auto mock = absl::make_unique<testing::MockClient>();
@@ -487,8 +486,8 @@ TEST(ObjectWriteStreambufTest, KnownSizeUpload) {
         EXPECT_THAT(r.payload(),
                     ElementsAre(ConstBuffer{payload.data(), quantum}));
         // When using X-Upload-Content-Length GCS finalizes the upload when
-        // enough data is sent, regardless of whether we use UploadChunk() or
-        // UploadFinalChunk(). Furthermore, the response does not have a
+        // enough data is sent, regardless of whether the client marks a chunk
+        // as the final chunk. Furthermore, the response does not have a
         // committed size.
         return QueryResumableUploadResponse{absl::nullopt, ObjectMetadata()};
       });

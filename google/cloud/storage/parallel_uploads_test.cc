@@ -220,11 +220,9 @@ class ParallelUploadTest
         })
         .RetiresOnSaturation();
 
-    using ::testing::AtMost;
     EXPECT_CALL(*mock_, UploadChunk(Property(
                             &UploadChunkRequest::upload_session_url, id)))
-        .Times(AtMost(1))
-        .WillRepeatedly([=](UploadChunkRequest const& r) {
+        .WillOnce([=](UploadChunkRequest const& r) {
           if (expected_content) {
             EXPECT_THAT(r.payload(),
                         ElementsAre(ConstBuffer(*expected_content)));
