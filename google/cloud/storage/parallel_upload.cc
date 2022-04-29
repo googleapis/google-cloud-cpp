@@ -27,12 +27,12 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
  public:
   ParallelObjectWriteStreambuf(
       std::shared_ptr<ParallelUploadStateImpl> state, std::size_t stream_idx,
-      std::unique_ptr<ResumableUploadSession> upload_session,
-      ResumableUploadResponse response, std::size_t max_buffer_size,
-      ResumableUploadRequest const& request)
+      std::shared_ptr<RawClient> client, ResumableUploadRequest const& request,
+      std::string upload_id, std::uint64_t committed_size,
+      absl::optional<ObjectMetadata> metadata, std::size_t max_buffer_size)
       : ObjectWriteStreambuf(
-            std::move(upload_session), std::move(response), max_buffer_size,
-            CreateHashFunction(request),
+            std::move(client), request, std::move(upload_id), committed_size,
+            std::move(metadata), max_buffer_size, CreateHashFunction(request),
             internal::HashValues{
                 request.GetOption<Crc32cChecksumValue>().value_or(""),
                 request.GetOption<MD5HashValue>().value_or(""),
@@ -45,7 +45,7 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
     state_->StreamDestroyed(stream_idx_);
   }
 
-  StatusOr<ResumableUploadResponse> Close() override {
+  StatusOr<QueryResumableUploadResponse> Close() override {
     auto res = this->ObjectWriteStreambuf::Close();
     state_->StreamFinished(stream_idx_, res);
     return res;
@@ -74,8 +74,10 @@ ParallelUploadStateImpl::~ParallelUploadStateImpl() {
 }
 
 StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
-    RawClient& raw_client, ResumableUploadRequest const& request) {
-  auto create = raw_client.CreateResumableSession(request);
+    std::shared_ptr<RawClient> raw_client,
+    ResumableUploadRequest const& request) {
+  auto create = internal::CreateOrResume(*raw_client, request);
+
   std::unique_lock<std::mutex> lk(mu_);
   if (!create) {
     // Preserve the first error.
@@ -83,16 +85,17 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
     return std::move(create).status();
   }
 
-  auto session = std::move(create->session);
   auto idx = streams_.size();
   ++num_unfinished_streams_;
   streams_.emplace_back(
-      StreamInfo{request.object_name(), session->session_id(), {}, false});
+      StreamInfo{request.object_name(), create->upload_id, {}, false});
   assert(idx < streams_.size());
   lk.unlock();
   return ObjectWriteStream(absl::make_unique<ParallelObjectWriteStreambuf>(
-      shared_from_this(), idx, std::move(session), std::move(create->state),
-      raw_client.client_options().upload_buffer_size(), request));
+      shared_from_this(), idx, std::move(raw_client), request,
+      std::move(create->upload_id), create->committed_size,
+      std::move(create->metadata),
+      raw_client->client_options().upload_buffer_size()));
 }
 
 std::string ParallelUploadPersistentState::ToString() const {
@@ -271,7 +274,8 @@ void ParallelUploadStateImpl::AllStreamsFinished(
 }
 
 void ParallelUploadStateImpl::StreamFinished(
-    std::size_t stream_idx, StatusOr<ResumableUploadResponse> const& response) {
+    std::size_t stream_idx,
+    StatusOr<QueryResumableUploadResponse> const& response) {
   std::unique_lock<std::mutex> lk(mu_);
   assert(stream_idx < streams_.size());
   if (streams_[stream_idx].finished) {

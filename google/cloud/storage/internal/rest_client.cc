@@ -140,11 +140,6 @@ StatusOr<RewriteObjectResponse> RestClient::RewriteObject(
   return curl_client_->RewriteObject(request);
 }
 
-StatusOr<CreateResumableSessionResponse> RestClient::CreateResumableSession(
-    ResumableUploadRequest const& request) {
-  return curl_client_->CreateResumableSession(request);
-}
-
 StatusOr<CreateResumableUploadResponse> RestClient::CreateResumableUpload(
     ResumableUploadRequest const& request) {
   return curl_client_->CreateResumableUpload(request);

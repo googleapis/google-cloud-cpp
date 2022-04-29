@@ -24,23 +24,33 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+ObjectWriteStreambuf::ObjectWriteStreambuf(Status status)
+    : last_status_(std::move(status)),
+      max_buffer_size_(UploadChunkRequest::kChunkSizeQuantum) {
+  current_ios_buffer_.resize(max_buffer_size_);
+  auto* pbeg = current_ios_buffer_.data();
+  auto* pend = pbeg + current_ios_buffer_.size();
+  setp(pbeg, pend);
+}
+
 ObjectWriteStreambuf::ObjectWriteStreambuf(
-    std::unique_ptr<ResumableUploadSession> upload_session,
-    StatusOr<ResumableUploadResponse> last_response,
-    std::size_t max_buffer_size, std::unique_ptr<HashFunction> hash_function,
-    HashValues known_hashes, std::unique_ptr<HashValidator> hash_validator,
+    std::shared_ptr<RawClient> client, ResumableUploadRequest request,
+    std::string upload_id, std::uint64_t committed_size,
+    absl::optional<ObjectMetadata> metadata, std::size_t max_buffer_size,
+    std::unique_ptr<HashFunction> hash_function, HashValues known_hashes,
+    std::unique_ptr<HashValidator> hash_validator,
     AutoFinalizeConfig auto_finalize)
-    : upload_session_(std::move(upload_session)),
+    : client_(std::move(client)),
+      request_(std::move(request)),
+      upload_id_(std::move(upload_id)),
+      committed_size_(committed_size),
+      metadata_(std::move(metadata)),
       max_buffer_size_(UploadChunkRequest::RoundUpToQuantum(max_buffer_size)),
       hash_function_(std::move(hash_function)),
       known_hashes_(std::move(known_hashes)),
       hash_validator_(std::move(hash_validator)),
-      auto_finalize_(auto_finalize),
-      last_response_(std::move(last_response)) {
+      auto_finalize_(auto_finalize) {
   current_ios_buffer_.resize(max_buffer_size_);
-  if (last_response_) {
-    committed_size_ = last_response_->committed_size.value_or(0);
-  }
   auto* pbeg = current_ios_buffer_.data();
   auto* pend = pbeg + current_ios_buffer_.size();
   setp(pbeg, pend);
@@ -51,14 +61,14 @@ void ObjectWriteStreambuf::AutoFlushFinal() {
   Close();
 }
 
-StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Close() {
+StatusOr<QueryResumableUploadResponse> ObjectWriteStreambuf::Close() {
   FlushFinal();
-  return last_response_;
+  if (!last_status_.ok()) return last_status_;
+  return QueryResumableUploadResponse{committed_size_, metadata_};
 }
 
 bool ObjectWriteStreambuf::IsOpen() const {
-  return last_response_ &&
-         last_response_->upload_state == ResumableUploadResponse::kInProgress;
+  return last_status_.ok() && !metadata_.has_value();
 }
 
 bool ObjectWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
@@ -85,7 +95,7 @@ bool ObjectWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
 
 int ObjectWriteStreambuf::sync() {
   Flush();
-  return !last_response_ ? traits_type::eof() : 0;
+  return !last_status_.ok() ? traits_type::eof() : 0;
 }
 
 std::streamsize ObjectWriteStreambuf::xsputn(char const* s,
@@ -102,7 +112,7 @@ std::streamsize ObjectWriteStreambuf::xsputn(char const* s,
           ConstBuffer(s, static_cast<std::size_t>(count)),
       });
     }
-    if (!last_response_) return traits_type::eof();
+    if (!last_status_.ok()) return traits_type::eof();
   } else {
     std::copy(s, s + count, pptr());
     pbump(static_cast<int>(count));
@@ -119,7 +129,7 @@ ObjectWriteStreambuf::int_type ObjectWriteStreambuf::overflow(int_type ch) {
   if (actual_size >= max_buffer_size_) Flush();
   *pptr() = traits_type::to_char_type(ch);
   pbump(1);
-  return last_response_ ? ch : traits_type::eof();
+  return last_status_.ok() ? ch : traits_type::eof();
 }
 
 void ObjectWriteStreambuf::FlushFinal() {
@@ -127,24 +137,28 @@ void ObjectWriteStreambuf::FlushFinal() {
 
   // Calculate the portion of the buffer that needs to be uploaded, if any.
   auto const actual_size = put_area_size();
-  auto const upload_size = committed_size_ + actual_size;
   hash_function_->Update(pbase(), actual_size);
 
   // After this point the session will be closed, and no more calls to the hash
   // function are possible.
   auto function = std::move(hash_function_);
   hash_values_ = std::move(*function).Finish();
-  last_response_ = upload_session_->UploadFinalChunk(
-      {ConstBuffer(pbase(), actual_size)}, upload_size,
-      Merge(known_hashes_, hash_values_));
+  auto upload_request = UploadChunkRequest(upload_id_, committed_size_,
+                                           {ConstBuffer(pbase(), actual_size)},
+                                           Merge(known_hashes_, hash_values_));
+  request_.ForEachOption(internal::CopyCommonOptions(upload_request));
+  auto response = client_->UploadChunk(upload_request);
+  if (!response) {
+    last_status_ = std::move(response).status();
+  } else {
+    committed_size_ = response->committed_size.value_or(0);
+    metadata_ = std::move(response->payload);
+  }
 
   // Reset the iostream put area with valid pointers, but empty.
   current_ios_buffer_.resize(1);
   auto* pbeg = current_ios_buffer_.data();
   setp(pbeg, pbeg);
-
-  // Close the stream
-  upload_session_.reset();
 }
 
 void ObjectWriteStreambuf::Flush() {
@@ -180,9 +194,17 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   // byte. Check to make sure it remains consistent with the bytes stored in the
   // buffer.
   auto const expected_committed_size = committed_size_ + actual_size;
-  last_response_ = upload_session_->UploadChunk(payload);
-
-  if (last_response_) {
+  auto upload_request =
+      UploadChunkRequest(upload_id_, committed_size_, payload);
+  request_.ForEachOption(internal::CopyCommonOptions(upload_request));
+  auto response = client_->UploadChunk(upload_request);
+  if (!response) {
+    // Upload failures are irrecoverable because the internal buffer is opaque
+    // to the caller, so there is no way to know what byte range to specify
+    // next.  Replace it with a SessionError so next_expected_byte and
+    // resumable_session_id can still be retrieved.
+    last_status_ = std::move(response).status();
+  } else {
     // Reset the internal buffer and copy any trailing bytes from `buffers` to
     // it.
     auto* pbeg = current_ios_buffer_.data();
@@ -193,32 +215,23 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
       pbump(static_cast<int>(b.size()));
     }
 
+    metadata_ = std::move(response->payload);
+    committed_size_ = response->committed_size.value_or(0);
+
     // If the upload completed, the stream was implicitly "closed". There is
     // no need to verify anything else.
-    if (last_response_->upload_state == ResumableUploadResponse::kDone) {
-      committed_size_ =
-          last_response_->committed_size.value_or(expected_committed_size);
+    if (metadata_.has_value()) {
+      committed_size_ = expected_committed_size;
       return;
     }
-    auto actual_committed_size = last_response_->committed_size.value_or(0);
-    if (actual_committed_size != expected_committed_size) {
+
+    if (committed_size_ != expected_committed_size) {
       std::ostringstream error_message;
       error_message << "Could not continue upload stream. GCS reports "
-                    << actual_committed_size
-                    << " as committed, but we expected "
+                    << committed_size_ << " as committed, but we expected "
                     << expected_committed_size;
-      last_response_ = Status(StatusCode::kAborted, error_message.str());
+      last_status_ = Status(StatusCode::kAborted, error_message.str());
     }
-    committed_size_ = actual_committed_size;
-  }
-
-  // Upload failures are irrecoverable because the internal buffer is opaque
-  // to the caller, so there is no way to know what byte range to specify
-  // next.  Replace it with a SessionError so next_expected_byte and
-  // resumable_session_id can still be retrieved.
-  if (!last_response_) {
-    upload_session_ = absl::make_unique<ResumableUploadSessionError>(
-        last_response_.status(), resumable_session_id());
   }
 }
 

@@ -133,19 +133,14 @@ StatusOr<RewriteObjectResponse> HybridClient::RewriteObject(
   return curl_->RewriteObject(request);
 }
 
-StatusOr<CreateResumableSessionResponse> HybridClient::CreateResumableSession(
-    ResumableUploadRequest const& request) {
-  return grpc_->CreateResumableSession(request);
-}
-
 StatusOr<CreateResumableUploadResponse> HybridClient::CreateResumableUpload(
-    ResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    ResumableUploadRequest const& request) {
+  return grpc_->CreateResumableUpload(request);
 }
 
 StatusOr<QueryResumableUploadResponse> HybridClient::QueryResumableUpload(
-    QueryResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    QueryResumableUploadRequest const& request) {
+  return grpc_->QueryResumableUpload(request);
 }
 
 StatusOr<EmptyResponse> HybridClient::DeleteResumableUpload(
@@ -157,8 +152,8 @@ StatusOr<EmptyResponse> HybridClient::DeleteResumableUpload(
 }
 
 StatusOr<QueryResumableUploadResponse> HybridClient::UploadChunk(
-    UploadChunkRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    UploadChunkRequest const& request) {
+  return grpc_->UploadChunk(request);
 }
 
 StatusOr<ListBucketAclResponse> HybridClient::ListBucketAcl(

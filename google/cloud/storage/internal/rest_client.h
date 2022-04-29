@@ -83,8 +83,6 @@ class RestClient : public RawClient,
       PatchObjectRequest const& request) override;
   StatusOr<ObjectMetadata> ComposeObject(
       ComposeObjectRequest const& request) override;
-  StatusOr<CreateResumableSessionResponse> CreateResumableSession(
-      ResumableUploadRequest const& request) override;
 
   StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
       ResumableUploadRequest const& request) override;

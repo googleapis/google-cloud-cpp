@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/logging_client.h"
-#include "google/cloud/storage/internal/logging_resumable_upload_session.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
@@ -188,19 +187,6 @@ StatusOr<ObjectMetadata> LoggingClient::ComposeObject(
 StatusOr<RewriteObjectResponse> LoggingClient::RewriteObject(
     RewriteObjectRequest const& request) {
   return MakeCall(*client_, &RawClient::RewriteObject, request, __func__);
-}
-
-StatusOr<CreateResumableSessionResponse> LoggingClient::CreateResumableSession(
-    ResumableUploadRequest const& request) {
-  auto result = MakeCallNoResponseLogging(
-      *client_, &RawClient::CreateResumableSession, request, __func__);
-  if (!result.ok()) {
-    GCP_LOG(INFO) << __func__ << "() >> status={" << result.status() << "}";
-    return std::move(result).status();
-  }
-  result->session = absl::make_unique<LoggingResumableUploadSession>(
-      std::move(result->session));
-  return result;
 }
 
 StatusOr<CreateResumableUploadResponse> LoggingClient::CreateResumableUpload(

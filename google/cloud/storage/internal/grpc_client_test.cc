@@ -97,7 +97,7 @@ TEST_F(GrpcClientTest, QueryResumableUpload) {
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
-  auto response = client->QueryResumableSession(
+  auto response = client->QueryResumableUpload(
       QueryResumableUploadRequest("test-only-upload-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -609,7 +609,7 @@ TEST_F(GrpcClientTest, RewriteObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST_F(GrpcClientTest, CreateResumableSession) {
+TEST_F(GrpcClientTest, CreateResumableUpload) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, StartResumableWrite)
       .WillOnce([this](grpc::ClientContext& context,
@@ -628,7 +628,7 @@ TEST_F(GrpcClientTest, CreateResumableSession) {
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
-  auto response = client->CreateResumableSession(
+  auto response = client->CreateResumableUpload(
       ResumableUploadRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
