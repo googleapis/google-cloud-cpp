@@ -540,6 +540,9 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("MutateRow"))));
 }
 
+// TODO(#8800) - remove after deprecation is complete
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
 TEST(ConnectionRefresh, Disabled) {
   auto data_client = bigtable::MakeDataClient(
       testing::TableTestEnvironment::project_id(),
@@ -605,6 +608,9 @@ TEST(ConnectionRefresh, Frequent) {
                             {row_key, kFamily4, "c1", 2000, "v2000"}};
   Apply(table, row_key, created);
 }
+
+// TODO(#8800) - remove after deprecation is complete
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

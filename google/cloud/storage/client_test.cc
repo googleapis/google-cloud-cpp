@@ -14,10 +14,12 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_client.h"
+#include "google/cloud/storage/internal/rest_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
@@ -149,8 +151,11 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
-TEST_F(ClientTest, DefaultDecorators) {
+TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
   ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
+                                 absl::nullopt);
+
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
   auto tested =
@@ -168,7 +173,9 @@ TEST_F(ClientTest, DefaultDecorators) {
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
-TEST_F(ClientTest, LoggingDecorators) {
+TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
+  ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
+                                 absl::nullopt);
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
   auto tested =
@@ -186,6 +193,51 @@ TEST_F(ClientTest, LoggingDecorators) {
 
   auto* curl = dynamic_cast<internal::CurlClient*>(logging->client().get());
   ASSERT_TRUE(curl != nullptr);
+}
+
+/// @test Verify the constructor creates the right set of RawClient decorations.
+TEST_F(ClientTest, DefaultDecoratorsRestClient) {
+  ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment enable_rest("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
+                                "yes");
+
+  // Create a client, use the anonymous credentials because on the CI
+  // environment there may not be other credentials configured.
+  auto tested =
+      Client(Options{}
+                 .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                 .set<TracingComponentsOption>({}));
+
+  EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
+  auto* retry = dynamic_cast<internal::RetryClient*>(
+      ClientImplDetails::GetRawClient(tested).get());
+  ASSERT_TRUE(retry != nullptr);
+
+  auto* rest = dynamic_cast<internal::RestClient*>(retry->client().get());
+  ASSERT_TRUE(rest != nullptr);
+}
+
+/// @test Verify the constructor creates the right set of RawClient decorations.
+TEST_F(ClientTest, LoggingDecoratorsRestClient) {
+  ScopedEnvironment enable_rest("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
+                                "yes");
+  // Create a client, use the anonymous credentials because on the CI
+  // environment there may not be other credentials configured.
+  auto tested =
+      Client(Options{}
+                 .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                 .set<TracingComponentsOption>({"raw-client"}));
+
+  EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
+  auto* retry = dynamic_cast<internal::RetryClient*>(
+      ClientImplDetails::GetRawClient(tested).get());
+  ASSERT_TRUE(retry != nullptr);
+
+  auto* logging = dynamic_cast<internal::LoggingClient*>(retry->client().get());
+  ASSERT_TRUE(logging != nullptr);
+
+  auto* rest = dynamic_cast<internal::RestClient*>(logging->client().get());
+  ASSERT_TRUE(rest != nullptr);
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"

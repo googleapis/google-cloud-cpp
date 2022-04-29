@@ -36,6 +36,9 @@ DataClient::PrepareAsyncSampleRowKeys(grpc::ClientContext*,
 
 namespace {
 
+// TODO(#8800) - remove after `DataClient` deprecation is complete
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
 /**
  * Implement a simple DataClient.
  *
@@ -202,6 +205,9 @@ class DefaultDataClient : public DataClient {
   absl::optional<std::string> user_project_;
   internal::CommonClient<btproto::Bigtable> impl_;
 };
+
+// TODO(#8800) - remove after `DataClient` deprecation is complete
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace
 

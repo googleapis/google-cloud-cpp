@@ -116,7 +116,7 @@ struct ConnectionPoolSizeOption {
  * this option controls the size of the in-memory buffer kept to satisfy any I/O
  * requests.
  *
- * Applications seeking optional performance for downloads should avoid
+ * Applications seeking optimal performance for downloads should avoid
  * formatted I/O, and prefer using `std::istream::read()`. This option has no
  * effect in that case.
  */
@@ -132,7 +132,7 @@ struct DownloadBufferSizeOption {
  * uploaded. Note that GCS only accepts chunks in multiples of 256KiB, so this
  * option is always rounded up to the next such multiple.
  *
- * Applications seeking optional performance for downloads should avoid
+ * Applications seeking optimal performance for downloads should avoid
  * formatted I/O, and prefer using `std::istream::write()`. This option has no
  * effect in that case.
  */

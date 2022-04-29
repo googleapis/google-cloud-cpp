@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/data_client.h"
 #include <memory>
 #include <string>
+// TODO(#8800) - delete this class when deprecation is complete
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -150,5 +152,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
+
+// TODO(#8800) - delete this class when deprecation is complete
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LOGGING_DATA_CLIENT_H
