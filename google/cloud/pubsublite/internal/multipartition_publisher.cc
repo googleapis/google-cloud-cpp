@@ -196,6 +196,13 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
   future<StatusOr<MessageMetadata>> to_return;
   {
     std::lock_guard<std::mutex> g{mu_};
+    // Check the composite status under lock to ensure that we don't push to the
+    // messages_ buffer after the composite is shut down in
+    // MultipartitionPublisher::Shutdown.
+    auto status = service_composite_.status();
+    if (!status.ok()) {
+      return make_ready_future(StatusOr<MessageMetadata>(std::move(status)));
+    }
     to_return = state.publish_promise.get_future();
     messages_.push_back(std::move(state));
     // message will be published whenever we successfully read the number of

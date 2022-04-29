@@ -61,14 +61,17 @@ future<Status> PartitionPublisher::Start() {
 }
 
 future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage m) {
-  if (!service_composite_.status().ok()) {
-    return make_ready_future(
-        StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
+  std::lock_guard<std::mutex> g{mu_};
+  // Check the composite status under lock to ensure that we don't push to the
+  // messages buffer after the composite is shut down in
+  // PartitionPublisher::Shutdown.
+  auto status = service_composite_.status();
+  if (!status.ok()) {
+    return make_ready_future(StatusOr<Cursor>(std::move(status)));
   }
   MessageWithPromise unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
   future<StatusOr<Cursor>> message_future =
       unbatched.message_promise.get_future();
-  std::lock_guard<std::mutex> g{mu_};
   unbatched_messages_.emplace_back(std::move(unbatched));
   return message_future;
 }
