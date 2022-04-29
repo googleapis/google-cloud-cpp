@@ -146,6 +146,8 @@ add_library(
     internal/raw_client.cc
     internal/raw_client.h
     internal/raw_client_wrapper_utils.h
+    internal/rest_client.cc
+    internal/rest_client.h
     internal/resumable_upload_session.cc
     internal/resumable_upload_session.h
     internal/retry_client.cc
@@ -235,6 +237,7 @@ target_link_libraries(
            absl::time
            absl::variant
            google-cloud-cpp::common
+           google-cloud-cpp::rest-internal
            nlohmann_json::nlohmann_json
            Crc32c::crc32c
            CURL::libcurl

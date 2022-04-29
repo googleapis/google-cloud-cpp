@@ -61,7 +61,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   if ((argv.size() == 1 && argv[0] == "--help") || argv.size() != 2) {
     throw examples::Usage{
-        "default-client"
+        "set-client-endpoint"
         " <bucket-name> <object-name>"};
   }
   //! [START storage_set_client_endpoint] [set-client-endpoint]
@@ -115,12 +115,10 @@ void ServiceAccountKeyfile(std::vector<std::string> const& argv) {
         std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
     auto credentials =
         google::cloud::MakeServiceAccountCredentials(json_string);
-
-    PerformSomeOperations(
-        gcs::Client(
-            google::cloud::Options{}
-                .set<google::cloud::UnifiedCredentialsOption>(credentials)),
-        bucket_name, object_name);
+    auto client = gcs::Client(
+        google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
+            credentials));
+    PerformSomeOperations(client, bucket_name, object_name);
   }
   //! [service-account-keyfile]
   (argv.at(0), argv.at(1), argv.at(2));

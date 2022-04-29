@@ -70,9 +70,9 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #  error "GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS should not be set directly."
 #elif defined(__clang__)
-#  if defined(__EXCEPTIONS) && __has_feature(cxx_exceptions)
+#  if (defined(__EXCEPTIONS) || defined(COMPILER_MSVC)) && __has_feature(cxx_exceptions)
 #    define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
-#  endif  // defined(__EXCEPTIONS) && __has_feature(cxx_exceptions)
+#  endif  // (defined(__EXCEPTIONS) || defined(COMPILER_MSVC)) && __has_feature(cxx_exceptions)
 #elif defined(_MSC_VER)
 #  if defined(_CPPUNWIND)
 #    define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1

@@ -64,6 +64,21 @@ namespace. The function continues to exist but in an internal file and
 namespace. For status on this see
 https://github.com/googleapis/google-cloud-cpp/issues/8234.
 </details>
+<br>
+
+On 2023-05-01 (or shortly after) we will mark `bigtable::DataClient` as `final`
+and remove the following member functions:
+* `DataClient::Channel()`
+* `DataClient::reset()`
+* `DataClient::BackgroundThreadsFactory()`
+
+Application developers should not need to interact with this class directly.
+Please use `google::cloud::bigtable::MakeDataClient(...)` with the options from
+`google::cloud::GrpcOptionList<>` if you need to configure the gRPC channel or
+background threads.
+
+For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/8800
+</details>
 
 ## v1.40.0 - TBD
 

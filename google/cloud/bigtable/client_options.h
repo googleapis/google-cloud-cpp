@@ -49,6 +49,8 @@ Options&& MakeOptions(ClientOptions&& o);
  * auto client =
  *   bigtable::Client(bigtable::ClientOptions().SetCredentials(...));
  * @endcode
+ *
+ * @deprecated Please use `google::cloud::Options` instead.
  */
 class ClientOptions {
  public:
@@ -75,6 +77,8 @@ class ClientOptions {
    * documentation](https://grpc.io/grpc/cpp/namespacegrpc.html)
    * @see The [documentation](https://cloud.google.com/bigtable/docs/emulator)
    * for the Cloud Bigtable Emulator.
+   *
+   * @deprecated Please use `google::cloud::Options` instead.
    */
   ClientOptions();
 
@@ -92,6 +96,8 @@ class ClientOptions {
    *     unexpected options will be logged.
    *
    * @param opts (optional) configuration options
+   *
+   * @deprecated Please use `google::cloud::Options` directly instead.
    */
   explicit ClientOptions(Options opts);
 
@@ -102,28 +108,52 @@ class ClientOptions {
    * Bigtable, and can be used when the application default credentials are
    * not configured in the environment where the application is running.
    *
-   * @note Prefer using the `ClientOptions(Options opts)` constructor and
-   *     passing in @p creds as a `GrpcCredentialOption`.
-   *
    * @param creds gRPC authentication credentials
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcCredentialOption` instead.
    */
   explicit ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds);
 
-  /// Return the current endpoint for data RPCs.
+  /**
+   * Return the current endpoint for data RPCs.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `bigtable::DataEndpointOption` instead.
+   */
   std::string const& data_endpoint() const {
     return opts_.get<DataEndpointOption>();
   }
 
+  /**
+   * Set the current endpoint for data RPCs.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `bigtable::DataEndpointOption` instead.
+   */
   ClientOptions& set_data_endpoint(std::string endpoint) {
     opts_.set<DataEndpointOption>(std::move(endpoint));
     return *this;
   }
 
-  /// Return the current endpoint for admin RPCs.
+  /**
+   * Return the current endpoint for admin RPCs.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `bigtable::AdminEndpointOption` and
+   *     `bigtable::InstanceAdminEndpointOption` instead.
+   */
   std::string const& admin_endpoint() const {
     return opts_.get<AdminEndpointOption>();
   }
 
+  /**
+   * Set the current endpoint for admin RPCs.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `bigtable::AdminEndpointOption` and
+   *     `bigtable::InstanceAdminEndpointOption` instead.
+   */
   ClientOptions& set_admin_endpoint(std::string endpoint) {
     opts_.set<AdminEndpointOption>(endpoint);
     // These two endpoints are generally equivalent, but they may differ in
@@ -142,13 +172,23 @@ class ClientOptions {
    * segregation, for example, the application may want to use a different pool
    * for high-priority requests vs. lower priority ones.  Using different names
    * creates segregated pools.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsOption` or
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
    */
   ClientOptions& set_connection_pool_name(std::string name) {
     connection_pool_name_ = std::move(name);
     return *this;
   }
 
-  /// Return the name of the connection pool.
+  /**
+   * Return the name of the connection pool.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsOption` or
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
+   */
   std::string const& connection_pool_name() const {
     return connection_pool_name_;
   }
@@ -158,30 +198,61 @@ class ClientOptions {
    *
    * Specifying 0 for @p size will set the size of the connection pool to
    * default.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcNumChannelsOption` instead.
    */
   ClientOptions& set_connection_pool_size(std::size_t size);
 
+  /**
+   * Return the size of the connection pool.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcNumChannelsOption` instead.
+   */
   std::size_t connection_pool_size() const {
     return opts_.get<GrpcNumChannelsOption>();
   }
 
-  /// Return the current credentials.
+  /**
+   * Return the current credentials.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcCredentialOption` instead.
+   */
   std::shared_ptr<grpc::ChannelCredentials> credentials() const {
     return opts_.get<GrpcCredentialOption>();
   }
 
+  /**
+   * Set the current credentials.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcCredentialOption` instead.
+   */
   ClientOptions& SetCredentials(
       std::shared_ptr<grpc::ChannelCredentials> credentials) {
     opts_.set<GrpcCredentialOption>(std::move(credentials));
     return *this;
   }
 
-  /// Access all the channel arguments.
+  /**
+   * Access all the channel arguments.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsOption` or
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
+   */
   grpc::ChannelArguments channel_arguments() const {
     return ::google::cloud::internal::MakeChannelArguments(opts_);
   }
 
-  /// Set all the channel arguments.
+  /**
+   * Set all the channel arguments.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
+   */
   ClientOptions& set_channel_arguments(
       grpc::ChannelArguments const& channel_arguments) {
     opts_.set<GrpcChannelArgumentsNativeOption>(channel_arguments);
@@ -195,6 +266,8 @@ class ClientOptions {
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
    */
   void SetCompressionAlgorithm(grpc_compression_algorithm algorithm) {
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetCompressionAlgorithm(
@@ -234,6 +307,8 @@ class ClientOptions {
    * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html for more
    * details.
    *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
    */
   template <typename Rep, typename Period>
   google::cloud::Status SetGrpclbFallbackTimeout(
@@ -259,6 +334,9 @@ class ClientOptions {
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::UserAgentProductsOption` or
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
    */
   void SetUserAgentPrefix(grpc::string const& user_agent_prefix) {
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetUserAgentPrefix(
@@ -272,6 +350,8 @@ class ClientOptions {
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
    */
   void SetResourceQuota(grpc::ResourceQuota const& resource_quota) {
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetResourceQuota(
@@ -286,6 +366,8 @@ class ClientOptions {
    * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html for more
    * details.
    *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
    */
   void SetMaxReceiveMessageSize(int size) {
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetMaxReceiveMessageSize(
@@ -299,6 +381,8 @@ class ClientOptions {
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
    */
   void SetMaxSendMessageSize(int size) {
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetMaxSendMessageSize(
@@ -313,6 +397,8 @@ class ClientOptions {
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
    */
   void SetLoadBalancingPolicyName(grpc::string const& lb_policy_name) {
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetLoadBalancingPolicyName(
@@ -326,6 +412,8 @@ class ClientOptions {
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
    */
   void SetServiceConfigJSON(grpc::string const& service_config_json) {
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetServiceConfigJSON(
@@ -339,6 +427,8 @@ class ClientOptions {
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcChannelArgumentsNativeOption` instead.
    */
   void SetSslTargetNameOverride(grpc::string const& name) {
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetSslTargetNameOverride(
@@ -354,31 +444,53 @@ class ClientOptions {
    * The C++ clients can log interesting events to help library and application
    * developers troubleshoot problems. This flag returns true if tracing should
    * be enabled by clients configured with this option.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::TracingComponentsOption` instead.
    */
   bool tracing_enabled(std::string const& component) const {
     return google::cloud::internal::Contains(
         opts_.get<TracingComponentsOption>(), component);
   }
 
-  /// Enable tracing for @p component in clients configured with this object.
+  /**
+   * Enable tracing for @p component in clients configured with this object.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::TracingComponentsOption` instead.
+   */
   ClientOptions& enable_tracing(std::string const& component) {
     opts_.lookup<TracingComponentsOption>().insert(component);
     return *this;
   }
 
-  /// Disable tracing for @p component in clients configured with this object.
+  /**
+   * Disable tracing for @p component in clients configured with this object.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::TracingComponentsOption` instead.
+   */
   ClientOptions& disable_tracing(std::string const& component) {
     opts_.lookup<TracingComponentsOption>().erase(component);
     return *this;
   }
 
-  /// Return the options for use when tracing RPCs.
+  /**
+   * Return the options for use when tracing RPCs.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcTracingOptionsOption` instead.
+   */
   TracingOptions const& tracing_options() const {
     return opts_.get<GrpcTracingOptionsOption>();
   }
 
   /**
    * Maximum connection refresh period, as set via `set_max_conn_refresh_period`
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `bigtable::MinConnectionRefreshOption` and
+   *     `bigtable::MaxConnectionRefreshOption` instead.
    */
   std::chrono::milliseconds max_conn_refresh_period() {
     return opts_.get<MaxConnectionRefreshOption>();
@@ -395,6 +507,10 @@ class ClientOptions {
    * @code
    * assert(min_conn_refresh_period() <= max_conn_refresh_period())
    * @endcode
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `bigtable::MinConnectionRefreshOption` and
+   *     `bigtable::MaxConnectionRefreshOption` instead.
    */
   ClientOptions& set_max_conn_refresh_period(std::chrono::milliseconds period) {
     opts_.set<MaxConnectionRefreshOption>(period);
@@ -405,6 +521,10 @@ class ClientOptions {
 
   /**
    * Minimum connection refresh period, as set via `set_min_conn_refresh_period`
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `bigtable::MinConnectionRefreshOption` and
+   *     `bigtable::MaxConnectionRefreshOption` instead.
    */
   std::chrono::milliseconds min_conn_refresh_period() {
     return opts_.get<MinConnectionRefreshOption>();
@@ -419,6 +539,10 @@ class ClientOptions {
    * @code
    * assert(min_conn_refresh_period() <= max_conn_refresh_period())
    * @endcode
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `bigtable::MinConnectionRefreshOption` and
+   *     `bigtable::MaxConnectionRefreshOption` instead.
    */
   ClientOptions& set_min_conn_refresh_period(std::chrono::milliseconds period) {
     opts_.set<MinConnectionRefreshOption>(period);
@@ -431,12 +555,23 @@ class ClientOptions {
    * Set the number of background threads.
    *
    * @note This value is not used if `DisableBackgroundThreads()` is called.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcBackgroundThreadPoolSizeOption` instead.
    */
   ClientOptions& set_background_thread_pool_size(std::size_t s) {
     opts_.set<GrpcBackgroundThreadPoolSizeOption>(s);
     return *this;
   }
 
+  /**
+   * Return the number of background threads.
+   *
+   * @note This value is not used if `DisableBackgroundThreads()` is called.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcBackgroundThreadPoolSizeOption` instead.
+   */
   std::size_t background_thread_pool_size() const {
     return opts_.get<GrpcBackgroundThreadPoolSizeOption>();
   }
@@ -450,6 +585,9 @@ class ClientOptions {
    * threads. In this case the application can provide the `CompletionQueue` and
    * it assumes responsibility for creating one or more threads blocked on
    * `CompletionQueue::Run()`.
+   *
+   * @deprecated Please configure `google::cloud::Options` with
+   *     `google::cloud::GrpcCompletionQueueOption` instead.
    */
   ClientOptions& DisableBackgroundThreads(
       google::cloud::CompletionQueue const& cq);

@@ -44,7 +44,9 @@ TRANSITION_LIBRARIES = [
     "managedidentities",
     "profiler",
     "resourcesettings",
-    # 2022-02-28
+]
+
+GA_LIBRARIES = [
     "accessapproval",
     "accesscontextmanager",
     "apigateway",
@@ -106,9 +108,6 @@ TRANSITION_LIBRARIES = [
     "webrisk",
     "websecurityscanner",
     "workflows",
-]
-
-GA_LIBRARIES = [
 ]
 
 [cc_library(

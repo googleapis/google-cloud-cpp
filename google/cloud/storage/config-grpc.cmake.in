@@ -15,6 +15,7 @@
 include(CMakeFindDependencyMacro)
 find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_grpc_utils)
+find_dependency(google_cloud_cpp_rest_internal)
 find_dependency(google_cloud_cpp_common)
 find_dependency(absl)
 find_dependency(CURL)

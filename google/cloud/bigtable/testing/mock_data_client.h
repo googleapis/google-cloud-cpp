@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/table.h"
 #include <gmock/gmock.h>
 #include <string>
+// TODO(#8800) - delete this class when deprecation is complete
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -148,5 +150,8 @@ class MockDataClient : public bigtable::DataClient {
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
+
+// TODO(#8800) - delete this class when deprecation is complete
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_DATA_CLIENT_H
