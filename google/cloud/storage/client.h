@@ -1064,8 +1064,8 @@ class Client {
    *     Valid types for this operation include `DisableCrc32cChecksum`,
    *     `DisableMD5Hash`, `IfGenerationMatch`, `EncryptionKey`, `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, `ReadLast`
-   *     and `UserProject`.
+   *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, `ReadLast`,
+   *     `UserProject`, and `AcceptEncoding`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -1073,11 +1073,14 @@ class Client {
    * @par Example
    * @snippet storage_object_samples.cc read object
    *
-   * @par Example
+   * @par Example: read only a sub-range in the object.
    * @snippet storage_object_samples.cc read object range
    *
    * @par Example: read a object encrypted with a CSEK.
    * @snippet storage_object_csek_samples.cc read encrypted object
+   *
+   * @par Example: disable decompressive transcoding.
+   * @snippet storage_object_samples read object gzip
    */
   template <typename... Options>
   ObjectReadStream ReadObject(std::string const& bucket_name,

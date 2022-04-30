@@ -326,6 +326,22 @@ void ReadObjectIntoMemory(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void ReadObjectGzip(google::cloud::storage::Client client,
+                    std::vector<std::string> const& argv) {
+  //! [read object gzip]
+  namespace gcs = ::google::cloud::storage;
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
+    auto is =
+        client.ReadObject(bucket_name, object_name, gcs::AcceptEncodingGzip());
+    auto const contents = std::string{std::istream_iterator<char>(is), {}};
+    if (!is.status().ok()) throw std::runtime_error(is.status().message());
+    std::cout << "The object has " << contents.size() << " characters\n";
+  }
+  //! [read object gzip]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void DeleteObject(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [delete object] [START storage_delete_file]
@@ -691,6 +707,9 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ReadObjectRange() example" << std::endl;
   ReadObjectRange(client, {bucket_name, object_name, "1000", "2000"});
 
+  std::cout << "\nRunning ReadObjectGzip() example" << std::endl;
+  ReadObjectGzip(client, {bucket_name, object_name});
+
   std::cout << "\nRunning UpdateObjectMetadata() example" << std::endl;
   UpdateObjectMetadata(client,
                        {bucket_name, object_name, "test-label", "test-value"});
@@ -793,6 +812,7 @@ int main(int argc, char* argv[]) {
       make_entry("read-object", {"<object-name>"}, ReadObject),
       make_entry("read-object-range", {"<object-name>", "<start>", "<end>"},
                  ReadObjectRange),
+      make_entry("read-object-gzip", {"<object-name>"}, ReadObjectGzip),
       make_entry("read-object-into-memory", {"<object-name>"},
                  ReadObjectIntoMemory),
       make_entry("delete-object", {"<object-name>"}, DeleteObject),
