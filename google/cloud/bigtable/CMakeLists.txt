@@ -163,8 +163,9 @@ add_library(
     internal/bulk_mutator.cc
     internal/bulk_mutator.h
     internal/client_options_defaults.h
-    internal/common_client.cc
     internal/common_client.h
+    internal/connection_refresh_state.cc
+    internal/connection_refresh_state.h
     internal/convert_policies.cc
     internal/convert_policies.h
     internal/defaults.cc
@@ -314,7 +315,7 @@ if (BUILD_TESTING)
         internal/async_bulk_apply_test.cc
         internal/async_row_sampler_test.cc
         internal/bulk_mutator_test.cc
-        internal/common_client_test.cc
+        internal/connection_refresh_state_test.cc
         internal/convert_policies_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
