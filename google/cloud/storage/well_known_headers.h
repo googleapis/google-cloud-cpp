@@ -267,13 +267,10 @@ std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs);
  */
 template <typename Generator>
 EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
-  constexpr int kKeySize = 256 / std::numeric_limits<unsigned char>::digits;
-
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  constexpr auto minchar = (std::numeric_limits<char>::min)();
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  constexpr auto maxchar = (std::numeric_limits<char>::max)();
-  std::uniform_int_distribution<int> uni(minchar, maxchar);
+  auto constexpr kKeySize = 256 / std::numeric_limits<unsigned char>::digits;
+  auto constexpr kMinChar = (std::numeric_limits<char>::min)();
+  auto constexpr kMaxChar = (std::numeric_limits<char>::max)();
+  std::uniform_int_distribution<int> uni(kMinChar, kMaxChar);
   std::string key(static_cast<std::size_t>(kKeySize), ' ');
   std::generate_n(key.begin(), key.size(),
                   [&uni, &gen] { return static_cast<char>(uni(gen)); });

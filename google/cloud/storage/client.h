@@ -3176,13 +3176,14 @@ class Client {
       std::string const& file_name, internal::ResumableUploadRequest request);
 
   StatusOr<ObjectMetadata> UploadStreamResumable(
-      std::istream& source, internal::ResumableUploadRequest const& request);
+      std::istream& source,
+      internal::ResumableUploadRequest const& request) const;
 
   Status DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                           std::string const& file_name);
 
   /// Determine the email used to sign a blob.
-  std::string SigningEmail(SigningAccount const& signing_account);
+  std::string SigningEmail(SigningAccount const& signing_account) const;
 
   /// Represents the result of signing a blob, including the key used in the
   /// signature.
@@ -3373,8 +3374,7 @@ class ScopedDeleter {
  public:
   // The actual deletion depends on local's types in a very non-trivial way,
   // so we abstract this away by providing the function to delete one object.
-  // NOLINTNEXTLINE(google-explicit-constructor)
-  ScopedDeleter(std::function<Status(std::string, std::int64_t)> delete_fun);
+  explicit ScopedDeleter(std::function<Status(std::string, std::int64_t)> df);
   ScopedDeleter(ScopedDeleter const&) = delete;
   ScopedDeleter& operator=(ScopedDeleter const&) = delete;
   ~ScopedDeleter();

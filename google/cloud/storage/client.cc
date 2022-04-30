@@ -222,9 +222,9 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   return UploadStreamResumable(source, request);
 }
 
-// NOLINTNEXTLINE(readability-make-member-function-const)
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(
-    std::istream& source, internal::ResumableUploadRequest const& request) {
+    std::istream& source,
+    internal::ResumableUploadRequest const& request) const {
   auto response = internal::CreateOrResume(*raw_client_, request);
   if (!response) return std::move(response).status();
 
@@ -337,8 +337,7 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   return Status();
 }
 
-// NOLINTNEXTLINE(readability-make-member-function-const)
-std::string Client::SigningEmail(SigningAccount const& signing_account) {
+std::string Client::SigningEmail(SigningAccount const& signing_account) const {
   if (signing_account.has_value()) {
     return signing_account.value();
   }
@@ -476,8 +475,8 @@ std::string CreateRandomPrefixName(std::string const& prefix) {
 namespace internal {
 
 ScopedDeleter::ScopedDeleter(
-    std::function<Status(std::string, std::int64_t)> delete_fun)
-    : delete_fun_(std::move(delete_fun)) {}
+    std::function<Status(std::string, std::int64_t)> df)
+    : delete_fun_(std::move(df)) {}
 
 ScopedDeleter::~ScopedDeleter() {
   if (enabled_) {

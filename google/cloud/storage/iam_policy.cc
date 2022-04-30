@@ -428,7 +428,7 @@ NativeIamPolicy& NativeIamPolicy::operator=(NativeIamPolicy const& other) {
   return *this;
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
+// XXXXNOLINTNEXTLINE(readability-identifier-naming)
 std::int32_t NativeIamPolicy::version() const {
   return pimpl_->native_json.value("version", 0);
 }
