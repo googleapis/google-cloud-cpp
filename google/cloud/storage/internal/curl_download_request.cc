@@ -52,6 +52,8 @@ ReadSourceResult MakeReadResult(std::size_t bytes_received,
   if (f != end && !r.storage_class) r.storage_class = f->second;
   f = r.response.headers.find("x-goog-stored-content-length");
   if (f != end && !r.size) r.size = std::stoull(f->second);
+  f = r.response.headers.find("x-guploader-response-body-transformations");
+  if (f != end && !r.transformation) r.transformation = f->second;
 
   // Prefer "Content-Range" over "Content-Length" because the former works for
   // ranged downloads.

@@ -52,6 +52,9 @@ $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT="storage-test-iam-sa@${env:GO
 $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT="kokoro-run@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY="projects/${env:GOOGLE_CLOUD_PROJECT}/locations/us/keyRings/gcs-testing-us-kr/cryptoKeys/integration-tests-key"
 $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${env:GOOGLE_CLOUD_PROJECT}/topics/gcs-changes"
+# We need a gzip file to test ReadObject() with decompressive transcoding
+#  https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
+$env:GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME="${env:PROJECT_ROOT}/ci/abi-dumps/google_cloud_cpp_storage.expected.abi.dump.gz"
 
 # Cloud Spanner configuration parameters
 $env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID="test-instance"
