@@ -428,32 +428,26 @@ NativeIamPolicy& NativeIamPolicy::operator=(NativeIamPolicy const& other) {
   return *this;
 }
 
-// XXXXNOLINTNEXTLINE(readability-identifier-naming)
 std::int32_t NativeIamPolicy::version() const {
   return pimpl_->native_json.value("version", 0);
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeIamPolicy::set_version(std::int32_t version) {
   pimpl_->native_json["version"] = version;
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::string NativeIamPolicy::etag() const {
   return pimpl_->native_json.value("etag", "");
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeIamPolicy::set_etag(std::string etag) {
   pimpl_->native_json["etag"] = std::move(etag);
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::vector<NativeIamBinding>& NativeIamPolicy::bindings() {
   return pimpl_->bindings;
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::vector<NativeIamBinding> const& NativeIamPolicy::bindings() const {
   return pimpl_->bindings;
 }
