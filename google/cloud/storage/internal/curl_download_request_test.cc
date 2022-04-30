@@ -97,8 +97,8 @@ TEST(CurlDownloadRequest, MakeReadResultDecompressiveTranscoding) {
         {"x-hashes", "crc32c=123"}},
        absl::nullopt},
       {"guploader",
-       {{"x-guploader-response-body-transformation", "gunzipped"}},
-       absl::nullopt},
+       {{"x-guploader-response-body-transformations", "gunzipped"}},
+       "gunzipped"},
   };
 
   for (auto const& test : cases) {
