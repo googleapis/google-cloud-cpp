@@ -20,14 +20,10 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/connection_options.h"
-#include "google/cloud/internal/random.h"
-#include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include <grpcpp/grpcpp.h>
-#include <chrono>
 #include <list>
-#include <unordered_map>
 #include <vector>
 
 namespace google {

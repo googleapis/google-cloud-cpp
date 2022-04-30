@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc.
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,19 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_CONNECTION_REFRESH_STATE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_CONNECTION_REFRESH_STATE_H
 
-#include "google/cloud/bigtable/internal/defaults.h"
-#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/connection_options.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/log.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include <grpcpp/grpcpp.h>
 #include <chrono>
-#include <list>
-#include <unordered_map>
-#include <vector>
+#include <memory>
+#include <mutex>
 
 namespace google {
 namespace cloud {

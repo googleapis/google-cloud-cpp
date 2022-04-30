@@ -11,7 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 
-#include "google/cloud/bigtable/internal/common_client.h"
+#include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
