@@ -29,33 +29,28 @@ TEST(TupleFilter, EmptyTuple) {
 
 TEST(TupleFilter, FullMatch) {
   auto res = StaticTupleFilter<std::is_integral>(
-      std::tuple<int, short, long>(1, 2, 3));  // NOLINT(google-runtime-int)
+      std::tuple<int, std::int32_t, std::int64_t>(1, 2, 3));
   static_assert(std::tuple_size<decltype(res)>::value == 3, "");
   auto i1 = std::get<0>(res);
   auto i2 = std::get<1>(res);
   auto i3 = std::get<2>(res);
   static_assert(std::is_same<decltype(i1), int>::value, "");
-  // NOLINTNEXTLINE(google-runtime-int)
-  static_assert(std::is_same<decltype(i2), short>::value, "");
-  // NOLINTNEXTLINE(google-runtime-int)
-  static_assert(std::is_same<decltype(i3), long>::value, "");
+  static_assert(std::is_same<decltype(i2), std::int32_t>::value, "");
+  static_assert(std::is_same<decltype(i3), std::int64_t>::value, "");
   EXPECT_EQ(1, std::get<0>(res));
   EXPECT_EQ(2, std::get<1>(res));
   EXPECT_EQ(3, std::get<2>(res));
 }
 
 TEST(TupleFilter, NoMatch) {
-  auto res =
-      // NOLINTNEXTLINE(google-runtime-int)
-      StaticTupleFilter<std::is_pointer>(std::tuple<int, short, long>(1, 2, 3));
+  auto res = StaticTupleFilter<std::is_pointer>(
+      std::tuple<int, std::int32_t, std::int64_t>(1, 2, 3));
   static_assert(std::tuple_size<decltype(res)>::value == 0, "");
 }
 
 TEST(TupleFilter, Selective) {
-  // NOLINTNEXTLINE(google-runtime-int)
-  auto res = StaticTupleFilter<NotAmong<long, short>::TPred>(
-      // NOLINTNEXTLINE(google-runtime-int)
-      std::tuple<int, std::string, short>(5, "asd", 7));
+  auto res = StaticTupleFilter<NotAmong<std::int64_t, std::int16_t>::TPred>(
+      std::tuple<int, std::string, std::int16_t>(5, "asd", 7));
   static_assert(std::tuple_size<decltype(res)>::value == 2, "");
   auto i1 = std::get<0>(res);
   auto i2 = std::get<1>(res);
@@ -68,8 +63,7 @@ TEST(TupleFilter, Selective) {
 // Test that forwarding rvalues works.
 TEST(TupleFilter, NonCopyable) {
   std::unique_ptr<int> iptr = absl::make_unique<int>(42);
-  // NOLINTNEXTLINE(google-runtime-int)
-  auto res = std::get<0>(StaticTupleFilter<NotAmong<long>::TPred>(
+  auto res = std::get<0>(StaticTupleFilter<NotAmong<std::int64_t>::TPred>(
       std::tuple<std::unique_ptr<int>>(std::move(iptr))));
   EXPECT_EQ(42, *res);
   static_assert(std::is_same<std::unique_ptr<int>, decltype(res)>::value, "");
@@ -81,9 +75,8 @@ TEST(TupleFilter, ByReference) {
   // This wouldn't work because get<0> returns a std::unique_ptr<int>&:
   // auto res = std::get<0>(StaticTupleFilter<NotAmong<long>::TPred>(
   //     std::tie(iptr)));
-  auto& res =
-      // NOLINTNEXTLINE(google-runtime-int)
-      std::get<0>(StaticTupleFilter<NotAmong<long>::TPred>(std::tie(iptr)));
+  auto& res = std::get<0>(
+      StaticTupleFilter<NotAmong<std::int64_t>::TPred>(std::tie(iptr)));
   // res is only an alias to iptr
   EXPECT_EQ(&res, &iptr);
   EXPECT_EQ(42, *res);
@@ -96,8 +89,7 @@ TEST(TupleFilter, TupleByReference) {
   // This wouldn't work because get<0> returns a std::unique_ptr<int>&:
   // auto res = std::get<0>(StaticTupleFilter<NotAmong<long>::TPred>(
   //     std::tie(iptr)));
-  // NOLINTNEXTLINE(google-runtime-int)
-  auto& res = std::get<0>(StaticTupleFilter<NotAmong<long>::TPred>(t));
+  auto& res = std::get<0>(StaticTupleFilter<NotAmong<std::int64_t>::TPred>(t));
   // res is only an alias to iptr
   EXPECT_EQ(&res, &iptr);
   EXPECT_EQ(42, *res);

@@ -367,8 +367,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_STATUS_OK(info);
 
-  // NOLINTNEXTLINE(google-runtime-int)
-  auto make_request_assertion = [&info](long timestamp) {
+  auto make_request_assertion = [&info](std::int64_t timestamp) {
     return [timestamp, &info](std::string const& p) {
       std::string const prefix =
           std::string("grant_type=") + kGrantParamEscaped + "&assertion=";

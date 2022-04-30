@@ -92,9 +92,8 @@ struct Options {
   std::int64_t maximum_object_size = 8 * gcs_bm::kGiB;
   std::size_t minimum_num_shards = 1;
   std::size_t maximum_num_shards = 128;
-  long minimum_sample_count = 0;  // NOLINT(google-runtime-int)
-  // NOLINTNEXTLINE(google-runtime-int)
-  long maximum_sample_count = std::numeric_limits<long>::max();
+  std::int32_t minimum_sample_count = 0;
+  std::int32_t maximum_sample_count = std::numeric_limits<std::int32_t>::max();
 };
 
 StatusOr<std::string> CreateTempFile(
@@ -335,12 +334,12 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
        "continue the test until at least this number of samples are "
        "obtained",
        [&options](std::string const& val) {
-         options.minimum_sample_count = std::stol(val);
+         options.minimum_sample_count = std::stoi(val);
        }},
       {"--maximum-sample-count",
        "stop the test when this number of samples are obtained",
        [&options](std::string const& val) {
-         options.maximum_sample_count = std::stol(val);
+         options.maximum_sample_count = std::stoi(val);
        }},
   };
   auto usage = BuildUsage(desc, argv[0]);

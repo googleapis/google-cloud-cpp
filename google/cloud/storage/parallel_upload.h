@@ -44,8 +44,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class MaxStreams {
  public:
-  // NOLINTNEXTLINE(google-explicit-constructor)
-  MaxStreams(std::size_t value) : value_(value) {}
+  explicit MaxStreams(std::size_t value) : value_(value) {}
   std::size_t value() const { return value_; }
 
  private:
@@ -61,8 +60,7 @@ class MaxStreams {
  */
 class MinStreamSize {
  public:
-  // NOLINTNEXTLINE(google-explicit-constructor)
-  MinStreamSize(std::uintmax_t value) : value_(value) {}
+  explicit MinStreamSize(std::uintmax_t value) : value_(value) {}
   std::uintmax_t value() const { return value_; }
 
  private:
@@ -253,8 +251,8 @@ struct ComposeManyApplyHelper {
 
 class SetOptionsApplyHelper {
  public:
-  // NOLINTNEXTLINE(google-explicit-constructor)
-  SetOptionsApplyHelper(ResumableUploadRequest& request) : request_(request) {}
+  explicit SetOptionsApplyHelper(ResumableUploadRequest& request)
+      : request_(request) {}
 
   template <typename... Options>
   void operator()(Options&&... options) const {
