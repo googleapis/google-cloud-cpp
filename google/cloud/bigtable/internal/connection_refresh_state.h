@@ -20,23 +20,16 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/random.h"
 #include <chrono>
+#include <cstdint>
 #include <memory>
 #include <mutex>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-/**
- * Time after which we bail out waiting for a connection to become ready.
- *
- * This number was copied from the Java client and there doesn't seem to be a
- * well-founded reason for it to be exactly this. It should not bee too large
- * since waiting for a connection to become ready is not cancellable.
- */
-std::chrono::seconds constexpr kConnectionReadyTimeout(10);
 
 class OutstandingTimers
     : public std::enable_shared_from_this<OutstandingTimers> {
