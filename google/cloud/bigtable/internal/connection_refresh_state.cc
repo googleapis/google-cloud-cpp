@@ -11,13 +11,26 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 
-#include "google/cloud/bigtable/internal/common_client.h"
+#include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
+
+/**
+ * Time after which we bail out waiting for a connection to become ready.
+ *
+ * This number was copied from the Java client and there doesn't seem to be a
+ * well-founded reason for it to be exactly this. It should not bee too large
+ * since waiting for a connection to become ready is not cancellable.
+ */
+auto constexpr kConnectionReadyTimeout = std::chrono::seconds(10);
+
+}  // namespace
 
 ConnectionRefreshState::ConnectionRefreshState(
     std::shared_ptr<CompletionQueue> const& cq,
