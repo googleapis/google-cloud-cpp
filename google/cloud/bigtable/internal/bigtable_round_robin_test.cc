@@ -16,7 +16,6 @@
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
-#include "google/bigtable/v2/bigtable.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/client_context.h>
 
