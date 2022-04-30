@@ -1080,7 +1080,7 @@ class Client {
    * @snippet storage_object_csek_samples.cc read encrypted object
    *
    * @par Example: disable decompressive transcoding.
-   * @snippet storage_object_samples read object gzip
+   * @snippet storage_object_samples.cc read object gzip
    */
   template <typename... Options>
   ObjectReadStream ReadObject(std::string const& bucket_name,
