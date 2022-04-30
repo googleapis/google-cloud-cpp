@@ -34,8 +34,7 @@ namespace {
 std::shared_ptr<grpc::Channel> CreateGrpcChannel(
     google::cloud::internal::GrpcAuthenticationStrategy& auth,
     Options const& options, int channel_id) {
-  grpc::ChannelArguments args;
-  // Just configure for the regular path.
+  auto args = internal::MakeChannelArguments(options);
   args.SetInt("grpc.channel_id", channel_id);
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
