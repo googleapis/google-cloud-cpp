@@ -156,6 +156,8 @@ add_library(
     internal/bigtable_logging_decorator.h
     internal/bigtable_metadata_decorator.cc
     internal/bigtable_metadata_decorator.h
+    internal/bigtable_round_robin.cc
+    internal/bigtable_round_robin.h
     internal/bigtable_stub.cc
     internal/bigtable_stub.h
     internal/bigtable_stub_factory.cc
@@ -255,6 +257,7 @@ if (BUILD_TESTING)
         testing/inprocess_data_client.cc
         testing/inprocess_data_client.h
         testing/mock_async_failing_rpc_factory.h
+        testing/mock_bigtable_stub.h
         testing/mock_data_client.h
         testing/mock_mutate_rows_reader.h
         testing/mock_policies.h
@@ -313,6 +316,7 @@ if (BUILD_TESTING)
         internal/admin_client_params_test.cc
         internal/async_bulk_apply_test.cc
         internal/async_row_sampler_test.cc
+        internal/bigtable_round_robin_test.cc
         internal/bulk_mutator_test.cc
         internal/common_client_test.cc
         internal/convert_policies_test.cc
