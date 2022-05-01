@@ -290,10 +290,10 @@ EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
  * data.
  *
  * @note Note that decompressive transcoding only apply to objects that are
- *     compressed with `gzip` and have their `content_encoding()` attribute
- *     set accordingly. At the time of this writing GCS does not decompress
- *     objects stored with other compression algorithms, nor does not it
- *     detect the object compression based on the object name or its contents.
+ *     compressed with `gzip` and have their `content_encoding()` attribute set
+ *     accordingly. At the time of this writing GCS does not decompress objects
+ *     stored with other compression algorithms, nor does it detect the object
+ *     compression based on the object name or its contents.
  *
  * @see `AcceptEncodingGzip()` is a helper function to disable decompressive
  *     encoding.
