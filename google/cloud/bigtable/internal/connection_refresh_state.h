@@ -27,9 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 class OutstandingTimers
     : public std::enable_shared_from_this<OutstandingTimers> {
@@ -86,9 +85,8 @@ void ScheduleChannelRefresh(
     std::shared_ptr<ConnectionRefreshState> const& state,
     std::shared_ptr<grpc::Channel> const& channel);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

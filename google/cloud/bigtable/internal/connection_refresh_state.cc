@@ -16,9 +16,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 /**
@@ -138,8 +137,7 @@ void OutstandingTimers::CancelAll() {
   }
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

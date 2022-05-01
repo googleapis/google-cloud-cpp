@@ -17,9 +17,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
 
@@ -107,8 +106,7 @@ TEST_F(OutstandingTimersTest, TimerRegisteredAfterCancelAllGetCancelled) {
   continuation_promise.get_future().get();
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
