@@ -277,6 +277,39 @@ EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
   return EncryptionDataFromBinaryKey(key);
 }
 
+/**
+ * Modify the accepted encodings.
+ *
+ * When using HTTP, GCS decompresses gzip-encoded objects by default:
+ *
+ *     https://cloud.google.com/storage/docs/transcoding
+ *
+ * Setting this option to `gzip` disables automatic decompression. This can be
+ * useful for applications wanting to operate with the compressed data. Setting
+ * this option to `identity`, or not setting this option, returns decompressed
+ * data.
+ *
+ * @note Note that decompressive transcoding only apply to objects that are
+ *     compressed with `gzip` and have their `content_encoding()` attribute set
+ *     accordingly. At the time of this writing GCS does not decompress objects
+ *     stored with other compression algorithms, nor does it detect the object
+ *     compression based on the object name or its contents.
+ *
+ * @see `AcceptEncodingGzip()` is a helper function to disable decompressive
+ *     encoding.
+ */
+struct AcceptEncoding
+    : public internal::WellKnownHeader<AcceptEncoding, std::string> {
+  using WellKnownHeader<AcceptEncoding, std::string>::WellKnownHeader;
+  static char const* header_name() { return "Accept-Encoding"; }
+};
+
+inline AcceptEncoding AcceptEncodingGzip() { return AcceptEncoding("gzip"); }
+
+inline AcceptEncoding AcceptEncodingIdentity() {
+  return AcceptEncoding("identity");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud

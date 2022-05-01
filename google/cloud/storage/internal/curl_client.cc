@@ -1199,6 +1199,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
   // None of the IfGeneration*Match nor IfMetageneration*Match can be set. This
   // is checked by the caller (in this class).
   builder.AddOption(request.GetOption<UserProject>());
+  builder.AddOption(request.GetOption<AcceptEncoding>());
 
   //
   // Apply the options from GenericRequestBase<> that are set, translating

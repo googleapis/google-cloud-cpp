@@ -169,7 +169,7 @@ class ReadObjectRangeRequest
           ReadObjectRangeRequest, DisableCrc32cChecksum, DisableMD5Hash,
           EncryptionKey, Generation, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, ReadFromOffset,
-          ReadRange, ReadLast, UserProject> {
+          ReadRange, ReadLast, UserProject, AcceptEncoding> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 

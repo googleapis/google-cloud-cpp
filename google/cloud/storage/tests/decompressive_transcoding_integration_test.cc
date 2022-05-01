@@ -127,6 +127,81 @@ TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadXml) {
   ASSERT_NE(decompressed.substr(0, 32), contents.substr(0, 32));
 }
 
+TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadCompressedJson) {
+  // TODO(storage-testbench#321) - fix transcoding support in the emulator
+  if (UsingEmulator()) GTEST_SKIP();
+
+  auto const gzip_filename = google::cloud::internal::GetEnv(
+                                 "GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME")
+                                 .value_or("");
+  ASSERT_FALSE(gzip_filename.empty());
+  std::ifstream gz(gzip_filename, std::ios::binary);
+  auto const contents = std::string{std::istreambuf_iterator<char>(gz), {}};
+  ASSERT_TRUE(gz.good());
+
+  auto client = Client(
+      Options{}
+          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
+
+  auto object_name = MakeRandomObjectName();
+  auto insert = client.InsertObject(
+      bucket_name(), object_name, contents, IfGenerationMatch(0),
+      WithObjectMetadata(
+          ObjectMetadata().set_content_encoding("gzip").set_content_type(
+              "text/plain")));
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+  EXPECT_EQ(insert->content_encoding(), "gzip");
+  EXPECT_EQ(insert->content_type(), "text/plain");
+
+  auto reader =
+      client.ReadObject(bucket_name(), object_name, AcceptEncodingGzip(),
+                        IfGenerationNotMatch(0));
+  ASSERT_STATUS_OK(reader.status());
+  auto compressed = std::string{std::istreambuf_iterator<char>(reader), {}};
+  ASSERT_STATUS_OK(reader.status());
+
+  ASSERT_EQ(compressed.substr(0, 32), contents.substr(0, 32));
+}
+
+TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadCompressedXml) {
+  // TODO(storage-testbench#321) - fix transcoding support in the emulator
+  if (UsingEmulator()) GTEST_SKIP();
+
+  auto const gzip_filename = google::cloud::internal::GetEnv(
+                                 "GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME")
+                                 .value_or("");
+  ASSERT_FALSE(gzip_filename.empty());
+  std::ifstream gz(gzip_filename, std::ios::binary);
+  auto const contents = std::string{std::istreambuf_iterator<char>(gz), {}};
+  ASSERT_TRUE(gz.good());
+
+  auto client = Client(
+      Options{}
+          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
+
+  auto object_name = MakeRandomObjectName();
+  auto insert = client.InsertObject(
+      bucket_name(), object_name, contents, IfGenerationMatch(0),
+      WithObjectMetadata(
+          ObjectMetadata().set_content_encoding("gzip").set_content_type(
+              "text/plain")));
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+  EXPECT_EQ(insert->content_encoding(), "gzip");
+  EXPECT_EQ(insert->content_type(), "text/plain");
+
+  auto reader =
+      client.ReadObject(bucket_name(), object_name, AcceptEncodingGzip());
+  ASSERT_STATUS_OK(reader.status());
+  auto compressed = std::string{std::istreambuf_iterator<char>(reader), {}};
+  ASSERT_STATUS_OK(reader.status());
+
+  ASSERT_EQ(compressed.substr(0, 32), contents.substr(0, 32));
+}
+
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
