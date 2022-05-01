@@ -151,6 +151,7 @@ service {
   initial_copyright_year: "2022"
   omit_client: true
   omit_connection: true
+  omit_stub_factory: true
   gen_async_rpcs: [
    "CheckAndMutateRow",
    "MutateRow",
