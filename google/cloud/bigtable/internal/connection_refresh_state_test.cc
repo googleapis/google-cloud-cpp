@@ -106,6 +106,20 @@ TEST_F(OutstandingTimersTest, TimerRegisteredAfterCancelAllGetCancelled) {
   continuation_promise.get_future().get();
 }
 
+TEST(ConnectionRefreshState, Enabled) {
+  using ms = std::chrono::milliseconds;
+  ConnectionRefreshState state(std::make_shared<CompletionQueue>(), ms(0),
+                               ms(1000));
+  EXPECT_TRUE(state.enabled());
+}
+
+TEST(ConnectionRefreshState, Disabled) {
+  using ms = std::chrono::milliseconds;
+  ConnectionRefreshState state(std::make_shared<CompletionQueue>(), ms(0),
+                               ms(0));
+  EXPECT_FALSE(state.enabled());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
