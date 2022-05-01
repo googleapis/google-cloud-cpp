@@ -60,9 +60,10 @@ class CommonClient {
             google::cloud::internal::DefaultBackgroundThreads(1)),
         refresh_cq_(
             std::make_shared<CompletionQueue>(background_threads_->cq())),
-        refresh_state_(std::make_shared<ConnectionRefreshState>(
-            refresh_cq_, opts_.get<MinConnectionRefreshOption>(),
-            opts_.get<MaxConnectionRefreshOption>())) {}
+        refresh_state_(
+            std::make_shared<bigtable_internal::ConnectionRefreshState>(
+                refresh_cq_, opts_.get<MinConnectionRefreshOption>(),
+                opts_.get<MaxConnectionRefreshOption>())) {}
 
   ~CommonClient() {
     // This will stop the refresh of the channels.
@@ -186,7 +187,7 @@ class CommonClient {
   // completion queue in the operations scheduled on it. In order to do it, we
   // need to hold one instance by a shared pointer.
   std::shared_ptr<CompletionQueue> refresh_cq_;
-  std::shared_ptr<ConnectionRefreshState> refresh_state_;
+  std::shared_ptr<bigtable_internal::ConnectionRefreshState> refresh_state_;
 };
 
 }  // namespace internal
