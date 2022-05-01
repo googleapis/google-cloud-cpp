@@ -22,7 +22,6 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
-#include "absl/strings/str_split.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
