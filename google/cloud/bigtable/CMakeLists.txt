@@ -152,6 +152,8 @@ add_library(
     internal/async_row_sampler.h
     internal/bigtable_auth_decorator.cc
     internal/bigtable_auth_decorator.h
+    internal/bigtable_channel_refresh.cc
+    internal/bigtable_channel_refresh.h
     internal/bigtable_logging_decorator.cc
     internal/bigtable_logging_decorator.h
     internal/bigtable_metadata_decorator.cc
@@ -317,6 +319,7 @@ if (BUILD_TESTING)
         internal/admin_client_params_test.cc
         internal/async_bulk_apply_test.cc
         internal/async_row_sampler_test.cc
+        internal/bigtable_channel_refresh_test.cc
         internal/bigtable_round_robin_test.cc
         internal/bigtable_stub_factory_test.cc
         internal/bulk_mutator_test.cc
