@@ -181,12 +181,15 @@ add_library(
     internal/defaults.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
+    internal/legacy_row_reader_impl.cc
+    internal/legacy_row_reader_impl.h
     internal/logging_data_client.cc
     internal/logging_data_client.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
     internal/readrowsparser.cc
     internal/readrowsparser.h
+    internal/row_reader_impl.h
     internal/rowreaderiterator.cc
     internal/rowreaderiterator.h
     internal/rpc_policy_parameters.h
