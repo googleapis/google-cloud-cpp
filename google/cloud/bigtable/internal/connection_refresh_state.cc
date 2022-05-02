@@ -48,6 +48,10 @@ std::chrono::milliseconds ConnectionRefreshState::RandomizedRefreshDelay() {
           max_conn_refresh_period_.count())(rng_));
 }
 
+bool ConnectionRefreshState::enabled() const {
+  return max_conn_refresh_period_.count() != 0;
+}
+
 void ScheduleChannelRefresh(
     std::shared_ptr<CompletionQueue> const& cq,
     std::shared_ptr<ConnectionRefreshState> const& state,

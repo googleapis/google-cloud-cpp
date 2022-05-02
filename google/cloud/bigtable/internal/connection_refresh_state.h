@@ -68,6 +68,7 @@ class ConnectionRefreshState {
       std::chrono::milliseconds max_conn_refresh_period);
   std::chrono::milliseconds RandomizedRefreshDelay();
   OutstandingTimers& timers() { return *timers_; }
+  bool enabled() const;
 
  private:
   std::mutex mu_;

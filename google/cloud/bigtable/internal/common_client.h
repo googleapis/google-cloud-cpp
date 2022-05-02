@@ -148,10 +148,9 @@ class CommonClient {
     args.SetInt(GRPC_ARG_CHANNEL_ID, idx);
     auto res = grpc::CreateCustomChannel(
         opts_.get<EndpointOption>(), opts_.get<GrpcCredentialOption>(), args);
-    if (opts_.get<MaxConnectionRefreshOption>().count() == 0) {
-      return res;
+    if (refresh_state_->enabled()) {
+      ScheduleChannelRefresh(refresh_cq_, refresh_state_, res);
     }
-    ScheduleChannelRefresh(refresh_cq_, refresh_state_, res);
     return res;
   }
 
