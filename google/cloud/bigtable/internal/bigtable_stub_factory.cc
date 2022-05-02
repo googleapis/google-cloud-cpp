@@ -14,9 +14,12 @@
 
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/internal/bigtable_auth_decorator.h"
+#include "google/cloud/bigtable/internal/bigtable_channel_refresh.h"
 #include "google/cloud/bigtable/internal/bigtable_logging_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_metadata_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_round_robin.h"
+#include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -31,8 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 std::shared_ptr<grpc::Channel> CreateGrpcChannel(
-    google::cloud::internal::GrpcAuthenticationStrategy& auth,
-    Options const& options, int channel_id) {
+    internal::GrpcAuthenticationStrategy& auth, Options const& options,
+    int channel_id) {
   auto args = internal::MakeChannelArguments(options);
   args.SetInt("grpc.channel_id", channel_id);
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
@@ -54,13 +57,22 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
     BaseBigtableStubFactory const& base_factory) {
+  auto cq_ptr = std::make_shared<CompletionQueue>(cq);
+  auto refresh = std::make_shared<ConnectionRefreshState>(
+      cq_ptr, options.get<bigtable::MinConnectionRefreshOption>(),
+      options.get<bigtable::MaxConnectionRefreshOption>());
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
-  auto child_factory = [base_factory, &auth, options](int id) {
+  auto child_factory = [base_factory, cq_ptr, refresh, &auth, options](int id) {
     auto channel = CreateGrpcChannel(*auth, options, id);
+    if (refresh->enabled()) ScheduleChannelRefresh(cq_ptr, refresh, channel);
     return base_factory(std::move(channel));
   };
   auto stub = CreateBigtableStubRoundRobin(options, std::move(child_factory));
+  if (refresh->enabled()) {
+    stub = std::make_shared<BigtableChannelRefresh>(std::move(stub),
+                                                    std::move(refresh));
+  }
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<BigtableAuth>(std::move(auth), std::move(stub));
   }
