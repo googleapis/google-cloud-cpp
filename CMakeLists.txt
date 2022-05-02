@@ -272,13 +272,18 @@ cmake_dependent_option(
     ON "GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_REST)
 
-# Prevent users for setting incompatible flags.
+# Detect incompatible flags and let the customer know what to do.
 if (storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND NOT GOOGLE_CLOUD_CPP_ENABLE_REST)
     message(
         FATAL_ERROR
-            "If storage is enabled (e.g. -DGOOGLE_CLOUD_ENABLE=storage), "
-            "the REST library cannot be disabled "
-            "(e.g. -DGOOGLE_CLOUD_CPP_ENABLE_REST=OFF)")
+            "If storage is enabled (e.g. -DGOOGLE_CLOUD_CPP_ENABLE=storage),"
+            " the REST library cannot be disabled,"
+            " i.e., you cannot set -DGOOGLE_CLOUD_CPP_ENABLE_REST=OFF."
+            " If you do want to use the storage library,"
+            " then do not use -DGOOGLE_CLOUD_CPP_ENABLE_REST=OFF."
+            " If you do not want to use the storage library,"
+            " then provide a -DGOOGLE_CLOUD_CPP_ENABLE=... list and do not"
+            " include storage in that list.")
 endif ()
 
 # Enable testing in this directory so we can do a top-level `make test`. This
