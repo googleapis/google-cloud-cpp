@@ -311,6 +311,7 @@ string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage" " -lcrc32c")
 string(
     CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
            "google_cloud_cpp_common"
+           " google_cloud_cpp_rest_internal"
            " libcurl openssl"
            " absl_memory"
            " absl_strings"
