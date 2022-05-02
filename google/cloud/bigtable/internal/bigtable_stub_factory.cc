@@ -34,17 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 std::shared_ptr<grpc::Channel> CreateGrpcChannel(
-    std::shared_ptr<CompletionQueue> const& cq,
-    std::shared_ptr<ConnectionRefreshState> const& refresh_state,
     internal::GrpcAuthenticationStrategy& auth, Options const& options,
     int channel_id) {
   auto args = internal::MakeChannelArguments(options);
   args.SetInt("grpc.channel_id", channel_id);
-  auto c = auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
-  if (refresh_state->enabled()) {
-    ScheduleChannelRefresh(cq, refresh_state, c);
-  }
-  return c;
+  return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
 }  // namespace
@@ -64,20 +58,20 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
     BaseBigtableStubFactory const& base_factory) {
   auto cq_ptr = std::make_shared<CompletionQueue>(cq);
-  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+  auto refresh = std::make_shared<ConnectionRefreshState>(
       cq_ptr, options.get<bigtable::MinConnectionRefreshOption>(),
       options.get<bigtable::MaxConnectionRefreshOption>());
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
-  auto child_factory = [base_factory, cq_ptr, refresh_state, &auth,
-                        options](int id) {
-    auto channel = CreateGrpcChannel(cq_ptr, refresh_state, *auth, options, id);
+  auto child_factory = [base_factory, cq_ptr, refresh, &auth, options](int id) {
+    auto channel = CreateGrpcChannel(*auth, options, id);
+    if (refresh->enabled()) ScheduleChannelRefresh(cq_ptr, refresh, channel);
     return base_factory(std::move(channel));
   };
   auto stub = CreateBigtableStubRoundRobin(options, std::move(child_factory));
-  if (refresh_state->enabled()) {
+  if (refresh->enabled()) {
     stub = std::make_shared<BigtableChannelRefresh>(std::move(stub),
-                                                    std::move(refresh_state));
+                                                    std::move(refresh));
   }
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<BigtableAuth>(std::move(auth), std::move(stub));
