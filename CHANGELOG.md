@@ -64,8 +64,10 @@ namespace. The function continues to exist but in an internal file and
 namespace. For status on this see
 https://github.com/googleapis/google-cloud-cpp/issues/8234.
 </details>
-<br>
 
+<details>
+<summary>2023-05-01: mark `bigtable::DataClient` as `final`</summary>
+<br>
 On 2023-05-01 (or shortly after) we will mark `bigtable::DataClient` as `final`
 and remove the following member functions:
 * `DataClient::Channel()`
@@ -80,7 +82,9 @@ background threads.
 For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/8800
 </details>
 
-## v1.40.0 - TBD
+## v1.41.0 - TBD
+
+## v1.40.0 - 2022-05
 
 We are happy to announce that the following GA libraries.  Unless specifically
 noted, the APIs in these libraries are stable, and are ready for production use.
@@ -95,6 +99,19 @@ noted, the APIs in these libraries are stable, and are ready for production use.
 
 </details>
 
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+* doc(bigtable): deprecate DataClient member fns ([#8813](https://github.com/googleapis/google-cloud-cpp/pull/8813))
+* doc(bigtable): deprecate ClientOptions ([#8824](https://github.com/googleapis/google-cloud-cpp/pull/8824))
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* doc(pubsub): document publish return value ([#8703](https://github.com/googleapis/google-cloud-cpp/pull/8703))
+
+### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
+
+* fix(spanner)!: FLOAT64 NaN values are considered equal ([#8805](https://github.com/googleapis/google-cloud-cpp/pull/8805))
+
 ### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
 
 **BREAKING CHANGES**
@@ -105,6 +122,11 @@ noted, the APIs in these libraries are stable, and are ready for production use.
   necessarily depends on these implementation details. We updated the
   [mocking examples][storage-mocking-link] to guide you in changing any tests.
 
+* feat(storage): new option to disable decompressive transcoding ([#8834](https://github.com/googleapis/google-cloud-cpp/pull/8834))
+* fix(storage): disable checksums for transcoded objects ([#8830](https://github.com/googleapis/google-cloud-cpp/pull/8830))
+* cleanup(storage)!: session-less resumable uploads ([#8806](https://github.com/googleapis/google-cloud-cpp/pull/8806))
+* doc: fix typo, change "optional" to "optimal" ([#8825](https://github.com/googleapis/google-cloud-cpp/pull/8825))
+
 ### [Storage Transfer Service](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storagetransfer/README.md)
 
 **BREAKING CHANGES**
@@ -114,7 +136,7 @@ The library has been disabled on macOS due to a protobuf naming clash. See
 
 ### New Libraries
 
-We are introducing 2 new client libraries for GCP services. While we do not
+We are introducing 3 new client libraries for GCP services. While we do not
 anticipate any API changes to these libraries before declaring them GA, we are
 releasing them early in case they elicit some feedback that requires changes.
 
@@ -122,6 +144,7 @@ releasing them early in case they elicit some feedback that requires changes.
 <summary> Expand to see the full list of new libraries...</summary>
 <br>
 
+* [Dataplex](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dataplex/README.md)
 * [Dialog Flow CX](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dialogflow_cx/README.md)
 * [Dialog Flow ES](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dialogflow_es/README.md)
 
