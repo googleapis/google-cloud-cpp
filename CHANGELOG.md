@@ -123,7 +123,7 @@ noted, the APIs in these libraries are stable, and are ready for production use.
   [mocking examples][storage-mocking-link] to guide you in changing any tests
   ([#8806](https://github.com/googleapis/google-cloud-cpp/pull/8806)).
 
-**OTHER CHANGES**:
+**Other Changes**:
 
 * feat(storage): new option to disable decompressive transcoding ([#8834](https://github.com/googleapis/google-cloud-cpp/pull/8834))
 * fix(storage): disable checksums for transcoded objects ([#8830](https://github.com/googleapis/google-cloud-cpp/pull/8830))
