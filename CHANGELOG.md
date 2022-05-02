@@ -84,6 +84,10 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
 
 ## v1.41.0 - TBD
 
+## v1.40.1 - 2022-05
+
+* fix: correct check for storage vs. rest enabled ([#8850](https://github.com/googleapis/google-cloud-cpp/pull/8850))
+
 ## v1.40.0 - 2022-05
 
 We are happy to announce that the following GA libraries.  Unless specifically
