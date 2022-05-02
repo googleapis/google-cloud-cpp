@@ -273,7 +273,8 @@ cmake_dependent_option(
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_REST)
 
 # Detect incompatible flags and let the customer know what to do.
-if (storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND NOT GOOGLE_CLOUD_CPP_ENABLE_REST)
+if (storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND NOT
+                                                GOOGLE_CLOUD_CPP_ENABLE_REST)
     message(
         FATAL_ERROR
             "If storage is enabled (e.g. -DGOOGLE_CLOUD_CPP_ENABLE=storage),"
