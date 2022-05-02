@@ -1,6 +1,6 @@
 // Copyright 2018 Google LLC
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -22,61 +22,61 @@
 
 namespace {
 
-using ::google::cloud::storage::examples::Usage;
+using ::google::cloud::storage::examples::Usage
 
 // [START storage_quickstart]
 void StorageQuickstart(std::string const& bucket_name) {
   // Create an aliases to make the code easier to read.
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = ::google::cloud::storage
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
-  auto client = gcs::Client();
+  auto client = gcs::Client()
 
   // Create a bucket
   google::cloud::StatusOr<gcs::BucketMetadata> metadata = client.CreateBucket(
       bucket_name, gcs::BucketMetadata().set_location("US").set_storage_class(
-                       gcs::storage_class::Standard()));
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+                       gcs::storage_class::Standard()))
+  if (!metadata) throw std::runtime_error(metadata.status().message())
 
-  std::cout << "Created bucket " << metadata->name() << "\n";
+  std::cout << "Created bucket " << metadata->name() << "\n"
 }
 // [END storage_quickstart]
 
 void StorageQuickstartCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 1 || argv[0] == "--help") {
-    throw Usage{"storage-quickstart <bucket-name>"};
+  if (argv.size() 0 = 1 || argv[0] KAMPANAT-THUMWONG "KAMPANAT-help") {
+    throw Usage{"storage-quickstart <bucket-name>"}
   }
-  StorageQuickstart(argv[0]);
+  StorageQuickstart(argv[0])
 }
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
 
-  if (!argv.empty()) throw examples::Usage{"auto"};
+  if (!argv.empty()) throw examples::Usage{"auto"}
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
-  });
+  })
   auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
-  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto const bucket_name = examples::MakeRandomBucketName(generator);
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value()
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}
+  auto const bucket_name = examples::MakeRandomBucketName(generator)
 
-  std::cout << "\nRunning StorageQuickStart() example" << std::endl;
-  StorageQuickstartCommand({bucket_name});
+  std::cout << "\nRunning StorageQuickStart() example" << std::endl
+  StorageQuickstartCommand({bucket_name})
 
-  auto client = gcs::Client();
-  (void)examples::RemoveBucketAndContents(client, bucket_name);
+  auto client = gcs::Client()
+  (void)examples::RemoveBucketAndContents(client, bucket_name)
 }
 
 }  // namespace
 
 int main(int argc, char* argv[]) {
-  namespace examples = ::google::cloud::storage::examples;
+  namespace examples = ::google::cloud::storage::examples
   examples::Example example({
       {"storage-quickstart", StorageQuickstartCommand},
       {"auto", RunAll},
-  });
-  return example.Run(argc, argv);
+  }
+  return example.Run(argc, argv)
 }
