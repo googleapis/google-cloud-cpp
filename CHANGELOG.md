@@ -120,11 +120,13 @@ noted, the APIs in these libraries are stable, and are ready for production use.
   stable, its implementation has changed. Normally implementation details are
   not breaking changes, but any application mocking the storage library
   necessarily depends on these implementation details. We updated the
-  [mocking examples][storage-mocking-link] to guide you in changing any tests.
+  [mocking examples][storage-mocking-link] to guide you in changing any tests
+  ([#8806](https://github.com/googleapis/google-cloud-cpp/pull/8806)).
+
+**OTHER CHANGES**:
 
 * feat(storage): new option to disable decompressive transcoding ([#8834](https://github.com/googleapis/google-cloud-cpp/pull/8834))
 * fix(storage): disable checksums for transcoded objects ([#8830](https://github.com/googleapis/google-cloud-cpp/pull/8830))
-* cleanup(storage)!: session-less resumable uploads ([#8806](https://github.com/googleapis/google-cloud-cpp/pull/8806))
 * doc: fix typo, change "optional" to "optimal" ([#8825](https://github.com/googleapis/google-cloud-cpp/pull/8825))
 
 ### [Storage Transfer Service](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storagetransfer/README.md)
