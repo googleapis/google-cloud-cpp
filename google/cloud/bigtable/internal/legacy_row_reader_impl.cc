@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc.
+// Copyright 2022 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/row_reader.h"
+#include "google/cloud/bigtable/internal/legacy_row_reader_impl.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -22,62 +22,30 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-// RowReader::iterator must satisfy the requirements of an InputIterator.
-static_assert(
-    std::is_same<std::iterator_traits<RowReader::iterator>::iterator_category,
-                 std::input_iterator_tag>::value,
-    "RowReader::iterator should be an InputIterator");
-static_assert(
-    std::is_same<std::iterator_traits<RowReader::iterator>::value_type,
-                 StatusOr<Row>>::value,
-    "RowReader::iterator should be an InputIterator of Row");
-static_assert(std::is_same<std::iterator_traits<RowReader::iterator>::pointer,
-                           StatusOr<Row>*>::value,
-              "RowReader::iterator should be an InputIterator of Row");
-static_assert(std::is_same<std::iterator_traits<RowReader::iterator>::reference,
-                           StatusOr<Row>&>::value,
-              "RowReader::iterator should be an InputIterator of Row");
-static_assert(std::is_copy_constructible<RowReader::iterator>::value,
-              "RowReader::iterator must be CopyConstructible");
-static_assert(std::is_move_constructible<RowReader::iterator>::value,
-              "RowReader::iterator must be MoveConstructible");
-static_assert(std::is_copy_assignable<RowReader::iterator>::value,
-              "RowReader::iterator must be CopyAssignable");
-static_assert(std::is_move_assignable<RowReader::iterator>::value,
-              "RowReader::iterator must be MoveAssignable");
-static_assert(std::is_destructible<RowReader::iterator>::value,
-              "RowReader::iterator must be Destructible");
-static_assert(
-    std::is_convertible<decltype(*std::declval<RowReader::iterator>()),
-                        RowReader::iterator::value_type>::value,
-    "*it when it is of RowReader::iterator type must be convertible to "
-    "RowReader::iterator::value_type>");
-static_assert(std::is_same<decltype(++std::declval<RowReader::iterator>()),
-                           RowReader::iterator&>::value,
-              "++it when it is of RowReader::iterator type must be a "
-              "RowReader::iterator &>");
 
-RowReader::RowReader(
-    std::shared_ptr<DataClient> client, std::string table_name, RowSet row_set,
-    std::int64_t rows_limit, Filter filter,
-    std::unique_ptr<RPCRetryPolicy> retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy,
-    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
-    : RowReader(std::move(client), std::string(""), std::move(table_name),
-                std::move(row_set), rows_limit, std::move(filter),
-                std::move(retry_policy), std::move(backoff_policy),
-                std::move(metadata_update_policy), std::move(parser_factory)) {}
+LegacyRowReaderImpl::LegacyRowReaderImpl(
+    std::shared_ptr<bigtable::DataClient> client, std::string table_name,
+    bigtable::RowSet row_set, std::int64_t rows_limit, bigtable::Filter filter,
+    std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy,
+    std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
+    bigtable::MetadataUpdatePolicy metadata_update_policy,
+    std::unique_ptr<bigtable::internal::ReadRowsParserFactory> parser_factory)
+    : LegacyRowReaderImpl(
+          std::move(client), std::string(""), std::move(table_name),
+          std::move(row_set), rows_limit, std::move(filter),
+          std::move(retry_policy), std::move(backoff_policy),
+          std::move(metadata_update_policy), std::move(parser_factory)) {}
 
-RowReader::RowReader(
-    std::shared_ptr<DataClient> client, std::string app_profile_id,
-    std::string table_name, RowSet row_set, std::int64_t rows_limit,
-    Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy,
-    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
+LegacyRowReaderImpl::LegacyRowReaderImpl(
+    std::shared_ptr<bigtable::DataClient> client, std::string app_profile_id,
+    std::string table_name, bigtable::RowSet row_set, std::int64_t rows_limit,
+    bigtable::Filter filter,
+    std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy,
+    std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
+    bigtable::MetadataUpdatePolicy metadata_update_policy,
+    std::unique_ptr<bigtable::internal::ReadRowsParserFactory> parser_factory)
     : client_(std::move(client)),
       app_profile_id_(std::move(app_profile_id)),
       table_name_(std::move(table_name)),
@@ -93,16 +61,7 @@ RowReader::RowReader(
       processed_chunks_count_(0),
       rows_count_(0) {}
 
-// The name must be all lowercase to work with range-for loops.
-RowReader::iterator RowReader::begin() {
-  return internal::RowReaderIterator(this);
-}
-
-// The name must be all lowercase to work with range-for loops.
-// NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-RowReader::iterator RowReader::end() { return internal::RowReaderIterator(); }
-
-void RowReader::MakeRequest() {
+void LegacyRowReaderImpl::MakeRequest() {
   response_ = {};
   processed_chunks_count_ = 0;
 
@@ -116,7 +75,7 @@ void RowReader::MakeRequest() {
   auto filter_proto = filter_.as_proto();
   request.mutable_filter()->Swap(&filter_proto);
 
-  if (rows_limit_ != NO_ROWS_LIMIT) {
+  if (rows_limit_ != bigtable::RowReader::NO_ROWS_LIMIT) {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
 
@@ -130,7 +89,7 @@ void RowReader::MakeRequest() {
   parser_ = parser_factory_->Create();
 }
 
-bool RowReader::NextChunk() {
+bool LegacyRowReaderImpl::NextChunk() {
   ++processed_chunks_count_;
   while (processed_chunks_count_ >= response_.chunks_size()) {
     processed_chunks_count_ = 0;
@@ -146,7 +105,7 @@ bool RowReader::NextChunk() {
   return true;
 }
 
-StatusOr<RowReader::OptionalRow> RowReader::Advance() {
+StatusOr<RowReaderImpl::OptionalRow> LegacyRowReaderImpl::Advance() {
   if (operation_cancelled_) {
     return Status(StatusCode::kCancelled, "Operation cancelled.");
   }
@@ -162,14 +121,16 @@ StatusOr<RowReader::OptionalRow> RowReader::Advance() {
     // number of rows and still receive an error (the parser can throw
     // an error at end of stream for example), there is no need to
     // retry and we have no good value for rows_limit anyway.
-    if (rows_limit_ != NO_ROWS_LIMIT && rows_limit_ <= rows_count_) {
+    if (rows_limit_ != bigtable::RowReader::NO_ROWS_LIMIT &&
+        rows_limit_ <= rows_count_) {
       return row;
     }
 
     if (!last_read_row_key_.empty()) {
       // We've returned some rows and need to make sure we don't
       // request them again.
-      row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
+      row_set_ =
+          row_set_.Intersect(bigtable::RowRange::Open(last_read_row_key_, ""));
     }
 
     // If we receive an error, but the retryable set is empty, stop.
@@ -189,7 +150,7 @@ StatusOr<RowReader::OptionalRow> RowReader::Advance() {
   }
 }
 
-grpc::Status RowReader::AdvanceOrFail(OptionalRow& row) {
+grpc::Status LegacyRowReaderImpl::AdvanceOrFail(OptionalRow& row) {
   row.reset();
   grpc::Status status;
   if (!stream_) {
@@ -219,7 +180,7 @@ grpc::Status RowReader::AdvanceOrFail(OptionalRow& row) {
   }
 
   // We have a complete row in the parser.
-  Row parsed_row = parser_->Next(status);
+  bigtable::Row parsed_row = parser_->Next(status);
   if (!status.ok()) {
     return status;
   }
@@ -230,7 +191,7 @@ grpc::Status RowReader::AdvanceOrFail(OptionalRow& row) {
   return status;
 }
 
-void RowReader::Cancel() {
+void LegacyRowReaderImpl::Cancel() {
   operation_cancelled_ = true;
   if (!stream_is_open_) {
     return;
@@ -246,11 +207,12 @@ void RowReader::Cancel() {
   (void)stream_->Finish();  // ignore errors
 }
 
-RowReader::~RowReader() {
+LegacyRowReaderImpl::~LegacyRowReaderImpl() {
   // Make sure we don't leave open streams.
   Cancel();
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

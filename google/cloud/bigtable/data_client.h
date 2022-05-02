@@ -24,6 +24,11 @@
 
 namespace google {
 namespace cloud {
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class LegacyRowReaderImpl;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // Forward declare some classes so we can be friends.
@@ -109,7 +114,7 @@ class DataClient {
   friend class internal::AsyncRetryBulkApply;
   friend class internal::AsyncRowSampler;
   friend class internal::BulkMutator;
-  friend class RowReader;
+  friend class bigtable_internal::LegacyRowReaderImpl;
   template <typename RowFunctor, typename FinishFunctor>
   friend class AsyncRowReader;
   friend class internal::LoggingDataClient;
