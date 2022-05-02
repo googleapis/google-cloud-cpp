@@ -144,6 +144,8 @@ add_library(
     internal/raw_client_wrapper_utils.h
     internal/rest_client.cc
     internal/rest_client.h
+    internal/rest_request_builder.cc
+    internal/rest_request_builder.h
     internal/retry_client.cc
     internal/retry_client.h
     internal/retry_object_read_source.cc
@@ -452,6 +454,7 @@ if (BUILD_TESTING)
         internal/parameter_pack_validation_test.cc
         internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
+        internal/rest_request_builder_test.cc
         internal/retry_client_test.cc
         internal/retry_object_read_source_test.cc
         internal/self_signing_service_account_credentials_test.cc

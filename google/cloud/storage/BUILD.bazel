@@ -68,6 +68,7 @@ cc_library(
     ],
     deps = [
         "//:common",
+        "//google/cloud:google_cloud_cpp_rest_internal",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
