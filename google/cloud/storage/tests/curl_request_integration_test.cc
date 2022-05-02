@@ -293,7 +293,7 @@ TEST(CurlRequestTest, HandleTeapot) {
   auto response = RetryMakeRequest(factory, {}, 418);
   ASSERT_STATUS_OK(response);
   ASSERT_EQ(418, response->status_code) << "response=" << *response;
-  EXPECT_THAT(response->payload, HasSubstr("[ teapot ]"));
+  EXPECT_THAT(response->payload, HasSubstr("teapot"));
 }
 
 /// @test Verify the response includes the header values.
