@@ -122,7 +122,7 @@ CurlDownloadRequest::~CurlDownloadRequest() {
 StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   if (curl_closed_) return HttpResponse{http_code_, {}, received_headers_};
   TRACE_STATE();
-  // Set the the closing_ flag to trigger a return 0 from the next read
+  // Set the closing_ flag to trigger a return 0 from the next read
   // callback, see the comments in the header file for more details.
   closing_ = true;
   TRACE_STATE();
@@ -167,22 +167,28 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
         HttpResponse{http_code_, std::string{}, std::move(received_headers_)});
   }
 
-  handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlDownloadRequestWrite);
-  handle_.SetOption(CURLOPT_WRITEDATA, this);
-  handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlDownloadRequestHeader);
-  handle_.SetOption(CURLOPT_HEADERDATA, this);
+  auto status =
+      handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlDownloadRequestWrite);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_WRITEDATA, this);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status =
+      handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlDownloadRequestHeader);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_HEADERDATA, this);
+  if (!status.ok()) return OnTransferError(std::move(status));
 
   handle_.FlushDebug(__func__);
   TRACE_STATE();
 
   if (!curl_closed_ && paused_) {
     paused_ = false;
-    auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
+    status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
     TRACE_STATE() << ", status=" << status;
-    if (!status.ok()) return status;
+    if (!status.ok()) return OnTransferError(std::move(status));
   }
 
-  auto status = Wait([this] {
+  status = Wait([this] {
     return curl_closed_ || paused_ || buffer_offset_ >= buffer_size_;
   });
   TRACE_STATE() << ", status=" << status;
@@ -229,15 +235,24 @@ void CurlDownloadRequest::CleanupHandles() {
   }
 }
 
-void CurlDownloadRequest::SetOptions() {
-  handle_.SetOption(CURLOPT_URL, url_.c_str());
-  handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
-  handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
-  handle_.SetOption(CURLOPT_NOSIGNAL, 1L);
-  handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
+Status CurlDownloadRequest::SetOptions() {
+  auto status = handle_.SetOption(CURLOPT_URL, url_.c_str());
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_NOSIGNAL, 1L);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
+  if (!status.ok()) return OnTransferError(std::move(status));
+
   if (!payload_.empty()) {
-    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
-    handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status = handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status = handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
+    if (!status.ok()) return OnTransferError(std::move(status));
   }
   handle_.EnableLogging(logging_enabled_);
   handle_.SetSocketCallback(socket_options_);
@@ -246,21 +261,23 @@ void CurlDownloadRequest::SetOptions() {
   if (download_stall_timeout_.count() != 0) {
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
     auto const timeout = static_cast<long>(download_stall_timeout_.count());
-    handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
+    status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
+    if (!status.ok()) return OnTransferError(std::move(status));
     // Timeout if the download receives less than 1 byte/second (i.e.
     // effectively no bytes) for `transfer_stall_timeout_` seconds.
-    handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
-    handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
+    status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status = handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
+    if (!status.ok()) return OnTransferError(std::move(status));
   }
-  if (in_multi_) GCP_LOG(FATAL) << "in_multi_ should be false in `SetOptions`";
+  if (in_multi_) {
+    return OnTransferError(Status(StatusCode::kInternal,
+                                  "in_multi_ should be false in `SetOptions`"));
+  }
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-  if (error != CURLM_OK) {
-    // This indicates that we are using the API incorrectly, the application
-    // can not recover from these problems, raising an exception is the
-    // "Right Thing"[tm] here.
-    google::cloud::internal::ThrowStatus(AsStatus(error, __func__));
-  }
+  if (error != CURLM_OK) return OnTransferError(AsStatus(error, __func__));
   in_multi_ = true;
+  return Status{};
 }
 
 void CurlDownloadRequest::OnTransferDone() {

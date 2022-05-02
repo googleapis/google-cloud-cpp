@@ -69,10 +69,11 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
         HttpBinEndpoint() + "/stream/" + std::to_string(kDownloadedLines),
         storage::internal::GetDefaultCurlHandleFactory());
     auto download = std::move(builder).BuildDownloadRequest();
+    if (!download) return std::move(download).status();
     char buffer[128 * 1024];
     do {
       auto n = sizeof(buffer);
-      auto result = download->Read(buffer, n);
+      auto result = (*download)->Read(buffer, n);
       if (!result) return std::move(result).status();
       if (result->bytes_received > sizeof(buffer)) {
         return Status{StatusCode::kUnknown, "invalid byte count"};
@@ -102,11 +103,11 @@ TEST(CurlDownloadRequestTest, HashHeaders) {
                                GetDefaultCurlHandleFactory());
     builder.AddQueryParameter("x-goog-hash", "crc32c=123, md5=234");
     auto download = std::move(builder).BuildDownloadRequest();
-
+    if (!download) return std::move(download).status();
     auto constexpr kBufferSize = 4096;
     char buffer[kBufferSize];
     do {
-      auto read = download->Read(buffer, kBufferSize);
+      auto read = (*download)->Read(buffer, kBufferSize);
       if (!read) return read.status();
       hashes = Merge(std::move(hashes), std::move(read->hashes));
       if (read->response.status_code != 100) break;
@@ -128,11 +129,11 @@ TEST(CurlDownloadRequestTest, Generation) {
                                GetDefaultCurlHandleFactory());
     builder.AddQueryParameter("x-goog-generation", "123456");
     auto download = std::move(builder).BuildDownloadRequest();
-
+    if (!download) return std::move(download).status();
     auto constexpr kBufferSize = 4096;
     char buffer[kBufferSize];
     do {
-      auto read = download->Read(buffer, kBufferSize);
+      auto read = (*download)->Read(buffer, kBufferSize);
       if (!read) return read.status();
       if (!received_generation && read->generation.has_value()) {
         received_generation = read->generation;
@@ -159,9 +160,10 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/stream/" + std::to_string(kLineCount), factory);
     auto download = std::move(builder).BuildDownloadRequest();
+    if (!download) return std::move(download).status();
 
     char buffer[4096];
-    auto read = download->Read(buffer, sizeof(buffer));
+    auto read = (*download)->Read(buffer, sizeof(buffer));
     if (!read) return std::move(read).status();
     // The data is 10 lines of about 200 bytes each, it all fits in the buffer.
     EXPECT_LT(read->bytes_received, sizeof(buffer));
@@ -170,7 +172,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
     EXPECT_EQ(1, factory->CurrentHandleCount());
     EXPECT_EQ(1, factory->CurrentMultiHandleCount());
 
-    auto close = download->Close();
+    auto close = (*download)->Close();
     if (!close) return std::move(close).status();
     EXPECT_EQ(1, factory->CurrentHandleCount());
     EXPECT_EQ(1, factory->CurrentMultiHandleCount());
@@ -195,9 +197,10 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/stream/" + std::to_string(kLineCount), factory);
     auto download = std::move(builder).BuildDownloadRequest();
+    if (!download) return std::move(download).status();
 
     char buffer[4];
-    auto read = download->Read(buffer, sizeof(buffer));
+    auto read = (*download)->Read(buffer, sizeof(buffer));
     if (!read) return std::move(read).status();
     // The data is 10 lines of about 200 bytes each, it will not fit in the
     // buffer:
@@ -208,7 +211,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
     EXPECT_EQ(0, factory->CurrentHandleCount());
     EXPECT_EQ(0, factory->CurrentMultiHandleCount());
 
-    auto close = download->Close();
+    auto close = (*download)->Close();
     if (!close) return std::move(close).status();
     EXPECT_EQ(1, factory->CurrentHandleCount());
     EXPECT_EQ(1, factory->CurrentMultiHandleCount());
@@ -231,16 +234,18 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnError) {
 
   CurlRequestBuilder request("https://localhost:1/get", factory);
   auto download = std::move(request).BuildDownloadRequest();
+  ASSERT_STATUS_OK(download);
+
   // This `.Read()` call fails as the endpoint is invalid.
   char buffer[4096];
-  auto read = download->Read(buffer, sizeof(buffer));
+  auto read = (*download)->Read(buffer, sizeof(buffer));
   ASSERT_THAT(read, Not(IsOk()));
   // Assuming there was an error the CURL* handle should not be returned to the
   // pool. The CURLM* handle is a local resource and always reusable so it does:
   EXPECT_EQ(0, factory->CurrentHandleCount());
   EXPECT_EQ(1, factory->CurrentMultiHandleCount());
 
-  auto close = download->Close();
+  auto close = (*download)->Close();
   ASSERT_THAT(close, IsOk());
   EXPECT_THAT(0, close->status_code);
   // No changes expected in the pool sizes.
@@ -256,13 +261,14 @@ TEST(CurlDownloadRequestTest, SimpleStreamReadAfterClosed) {
         HttpBinEndpoint() + "/stream/" + std::to_string(kLineCount),
         storage::internal::GetDefaultCurlHandleFactory());
     auto download = std::move(builder).BuildDownloadRequest();
+    if (!download) return std::move(download).status();
     // Perform a series of very small `.Read()` calls. libcurl provides data to
     // CurlDownloadRequest in chunks larger than 4 bytes. This forces
     // CurlDownloadRequest to keep data in its "spill" buffer, and to return the
     // data in the `Read()` requests even after the CURL* handle is closed.
     char buffer[4];
     do {
-      auto result = download->Read(buffer, sizeof(buffer));
+      auto result = (*download)->Read(buffer, sizeof(buffer));
       if (!result) return std::move(result).status();
       if (result->bytes_received == 0) break;
       contents += std::string{buffer, result->bytes_received};
@@ -318,29 +324,33 @@ Status AttemptRegression7051() {
   void* id;
   {
     auto r_no_close = make_download();
-    id = r_no_close->id();
+    if (!r_no_close) return std::move(r_no_close).status();
+    id = (*r_no_close)->id();
     if (id == nullptr) return error("r_no_close.id()==nulltptr");
-    auto read = r_no_close->Read(buffer, kBufferSize);
+    auto read = (*r_no_close)->Read(buffer, kBufferSize);
     if (!read) return std::move(read).status();
   }
 
   {
     auto r_partial_close = make_download();
-    if (r_partial_close->id() != id) return error("r_partial_close.id() != id");
-    auto read = r_partial_close->Read(buffer, kBufferSize);
+    if (!r_partial_close) return std::move(r_partial_close).status();
+    if ((*r_partial_close)->id() != id)
+      return error("r_partial_close.id() != id");
+    auto read = (*r_partial_close)->Read(buffer, kBufferSize);
     if (!read) return std::move(read).status();
-    auto close = r_partial_close->Close();
+    auto close = (*r_partial_close)->Close();
     if (!close) return std::move(close).status();
   }
 
   auto r_full = make_download();
-  if (r_full->id() != id) return error("r_full.id() != id");
+  if (!r_full) return std::move(r_full).status();
+  if ((*r_full)->id() != id) return error("r_full.id() != id");
   do {
-    auto read = r_full->Read(buffer, kBufferSize);
+    auto read = (*r_full)->Read(buffer, kBufferSize);
     if (!read) return std::move(read).status();
     if (read->response.status_code != 100) break;
   } while (true);
-  auto close = r_full->Close();
+  auto close = (*r_full)->Close();
   if (!close) return std::move(close).status();
 
   return Status{};
@@ -365,18 +375,19 @@ TEST(CurlDownloadRequestTest, HttpVersion) {
     builder.ApplyClientOptions(
         Options{}.set<storage_experimental::HttpVersionOption>(version));
     auto download = std::move(builder).BuildDownloadRequest();
+    if (!download) return std::move(download).status();
 
     auto constexpr kBufferSize = 4096;
     char buffer[kBufferSize];
     do {
-      auto read = download->Read(buffer, kBufferSize);
+      auto read = (*download)->Read(buffer, kBufferSize);
       if (!read) return std::move(read).status();
       response.headers.insert(read->response.headers.begin(),
                               read->response.headers.end());
       response.payload += std::string{buffer, read->bytes_received};
       if (read->response.status_code != 100) break;
     } while (true);
-    auto close = download->Close();
+    auto close = (*download)->Close();
     if (!close) return std::move(close).status();
     return response;
   };

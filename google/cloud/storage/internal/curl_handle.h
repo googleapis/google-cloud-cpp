@@ -29,38 +29,6 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-void AssertOptionSuccessImpl(
-    CURLcode e, CURLoption opt, char const* where,
-    absl::FunctionRef<std::string()> const& format_parameter);
-
-inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
-                                char const* param) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where,
-                          [param] { return std::string{param}; });
-}
-
-inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
-                                std::intmax_t param) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where,
-                          [param] { return std::to_string(param); });
-}
-
-inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
-                                std::nullptr_t) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where, [] { return "nullptr"; });
-}
-
-template <typename T,
-          typename std::enable_if<!std::is_integral<T>::value, int>::type = 0>
-void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where, T) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where, [] {
-    return std::string{"a value of type="} + typeid(T).name();
-  });
-}
 
 /**
  * Wraps CURL* handles in a safer C++ interface.
@@ -104,14 +72,14 @@ class CurlHandle {
   }
 
   template <typename T>
-  void SetOption(CURLoption option, T&& param) {
+  Status SetOption(CURLoption option, T&& param) {
     auto e = curl_easy_setopt(handle_.get(), option, std::forward<T>(param));
-    AssertOptionSuccess(e, option, __func__, param);
+    return AsStatus(e, __func__);
   }
 
-  void SetOption(CURLoption option, std::nullptr_t) {
+  Status SetOption(CURLoption option, std::nullptr_t) {
     auto e = curl_easy_setopt(handle_.get(), option, nullptr);
-    AssertOptionSuccess(e, option, __func__, nullptr);
+    return AsStatus(e, __func__);
   }
 
   /**
