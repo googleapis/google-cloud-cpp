@@ -21,17 +21,11 @@
 #include "absl/numeric/int128.h"
 #include "absl/strings/string_view.h"
 #include <algorithm>
-#include <cctype>
-#include <cerrno>
-#include <cmath>
 #include <cstdlib>
 #include <cstring>
 #include <deque>
-#include <iomanip>
 #include <limits>
-#include <locale>
 #include <ostream>
-#include <sstream>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -100,6 +94,9 @@ class Decimal {
   static std::size_t const kIntPrecision;
   static std::size_t const kFracPrecision;
   ///@}
+
+  /// Whether `DecimalMode` supports NaN values.
+  static bool const kHasNaN;
 
   /// @deprecated These backwards-compatibility constants only apply to
   /// kGoogleSQL mode, and are no longer used in the implementation.
@@ -180,6 +177,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+Status DataLoss(std::string message);
+
 // Like `std::to_string`, but also supports Abseil 128-bit integers.
 template <typename T>
 std::string ToString(T&& value) {
@@ -188,129 +187,18 @@ std::string ToString(T&& value) {
 std::string ToString(absl::int128 value);
 std::string ToString(absl::uint128 value);
 
-inline bool IsDigit(char ch) {
-  return std::isdigit(static_cast<unsigned char>(ch)) != 0;
-}
-
-inline bool IsSpace(char ch) {
-  return std::isspace(static_cast<unsigned char>(ch)) != 0;
-}
-
-bool IsNaN(std::string const& rep);
-bool IsCanonical(absl::string_view sign_part, absl::string_view int_part,
-                 absl::string_view frac_part, std::size_t int_prec,
-                 std::size_t frac_prec);
-void Round(std::deque<char>& int_rep, std::deque<char>& frac_rep,
-           std::size_t frac_prec);
-
-Status InvalidArgument(std::string message);
-Status OutOfRange(std::string message);
-Status DataLoss(std::string message);
+StatusOr<std::string> MakeDecimalRep(std::string s, bool has_nan,
+                                     std::size_t int_prec,
+                                     std::size_t frac_prec);
+StatusOr<std::string> MakeDecimalRep(double d);
 
 template <spanner::DecimalMode Mode>
 StatusOr<spanner::Decimal<Mode>> MakeDecimal(std::string s) {
-  std::size_t const int_frac = spanner::Decimal<Mode>::kIntPrecision;
-  std::size_t const frac_prec = spanner::Decimal<Mode>::kFracPrecision;
-
-  if (IsNaN(s)) {
-    switch (Mode) {
-      case spanner::DecimalMode::kGoogleSQL:
-        return InvalidArgument(std::move(s));
-      case spanner::DecimalMode::kPostgreSQL:
-        return spanner::Decimal<Mode>("NaN");
-    }
-  }
-
-  char const* p = s.c_str();
-  char const* e = p + s.size();
-
-  // Consume any sign part.
-  auto sign_part = absl::string_view(p, 0);
-  if (p != e && (*p == '+' || *p == '-')) {
-    sign_part = absl::string_view(p++, 1);
-  }
-
-  // Consume any integral part.
-  char const* ip = p;
-  for (; p != e && IsDigit(*p); ++p) continue;
-  auto int_part = absl::string_view(ip, p - ip);
-
-  // Consume any fractional part.
-  auto frac_part = absl::string_view(p, 0);
-  if (p != e && *p == '.') {
-    char const* fp = p++;
-    for (; p != e && IsDigit(*p); ++p) continue;
-    frac_part = absl::string_view(fp, p - fp);
-  }
-
-  if (p == e) {
-    // This is the expected case, and avoids any allocations.
-    if (IsCanonical(sign_part, int_part, frac_part, int_frac, frac_prec)) {
-      return spanner::Decimal<Mode>(std::move(s));
-    }
-  }
-
-  // Consume any exponent part.
-  long exponent = 0;  // NOLINT(google-runtime-int)
-  if (p != e && (*p == 'e' || *p == 'E')) {
-    if (p + 1 != e && !IsSpace(*(p + 1))) {
-      errno = 0;
-      char* ep = nullptr;
-      exponent = std::strtol(p + 1, &ep, 10);
-      if (ep != p + 1) {
-        if (errno != 0) return OutOfRange(std::move(s));
-        p = ep;
-      }
-    }
-  }
-
-  // That must have consumed everything.
-  if (p != e) return InvalidArgument(std::move(s));
-
-  // There must be at least one digit.
-  if (int_part.empty() && frac_part.size() <= 1) {
-    return InvalidArgument(std::move(s));
-  }
-
-  auto int_rep = std::deque<char>(int_part.begin(), int_part.end());
-  auto frac_rep = std::deque<char>(frac_part.begin(), frac_part.end());
-  if (!frac_rep.empty()) frac_rep.pop_front();  // remove the decimal point
-
-  // Symbolically multiply "int_rep.frac_rep" by 10^exponent.
-  if (exponent >= 0) {
-    auto shift = std::min<std::size_t>(exponent, frac_rep.size());
-    int_rep.insert(int_rep.end(), frac_rep.begin(), frac_rep.begin() + shift);
-    int_rep.insert(int_rep.end(), exponent - shift, '0');
-    frac_rep.erase(frac_rep.begin(), frac_rep.begin() + shift);
-  } else {
-    auto shift = std::min<std::size_t>(-exponent, int_rep.size());
-    frac_rep.insert(frac_rep.begin(), int_rep.end() - shift, int_rep.end());
-    frac_rep.insert(frac_rep.begin(), -exponent - shift, '0');
-    int_rep.erase(int_rep.end() - shift, int_rep.end());
-  }
-
-  // Round/canonicalize the fractional part.
-  Round(int_rep, frac_rep, frac_prec);
-
-  // Canonicalize and range check the integer part.
-  while (!int_rep.empty() && int_rep.front() == '0') int_rep.pop_front();
-  if (int_rep.size() > int_frac) {
-    return OutOfRange(std::move(s));
-  }
-
-  // Add any sign and decimal point.
-  bool empty = int_rep.empty() && frac_rep.empty();
-  bool negate = !empty && !sign_part.empty() && sign_part.front() == '-';
-  if (int_rep.empty()) int_rep.push_front('0');
-  if (negate) int_rep.push_front('-');
-  if (!frac_rep.empty()) frac_rep.push_front('.');
-
-  // Construct the final value using the canonical representation.
-  std::string rep;
-  rep.reserve(int_rep.size() + frac_rep.size());
-  rep.append(int_rep.begin(), int_rep.end());
-  rep.append(frac_rep.begin(), frac_rep.end());
-  return spanner::Decimal<Mode>(std::move(rep));
+  auto rep = MakeDecimalRep(std::move(s), spanner::Decimal<Mode>::kHasNaN,
+                            spanner::Decimal<Mode>::kIntPrecision,
+                            spanner::Decimal<Mode>::kFracPrecision);
+  if (!rep) return std::move(rep).status();
+  return spanner::Decimal<Mode>(*std::move(rep));
 }
 
 // Like `MakeDecimal(s)`, but with an out-of-band exponent.
@@ -355,12 +243,9 @@ StatusOr<Decimal<Mode>> MakeDecimal(std::string s) {
  */
 template <DecimalMode Mode>
 StatusOr<Decimal<Mode>> MakeDecimal(double d) {
-  std::ostringstream ss;
-  ss.imbue(std::locale::classic());
-  ss << std::setprecision(std::numeric_limits<double>::digits10 + 1) << d;
-  std::string s = std::move(ss).str();
-  if (std::isinf(d)) return spanner_internal::OutOfRange(std::move(s));
-  return spanner_internal::MakeDecimal<Mode>(std::move(s));
+  auto rep = spanner_internal::MakeDecimalRep(d);
+  if (!rep) return std::move(rep).status();
+  return spanner_internal::MakeDecimal<Mode>(*std::move(rep));
 }
 
 /**
@@ -383,7 +268,7 @@ StatusOr<Decimal<Mode>> MakeDecimal(T i, int exponent = 0) {
  * values up to 10^(kIntPrecision+1)).
  */
 template <DecimalMode Mode>
-inline double ToDouble(Decimal<Mode> const& d) {
+double ToDouble(Decimal<Mode> const& d) {
   return std::atof(d.ToString().c_str());
 }
 
