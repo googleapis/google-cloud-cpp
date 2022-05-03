@@ -211,6 +211,15 @@ bool SslLockingCallbacksInstalled() {
 #endif  // GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
 }
 
+CurlPtr MakeCurlPtr() {
+  auto handle = CurlPtr(curl_easy_init(), &curl_easy_cleanup);
+  // We get better performance using a slightly larger buffer (128KiB) than the
+  // default buffer size set by libcurl (16KiB).  We ignore errors because
+  // failing to set this parameter just affects performance by a small amount.
+  (void)curl_easy_setopt(handle.get(), CURLOPT_BUFFERSIZE, 128 * 1024L);
+  return handle;
+}
+
 std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
                                  char const* data, std::size_t size) {
   if (size <= 2) {

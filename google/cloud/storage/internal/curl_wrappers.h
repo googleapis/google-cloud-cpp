@@ -39,6 +39,9 @@ namespace internal {
 /// Hold a CURL* handle and automatically clean it up.
 using CurlPtr = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
 
+/// Create a new (wrapped) CURL* with one-time configuration options set.
+CurlPtr MakeCurlPtr();
+
 /// Hold a CURLM* handle and automatically clean it up.
 using CurlMulti = std::unique_ptr<CURLM, decltype(&curl_multi_cleanup)>;
 
