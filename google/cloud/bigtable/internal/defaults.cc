@@ -32,6 +32,8 @@ namespace internal {
 
 namespace {
 
+auto constexpr kBackoffScaling = 2.0;
+
 // As learned from experiments, idle gRPC connections enter IDLE state after 4m.
 auto constexpr kDefaultMaxRefreshPeriod =
     std::chrono::milliseconds(std::chrono::minutes(3));
@@ -166,6 +168,21 @@ Options DefaultDataOptions(Options opts) {
   }
   if (!opts.has<AuthorityOption>()) {
     opts.set<AuthorityOption>("bigtable.googleapis.com");
+  }
+  if (!opts.has<bigtable_internal::DataRetryPolicyOption>()) {
+    opts.set<bigtable_internal::DataRetryPolicyOption>(
+        bigtable_internal::DataLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
+  }
+  if (!opts.has<bigtable_internal::DataBackoffPolicyOption>()) {
+    opts.set<bigtable_internal::DataBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
+  }
+  if (!opts.has<bigtable_internal::IdempotentMutationPolicyOption>()) {
+    opts.set<bigtable_internal::IdempotentMutationPolicyOption>(
+        bigtable::DefaultIdempotentMutationPolicy());
   }
   opts = DefaultOptions(std::move(opts));
   return opts.set<EndpointOption>(opts.get<DataEndpointOption>());

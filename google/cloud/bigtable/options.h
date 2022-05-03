@@ -38,6 +38,8 @@
  * @see `google::cloud::GrpcOptionList`
  */
 
+#include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/internal/data_connection.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/options.h"
 #include <chrono>
@@ -100,6 +102,32 @@ using ClientOptionList =
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+
+// TODO(#8860) - Make these options public.
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/// Option to use with `google::cloud::Options`.
+struct DataRetryPolicyOption {
+  using Type = std::shared_ptr<DataRetryPolicy>;
+};
+
+/// Option to use with `google::cloud::Options`.
+struct DataBackoffPolicyOption {
+  using Type = std::shared_ptr<BackoffPolicy>;
+};
+
+/// Option to use with `google::cloud::Options`.
+struct IdempotentMutationPolicyOption {
+  using Type = std::shared_ptr<bigtable::IdempotentMutationPolicy>;
+};
+
+using DataPolicyOptionList =
+    OptionList<DataRetryPolicyOption, DataBackoffPolicyOption,
+               IdempotentMutationPolicyOption>;
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

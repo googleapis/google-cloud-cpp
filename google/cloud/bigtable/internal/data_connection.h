@@ -30,6 +30,17 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using DataRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
+    bigtable::internal::SafeGrpcRetry>;
+
+using DataLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        bigtable::internal::SafeGrpcRetry>;
+
+using DataLimitedErrorCountRetryPolicy =
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
+        bigtable::internal::SafeGrpcRetry>;
+
 /**
  * A connection to the Cloud Bigtable Data API.
  *

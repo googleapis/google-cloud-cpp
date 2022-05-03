@@ -125,7 +125,7 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
   EXPECT_THAT(*s, HasSubstr("test-prefix"));
 }
 
-TEST(OptionsTest, DefaultDataOptions) {
+TEST(OptionsTest, DefaultDataOptionsEndpoint) {
   auto options =
       Options{}
           .set<DataEndpointOption>("data.googleapis.com")
@@ -153,6 +153,13 @@ TEST(OptionsTest, DefaultTableAdminOptions) {
           .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
   options = DefaultTableAdminOptions(std::move(options));
   EXPECT_EQ("tableadmin.googleapis.com", options.get<EndpointOption>());
+}
+
+TEST(OptionsTest, DefaultDataOptionsPolicies) {
+  auto options = DefaultDataOptions(Options{});
+  EXPECT_TRUE(options.has<bigtable_internal::DataRetryPolicyOption>());
+  EXPECT_TRUE(options.has<bigtable_internal::DataBackoffPolicyOption>());
+  EXPECT_TRUE(options.has<bigtable_internal::IdempotentMutationPolicyOption>());
 }
 
 TEST(OptionsTest, DataUserProjectOption) {
