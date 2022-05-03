@@ -152,13 +152,14 @@ class CurlImpl {
   // Track the usage of the buffer provided to Read.
   absl::Span<char> buffer_;
 
-  // libcurl(1) will never pass a block larger than CURLOPT_BUFFERSIZE to the
-  // WriteCallback. However, the callback *must* save all the bytes, returning
-  // fewer bytes read aborts the download. The application may have requested
-  // fewer bytes in the call to `Read()`, so we need a place to store the
-  // additional bytes. We get better performance using a slightly larger buffer
-  // (128KiB) than the default buffer size set by libcurl (16KiB).
-  std::array<char, 128 * 1024L> spill_;
+  // libcurl(1) will never pass a block larger than CURL_MAX_WRITE_SIZE to
+  // `WriteCallback()`:
+  //     https://curl.se/libcurl/c/CURLOPT_WRITEFUNCTION.html
+  // However, the callback *must* save all the bytes.  If the callback reports
+  // that not all bytes are processed the download is aborted. The application
+  // may not provide a large enough buffer in the call to `Read()`, so we need a
+  // place to store the additional bytes.
+  std::array<char, CURL_MAX_WRITE_SIZE> spill_;
   std::size_t spill_offset_ = 0;
 
   Options options_;
