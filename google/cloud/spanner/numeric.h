@@ -19,8 +19,11 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/numeric/int128.h"
+#include "absl/strings/string_view.h"
+#include <algorithm>
 #include <cstdlib>
 #include <cstring>
+#include <deque>
 #include <limits>
 #include <ostream>
 #include <string>
@@ -31,27 +34,31 @@ namespace google {
 namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-class Numeric;  // defined below
+
+// The supported `Decimal` modes.
+enum class DecimalMode {
+  // kGoogleSQL mode supports:
+  //   - 29 decimal digits of integer precision
+  //   - 9 decimal digits of fractional precision
+  kGoogleSQL,
+
+  // kPostgreSQL mode supports:
+  //   - 131072 decimal digits of integer precision
+  //   - 16383 decimal digits of fractional precision
+  //   - NaN (not a number)
+  kPostgreSQL,
+};
+
+template <DecimalMode>
+class Decimal;  // defined below
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 
-// Internal implementation details that callers should not use.
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-StatusOr<spanner::Numeric> MakeNumeric(std::string s);
-
-// Like `std::to_string`, but also supports Abseil 128-bit integers.
-template <typename T>
-std::string ToString(T&& value) {
-  return std::to_string(std::forward<T>(value));
-}
-std::string ToString(absl::int128 value);
-std::string ToString(absl::uint128 value);
-
-// Forward declarations.
-Status DataLoss(std::string message);
-StatusOr<spanner::Numeric> MakeNumeric(std::string s, int exponent);
-
+template <spanner::DecimalMode Mode>
+StatusOr<spanner::Decimal<Mode>> MakeDecimal(std::string);
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
@@ -59,55 +66,64 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A representation of the Spanner NUMERIC type: an exact numeric value with
- * 29 decimal digits of integer precision (kIntPrec) and 9 decimal digits of
- * fractional precision (kFracPrec).
+ * A representation of the Spanner NUMERIC type: an exact decimal value with
+ * a maximum integer precision (kIntPrecision) and rounding to a maximum
+ * fractional precision (kFracPrecision).
  *
- * So, the range of a `Numeric` is -99999999999999999999999999999.999999999
- * to 99999999999999999999999999999.999999999.
- *
- * A `Numeric` can be constructed from, and converted to a `std::string`, a
- * `double`, or any integral type. See the `MakeNumeric()` factory functions,
+ * A `Decimal` can be constructed from, and converted to a `std::string`, a
+ * `double`, or any integral type. See the `MakeDecimal()` factory functions,
  * the `ToString()` member function, and the `ToDouble()`/`ToInteger()`
  * free functions.
  *
- * `Numeric` values can be copied/assigned/moved, compared for equality, and
+ * `Decimal` values can be copied/assigned/moved, compared for equality, and
  * streamed.
  *
  * @par Example
  *
  * @code
- * spanner::Numeric n = spanner::MakeNumeric(1234).value();
- * assert(n.ToString() == "1234");
- * assert(spanner::ToInteger<int>(n).value() == 1234);
+ * auto d = spanner::MakeDecimal<spanner::DecimalMode::kGoogleSQL>(42).value();
+ * assert(d.ToString() == "42");
+ * assert(spanner::ToInteger<int>(d).value() == 42);
  * @endcode
  */
-class Numeric {
+template <DecimalMode>
+class Decimal {
  public:
-  /// Decimal integer and fractional precision of a `Numeric` value.
+  /// Integer and fractional precision of a `Decimal` value of the mode.
+  ///@{
+  static std::size_t const kIntPrecision;
+  static std::size_t const kFracPrecision;
+  ///@}
+
+  /// Whether `DecimalMode` supports NaN values.
+  static bool const kHasNaN;
+
+  /// @deprecated These backwards-compatibility constants only apply to
+  /// kGoogleSQL mode, and are no longer used in the implementation.
   ///@{
   static constexpr std::size_t kIntPrec = 29;
   static constexpr std::size_t kFracPrec = 9;
   ///@}
 
   /// A zero value.
-  Numeric();
+  Decimal() : rep_("0") {}
 
   /// Regular value type, supporting copy, assign, move.
   ///@{
-  Numeric(Numeric&&) = default;
-  Numeric& operator=(Numeric&&) = default;
-  Numeric(Numeric const&) = default;
-  Numeric& operator=(Numeric const&) = default;
+  Decimal(Decimal&&) noexcept = default;
+  Decimal& operator=(Decimal&&) noexcept = default;
+  Decimal(Decimal const&) = default;
+  Decimal& operator=(Decimal const&) = default;
   ///@}
 
   /**
-   * Conversion to a decimal-string representation of the `Numeric` in one
+   * Conversion to a decimal-string representation of the `Decimal` in one
    * of the following forms:
    *
-   *  - 0                                      // value == 0
-   *  - -?0.[0-9]{0,8}[1-9]                    // 0 < abs(value) < 1
-   *  - -?[1-9][0-9]{0,28}(.[0-9]{0,8}[1-9])?  // abs(value) >= 1
+   *  - 0                             // value == 0
+   *  - -?0.[0-9]*[1-9]               // 0 < abs(value) < 1
+   *  - -?[1-9][0-9]*(.[0-9]*[1-9])?  // abs(value) >= 1
+   *  - NaN                           // "not a number" for kPostgreSQL mode
    *
    * Note: The string never includes an exponent field.
    */
@@ -118,24 +134,85 @@ class Numeric {
 
   /// Relational operators
   ///@{
-  friend bool operator==(Numeric const& a, Numeric const& b) {
+  friend bool operator==(Decimal const& a, Decimal const& b) {
+    // Decimal-value equality, which only depends on the canonical
+    // representation, not the mode. The representation may be "NaN"
+    // in kPostgreSQL mode, but unlike typical NaN implementations,
+    // PostgreSQL considers NaN values as equal, so that they may be
+    // sorted. We do the same.
     return a.rep_ == b.rep_;
   }
-  friend bool operator!=(Numeric const& a, Numeric const& b) {
+  friend bool operator!=(Decimal const& a, Decimal const& b) {
     return !(a == b);
   }
   ///@}
 
-  /// Outputs string representation of the `Numeric` to the provided stream.
-  friend std::ostream& operator<<(std::ostream& os, Numeric const& n) {
-    return os << n.ToString();
+  /// Outputs string representation of the `Decimal` to the provided stream.
+  friend std::ostream& operator<<(std::ostream& os, Decimal const& d) {
+    return os << d.ToString();
   }
 
  private:
-  friend StatusOr<Numeric> spanner_internal::MakeNumeric(std::string s);
-  explicit Numeric(std::string rep) : rep_(std::move(rep)) {}
-  std::string rep_;  // a valid and canonical NUMERIC representation
+  template <DecimalMode Mode>
+  friend StatusOr<Decimal<Mode>> spanner_internal::
+#if defined(__GNUC__) && !defined(__clang__)
+      GOOGLE_CLOUD_CPP_NS::
+#endif
+          MakeDecimal(std::string);
+
+  explicit Decimal(std::string rep) : rep_(std::move(rep)) {}
+
+  std::string rep_;  // a valid and canonical decimal representation
 };
+
+template <DecimalMode Mode>
+constexpr std::size_t Decimal<Mode>::kIntPrec;
+template <DecimalMode Mode>
+constexpr std::size_t Decimal<Mode>::kFracPrec;
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace spanner
+
+// Internal implementation details that callers should not use.
+namespace spanner_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+Status DataLoss(std::string message);
+
+// Like `std::to_string`, but also supports Abseil 128-bit integers.
+template <typename T>
+std::string ToString(T&& value) {
+  return std::to_string(std::forward<T>(value));
+}
+std::string ToString(absl::int128 value);
+std::string ToString(absl::uint128 value);
+
+StatusOr<std::string> MakeDecimalRep(std::string s, bool has_nan,
+                                     std::size_t int_prec,
+                                     std::size_t frac_prec);
+StatusOr<std::string> MakeDecimalRep(double d);
+
+template <spanner::DecimalMode Mode>
+StatusOr<spanner::Decimal<Mode>> MakeDecimal(std::string s) {
+  auto rep = MakeDecimalRep(std::move(s), spanner::Decimal<Mode>::kHasNaN,
+                            spanner::Decimal<Mode>::kIntPrecision,
+                            spanner::Decimal<Mode>::kFracPrecision);
+  if (!rep) return std::move(rep).status();
+  return spanner::Decimal<Mode>(*std::move(rep));
+}
+
+// Like `MakeDecimal(s)`, but with an out-of-band exponent.
+template <spanner::DecimalMode Mode>
+StatusOr<spanner::Decimal<Mode>> MakeDecimal(std::string s, int exponent) {
+  if (exponent != 0) s += 'e' + std::to_string(exponent);
+  return MakeDecimal<Mode>(std::move(s));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace spanner_internal
+
+namespace spanner {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Construction from a string, in decimal fixed- or floating-point formats.
@@ -147,41 +224,52 @@ class Numeric {
  * There must be digits either before or after any decimal point.
  *
  * Fails on syntax errors or if the conversion would yield a value outside
- * the NUMERIC range. If the argument has more than `kFracPrec` digits after
- * the decimal point it will be rounded, with halfway cases rounding away
- * from zero.
+ * the NUMERIC range. If the argument has more than `kFracPrecision` digits
+ * after the decimal point it will be rounded, with halfway cases rounding
+ * away from zero.
  */
-StatusOr<Numeric> MakeNumeric(std::string s);
+template <DecimalMode Mode>
+StatusOr<Decimal<Mode>> MakeDecimal(std::string s) {
+  return spanner_internal::MakeDecimal<Mode>(std::move(s));
+}
 
 /**
  * Construction from a double.
  *
  * Fails on NaN or any argument outside the NUMERIC value range (including
- * infinities). If the argument has more than `kFracPrec` digits after the
- * decimal point it will be rounded, with halfway cases rounding away from
- * zero.
+ * infinities). If the argument has more than `kFracPrecision` digits after
+ * the decimal point it will be rounded, with halfway cases rounding away
+ * from zero.
  */
-StatusOr<Numeric> MakeNumeric(double d);
+template <DecimalMode Mode>
+StatusOr<Decimal<Mode>> MakeDecimal(double d) {
+  auto rep = spanner_internal::MakeDecimalRep(d);
+  if (!rep) return std::move(rep).status();
+  return spanner_internal::MakeDecimal<Mode>(*std::move(rep));
+}
 
 /**
  * Construction from an integer `i`, scaled by 10^`exponent`.
  *
  * Fails on any (scaled) argument outside the NUMERIC value range.
  */
-template <typename T, typename std::enable_if<
-                          std::numeric_limits<T>::is_integer, int>::type = 0>
-StatusOr<Numeric> MakeNumeric(T i, int exponent = 0) {
-  return spanner_internal::MakeNumeric(spanner_internal::ToString(i), exponent);
+template <
+    typename T, DecimalMode Mode,
+    typename std::enable_if<std::numeric_limits<T>::is_integer, int>::type = 0>
+StatusOr<Decimal<Mode>> MakeDecimal(T i, int exponent = 0) {
+  return spanner_internal::MakeDecimal<Mode>(spanner_internal::ToString(i),
+                                             exponent);
 }
 
 /**
  * Conversion to the closest double value, with possible loss of precision.
  *
  * Always succeeds (i.e., can never overflow, assuming a double can hold
- * values up to 10^(kIntPrec+1)).
+ * values up to 10^(kIntPrecision+1)).
  */
-inline double ToDouble(Numeric const& n) {
-  return std::atof(n.ToString().c_str());
+template <DecimalMode Mode>
+double ToDouble(Decimal<Mode> const& d) {
+  return std::atof(d.ToString().c_str());
 }
 
 /**
@@ -193,22 +281,24 @@ inline double ToDouble(Numeric const& n) {
  * @par Example
  *
  * @code
- * spanner::Numeric n = spanner::MakeNumeric(123456789, -2).value();
- * assert(n.ToString() == "1234567.89");
- * assert(spanner::ToInteger<int>(n).value() == 1234568);
- * assert(spanner::ToInteger<int>(n, 2).value() == 123456789);
+ * auto d =
+ *     spanner::MakeDecimal<spanner::DecimalMode::kGoogleSQL>(123456789, -2)
+ *         .value();
+ * assert(d.ToString() == "1234567.89");
+ * assert(spanner::ToInteger<int>(d).value() == 1234568);
+ * assert(spanner::ToInteger<int>(d, 2).value() == 123456789);
  * @endcode
  */
 ///@{
-template <typename T,
+template <typename T, DecimalMode Mode,
           typename std::enable_if<std::numeric_limits<T>::is_integer &&
                                       !std::numeric_limits<T>::is_signed,
                                   int>::type = 0>
 StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
-    Numeric const& n, int exponent = 0) {
-  std::string const& rep = n.ToString();
+    Decimal<Mode> const& d, int exponent = 0) {
+  std::string const& rep = d.ToString();
   if (exponent != 0) {
-    auto const en = spanner_internal::MakeNumeric(rep, exponent);
+    auto const en = spanner_internal::MakeDecimal<Mode>(rep, exponent);
     return en ? ToInteger<T>(*en, 0) : en.status();
   }
   T v = 0;
@@ -230,23 +320,22 @@ StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
     } else {
       if (v > kMax / 10) return spanner_internal::DataLoss(rep);
       v = static_cast<T>(v * 10);
-      auto d = static_cast<T>(dp - kDigits);
-      if (v > kMax - d) return spanner_internal::DataLoss(rep);
-      v = static_cast<T>(v + d);
+      auto dv = static_cast<T>(dp - kDigits);
+      if (v > kMax - dv) return spanner_internal::DataLoss(rep);
+      v = static_cast<T>(v + dv);
     }
   }
   return v;
 }
-
-template <typename T,
+template <typename T, DecimalMode Mode,
           typename std::enable_if<std::numeric_limits<T>::is_integer &&
                                       std::numeric_limits<T>::is_signed,
                                   int>::type = 0>
 StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
-    Numeric const& n, int exponent = 0) {
-  std::string const& rep = n.ToString();
+    Decimal<Mode> const& d, int exponent = 0) {
+  std::string const& rep = d.ToString();
   if (exponent != 0) {
-    auto const en = spanner_internal::MakeNumeric(rep, exponent);
+    auto const en = spanner_internal::MakeDecimal<Mode>(rep, exponent);
     return en ? ToInteger<T>(*en, 0) : en.status();
   }
   T v = 0;
@@ -272,15 +361,64 @@ StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
     } else {
       if (v < kMin / 10) return spanner_internal::DataLoss(rep);
       v = static_cast<T>(v * 10);
-      auto d = static_cast<T>(dp - kDigits);
-      if (v < kMin + d) return spanner_internal::DataLoss(rep);
-      v = static_cast<T>(v - d);
+      auto dv = static_cast<T>(dp - kDigits);
+      if (v < kMin + dv) return spanner_internal::DataLoss(rep);
+      v = static_cast<T>(v - dv);
     }
   }
   if (!negate) return v;
   constexpr auto kMax = (std::numeric_limits<T>::max)();
   if (kMin != -kMax && v == kMin) return spanner_internal::DataLoss(rep);
   return static_cast<T>(-v);
+}
+///@}
+
+/**
+ * Most users only need the `Numeric` or `PgNumeric` specializations of
+ * `Decimal`. For example:
+ *
+ * @code
+ * auto n = spanner::MakeNumeric(42).value();
+ * assert(n.ToString() == "42");
+ * assert(spanner::ToInteger<int>(n).value() == 42);
+ * @endcode
+ */
+///@{
+using Numeric = Decimal<DecimalMode::kGoogleSQL>;
+using PgNumeric = Decimal<DecimalMode::kPostgreSQL>;
+///@}
+
+/**
+ * `MakeNumeric()` factory functions for `Numeric`.
+ */
+///@{
+inline StatusOr<Numeric> MakeNumeric(std::string s) {
+  return MakeDecimal<DecimalMode::kGoogleSQL>(std::move(s));
+}
+inline StatusOr<Numeric> MakeNumeric(double d) {
+  return MakeDecimal<DecimalMode::kGoogleSQL>(d);
+}
+template <typename T, typename std::enable_if<
+                          std::numeric_limits<T>::is_integer, int>::type = 0>
+StatusOr<Numeric> MakeNumeric(T i, int exponent = 0) {
+  return MakeDecimal<T, DecimalMode::kGoogleSQL>(i, exponent);
+}
+///@}
+
+/**
+ * `MakePgNumeric()` factory functions for `PgNumeric`.
+ */
+///@{
+inline StatusOr<PgNumeric> MakePgNumeric(std::string s) {
+  return MakeDecimal<DecimalMode::kPostgreSQL>(std::move(s));
+}
+inline StatusOr<PgNumeric> MakePgNumeric(double d) {
+  return MakeDecimal<DecimalMode::kPostgreSQL>(d);
+}
+template <typename T, typename std::enable_if<
+                          std::numeric_limits<T>::is_integer, int>::type = 0>
+StatusOr<PgNumeric> MakePgNumeric(T i, int exponent = 0) {
+  return MakeDecimal<T, DecimalMode::kPostgreSQL>(i, exponent);
 }
 ///@}
 

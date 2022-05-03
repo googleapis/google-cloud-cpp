@@ -13,19 +13,16 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/numeric.h"
-#include "google/cloud/status.h"
-#include "absl/strings/string_view.h"
 #include <algorithm>
 #include <cctype>
 #include <cerrno>
 #include <cmath>
 #include <cstddef>
-#include <deque>
 #include <iomanip>
-#include <limits>
 #include <locale>
 #include <sstream>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -42,20 +39,23 @@ inline bool IsSpace(char ch) {
   return std::isspace(static_cast<unsigned char>(ch)) != 0;
 }
 
-Status InvalidArgument(std::string message) {
-  return Status(StatusCode::kInvalidArgument, std::move(message));
-}
+inline char ToLower(char ch) { return static_cast<char>(std::tolower(ch)); }
 
-Status OutOfRange(std::string message) {
-  return Status(StatusCode::kOutOfRange, std::move(message));
+bool IsNaN(std::string const& rep) {
+  char const* np = "nan";
+  for (auto const ch : rep) {
+    if (*np == '\0' || ToLower(ch) != *np++) return false;
+  }
+  return *np == '\0';
 }
 
 // Do the pieces form a canonical, in-range value, with no rounding required?
 bool IsCanonical(absl::string_view sign_part, absl::string_view int_part,
-                 absl::string_view frac_part) {
+                 absl::string_view frac_part, std::size_t int_prec,
+                 std::size_t frac_prec) {
   if (int_part.empty()) return false;
-  if (int_part.size() > spanner::Numeric::kIntPrec) return false;
-  if (frac_part.size() > 1 + spanner::Numeric::kFracPrec) return false;
+  if (int_part.size() > int_prec) return false;
+  if (frac_part.size() > 1 + frac_prec) return false;
   if (int_part.size() == 1 && int_part.front() == '0') {
     if (frac_part.empty()) {  // Should match "0".
       if (!sign_part.empty()) return false;
@@ -72,14 +72,14 @@ bool IsCanonical(absl::string_view sign_part, absl::string_view int_part,
   return true;
 }
 
-// Round the value to `prec` digits after the decimal point, with halfway
+// Round the value to `frac_prec` digits after the decimal point, with halfway
 // cases rounding away from zero.
 void Round(std::deque<char>& int_rep, std::deque<char>& frac_rep,
-           std::size_t prec) {
+           std::size_t frac_prec) {
   static constexpr auto kDigits = "0123456789";
 
-  auto it = frac_rep.begin() + (std::min)(prec, frac_rep.size());
-  if (frac_rep.size() <= prec || std::strchr(kDigits, *it) - kDigits < 5) {
+  auto it = frac_rep.begin() + (std::min)(frac_prec, frac_rep.size());
+  if (frac_rep.size() <= frac_prec || std::strchr(kDigits, *it) - kDigits < 5) {
     // Round towards zero.
     while (it != frac_rep.begin() && *(it - 1) == '0') --it;
     frac_rep.erase(it, frac_rep.end());
@@ -103,7 +103,19 @@ void Round(std::deque<char>& int_rep, std::deque<char>& frac_rep,
   *it = *(std::strchr(kDigits, *it) + 1);
 }
 
+Status InvalidArgument(std::string message) {
+  return Status(StatusCode::kInvalidArgument, std::move(message));
+}
+
+Status OutOfRange(std::string message) {
+  return Status(StatusCode::kOutOfRange, std::move(message));
+}
+
 }  // namespace
+
+Status DataLoss(std::string message) {
+  return Status(StatusCode::kDataLoss, std::move(message));
+}
 
 std::string ToString(absl::int128 value) {
   std::ostringstream ss;
@@ -117,24 +129,14 @@ std::string ToString(absl::uint128 value) {
   return std::move(ss).str();
 }
 
-Status DataLoss(std::string message) {
-  return Status(StatusCode::kDataLoss, std::move(message));
-}
+StatusOr<std::string> MakeDecimalRep(std::string s, bool const has_nan,
+                                     std::size_t const int_prec,
+                                     std::size_t const frac_prec) {
+  if (IsNaN(s)) {
+    if (has_nan) return std::string{"NaN"};
+    return InvalidArgument(std::move(s));
+  }
 
-// Succeeds if `s` matches either of these regular expressions ...
-//
-//   [-+]?[0-9]+(.[0-9]*)?([eE][-+]?[0-9]+)?
-//   [-+]?.[0-9]+([eE][-+]?[0-9]+)?
-//
-// and the value is within the allowed range, producing a representation
-// that matches one of these regular expressions ...
-//
-//   0                                      // value == 0
-//   -?0.[0-9]{0,8}[1-9]                    // 0 < abs(value) < 1
-//   -?[1-9][0-9]{0,28}(.[0-9]{0,8}[1-9])?  // abs(value) >= 1
-//
-// where the fractional part has been rounded to `kFracPrec` decimal places.
-StatusOr<spanner::Numeric> MakeNumeric(std::string s) {
   char const* p = s.c_str();
   char const* e = p + s.size();
 
@@ -157,9 +159,11 @@ StatusOr<spanner::Numeric> MakeNumeric(std::string s) {
     frac_part = absl::string_view(fp, p - fp);
   }
 
-  // This is the expected case, and avoids any allocations.
-  if (p == e && IsCanonical(sign_part, int_part, frac_part)) {
-    return spanner::Numeric(std::move(s));
+  if (p == e) {
+    // This is the expected case, and avoids any allocations.
+    if (IsCanonical(sign_part, int_part, frac_part, int_prec, frac_prec)) {
+      return s;
+    }
   }
 
   // Consume any exponent part.
@@ -202,11 +206,11 @@ StatusOr<spanner::Numeric> MakeNumeric(std::string s) {
   }
 
   // Round/canonicalize the fractional part.
-  Round(int_rep, frac_rep, spanner::Numeric::kFracPrec);
+  Round(int_rep, frac_rep, frac_prec);
 
   // Canonicalize and range check the integer part.
   while (!int_rep.empty() && int_rep.front() == '0') int_rep.pop_front();
-  if (int_rep.size() > spanner::Numeric::kIntPrec) {
+  if (int_rep.size() > int_prec) {
     return OutOfRange(std::move(s));
   }
 
@@ -222,13 +226,16 @@ StatusOr<spanner::Numeric> MakeNumeric(std::string s) {
   rep.reserve(int_rep.size() + frac_rep.size());
   rep.append(int_rep.begin(), int_rep.end());
   rep.append(frac_rep.begin(), frac_rep.end());
-  return spanner::Numeric(std::move(rep));
+  return rep;
 }
 
-// Like `MakeNumeric(s)`, but with an out-of-band exponent.
-StatusOr<spanner::Numeric> MakeNumeric(std::string s, int exponent) {
-  if (exponent != 0) s += 'e' + std::to_string(exponent);
-  return MakeNumeric(std::move(s));
+StatusOr<std::string> MakeDecimalRep(double d) {
+  std::ostringstream ss;
+  ss.imbue(std::locale::classic());
+  ss << std::setprecision(std::numeric_limits<double>::digits10 + 1) << d;
+  std::string rep = std::move(ss).str();
+  if (std::isinf(d)) return OutOfRange(std::move(rep));
+  return rep;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -237,23 +244,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-constexpr std::size_t Numeric::kIntPrec;
-constexpr std::size_t Numeric::kFracPrec;
+template <>
+std::size_t const Decimal<DecimalMode::kGoogleSQL>::kIntPrecision = 29;
+template <>
+std::size_t const Decimal<DecimalMode::kGoogleSQL>::kFracPrecision = 9;
+template <>
+bool const Decimal<DecimalMode::kGoogleSQL>::kHasNaN = false;
 
-Numeric::Numeric() : rep_("0") {}
-
-StatusOr<Numeric> MakeNumeric(std::string s) {
-  return spanner_internal::MakeNumeric(std::move(s));
-}
-
-StatusOr<Numeric> MakeNumeric(double d) {
-  std::ostringstream ss;
-  ss.imbue(std::locale::classic());
-  ss << std::setprecision(std::numeric_limits<double>::digits10 + 1) << d;
-  std::string s = std::move(ss).str();
-  if (!std::isfinite(d)) return spanner_internal::OutOfRange(std::move(s));
-  return spanner_internal::MakeNumeric(std::move(s));
-}
+template <>
+std::size_t const Decimal<DecimalMode::kPostgreSQL>::kIntPrecision = 131072;
+template <>
+std::size_t const Decimal<DecimalMode::kPostgreSQL>::kFracPrecision = 16383;
+template <>
+bool const Decimal<DecimalMode::kPostgreSQL>::kHasNaN = true;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
