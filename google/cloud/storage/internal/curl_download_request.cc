@@ -230,16 +230,11 @@ void CurlDownloadRequest::CleanupHandles() {
 }
 
 void CurlDownloadRequest::SetOptions() {
-  // We get better performance using a slightly larger buffer (128KiB) than the
-  // default buffer size set by libcurl (16KiB)
-  auto constexpr kDefaultBufferSize = 128 * 1024L;
-
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
   handle_.SetOption(CURLOPT_NOSIGNAL, 1L);
   handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
-  handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultBufferSize);
   if (!payload_.empty()) {
     handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
     handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
