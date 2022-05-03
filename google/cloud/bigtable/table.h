@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H
 
-#include "google/cloud/bigtable/async_row_reader.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/internal/async_row_reader.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
 #include "google/cloud/bigtable/resource_names.h"
@@ -825,8 +825,7 @@ class Table {
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
                      Filter filter) {
     AsyncReadRows(std::move(on_row), std::move(on_finish), std::move(row_set),
-                  AsyncRowReader<RowFunctor, FinishFunctor>::NO_ROWS_LIMIT,
-                  std::move(filter));
+                  RowReader::NO_ROWS_LIMIT, std::move(filter));
   }
 
   /**
@@ -867,7 +866,7 @@ class Table {
   template <typename RowFunctor, typename FinishFunctor>
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
                      std::int64_t rows_limit, Filter filter) {
-    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
+    bigtable_internal::AsyncRowReader<RowFunctor, FinishFunctor>::Create(
         background_threads_->cq(), client_, app_profile_id_, table_name_,
         std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
         std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
