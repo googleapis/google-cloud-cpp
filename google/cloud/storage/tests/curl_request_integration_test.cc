@@ -45,6 +45,10 @@ std::string HttpBinEndpoint() {
       .value_or("https://httpbin.org");
 }
 
+bool UsingEmulator() {
+  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT").has_value();
+}
+
 // The integration tests sometimes flake (e.g. DNS failures) if we do not have a
 // retry loop.
 StatusOr<HttpResponse> RetryMakeRequest(
@@ -367,16 +371,16 @@ TEST(CurlRequestTest, HttpVersion) {
       {"", "http/"},
   };
 
+  auto* vinfo = curl_version_info(CURLVERSION_NOW);
+  auto const supports_http2 = vinfo->features & CURL_VERSION_HTTP2;
+
   for (auto const& test : cases) {
     SCOPED_TRACE("Testing with version=<" + test.version + ">");
     auto factory = [&] {
-      CurlRequestBuilder builder(
-          HttpBinEndpoint() + "/get",
-          storage::internal::GetDefaultCurlHandleFactory());
-      auto options =
-          google::cloud::Options{}.set<storage_experimental::HttpVersionOption>(
-              test.version);
-      builder.ApplyClientOptions(options);
+      auto factory = std::make_shared<DefaultCurlHandleFactory>();
+      CurlRequestBuilder builder(HttpBinEndpoint() + "/get", factory);
+      builder.ApplyClientOptions(
+          Options{}.set<storage_experimental::HttpVersionOption>(test.version));
       builder.AddHeader("Accept: application/json");
       builder.AddHeader("charsets: utf-8");
       return std::move(builder).BuildRequest();
@@ -386,6 +390,14 @@ TEST(CurlRequestTest, HttpVersion) {
     ASSERT_STATUS_OK(response);
     ASSERT_EQ(200, response->status_code) << "response=" << *response;
     EXPECT_THAT(response->headers, Contains(Pair(StartsWith(test.prefix), "")));
+
+    // The httpbin.org site strips the `Connection` header.
+    if (supports_http2 && test.version == "2" && UsingEmulator()) {
+      auto parsed = nlohmann::json::parse(response->payload);
+      auto const& request_headers = parsed["headers"];
+      auto const& connection = request_headers.value("Connection", "");
+      EXPECT_THAT(connection, HasSubstr("HTTP2")) << *response;
+    }
   }
 }
 
