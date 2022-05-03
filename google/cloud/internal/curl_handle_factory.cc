@@ -46,7 +46,7 @@ DefaultCurlHandleFactory::DefaultCurlHandleFactory(Options const& o) {
 }
 
 CurlPtr DefaultCurlHandleFactory::CreateHandle() {
-  CurlPtr curl(curl_easy_init(), &curl_easy_cleanup);
+  auto curl = MakeCurlPtr();
   SetCurlOptions(curl.get());
   return curl;
 }
@@ -104,7 +104,7 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
     SetCurlOptions(curl.get());
     return curl;
   }
-  CurlPtr curl(curl_easy_init(), &curl_easy_cleanup);
+  auto curl = MakeCurlPtr();
   SetCurlOptions(curl.get());
   return curl;
 }

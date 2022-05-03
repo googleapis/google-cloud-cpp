@@ -136,7 +136,7 @@ void AssertOptionSuccessImpl(
                  << "], error description=" << curl_easy_strerror(e);
 }
 
-CurlHandle::CurlHandle() : handle_(curl_easy_init(), &curl_easy_cleanup) {
+CurlHandle::CurlHandle() : handle_(MakeCurlPtr()) {
   if (handle_.get() == nullptr) {
     google::cloud::internal::ThrowRuntimeError("Cannot initialize CURL handle");
   }
