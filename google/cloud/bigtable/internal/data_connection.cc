@@ -30,8 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataConnection::~DataConnection() = default;
 
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList>(options,
-                                                                   __func__);
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 DataPolicyOptionList>(options, __func__);
   options = bigtable::internal::DefaultDataOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigtable_internal::CreateBigtableStub(background->cq(), options);
