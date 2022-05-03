@@ -32,12 +32,17 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::StartsWith;
 
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
       .value_or("https://httpbin.org");
+}
+
+bool UsingEmulator() {
+  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT").has_value();
 }
 
 Status Make3Attempts(std::function<Status()> const& attempt) {
@@ -348,51 +353,72 @@ TEST(CurlDownloadRequestTest, Regression7051) {
 }
 
 TEST(CurlDownloadRequestTest, HttpVersion) {
-  using Headers = std::multimap<std::string, std::string>;
-  // Run one attempt and return the headers, if any.
-  auto attempt = [] {
-    Headers headers;
-    CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
-                               GetDefaultCurlHandleFactory());
+  // Run one attempt and return the response.
+  struct Response {
+    std::multimap<std::string, std::string> headers;
+    std::string payload;
+  };
+  auto attempt = [](std::string const& version) -> StatusOr<Response> {
+    Response response;
+    auto factory = std::make_shared<DefaultCurlHandleFactory>();
+    CurlRequestBuilder builder(HttpBinEndpoint() + "/get", factory);
+    builder.ApplyClientOptions(
+        Options{}.set<storage_experimental::HttpVersionOption>(version));
     auto download = std::move(builder).BuildDownloadRequest();
 
     auto constexpr kBufferSize = 4096;
     char buffer[kBufferSize];
     do {
       auto read = download->Read(buffer, kBufferSize);
-      if (!read) return Headers{};
-      headers.insert(read->response.headers.begin(),
-                     read->response.headers.end());
+      if (!read) return std::move(read).status();
+      response.headers.insert(read->response.headers.begin(),
+                              read->response.headers.end());
+      response.payload += std::string{buffer, read->bytes_received};
       if (read->response.status_code != 100) break;
     } while (true);
     auto close = download->Close();
-    if (!close) return Headers{};
-    return headers;
+    if (!close) return std::move(close).status();
+    return response;
   };
 
   struct Test {
     std::string version;
     std::string prefix;
   } cases[] = {
-      // The HTTP version setting is a request, libcurl may choose a slightly
-      // different version (e.g. 1.1 when 1.0 is requested).
+      // The HTTP version setting is a request, libcurl may negotiate a
+      // different version. For example, the server may not support HTTP/2.
+      // Sadly this makes this test less interesting, but at least we check
+      // that the request succeeds.
       {"1.0", "http/1"},
       {"1.1", "http/1"},
-      {"2", "http/"},  // HTTP/2 may not be compiled in
+      {"2", "http/"},
       {"", "http/"},
   };
+
+  auto* vinfo = curl_version_info(CURLVERSION_NOW);
+  auto const supports_http2 = vinfo->features & CURL_VERSION_HTTP2;
 
   for (auto const& test : cases) {
     SCOPED_TRACE("Testing with version=<" + test.version + ">");
     auto delay = std::chrono::seconds(1);
-    Headers headers;
+    StatusOr<Response> response;
     for (int i = 0; i != 3; ++i) {
-      headers = attempt();
-      if (!headers.empty()) break;
+      response = attempt(test.version);
+      if (response) break;
+      std::this_thread::sleep_for(delay);
+      delay *= 2;
     }
-    std::this_thread::sleep_for(delay);
-    delay *= 2;
-    EXPECT_THAT(headers, Contains(Pair(StartsWith(test.prefix), "")));
+    EXPECT_STATUS_OK(response);
+    if (!response) continue;
+    EXPECT_THAT(response->headers, Contains(Pair(StartsWith(test.prefix), "")));
+
+    // The httpbin.org site strips the `Connection` header.
+    if (supports_http2 && test.version == "2" && UsingEmulator()) {
+      auto parsed = nlohmann::json::parse(response->payload);
+      auto const& request_headers = parsed["headers"];
+      auto const& connection = request_headers.value("Connection", "");
+      EXPECT_THAT(connection, HasSubstr("HTTP2")) << parsed;
+    }
   }
 }
 
