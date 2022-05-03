@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/rest_client.h"
 #include <string>
 
 namespace google {
@@ -160,8 +161,11 @@ class RestClient : public RawClient,
   explicit RestClient(Options options);
 
  private:
+  std::unique_ptr<google::cloud::rest_internal::RestClient>
+      storage_rest_client_;
+  std::unique_ptr<google::cloud::rest_internal::RestClient> iam_rest_client_;
   std::shared_ptr<RawClient> curl_client_;
-  google::cloud::Options opts_;
+  google::cloud::Options options_;
 };
 
 }  // namespace internal

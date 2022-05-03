@@ -242,6 +242,14 @@ StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
   return result;
 }
 
+StatusOr<ListBucketsResponse> ListBucketsResponse::FromRestResponse(
+    google::cloud::rest_internal::RestResponse&& r) {
+  auto payload =
+      google::cloud::rest_internal::ReadAll(std::move(r).ExtractPayload());
+  if (!payload.ok()) return payload.status();
+  return FromHttpResponse(*payload);
+}
+
 std::ostream& operator<<(std::ostream& os, ListBucketsResponse const& r) {
   os << "ListBucketsResponse={next_page_token=" << r.next_page_token
      << ", items={";

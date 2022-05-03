@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "google/cloud/internal/rest_response.h"
 #include <iosfwd>
 #include <string>
 #include <vector>
@@ -58,6 +59,9 @@ std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r);
 struct ListBucketsResponse {
   static StatusOr<ListBucketsResponse> FromHttpResponse(
       std::string const& payload);
+
+  static StatusOr<ListBucketsResponse> FromRestResponse(
+      google::cloud::rest_internal::RestResponse&& r);
 
   std::string next_page_token;
   std::vector<BucketMetadata> items;
