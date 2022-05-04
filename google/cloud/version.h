@@ -20,13 +20,6 @@
 #include "google/cloud/internal/version_info.h"
 #include <string>
 
-#define GOOGLE_CLOUD_CPP_IAM_DEPRECATED                                    \
-  GOOGLE_CLOUD_CPP_DEPRECATED(                                             \
-      "this type predates IAM conditions and does not work with policies " \
-      "that include IAM conditions. The functions that use this type are " \
-      "deprecated and will be be removed on 2022-04-01 or shortly "        \
-      "after. See GitHub issue #5929 for more information.")
-
 #define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa) v##Ma##_##Mi##_##Pa
 #define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi, Pa) GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa)
 #define GOOGLE_CLOUD_CPP_NS                              \
