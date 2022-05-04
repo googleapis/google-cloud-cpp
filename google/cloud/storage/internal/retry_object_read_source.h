@@ -49,6 +49,11 @@ class RetryObjectReadSource : public ObjectReadSource {
   StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override;
 
  private:
+  bool HandleResult(StatusOr<ReadSourceResult> const& r);
+  Status MakeChild(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy);
+  StatusOr<std::unique_ptr<ObjectReadSource>> ReadDiscard(
+      std::unique_ptr<ObjectReadSource> child, std::int64_t count) const;
+
   std::shared_ptr<RetryClient> client_;
   ReadObjectRangeRequest request_;
   std::unique_ptr<ObjectReadSource> child_;
@@ -56,7 +61,8 @@ class RetryObjectReadSource : public ObjectReadSource {
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   OffsetDirection offset_direction_;
-  std::int64_t current_offset_;
+  std::int64_t current_offset_ = 0;
+  bool is_gunzipped_ = false;
 };
 
 }  // namespace internal
