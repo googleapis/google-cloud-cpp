@@ -27,6 +27,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 
 class ObjectReadRangeIntegrationTest
     : public ::google::cloud::storage::testing::StorageIntegrationTest {
@@ -95,6 +96,12 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadRanges) {
         std::string{buffer.begin(), std::next(buffer.begin(), reader.gcount())};
     EXPECT_EQ(test.expected, actual);
   }
+
+  auto reader = client->ReadObject(
+      bucket_name(), object_name,
+      ReadRange(kObjectSize + kChunk, kObjectSize + 2 * kChunk));
+  EXPECT_TRUE(reader.bad());
+  EXPECT_THAT(reader.status(), StatusIs(StatusCode::kOutOfRange));
 }
 
 TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
@@ -142,6 +149,11 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
         std::string{buffer.begin(), std::next(buffer.begin(), reader.gcount())};
     EXPECT_EQ(test.expected, actual);
   }
+
+  auto reader = client->ReadObject(bucket_name(), object_name,
+                                   ReadFromOffset(kObjectSize + kChunk));
+  EXPECT_TRUE(reader.bad());
+  EXPECT_THAT(reader.status(), StatusIs(StatusCode::kOutOfRange));
 }
 
 TEST_F(ObjectReadRangeIntegrationTest, ReadLast) {
@@ -159,6 +171,8 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadLast) {
       {kObjectSize, contents},
       {kChunk, contents.substr(contents.size() - kChunk)},
       {2 * kChunk, contents.substr(contents.size() - 2 * kChunk)},
+      // GCS returns the minimum of "the last N bytes" or "all the bytes".
+      {kObjectSize + kChunk, contents},
   };
 
   auto const object_name = MakeRandomObjectName();
