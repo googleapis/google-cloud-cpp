@@ -549,8 +549,18 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
     }
 
     committed_size = *result->committed_size;
+
+    if (committed_size != expected_committed_size || request.last_chunk()) {
+      // If we still have to send data, restart the loop. On the last chunk,
+      // event if the service reports all the data as received, we need to keep
+      // "finalizing" the object until the object metadata is returned. Note
+      // that if we had the object metadata we would have already exited this
+      // function.
+      continue;
+    }
+
     // On a full write we can return immediately.
-    if (committed_size == expected_committed_size) return result;
+    return result;
   }
   std::ostringstream os;
   os << "Retry policy exhausted in " << __func__ << ": "
