@@ -97,6 +97,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadRanges) {
     EXPECT_EQ(test.expected, actual);
   }
 
+  if (UsingEmulator()) return;
   auto reader = client->ReadObject(
       bucket_name(), object_name,
       ReadRange(kObjectSize + kChunk, kObjectSize + 2 * kChunk));
@@ -150,6 +151,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
     EXPECT_EQ(test.expected, actual);
   }
 
+  if (UsingEmulator()) return;
   auto reader = client->ReadObject(bucket_name(), object_name,
                                    ReadFromOffset(kObjectSize + kChunk));
   EXPECT_TRUE(reader.bad());
