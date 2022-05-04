@@ -334,8 +334,9 @@ Status AttemptRegression7051() {
   {
     auto r_partial_close = make_download();
     if (!r_partial_close) return std::move(r_partial_close).status();
-    if ((*r_partial_close)->id() != id)
+    if ((*r_partial_close)->id() != id) {
       return error("r_partial_close.id() != id");
+    }
     auto read = (*r_partial_close)->Read(buffer, kBufferSize);
     if (!read) return std::move(read).status();
     auto close = (*r_partial_close)->Close();

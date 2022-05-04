@@ -248,7 +248,6 @@ Status CurlDownloadRequest::SetOptions() {
   if (!status.ok()) return OnTransferError(std::move(status));
 
   if (!payload_.empty()) {
-    if (!status.ok()) return OnTransferError(std::move(status));
     status = handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
     if (!status.ok()) return OnTransferError(std::move(status));
     status = handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
