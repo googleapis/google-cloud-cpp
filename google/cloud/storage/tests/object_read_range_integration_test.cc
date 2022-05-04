@@ -93,7 +93,9 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadRanges) {
     EXPECT_THAT(reader.status(), IsOk());
 
     auto actual =
-        std::string{buffer.begin(), std::next(buffer.begin(), reader.gcount())};
+        std::string{buffer.begin(),
+                    std::next(buffer.begin(),
+                              static_cast<std::ptrdiff_t>(reader.gcount()))};
     EXPECT_EQ(test.expected, actual);
   }
 
@@ -147,7 +149,9 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
     EXPECT_THAT(reader.status(), IsOk());
 
     auto actual =
-        std::string{buffer.begin(), std::next(buffer.begin(), reader.gcount())};
+        std::string{buffer.begin(),
+                    std::next(buffer.begin(),
+                              static_cast<std::ptrdiff_t>(reader.gcount()))};
     EXPECT_EQ(test.expected, actual);
   }
 
@@ -202,7 +206,9 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadLast) {
     EXPECT_THAT(reader.status(), IsOk());
 
     auto actual =
-        std::string{buffer.begin(), std::next(buffer.begin(), reader.gcount())};
+        std::string{buffer.begin(),
+                    std::next(buffer.begin(),
+                              static_cast<std::ptrdiff_t>(reader.gcount()))};
     EXPECT_EQ(test.expected, actual);
   }
 }
