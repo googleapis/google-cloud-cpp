@@ -225,6 +225,7 @@ TEST(Value, Equality) {
       {Value(Bytes("foo")), Value(Bytes("bar"))},
       {Value(Json("42")), Value(Json("true"))},
       {Value(MakeNumeric(0).value()), Value(MakeNumeric(1).value())},
+      {Value(MakePgNumeric(0).value()), Value(MakePgNumeric(1).value())},
       {Value(absl::CivilDay(1970, 1, 1)), Value(absl::CivilDay(2020, 3, 15))},
       {Value(std::vector<double>{1.2, 3.4}),
        Value(std::vector<double>{4.5, 6.7})},
@@ -1122,6 +1123,7 @@ TEST(Value, OutputStream) {
       {Value(Json()), "null", normal},
       {Value(Json("true")), "true", normal},
       {Value(MakeNumeric(1234567890).value()), "1234567890", normal},
+      {Value(MakePgNumeric(1234567890).value()), "1234567890", normal},
       {Value(absl::CivilDay()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
 
@@ -1163,6 +1165,8 @@ TEST(Value, OutputStream) {
       {Value(std::vector<absl::CivilDay>{2}), "[1970-01-01, 1970-01-01]",
        normal},
       {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
+
+      // Tests arrays with null elements
       {Value(std::vector<absl::optional<double>>{1, {}, 2}), "[1, NULL, 2]",
        normal},
 
@@ -1276,6 +1280,12 @@ TEST(Value, OutputStreamMatchesT) {
   StreamMatchesValueStream(MakeNumeric("999").value());
   StreamMatchesValueStream(MakeNumeric(3.14159).value());
   StreamMatchesValueStream(MakeNumeric(42).value());
+
+  // PgNumeric
+  StreamMatchesValueStream(MakePgNumeric("999").value());
+  StreamMatchesValueStream(MakePgNumeric(3.14159).value());
+  StreamMatchesValueStream(MakePgNumeric(42).value());
+  StreamMatchesValueStream(MakePgNumeric("NaN").value());
 
   // Date
   StreamMatchesValueStream(absl::CivilDay(1, 1, 1));
