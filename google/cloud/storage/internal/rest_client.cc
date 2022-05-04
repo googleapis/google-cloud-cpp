@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/rest_client.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
+#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/logging_client.h"
@@ -23,8 +24,10 @@
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/internal/object_write_streambuf.h"
+#include "google/cloud/storage/internal/rest_request_builder.h"
 #include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/match.h"
@@ -36,13 +39,36 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+namespace rest = google::cloud::rest_internal;
+
+template <typename ReturnType>
+StatusOr<ReturnType> ParseFromRestResponse(
+    StatusOr<std::unique_ptr<rest::RestResponse>> response) {
+  if (!response.ok()) return std::move(response).status();
+  if ((*response)->StatusCode() >= rest::kMinNotSuccess) {
+    return rest::AsStatus(std::move(**response));
+  }
+  auto payload = rest::ReadAll(std::move(**response).ExtractPayload());
+  if (!payload.ok()) return std::move(payload).status();
+  return ReturnType::FromHttpResponse(*payload);
+}
+
 RestClient::RestClient(google::cloud::Options options)
-    : curl_client_(internal::CurlClient::Create(options)),
-      opts_(std::move(options)) {}
+    : storage_rest_client_(
+          rest::MakePooledRestClient(RestEndpoint(options), options)),
+      iam_rest_client_(
+          rest::MakePooledRestClient(IamRestEndpoint(options), options)),
+      curl_client_(internal::CurlClient::Create(options)),
+      options_(std::move(options)) {}
 
 StatusOr<ListBucketsResponse> RestClient::ListBuckets(
     ListBucketsRequest const& request) {
-  return curl_client_->ListBuckets(request);
+  RestRequestBuilder r(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b"));
+  request.AddOptionsToHttpRequest(r);
+  r.AddQueryParameter("project", request.project_id());
+  return ParseFromRestResponse<ListBucketsResponse>(
+      storage_rest_client_->Get(std::move(r).BuildRequest()));
 }
 
 StatusOr<BucketMetadata> RestClient::CreateBucket(
