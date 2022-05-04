@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/rest_client.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
+#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/logging_client.h"
@@ -47,7 +48,9 @@ StatusOr<ReturnType> ParseFromRestResponse(
   if ((*response)->StatusCode() >= rest::kMinNotSuccess) {
     return rest::AsStatus(std::move(**response));
   }
-  return ReturnType::FromRestResponse(std::move(**response));
+  auto payload = rest::ReadAll(std::move(**response).ExtractPayload());
+  if (!payload.ok()) return std::move(payload).status();
+  return ReturnType::FromHttpResponse(*payload);
 }
 
 RestClient::RestClient(google::cloud::Options options)
