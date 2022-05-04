@@ -95,7 +95,7 @@ class CurlDownloadRequest : public ObjectReadSource {
   void CleanupHandles();
 
   /// Set the underlying CurlHandle options on a new CurlDownloadRequest.
-  void SetOptions();
+  Status SetOptions();
 
   /// Handle a completed (even interrupted) download.
   void OnTransferDone();

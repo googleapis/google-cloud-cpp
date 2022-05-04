@@ -60,7 +60,7 @@ CurlRequest CurlRequestBuilder::BuildRequest() && {
   return request;
 }
 
-std::unique_ptr<CurlDownloadRequest>
+StatusOr<std::unique_ptr<CurlDownloadRequest>>
 CurlRequestBuilder::BuildDownloadRequest() && {
   ValidateBuilderState(__func__);
   auto agent = user_agent_prefix_ + UserAgentSuffix();
@@ -73,7 +73,8 @@ CurlRequestBuilder::BuildDownloadRequest() && {
   request->logging_enabled_ = logging_enabled_;
   request->socket_options_ = socket_options_;
   request->download_stall_timeout_ = download_stall_timeout_;
-  request->SetOptions();
+  auto status = request->SetOptions();
+  if (!status.ok()) return status;
   return request;
 }
 

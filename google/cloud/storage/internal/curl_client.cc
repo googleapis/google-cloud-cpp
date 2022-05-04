@@ -428,8 +428,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
     builder.AddHeader("Cache-Control: no-transform");
   }
 
-  return std::unique_ptr<ObjectReadSource>(
-      std::move(builder).BuildDownloadRequest());
+  auto download = std::move(builder).BuildDownloadRequest();
+  if (!download) return std::move(download).status();
+  return std::unique_ptr<ObjectReadSource>(*std::move(download));
 }
 
 StatusOr<ListObjectsResponse> CurlClient::ListObjects(
@@ -1218,8 +1219,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
     builder.AddHeader("Cache-Control: no-transform");
   }
 
-  return std::unique_ptr<ObjectReadSource>(
-      std::move(builder).BuildDownloadRequest());
+  auto download = std::move(builder).BuildDownloadRequest();
+  if (!download) return std::move(download).status();
+  return std::unique_ptr<ObjectReadSource>(*std::move(download));
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(

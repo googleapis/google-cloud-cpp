@@ -127,15 +127,6 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
 
 }  // namespace
 
-void AssertOptionSuccessImpl(
-    CURLcode e, CURLoption opt, char const* where,
-    absl::FunctionRef<std::string()> const& format_parameter) {
-  GCP_LOG(FATAL) << where << "() - error [" << e
-                 << "] while setting curl option [" << opt << "] to ["
-                 << format_parameter()
-                 << "], error description=" << curl_easy_strerror(e);
-}
-
 CurlHandle::CurlHandle() : handle_(MakeCurlPtr()) {
   if (handle_.get() == nullptr) {
     google::cloud::internal::ThrowRuntimeError("Cannot initialize CURL handle");

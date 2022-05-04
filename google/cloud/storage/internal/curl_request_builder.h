@@ -53,7 +53,7 @@ class CurlRequestBuilder {
    * This function invalidates the builder. The application should not use this
    * builder once this function is called.
    */
-  std::unique_ptr<CurlDownloadRequest> BuildDownloadRequest() &&;
+  StatusOr<std::unique_ptr<CurlDownloadRequest>> BuildDownloadRequest() &&;
 
   /// Adds one of the well-known parameters as a query parameter
   template <typename P>
