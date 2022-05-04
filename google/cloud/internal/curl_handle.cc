@@ -127,15 +127,6 @@ extern "C" int RestCurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
 
 }  // namespace
 
-void AssertOptionSuccessImpl(
-    CURLcode e, CURLoption opt, char const* where,
-    absl::FunctionRef<std::string()> const& format_parameter) {
-  GCP_LOG(FATAL) << where << "() - error [" << e
-                 << "] while setting curl option [" << opt << "] to ["
-                 << format_parameter()
-                 << "], error description=" << curl_easy_strerror(e);
-}
-
 CurlHandle::CurlHandle() : handle_(MakeCurlPtr()) {
   if (handle_.get() == nullptr) {
     google::cloud::internal::ThrowRuntimeError("Cannot initialize CURL handle");
@@ -146,8 +137,8 @@ CurlHandle::~CurlHandle() { FlushDebug(__func__); }
 
 void CurlHandle::SetSocketCallback(SocketOptions const& options) {
   socket_options_ = options;
-  SetOption(CURLOPT_SOCKOPTDATA, &socket_options_);
-  SetOption(CURLOPT_SOCKOPTFUNCTION, &RestCurlSetSocketOptions);
+  (void)SetOption(CURLOPT_SOCKOPTDATA, &socket_options_);
+  (void)SetOption(CURLOPT_SOCKOPTFUNCTION, &RestCurlSetSocketOptions);
 }
 
 std::int32_t CurlHandle::GetResponseCode() {
@@ -176,13 +167,13 @@ std::string CurlHandle::GetPeer() {
 void CurlHandle::EnableLogging(bool enabled) {
   if (enabled) {
     debug_info_ = std::make_shared<DebugInfo>();
-    SetOption(CURLOPT_DEBUGDATA, debug_info_.get());
-    SetOption(CURLOPT_DEBUGFUNCTION, &RestCurlHandleDebugCallback);
-    SetOption(CURLOPT_VERBOSE, 1L);
+    (void)SetOption(CURLOPT_DEBUGDATA, debug_info_.get());
+    (void)SetOption(CURLOPT_DEBUGFUNCTION, &RestCurlHandleDebugCallback);
+    (void)SetOption(CURLOPT_VERBOSE, 1L);
   } else {
-    SetOption(CURLOPT_DEBUGDATA, nullptr);
-    SetOption(CURLOPT_DEBUGFUNCTION, nullptr);
-    SetOption(CURLOPT_VERBOSE, 0L);
+    (void)SetOption(CURLOPT_DEBUGDATA, nullptr);
+    (void)SetOption(CURLOPT_DEBUGFUNCTION, nullptr);
+    (void)SetOption(CURLOPT_VERBOSE, 0L);
   }
 }
 

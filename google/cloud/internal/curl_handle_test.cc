@@ -61,37 +61,6 @@ TEST(CurlHandleTest, AsStatus) {
   }
 }
 
-TEST(AssertOptionSuccess, StringWithError) {
-  EXPECT_DEATH_IF_SUPPORTED(
-      AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
-                          "some-path"),
-      "test-function");
-}
-
-TEST(AssertOptionSuccess, IntWithError) {
-  EXPECT_DEATH_IF_SUPPORTED(
-      AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
-                          1234),
-      "test-function");
-}
-
-TEST(AssertOptionSuccess, NullptrWithError) {
-  EXPECT_DEATH_IF_SUPPORTED(
-      AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
-                          nullptr),
-      "test-function");
-}
-
-int TestFunction() { return 42; }
-
-TEST(AssertOptionSuccess, FunctionPtrWithError) {
-  EXPECT_EQ(42, TestFunction());
-  EXPECT_DEATH_IF_SUPPORTED(
-      AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
-                          &TestFunction),
-      "test-function");
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

@@ -567,20 +567,24 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
   auto bytes_read = DrainSpillBuffer();
   if (curl_closed_) return bytes_read;
 
-  handle_.SetOption(CURLOPT_WRITEFUNCTION, &RestCurlRequestWrite);
-  handle_.SetOption(CURLOPT_WRITEDATA, this);
-  handle_.SetOption(CURLOPT_HEADERFUNCTION, &RestCurlRequestHeader);
-  handle_.SetOption(CURLOPT_HEADERDATA, this);
+  Status status;
+  status = handle_.SetOption(CURLOPT_WRITEFUNCTION, &RestCurlRequestWrite);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_WRITEDATA, this);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_HEADERFUNCTION, &RestCurlRequestHeader);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_HEADERDATA, this);
+  if (!status.ok()) return OnTransferError(std::move(status));
   handle_.FlushDebug(__func__);
 
   if (!curl_closed_ && paused_) {
     paused_ = false;
-    auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
+    status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
     TRACE_STATE() << ", status=" << status << "\n";
-    if (!status.ok()) return status;
+    if (!status.ok()) return OnTransferError(std::move(status));
   }
 
-  Status status;
   if (buffer_.empty()) {
     // Once we have received the status and all the headers, we have read
     // enough to satisfy calls to any of RestResponse's methods, and we can
@@ -612,15 +616,24 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
 
 Status CurlImpl::MakeRequestImpl() {
   TRACE_STATE() << "url_ " << url_ << "\n";
-  handle_.SetOption(CURLOPT_URL, url_.c_str());
-  handle_.SetOption(CURLOPT_HTTPHEADER, request_headers_.get());
-  handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  Status status;
+  status = handle_.SetOption(CURLOPT_URL, url_.c_str());
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_HTTPHEADER, request_headers_.get());
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  if (!status.ok()) return OnTransferError(std::move(status));
   handle_.EnableLogging(logging_enabled_);
+  if (!status.ok()) return OnTransferError(std::move(status));
   handle_.SetSocketCallback(socket_options_);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_NOSIGNAL, 1);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
+  if (!status.ok()) return OnTransferError(std::move(status));
+
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
                              VersionToCurlCode(http_version_));
-  handle_.SetOption(CURLOPT_NOSIGNAL, 1);
-  handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
 
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
 
@@ -643,21 +656,30 @@ Status CurlImpl::MakeRequestImpl() {
 Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
                              std::vector<absl::Span<char const>> payload) {
   using HttpMethod = CurlImpl::HttpMethod;
-  handle_.SetOption(CURLOPT_CUSTOMREQUEST, HttpMethodAsChar(method));
-  handle_.SetOption(CURLOPT_UPLOAD, 0L);
-  handle_.SetOption(CURLOPT_FOLLOWLOCATION,
-                    options_.get<CurlFollowLocationOption>() ? 1L : 0L);
+  Status status;
+  status = handle_.SetOption(CURLOPT_CUSTOMREQUEST, HttpMethodAsChar(method));
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_UPLOAD, 0L);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status =
+      handle_.SetOption(CURLOPT_FOLLOWLOCATION,
+                        options_.get<CurlFollowLocationOption>() ? 1L : 0L);
+  if (!status.ok()) return OnTransferError(std::move(status));
 
   if (method == HttpMethod::kGet) {
-    handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
+    status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
+    if (!status.ok()) return OnTransferError(std::move(status));
     if (download_stall_timeout_.count() != 0) {
       // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
       auto const timeout = static_cast<long>(download_stall_timeout_.count());
-      handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
+      status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
+      if (!status.ok()) return OnTransferError(std::move(status));
       // Timeout if the request sends or receives less than 1 byte/second (i.e.
       // effectively no bytes) for `download_stall_timeout_` seconds.
-      handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
-      handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
+      status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
+      if (!status.ok()) return OnTransferError(std::move(status));
+      status = handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
+      if (!status.ok()) return OnTransferError(std::move(status));
     }
     return MakeRequestImpl();
   }
@@ -665,11 +687,14 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
   if (transfer_stall_timeout_.count() != 0) {
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
     auto const timeout = static_cast<long>(transfer_stall_timeout_.count());
-    handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
+    status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
+    if (!status.ok()) return OnTransferError(std::move(status));
     // Timeout if the request sends or receives less than 1 byte/second (i.e.
     // effectively no bytes) for `transfer_stall_timeout_` seconds.
-    handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
-    handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
+    status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status = handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
+    if (!status.ok()) return OnTransferError(std::move(status));
   }
 
   if (method == HttpMethod::kDelete || payload.empty())
@@ -678,8 +703,10 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
   // TODO(#7955): add support for multi-Span POST
   if (method == HttpMethod::kPost) {
     if (payload.size() == 1) {
-      handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload[0].size());
-      handle_.SetOption(CURLOPT_POSTFIELDS, payload[0].data());
+      status = handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload[0].size());
+      if (!status.ok()) return OnTransferError(std::move(status));
+      status = handle_.SetOption(CURLOPT_POSTFIELDS, payload[0].data());
+      if (!status.ok()) return OnTransferError(std::move(status));
       return MakeRequestImpl();
     }
     return Status{
@@ -690,9 +717,13 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
 
   if (method == HttpMethod::kPut || method == HttpMethod::kPatch) {
     WriteVector writev{std::move(payload)};
-    handle_.SetOption(CURLOPT_READFUNCTION, &RestCurlRequestOnReadData);
-    handle_.SetOption(CURLOPT_READDATA, &writev);
-    handle_.SetOption(CURLOPT_UPLOAD, 1L);
+    status =
+        handle_.SetOption(CURLOPT_READFUNCTION, &RestCurlRequestOnReadData);
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status = handle_.SetOption(CURLOPT_READDATA, &writev);
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status = handle_.SetOption(CURLOPT_UPLOAD, 1L);
+    if (!status.ok()) return OnTransferError(std::move(status));
     return MakeRequestImpl();
   }
 
