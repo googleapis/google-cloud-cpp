@@ -103,7 +103,7 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.45.2.tar.gz | \
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.46.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
