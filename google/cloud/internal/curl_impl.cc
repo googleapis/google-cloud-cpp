@@ -668,6 +668,7 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
 
   if (method == HttpMethod::kGet) {
     status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
+    if (!status.ok()) return OnTransferError(std::move(status));
     if (download_stall_timeout_.count() != 0) {
       // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
       auto const timeout = static_cast<long>(download_stall_timeout_.count());
