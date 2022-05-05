@@ -465,9 +465,9 @@ name of some object in the file system.
 
 As with the C++ API, we try to avoid breaking changes to these interface
 points. Sometimes such changes yield benefits to our customers, in the form of
-easier-to-understand what names go with services, or more consistency
-across services. When these benefits warrant it, we will announce these changes
-prominently in our `CHANGELOG.md` file and in the affected release's notes.
+bug fixes, increased consistency across services, or easier to understand names.
+When these benefits warrant it, we will announce these changes prominently in
+our `CHANGELOG.md` file and in the affected release's notes.
 Nevertheless, though we take commercially reasonable efforts to prevent this,
 it is possible that backwards incompatible changes go undetected and,
 therefore, undocumented. We apologize if this is the case and welcome feedback
