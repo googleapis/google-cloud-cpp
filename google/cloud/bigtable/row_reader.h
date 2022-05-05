@@ -120,6 +120,15 @@ class RowReader {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+inline bigtable::RowReader MakeRowReader(std::shared_ptr<RowReaderImpl> impl) {
+  return bigtable::RowReader(std::move(impl));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 
