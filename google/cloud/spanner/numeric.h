@@ -219,6 +219,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  *  - [-+]?[0-9]+(.[0-9]*)?([eE][-+]?[0-9]+)?
  *  - [-+]?.[0-9]+([eE][-+]?[0-9]+)?
+ *  - [Nn][Aa][Nn]                  // "not a number" for kPostgreSQL mode
  *
  * For example, "0", "-999", "3.141592654", "299792458", "6.02214076e23", etc.
  * There must be digits either before or after any decimal point.
