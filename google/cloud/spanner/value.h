@@ -194,6 +194,10 @@ class Value {
   /// @copydoc Value(bool)
   explicit Value(Json v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
+  explicit Value(Numeric v) : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
+  explicit Value(PgNumeric v) : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
   explicit Value(Timestamp v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(CommitTimestamp v)
@@ -201,9 +205,6 @@ class Value {
   /// @copydoc Value(bool)
   explicit Value(absl::CivilDay v)
       : Value(PrivateConstructor{}, std::move(v)) {}
-  /// @copydoc Value(bool)
-  template <DecimalMode Mode>
-  explicit Value(Decimal<Mode> v) : Value(PrivateConstructor{}, std::move(v)) {}
 
   /**
    * Constructs an instance from common C++ literal types that closely, though
@@ -365,27 +366,8 @@ class Value {
   static bool TypeProtoIs(std::string const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Bytes const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Json const&, google::spanner::v1::Type const&);
-  template <DecimalMode Mode>
-  static bool TypeProtoIs(Decimal<Mode> const&,
-                          google::spanner::v1::Type const& type) {
-    if (type.code() == google::spanner::v1::TypeCode::NUMERIC) {
-      using google::spanner::v1::TypeAnnotationCode;
-      switch (Mode) {
-        case DecimalMode::kGoogleSQL:
-          if (type.type_annotation() ==
-              TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED) {
-            return true;
-          }
-          break;
-        case DecimalMode::kPostgreSQL:
-          if (type.type_annotation() == TypeAnnotationCode::PG_NUMERIC) {
-            return true;
-          }
-          break;
-      }
-    }
-    return false;
-  }
+  static bool TypeProtoIs(Numeric const&, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(PgNumeric const&, google::spanner::v1::Type const&);
   template <typename T>
   static bool TypeProtoIs(absl::optional<T>,
                           google::spanner::v1::Type const& type) {
@@ -432,27 +414,13 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(std::string const&);
   static google::spanner::v1::Type MakeTypeProto(Bytes const&);
   static google::spanner::v1::Type MakeTypeProto(Json const&);
+  static google::spanner::v1::Type MakeTypeProto(Numeric const&);
+  static google::spanner::v1::Type MakeTypeProto(PgNumeric const&);
   static google::spanner::v1::Type MakeTypeProto(Timestamp);
   static google::spanner::v1::Type MakeTypeProto(CommitTimestamp);
   static google::spanner::v1::Type MakeTypeProto(absl::CivilDay);
   static google::spanner::v1::Type MakeTypeProto(int);
   static google::spanner::v1::Type MakeTypeProto(char const*);
-  template <DecimalMode Mode>
-  static google::spanner::v1::Type MakeTypeProto(Decimal<Mode> const&) {
-    google::spanner::v1::Type t;
-    t.set_code(google::spanner::v1::TypeCode::NUMERIC);
-    using google::spanner::v1::TypeAnnotationCode;
-    switch (Mode) {
-      case DecimalMode::kGoogleSQL:
-        // Prefer to leave type_annotation unset over setting it to
-        // TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED.
-        break;
-      case DecimalMode::kPostgreSQL:
-        t.set_type_annotation(TypeAnnotationCode::PG_NUMERIC);
-        break;
-    }
-    return t;
-  }
   template <typename T>
   static google::spanner::v1::Type MakeTypeProto(absl::optional<T> const&) {
     return MakeTypeProto(T{});
@@ -508,17 +476,13 @@ class Value {
   static google::protobuf::Value MakeValueProto(std::string s);
   static google::protobuf::Value MakeValueProto(Bytes b);
   static google::protobuf::Value MakeValueProto(Json j);
+  static google::protobuf::Value MakeValueProto(Numeric n);
+  static google::protobuf::Value MakeValueProto(PgNumeric n);
   static google::protobuf::Value MakeValueProto(Timestamp ts);
   static google::protobuf::Value MakeValueProto(CommitTimestamp ts);
   static google::protobuf::Value MakeValueProto(absl::CivilDay d);
   static google::protobuf::Value MakeValueProto(int i);
   static google::protobuf::Value MakeValueProto(char const* s);
-  template <DecimalMode Mode>
-  static google::protobuf::Value MakeValueProto(Decimal<Mode> d) {
-    google::protobuf::Value v;
-    v.set_string_value(std::move(d).ToString());
-    return v;
-  }
   template <typename T>
   static google::protobuf::Value MakeValueProto(absl::optional<T> opt) {
     if (opt.has_value()) return MakeValueProto(*std::move(opt));
@@ -577,6 +541,12 @@ class Value {
                                   google::spanner::v1::Type const&);
   static StatusOr<Json> GetValue(Json const&, google::protobuf::Value const&,
                                  google::spanner::v1::Type const&);
+  static StatusOr<Numeric> GetValue(Numeric const&,
+                                    google::protobuf::Value const&,
+                                    google::spanner::v1::Type const&);
+  static StatusOr<PgNumeric> GetValue(PgNumeric const&,
+                                      google::protobuf::Value const&,
+                                      google::spanner::v1::Type const&);
   static StatusOr<Timestamp> GetValue(Timestamp, google::protobuf::Value const&,
                                       google::spanner::v1::Type const&);
   static StatusOr<CommitTimestamp> GetValue(CommitTimestamp,
@@ -585,17 +555,6 @@ class Value {
   static StatusOr<absl::CivilDay> GetValue(absl::CivilDay,
                                            google::protobuf::Value const&,
                                            google::spanner::v1::Type const&);
-  template <DecimalMode Mode>
-  static StatusOr<Decimal<Mode>> GetValue(Decimal<Mode> const&,
-                                          google::protobuf::Value const& pv,
-                                          google::spanner::v1::Type const&) {
-    if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-      return Status(StatusCode::kUnknown, "missing NUMERIC");
-    }
-    auto decoded = MakeDecimal<Mode>(pv.string_value());
-    if (!decoded) return decoded.status();
-    return *decoded;
-  }
   template <typename T, typename V>
   static StatusOr<absl::optional<T>> GetValue(
       absl::optional<T> const&, V&& pv, google::spanner::v1::Type const& pt) {
