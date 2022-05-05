@@ -84,6 +84,11 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
 
 ## v1.41.0 - TBD
 
+* Starting with this release we only test with Bazel >= 4.2.1. This change is
+  required to test with the current version of gRPC (>= 1.46.0). It is possible,
+  that you can continue to compile `google-cloud-cpp` with Bazel < 4.2.1 and
+  grpc < 1.46.0. We do not recommend or test such configurations.
+
 ## v1.40.0 - 2022-05
 
 We are happy to announce that the following GA libraries.  Unless specifically
