@@ -18,25 +18,19 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
+#include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/internal/rowreaderiterator.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
-#include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/optional.h"
-#include "absl/types/optional.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
-#include <grpcpp/grpcpp.h>
-#include <cinttypes>
-#include <iterator>
-#include <string>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Object returned by Table::ReadRows(), enumerates rows in the response.
  *
@@ -73,10 +67,10 @@ class RowReader {
 
   RowReader(RowReader&&) = default;
 
-  ~RowReader();
+  ~RowReader() = default;
 
-  using iterator = internal::RowReaderIterator;
-  friend class internal::RowReaderIterator;
+  using iterator = bigtable_internal::RowReaderIterator;
+  friend class bigtable_internal::RowReaderIterator;
 
   /**
    * Input iterator over rows in the response.
@@ -104,66 +98,10 @@ class RowReader {
   void Cancel();
 
  private:
-  using OptionalRow = absl::optional<Row>;
+  explicit RowReader(std::shared_ptr<bigtable_internal::RowReaderImpl> impl)
+      : impl_(std::move(impl)) {}
 
-  /**
-   * Read and parse the next row in the response.
-   *
-   * @param row receives the next row on success, and is reset on failure or if
-   * there are no more rows.
-   *
-   * This call possibly blocks waiting for data until a full row is available.
-   */
-  StatusOr<OptionalRow> Advance();
-
-  /// Called by Advance(), does not handle retries.
-  grpc::Status AdvanceOrFail(OptionalRow& row);
-
-  /**
-   * Move the `processed_chunks_count_` index to the next chunk,
-   * reading data if needed.
-   *
-   * Returns false if no more chunks are available.
-   *
-   * This call is used internally by AdvanceOrFail to prepare data for
-   * parsing. When it returns true, the value of
-   * `response_.chunks(processed_chunks_count_)` is valid and holds
-   * the next chunk to parse.
-   */
-  bool NextChunk();
-
-  /// Sends the ReadRows request to the stub.
-  void MakeRequest();
-
-  std::shared_ptr<DataClient> client_;
-  std::string app_profile_id_;
-  std::string table_name_;
-  RowSet row_set_;
-  std::int64_t rows_limit_;
-  Filter filter_;
-  std::unique_ptr<RPCRetryPolicy> retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> backoff_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
-
-  std::unique_ptr<grpc::ClientContext> context_;
-
-  std::unique_ptr<internal::ReadRowsParserFactory> parser_factory_;
-  std::unique_ptr<internal::ReadRowsParser> parser_;
-  std::unique_ptr<
-      grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
-      stream_;
-  bool stream_is_open_;
-  bool operation_cancelled_;
-
-  /// The last received response, chunks are being parsed one by one from it.
-  google::bigtable::v2::ReadRowsResponse response_;
-  /// Number of chunks already parsed in response_.
-  int processed_chunks_count_;
-
-  /// Number of rows read so far, used to set row_limit in retries.
-  std::int64_t rows_count_;
-  /// Holds the last read row key, for retries.
-  RowKeyType last_read_row_key_;
+  std::shared_ptr<bigtable_internal::RowReaderImpl> impl_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

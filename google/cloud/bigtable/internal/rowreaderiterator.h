@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROWREADERITERATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROWREADERITERATOR_H
 
+#include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -23,12 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-// Forward declare the owner class of this iterator.
-class RowReader;
-
-namespace internal {
 
 /**
  * The input iterator used to scan the rows in a RowReader.
@@ -38,13 +35,13 @@ class RowReaderIterator {
   //@{
   /// @name Iterator traits
   using iterator_category = std::input_iterator_tag;
-  using value_type = StatusOr<Row>;
+  using value_type = StatusOr<bigtable::Row>;
   using difference_type = std::ptrdiff_t;
   using pointer = value_type*;
   using reference = value_type&;
   //@}
 
-  explicit RowReaderIterator(RowReader* owner);
+  explicit RowReaderIterator(std::shared_ptr<RowReaderImpl> owner);
   RowReaderIterator() = default;
 
   RowReaderIterator& operator++();
@@ -68,9 +65,9 @@ class RowReaderIterator {
 
   void Advance();
   /// nullptr indicates end()
-  RowReader* owner_{};
+  std::shared_ptr<RowReaderImpl> owner_;
   /// Current value of the iterator.
-  StatusOr<Row> row_;
+  StatusOr<bigtable::Row> row_;
 };
 
 inline bool operator==(RowReaderIterator const& lhs,
@@ -84,9 +81,8 @@ inline bool operator!=(RowReaderIterator const& lhs,
   return std::rel_ops::operator!=(lhs, rhs);
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

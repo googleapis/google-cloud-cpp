@@ -13,15 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/rowreaderiterator.h"
-#include "google/cloud/bigtable/row_reader.h"
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-RowReaderIterator::RowReaderIterator(RowReader* owner) : owner_(owner) {
+RowReaderIterator::RowReaderIterator(std::shared_ptr<RowReaderImpl> owner)
+    : owner_(std::move(owner)) {
   Advance();
 }
 
@@ -44,7 +43,7 @@ RowReaderIterator& RowReaderIterator::operator++() {
 void RowReaderIterator::Advance() {
   auto status_or_optional_row = owner_->Advance();
   if (!status_or_optional_row) {
-    row_ = StatusOr<Row>(std::move(status_or_optional_row).status());
+    row_ = StatusOr<bigtable::Row>(std::move(status_or_optional_row).status());
     return;
   }
   auto& optional_row = *status_or_optional_row;
@@ -56,8 +55,7 @@ void RowReaderIterator::Advance() {
   owner_ = nullptr;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
