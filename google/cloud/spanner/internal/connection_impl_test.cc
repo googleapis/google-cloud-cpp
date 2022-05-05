@@ -869,8 +869,8 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
     values: { string_value: "1999" }
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce([](grpc::ClientContext&,
-                   google::spanner::v1::ExecuteSqlRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&,
+                    google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ(request.params().fields().at("value").string_value(), "998");
         EXPECT_EQ(request.param_types().at("value").code(),
                   google::spanner::v1::TypeCode::NUMERIC);
@@ -879,8 +879,8 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
                       TYPE_ANNOTATION_CODE_UNSPECIFIED);
         return MakeReader({kResponseNumeric});
       })
-      .WillOnce([](grpc::ClientContext&,
-                   google::spanner::v1::ExecuteSqlRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&,
+                    google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ(request.params().fields().at("value").string_value(), "999");
         EXPECT_EQ(request.param_types().at("value").code(),
                   google::spanner::v1::TypeCode::NUMERIC);
@@ -888,8 +888,8 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
                   google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
         return MakeReader({kResponsePgNumeric});
       })
-      .WillOnce([](grpc::ClientContext&,
-                   google::spanner::v1::ExecuteSqlRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&,
+                    google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ(request.params().fields().at("value").string_value(), "NaN");
         EXPECT_EQ(request.param_types().at("value").code(),
                   google::spanner::v1::TypeCode::NUMERIC);
