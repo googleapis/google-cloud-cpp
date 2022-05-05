@@ -349,7 +349,7 @@ void CastDataType(google::cloud::spanner::Client client) {
              '2021-11-03T09:35:01UTC'::TIMESTAMPTZ as timestamp
   )""");
   using RowType =
-      std::tuple<std::string, std::int64_t, google::cloud::spanner::Numeric,
+      std::tuple<std::string, std::int64_t, google::cloud::spanner::PgNumeric,
                  google::cloud::spanner::Bytes, double, bool,
                  google::cloud::spanner::Timestamp>;
   auto rows = client.ExecuteQuery(std::move(sql));

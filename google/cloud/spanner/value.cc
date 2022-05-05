@@ -54,7 +54,9 @@ bool Equal(google::spanner::v1::Type const& pt1,  // NOLINT(misc-no-recursion)
     case google::spanner::v1::TypeCode::JSON:
     case google::spanner::v1::TypeCode::DATE:
     case google::spanner::v1::TypeCode::TIMESTAMP:
+      return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::NUMERIC:
+      if (pt1.type_annotation() != pt2.type_annotation()) return false;
       return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::ARRAY: {
       auto const& etype1 = pt1.array_element_type();
@@ -237,7 +239,16 @@ bool Value::TypeProtoIs(Json const&, google::spanner::v1::Type const& type) {
 }
 
 bool Value::TypeProtoIs(Numeric const&, google::spanner::v1::Type const& type) {
-  return type.code() == google::spanner::v1::TypeCode::NUMERIC;
+  return type.code() == google::spanner::v1::TypeCode::NUMERIC &&
+         type.type_annotation() == google::spanner::v1::TypeAnnotationCode::
+                                       TYPE_ANNOTATION_CODE_UNSPECIFIED;
+}
+
+bool Value::TypeProtoIs(PgNumeric const&,
+                        google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::NUMERIC &&
+         type.type_annotation() ==
+             google::spanner::v1::TypeAnnotationCode::PG_NUMERIC;
 }
 
 //
@@ -283,6 +294,15 @@ google::spanner::v1::Type Value::MakeTypeProto(Json const&) {
 google::spanner::v1::Type Value::MakeTypeProto(Numeric const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::NUMERIC);
+  // Prefer to leave type_annotation unset over setting it to
+  // TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED.
+  return t;
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(PgNumeric const&) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::NUMERIC);
+  t.set_type_annotation(google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
   return t;
 }
 
@@ -359,6 +379,12 @@ google::protobuf::Value Value::MakeValueProto(Json j) {
 }
 
 google::protobuf::Value Value::MakeValueProto(Numeric n) {
+  google::protobuf::Value v;
+  v.set_string_value(std::move(n).ToString());
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(PgNumeric n) {
   google::protobuf::Value v;
   v.set_string_value(std::move(n).ToString());
   return v;
@@ -490,6 +516,17 @@ StatusOr<Numeric> Value::GetValue(Numeric const&,
     return Status(StatusCode::kUnknown, "missing NUMERIC");
   }
   auto decoded = MakeNumeric(pv.string_value());
+  if (!decoded) return decoded.status();
+  return *decoded;
+}
+
+StatusOr<PgNumeric> Value::GetValue(PgNumeric const&,
+                                    google::protobuf::Value const& pv,
+                                    google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing NUMERIC");
+  }
+  auto decoded = MakePgNumeric(pv.string_value());
   if (!decoded) return decoded.status();
   return *decoded;
 }
