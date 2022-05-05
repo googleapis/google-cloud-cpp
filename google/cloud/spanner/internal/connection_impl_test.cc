@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/numeric.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
@@ -755,12 +756,18 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
           name: "UserName",
           type: { code: STRING }
         }
+        fields: {
+          name: "UserSalary",
+          type: { code: NUMERIC }
+        }
       }
     }
     values: { string_value: "12" }
     values: { string_value: "Steve" }
+    values: { null_value: NULL_VALUE }
     values: { string_value: "42" }
     values: { string_value: "Ann" }
+    values: { string_value: "123456.78" }
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({kText}))));
@@ -768,10 +775,11 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
-  using RowType = std::tuple<std::int64_t, std::string>;
+  using RowType =
+      std::tuple<std::int64_t, std::string, absl::optional<spanner::Numeric>>;
   auto expected = std::vector<RowType>{
-      RowType(12, "Steve"),
-      RowType(42, "Ann"),
+      RowType(12, "Steve", absl::nullopt),
+      RowType(42, "Ann", spanner::MakeNumeric(12345678, -2).value()),
   };
   int row_number = 0;
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
@@ -780,6 +788,140 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
     ++row_number;
   }
   EXPECT_EQ(row_number, expected.size());
+}
+
+TEST(ConnectionImplTest, ExecuteQueryPgNumericResult) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  auto conn = MakeConnectionImpl(db, {mock});
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  auto constexpr kText = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "ColumnA",
+          type: { code: NUMERIC type_annotation: PG_NUMERIC }
+        }
+        fields: {
+          name: "ColumnB",
+          type: { code: NUMERIC type_annotation: PG_NUMERIC }
+        }
+      }
+    }
+    values: { string_value: "42" }
+    values: { null_value: NULL_VALUE }
+    values: { string_value: "NaN" }
+    values: { string_value: "0.42" }
+  )pb";
+  EXPECT_CALL(*mock, ExecuteStreamingSql)
+      .WillOnce(Return(ByMove(MakeReader({kText}))));
+
+  auto rows = conn->ExecuteQuery(
+      {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
+       spanner::SqlStatement("SELECT * FROM Table")});
+  using RowType =
+      std::tuple<spanner::PgNumeric, absl::optional<spanner::PgNumeric>>;
+  auto expected = std::vector<RowType>{
+      RowType(spanner::MakePgNumeric(42).value(), absl::nullopt),
+      RowType(spanner::MakePgNumeric("NaN").value(),
+              spanner::MakePgNumeric(42, -2).value()),
+  };
+  int row_number = 0;
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(*row, expected[row_number]);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, expected.size());
+}
+
+TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  auto conn = MakeConnectionImpl(db, {mock});
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  auto constexpr kResponseNumeric = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "Column",
+          type: { code: NUMERIC }
+        }
+      }
+    }
+    values: { string_value: "1998" }
+  )pb";
+  auto constexpr kResponsePgNumeric = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "Column",
+          type: { code: NUMERIC type_annotation: PG_NUMERIC }
+        }
+      }
+    }
+    values: { string_value: "1999" }
+  )pb";
+  EXPECT_CALL(*mock, ExecuteStreamingSql)
+      .WillOnce([&](grpc::ClientContext&,
+                    google::spanner::v1::ExecuteSqlRequest const& request) {
+        EXPECT_EQ(request.params().fields().at("value").string_value(), "998");
+        EXPECT_EQ(request.param_types().at("value").code(),
+                  google::spanner::v1::TypeCode::NUMERIC);
+        EXPECT_EQ(request.param_types().at("value").type_annotation(),
+                  google::spanner::v1::TypeAnnotationCode::
+                      TYPE_ANNOTATION_CODE_UNSPECIFIED);
+        return MakeReader({kResponseNumeric});
+      })
+      .WillOnce([&](grpc::ClientContext&,
+                    google::spanner::v1::ExecuteSqlRequest const& request) {
+        EXPECT_EQ(request.params().fields().at("value").string_value(), "999");
+        EXPECT_EQ(request.param_types().at("value").code(),
+                  google::spanner::v1::TypeCode::NUMERIC);
+        EXPECT_EQ(request.param_types().at("value").type_annotation(),
+                  google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
+        return MakeReader({kResponsePgNumeric});
+      })
+      .WillOnce([&](grpc::ClientContext&,
+                    google::spanner::v1::ExecuteSqlRequest const& request) {
+        EXPECT_EQ(request.params().fields().at("value").string_value(), "NaN");
+        EXPECT_EQ(request.param_types().at("value").code(),
+                  google::spanner::v1::TypeCode::NUMERIC);
+        EXPECT_EQ(request.param_types().at("value").type_annotation(),
+                  google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
+        return MakeReader({kResponsePgNumeric});
+      });
+
+  for (auto const& value : {spanner::MakeNumeric(998)}) {
+    auto rows = conn->ExecuteQuery(
+        {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
+         spanner::SqlStatement(
+             "SELECT Column FROM Table"
+             " WHERE Column > @value",
+             {{"value", spanner::Value(std::move(value.value()))}})});
+    using RowType = std::tuple<spanner::Numeric>;
+    auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
+    EXPECT_EQ(*row, RowType(spanner::MakeNumeric(1998).value()));
+  }
+
+  for (auto const& value :
+       {spanner::MakePgNumeric(999), spanner::MakePgNumeric("NaN")}) {
+    auto rows = conn->ExecuteQuery(
+        {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
+         spanner::SqlStatement(
+             "SELECT Column FROM Table"
+             " WHERE Column > @value",
+             {{"value", spanner::Value(std::move(value.value()))}})});
+    using RowType = std::tuple<spanner::PgNumeric>;
+    auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
+    EXPECT_EQ(*row, RowType(spanner::MakePgNumeric(1999).value()));
+  }
 }
 
 /// @test Verify implicit "begin transaction" in ExecuteQuery() works.
@@ -1125,7 +1267,7 @@ TEST(ConnectionImplTest, ExecuteDmlDeletePermanentFailure) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->ExecuteDml({txn, spanner::SqlStatement("DELETE * FROM table")});
+      conn->ExecuteDml({txn, spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in ExecuteDml")));
 }
@@ -1154,7 +1296,7 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteTooManyTransientFailures) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->ExecuteDml({txn, spanner::SqlStatement("DELETE * FROM table")});
+      conn->ExecuteDml({txn, spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable,
                                HasSubstr("try-again in ExecuteDml")));
 }
