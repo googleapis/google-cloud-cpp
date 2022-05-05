@@ -19,25 +19,33 @@
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/internal/getenv.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
 namespace storage {
 namespace testing {
+namespace {
 
-static bool UseGrpcForMetadata() {
+absl::optional<std::string> EmulatorEndpoint() {
+  return google::cloud::internal::GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+}
+
+bool UseGrpcForMetadata() {
   auto v =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
           .value_or("");
   return v.find("metadata") != std::string::npos;
 }
 
-static bool UseGrpcForMedia() {
+bool UseGrpcForMedia() {
   auto v =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
           .value_or("");
   return v.find("media") != std::string::npos;
 }
+
+}  // namespace
 
 StorageIntegrationTest::~StorageIntegrationTest() {
   // The client configured to create and delete buckets is good for our
@@ -171,8 +179,7 @@ EncryptionKeyData StorageIntegrationTest::MakeEncryptionKeyData() {
 }
 
 bool StorageIntegrationTest::UsingEmulator() {
-  auto emulator =
-      google::cloud::internal::GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  auto emulator = EmulatorEndpoint();
   if (emulator) return true;
   return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
       .has_value();
@@ -224,6 +231,59 @@ std::string StorageIntegrationTest::MakeRandomData(std::size_t desired_size) {
     text += generate_random_line(desired_size - text.size());
   }
   return text;
+}
+
+StatusOr<StorageIntegrationTest::RetryTestResponse>
+StorageIntegrationTest::InsertRetryTest(RetryTestRequest const& request) {
+  if (!UsingEmulator()) {
+    return Status(StatusCode::kUnimplemented,
+                  "no retry tests without the testbench");
+  }
+  auto retry_client = RetryClient();
+
+  namespace rest = ::google::cloud::rest_internal;
+  auto http_request = rest::RestRequest()
+                          .AddHeader("Content-Type", "application/json")
+                          .SetPath("retry_test");
+  auto const payload = [&request] {
+    auto instructions = nlohmann::json{};
+    for (auto const& i : request.instructions) {
+      instructions[i.rpc_name] = i.actions;
+    }
+    return nlohmann::json{{"instructions", instructions}}.dump();
+  }();
+
+  auto attempts = 0;
+  auto delay = std::chrono::milliseconds(250);
+  auto keep_trying = [&attempts, &delay]() mutable {
+    if (attempts >= 3) return false;
+    if (++attempts == 1) return true;
+    std::this_thread::sleep_for(delay);
+    delay *= 2;
+    return true;
+  };
+
+  while (keep_trying()) {
+    auto http_response =
+        retry_client->Post(http_request, {absl::Span<char const>{payload}});
+    if (!http_response) continue;
+    if ((*http_response)->StatusCode() != rest::HttpStatusCode::kOk) continue;
+    auto response_payload =
+        rest::ReadAll(std::move(**http_response).ExtractPayload());
+    if (!response_payload) continue;
+    auto json = nlohmann::json::parse(*response_payload);
+    return RetryTestResponse{json.value("id", "")};
+  }
+  return Status{StatusCode::kUnavailable, "too many failures"};
+}
+
+std::shared_ptr<google::cloud::rest_internal::RestClient>
+StorageIntegrationTest::RetryClient() {
+  std::lock_guard<std::mutex> lk(mu_);
+  if (retry_client_) return retry_client_;
+  retry_client_ = google::cloud::rest_internal::MakePooledRestClient(
+      EmulatorEndpoint().value(), Options{});
+  return retry_client_;
 }
 
 }  // namespace testing
