@@ -329,11 +329,12 @@ TEST(MutationsTest, SpannerTypes) {
   auto date = Date(2022, 3, 30);
   auto json = Json("{true}");
   auto numeric = MakeNumeric(42).value();
+  auto pg_numeric = MakePgNumeric(131072).value();
   auto timestamp = Timestamp();
-  Mutation insert = MakeInsertMutation(                   //
-      "table-name",                                       //
-      {"bytes", "date", "json", "numeric", "timestamp"},  //
-      bytes, date, json, numeric, timestamp);
+  Mutation insert = MakeInsertMutation(
+      "table-name",
+      {"bytes", "date", "json", "numeric", "pg_numeric", "timestamp"},  //
+      bytes, date, json, numeric, pg_numeric, timestamp);
   EXPECT_EQ(insert, insert);
   EXPECT_NE(insert, empty);
 
@@ -345,12 +346,14 @@ TEST(MutationsTest, SpannerTypes) {
       columns: "date"
       columns: "json"
       columns: "numeric"
+      columns: "pg_numeric"
       columns: "timestamp"
       values {
         values { string_value: "Ynl0ZXMA" }
         values { string_value: "2022-03-30" }
         values { string_value: "{true}" }
         values { string_value: "42" }
+        values { string_value: "131072" }
         values { string_value: "1970-01-01T00:00:00Z" }
       }
     }
