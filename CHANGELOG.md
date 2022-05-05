@@ -82,6 +82,19 @@ background threads.
 For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/8800
 </details>
 
+<details>
+<summary>2023-05-01: remove `bigtable::RowReader` constructors</summary>
+<br>
+On 2023-05-01 (or shortly after) we will remove `bigtable::RowReader`
+constructors which accept `DataClient` as an argument.
+
+Application developers that read rows by directly constructing a `RowReader`
+object should instead construct a `Table` object and call `Table::ReadRows(...)`
+on it.
+
+For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/8854
+</details>
+
 ## v1.41.0 - TBD
 
 ## v1.40.0 - 2022-05

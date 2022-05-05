@@ -88,6 +88,8 @@ RowReader::RowReader(
           std::move(retry_policy), std::move(backoff_policy),
           std::move(metadata_update_policy), std::move(parser_factory))) {}
 
+std::int64_t constexpr RowReader::NO_ROWS_LIMIT;
+
 // The name must be all lowercase to work with range-for loops.
 RowReader::iterator RowReader::begin() {
   return bigtable_internal::RowReaderIterator(impl_);
@@ -103,5 +105,14 @@ void RowReader::Cancel() { impl_->Cancel(); }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+bigtable::RowReader MakeRowReader(std::shared_ptr<RowReaderImpl> impl) {
+  return bigtable::RowReader(std::move(impl));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
