@@ -148,6 +148,7 @@ add_library(
     internal/async_bulk_apply.cc
     internal/async_bulk_apply.h
     internal/async_retry_op.h
+    internal/async_row_reader.h
     internal/async_row_sampler.cc
     internal/async_row_sampler.h
     internal/bigtable_auth_decorator.cc
@@ -303,7 +304,6 @@ if (BUILD_TESTING)
         admin_client_test.cc
         app_profile_config_test.cc
         async_read_stream_test.cc
-        async_row_reader_test.cc
         bigtable_version_test.cc
         cell_test.cc
         client_options_test.cc
@@ -322,6 +322,7 @@ if (BUILD_TESTING)
         instance_update_config_test.cc
         internal/admin_client_params_test.cc
         internal/async_bulk_apply_test.cc
+        internal/async_row_reader_test.cc
         internal/async_row_sampler_test.cc
         internal/bigtable_channel_refresh_test.cc
         internal/bigtable_round_robin_test.cc
