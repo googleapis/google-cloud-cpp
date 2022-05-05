@@ -18,6 +18,7 @@
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <algorithm>
 #include <string>
 #include <vector>
 
