@@ -688,9 +688,20 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
   ASSERT_STATUS_OK(source_meta);
   ScheduleForDelete(*source_meta);
 
-  auto stream = client.ReadObject(
-      bucket_name_, object_name,
-      CustomHeader("x-goog-emulator-instructions", "return-503-after-256K"));
+  auto retry_response = InsertRetryTest(RetryTestRequest{{
+      RetryTestConfiguration{"storage.objects.get",
+                             {
+                                 "return-503",
+                                 "return-503",
+                                 "return-broken-stream-after-256K",
+                                 "return-broken-stream-after-64K",
+                             }},
+  }});
+  ASSERT_STATUS_OK(retry_response);
+
+  auto stream =
+      client.ReadObject(bucket_name_, object_name,
+                        CustomHeader("x-retry-test-id", retry_response->id));
   std::vector<char> actual(64 * 1024);
   for (std::size_t offset = 0;
        offset < contents.size() && !stream.bad() && !stream.eof();
