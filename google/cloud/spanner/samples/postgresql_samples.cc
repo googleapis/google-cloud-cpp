@@ -399,11 +399,13 @@ void OrderNulls(google::cloud::spanner::Client client) {
     auto rows = client.ExecuteQuery(std::move(sql));
     for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
       if (!row) throw std::runtime_error(row.status().message());
+      std::cout << "    ";
       if (std::get<0>(*row).has_value()) {
-        std::cout << "    " << *std::get<0>(*row) << "\n";
+        std::cout << *std::get<0>(*row);
       } else {
-        std::cout << "    NULL\n";
+        std::cout << "NULL";
       }
+      std::cout << "\n";
     }
   }
 }
@@ -433,7 +435,7 @@ void DmlWithParameters(google::cloud::spanner::Client client) {
         return google::cloud::spanner::Mutations{};
       });
   if (!commit) throw std::runtime_error(commit.status().message());
-  std::cout << "Inserted " << dml_result.RowsModified() << " singers\n";
+  std::cout << "Inserted " << dml_result.RowsModified() << " singers.\n";
 }
 // [END spanner_postgresql_dml_with_parameters]
 
@@ -517,7 +519,7 @@ void InformationSchema(
         CREATE TABLE Venues (
             VenueId  BIGINT NOT NULL PRIMARY KEY,
             Name     CHARACTER VARYING(1024) NOT NULL,
-            Revenues NUMERIC,
+            Revenue  NUMERIC,
             Picture  BYTEA
         )
       )""",
@@ -557,28 +559,106 @@ void InformationSchema(
 }
 // [END spanner_postgresql_information_schema]
 
-/*
- * Remaining samples to add:
- *   - Insert a Venue with a valid for the Revenues column.
- *   - Insert a Venue with a NULL value for the Revenues column.
- *   - Insert a Venue with a NaN value for the Revenues column.
- *   - Mutations can also be used to insert/update NUMERIC values,
- *     including NaN values.
- */
 // [START spanner_postgresql_numeric_data_type]
 void NumericDataType(google::cloud::spanner::Client client) {
-  // Get all Venues and inspect the Revenues values.
+  // Insert a Venue with a valid value for the Revenue column.
+  google::cloud::spanner::DmlResult dml_result;
+  auto commit = client.Commit(
+      [&client, &dml_result](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(
+            R"""(
+                INSERT INTO Venues (VenueId, Name, Revenue)
+                    VALUES ($1, $2, $3)
+            )""",
+            {{"p1", google::cloud::spanner::Value(1)},
+             {"p2", google::cloud::spanner::Value("Venue 1")},
+             {"p3",
+              google::cloud::spanner::Value(
+                  google::cloud::spanner::MakePgNumeric("3150.25").value())}});
+        auto insert = client.ExecuteDml(std::move(txn), std::move(sql));
+        if (!insert) return std::move(insert).status();
+        dml_result = *std::move(insert);
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "Inserted " << dml_result.RowsModified() << " venue(s).\n";
+
+  // Insert a Venue with a NULL value for the Revenue column.
+  commit = client.Commit(
+      [&client, &dml_result](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(
+            R"""(
+                INSERT INTO Venues (VenueId, Name, Revenue)
+                    VALUES ($1, $2, $3)
+            )""",
+            {{"p1", google::cloud::spanner::Value(2)},
+             {"p2", google::cloud::spanner::Value("Venue 2")},
+             {"p3", google::cloud::spanner::MakeNullValue<
+                        google::cloud::spanner::PgNumeric>()}});
+        auto insert = client.ExecuteDml(std::move(txn), std::move(sql));
+        if (!insert) return std::move(insert).status();
+        dml_result = *std::move(insert);
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "Inserted " << dml_result.RowsModified() << " venue(s)"
+            << " with NULL revenue.\n";
+
+  // Insert a Venue with a NaN value for the Revenue column.
+  commit = client.Commit(
+      [&client, &dml_result](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(
+            R"""(
+                INSERT INTO Venues (VenueId, Name, Revenue)
+                    VALUES ($1, $2, $3)
+            )""",
+            {{"p1", google::cloud::spanner::Value(3)},
+             {"p2", google::cloud::spanner::Value("Venue 3")},
+             {"p3",
+              google::cloud::spanner::Value(
+                  google::cloud::spanner::MakePgNumeric("NaN").value())}});
+        auto insert = client.ExecuteDml(std::move(txn), std::move(sql));
+        if (!insert) return std::move(insert).status();
+        dml_result = *std::move(insert);
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "Inserted " << dml_result.RowsModified() << " venue(s)"
+            << " with NaN revenue.\n";
+
+  // Mutations can also be used to insert/update values, including NaNs.
+  auto insert_venues =  //
+      google::cloud::spanner::InsertMutationBuilder(
+          "Venues", {"VenueId", "Name", "Revenue"})
+          .EmplaceRow(4, "Venue 4",
+                      google::cloud::spanner::MakePgNumeric("125.10").value())
+          .EmplaceRow(5, "Venue 5",
+                      google::cloud::spanner::MakePgNumeric("NaN").value())
+          .Build();
+  commit = client.Commit(google::cloud::spanner::Mutations{insert_venues});
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "Inserted 2 venues using mutations at "
+            << commit->commit_timestamp << ".\n";
+
+  // Get all Venues and inspect the Revenue values.
   auto sql = google::cloud::spanner::SqlStatement(R"""(
-      SELECT Name, Revenues FROM Venues
+      SELECT Name, Revenue FROM Venues
   )""");
-  using RowType =
-      std::tuple<std::string, absl::optional<google::cloud::spanner::Numeric>>;
+  using RowType = std::tuple<std::string,
+                             absl::optional<google::cloud::spanner::PgNumeric>>;
   auto rows = client.ExecuteQuery(std::move(sql));
   for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
-    if (!std::get<1>(*row).has_value()) continue;
-    std::cout << "Revenues of " << std::get<0>(*row) << ": "
-              << *std::get<1>(*row) << "\n";
+    std::cout << "Revenue of " << std::get<0>(*row) << ": ";
+    if (std::get<1>(*row).has_value()) {
+      std::cout << *std::get<1>(*row);
+    } else {
+      std::cout << "NULL";
+    }
+    std::cout << "\n";
   }
 }
 // [END spanner_postgresql_numeric_data_type]
