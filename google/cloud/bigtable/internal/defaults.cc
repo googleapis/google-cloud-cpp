@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/bigtable/rpc_policy_parameters.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
@@ -171,13 +172,14 @@ Options DefaultDataOptions(Options opts) {
   }
   if (!opts.has<bigtable_internal::DataRetryPolicyOption>()) {
     opts.set<bigtable_internal::DataRetryPolicyOption>(
-        bigtable_internal::DataLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        bigtable_internal::DataLimitedTimeRetryPolicy(
+            kBigtableLimits.maximum_retry_period)
             .clone());
   }
   if (!opts.has<bigtable_internal::DataBackoffPolicyOption>()) {
     opts.set<bigtable_internal::DataBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(kBigtableLimits.initial_delay / 2,
+                                 kBigtableLimits.maximum_delay, kBackoffScaling)
             .clone());
   }
   if (!opts.has<bigtable_internal::IdempotentMutationPolicyOption>()) {
