@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -49,9 +50,11 @@ spanner::Client MakeClient(Config const& config, int num_channels,
             << std::flush;
 
   auto connection = spanner::MakeConnection(
-      database, spanner::ConnectionOptions().set_num_channels(num_channels),
+      database,
       // This pre-creates all the Sessions we will need (one per thread).
-      spanner::SessionPoolOptions().set_min_sessions(config.maximum_threads));
+      google::cloud::Options{}
+          .set<google::cloud::GrpcNumChannelsOption>(num_channels)
+          .set<spanner::SessionPoolMinSessionsOption>(config.maximum_threads));
   return spanner::Client(std::move(connection));
 }
 

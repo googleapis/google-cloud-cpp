@@ -115,7 +115,8 @@ Result RunExperiment(Database const& db, int iterations) {
   }();
 
   Client client(
-      MakeConnection(db, ConnectionOptions().set_channel_pool_domain(pool)));
+      MakeConnection(db, Options{}.set<GrpcChannelArgumentsOption>(
+                             {{"grpc.channel_pooling_domain", pool}})));
 
   int number_of_successes = 0;
   int number_of_failures = 0;
