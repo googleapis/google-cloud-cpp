@@ -89,7 +89,7 @@ class PublisherConnection {
  *
  * @deprecated Please use `MakePublisherConnection(topic)` instead.
  */
-GOOGLE_CLOUD_CPP_DEPRECATED("use MakePublisherConnection(topic) instead")
+GOOGLE_CLOUD_CPP_DEPRECATED("use `MakePublisherConnection(topic)` instead")
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Topic topic, std::initializer_list<internal::NonConstructible>);
 

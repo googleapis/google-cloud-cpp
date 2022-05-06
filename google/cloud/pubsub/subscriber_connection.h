@@ -74,11 +74,10 @@ class SubscriberConnection {
  *     existing code, which calls `MakeSubscriberConnection(subscription, {})`
  *     from breaking, due to ambiguity.
  *
- * @deprecated Please use the `MakeSubscriberConnection` function which accepts
- *     `google::cloud::Options` instead.
+ * @deprecated Please use `MakeSubscriberConnection(subscription)` instead.
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "use the overload consuming google::cloud::Options instead")
+    "use `MakeSubscriberConnection(subscription) instead")
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription,
     std::initializer_list<internal::NonConstructible>);
