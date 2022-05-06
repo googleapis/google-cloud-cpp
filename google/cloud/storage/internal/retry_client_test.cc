@@ -560,7 +560,7 @@ TEST(RetryClientTest, UploadFinalChunkQueryTooManyMissingPayloads) {
   EXPECT_CALL(*mock, UploadChunk)
       .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
-  // This should trigger a `QueryResumableUpload()`, simulate the case the
+  // This should trigger a `QueryResumableUpload()`, simulate the case where the
   // service never returns a payload.
   EXPECT_CALL(*mock, QueryResumableUpload)
       .Times(AtLeast(2))
