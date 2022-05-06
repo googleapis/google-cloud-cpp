@@ -291,9 +291,12 @@ class ExperimentImpl {
               << std::flush;
 
     auto connection = spanner::MakeConnection(
-        database, spanner::ConnectionOptions().set_num_channels(num_channels),
+        database,
         // This pre-creates all the Sessions we will need (one per thread).
-        spanner::SessionPoolOptions().set_min_sessions(config.maximum_threads));
+        google::cloud::Options{}
+            .set<google::cloud::GrpcNumChannelsOption>(num_channels)
+            .set<spanner::SessionPoolMinSessionsOption>(
+                config.maximum_threads));
     return spanner::Client(std::move(connection));
   }
 
@@ -303,8 +306,9 @@ class ExperimentImpl {
     std::cout << "# Creating " << num_channels << " stub"
               << (num_channels != 1 ? "s" : "") << "\n"
               << std::flush;
-    auto opts = google::cloud::internal::MakeOptions(
-        spanner::ConnectionOptions().set_num_channels(num_channels));
+    auto opts =
+        google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(
+            num_channels);
     opts = spanner_internal::DefaultOptions(std::move(opts));
     auto auth = google::cloud::internal::CreateAuthenticationStrategy(
         opts.get<google::cloud::GrpcCredentialOption>());
