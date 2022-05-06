@@ -29,26 +29,12 @@
 #include <utility>
 
 namespace {
-std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator) {
-  return google::cloud::pubsub_testing::RandomTopicId(generator,
-                                                      "cloud-cpp-samples");
-}
 
-std::string RandomSubscriptionId(
-    google::cloud::internal::DefaultPRNG& generator) {
-  return google::cloud::pubsub_testing::RandomSubscriptionId(
-      generator, "cloud-cpp-samples");
-}
-
-std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator) {
-  return google::cloud::pubsub_testing::RandomSnapshotId(generator,
-                                                         "cloud-cpp-samples");
-}
-
-std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator) {
-  return google::cloud::pubsub_testing::RandomSchemaId(generator,
-                                                       "cloud-cpp-samples");
-}
+using ::google::cloud::pubsub::examples::RandomSchemaId;
+using ::google::cloud::pubsub::examples::RandomSnapshotId;
+using ::google::cloud::pubsub::examples::RandomSubscriptionId;
+using ::google::cloud::pubsub::examples::RandomTopicId;
+using ::google::cloud::pubsub::examples::UsingEmulator;
 
 auto constexpr kWaitTimeout = std::chrono::minutes(1);
 
