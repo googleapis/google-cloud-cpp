@@ -88,6 +88,8 @@ RowReader::RowReader(
           std::move(retry_policy), std::move(backoff_policy),
           std::move(metadata_update_policy), std::move(parser_factory))) {}
 
+std::int64_t constexpr RowReader::NO_ROWS_LIMIT;
+
 // The name must be all lowercase to work with range-for loops.
 RowReader::iterator RowReader::begin() {
   return bigtable_internal::RowReaderIterator(impl_);

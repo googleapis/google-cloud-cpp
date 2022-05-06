@@ -30,6 +30,16 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class RowReader;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+bigtable::RowReader MakeRowReader(std::shared_ptr<RowReaderImpl> impl);
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+namespace bigtable {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Object returned by Table::ReadRows(), enumerates rows in the response.
@@ -51,6 +61,7 @@ class RowReader {
   // NOLINTNEXTLINE(readability-identifier-naming)
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
 
+  GOOGLE_CLOUD_CPP_BIGTABLE_ROW_READER_CTOR_DEPRECATED()
   RowReader(std::shared_ptr<DataClient> client, std::string table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
@@ -58,6 +69,7 @@ class RowReader {
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
+  GOOGLE_CLOUD_CPP_BIGTABLE_ROW_READER_CTOR_DEPRECATED()
   RowReader(std::shared_ptr<DataClient> client, std::string app_profile_id,
             std::string table_name, RowSet row_set, std::int64_t rows_limit,
             Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
@@ -98,6 +110,8 @@ class RowReader {
   void Cancel();
 
  private:
+  friend RowReader bigtable_internal::MakeRowReader(
+      std::shared_ptr<bigtable_internal::RowReaderImpl>);
   explicit RowReader(std::shared_ptr<bigtable_internal::RowReaderImpl> impl)
       : impl_(std::move(impl)) {}
 
@@ -106,6 +120,15 @@ class RowReader {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+inline bigtable::RowReader MakeRowReader(std::shared_ptr<RowReaderImpl> impl) {
+  return bigtable::RowReader(std::move(impl));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

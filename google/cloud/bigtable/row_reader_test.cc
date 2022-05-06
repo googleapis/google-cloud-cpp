@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
-#include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/internal/legacy_row_reader_impl.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
@@ -145,11 +145,12 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
   EXPECT_CALL(*stream, Finish).WillOnce(Return(grpc::Status::OK));
   EXPECT_CALL(*client_, ReadRows).WillOnce(stream->MakeMockReturner());
 
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   EXPECT_EQ(reader.begin(), reader.end());
 }
@@ -169,11 +170,12 @@ TEST_F(RowReaderTest, ReadOneRow) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -206,11 +208,12 @@ TEST_F(RowReaderTest, ReadOneRowAppProfileId) {
       });
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "test-id", "", bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -234,11 +237,12 @@ TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -265,11 +269,12 @@ TEST_F(RowReaderTest, ReadOneOfTwoRowsClosesStream) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -307,11 +312,12 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -338,11 +344,12 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -381,11 +388,12 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -436,11 +444,12 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipToLastScannedRow) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet("r1", "r2", "r3"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -479,11 +488,12 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -527,11 +537,12 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -561,11 +572,12 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -594,11 +606,12 @@ TEST_F(RowReaderTest, FailedStreamWithAllRequiredRowsSeenShouldNotRetry) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(bigtable::RowRange::Closed("r1", "r2")),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -615,10 +628,11 @@ TEST_F(RowReaderTest, RowLimitIsSent) {
   EXPECT_CALL(*stream, Read).WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), 442, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_EQ(it, reader.end());
@@ -655,10 +669,11 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), 42, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -688,10 +703,11 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), 1, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -715,11 +731,12 @@ TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -736,22 +753,25 @@ TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
 TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
   testing_util::ScopedLog log;
 
-  std::unique_ptr<bigtable::RowReader> reader(new bigtable::RowReader(
-      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
-      bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
-      std::move(backoff_policy_), metadata_update_policy_,
-      std::move(parser_factory_)));
-  // Manually cancel the call before a stream was created.
-  reader->Cancel();
-  reader->begin();
+  {
+    auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
+        client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+        bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
+        std::move(backoff_policy_), metadata_update_policy_,
+        std::move(parser_factory_));
+    auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
-  auto it = reader->begin();
-  EXPECT_NE(it, reader->end());
-  EXPECT_FALSE(*it);
+    // Manually cancel the call before a stream was created.
+    reader.Cancel();
+    reader.begin();
 
-  // Delete the reader and verify no log is produced because we handled the
-  // error.
-  reader.reset();
+    auto it = reader.begin();
+    EXPECT_NE(it, reader.end());
+    EXPECT_FALSE(*it);
+
+    // Delete the reader and verify no log is produced because we handled the
+    // error.
+  }
 
   EXPECT_THAT(
       log.ExtractLines(),
@@ -766,11 +786,12 @@ TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {
   EXPECT_CALL(*client_, ReadRows).Times(0);
   EXPECT_CALL(*parser_factory_, CreateHook()).Times(0);
 
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 }
 
 TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
@@ -812,11 +833,12 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());

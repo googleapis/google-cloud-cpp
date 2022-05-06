@@ -25,6 +25,12 @@
       " is deprecated, and will be removed on or shortly after 2023-05-01." \
       " See GitHub issue #8800 for more information.")
 
+#define GOOGLE_CLOUD_CPP_BIGTABLE_ROW_READER_CTOR_DEPRECATED()             \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                             \
+      "RowReader public constructors have been deprecated. They are "      \
+      " scheduled for deletion on 2023-05-01. Please use the `RowReader` " \
+      "returned by `Table::ReadRows()`.")
+
 // This preprocessor symbol is deprecated and should never be used anywhere. It
 // exists solely for backward compatibility to avoid breaking anyone who may
 // have been using it.
