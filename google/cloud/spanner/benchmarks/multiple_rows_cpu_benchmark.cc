@@ -317,12 +317,6 @@ class ExperimentImpl {
     return stubs;
   }
 
-  /// Get a snapshot of the random bit generator
-  google::cloud::internal::DefaultPRNG Generator() const {
-    std::lock_guard<std::mutex> lk(mu_);
-    return generator_;
-  };
-
   void DumpSamples(std::vector<RowCpuSample> const& samples) const {
     std::lock_guard<std::mutex> lk(mu_);
     std::copy(samples.begin(), samples.end(),
