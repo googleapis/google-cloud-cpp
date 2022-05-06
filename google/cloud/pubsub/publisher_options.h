@@ -53,6 +53,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Applications developers should consult the Cloud Pub/Sub
  * [pricing page][pubsub-pricing-link] when selecting a batching configuration.
  *
+ * @deprecated We recommend you use `google::cloud::Options` and pass the
+ *   options to `MakePublisherConnection()`.
+ *
  * @par Example
  * @snippet samples.cc publisher-options
  *
@@ -60,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class PublisherOptions {
  public:
-  PublisherOptions() : PublisherOptions(Options{}) {}
+  /// @deprecated Use `google::cloud::Options{}` instead.
+  GOOGLE_CLOUD_CPP_DEPRECATED("use `google::cloud::Options{}` instead")
+  PublisherOptions();
 
   /**
    * Initialize the publisher options.
@@ -72,10 +77,12 @@ class PublisherOptions {
    *     unexpected options will be logged.
    *
    * @param opts configuration options
+   *
+   * @deprecated Use `google::cloud::Options{}` instead.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED("use `google::cloud::Options{}` instead")
   explicit PublisherOptions(Options opts);
 
-  //@{
   /**
    * @name Publisher batch control
    *
@@ -86,7 +93,13 @@ class PublisherOptions {
    * to [quota limits].
    *
    * [quota limits]: https://cloud.google.com/pubsub/quotas#resource_limits
+   *
    */
+  ///@{
+  /// @deprecated Use `google::cloud::Options{}` and `MaxHoldTimeOption`
+  ///     instead.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MaxHoldTimeOption` instead")
   std::chrono::microseconds maximum_hold_time() const {
     return opts_.get<MaxHoldTimeOption>();
   }
@@ -104,8 +117,12 @@ class PublisherOptions {
    *     set the holding time to 10 milliseconds, start a batch with message 1,
    *     and publish a second message 5 milliseconds later, the second message
    *     will be flushed approximately 5 milliseconds after it is published.
+   *
+   * @deprecated Use `google::cloud::Options{}` and `MaxHoldTimeOption` instead.
    */
   template <typename Rep, typename Period>
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MaxHoldTimeOption` instead")
   PublisherOptions& set_maximum_hold_time(
       std::chrono::duration<Rep, Period> v) {
     opts_.set<MaxHoldTimeOption>(
@@ -113,6 +130,10 @@ class PublisherOptions {
     return *this;
   }
 
+  /// @deprecated Use `google::cloud::Options{}` and `MaxBatchMessagesOption`
+  /// instead.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MaxBatchMessagesOption` instead")
   std::size_t maximum_batch_message_count() const {
     return opts_.get<MaxBatchMessagesOption>();
   }
@@ -126,12 +147,21 @@ class PublisherOptions {
    *    function.
    *
    * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
+   *
+   * @deprecated Use `google::cloud::Options{}` and `MaxBatchMessagesOption`
+   *     instead.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MaxBatchMessagesOption` instead")
   PublisherOptions& set_maximum_batch_message_count(std::size_t v) {
     opts_.set<MaxBatchMessagesOption>(v);
     return *this;
   }
 
+  /// @deprecated Use `google::cloud::Options{}` and `MaxBatchBytesOption`
+  ///     instead.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MaxBatchBytesOption` instead")
   std::size_t maximum_batch_bytes() const {
     return opts_.get<MaxBatchBytesOption>();
   }
@@ -145,14 +175,18 @@ class PublisherOptions {
    *    function.
    *
    * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
+   *
+   * @deprecated Use `google::cloud::Options{}` and `MaxBatchBytesOption`
+   *     instead.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MaxBatchBytesOption` instead")
   PublisherOptions& set_maximum_batch_bytes(std::size_t v) {
     opts_.set<MaxBatchBytesOption>(v);
     return *this;
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Publisher message ordering.
    *
@@ -165,15 +199,28 @@ class PublisherOptions {
    * For applications that do not care about message ordering, this can limit
    * the throughput. Therefore, the behavior is disabled by default.
    */
+  ///@{
 
-  /// Return `true` if message ordering is enabled.
+  /**
+   * Return `true` if message ordering is enabled.
+   *
+   * @deprecated Use `google::cloud::Options{}` and `MessageOrderingOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MessageOrderingOption` instead")
   bool message_ordering() const { return opts_.get<MessageOrderingOption>(); }
 
   /**
    * Enable message ordering.
    *
+   * @deprecated Use `google::cloud::Options{}` and `MessageOrderingOption`
+   *     instead.
+   *
    * @see the documentation for the `Publisher` class for details.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MessageOrderingOption` instead")
   PublisherOptions& enable_message_ordering() {
     opts_.set<MessageOrderingOption>(true);
     return *this;
@@ -182,15 +229,19 @@ class PublisherOptions {
   /**
    * Disable message ordering.
    *
+   * @deprecated Use `google::cloud::Options{}` and `MessageOrderingOption`
+   *     instead.
+   *
    * @see the documentation for the `Publisher` class for details.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MessageOrderingOption` instead")
   PublisherOptions& disable_message_ordering() {
     opts_.set<MessageOrderingOption>(false);
     return *this;
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Publisher flow control.
    *
@@ -202,58 +253,128 @@ class PublisherOptions {
    * messages they can tolerate in this pending state, and may prefer to block
    * or reject messages.
    */
+  ///@{
 
-  /// Flow control based on pending bytes.
+  /**
+   * Flow control based on pending bytes.
+   *
+   * @deprecated Use `google::cloud::Options{}` and `MaxPendingBytesOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MaxPendingBytesOption` instead")
   PublisherOptions& set_maximum_pending_bytes(std::size_t v) {
     opts_.set<MaxPendingBytesOption>(v);
     return *this;
   }
 
-  /// Flow control based on pending messages.
+  /**
+   * Flow control based on pending messages.
+   *
+   * @deprecated Use `google::cloud::Options{}` and `MaxPendingMessagesOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MaxPendingMessagesOption` instead")
   PublisherOptions& set_maximum_pending_messages(std::size_t v) {
     opts_.set<MaxPendingMessagesOption>(v);
     return *this;
   }
 
+  /// @deprecated Use `google::cloud::Options{}` and `MaxPendingBytesOption`
+  /// instead.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MaxPendingBytesOption` instead")
   std::size_t maximum_pending_bytes() const {
     return opts_.get<MaxPendingBytesOption>();
   }
+
+  /// @deprecated Use `google::cloud::Options{}` and `MaxPendingMessagesOption`
+  /// instead.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `MaxPendingMessagesOption` instead")
   std::size_t maximum_pending_messages() const {
     return opts_.get<MaxPendingMessagesOption>();
   }
 
-  /// The current action for a full publisher
+  /**
+   * The current action for a full publisher.
+   *
+   * @deprecated Use `google::cloud::Options{}` and `FullPublisherActionOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `FullPublisherActionOption` instead")
   bool full_publisher_ignored() const {
     return opts_.get<FullPublisherActionOption>() ==
            FullPublisherAction::kIgnored;
   }
+
+  /**
+   * The current action for a full publisher.
+   *
+   * @deprecated Use `google::cloud::Options{}` and `FullPublisherActionOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `FullPublisherActionOption` instead")
   bool full_publisher_rejects() const {
     return opts_.get<FullPublisherActionOption>() ==
            FullPublisherAction::kRejects;
   }
+
+  /**
+   * The current action for a full publisher.
+   *
+   * @deprecated Use `google::cloud::Options{}` and `FullPublisherActionOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `FullPublisherActionOption` instead")
   bool full_publisher_blocks() const {
     return opts_.get<FullPublisherActionOption>() ==
            FullPublisherAction::kBlocks;
   }
 
-  /// Ignore full publishers, continue as usual
+  /**
+   * Ignore full publishers, continue as usual
+   *
+   * @deprecated Use `google::cloud::Options{}` and `FullPublisherActionOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `FullPublisherActionOption` instead")
   PublisherOptions& set_full_publisher_ignored() {
     opts_.set<FullPublisherActionOption>(FullPublisherAction::kIgnored);
     return *this;
   }
 
-  /// Configure the publisher to reject new messages when full.
+  /**
+   * Configure the publisher to reject new messages when full.
+   *
+   * @deprecated Use `google::cloud::Options{}` and `FullPublisherActionOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `FullPublisherActionOption` instead")
   PublisherOptions& set_full_publisher_rejects() {
     opts_.set<FullPublisherActionOption>(FullPublisherAction::kRejects);
     return *this;
   }
 
-  /// Configure the publisher to block the caller when full.
+  /**
+   * Configure the publisher to block the caller when full.
+   *
+   * @deprecated Use `google::cloud::Options{}` and `FullPublisherActionOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options{}` and `FullPublisherActionOption` instead")
   PublisherOptions& set_full_publisher_blocks() {
     opts_.set<FullPublisherActionOption>(FullPublisherAction::kBlocks);
     return *this;
   }
-  //@}
+  ///@}
 
  private:
   friend Options pubsub_internal::MakeOptions(PublisherOptions);

@@ -105,7 +105,6 @@ add_library(
     message.cc
     message.h
     options.h
-    publisher.cc
     publisher.h
     publisher_connection.cc
     publisher_connection.h
