@@ -1,15 +1,15 @@
-**Title**: customers must type `[Ee]xperimental` to access experimental features.
+**Title**: customers must type `experimental` to access experimental features.
 
 **Status**: accepted
 
 **Context**: From time-to-time we need to add experimental features to existing
 libraries. These may be:
 
-- Improvements or additions that do not have a stable API, normally we have a
+- Improvements or additions that do not have a stable API. Normally we have a
   period with new libraries where we let the API stabilize, but we have no such
   luxury when adding APIs to a GA library.
 - Features of a service that are released as "beta" or "EAP", or otherwise not
-  GA, we may want to give folks access to that feature, but again the API might
+  GA. We may want to give folks access to that feature, but again the API might
   change, or the underlying feature may be completely removed.
 
 Making changes to GA libraries *implies*, unless we take additional measures,
@@ -17,7 +17,7 @@ that the changes are GA.
 
 The `[[deprecated]]` attribute is not available in C++11, but even if we use
 existing workarounds (e.g. `ABSL_DEPRECATED()`), the generated warning messages
-are misleading: they include the literal word `deprecated` in the warnings.
+are misleading; they include the literal word `deprecated` in the warnings.
 
 Sometimes it is possible to add new features in a separate namespace, such as
 `google::cloud::experimental`, or `google::cloud::${service}_experimental`.
@@ -28,17 +28,15 @@ We could use a separate branch for experimental features, but then customers
 would need to manually diff the branch to understand what is experimental and
 what is stable. And we would need to support twice as much code.
 
-**Decision**: Experimental features for in existing GA libraries **must** 
-require the application developer to type `experimental` or `Experimental` to
-use them.
+**Decision**: Experimental features in existing GA libraries **must** require
+the application developer to type `experimental` (or `Experimental`, or whatever
+casing is correct under the applicable naming convention) to use them.
 
 Examples of acceptable approaches include:
 
 - Adding any new symbols to the `google::cloud::${service}_experimental`
   namespace.
-
 - Naming the symbol `ExperimentalFoo` or similar.
-
 - Functions can require a parameter of type `google::cloud::ExperimentalTag`.
   This type cannot be created with a brace initializer, the caller would need
   to type `Experimental` when using such functions.
