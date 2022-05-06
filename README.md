@@ -390,7 +390,8 @@ int main(int argc, char* argv[]) {
 * This project supports Windows, macOS, Linux
 * This project supports C++11 (and higher) compilers (we test with GCC >= 6.3,
   Clang >= 6.0, and MSVC >= 2017)
-* This project supports Bazel and CMake builds. See the [Quickstart examples](https://github.com/googleapis/google-cloud-cpp#quickstart)
+* This project supports Bazel (>= 4.0) and CMake (>= 3.5) builds. See the
+  [Quickstart examples](https://github.com/googleapis/google-cloud-cpp#quickstart)
 * This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md)
 * This project works with or without exceptions enabled
 * This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes
@@ -458,19 +459,19 @@ policy described at https://cloud.google.com/terms.
 
 Applications developers interact with a C++ library through more than just
 the C++ symbols and headers. They also need to reference the name of the
-library in their build scripts. Depending of the build system they use
+library in their build scripts. Depending on the build system they use
 this may be a CMake target, a Bazel rule, a pkg-config module, or just the
 name of some object in the file system.
 
 As with the C++ API, we try to avoid breaking changes to these interface
 points. Sometimes such changes yield benefits to our customers, in the form of
-easier-to-understand what names go with with services, or more consistency
-across services. When these benefits warrant it, we will announce these changes
-prominently in our `CHANGELOG.md` file and in the affected release's notes.
-Nevertheless, though we take commercially reasonable efforts to prevent this,
-it is possible that backwards incompatible changes go undetected and,
-therefore, undocumented. We apologize if this is the case and welcome feedback
-or bug reports to rectify the problem.
+bug fixes, increased consistency across services, or easier to understand names.
+When these benefits warrant it, we will announce these changes prominently in
+our `CHANGELOG.md` file and in the affected release's notes.  Nevertheless,
+though we take commercially reasonable efforts to prevent this, it is possible
+that backwards incompatible changes go undetected and, therefore, undocumented.
+We apologize if this is the case and welcome feedback or bug reports to rectify
+the problem.
 
 ### Experimental Libraries
 
@@ -515,7 +516,7 @@ these may work, we may accidentally break these from time to time. Examples of
 such, and the recommended alternatives, include:
 
 * CMake's `FetchContent` and/or git submodules: in these approaches the
-  `google-cloud-cpp` library becomes a sub-directory of a larger CMake build
+  `google-cloud-cpp` library becomes a subdirectory of a larger CMake build
   We do not test `google-cloud-cpp` in these  configurations, and we find them
   brittle as **all** CMake targets become visible to the larger project.
   This is both prone to conflicts, and makes it impossible to enforce that
