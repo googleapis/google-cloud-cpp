@@ -77,6 +77,8 @@ class SubscriberConnection {
  * @deprecated Please use the `MakeSubscriberConnection` function which accepts
  *     `google::cloud::Options` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "use the overload consuming google::cloud::Options instead")
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription,
     std::initializer_list<internal::NonConstructible>);
@@ -127,7 +129,7 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
  * shared and reused when possible. Note that gRPC reuses existing OS resources
  * (sockets) whenever possible, so applications may experience better
  * performance on the second (and subsequent) calls to this function with the
- * same `ConnectionOptions` parameters. However, this behavior is not guaranteed
+ * identical values for @p options. However, this behavior is not guaranteed
  * and applications should not rely on it.
  *
  * @see `SubscriberConnection`
@@ -149,6 +151,8 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
  * @deprecated Please use the `MakeSubscriberConnection` function which accepts
  *     `google::cloud::Options` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "use the overload consuming google::cloud::Options instead")
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription, SubscriberOptions options,
     ConnectionOptions connection_options = {},
