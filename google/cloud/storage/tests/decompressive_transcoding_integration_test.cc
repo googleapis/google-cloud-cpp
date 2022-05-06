@@ -47,9 +47,6 @@ class DecompressiveTranscodingIntegrationTest
 };
 
 TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadJson) {
-  // TODO(storage-testbench#321) - fix transcoding support in the emulator
-  if (UsingEmulator()) GTEST_SKIP();
-
   auto const gzip_filename = google::cloud::internal::GetEnv(
                                  "GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME")
                                  .value_or("");
@@ -88,9 +85,6 @@ TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadJson) {
 }
 
 TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadXml) {
-  // TODO(storage-testbench#321) - fix transcoding support in the emulator
-  if (UsingEmulator()) GTEST_SKIP();
-
   auto const gzip_filename = google::cloud::internal::GetEnv(
                                  "GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME")
                                  .value_or("");
@@ -128,9 +122,6 @@ TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadXml) {
 }
 
 TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadCompressedJson) {
-  // TODO(storage-testbench#321) - fix transcoding support in the emulator
-  if (UsingEmulator()) GTEST_SKIP();
-
   auto const gzip_filename = google::cloud::internal::GetEnv(
                                  "GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME")
                                  .value_or("");
@@ -166,9 +157,6 @@ TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadCompressedJson) {
 }
 
 TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadCompressedXml) {
-  // TODO(storage-testbench#321) - fix transcoding support in the emulator
-  if (UsingEmulator()) GTEST_SKIP();
-
   auto const gzip_filename = google::cloud::internal::GetEnv(
                                  "GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME")
                                  .value_or("");
