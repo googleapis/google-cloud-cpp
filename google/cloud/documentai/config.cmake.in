@@ -20,7 +20,3 @@ find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_documentai-targets.cmake")
-
-if (NOT TARGET google-cloud-cpp::experimental-documentai)
-    add_library(google-cloud-cpp::experimental-documentai ALIAS google-cloud-cpp::documentai)
-endif ()
