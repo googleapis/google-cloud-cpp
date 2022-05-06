@@ -37,9 +37,14 @@ Examples of acceptable approaches include:
 - Adding any new symbols to the `google::cloud::${service}_experimental`
   namespace.
 - Naming the symbol `ExperimentalFoo` or similar.
-- Functions can require a parameter of type `google::cloud::ExperimentalTag`.
-  This type cannot be created with a brace initializer, the caller would need
-  to type `Experimental` when using such functions.
+- Functions can require a non-defaulted parameter of type
+  `google::cloud::ExperimentalTag`. This type cannot be created with a brace
+  initializer, the caller would need to type `Experimental` when using such
+  functions.
+- Adding new libraries, where the target name includes `experimental-`. For
+  CMake we generally use `google-cloud-cpp::experimental-${library}`, for 
+  Bazel we generally use `//:experimental-${library}` (note this is a top-level)
+  target.
 
 **Consequences**: This decision makes it possible to add experimental features
 while clearly signalling to any users of the feature that it is indeed
