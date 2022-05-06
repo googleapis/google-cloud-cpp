@@ -460,6 +460,10 @@ TEST(ObjectWriteStreambufTest, Regression8868) {
   EXPECT_EQ(close->committed_size.value_or(0), quantum);
   EXPECT_TRUE(close->payload.has_value());
 
+  // Before the fixes for #8868 this second call (which is legal, though maybe
+  // a bit silly) would crash.  Basically the class assumed that the final
+  // UploadChunk() would always return an error or a full payload.  That is now
+  // guaranteed by the RetryClient.
   close = streambuf.Close();
   ASSERT_STATUS_OK(close);
   EXPECT_FALSE(streambuf.IsOpen());

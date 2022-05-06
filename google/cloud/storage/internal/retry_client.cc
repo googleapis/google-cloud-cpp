@@ -552,7 +552,7 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
 
     if (committed_size != expected_committed_size || request.last_chunk()) {
       // If we still have to send data, restart the loop. On the last chunk,
-      // event if the service reports all the data as received, we need to keep
+      // even if the service reports all the data as received, we need to keep
       // "finalizing" the object until the object metadata is returned. Note
       // that if we had the object metadata we would have already exited this
       // function.
