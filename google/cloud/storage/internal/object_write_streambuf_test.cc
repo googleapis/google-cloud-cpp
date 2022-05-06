@@ -414,6 +414,63 @@ TEST(ObjectWriteStreambufTest, CreatedForFinalizedUpload) {
   ASSERT_STATUS_OK(close_result);
 }
 
+/// @test A regression test for #8868.
+///    https://github.com/googleapis/google-cloud-cpp/issues/8868
+TEST(ObjectWriteStreambufTest, Regression8868) {
+  auto mock = absl::make_unique<testing::MockClient>();
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  auto const payload = std::string(quantum, '0');
+  using ::testing::Return;
+
+  ::testing::InSequence sequence;
+  // Simulate an upload chunk that has some kind of transient error.
+  EXPECT_CALL(*mock, UploadChunk)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
+  // This should trigger a `QueryResumableUpload()`, simulate the case where
+  // all the data is reported as "committed", but the payload is not reported
+  // back.
+  EXPECT_CALL(*mock, QueryResumableUpload)
+      .WillOnce(Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
+  EXPECT_CALL(*mock, UploadChunk)
+      .WillOnce(
+          Return(QueryResumableUploadResponse{quantum, ObjectMetadata()}));
+
+  using us = std::chrono::microseconds;
+  auto retry = RetryClient::Create(
+      std::move(mock),
+      Options{}
+          .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone())
+          .set<BackoffPolicyOption>(
+              ExponentialBackoffPolicy(us(1), us(2), 2).clone())
+          .set<IdempotencyPolicyOption>(
+              AlwaysRetryIdempotencyPolicy{}.clone()));
+  ObjectWriteStreambuf streambuf(
+      std::move(retry), ResumableUploadRequest(), "test-only-upload-id",
+      /*committed_size=*/0,
+      /*metadata=*/absl::nullopt,
+      /*max_buffer_size=*/2 * quantum, CreateNullHashFunction(), HashValues{},
+      CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
+  EXPECT_TRUE(streambuf.IsOpen());
+  streambuf.sputn(payload.data(), payload.size());
+  auto close = streambuf.Close();
+  ASSERT_STATUS_OK(close);
+  EXPECT_FALSE(streambuf.IsOpen());
+  EXPECT_EQ(close->committed_size.value_or(0), quantum);
+  EXPECT_TRUE(close->payload.has_value());
+
+  // Before the fixes for #8868 this second call (which is legal, though maybe
+  // a bit silly) would crash.  Basically the class assumed that the final
+  // UploadChunk() would always return an error or a full payload.  That is now
+  // guaranteed by the RetryClient.
+  close = streambuf.Close();
+  ASSERT_STATUS_OK(close);
+  EXPECT_FALSE(streambuf.IsOpen());
+  EXPECT_EQ(close->committed_size.value_or(0), quantum);
+  EXPECT_TRUE(close->payload.has_value());
+}
+
 /// @test Verify that last error status is accessible for small payload.
 TEST(ObjectWriteStreambufTest, ErrorInSmallPayload) {
   auto mock = absl::make_unique<testing::MockClient>();

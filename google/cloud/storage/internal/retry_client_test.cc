@@ -28,10 +28,13 @@ namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::Not;
+using ::testing::Property;
 using ::testing::Return;
 
 Options BasicTestPolicies() {
@@ -505,6 +508,68 @@ TEST(RetryClientTest, UploadChunkMissingRangeHeaderInQueryResumableUpload) {
       UploadChunkRequest("test-only-upload-id", 0, {{payload}}));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(quantum, response->committed_size.value_or(0));
+}
+
+/// @test Verify that full but unfinalized uploads are handled correctly.
+TEST(RetryClientTest, UploadFinalChunkQueryMissingPayloadTriggersRetry) {
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
+                          BasicTestPolicies().set<IdempotencyPolicyOption>(
+                              StrictIdempotencyPolicy().clone()));
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  auto const payload = std::string(quantum, '0');
+
+  ::testing::InSequence sequence;
+  // Simulate an upload chunk that has some kind of transient error.
+  EXPECT_CALL(*mock,
+              UploadChunk(Property(&UploadChunkRequest::last_chunk, true)))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
+  // This should trigger a `QueryResumableUpload()`, simulate the case where
+  // all the data is reported as "committed", but the payload is not reported
+  // back.
+  EXPECT_CALL(*mock, QueryResumableUpload)
+      .WillOnce(Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
+  // This should force a new UploadChunk() to finalize the object, verify this
+  // is an "empty" message, and return a successful result.
+  EXPECT_CALL(*mock,
+              UploadChunk(Property(&UploadChunkRequest::payload_size, 0)))
+      .WillOnce(
+          Return(QueryResumableUploadResponse{quantum, ObjectMetadata()}));
+
+  auto response = client->UploadChunk(
+      UploadChunkRequest("test-only-upload-id", 0, {{payload}}, HashValues{}));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(quantum, response->committed_size.value_or(0));
+  EXPECT_TRUE(response->payload.has_value());
+}
+
+/// @test Verify that not returning a final payload eventually becomes an error.
+TEST(RetryClientTest, UploadFinalChunkQueryTooManyMissingPayloads) {
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
+                          BasicTestPolicies().set<IdempotencyPolicyOption>(
+                              StrictIdempotencyPolicy().clone()));
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  auto const payload = std::string(quantum, '0');
+
+  // Simulate an upload chunk that has some kind of transient error.
+  EXPECT_CALL(*mock, UploadChunk)
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+  // This should trigger a `QueryResumableUpload()`, simulate the case where the
+  // service never returns a payload.
+  EXPECT_CALL(*mock, QueryResumableUpload)
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
+
+  auto response = client->UploadChunk(
+      UploadChunkRequest("test-only-upload-id", 0, {{payload}}, HashValues{}));
+  ASSERT_THAT(response, Not(IsOk()));
 }
 
 }  // namespace
