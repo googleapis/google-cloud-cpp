@@ -195,6 +195,9 @@ function (google_cloud_cpp_enable_deps)
     if (containeranalysis IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE grafeas)
     endif ()
+    if (pubsublite IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE pubsub)
+    endif ()
     set(GOOGLE_CLOUD_CPP_ENABLE
         "${GOOGLE_CLOUD_CPP_ENABLE}"
         PARENT_SCOPE)
@@ -264,7 +267,8 @@ endif ()
 # The only case where REST support is not needed is when not compiling services
 # with REST interfaces.
 set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION ON)
-if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+    AND NOT experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION OFF)
 endif ()
 cmake_dependent_option(
