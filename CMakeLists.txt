@@ -264,7 +264,8 @@ endif ()
 # The only case where REST support is not needed is when not compiling services
 # with REST interfaces.
 set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION ON)
-if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+    AND NOT experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION OFF)
 endif ()
 cmake_dependent_option(
@@ -316,6 +317,10 @@ function (google_cloud_cpp_enable_features)
         elseif ("${feature}" STREQUAL "experimental-storage-grpc")
             if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/storage)
+            endif ()
+        elseif ("${feature}" STREQUAL "pubsublite")
+            if (NOT ("pubsub" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
+                add_subdirectory(google/cloud/pubsub)
             endif ()
         else ()
             if (NOT IS_DIRECTORY
