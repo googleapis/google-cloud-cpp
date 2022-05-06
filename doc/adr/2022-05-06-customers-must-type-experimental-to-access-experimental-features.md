@@ -42,7 +42,7 @@ Examples of acceptable approaches include:
   initializer, the caller would need to type `Experimental` when using such
   functions.
 - Adding new libraries, where the target name includes `experimental-`. For
-  CMake we generally use `google-cloud-cpp::experimental-${library}`, for 
+  CMake we generally use `google-cloud-cpp::experimental-${library}`, for
   Bazel we generally use `//:experimental-${library}` (note this is a top-level)
   target.
 
