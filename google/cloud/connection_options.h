@@ -47,14 +47,24 @@ Options MakeOptions(ConnectionOptions<ConnectionTraits>);
 
 /**
  * The configuration parameters for client connections.
+ *
+ * @deprecated Use `Options` instead.
  */
 template <typename ConnectionTraits>
 class ConnectionOptions {
  public:
-  /// The default options, using `grpc::GoogleDefaultCredentials()`.
+  /**
+   * The default options, using `grpc::GoogleDefaultCredentials()`.
+   *
+   * @deprecated Use `Options` instead.
+   */
   ConnectionOptions() : ConnectionOptions(grpc::GoogleDefaultCredentials()) {}
 
-  /// The default options, using an explicit credentials object.
+  /**
+   * The default options, using an explicit credentials object.
+   *
+   * @deprecated Use `Options` instead.
+   */
   explicit ConnectionOptions(
       std::shared_ptr<grpc::ChannelCredentials> credentials)
       : opts_(Options{}
@@ -69,14 +79,24 @@ class ConnectionOptions {
                       ConnectionTraits::default_num_channels())),
         user_agent_prefix_(ConnectionTraits::user_agent_prefix()) {}
 
-  /// Change the gRPC credentials value.
+  /**
+   * Change the gRPC credentials value.
+   *
+   * @deprecated Use `Options` and `UnifiedCredentialsOption`.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `UnifiedCredentialsOption`")
   ConnectionOptions& set_credentials(
       std::shared_ptr<grpc::ChannelCredentials> v) {
     opts_.set<GrpcCredentialOption>(std::move(v));
     return *this;
   }
 
-  /// The gRPC credentials used by clients configured with this object.
+  /**
+   * The gRPC credentials used by clients configured with this object.
+   *
+   *  @deprecated Use `Options` and `UnifiedCredentialsOption`.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `UnifiedCredentialsOption`")
   std::shared_ptr<grpc::ChannelCredentials> credentials() const {
     return opts_.get<GrpcCredentialOption>();
   }
@@ -89,13 +109,21 @@ class ConnectionOptions {
    * simulator, or (2) to use a beta or EAP version of the service.
    *
    * The default value is set by `ConnectionTraits::default_endpoint()`.
+   *
+   * @deprecated Use `Options` and `EndpointOption`.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `EndpointOption`")
   ConnectionOptions& set_endpoint(std::string v) {
     opts_.set<EndpointOption>(std::move(v));
     return *this;
   }
 
-  /// The endpoint used by clients configured with this object.
+  /**
+   * The endpoint used by clients configured with this object.
+   *
+   * @deprecated Use `Options` and `EndpointOption`.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `EndpointOption`")
   std::string const& endpoint() const { return opts_.get<EndpointOption>(); }
 
   /**
@@ -107,10 +135,18 @@ class ConnectionOptions {
    * parallel.
    *
    * The default value is set by `ConnectionTraits::default_num_channels()`.
+   *
+   * @deprecated Use `Options` and `GrpcNumChannelsOption`
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `GrpcNumChannelsOption`")
   int num_channels() const { return opts_.get<GrpcNumChannelsOption>(); }
 
-  /// Set the value for `num_channels()`.
+  /**
+   * Set the value for `num_channels()`.
+   *
+   * @deprecated Use `Options` and `GrpcNumChannelsOption`
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `GrpcNumChannelsOption`")
   ConnectionOptions& set_num_channels(int num_channels) {
     opts_.set<GrpcNumChannelsOption>(num_channels);
     return *this;
@@ -122,29 +158,52 @@ class ConnectionOptions {
    * The C++ clients can log interesting events to help library and application
    * developers troubleshoot problems. This flag returns true if tracing should
    * be enabled by clients configured with this option.
+   *
+   * @deprecated Use `Options` and `TracingComponentsOption`
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `TracingComponentsOption`")
   bool tracing_enabled(std::string const& component) const {
     return internal::Contains(opts_.get<TracingComponentsOption>(), component);
   }
 
-  /// Enable tracing for @p component in clients configured with this object.
+  /**
+   * Enable tracing for @p component in clients configured with this object.
+   *
+   * @deprecated Use `Options` and `TracingComponentsOption`
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `TracingComponentsOption`")
   ConnectionOptions& enable_tracing(std::string const& component) {
     opts_.lookup<TracingComponentsOption>().insert(component);
     return *this;
   }
 
-  /// Disable tracing for @p component in clients configured with this object.
+  /**
+   * Disable tracing for @p component in clients configured with this object.
+   *
+   * @deprecated Use `Options` and `TracingComponentsOption`
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `TracingComponentsOption`")
   ConnectionOptions& disable_tracing(std::string const& component) {
     opts_.lookup<TracingComponentsOption>().erase(component);
     return *this;
   }
 
-  /// Return the set of tracing components.
+  /**
+   * Return the set of tracing components.
+   *
+   * @deprecated Use `Options` and `TracingComponentsOption`
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `TracingComponentsOption`")
   std::set<std::string> const& components() const {
     return opts_.get<TracingComponentsOption>();
   }
 
-  /// Return the options for use when tracing RPCs.
+  /**
+   * Return the options for use when tracing RPCs.
+   *
+   * @deprecated Use `Options` and `GrpcTracingOption`
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `GrpcTracingOption`")
   TracingOptions const& tracing_options() const {
     return opts_.get<GrpcTracingOptionsOption>();
   }
@@ -164,12 +223,20 @@ class ConnectionOptions {
    *
    * This option might be useful for applications that want to segregate traffic
    * for whatever reason.
+   *
+   * @deprecated Use `Options` and `GrpcChannelsArgumentsOption`
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `GrpcChannelsArgumentOption`")
   std::string const& channel_pool_domain() const {
     return channel_pool_domain_;
   }
 
-  /// Set the value for `channel_pool_domain()`.
+  /**
+   * Set the value for `channel_pool_domain()`.
+   *
+   * @deprecated Use `Options` and `GrpcChannelsArgumentsOption`
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `GrpcChannelsArgumentsOption`")
   ConnectionOptions& set_channel_pool_domain(std::string v) {
     channel_pool_domain_ = std::move(v);
     return *this;
@@ -181,7 +248,10 @@ class ConnectionOptions {
    * Libraries or services that use Cloud C++ clients may want to set their own
    * user-agent prefix. This can help them develop telemetry information about
    * number of users running particular versions of their system or library.
+   *
+   * @deprecated Use `Options` and `UserAgentProductsOption`
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `UserAgentProductsOption`")
   ConnectionOptions& add_user_agent_prefix(std::string prefix) {
     prefix += " ";
     prefix += user_agent_prefix_;
@@ -189,7 +259,12 @@ class ConnectionOptions {
     return *this;
   }
 
-  /// Return the current value for the user agent string.
+  /**
+   * Return the current value for the user agent string.
+   *
+   *  @deprecated Use `Options` and `UserAgentProductsOption`.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `UserAgentProductsOption`")
   std::string const& user_agent_prefix() const { return user_agent_prefix_; }
 
   /**
@@ -198,7 +273,13 @@ class ConnectionOptions {
    *
    * The caller would typically pass this argument to
    * `grpc::CreateCustomChannel` and create one more more gRPC channels.
+   *
+   * @deprecated Not intended for use in application code. There is
+   *   no alternative implemented or planned.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "Not intended for use in application code. There is no alternative "
+      "implemented or planned.")
   grpc::ChannelArguments CreateChannelArguments() const {
     return internal::MakeChannelArguments(internal::MakeOptions(*this));
   }
@@ -207,11 +288,19 @@ class ConnectionOptions {
    * Set the number of background threads.
    *
    * @note This value is not used if `DisableBackgroundThreads()` is called.
+   *
+   * @deprecated Use `Options` and `GrpcBackgroundThreadPoolSizeOption`
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "Use `Options` and `GrpcBackgroundThreadPoolSizeOption`")
   ConnectionOptions& set_background_thread_pool_size(std::size_t s) {
     background_thread_pool_size_ = s;
     return *this;
   }
+
+  /// @deprecated Use `Options` and `GrpcBackgroundThreadPoolSizeOption`.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "Use `Options` and `GrpcBackgroundThreadPoolSizeOption`")
   std::size_t background_thread_pool_size() const {
     return background_thread_pool_size_;
   }
@@ -225,7 +314,10 @@ class ConnectionOptions {
    * threads. In this case the application can provide the `CompletionQueue` and
    * it assumes responsibility for creating one or more threads blocked on
    * `CompletionQueue::Run()`.
+   *
+   * @deprecated Use `Options` and `GrpcCompletionQueueOption`
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `GrpcCompletionQueueOption`")
   ConnectionOptions& DisableBackgroundThreads(
       google::cloud::CompletionQueue const& cq) {
     background_threads_factory_ = [cq] {
@@ -234,7 +326,14 @@ class ConnectionOptions {
     return *this;
   }
 
+  /// @deprecated Prefer using `::google::cloud::BackgroundThreadsFactory`.
   using BackgroundThreadsFactory = ::google::cloud::BackgroundThreadsFactory;
+
+  /// @deprecated Not intended for applications to use. There is no alternative
+  ///    implemented or planned.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "Not intended for applications to use. There is no alternative "
+      "implemented or planned")
   BackgroundThreadsFactory background_threads_factory() const {
     if (background_threads_factory_) return background_threads_factory_;
     auto const s = background_thread_pool_size_;
@@ -257,6 +356,9 @@ class ConnectionOptions {
 
 namespace internal {
 
+// The following function is used in backwards compatibility code, disable
+// deprecation warnings for it.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 template <typename ConnectionTraits>
 Options MakeOptions(ConnectionOptions<ConnectionTraits> old) {
   Options opts = std::move(old.opts_);
@@ -273,6 +375,7 @@ Options MakeOptions(ConnectionOptions<ConnectionTraits> old) {
   }
   return opts;
 }
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace internal
 

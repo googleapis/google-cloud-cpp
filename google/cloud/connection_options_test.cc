@@ -21,6 +21,10 @@
 #include <gmock/gmock.h>
 #include <map>
 
+// This test disables all deprecation warnings because it is supposed to test a
+// deprecated (but not retired) class.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
