@@ -89,6 +89,7 @@ class PublisherConnection {
  *
  * @deprecated Please use `MakePublisherConnection(topic)` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED("use MakePublisherConnection(topic) instead")
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Topic topic, std::initializer_list<internal::NonConstructible>);
 
@@ -134,7 +135,7 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
  * shared and reused when possible. Note that gRPC reuses existing OS resources
  * (sockets) whenever possible, so applications may experience better
  * performance on the second (and subsequent) calls to this function with the
- * same `ConnectionOptions` parameters. However, this behavior is not guaranteed
+ * identical values for @p options. However, this behavior is not guaranteed
  * and applications should not rely on it.
  *
  * @see `PublisherConnection`
@@ -152,6 +153,8 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
  * @deprecated Please use the `MakePublisherConnection` method which accepts
  *     `google::cloud::Options` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "use the overload consuming google::cloud::Options instead")
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Topic topic, PublisherOptions options,
     ConnectionOptions connection_options = {},
