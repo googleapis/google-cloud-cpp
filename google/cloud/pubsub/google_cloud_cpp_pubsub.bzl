@@ -111,6 +111,7 @@ google_cloud_cpp_pubsub_srcs = [
     "internal/subscription_message_queue.cc",
     "internal/subscription_session.cc",
     "message.cc",
+    "options.cc",
     "publisher_connection.cc",
     "publisher_options.cc",
     "schema.cc",

@@ -104,6 +104,7 @@ add_library(
     internal/subscription_session.h
     message.cc
     message.h
+    options.cc
     options.h
     publisher.h
     publisher_connection.cc

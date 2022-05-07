@@ -18,4 +18,5 @@
 
 pubsub_client_integration_samples = [
     "samples.cc",
+    "iam_samples.cc",
 ]

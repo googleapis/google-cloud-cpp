@@ -78,7 +78,7 @@ cc_proto_library(
         "//:common",
         "//:pubsub",
         "@com_google_googletest//:gtest_main",
-    ],
+    ] + (["//:iam"] if test == "iam_samples.cc" else []),
 ) for test in pubsub_client_integration_samples]
 
 [cc_test(
