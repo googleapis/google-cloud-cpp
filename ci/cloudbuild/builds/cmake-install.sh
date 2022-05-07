@@ -95,7 +95,6 @@ expected_dirs+=(
   ./include/google/cloud/workflows/type
   ./include/google/devtools/source
   ./include/google/devtools/source/v1
-  ./include/google/iam/v1
   # no gRPC services in google/identity/accesscontextmanager/type
   ./include/google/identity/accesscontextmanager/type
   ./include/google/logging/type

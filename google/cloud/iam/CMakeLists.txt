@@ -43,6 +43,13 @@ add_library(
     iam_credentials_connection_idempotency_policy.h
     iam_credentials_options.h
     iam_options.h
+    iam_policy_client.cc
+    iam_policy_client.h
+    iam_policy_connection.cc
+    iam_policy_connection.h
+    iam_policy_connection_idempotency_policy.cc
+    iam_policy_connection_idempotency_policy.h
+    iam_policy_options.h
     internal/iam_auth_decorator.cc
     internal/iam_auth_decorator.h
     internal/iam_connection_impl.cc
@@ -68,6 +75,21 @@ add_library(
     internal/iam_metadata_decorator.h
     internal/iam_option_defaults.cc
     internal/iam_option_defaults.h
+    internal/iam_policy_auth_decorator.cc
+    internal/iam_policy_auth_decorator.h
+    internal/iam_policy_connection_impl.cc
+    internal/iam_policy_connection_impl.h
+    internal/iam_policy_logging_decorator.cc
+    internal/iam_policy_logging_decorator.h
+    internal/iam_policy_metadata_decorator.cc
+    internal/iam_policy_metadata_decorator.h
+    internal/iam_policy_option_defaults.cc
+    internal/iam_policy_option_defaults.h
+    internal/iam_policy_retry_traits.h
+    internal/iam_policy_stub.cc
+    internal/iam_policy_stub.h
+    internal/iam_policy_stub_factory.cc
+    internal/iam_policy_stub_factory.h
     internal/iam_retry_traits.h
     internal/iam_stub.cc
     internal/iam_stub.h
@@ -82,7 +104,7 @@ target_include_directories(
 target_link_libraries(
     google_cloud_cpp_iam
     PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-           google-cloud-cpp::iam_protos)
+           google-cloud-cpp::iam_protos google-cloud-cpp::iam_v1_policy_protos)
 google_cloud_cpp_add_common_options(google_cloud_cpp_iam)
 set_target_properties(
     google_cloud_cpp_iam
@@ -106,8 +128,10 @@ add_library(google_cloud_cpp_iam_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_iam_mocks
     INTERFACE
+        # cmake-format: sort
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_credentials_connection.h)
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_credentials_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_policy_connection.h)
 target_link_libraries(
     google_cloud_cpp_iam_mocks
     INTERFACE google-cloud-cpp::iam_mocks google-cloud-cpp::iam
