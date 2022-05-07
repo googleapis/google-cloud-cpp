@@ -85,6 +85,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * can also put back pressure on the flow control algorithm.
  * @endparblock
  *
+ * @deprecated We recommend you use `google::cloud::Options` and pass any
+ *     subscriber options to `MakeSubscriberConnection()`.
+ *
  * @par Example: setting the concurrency control parameters
  * @snippet samples.cc subscriber-concurrency
  *
@@ -93,8 +96,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class SubscriberOptions {
  public:
-  SubscriberOptions() : SubscriberOptions(Options{}) {}
-
   /**
    * Initialize the subscriber options.
    *
@@ -105,8 +106,11 @@ class SubscriberOptions {
    *     unexpected options will be logged.
    *
    * @param opts configuration options
+   *
+   * @deprecated Use `google::cloud::Options` instead.
    */
-  explicit SubscriberOptions(Options opts);
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `google::cloud::Options` instead")
+  explicit SubscriberOptions(Options opts = {});
 
   /**
    * The maximum deadline for each incoming message.
@@ -122,12 +126,24 @@ class SubscriberOptions {
    *     application, thus, if the library receives a batch of N messages their
    *     deadline for all the messages is extended repeatedly. Only once the
    *     message is delivered to a callback does the deadline become immutable.
+   *
+   * @deprecated Use `google::cloud::Options` and `MaxDeadlineTimeOption`
+   *     instead.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `MaxDeadlineTimeOption` instead")
   std::chrono::seconds max_deadline_time() const {
     return opts_.get<MaxDeadlineTimeOption>();
   }
 
-  /// Set the maximum deadline for incoming messages.
+  /**
+   * Set the maximum deadline for incoming messages.
+   *
+   * @deprecated Use `google::cloud::Options` and `MaxDeadlineTimeOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `MaxDeadlineTimeOption` instead")
   SubscriberOptions& set_max_deadline_time(std::chrono::seconds d) {
     opts_.set<MaxDeadlineTimeOption>(d);
     return *this;
@@ -146,9 +162,19 @@ class SubscriberOptions {
    * The value is clamped between 10 seconds and 10 minutes.
    *
    * @param extension the maximum time that the deadline can be extended by,
-   * measured in seconds.
+   *     measured in seconds.
+   *
+   * @deprecated Use `google::cloud::Options` and `MaxDeadlineExtensionOption`
+   *     instead.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `MaxDeadlineExtensionOption` instead")
   SubscriberOptions& set_max_deadline_extension(std::chrono::seconds extension);
+
+  /// @deprecated Use `google::cloud::Options` and `MaxDeadlineExtensionOption`
+  ///     instead.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `MaxDeadlineExtensionOption` instead")
   std::chrono::seconds max_deadline_extension() const {
     return opts_.get<MaxDeadlineExtensionOption>();
   }
@@ -166,8 +192,18 @@ class SubscriberOptions {
    *
    * @param message_count the maximum number of messages outstanding, use 0 or
    *     negative numbers to make the message count unlimited.
+   *
+   * @deprecated Use `google::cloud::Options` and `MaxOutstandingMessagesOption`
+   *     instead.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `MaxOutstandingMessagesOption` instead")
   SubscriberOptions& set_max_outstanding_messages(std::int64_t message_count);
+
+  /// @deprecated Use `google::cloud::Options` and
+  ///     `MaxOutstandingMessagesOption` instead.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `MaxOutstandingMessagesOption` instead")
   std::int64_t max_outstanding_messages() const {
     return opts_.get<MaxOutstandingMessagesOption>();
   }
@@ -185,8 +221,18 @@ class SubscriberOptions {
    *
    * @param bytes the maximum number of bytes outstanding, use 0 or negative
    *     numbers to make the number of bytes unlimited.
+   *
+   * @deprecated Use `google::cloud::Options` and `MaxOutstandingBytesOption`
+   *     instead.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `MaxOutstandingBytesOption` instead")
   SubscriberOptions& set_max_outstanding_bytes(std::int64_t bytes);
+
+  /// @deprecated Use `google::cloud::Options` and `MaxOutstandingBytesOption`
+  ///     instead.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `MaxOutstandingBytesOption` instead")
   std::int64_t max_outstanding_bytes() const {
     return opts_.get<MaxOutstandingBytesOption>();
   }
@@ -211,10 +257,22 @@ class SubscriberOptions {
    * @snippet samples.cc subscriber-concurrency
    *
    * @param v the new value, 0 resets to the default
+   *
+   * @deprecated Use `google::cloud::Options` and `MaxConcurrencyOption`
+   *     instead.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `MaxConcurrencyOption` instead")
   SubscriberOptions& set_max_concurrency(std::size_t v);
 
-  /// Maximum number of callbacks scheduled by the library at a time.
+  /**
+   * Maximum number of callbacks scheduled by the library at a time.
+   *
+   * @deprecated Use `google::cloud::Options` and `MaxConcurrencyOption`
+   *     instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `MaxConcurrencyOption` instead")
   std::size_t max_concurrency() const {
     return opts_.get<MaxConcurrencyOption>();
   }
@@ -227,11 +285,21 @@ class SubscriberOptions {
    * which is only shutdown once the completion queue servicing the session
    * shuts down. In this latter case the session polls periodically to detect
    * if the CQ has shutdown. This controls how often this polling happens.
+   *
+   * @deprecated Use `google::cloud::Options` and `ShutdownPollingPeriodOption`
+   *     instead.
    */
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `ShutdownPollingPeriodOption` instead")
   SubscriberOptions& set_shutdown_polling_period(std::chrono::milliseconds v) {
     opts_.set<ShutdownPollingPeriodOption>(v);
     return *this;
   }
+
+  /// @deprecated Use `google::cloud::Options` and `ShutdownPollingPeriodOption`
+  ///     instead.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "use `google::cloud::Options` and `ShutdownPollingPeriodOption` instead")
   std::chrono::milliseconds shutdown_polling_period() const {
     return opts_.get<ShutdownPollingPeriodOption>();
   }
