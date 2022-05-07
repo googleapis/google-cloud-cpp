@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/mutation_batcher.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -59,10 +59,7 @@ int main(int argc, char* argv[]) try {
 
   // Create a connection to Cloud Bigtable and an object to manipulate the
   // specific table used in this demo.
-  cbt::Table table(cbt::CreateDefaultDataClient(
-                       options.project_id, options.instance_id,
-                       cbt::ClientOptions().set_connection_pool_size(
-                           std::thread::hardware_concurrency())),
+  cbt::Table table(cbt::MakeDataClient(options.project_id, options.instance_id),
                    options.table_id);
   cbt::MutationBatcher batcher(table);
 
@@ -79,7 +76,7 @@ int main(int argc, char* argv[]) try {
   }();
 
   std::cout << "Starting " << thread_pool_size << " workers ..." << std::flush;
-  google::cloud::bigtable::CompletionQueue cq;
+  google::cloud::CompletionQueue cq;
   std::vector<std::thread> thread_pool;
   for (std::size_t i = 0; i != thread_pool_size; ++i) {
     thread_pool.emplace_back([&cq] { cq.Run(); });
@@ -252,6 +249,7 @@ Options ParseArgsNoAutoRun(int argc, char const* const argv[]) {
 Options AutoRun() {
   using ::google::cloud::internal::GetEnv;
   using ::google::cloud::internal::Sample;
+  namespace cbta = ::google::cloud::bigtable_admin;
 
   for (auto const& var :
        {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
@@ -276,12 +274,16 @@ Options AutoRun() {
 )""";
   gcs_client.InsertObject(bucket_name, kObjectName, kTestData).value();
 
-  cbt::TableAdmin admin(
-      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
-      instance_id);
-  auto schema = admin.CreateTable(
-      kTableId,
-      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(2)}}, {}));
+  google::bigtable::admin::v2::GcRule gc;
+  gc.set_max_num_versions(2);
+  google::bigtable::admin::v2::Table t;
+  auto& families = *t.mutable_column_families();
+  *families["fam"].mutable_gc_rule() = std::move(gc);
+
+  cbta::BigtableTableAdminClient admin(
+      cbta::MakeBigtableTableAdminConnection());
+  auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
+                                  kTableId, t);
   // Throw the error unless it is "already exists"
   if (!schema &&
       schema.status().code() != google::cloud::StatusCode::kAlreadyExists) {
