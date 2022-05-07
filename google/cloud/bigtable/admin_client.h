@@ -71,6 +71,7 @@ std::shared_ptr<AdminClient> MakeAdminClient(std::string project,
  * @deprecated use the `MakeAdminClient` method which accepts
  * `google::cloud::Options` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED("use `MakeAdminClient` instead")
 std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
                                                       ClientOptions options);
 

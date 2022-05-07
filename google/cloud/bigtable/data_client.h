@@ -209,6 +209,7 @@ std::shared_ptr<DataClient> MakeDataClient(std::string project_id,
  * @deprecated use the `MakeDataClient` method which accepts
  * `google::cloud::Options` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED("use `MakeDataClient` instead")
 std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
                                                     std::string instance_id,
                                                     ClientOptions options);
