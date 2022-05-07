@@ -185,12 +185,6 @@ class Publisher {
     connection_->ResumePublish({std::move(ordering_key)});
   }
 
-  /// @deprecated Use `Publisher(connection)` instead.
-  GOOGLE_CLOUD_CPP_DEPRECATED("use `Publisher(connection)` instead")
-  explicit Publisher(std::shared_ptr<PublisherConnection> connection,
-                     std::initializer_list<internal::NonConstructible>)
-      : Publisher(std::move(connection)) {}
-
   /// @deprecated Use `Publisher(connection)` and provide any configuration
   ///     options when initializing the @p connection object.
   GOOGLE_CLOUD_CPP_DEPRECATED("use `Publisher(connection)` instead")

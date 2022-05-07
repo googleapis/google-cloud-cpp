@@ -93,7 +93,6 @@ class PublisherOptions {
    * to [quota limits].
    *
    * [quota limits]: https://cloud.google.com/pubsub/quotas#resource_limits
-   *
    */
   ///@{
   /// @deprecated Use `google::cloud::Options{}` and `MaxHoldTimeOption`
