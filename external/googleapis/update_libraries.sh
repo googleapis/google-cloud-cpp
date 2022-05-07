@@ -94,6 +94,10 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc" \
       "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc"
   )"
+  # We already have libraries, different from `iam_protos` that compile
+  # the protos defined in the following entry. Thus, we cannot merge
+  # the following entry into the existing `iam` entry, that would
+  # introduce either ODR-violations, or break backwards compatibility.
   ["iam_policy"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/iam/v1:iam_cc_grpc" \
