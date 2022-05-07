@@ -368,6 +368,7 @@
 ./include/google/iam/admin/v1
 ./include/google/iam/credentials
 ./include/google/iam/credentials/v1
+./include/google/iam/v1
 ./include/google/identity
 ./include/google/identity/accesscontextmanager
 ./include/google/identity/accesscontextmanager/v1

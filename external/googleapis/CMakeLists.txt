@@ -61,9 +61,6 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     # by any other library. So, added manually.
     "google/cloud/orgpolicy/v1/orgpolicy.proto"
     "google/devtools/source/v1/source_context.proto"
-    "google/iam/v1/iam_policy.proto"
-    "google/iam/v1/options.proto"
-    "google/iam/v1/policy.proto"
     "google/longrunning/operations.proto"
     "google/rpc/code.proto"
     "google/rpc/error_details.proto"

@@ -19,6 +19,7 @@
 google_cloud_cpp_iam_mocks_hdrs = [
     "mocks/mock_iam_connection.h",
     "mocks/mock_iam_credentials_connection.h",
+    "mocks/mock_iam_policy_connection.h",
 ]
 
 google_cloud_cpp_iam_mocks_srcs = [

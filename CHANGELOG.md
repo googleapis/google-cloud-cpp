@@ -97,6 +97,15 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
 
 ## v1.41.0 - TBD
 
+### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
+
+The library has been expanded to include [IAM Policy][iam-policy-link], an API
+to grant, change, and revoke access to all
+[GCP resources][resource-types-with-policies] that accept *allow policies*.
+
+[resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
+[iam-policy-link]: https://cloud.google.com/iam/docs/manage-access-other-resources
+
 ## v1.40.0 - 2022-05
 
 We are happy to announce that the following GA libraries.  Unless specifically
