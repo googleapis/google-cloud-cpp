@@ -102,9 +102,9 @@ class SchemaAdminConnection {
  *     existing code that calls `MakeSchemaAdminConnection({})` from breaking,
  *     due to ambiguity.
  *
- * @deprecated Please use the `MakeSchemaAdminConnection` function that accepts
- *     `google::cloud::Options` instead.
+ * @deprecated Please use `MakeSchemaAdminConnection()` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED("use `MakeSchemaAdminConnection()` instead")
 std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
     std::initializer_list<internal::NonConstructible>);
 
@@ -150,7 +150,7 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
  * should be shared and reused when possible. Note that gRPC reuses existing OS
  * resources (sockets) whenever possible, so applications may experience better
  * performance on the second (and subsequent) calls to this function with the
- * same `ConnectionOptions` parameters. However, this behavior is not guaranteed
+ * identical values for @p options. However, this behavior is not guaranteed
  * and applications should not rely on it.
  *
  * @see `SchemaAdminClient`
@@ -165,6 +165,8 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
  * @deprecated Please use the `MakeSchemaAdminConnection` function that accepts
  *     `google::cloud::Options` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "use the overload consuming google::cloud::Options instead")
 std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
     pubsub::ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},

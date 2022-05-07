@@ -171,6 +171,7 @@ class TopicAdminConnection {
  *
  * @deprecated Please use `MakeTopicAdminConnection()` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED("use MakeTopicAdminConnection() instead")
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     std::initializer_list<internal::NonConstructible>);
 
@@ -214,7 +215,7 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
  * shared and reused when possible. Note that gRPC reuses existing OS resources
  * (sockets) whenever possible, so applications may experience better
  * performance on the second (and subsequent) calls to this function with the
- * same `ConnectionOptions` parameters. However, this behavior is not guaranteed
+ * identical values for @p options. However, this behavior is not guaranteed
  * and applications should not rely on it.
  *
  * @see `TopicAdminClient`
@@ -229,6 +230,8 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
  * @deprecated Please use the `MakeTopicAdminConnection` function that accepts
  *     `google::cloud::Options` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "use the overload consuming google::cloud::Options instead")
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
