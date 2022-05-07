@@ -50,6 +50,7 @@ bigtable_client_unit_tests = [
     "internal/defaults_test.cc",
     "internal/google_bytes_traits_test.cc",
     "internal/logging_data_client_test.cc",
+    "internal/mock_row_reader_impl_test.cc",
     "internal/prefix_range_end_test.cc",
     "internal/wait_for_consistency_test.cc",
     "metadata_update_policy_test.cc",

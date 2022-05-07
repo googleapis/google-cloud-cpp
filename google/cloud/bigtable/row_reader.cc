@@ -105,5 +105,17 @@ void RowReader::Cancel() { impl_->Cancel(); }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+bigtable::RowReader MakeMockRowReader(
+    std::vector<StatusOr<bigtable::Row>> expected) {
+  auto impl = std::make_shared<bigtable_internal::MockRowReaderImpl>(
+      std::move(expected));
+  return bigtable_internal::MakeRowReader(std::move(impl));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

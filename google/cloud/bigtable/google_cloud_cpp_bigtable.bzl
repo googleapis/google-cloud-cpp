@@ -84,6 +84,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "internal/google_bytes_traits.h",
     "internal/legacy_row_reader_impl.h",
     "internal/logging_data_client.h",
+    "internal/mock_row_reader_impl.h",
     "internal/prefix_range_end.h",
     "internal/readrowsparser.h",
     "internal/row_reader_impl.h",

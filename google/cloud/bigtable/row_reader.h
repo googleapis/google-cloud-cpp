@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
+#include "google/cloud/bigtable/internal/mock_row_reader_impl.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/internal/rowreaderiterator.h"
@@ -126,6 +127,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 inline bigtable::RowReader MakeRowReader(std::shared_ptr<RowReaderImpl> impl) {
   return bigtable::RowReader(std::move(impl));
 }
+
+/**
+ * Returns a RowReader with a fixed output stream.
+ *
+ * This factory function is offered for customers to mock the output of
+ * `Table::ReadRows(...)` in their tests.
+ *
+ * @note The stream will terminate at the first bad `Status` it is given. It
+ *     will also terminate if `Cancel()` is called on the `RowReader`.
+ *
+ * @param expected a vector containing the values returned by iterating over
+ *     the `RowReader`.
+ *
+ * @code
+ * TEST(ReadRowsTest, Success) {
+ *   using ::google::cloud::StatusOr;
+ *   using cbt = ::google::cloud::bigtable;
+ *   using cbtm = ::google::cloud::bigtable_mocks;
+ *
+ *   std::vector<StatusOr<cbt::Row>> rows = {cbt::Row("r1", {}),
+ *                                           cbt::Row("r2", {})};
+ *
+ *   auto mock = std::shared_ptr<cbtm::MockDataConnection>();
+ *   EXPECT_CALL(*mock, ReadRows)
+ *       .WillOnce(Return(cbtm::MakeMockRowReader(rows)));
+ *
+ *   auto table = cbt::Table(mock);
+ *   auto reader = table.ReadRows(...);
+ *
+ *   // Verify your code works when reading rows: {"r1", "r2"}
+ * }
+ * @endcode
+ */
+bigtable::RowReader MakeMockRowReader(
+    std::vector<StatusOr<bigtable::Row>> expected);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
