@@ -20,10 +20,11 @@ namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options IAMPolicyOptions() {
-  return Options{}
-      .set<EndpointOption>("pubsub.googleapis.com")
-      .set<AuthorityOption>("pubsub.googleapis.com");
+Options IAMPolicyOptions(Options opts) {
+  return google::cloud::internal::MergeOptions(
+      std::move(opts), Options{}
+                           .set<EndpointOption>("pubsub.googleapis.com")
+                           .set<AuthorityOption>("pubsub.googleapis.com"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

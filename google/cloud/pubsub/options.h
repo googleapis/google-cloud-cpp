@@ -296,7 +296,7 @@ using SubscriberOptionList =
  * can provide additional configuration, or override some of the values before
  * passing the object to `google::cloud::iam::MakeIAMPolicyConnection`.
  */
-Options IAMPolicyOptions();
+Options IAMPolicyOptions(Options opts = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub

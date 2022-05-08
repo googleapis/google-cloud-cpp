@@ -30,7 +30,6 @@ BAZEL_VERB="$1"
 shift
 bazel_test_args=("$@")
 
-# Configure run_emulators_utils.sh to find the instance admin emulator.
 # These can only run against production
 production_only_targets=(
   "//google/cloud/pubsub/samples:iam_samples"
