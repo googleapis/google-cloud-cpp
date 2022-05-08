@@ -17,7 +17,6 @@
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/subscription_builder.h"
-#include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -1880,7 +1879,7 @@ void AutoRunProtobuf(
 
   // TODO(#4792) - the CreateSchema() operation would have failed, what follows
   //    would fail and stop all the other examples.
-  if (google::cloud::pubsub::examples::UsingEmulator()) return;
+  if (UsingEmulator()) return;
 
   std::cout << "\nRunning CreateTopicWithSchema() sample [proto]" << std::endl;
   auto const proto_topic_id = RandomTopicId(generator);
@@ -1928,7 +1927,6 @@ void AutoRunProtobuf(
 
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
-  using ::google::cloud::pubsub::examples::UsingEmulator;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
