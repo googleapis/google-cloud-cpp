@@ -184,7 +184,6 @@ void TestSubscriptionPermissions(std::vector<std::string> const& argv) {
     request.set_resource(subscription.FullName());
     request.add_permissions("pubsub.subscriptions.consume");
     request.add_permissions("pubsub.subscriptions.update");
-    std::cout << "request=" << request.DebugString() << "\n";
 
     auto response = client.TestIamPermissions(request);
     if (!response) throw std::runtime_error(response.status().message());
@@ -195,7 +194,7 @@ void TestSubscriptionPermissions(std::vector<std::string> const& argv) {
     }
     std::cout << "\n";
   }
-  // [END pubsub_test_topic_permissions]
+  // [END pubsub_test_subscription_permissions]
   (argv.at(0), argv.at(1));
 }
 
