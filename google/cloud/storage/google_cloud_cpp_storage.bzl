@@ -25,6 +25,7 @@ google_cloud_cpp_storage_hdrs = [
     "download_options.h",
     "hash_mismatch_error.h",
     "hashing_options.h",
+    "headers_map.h",
     "hmac_key_metadata.h",
     "iam_policy.h",
     "idempotency_policy.h",
