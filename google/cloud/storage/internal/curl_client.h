@@ -63,10 +63,6 @@ class CurlClient : public RawClient,
   CurlClient& operator=(CurlClient const& rhs) = delete;
   CurlClient& operator=(CurlClient&& rhs) = delete;
 
-  using LockFunction =
-      std::function<void(CURL*, curl_lock_data, curl_lock_access)>;
-  using UnlockFunction = std::function<void(CURL*, curl_lock_data)>;
-
   ClientOptions const& client_options() const override {
     return backwards_compatibility_options_;
   }
