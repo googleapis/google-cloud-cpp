@@ -31,6 +31,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/match.h"
+#include "absl/strings/strip.h"
 #include <sstream>
 
 namespace google {
@@ -53,6 +54,56 @@ StatusOr<ReturnType> ParseFromRestResponse(
   return ReturnType::FromHttpResponse(*payload);
 }
 
+template <typename Parser>
+auto CheckedFromString(StatusOr<std::unique_ptr<rest::RestResponse>> response)
+    -> decltype(Parser::FromString(
+        *(rest::ReadAll(std::move(**response).ExtractPayload())))) {
+  if (!response.ok()) {
+    return std::move(response).status();
+  }
+  if ((*response)->StatusCode() >= rest::kMinNotSuccess) {
+    return rest::AsStatus(std::move(**response));
+  }
+  auto payload = rest::ReadAll(std::move(**response).ExtractPayload());
+  if (!payload.ok()) return std::move(payload).status();
+  return Parser::FromString(*payload);
+}
+
+StatusOr<EmptyResponse> ReturnEmptyResponse(
+    StatusOr<std::unique_ptr<rest::RestResponse>> response) {
+  if (!response.ok()) {
+    return std::move(response).status();
+  }
+  if ((*response)->StatusCode() >= rest::kMinNotSuccess) {
+    return rest::AsStatus(std::move(**response));
+  }
+  return EmptyResponse{};
+}
+
+template <typename ReturnType>
+StatusOr<ReturnType> CreateFromJson(
+    StatusOr<std::unique_ptr<rest::RestResponse>> response) {
+  if (!response.ok()) return std::move(response).status();
+  if ((*response)->StatusCode() >= rest::kMinNotSuccess) {
+    return rest::AsStatus(std::move(**response));
+  }
+  auto payload = rest::ReadAll(std::move(**response).ExtractPayload());
+  if (!payload.ok()) return std::move(payload).status();
+  return ReturnType::CreateFromJson(*payload);
+}
+
+Status AddAuthorizationHeader(Options const& options,
+                              RestRequestBuilder& builder) {
+  auto auth_header =
+      options.get<Oauth2CredentialsOption>()->AuthorizationHeader();
+  if (!auth_header.ok()) {
+    return std::move(auth_header).status();
+  }
+  builder.AddHeader("Authorization", std::string(absl::StripPrefix(
+                                         *auth_header, "Authorization: ")));
+  return {};
+}
+
 RestClient::RestClient(google::cloud::Options options)
     : storage_rest_client_(
           rest::MakePooledRestClient(RestEndpoint(options), options)),
@@ -63,57 +114,134 @@ RestClient::RestClient(google::cloud::Options options)
 
 StatusOr<ListBucketsResponse> RestClient::ListBuckets(
     ListBucketsRequest const& request) {
-  RestRequestBuilder r(
+  RestRequestBuilder builder(
       absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b"));
-  request.AddOptionsToHttpRequest(r);
-  r.AddQueryParameter("project", request.project_id());
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddQueryParameter("project", request.project_id());
   return ParseFromRestResponse<ListBucketsResponse>(
-      storage_rest_client_->Get(std::move(r).BuildRequest()));
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketMetadata> RestClient::CreateBucket(
     CreateBucketRequest const& request) {
-  return curl_client_->CreateBucket(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b"));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddQueryParameter("project", request.project_id());
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = request.json_payload();
+  return CheckedFromString<BucketMetadataParser>(storage_rest_client_->Post(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<BucketMetadata> RestClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
-  return curl_client_->GetBucketMetadata(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name()));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return CheckedFromString<BucketMetadataParser>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteBucket(
     DeleteBucketRequest const& request) {
-  return curl_client_->DeleteBucket(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name()));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ReturnEmptyResponse(
+      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketMetadata> RestClient::UpdateBucket(
     UpdateBucketRequest const& request) {
-  return curl_client_->UpdateBucket(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+                   request.metadata().name()));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = request.json_payload();
+  return CheckedFromString<BucketMetadataParser>(storage_rest_client_->Put(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<BucketMetadata> RestClient::PatchBucket(
     PatchBucketRequest const& request) {
-  return curl_client_->PatchBucket(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket()));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = request.payload();
+  return CheckedFromString<BucketMetadataParser>(storage_rest_client_->Patch(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<NativeIamPolicy> RestClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
-  return curl_client_->GetNativeBucketIamPolicy(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/iam"));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return CreateFromJson<NativeIamPolicy>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<NativeIamPolicy> RestClient::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {
-  return curl_client_->SetNativeBucketIamPolicy(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/iam"));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  auto const& payload = request.json_payload();
+  return CreateFromJson<NativeIamPolicy>(storage_rest_client_->Put(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<TestBucketIamPermissionsResponse> RestClient::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
-  return curl_client_->TestBucketIamPermissions(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/iam/testPermissions"));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  for (auto const& p : request.permissions()) {
+    builder.AddQueryParameter("permissions", p);
+  }
+  request.AddOptionsToHttpRequest(builder);
+  return ParseFromRestResponse<TestBucketIamPermissionsResponse>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketMetadata> RestClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
-  return curl_client_->LockBucketRetentionPolicy(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/lockRetentionPolicy"));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  return CheckedFromString<BucketMetadataParser>(storage_rest_client_->Post(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(std::string{})}));
 }
 
 StatusOr<ObjectMetadata> RestClient::InsertObjectMedia(
