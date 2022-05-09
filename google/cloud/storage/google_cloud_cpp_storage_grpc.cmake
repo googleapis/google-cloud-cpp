@@ -67,7 +67,7 @@ else ()
         internal/storage_stub.cc
         internal/storage_stub.h
         internal/storage_stub_factory.cc
-        internal/storage_stub_factory.h)
+        internal/storage_stub_factory.h internal/grpc_hmac_key_request_parser.cc internal/grpc_hmac_key_request_parser.h)
     target_link_libraries(
         google_cloud_cpp_storage_grpc
         PUBLIC google-cloud-cpp::storage
@@ -168,6 +168,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_client_test.cc
         internal/grpc_configure_client_context_test.cc
         internal/grpc_hmac_key_metadata_parser_test.cc
+        internal/grpc_hmac_key_request_parser_test.cc
         internal/grpc_object_access_control_parser_test.cc
         internal/grpc_object_metadata_parser_test.cc
         internal/grpc_object_read_source_test.cc
