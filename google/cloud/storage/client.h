@@ -180,6 +180,34 @@ struct ClientImplDetails;
  * options can be specified in any order. Specifying an option that is not
  * applicable to a member function results in a compile-time error.
  *
+ * All operations support the following common options:
+ *
+ * - `Fields`: return a [partial response], which includes only the desired
+ *   fields.
+ * - `QuotaUser`: attribute the request to this specific label for quota
+ *   purposes.
+ * - `UserProject`: change the request costs (if applicable) to this GCP
+ *   project.
+ * - `CustomHeader`: include a custom header with the request. These are
+ *   typically used for testing, though they are sometimes helpful if
+ *   environments where HTTPS traffic is mediated by a proxy.
+ * - `IfMatchEtag`: a pre-condition, the operation succeeds only if the resource
+ *   ETag matches. Typically used in OCC loops ("change X only if its Etag is
+ *   still Y"). Note that GCS sometimes ignores this header, we recommend you
+ *   use the GCS specific pre-conditions (`IfGenerationMatch`,
+ *   `IfMetagenerationMatch` and their `*NotMatch` counterparts) instead.
+ * - `IfNoneMatchEtag`: a pre-condition, abort the operation if the resource
+ *   ETag has not changed. Typically used in caching ("return the contents of X
+ *   only if the Etag is different from the last value I got, which was Y").
+ *   Note that GCS sometimes ignores this header, we recommend you use the GCS
+ *   specific pre-conditions (`IfGenerationMatch`, `IfMetagenerationMatch` and
+ *   their `*NotMatch` counterparts) instead.
+ * - `UserIp`: attribute the request to this specific IP address for quota
+ *   purpose. Not recommended, prefer `QuotaUser` instead.
+ *
+ * [partial response]:
+ * https://cloud.google.com/storage/docs/json_api#partial-response
+ *
  * @par Retry, Backoff, and Idempotency Policies
  *
  * The library automatically retries requests that fail with transient errors,
@@ -321,13 +349,13 @@ class Client {
   explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
       : Client(InternalOnlyNoDecorations{}, std::move(client)) {}
 
-  //@{
-  // @name Equality
+  /// @name Equality
+  ///@{
   friend bool operator==(Client const& a, Client const& b) {
     return a.raw_client_ == b.raw_client_;
   }
   friend bool operator!=(Client const& a, Client const& b) { return !(a == b); }
-  //@}
+  ///@}
 
   /// Access the underlying `RawClient`.
   /// @deprecated Only intended for implementors, do not use.
@@ -339,7 +367,6 @@ class Client {
     return raw_client_;
   }
 
-  //@{
   /**
    * @name Bucket operations.
    *
@@ -351,6 +378,7 @@ class Client {
    * @see https://cloud.google.com/storage/docs/key-terms#buckets for more
    * information about GCS buckets.
    */
+  ///@{
   /**
    * Fetches the list of buckets for a given project.
    *
@@ -848,9 +876,8 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->LockBucketRetentionPolicy(request);
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Object operations
    *
@@ -863,6 +890,7 @@ class Client {
    * @see https://cloud.google.com/storage/docs/key-terms#objects for more
    * information about GCS objects.
    */
+  ///@{
   /**
    * Creates an object given its name and contents.
    *
@@ -1596,9 +1624,8 @@ class Client {
                                std::string{}, std::forward<Options>(options)...)
         .Result();
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Bucket Access Control List operations.
    *
@@ -1629,6 +1656,7 @@ class Client {
    * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
    *     for the format of the @p role parameters.
    */
+  ///@{
   /**
    * Retrieves the list of `BucketAccessControl` items for a bucket.
    *
@@ -1864,9 +1892,8 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchBucketAcl(request);
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Object Access Control List operations.
    *
@@ -1890,6 +1917,7 @@ class Client {
    * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
    *     for the format of the @p role parameters.
    */
+  ///@{
   /**
    * Retrieves the list of ObjectAccessControl items for an object.
    *
@@ -2139,9 +2167,8 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchObjectAcl(request);
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Bucket Default Object Access Control List operations.
    *
@@ -2157,6 +2184,7 @@ class Client {
    * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
    *     for the format of the @p role parameters.
    */
+  ///@{
   /**
    * Retrieves the default object ACL for a bucket as a vector of
    * `ObjectAccessControl` items.
@@ -2426,9 +2454,8 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchDefaultObjectAcl(request);
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Service account operations.
    *
@@ -2440,6 +2467,7 @@ class Client {
    * @see https://cloud.google.com/storage/docs/projects#service-accounts for
    *     more information on service accounts.
    */
+  ///@{
   /**
    * Gets the GCS service account for a given project.
    *
@@ -2512,7 +2540,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     In addition to the options common to all requests, this operation
    *     accepts `Deleted` `MaxResults`, `OverrideDefaultProject`,
-   *     `ServiceAccountFilter`, and `UserProject`.
+   *     `ServiceAccountFilter`.
    *
    * @return A range to iterate over the available HMAC keys.
    *
@@ -2707,10 +2735,10 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->UpdateHmacKey(request);
   }
-  //@}
+  ///@}
 
-  //@{
   /// @name Signed URL support operations.
+  ///@{
   /**
    * Create a V2 signed URL for the given parameters.
    *
@@ -2836,7 +2864,7 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return SignUrlV4(std::move(request));
   }
-  //@}
+  ///@}
 
   /**
    * Create a signed policy document.
@@ -2919,7 +2947,6 @@ class Client {
     return SignPolicyDocumentV4(std::move(request));
   }
 
-  //@{
   /**
    * @name Pub/Sub operations.
    *
@@ -2930,6 +2957,7 @@ class Client {
    * @see https://cloud.google.com/storage/docs/pubsub-notifications for more
    *     information about Cloud Pub/Sub in the context of GCS.
    */
+  ///@{
   /**
    * Retrieves the list of Notifications for a Bucket.
    *
@@ -3109,7 +3137,7 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return std::move(raw_client_->DeleteNotification(request)).status();
   }
-  //@}
+  ///@}
 
  private:
   friend class internal::NonResumableParallelUploadState;
