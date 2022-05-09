@@ -149,6 +149,12 @@ StorageRoundRobin::GetServiceAccount(
   return Child()->GetServiceAccount(context, request);
 }
 
+StatusOr<google::storage::v2::HmacKeyMetadata> StorageRoundRobin::GetHmacKey(
+    grpc::ClientContext& context,
+    google::storage::v2::GetHmacKeyRequest const& request) {
+  return Child()->GetHmacKey(context, request);
+}
+
 std::shared_ptr<StorageStub> StorageRoundRobin::Child() {
   std::lock_guard<std::mutex> lk(mu_);
   auto child = children_[current_];
