@@ -59,6 +59,9 @@ export_list_to_bazel("pubsub_samples_unit_tests.bzl"
 
 set(pubsub_client_integration_samples # cmake-format: sort
                                       samples.cc)
+if (TARGET google-cloud-cpp::iam)
+    list(APPEND pubsub_client_integration_samples iam_samples.cc)
+endif ()
 set(pubsub_client_unit_samples # cmake-format: sort
                                mock_publisher.cc mock_subscriber.cc)
 
@@ -96,3 +99,7 @@ foreach (fname ${pubsub_client_integration_samples})
         ${target} PROPERTIES LABELS
                              "integration-test;integration-test-emulator")
 endforeach ()
+
+if (TARGET google-cloud-cpp::iam)
+    target_link_libraries(pubsub_iam_samples PRIVATE google-cloud-cpp::iam)
+endif ()

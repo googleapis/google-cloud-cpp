@@ -30,13 +30,13 @@ BAZEL_VERB="$1"
 shift
 bazel_test_args=("$@")
 
-# Configure run_emulators_utils.sh to find the instance admin emulator.
 # These can only run against production
-production_only_targets=()
-# Enable this command when there are any production targets to run
-#    "${BAZEL_BIN}" test "${bazel_test_args[@]}" \
-#      --test_tag_filters="integration-test" -- \
-#      "${production_only_targets[@]}"
+production_only_targets=(
+  "//google/cloud/pubsub/samples:iam_samples"
+)
+"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
+  --test_tag_filters="integration-test" -- \
+  "${production_only_targets[@]}"
 
 # Start the emulator and arranges to kill it, run in $HOME because
 # pubsub_emulator::start creates unsightly *.log files in the workspace
