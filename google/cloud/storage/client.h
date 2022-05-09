@@ -2540,7 +2540,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     In addition to the options common to all requests, this operation
    *     accepts `Deleted` `MaxResults`, `OverrideDefaultProject`,
-   *     `ServiceAccountFilter`.
+   *     and `ServiceAccountFilter`.
    *
    * @return A range to iterate over the available HMAC keys.
    *
