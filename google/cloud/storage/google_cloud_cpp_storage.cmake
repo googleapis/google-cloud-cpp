@@ -35,6 +35,7 @@ add_library(
     hash_mismatch_error.h
     hashing_options.cc
     hashing_options.h
+    headers_map.h
     hmac_key_metadata.cc
     hmac_key_metadata.h
     iam_policy.cc

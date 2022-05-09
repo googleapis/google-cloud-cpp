@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_READ_STREAM_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_READ_STREAM_H
 
+#include "google/cloud/storage/headers_map.h"
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/version.h"
 #include <istream>
-#include <map>
 #include <memory>
 #include <string>
 
@@ -26,9 +26,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/// Represents the headers returned in a streaming upload or download operation.
-using HeadersMap = std::multimap<std::string, std::string>;
 
 /**
  * Defines a `std::basic_istream<char>` to read from a GCS Object.

@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_WRITE_STREAM_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_WRITE_STREAM_H
 
+#include "google/cloud/storage/headers_map.h"
 #include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/version.h"
-#include <map>
 #include <memory>
 #include <ostream>
 #include <string>
@@ -26,9 +26,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/// Represents the headers returned in a streaming upload or download operation.
-using HeadersMap = std::multimap<std::string, std::string>;
 
 /**
  * Defines a `std::basic_ostream<char>` to write to a GCS object.

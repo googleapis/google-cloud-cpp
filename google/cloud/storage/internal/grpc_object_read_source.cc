@@ -24,8 +24,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-using HeadersMap = std::multimap<std::string, std::string>;
-
 GrpcObjectReadSource::GrpcObjectReadSource(std::unique_ptr<StreamingRpc> stream)
     : stream_(std::move(stream)) {}
 
