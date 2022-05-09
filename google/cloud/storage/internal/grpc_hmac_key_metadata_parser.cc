@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/grpc_hmac_key_metadata_parser.h"
 #include "google/cloud/internal/time_utils.h"
+#include "absl/strings/string_view.h"
+#include "absl/strings/strip.h"
 
 namespace google {
 namespace cloud {
@@ -27,21 +29,18 @@ HmacKeyMetadata GrpcHmacKeyMetadataParser::FromProto(
   result.id_ = rhs.id();
   result.access_id_ = rhs.access_id();
   // The protos use `projects/{project}` format, but the field may be absent or
-  // may have a project id (instead of number), we need to do some parsing. We
-  // are forgiving here. It is better to drop one field rather than dropping
+  // may have a project id (instead of number), so we need to do some parsing.
+  // We are forgiving here. It is better to drop one field rather than dropping
   // the full message.
-  if (rhs.project().rfind("projects/", 0) == 0) {
-    result.project_id_ = rhs.project().substr(std::strlen("projects/"));
-  } else {
-    result.project_id_ = rhs.project();
-  }
+  absl::string_view project = rhs.project();
+  absl::ConsumePrefix(&project, "projects/");
+  result.project_id_ = std::string(project);
   result.service_account_email_ = rhs.service_account_email();
   result.state_ = rhs.state();
   result.time_created_ =
       google::cloud::internal::ToChronoTimePoint(rhs.create_time());
   result.updated_ =
       google::cloud::internal::ToChronoTimePoint(rhs.update_time());
-
   return result;
 }
 

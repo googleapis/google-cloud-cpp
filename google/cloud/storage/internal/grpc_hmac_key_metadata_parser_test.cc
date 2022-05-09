@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -26,14 +27,12 @@ namespace internal {
 namespace {
 
 namespace storage_proto = ::google::storage::v2;
+using ::google::cloud::internal::FormatRfc3339;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 
 TEST(GrpcHmacKeyMetadataParser, Roundtrip) {
   storage_proto::HmacKeyMetadata input;
-  // To get the dates in RFC-3339 format I used:
-  //     date --rfc-3339=seconds --date=@1652099696  # Create
-  //     date --rfc-3339=seconds --date=@1652186096  # Update
   auto constexpr kProtoText = R"pb(
     id: "test-id"
     access_id: "test-access-id"
@@ -48,7 +47,11 @@ TEST(GrpcHmacKeyMetadataParser, Roundtrip) {
   EXPECT_EQ(actual.id(), "test-id");
   EXPECT_EQ(actual.access_id(), "test-access-id");
   EXPECT_EQ(actual.state(), "INACTIVE");
-
+  // To get the dates in RFC-3339 format I used:
+  //     date --rfc-3339=seconds --date=@1652099696  # Create
+  //     date --rfc-3339=seconds --date=@1652186096  # Update
+  EXPECT_EQ(FormatRfc3339(actual.time_created()), "2022-05-09T12:34:56.789Z");
+  EXPECT_EQ(FormatRfc3339(actual.updated()), "2022-05-10T12:34:56.789Z");
   auto const output = GrpcHmacKeyMetadataParser::ToProto(actual);
   EXPECT_THAT(output, IsProtoEqual(input));
 }
