@@ -28,6 +28,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct HmacKeyMetadataParser;
+struct GrpcHmacKeyMetadataParser;
 }  // namespace internal
 
 /**
@@ -79,6 +80,7 @@ class HmacKeyMetadata {
 
  private:
   friend struct internal::HmacKeyMetadataParser;
+  friend struct internal::GrpcHmacKeyMetadataParser;
   friend std::ostream& operator<<(std::ostream& os, HmacKeyMetadata const& rhs);
 
   // Keep the fields in alphabetical order.
