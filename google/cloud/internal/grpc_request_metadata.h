@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,21 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/streaming_read_rpc.h"
-#include "google/cloud/log.h"
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
+
+#include "google/cloud/version.h"
+#include <grpcpp/grpcpp.h>
+#include <map>
+#include <string>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-void StreamingReadRpcReportUnhandledError(Status const& status,
-                                          char const* tname) {
-  GCP_LOG(WARNING) << "unhandled error for StreamingReadRpcImpl< " << tname
-                   << " > - status=" << status;
-}
+/// A simple representation of request metadata.
+using StreamingRpcMetadata = std::multimap<std::string, std::string>;
+
+/// Return interesting bits of metadata stored in the client context.
+StreamingRpcMetadata GetRequestMetadataFromContext(
+    grpc::ClientContext const& context);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
