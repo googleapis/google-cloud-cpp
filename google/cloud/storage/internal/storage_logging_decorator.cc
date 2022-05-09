@@ -279,6 +279,17 @@ StatusOr<google::storage::v2::ServiceAccount> StorageLogging::GetServiceAccount(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::HmacKeyMetadata> StorageLogging::GetHmacKey(
+    grpc::ClientContext& context,
+    google::storage::v2::GetHmacKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::GetHmacKeyRequest const& request) {
+        return child_->GetHmacKey(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

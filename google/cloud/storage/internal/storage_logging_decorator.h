@@ -122,6 +122,10 @@ class StorageLogging : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::GetServiceAccountRequest const& request) override;
 
+  StatusOr<google::storage::v2::HmacKeyMetadata> GetHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::GetHmacKeyRequest const& request) override;
+
  private:
   std::shared_ptr<StorageStub> child_;
   TracingOptions tracing_options_;

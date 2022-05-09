@@ -264,6 +264,17 @@ DefaultStorageStub::GetServiceAccount(
   return response;
 }
 
+StatusOr<google::storage::v2::HmacKeyMetadata> DefaultStorageStub::GetHmacKey(
+    grpc::ClientContext& client_context,
+    google::storage::v2::GetHmacKeyRequest const& request) {
+  google::storage::v2::HmacKeyMetadata response;
+  auto status = grpc_stub_->GetHmacKey(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
