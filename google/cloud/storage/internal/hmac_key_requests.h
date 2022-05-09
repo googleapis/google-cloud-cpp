@@ -31,7 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 template <typename Derived, typename... Options>
-class GenericHmacKeyRequest : public GenericRequest<Derived, Options...> {
+class GenericHmacKeyRequest
+    : public GenericRequest<Derived, UserProject, Options...> {
  public:
   GenericHmacKeyRequest() = default;
   explicit GenericHmacKeyRequest(std::string project_id)
@@ -54,7 +55,7 @@ class GenericHmacKeyRequest : public GenericRequest<Derived, Options...> {
 
   Derived& set_multiple_options() { return *static_cast<Derived*>(this); }
 
-  using GenericRequest<Derived, Options...>::set_option;
+  using GenericRequest<Derived, UserProject, Options...>::set_option;
   void set_option(OverrideDefaultProject const& o) {
     if (o.has_value()) {
       project_id_ = o.value();
@@ -97,7 +98,7 @@ std::ostream& operator<<(std::ostream& os, CreateHmacKeyResponse const& r);
 /// Represents a request to call the `HmacKeys: list` API.
 class ListHmacKeysRequest
     : public GenericHmacKeyRequest<ListHmacKeysRequest, Deleted, MaxResults,
-                                   ServiceAccountFilter, UserProject> {
+                                   ServiceAccountFilter> {
  public:
   explicit ListHmacKeysRequest(std::string project_id)
       : GenericHmacKeyRequest(std::move(project_id)) {}
