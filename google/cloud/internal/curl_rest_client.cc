@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/curl_rest_client.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -83,9 +84,11 @@ std::string CurlRestClient::HostHeader(Options const& options,
   // header based on the URL. In most cases this is the correct value. The main
   // exception are applications using `VPC-SC`:
   //     https://cloud.google.com/vpc/docs/configure-private-google-access
-  // In those cases the application would target an URL like
+  // In those cases the application would target a URL like
   // `https://restricted.googleapis.com`, or `https://private.googleapis.com`,
   // or their own proxy, and need to provide the target's service host.
+  auto const& auth = options.get<AuthorityOption>();
+  if (!auth.empty()) return absl::StrCat("Host: ", auth);
   auto const& endpoint = options.get<RestEndpointOption>();
   if (absl::StrContains(endpoint, "googleapis.com"))
     return absl::StrCat("Host: ", FormatHostHeaderValue(default_endpoint));
