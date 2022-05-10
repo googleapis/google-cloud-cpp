@@ -74,10 +74,9 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
   EXPECT_EQ(get->updated(), metadata.updated());
 
   // Before we can delete the HmacKey we need to move it to the inactive state.
-  // TODO(#4207) - use gRPC to update the metadata
   auto update = metadata;
   update.set_state(HmacKeyMetadata::state_inactive());
-  auto update_response = rest_client.UpdateHmacKey(update.access_id(), update);
+  auto update_response = client->UpdateHmacKey(update.access_id(), update);
   ASSERT_STATUS_OK(update_response);
   EXPECT_EQ(update_response->state(), HmacKeyMetadata::state_inactive());
 

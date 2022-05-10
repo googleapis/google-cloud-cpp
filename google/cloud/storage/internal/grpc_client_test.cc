@@ -698,6 +698,29 @@ TEST_F(GrpcClientTest, GetHmacKey) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
+TEST_F(GrpcClientTest, UpdateHmacKey) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, UpdateHmacKey)
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::UpdateHmacKeyRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.hmac_key().project(), "projects/test-project-id");
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto response = client->UpdateHmacKey(
+      UpdateHmacKeyRequest(
+          "test-project-id", "test-access-id",
+          HmacKeyMetadata().set_state(HmacKeyMetadata::state_deleted()))
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
