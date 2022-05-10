@@ -115,8 +115,8 @@ spanner::RowStream ConnectionImpl::Read(ReadParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t) {
-        return ReadImpl(session, s, tag, std::move(params));
+                      TransactionContext const& ctx) {
+        return ReadImpl(session, s, ctx.tag, std::move(params));
       });
 }
 
@@ -126,8 +126,8 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionRead(
       std::move(params.read_params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t) {
-        return PartitionReadImpl(session, s, tag, params.read_params,
+                      TransactionContext const& ctx) {
+        return PartitionReadImpl(session, s, ctx.tag, params.read_params,
                                  params.partition_options);
       });
 }
@@ -137,8 +137,9 @@ spanner::RowStream ConnectionImpl::ExecuteQuery(SqlParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t seqno) {
-        return ExecuteQueryImpl(session, s, tag, seqno, std::move(params));
+                      TransactionContext const& ctx) {
+        return ExecuteQueryImpl(session, s, ctx.tag, ctx.seqno,
+                                std::move(params));
       });
 }
 
@@ -147,8 +148,9 @@ StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDml(SqlParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t seqno) {
-        return ExecuteDmlImpl(session, s, tag, seqno, std::move(params));
+                      TransactionContext const& ctx) {
+        return ExecuteDmlImpl(session, s, ctx.tag, ctx.seqno,
+                              std::move(params));
       });
 }
 
@@ -157,8 +159,9 @@ spanner::ProfileQueryResult ConnectionImpl::ProfileQuery(SqlParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t seqno) {
-        return ProfileQueryImpl(session, s, tag, seqno, std::move(params));
+                      TransactionContext const& ctx) {
+        return ProfileQueryImpl(session, s, ctx.tag, ctx.seqno,
+                                std::move(params));
       });
 }
 
@@ -168,8 +171,9 @@ StatusOr<spanner::ProfileDmlResult> ConnectionImpl::ProfileDml(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t seqno) {
-        return ProfileDmlImpl(session, s, tag, seqno, std::move(params));
+                      TransactionContext const& ctx) {
+        return ProfileDmlImpl(session, s, ctx.tag, ctx.seqno,
+                              std::move(params));
       });
 }
 
@@ -178,8 +182,9 @@ StatusOr<spanner::ExecutionPlan> ConnectionImpl::AnalyzeSql(SqlParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t seqno) {
-        return AnalyzeSqlImpl(session, s, tag, seqno, std::move(params));
+                      TransactionContext const& ctx) {
+        return AnalyzeSqlImpl(session, s, ctx.tag, ctx.seqno,
+                              std::move(params));
       });
 }
 
@@ -189,8 +194,9 @@ StatusOr<spanner::PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
   return Visit(txn, [this, &params](
                         SessionHolder& session,
                         StatusOr<google::spanner::v1::TransactionSelector>& s,
-                        std::string const& tag, std::int64_t seqno) {
-    return ExecutePartitionedDmlImpl(session, s, tag, seqno, std::move(params));
+                        TransactionContext const& ctx) {
+    return ExecutePartitionedDmlImpl(session, s, ctx.tag, ctx.seqno,
+                                     std::move(params));
   });
 }
 
@@ -200,8 +206,8 @@ StatusOr<std::vector<spanner::QueryPartition>> ConnectionImpl::PartitionQuery(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t) {
-        return PartitionQueryImpl(session, s, tag, params);
+                      TransactionContext const& ctx) {
+        return PartitionQueryImpl(session, s, ctx.tag, params);
       });
 }
 
@@ -211,8 +217,9 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t seqno) {
-        return ExecuteBatchDmlImpl(session, s, tag, seqno, std::move(params));
+                      TransactionContext const& ctx) {
+        return ExecuteBatchDmlImpl(session, s, ctx.tag, ctx.seqno,
+                                   std::move(params));
       });
 }
 
@@ -221,8 +228,8 @@ StatusOr<spanner::CommitResult> ConnectionImpl::Commit(CommitParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t) {
-        return this->CommitImpl(session, s, tag, std::move(params));
+                      TransactionContext const& ctx) {
+        return this->CommitImpl(session, s, ctx.tag, std::move(params));
       });
 }
 
@@ -230,8 +237,8 @@ Status ConnectionImpl::Rollback(RollbackParams params) {
   return Visit(std::move(params.transaction),
                [this](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t) {
-                 return this->RollbackImpl(session, s, tag);
+                      TransactionContext const& ctx) {
+                 return this->RollbackImpl(session, s, ctx.tag);
                });
 }
 

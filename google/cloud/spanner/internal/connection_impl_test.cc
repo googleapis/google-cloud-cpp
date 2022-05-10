@@ -147,7 +147,7 @@ MATCHER_P(HasDatabase, database, "Request has expected database") {
 MATCHER(HasBadSession, "bound to a session that's marked bad") {
   return Visit(arg, [&](SessionHolder& session,
                         StatusOr<google::spanner::v1::TransactionSelector>&,
-                        std::string const&, std::int64_t) {
+                        TransactionContext const&) {
     if (!session) {
       *result_listener << "has no session";
       return false;
@@ -183,7 +183,7 @@ void SetTransactionId(spanner::Transaction& txn, std::string tid) {
   Visit(txn,
         [&tid](SessionHolder&,
                StatusOr<google::spanner::v1::TransactionSelector>& selector,
-               std::string const&, std::int64_t) {
+               TransactionContext const&) {
           selector->set_id(std::move(tid));
           return 0;
         });
@@ -194,7 +194,7 @@ void SetTransactionInvalid(spanner::Transaction& txn, Status status) {
   Visit(txn,
         [&status](SessionHolder&,
                   StatusOr<google::spanner::v1::TransactionSelector>& selector,
-                  std::string const&, std::int64_t) {
+                  TransactionContext const&) {
           selector = std::move(status);
           return 0;
         });
