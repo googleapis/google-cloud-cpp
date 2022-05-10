@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_hmac_key_request_parser.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -26,7 +27,57 @@ namespace internal {
 namespace {
 
 namespace v2 = ::google::storage::v2;
+using ::google::cloud::internal::FormatRfc3339;
 using ::google::cloud::testing_util::IsProtoEqual;
+
+TEST(GrpcBucketRequestParser, CreateHmacKeyRequestAllOptions) {
+  v2::CreateHmacKeyRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        project: "projects/test-project-id"
+        service_account_email: "test-service-account-email"
+        common_request_params: { user_project: "test-user-project" }
+      )pb",
+      &expected));
+
+  CreateHmacKeyRequest req("test-project-id", "test-service-account-email");
+  req.set_multiple_options(UserProject("test-user-project"));
+
+  auto const actual = GrpcHmacKeyRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcBucketRequestParser, CreateHmacKeyResponseFull) {
+  v2::CreateHmacKeyResponse input;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        metadata {
+          id: "test-id"
+          access_id: "test-access-id"
+          project: "projects/test-project-id"
+          service_account_email: "test-service-account-email"
+          state: "ACTIVE"
+          create_time { seconds: 1652099696 nanos: 789000000 }
+          update_time { seconds: 1652186096 nanos: 789000000 }
+        }
+        secret_key_bytes: "0123456789"
+      )pb",
+      &input));
+
+  auto actual = GrpcHmacKeyRequestParser::FromProto(input);
+  // Obtained the magic base64 string using:
+  //     /bin/echo  -n "0123456789" | openssl base64 -e
+  EXPECT_EQ(actual.secret, "MDEyMzQ1Njc4OQ==");
+  auto const& metadata = actual.metadata;
+  EXPECT_EQ(metadata.id(), "test-id");
+  EXPECT_EQ(metadata.access_id(), "test-access-id");
+  EXPECT_EQ(metadata.state(), "ACTIVE");
+  // To get the dates in RFC-3339 format I used:
+  //     date --rfc-3339=seconds --date=@1652099696  # Create
+  //     date --rfc-3339=seconds --date=@1652186096  # Update
+  EXPECT_EQ(FormatRfc3339(metadata.time_created()), "2022-05-09T12:34:56.789Z");
+  EXPECT_EQ(FormatRfc3339(metadata.updated()), "2022-05-10T12:34:56.789Z");
+}
 
 TEST(GrpcBucketRequestParser, DeleteHmacKeyRequestAllOptions) {
   v2::DeleteHmacKeyRequest expected;
