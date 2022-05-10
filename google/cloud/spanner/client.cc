@@ -270,7 +270,7 @@ StatusOr<CommitResult> Client::Commit(
       spanner_internal::Visit(
           txn, [](spanner_internal::SessionHolder& s,
                   StatusOr<google::spanner::v1::TransactionSelector> const&,
-                  std::string const&, std::int64_t) {
+                  spanner_internal::TransactionContext const&) {
             if (s) s->set_bad();
             return true;
           });

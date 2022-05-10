@@ -704,7 +704,7 @@ MATCHER(DoesNotHaveSession, "not bound to a session") {
   return spanner_internal::Visit(
       arg, [&](spanner_internal::SessionHolder& session,
                StatusOr<google::spanner::v1::TransactionSelector>&,
-               std::string const&, std::int64_t) {
+               spanner_internal::TransactionContext const&) {
         if (session) {
           *result_listener << "has session " << session->session_name();
           return false;
@@ -717,7 +717,7 @@ MATCHER_P(HasSession, name, "bound to expected session") {
   return spanner_internal::Visit(
       arg, [&](spanner_internal::SessionHolder& session,
                StatusOr<google::spanner::v1::TransactionSelector>&,
-               std::string const&, std::int64_t) {
+               spanner_internal::TransactionContext const&) {
         if (!session) {
           *result_listener << "has no session but expected " << name;
           return false;
@@ -735,9 +735,10 @@ MATCHER_P(HasTag, value, "bound to expected transaction tag") {
   return spanner_internal::Visit(
       arg, [&](spanner_internal::SessionHolder&,
                StatusOr<google::spanner::v1::TransactionSelector>&,
-               std::string const& tag, std::int64_t) {
-        if (tag != value) {
-          *result_listener << "has tag " << tag << " but expected " << value;
+               spanner_internal::TransactionContext const& ctx) {
+        if (ctx.tag != value) {
+          *result_listener << "has tag " << ctx.tag << " but expected "
+                           << value;
           return false;
         }
         return true;
@@ -748,7 +749,7 @@ MATCHER(HasBegin, "not bound to a transaction-id nor invalidated") {
   return spanner_internal::Visit(
       arg, [&](spanner_internal::SessionHolder&,
                StatusOr<google::spanner::v1::TransactionSelector>& s,
-               std::string const&, std::int64_t) {
+               spanner_internal::TransactionContext const&) {
         if (!s) {
           *result_listener << "has status " << s.status();
           return false;
@@ -769,7 +770,7 @@ bool SetSessionName(Transaction const& txn, std::string name) {
   return spanner_internal::Visit(
       txn, [&name](spanner_internal::SessionHolder& session,
                    StatusOr<google::spanner::v1::TransactionSelector>&,
-                   std::string const&, std::int64_t) {
+                   spanner_internal::TransactionContext const&) {
         session =
             spanner_internal::MakeDissociatedSessionHolder(std::move(name));
         return true;
@@ -780,7 +781,7 @@ bool SetTransactionId(Transaction const& txn, std::string id) {
   return spanner_internal::Visit(
       txn, [&id](spanner_internal::SessionHolder&,
                  StatusOr<google::spanner::v1::TransactionSelector>& s,
-                 std::string const&, std::int64_t) {
+                 spanner_internal::TransactionContext const&) {
         s->set_id(std::move(id));  // only valid when s.ok()
         return true;
       });
