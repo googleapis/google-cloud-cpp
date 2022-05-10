@@ -25,6 +25,7 @@ google_cloud_cpp_storage_grpc_hdrs = [
     "internal/grpc_common_request_params.h",
     "internal/grpc_configure_client_context.h",
     "internal/grpc_hmac_key_metadata_parser.h",
+    "internal/grpc_hmac_key_request_parser.h",
     "internal/grpc_object_access_control_parser.h",
     "internal/grpc_object_metadata_parser.h",
     "internal/grpc_object_read_source.h",
@@ -39,7 +40,6 @@ google_cloud_cpp_storage_grpc_hdrs = [
     "internal/storage_round_robin.h",
     "internal/storage_stub.h",
     "internal/storage_stub_factory.h",
-    "internal/grpc_hmac_key_request_parser.h",
 ]
 
 google_cloud_cpp_storage_grpc_srcs = [
@@ -49,6 +49,7 @@ google_cloud_cpp_storage_grpc_srcs = [
     "internal/grpc_bucket_request_parser.cc",
     "internal/grpc_client.cc",
     "internal/grpc_hmac_key_metadata_parser.cc",
+    "internal/grpc_hmac_key_request_parser.cc",
     "internal/grpc_object_access_control_parser.cc",
     "internal/grpc_object_metadata_parser.cc",
     "internal/grpc_object_read_source.cc",
@@ -63,5 +64,4 @@ google_cloud_cpp_storage_grpc_srcs = [
     "internal/storage_round_robin.cc",
     "internal/storage_stub.cc",
     "internal/storage_stub_factory.cc",
-    "internal/grpc_hmac_key_request_parser.cc",
 ]
