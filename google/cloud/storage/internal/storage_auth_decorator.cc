@@ -216,6 +216,14 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageAuth::GetHmacKey(
   return child_->GetHmacKey(context, request);
 }
 
+StatusOr<google::storage::v2::HmacKeyMetadata> StorageAuth::UpdateHmacKey(
+    grpc::ClientContext& context,
+    google::storage::v2::UpdateHmacKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateHmacKey(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

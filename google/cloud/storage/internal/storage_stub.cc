@@ -286,6 +286,18 @@ StatusOr<google::storage::v2::HmacKeyMetadata> DefaultStorageStub::GetHmacKey(
   return response;
 }
 
+StatusOr<google::storage::v2::HmacKeyMetadata>
+DefaultStorageStub::UpdateHmacKey(
+    grpc::ClientContext& client_context,
+    google::storage::v2::UpdateHmacKeyRequest const& request) {
+  google::storage::v2::HmacKeyMetadata response;
+  auto status = grpc_stub_->UpdateHmacKey(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

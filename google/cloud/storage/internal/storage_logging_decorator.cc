@@ -301,6 +301,17 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageLogging::GetHmacKey(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::HmacKeyMetadata> StorageLogging::UpdateHmacKey(
+    grpc::ClientContext& context,
+    google::storage::v2::UpdateHmacKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::UpdateHmacKeyRequest const& request) {
+        return child_->UpdateHmacKey(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

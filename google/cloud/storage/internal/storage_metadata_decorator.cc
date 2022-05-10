@@ -195,6 +195,13 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::GetHmacKey(
   return child_->GetHmacKey(context, request);
 }
 
+StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::UpdateHmacKey(
+    grpc::ClientContext& context,
+    google::storage::v2::UpdateHmacKeyRequest const& request) {
+  SetMetadata(context, {});
+  return child_->UpdateHmacKey(context, request);
+}
+
 void StorageMetadata::SetMetadata(grpc::ClientContext& context,
                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
