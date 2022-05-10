@@ -51,17 +51,16 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
           .value_or("");
   ASSERT_THAT(service_account, Not(IsEmpty()));
 
-  // TODO(#4210) - use gRPC to also create the keys.
-  auto rest_client = Client();
-  auto create = rest_client.CreateHmacKey(service_account);
+  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
+                                "metadata");
+  auto client = MakeIntegrationTestClient();
+
+  auto create = client->CreateHmacKey(service_account);
   ASSERT_STATUS_OK(create);
   auto const key = create->second;
   auto const metadata = create->first;
   EXPECT_THAT(key, Not(IsEmpty()));
 
-  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                "metadata");
-  auto client = MakeIntegrationTestClient();
   auto get = client->GetHmacKey(metadata.access_id());
   ASSERT_STATUS_OK(get);
   // Compare member-by-member as the ETag field is missing in the protos:
