@@ -181,6 +181,14 @@ StorageMetadata::GetServiceAccount(
   return child_->GetServiceAccount(context, request);
 }
 
+StatusOr<google::storage::v2::CreateHmacKeyResponse>
+StorageMetadata::CreateHmacKey(
+    grpc::ClientContext& context,
+    google::storage::v2::CreateHmacKeyRequest const& request) {
+  SetMetadata(context, {});
+  return child_->CreateHmacKey(context, request);
+}
+
 Status StorageMetadata::DeleteHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::DeleteHmacKeyRequest const& request) {

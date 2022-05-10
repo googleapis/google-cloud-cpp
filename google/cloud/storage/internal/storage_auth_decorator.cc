@@ -200,6 +200,14 @@ StatusOr<google::storage::v2::ServiceAccount> StorageAuth::GetServiceAccount(
   return child_->GetServiceAccount(context, request);
 }
 
+StatusOr<google::storage::v2::CreateHmacKeyResponse> StorageAuth::CreateHmacKey(
+    grpc::ClientContext& context,
+    google::storage::v2::CreateHmacKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateHmacKey(context, request);
+}
+
 Status StorageAuth::DeleteHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::DeleteHmacKeyRequest const& request) {

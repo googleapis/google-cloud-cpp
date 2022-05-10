@@ -279,6 +279,18 @@ StatusOr<google::storage::v2::ServiceAccount> StorageLogging::GetServiceAccount(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::CreateHmacKeyResponse>
+StorageLogging::CreateHmacKey(
+    grpc::ClientContext& context,
+    google::storage::v2::CreateHmacKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::CreateHmacKeyRequest const& request) {
+        return child_->CreateHmacKey(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 Status StorageLogging::DeleteHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::DeleteHmacKeyRequest const& request) {
