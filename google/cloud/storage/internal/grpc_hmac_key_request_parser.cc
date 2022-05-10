@@ -39,6 +39,17 @@ google::storage::v2::GetHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
   return result;
 }
 
+google::storage::v2::UpdateHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
+    UpdateHmacKeyRequest const& request) {
+  google::storage::v2::UpdateHmacKeyRequest result;
+  SetCommonParameters(result, request);
+  result.mutable_hmac_key()->set_access_id(request.access_id());
+  result.mutable_hmac_key()->set_project("projects/" + request.project_id());
+  result.mutable_hmac_key()->set_state(request.resource().state());
+  result.mutable_update_mask()->add_paths("state");
+  return result;
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

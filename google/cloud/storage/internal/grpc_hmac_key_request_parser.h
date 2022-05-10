@@ -31,6 +31,8 @@ struct GrpcHmacKeyRequestParser {
       DeleteHmacKeyRequest const&);
   static google::storage::v2::GetHmacKeyRequest ToProto(
       GetHmacKeyRequest const&);
+  static google::storage::v2::UpdateHmacKeyRequest ToProto(
+      UpdateHmacKeyRequest const&);
 };
 
 }  // namespace internal
