@@ -224,6 +224,14 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageAuth::GetHmacKey(
   return child_->GetHmacKey(context, request);
 }
 
+StatusOr<google::storage::v2::ListHmacKeysResponse> StorageAuth::ListHmacKeys(
+    grpc::ClientContext& context,
+    google::storage::v2::ListHmacKeysRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListHmacKeys(context, request);
+}
+
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageAuth::UpdateHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::UpdateHmacKeyRequest const& request) {

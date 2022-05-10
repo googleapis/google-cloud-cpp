@@ -130,6 +130,10 @@ class StorageMetadata : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::GetHmacKeyRequest const& request) override;
 
+  StatusOr<google::storage::v2::ListHmacKeysResponse> ListHmacKeys(
+      grpc::ClientContext& context,
+      google::storage::v2::ListHmacKeysRequest const& request) override;
+
   StatusOr<google::storage::v2::HmacKeyMetadata> UpdateHmacKey(
       grpc::ClientContext& context,
       google::storage::v2::UpdateHmacKeyRequest const& request) override;
