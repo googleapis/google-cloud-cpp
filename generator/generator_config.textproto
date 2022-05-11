@@ -1184,7 +1184,6 @@ service {
     "ListNotifications",
     "CreateHmacKey",
     "DeleteHmacKey",
-    "GetHmacKey",
     "ListHmacKeys",
     "UpdateHmacKey"
   ]

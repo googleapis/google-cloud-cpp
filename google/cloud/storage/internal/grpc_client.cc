@@ -17,6 +17,8 @@
 #include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_request_parser.h"
 #include "google/cloud/storage/internal/grpc_configure_client_context.h"
+#include "google/cloud/storage/internal/grpc_hmac_key_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc_hmac_key_request_parser.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
@@ -645,8 +647,15 @@ StatusOr<EmptyResponse> GrpcClient::DeleteHmacKey(DeleteHmacKeyRequest const&) {
   return Status(StatusCode::kUnimplemented, __func__);
 }
 
-StatusOr<HmacKeyMetadata> GrpcClient::GetHmacKey(GetHmacKeyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+StatusOr<HmacKeyMetadata> GrpcClient::GetHmacKey(
+    GetHmacKeyRequest const& request) {
+  OptionsSpan span(options_);
+  auto proto = GrpcHmacKeyRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->GetHmacKey(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcHmacKeyMetadataParser::FromProto(*response);
 }
 
 StatusOr<HmacKeyMetadata> GrpcClient::UpdateHmacKey(
