@@ -32,6 +32,10 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::ReturnRef;
 
+struct FakeRequest {
+  std::string key;
+};
+
 struct FakeResponse {
   std::string key;
   std::string value;
@@ -51,13 +55,16 @@ class MockReader : public grpc::ClientAsyncReaderInterface<FakeResponse> {
 class MockStub {
  public:
   MOCK_METHOD(MockReturnType, FakeRpc,
-              (grpc::ClientContext*, grpc::CompletionQueue*), ());
+              (grpc::ClientContext*, FakeRequest const&,
+               grpc::CompletionQueue*),
+              ());
 };
 
 TEST(AsyncStreamingReadRpcTest, Basic) {
   MockStub mock;
   EXPECT_CALL(mock, FakeRpc)
-      .WillOnce([](grpc::ClientContext*, grpc::CompletionQueue*) {
+      .WillOnce([](grpc::ClientContext*, FakeRequest const&,
+                   grpc::CompletionQueue*) {
         auto stream = absl::make_unique<MockReader>();
         EXPECT_CALL(*stream, StartCall).Times(1);
         EXPECT_CALL(*stream, Read)
@@ -96,10 +103,11 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
       });
 
   google::cloud::CompletionQueue cq(mock_cq);
-  auto stream = MakeStreamingReadRpc<FakeResponse>(
-      cq, absl::make_unique<grpc::ClientContext>(),
-      [&mock](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-        return mock.FakeRpc(context, cq);
+  auto stream = MakeStreamingReadRpc<FakeRequest, FakeResponse>(
+      cq, absl::make_unique<grpc::ClientContext>(), FakeRequest{},
+      [&mock](grpc::ClientContext* context, FakeRequest const& request,
+              grpc::CompletionQueue* cq) {
+        return mock.FakeRpc(context, request, cq);
       });
 
   auto start = stream->Start();

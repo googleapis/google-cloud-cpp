@@ -113,10 +113,10 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
   std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>> stream_;
 };
 
-template <typename Response>
+template <typename Request, typename Response>
 using PrepareAsyncReadRpc = absl::FunctionRef<
     std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>>(
-        grpc::ClientContext*, grpc::CompletionQueue*)>;
+        grpc::ClientContext*, Request const&, grpc::CompletionQueue*)>;
 
 /**
  * Make an asynchronous streaming read/write RPC using `CompletionQueue`.
@@ -128,12 +128,12 @@ using PrepareAsyncReadRpc = absl::FunctionRef<
  *     the API in the `internal::` namespace give us more flexibility for the
  *     future, at the cost of (hopefully controlled) breaks in encapsulation.
  */
-template <typename Response>
+template <typename Request, typename Response>
 std::unique_ptr<AsyncStreamingReadRpc<Response>> MakeStreamingReadRpc(
     CompletionQueue const& cq, std::unique_ptr<grpc::ClientContext> context,
-    PrepareAsyncReadRpc<Response> async_call) {
+    Request const& request, PrepareAsyncReadRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
-  auto stream = async_call(context.get(), &cq_impl->cq());
+  auto stream = async_call(context.get(), request, &cq_impl->cq());
   return absl::make_unique<AsyncStreamingReadRpcImpl<Response>>(
       std::move(cq_impl), std::move(context), std::move(stream));
 }
