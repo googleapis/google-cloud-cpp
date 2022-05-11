@@ -36,7 +36,7 @@ namespace internal {
  *
  * A wrapper for gRPC's asynchronous streaming read APIs, which can be
  * combined with `google::cloud::CompletionQueue` and `google::cloud::future<>`
- * to provide easier-to-use abstractions than the objeects returned by gRPC.
+ * to provide easier-to-use abstractions than the objects returned by gRPC.
  */
 template <typename Response>
 class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
@@ -143,9 +143,9 @@ std::unique_ptr<AsyncStreamingReadRpc<Response>> MakeStreamingReadRpc(
  *
  * This is used when the library cannot even start the streaming RPC, for
  * example, because setting up the credentials for the call failed.  One could
- * return `StatusOr<std::unique_ptr<StreamingReadRpc<Response>>` in such cases.
- * We represent the error as part of the stream, as the receiving code must deal
- * with streams that fail anyway.
+ * return `StatusOr<std::unique_ptr<AsyncStreamingReadRpc<Response>>` in such
+ * cases. We represent the error as part of the stream, as the receiving code
+ * must deal with streams that fail anyway.
  */
 template <typename Response>
 class AsyncStreamingReadRpcError : public AsyncStreamingReadRpc<Response> {
