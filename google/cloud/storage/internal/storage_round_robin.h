@@ -114,7 +114,7 @@ class StorageRoundRobin : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::GetServiceAccountRequest const& request) override;
 
-   Status DeleteHmacKey(
+  Status DeleteHmacKey(
       grpc::ClientContext& context,
       google::storage::v2::DeleteHmacKeyRequest const& request) override;
 
