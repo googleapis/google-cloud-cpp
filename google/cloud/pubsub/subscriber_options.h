@@ -97,6 +97,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SubscriberOptions {
  public:
   /**
+   * Initialize the subscriber options with default values.
+   *
+   * @deprecated Use `google::cloud::Options` instead.
+   */
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `google::cloud::Options` instead")
+  SubscriberOptions();
+
+  /**
    * Initialize the subscriber options.
    *
    * Expected options are any of the types in the `SubscriberOptionList`
@@ -110,7 +118,7 @@ class SubscriberOptions {
    * @deprecated Use `google::cloud::Options` instead.
    */
   GOOGLE_CLOUD_CPP_DEPRECATED("Use `google::cloud::Options` instead")
-  explicit SubscriberOptions(Options opts = {});
+  explicit SubscriberOptions(Options opts);
 
   /**
    * The maximum deadline for each incoming message.
