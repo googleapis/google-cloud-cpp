@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASYNC_STREAMING_READ_RPC_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASYNC_STREAMING_READ_RPC_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_READ_RPC_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_READ_RPC_H
 
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
@@ -24,6 +24,7 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
 
 /**
  * An abstraction for asynchronous streaming read RPCs.
@@ -87,8 +88,9 @@ class AsyncStreamingReadRpc {
   virtual future<Status> Finish() = 0;
 };
 
+}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASYNC_STREAMING_READ_RPC_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_READ_RPC_H

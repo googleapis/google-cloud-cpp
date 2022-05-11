@@ -18,7 +18,6 @@
 add_library(
     google_cloud_cpp_grpc_utils # cmake-format: sort
     async_operation.h
-    async_streaming_read_rpc.h
     async_streaming_read_write_rpc.h
     background_threads.h
     completion_queue.cc
@@ -46,6 +45,7 @@ add_library(
     internal/async_retry_loop.h
     internal/async_retry_unary_rpc.h
     internal/async_rpc_details.h
+    internal/async_streaming_read_rpc.h
     internal/async_streaming_read_rpc_impl.h
     internal/background_threads_impl.cc
     internal/background_threads_impl.h

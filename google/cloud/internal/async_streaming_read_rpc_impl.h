@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_READ_RPC_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_READ_RPC_IMPL_H
 
-#include "google/cloud/async_streaming_read_rpc.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
