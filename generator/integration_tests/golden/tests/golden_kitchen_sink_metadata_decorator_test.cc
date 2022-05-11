@@ -15,6 +15,7 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
@@ -32,6 +33,7 @@ using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
 using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
 using ::google::cloud::golden_internal::MockWriteObjectStreamingWriteRpc;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::test::admin::database::v1::TailLogEntriesRequest;
 using ::google::test::admin::database::v1::TailLogEntriesResponse;
@@ -253,6 +255,33 @@ TEST_F(MetadataDecoratorTest, WriteObject) {
   auto response = stream->Close();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->response(), "test-only");
+}
+
+TEST_F(MetadataDecoratorTest, AsyncTailLogEntries) {
+  EXPECT_CALL(*mock_, AsyncTailLogEntries)
+      .WillOnce([this](google::cloud::CompletionQueue const&,
+                       std::unique_ptr<grpc::ClientContext> context,
+                       TailLogEntriesRequest const&) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            *context,
+            "google.test.admin.database.v1.GoldenKitchenSink.TailLogEntries"));
+        using ErrorStream =
+            ::google::cloud::internal::AsyncStreamingReadRpcError<
+                TailLogEntriesResponse>;
+        return absl::make_unique<ErrorStream>(
+            Status(StatusCode::kAborted, "uh-oh"));
+      });
+  GoldenKitchenSinkMetadata stub(mock_);
+
+  google::cloud::CompletionQueue cq;
+  TailLogEntriesRequest request;
+  auto stream = stub.AsyncTailLogEntries(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+
+  auto start = stream->Start().get();
+  EXPECT_FALSE(start);
+  auto finish = stream->Finish().get();
+  EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 }
 
 }  // namespace

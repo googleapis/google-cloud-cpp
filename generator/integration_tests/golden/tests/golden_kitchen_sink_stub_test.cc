@@ -14,9 +14,11 @@
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>
+#include <deque>
 #include <memory>
 
 namespace google {
@@ -25,10 +27,15 @@ namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::AsyncGrpcOperation;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::test::admin::database::v1::TailLogEntriesRequest;
+using ::google::test::admin::database::v1::TailLogEntriesResponse;
 using ::testing::_;
 using ::testing::Return;
+using ::testing::ReturnRef;
 
 class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
                                           v1::GoldenKitchenSink::StubInterface {
@@ -342,14 +349,11 @@ TEST_F(GoldenKitchenSinkStubTest, ListLogs) {
 }
 
 class MockTailLogEntriesResponse
-    : public ::grpc::ClientReaderInterface<
-          google::test::admin::database::v1::TailLogEntriesResponse> {
+    : public ::grpc::ClientReaderInterface<TailLogEntriesResponse> {
  public:
   MOCK_METHOD(::grpc::Status, Finish, (), (override));
   MOCK_METHOD(bool, NextMessageSize, (uint32_t*), (override));
-  MOCK_METHOD(bool, Read,
-              (google::test::admin::database::v1::TailLogEntriesResponse*),
-              (override));
+  MOCK_METHOD(bool, Read, (TailLogEntriesResponse*), (override));
   MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
 };
 
@@ -362,7 +366,7 @@ TEST_F(GoldenKitchenSinkStubTest, TailLogEntries) {
   EXPECT_CALL(*failure_response, Read).WillOnce(Return(false));
   EXPECT_CALL(*failure_response, Finish).WillOnce(Return(GrpcTransientError()));
 
-  google::test::admin::database::v1::TailLogEntriesRequest request;
+  TailLogEntriesRequest request;
   EXPECT_CALL(*grpc_stub_, TailLogEntriesRaw)
       .WillOnce(Return(success_response.release()))
       .WillOnce(Return(failure_response.release()));
@@ -421,6 +425,71 @@ TEST_F(GoldenKitchenSinkStubTest, WriteObject) {
       stream->Write(google::test::admin::database::v1::WriteObjectRequest{},
                     grpc::WriteOptions()));
   EXPECT_THAT(stream->Close(), StatusIs(StatusCode::kOk));
+}
+
+class MockAsyncTailLogEntriesResponse
+    : public grpc::ClientAsyncReaderInterface<TailLogEntriesResponse> {
+ public:
+  MOCK_METHOD(void, Read, (TailLogEntriesResponse*, void*), (override));
+  MOCK_METHOD(void, Finish, (grpc::Status*, void*), (override));
+  MOCK_METHOD(void, StartCall, (void*), (override));
+  MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
+};
+
+TEST_F(GoldenKitchenSinkStubTest, AsyncTailLogEntries) {
+  grpc::Status status;
+  EXPECT_CALL(*grpc_stub_, PrepareAsyncTailLogEntriesRaw)
+      .WillOnce([](grpc::ClientContext*, TailLogEntriesRequest const&,
+                   grpc::CompletionQueue*) {
+        auto stream = absl::make_unique<MockAsyncTailLogEntriesResponse>();
+        EXPECT_CALL(*stream, StartCall).Times(1);
+        EXPECT_CALL(*stream, Read).Times(2);
+        EXPECT_CALL(*stream, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status::OK;
+        });
+        return stream.release();  // gRPC assumes ownership of `stream`.
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  grpc::CompletionQueue grpc_cq;
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(ReturnRef(grpc_cq));
+
+  std::deque<std::shared_ptr<AsyncGrpcOperation>> operations;
+  auto notify_next_op = [&](bool ok) {
+    auto op = std::move(operations.front());
+    operations.pop_front();
+    op->Notify(ok);
+  };
+
+  EXPECT_CALL(*mock_cq, StartOperation)
+      .WillRepeatedly([&operations](std::shared_ptr<AsyncGrpcOperation> op,
+                                    absl::FunctionRef<void(void*)> call) {
+        void* tag = op.get();
+        operations.push_back(std::move(op));
+        call(tag);
+      });
+  google::cloud::CompletionQueue cq(mock_cq);
+
+  DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
+
+  TailLogEntriesRequest request;
+  auto stream = stub.AsyncTailLogEntries(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  auto start = stream->Start();
+  notify_next_op(true);
+  EXPECT_TRUE(start.get());
+
+  auto read0 = stream->Read();
+  notify_next_op(true);
+  EXPECT_TRUE(read0.get().has_value());
+
+  auto read1 = stream->Read();
+  notify_next_op(false);
+  EXPECT_FALSE(read1.get().has_value());
+
+  auto finish = stream->Finish();
+  notify_next_op(true);
+  EXPECT_THAT(finish.get(), IsOk());
 }
 
 }  // namespace

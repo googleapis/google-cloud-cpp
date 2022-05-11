@@ -122,6 +122,12 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasStreamingReadMethod() const;
 
   /**
+   * Determines if we need to generate at least one asynchronous streaming read
+   * RPC.
+   */
+  bool HasAsynchronousStreamingReadMethod() const;
+
+  /**
    * Determines if the service contains at least once rpc with a stream
    * request.
    */

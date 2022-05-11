@@ -126,6 +126,18 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto constexpr kDeclaration = R"""(
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) override;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -192,6 +204,9 @@ Status LoggingDecoratorGenerator::GenerateCc() {
            : "",
        HasBidirStreamingMethod()
            ? "google/cloud/internal/async_read_write_stream_logging.h"
+           : "",
+       HasAsynchronousStreamingReadMethod()
+           ? "google/cloud/internal/async_streaming_read_rpc_logging.h"
            : "",
        "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
@@ -331,6 +346,30 @@ $logging_class_name$::Async$method_name$(
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto constexpr kDefinition = R"""(
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    $response_type$>>
+$logging_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    $request_type$ const& request) {
+  using LoggingStream =
+     ::google::cloud::internal::AsyncStreamingReadRpcLogging<$response_type$>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->Async$method_name$(cq, std::move(context), request);
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+)""";
+      CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(

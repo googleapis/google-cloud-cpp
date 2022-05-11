@@ -105,6 +105,7 @@ class $connection_class_name$Impl
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) continue;
     HeaderPrintMethod(method, __FILE__, __LINE__,
                       AsyncMethodDeclaration(method));
   }
@@ -215,6 +216,7 @@ $connection_class_name$Impl::$connection_class_name$Impl(
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) continue;
     CcPrintMethod(method, __FILE__, __LINE__, AsyncMethodDefinition(method));
   }
 

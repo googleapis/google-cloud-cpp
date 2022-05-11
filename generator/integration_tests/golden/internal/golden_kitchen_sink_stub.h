@@ -21,6 +21,9 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
+#include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/status_or.h"
@@ -79,6 +82,13 @@ class GoldenKitchenSinkStub {
       google::test::admin::database::v1::WriteObjectResponse>>
   WriteObject(
       std::unique_ptr<grpc::ClientContext> context) = 0;
+
+  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      google::test::admin::database::v1::TailLogEntriesResponse>>
+  AsyncTailLogEntries(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::TailLogEntriesRequest const& request) = 0;
 };
 
 class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
@@ -134,6 +144,13 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::WriteObjectResponse>>
   WriteObject(
       std::unique_ptr<grpc::ClientContext> context) override;
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      google::test::admin::database::v1::TailLogEntriesResponse>>
+  AsyncTailLogEntries(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
 
  private:
   std::unique_ptr<google::test::admin::database::v1::GoldenKitchenSink::StubInterface> grpc_stub_;
