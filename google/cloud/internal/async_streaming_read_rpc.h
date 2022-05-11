@@ -46,20 +46,20 @@ class AsyncStreamingReadRpc {
   /**
    * Sends a best-effort request to cancel the RPC.
    *
-   * The application should still wait for the current operation(s) (any pending
-   * `Start()`, or `Read()`, operations) to complete. After they complete, the
-   * application should use `Finish()` to determine the status of the RPC.
+   * The library code should still wait for the current operation(s) (any
+   * pending `Start()`, or `Read()`) to complete. After they complete, the
+   * library code should use `Finish()` to determine the status of the RPC.
    */
   virtual void Cancel() = 0;
 
   /**
    * Start the streaming RPC.
    *
-   * Applications should call `Start()` and wait for its result before calling
-   * `Read()`. If `Start()` completes with `false` the stream has completed with
-   * an error.  The application should not call `Read()` in this case. On
-   * errors, the application should call`Finish()` to determine the status of
-   * the streaming RPC.
+   * The library code should invoke `Start()`, and wait for its result, before
+   * calling `Read()`. If `Start()` completes with `false` the stream has
+   * completed with an error.  The library code should not invoke `Read()` in
+   * this case. On errors, the library code should call`Finish()` to determine
+   * the status of the streaming RPC.
    */
   virtual future<bool> Start() = 0;
 
@@ -67,11 +67,11 @@ class AsyncStreamingReadRpc {
    * Read one response from the streaming RPC.
    *
    * @note Only **one** `Read()` operation may be pending at a time. The
-   * application is responsible for waiting until any previous `Read()`
+   * library code is responsible for waiting until any previous `Read()`
    * operations have completed before calling `Read()` again.
    *
    * If the `optional<>` is not engaged, the streaming RPC has completed.  The
-   * application should then call `Finish()` to find out if the streaming RPC
+   * library should then call `Finish()` to find out if the streaming RPC
    * was successful or completed with an error.
    */
   virtual future<absl::optional<Response>> Read() = 0;

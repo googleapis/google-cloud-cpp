@@ -36,7 +36,7 @@ namespace internal {
  *
  * A wrapper for gRPC's asynchronous streaming read APIs, which can be
  * combined with `google::cloud::CompletionQueue` and `google::cloud::future<>`
- * to provide easier-to-use abstractions.
+ * to provide easier-to-use abstractions than the objeects returned by gRPC.
  */
 template <typename Response>
 class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
@@ -54,9 +54,9 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
   future<bool> Start() override {
     struct OnStart : public AsyncGrpcOperation {
       promise<bool> p;
-      Options options_ = CurrentOptions();
+      Options options = CurrentOptions();
       bool Notify(bool ok) override {
-        OptionsSpan span(options_);
+        OptionsSpan span(options);
         p.set_value(ok);
         return true;
       }
@@ -71,9 +71,9 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
     struct OnRead : public AsyncGrpcOperation {
       promise<absl::optional<Response>> p;
       Response response;
-      Options options_ = CurrentOptions();
+      Options options = CurrentOptions();
       bool Notify(bool ok) override {
-        OptionsSpan span(options_);
+        OptionsSpan span(options);
         if (!ok) {
           p.set_value({});
           return true;
@@ -92,10 +92,10 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
   future<Status> Finish() override {
     struct OnFinish : public AsyncGrpcOperation {
       promise<Status> p;
-      Options options_ = CurrentOptions();
+      Options options = CurrentOptions();
       grpc::Status status;
       bool Notify(bool /*ok*/) override {
-        OptionsSpan span(options_);
+        OptionsSpan span(options);
         p.set_value(MakeStatusFromRpcError(std::move(status)));
         return true;
       }
@@ -119,13 +119,13 @@ using PrepareAsyncReadRpc = absl::FunctionRef<
         grpc::ClientContext*, Request const&, grpc::CompletionQueue*)>;
 
 /**
- * Make an asynchronous streaming read/write RPC using `CompletionQueue`.
+ * Make an asynchronous streaming read RPC using `CompletionQueue`.
  *
  * @note In the past we would have made this a member function of the
  *     `CompletionQueue` class. We want to avoid this as (a) we are not certain
  *     this is the long term API we want to expose, (b) once in the public
  *     `CompletionQueue` class it is hard to remove member functions.  Placing
- *     the API in the `internal::` namespace give us more flexibility for the
+ *     the API in the `internal::` namespace gives us more flexibility for the
  *     future, at the cost of (hopefully controlled) breaks in encapsulation.
  */
 template <typename Request, typename Response>
@@ -139,13 +139,13 @@ std::unique_ptr<AsyncStreamingReadRpc<Response>> MakeStreamingReadRpc(
 }
 
 /**
- * A streaming read-write RPC returning a fixed error.
+ * An asynchronous streaming read RPC returning a fixed error.
  *
  * This is used when the library cannot even start the streaming RPC, for
  * example, because setting up the credentials for the call failed.  One could
- * return `StatusOr<std::unique_ptr<StreamingWriteRpc<A, B>>` in such cases, but
- * the receiving code must deal with streams that fail anyway. It seems more
- * elegant to represent the error as part of the stream.
+ * return `StatusOr<std::unique_ptr<StreamingReadRpc<Response>>` in such cases.
+ * We represent the error as part of the stream, as the receiving code must deal
+ * with streams that fail anyway.
  */
 template <typename Response>
 class AsyncStreamingReadRpcError : public AsyncStreamingReadRpc<Response> {
