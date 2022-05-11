@@ -225,9 +225,9 @@ TEST_F(DecompressiveTranscodingIntegrationTest, ResumeGunzippedDownloadJson) {
   ASSERT_STATUS_OK(reader.status());
 
   EXPECT_EQ(actual.size(), decompressed.size());
-  std::vector<std::string> actual_lines = absl::StrSplit(actual, "\n");
+  std::vector<std::string> actual_lines = absl::StrSplit(actual, '\n');
   std::vector<std::string> decompressed_lines =
-      absl::StrSplit(decompressed, "\n");
+      absl::StrSplit(decompressed, '\n');
   EXPECT_THAT(actual_lines, ElementsAreArray(decompressed_lines));
 }
 
