@@ -38,7 +38,7 @@ class CurlImpl;
 class CurlRestClient : public RestClient {
  public:
   static std::string HostHeader(Options const& options,
-                                std::string const& default_endpoint);
+                                std::string const& endpoint);
   ~CurlRestClient() override = default;
 
   CurlRestClient(CurlRestClient const&) = delete;
