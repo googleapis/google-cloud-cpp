@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROW_READER_IMPL_H
 
 #include "google/cloud/bigtable/row.h"
-#include "absl/types/optional.h"
+#include "absl/types/variant.h"
 
 namespace google {
 namespace cloud {
@@ -30,8 +30,7 @@ class RowReaderImpl {
 
   virtual void Cancel() = 0;
 
-  using OptionalRow = absl::optional<bigtable::Row>;
-  virtual StatusOr<OptionalRow> Advance() = 0;
+  virtual absl::variant<Status, bigtable::Row> Advance() = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

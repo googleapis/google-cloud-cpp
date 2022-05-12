@@ -130,12 +130,13 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
         backoff_policy_(absl::make_unique<NiceMock<MockBackoffPolicy>>()),
         metadata_update_policy_(kTableName,
                                 bigtable::MetadataParamTypes::TABLE_NAME),
-        parser_factory_(new ReadRowsParserMockFactory) {}
+        parser_factory_(
+            absl::make_unique<NiceMock<ReadRowsParserMockFactory>>()) {}
 
   std::unique_ptr<MockRetryPolicy> retry_policy_;
   std::unique_ptr<MockBackoffPolicy> backoff_policy_;
   bigtable::MetadataUpdatePolicy metadata_update_policy_;
-  std::unique_ptr<ReadRowsParserMockFactory> parser_factory_;
+  std::unique_ptr<NiceMock<ReadRowsParserMockFactory>> parser_factory_;
 };
 
 TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
@@ -297,9 +298,9 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, OnFailure(An<grpc::Status const&>()))
+    EXPECT_CALL(*retry_policy_, OnFailure(An<Status const&>()))
         .WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, OnCompletion(An<grpc::Status const&>()))
+    EXPECT_CALL(*backoff_policy_, OnCompletion(An<Status const&>()))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     // the stub will free it
@@ -337,10 +338,9 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, OnFailure(An<grpc::Status const&>()))
+    EXPECT_CALL(*retry_policy_, OnFailure(An<Status const&>()))
         .WillOnce(Return(false));
-    EXPECT_CALL(*backoff_policy_, OnCompletion(An<grpc::Status const&>()))
-        .Times(0);
+    EXPECT_CALL(*backoff_policy_, OnCompletion(An<Status const&>())).Times(0);
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -372,9 +372,9 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, OnFailure(An<grpc::Status const&>()))
+    EXPECT_CALL(*retry_policy_, OnFailure(An<Status const&>()))
         .WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, OnCompletion(An<grpc::Status const&>()))
+    EXPECT_CALL(*backoff_policy_, OnCompletion(An<Status const&>()))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     // the stub will free it
@@ -424,9 +424,9 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipToLastScannedRow) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, OnFailure(An<grpc::Status const&>()))
+    EXPECT_CALL(*retry_policy_, OnFailure(An<Status const&>()))
         .WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, OnCompletion(An<grpc::Status const&>()))
+    EXPECT_CALL(*backoff_policy_, OnCompletion(An<Status const&>()))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto* stream_retry =
@@ -473,9 +473,9 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
         .WillOnce(SetArgReferee<1>(
             grpc::Status(grpc::StatusCode::INTERNAL, "parser exception")));
 
-    EXPECT_CALL(*retry_policy_, OnFailure(An<grpc::Status const&>()))
+    EXPECT_CALL(*retry_policy_, OnFailure(An<Status const&>()))
         .WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, OnCompletion(An<grpc::Status const&>()))
+    EXPECT_CALL(*backoff_policy_, OnCompletion(An<Status const&>()))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     // the stub will free it
@@ -521,9 +521,9 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
         .WillOnce(SetArgReferee<0>(
             grpc::Status(grpc::StatusCode::INTERNAL, "InternalError")));
 
-    EXPECT_CALL(*retry_policy_, OnFailure(An<grpc::Status const&>()))
+    EXPECT_CALL(*retry_policy_, OnFailure(An<Status const&>()))
         .WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, OnCompletion(An<grpc::Status const&>()))
+    EXPECT_CALL(*backoff_policy_, OnCompletion(An<Status const&>()))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     // the stub will free it
@@ -565,10 +565,9 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
     EXPECT_CALL(*parser, HandleEndOfStreamHook)
         .WillOnce(SetArgReferee<0>(
             grpc::Status(grpc::StatusCode::INTERNAL, "InternalError")));
-    EXPECT_CALL(*retry_policy_, OnFailure(An<grpc::Status const&>()))
+    EXPECT_CALL(*retry_policy_, OnFailure(An<Status const&>()))
         .WillOnce(Return(false));
-    EXPECT_CALL(*backoff_policy_, OnCompletion(An<grpc::Status const&>()))
-        .Times(0);
+    EXPECT_CALL(*backoff_policy_, OnCompletion(An<Status const&>())).Times(0);
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -653,9 +652,9 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, OnFailure(An<grpc::Status const&>()))
+    EXPECT_CALL(*retry_policy_, OnFailure(An<Status const&>()))
         .WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, OnCompletion(An<grpc::Status const&>()))
+    EXPECT_CALL(*backoff_policy_, OnCompletion(An<Status const&>()))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     // the stub will free it
@@ -818,9 +817,9 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, OnFailure(An<grpc::Status const&>()))
+    EXPECT_CALL(*retry_policy_, OnFailure(An<Status const&>()))
         .WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, OnCompletion(An<grpc::Status const&>()))
+    EXPECT_CALL(*backoff_policy_, OnCompletion(An<Status const&>()))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     // the stub will free it

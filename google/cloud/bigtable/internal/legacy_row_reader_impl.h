@@ -25,8 +25,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/optional.h"
-#include "absl/types/optional.h"
+#include "absl/types/variant.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <cinttypes>
@@ -74,11 +73,11 @@ class LegacyRowReaderImpl : public RowReaderImpl {
    *
    * This call possibly blocks waiting for data until a full row is available.
    */
-  StatusOr<OptionalRow> Advance() override;
+  absl::variant<Status, bigtable::Row> Advance() override;
 
  private:
   /// Called by Advance(), does not handle retries.
-  grpc::Status AdvanceOrFail(OptionalRow& row);
+  absl::variant<Status, bigtable::Row> AdvanceOrFail();
 
   /**
    * Move the `processed_chunks_count_` index to the next chunk,
