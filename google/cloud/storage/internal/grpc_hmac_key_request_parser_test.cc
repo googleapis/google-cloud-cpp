@@ -72,9 +72,7 @@ TEST(GrpcBucketRequestParser, UpdateHmacKeyRequestAllOptions) {
           state: "INACTIVE"
         }
         common_request_params: { user_project: "test-user-project" }
-        update_mask {
-          paths: ['state']
-        }
+        update_mask { paths: [ 'state' ] }
       )pb",
       &expected));
 
