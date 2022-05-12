@@ -90,8 +90,9 @@ std::string CurlRestClient::HostHeader(Options const& options,
   // AuthorityOption.
   auto const& auth = options.get<AuthorityOption>();
   if (!auth.empty()) return absl::StrCat("Host: ", auth);
-  if (absl::StrContains(endpoint, "googleapis.com"))
+  if (absl::StrContains(endpoint, "googleapis.com")) {
     return absl::StrCat("Host: ", FormatHostHeaderValue(endpoint));
+  }
   return {};
 }
 
