@@ -32,6 +32,7 @@ using ::google::cloud::internal::GetEnv;
 using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -77,11 +78,15 @@ TEST_F(GrpcBucketAclIntegrationTest, AclCRUD) {
   auto const existing_entity = metadata->acl().front();
   auto current_acl = client->ListBucketAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
-  // Search using the entity name returned by the request, because we use
-  // 'project-editors-<project_id>' this different than the original entity
-  // name, the server "translates" the project id to a project number.
   EXPECT_THAT(AclEntityNames(*current_acl),
               ContainsOnce(existing_entity.entity()));
+
+  auto get_acl = client->GetBucketAcl(bucket_name, existing_entity.entity());
+  ASSERT_STATUS_OK(get_acl);
+  EXPECT_EQ(*get_acl, existing_entity);
+
+  auto not_found_acl = client->GetBucketAcl(bucket_name, "not-found-entity");
+  EXPECT_THAT(not_found_acl, StatusIs(StatusCode::kNotFound));
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
