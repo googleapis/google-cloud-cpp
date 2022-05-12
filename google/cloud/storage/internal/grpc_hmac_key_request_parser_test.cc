@@ -171,8 +171,8 @@ TEST(GrpcBucketRequestParser, ListHmacKeysResponseFull) {
   //     /bin/echo  -n "0123456789" | openssl base64 -e
   EXPECT_EQ(actual.next_page_token, "test-next-page-token");
 
-  auto make_matcher = [](std::string expected_id,
-                         std::string expected_access_id) {
+  auto make_matcher = [](std::string const& expected_id,
+                         std::string const& expected_access_id) {
     // To get the dates in RFC-3339 format I used:
     //     date --rfc-3339=seconds --date=@1652099696  # Create
     //     date --rfc-3339=seconds --date=@1652186096  # Update
