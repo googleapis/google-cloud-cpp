@@ -95,14 +95,10 @@ TEST(AsyncStreamReadWriteAuth, AuthFails) {
   EXPECT_THAT(uut->Finish().get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(AsyncStreamReadWriteAuth, CancelThenStart) {
-  auto factory =
-      AuthStream::StreamFactory([](std::unique_ptr<grpc::ClientContext>) {
-        auto mock = absl::make_unique<StrictMock<MockStream>>();
-        EXPECT_CALL(*mock, Start).Times(0);
-        EXPECT_CALL(*mock, Finish).Times(0);
-        return std::unique_ptr<BaseStream>(std::move(mock));
-      });
+TEST(AsyncStreamReadWriteAuth, CancelDuringAuth) {
+  auto factory = [](std::unique_ptr<grpc::ClientContext>) {
+    return std::unique_ptr<BaseStream>(absl::make_unique<MockStream>());
+  };
   auto strategy = std::make_shared<StrictMock<MockAuthenticationStrategy>>();
   auto start_promise = promise<void>();
   EXPECT_CALL(*strategy, AsyncConfigureContext)
@@ -124,6 +120,42 @@ TEST(AsyncStreamReadWriteAuth, CancelThenStart) {
   start_promise.set_value();
   EXPECT_FALSE(start.get());
   EXPECT_THAT(uut->Finish().get(), StatusIs(StatusCode::kInternal));
+}
+
+TEST(AsyncStreamReadWriteAuth, CancelAfterStart) {
+  auto factory = AuthStream::StreamFactory([](std::unique_ptr<
+                                               grpc::ClientContext>) {
+    auto mock = absl::make_unique<StrictMock<MockStream>>();
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
+    EXPECT_CALL(*mock, Read).WillOnce([] {
+      return make_ready_future(absl::make_optional(FakeResponse{"k0", "v0"}));
+    });
+    EXPECT_CALL(*mock, Cancel).Times(1);
+    EXPECT_CALL(*mock, Read).WillOnce([] {
+      return make_ready_future(absl::optional<FakeResponse>{});
+    });
+    EXPECT_CALL(*mock, Finish).WillOnce([] {
+      return make_ready_future(Status{});
+    });
+    return std::unique_ptr<BaseStream>(std::move(mock));
+  });
+  auto strategy = std::make_shared<StrictMock<MockAuthenticationStrategy>>();
+  EXPECT_CALL(*strategy, AsyncConfigureContext)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext> context) {
+        return make_ready_future(make_status_or(std::move(context)));
+      });
+  auto uut = absl::make_unique<AuthStream>(
+      absl::make_unique<grpc::ClientContext>(), strategy, factory);
+  EXPECT_TRUE(uut->Start().get());
+  auto response = uut->Read().get();
+  ASSERT_TRUE(response.has_value());
+  EXPECT_EQ(response->key, "k0");
+  EXPECT_EQ(response->value, "v0");
+  uut->Cancel();
+  response = uut->Read().get();
+  EXPECT_FALSE(response);
+  EXPECT_THAT(uut->Finish().get(), IsOk());
 }
 
 }  // namespace
