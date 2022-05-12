@@ -30,8 +30,7 @@ TEST(CurlRestClientStandaloneFunctions, HostHeader) {
   } cases[] = {
       {"https://storage.googleapis.com", "storage.googleapis.com",
        "Host: storage.googleapis.com"},
-      {"https://storage.googleapis.com", "",
-       "Host: storage.googleapis.com"},
+      {"https://storage.googleapis.com", "", "Host: storage.googleapis.com"},
       {"https://storage.googleapis.com", "auth", "Host: auth"},
       {"https://storage.googleapis.com:443", "storage.googleapis.com",
        "Host: storage.googleapis.com"},
