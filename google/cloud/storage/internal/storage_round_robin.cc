@@ -149,6 +149,12 @@ StorageRoundRobin::GetServiceAccount(
   return Child()->GetServiceAccount(context, request);
 }
 
+Status StorageRoundRobin::DeleteHmacKey(
+    grpc::ClientContext& context,
+    google::storage::v2::DeleteHmacKeyRequest const& request) {
+  return Child()->DeleteHmacKey(context, request);
+}
+
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageRoundRobin::GetHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::GetHmacKeyRequest const& request) {

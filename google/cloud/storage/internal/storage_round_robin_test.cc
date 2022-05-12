@@ -450,6 +450,25 @@ TEST(StorageRoundRobinTest, GetServiceAccount) {
   }
 }
 
+TEST(StorageRoundRobinTest, DeleteHmacKey) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, DeleteHmacKey)
+          .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+    }
+  }
+
+  StorageRoundRobin under_test(AsPlainStubs(mocks));
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    google::storage::v2::DeleteHmacKeyRequest request;
+    grpc::ClientContext ctx;
+    auto response = under_test.DeleteHmacKey(ctx, request);
+    EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
+  }
+}
+
 TEST(StorageRoundRobinTest, GetHmacKey) {
   auto mocks = MakeMocks();
   InSequence sequence;

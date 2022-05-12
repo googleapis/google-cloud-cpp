@@ -45,6 +45,23 @@ TEST(GrpcBucketRequestParser, GetHmacKeyRequestAllOptions) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcBucketRequestParser, DeleteHmacKeyRequestAllOptions) {
+  v2::DeleteHmacKeyRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        access_id: "test-access-id"
+        project: "projects/test-project-id"
+        common_request_params: { user_project: "test-user-project" }
+      )pb",
+      &expected));
+
+  DeleteHmacKeyRequest req("test-project-id", "test-access-id");
+  req.set_multiple_options(UserProject("test-user-project"));
+
+  auto const actual = GrpcHmacKeyRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

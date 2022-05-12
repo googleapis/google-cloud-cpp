@@ -51,7 +51,7 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
           .value_or("");
   ASSERT_THAT(service_account, Not(IsEmpty()));
 
-  // TODO(#7757) - use gRPC to also create the keys.
+  // TODO(#4210) - use gRPC to also create the keys.
   auto rest_client = Client();
   auto create = rest_client.CreateHmacKey(service_account);
   ASSERT_STATUS_OK(create);
@@ -72,6 +72,17 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
   EXPECT_EQ(get->state(), metadata.state());
   EXPECT_EQ(get->time_created(), metadata.time_created());
   EXPECT_EQ(get->updated(), metadata.updated());
+
+  // Before we can delete the HmacKey we need to move it to the inactive state.
+  // TODO(#4207) - use gRPC to update the metadata
+  auto update = metadata;
+  update.set_state(HmacKeyMetadata::state_inactive());
+  auto update_response = rest_client.UpdateHmacKey(update.access_id(), update);
+  ASSERT_STATUS_OK(update_response);
+  EXPECT_EQ(update_response->state(), HmacKeyMetadata::state_inactive());
+
+  auto delete_response = client->DeleteHmacKey(get->access_id());
+  ASSERT_STATUS_OK(delete_response);
 }
 
 }  // namespace

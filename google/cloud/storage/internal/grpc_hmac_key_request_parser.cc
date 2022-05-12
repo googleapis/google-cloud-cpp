@@ -21,6 +21,15 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+google::storage::v2::DeleteHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
+    DeleteHmacKeyRequest const& request) {
+  google::storage::v2::DeleteHmacKeyRequest result;
+  SetCommonParameters(result, request);
+  result.set_access_id(request.access_id());
+  result.set_project("projects/" + request.project_id());
+  return result;
+}
+
 google::storage::v2::GetHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
     GetHmacKeyRequest const& request) {
   google::storage::v2::GetHmacKeyRequest result;
