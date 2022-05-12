@@ -29,6 +29,7 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "internal/async_read_write_stream_logging_test.cc",
     "internal/async_retry_loop_test.cc",
     "internal/async_retry_unary_rpc_test.cc",
+    "internal/async_streaming_read_rpc_auth_test.cc",
     "internal/async_streaming_read_rpc_impl_test.cc",
     "internal/background_threads_impl_test.cc",
     "internal/extract_long_running_result_test.cc",

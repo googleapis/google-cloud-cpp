@@ -46,6 +46,7 @@ add_library(
     internal/async_retry_unary_rpc.h
     internal/async_rpc_details.h
     internal/async_streaming_read_rpc.h
+    internal/async_streaming_read_rpc_auth.h
     internal/async_streaming_read_rpc_impl.h
     internal/background_threads_impl.cc
     internal/background_threads_impl.h
@@ -235,6 +236,7 @@ if (BUILD_TESTING)
         internal/async_read_write_stream_logging_test.cc
         internal/async_retry_loop_test.cc
         internal/async_retry_unary_rpc_test.cc
+        internal/async_streaming_read_rpc_auth_test.cc
         internal/async_streaming_read_rpc_impl_test.cc
         internal/background_threads_impl_test.cc
         internal/extract_long_running_result_test.cc
