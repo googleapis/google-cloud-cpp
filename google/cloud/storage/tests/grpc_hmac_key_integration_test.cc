@@ -59,9 +59,8 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
   auto get_ids = [&] {
     std::vector<std::string> ids;
     auto range = client->ListHmacKeys(ServiceAccountFilter(service_account));
-    std::transform(
-        range.begin(), range.end(), std::back_inserter(ids),
-        [](StatusOr<HmacKeyMetadata> x) { return x.value().id(); });
+    std::transform(range.begin(), range.end(), std::back_inserter(ids),
+                   [](StatusOr<HmacKeyMetadata> x) { return x.value().id(); });
     return ids;
   };
 
