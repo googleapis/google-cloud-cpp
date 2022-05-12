@@ -29,7 +29,6 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockAuthenticationStrategy;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::Return;
 using ::testing::StrictMock;
 
 struct FakeResponse {
