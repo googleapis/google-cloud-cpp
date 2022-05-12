@@ -27,6 +27,10 @@ namespace internal {
 
 /// Convert JSON requests to gRPC requests and gRPC responses to JSON responses
 struct GrpcHmacKeyRequestParser {
+  static google::storage::v2::CreateHmacKeyRequest ToProto(
+      CreateHmacKeyRequest const&);
+  static CreateHmacKeyResponse FromProto(
+      google::storage::v2::CreateHmacKeyResponse const&);
   static google::storage::v2::DeleteHmacKeyRequest ToProto(
       DeleteHmacKeyRequest const&);
   static google::storage::v2::GetHmacKeyRequest ToProto(

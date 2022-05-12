@@ -639,8 +639,14 @@ StatusOr<ListHmacKeysResponse> GrpcClient::ListHmacKeys(
 }
 
 StatusOr<CreateHmacKeyResponse> GrpcClient::CreateHmacKey(
-    CreateHmacKeyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    CreateHmacKeyRequest const& request) {
+  OptionsSpan span(options_);
+  auto proto = GrpcHmacKeyRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->CreateHmacKey(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcHmacKeyRequestParser::FromProto(*response);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteHmacKey(

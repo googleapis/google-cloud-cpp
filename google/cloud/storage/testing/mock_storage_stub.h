@@ -109,6 +109,11 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::GetServiceAccountRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::CreateHmacKeyResponse>,
+              CreateHmacKey,
+              (grpc::ClientContext&,
+               google::storage::v2::CreateHmacKeyRequest const&),
+              (override));
   MOCK_METHOD(Status, DeleteHmacKey,
               (grpc::ClientContext&,
                google::storage::v2::DeleteHmacKeyRequest const&),

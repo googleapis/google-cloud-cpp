@@ -122,6 +122,10 @@ class StorageAuth : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::GetServiceAccountRequest const& request) override;
 
+  StatusOr<google::storage::v2::CreateHmacKeyResponse> CreateHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::CreateHmacKeyRequest const& request) override;
+
   Status DeleteHmacKey(
       grpc::ClientContext& context,
       google::storage::v2::DeleteHmacKeyRequest const& request) override;

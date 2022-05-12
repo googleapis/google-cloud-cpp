@@ -1182,7 +1182,6 @@ service {
     "GetNotification",
     "CreateNotification",
     "ListNotifications",
-    "CreateHmacKey",
     "ListHmacKeys"
   ]
 }

@@ -120,6 +120,10 @@ class StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::GetServiceAccountRequest const& request) = 0;
 
+  virtual StatusOr<google::storage::v2::CreateHmacKeyResponse> CreateHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::CreateHmacKeyRequest const& request) = 0;
+
   virtual Status DeleteHmacKey(
       grpc::ClientContext& context,
       google::storage::v2::DeleteHmacKeyRequest const& request) = 0;
@@ -222,6 +226,10 @@ class DefaultStorageStub : public StorageStub {
   StatusOr<google::storage::v2::ServiceAccount> GetServiceAccount(
       grpc::ClientContext& client_context,
       google::storage::v2::GetServiceAccountRequest const& request) override;
+
+  StatusOr<google::storage::v2::CreateHmacKeyResponse> CreateHmacKey(
+      grpc::ClientContext& client_context,
+      google::storage::v2::CreateHmacKeyRequest const& request) override;
 
   Status DeleteHmacKey(
       grpc::ClientContext& client_context,

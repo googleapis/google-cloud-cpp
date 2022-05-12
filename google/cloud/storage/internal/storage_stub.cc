@@ -264,6 +264,18 @@ DefaultStorageStub::GetServiceAccount(
   return response;
 }
 
+StatusOr<google::storage::v2::CreateHmacKeyResponse>
+DefaultStorageStub::CreateHmacKey(
+    grpc::ClientContext& client_context,
+    google::storage::v2::CreateHmacKeyRequest const& request) {
+  google::storage::v2::CreateHmacKeyResponse response;
+  auto status = grpc_stub_->CreateHmacKey(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultStorageStub::DeleteHmacKey(
     grpc::ClientContext& client_context,
     google::storage::v2::DeleteHmacKeyRequest const& request) {

@@ -14,12 +14,31 @@
 
 #include "google/cloud/storage/internal/grpc_hmac_key_request_parser.h"
 #include "google/cloud/storage/internal/grpc_common_request_params.h"
+#include "google/cloud/storage/internal/grpc_hmac_key_metadata_parser.h"
+#include "google/cloud/storage/internal/openssl_util.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+google::storage::v2::CreateHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
+    CreateHmacKeyRequest const& request) {
+  google::storage::v2::CreateHmacKeyRequest result;
+  SetCommonParameters(result, request);
+  result.set_project("projects/" + request.project_id());
+  result.set_service_account_email(request.service_account());
+  return result;
+}
+
+CreateHmacKeyResponse GrpcHmacKeyRequestParser::FromProto(
+    google::storage::v2::CreateHmacKeyResponse const& response) {
+  CreateHmacKeyResponse result;
+  result.metadata = GrpcHmacKeyMetadataParser::FromProto(response.metadata());
+  result.secret = internal::Base64Encode(response.secret_key_bytes());
+  return result;
+}
 
 google::storage::v2::DeleteHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
     DeleteHmacKeyRequest const& request) {
