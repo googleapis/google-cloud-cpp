@@ -28,6 +28,8 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockAuthenticationStrategy;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Return;
 using ::testing::StrictMock;
 
 struct FakeResponse {
@@ -72,6 +74,57 @@ TEST(AsyncStreamReadWriteAuth, Start) {
   EXPECT_EQ(response->key, "k0");
   EXPECT_EQ(response->value, "v0");
   EXPECT_THAT(uut->Finish().get(), IsOk());
+}
+
+TEST(AsyncStreamReadWriteAuth, AuthFails) {
+  auto factory =
+      AuthStream::StreamFactory([](std::unique_ptr<grpc::ClientContext>) {
+        auto mock = absl::make_unique<StrictMock<MockStream>>();
+        EXPECT_CALL(*mock, Start).Times(0);
+        EXPECT_CALL(*mock, Finish).Times(0);
+        return std::unique_ptr<BaseStream>(std::move(mock));
+      });
+  auto strategy = std::make_shared<StrictMock<MockAuthenticationStrategy>>();
+  EXPECT_CALL(*strategy, AsyncConfigureContext)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
+        return make_ready_future(StatusOr<std::unique_ptr<grpc::ClientContext>>(
+            Status(StatusCode::kPermissionDenied, "uh-oh")));
+      });
+  auto uut = absl::make_unique<AuthStream>(
+      absl::make_unique<grpc::ClientContext>(), strategy, factory);
+  EXPECT_FALSE(uut->Start().get());
+  EXPECT_THAT(uut->Finish().get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(AsyncStreamReadWriteAuth, CancelThenStart) {
+  auto factory =
+      AuthStream::StreamFactory([](std::unique_ptr<grpc::ClientContext>) {
+        auto mock = absl::make_unique<StrictMock<MockStream>>();
+        EXPECT_CALL(*mock, Start).Times(0);
+        EXPECT_CALL(*mock, Finish).Times(0);
+        return std::unique_ptr<BaseStream>(std::move(mock));
+      });
+  auto strategy = std::make_shared<StrictMock<MockAuthenticationStrategy>>();
+  auto start_promise = promise<void>();
+  EXPECT_CALL(*strategy, AsyncConfigureContext)
+      .WillOnce([&](std::unique_ptr<grpc::ClientContext> context) {
+        struct MoveCapture {
+          std::unique_ptr<grpc::ClientContext> context;
+          StatusOr<std::unique_ptr<grpc::ClientContext>> operator()(
+              future<void>) {
+            return make_status_or(std::move(context));
+          }
+        };
+        return start_promise.get_future().then(MoveCapture{std::move(context)});
+      });
+
+  auto uut = absl::make_unique<AuthStream>(
+      absl::make_unique<grpc::ClientContext>(), strategy, factory);
+  auto start = uut->Start();
+  uut->Cancel();
+  start_promise.set_value();
+  EXPECT_FALSE(start.get());
+  EXPECT_THAT(uut->Finish().get(), StatusIs(StatusCode::kInternal));
 }
 
 }  // namespace

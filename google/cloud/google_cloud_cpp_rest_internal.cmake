@@ -21,7 +21,6 @@ find_package(OpenSSL REQUIRED)
 # the library
 add_library(
     google_cloud_cpp_rest_internal # cmake-format: sort
-    internal/async_streaming_read_rpc_auth.h
     internal/binary_data_as_debug_string.cc
     internal/binary_data_as_debug_string.h
     internal/curl_handle.cc
