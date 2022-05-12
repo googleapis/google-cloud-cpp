@@ -53,7 +53,7 @@ io::log_h2 "Highlight generated code differences"
 git diff --exit-code generator/integration_tests/golden/ google/ ci/
 
 io::log_h2 "Highlight new files"
-if [[ ! -z "$(git status --porcelain)" ]]; then
+if [[ -n "$(git status --porcelain)" ]]; then
   io::log_red "New unmanaged files created by generator"
   git status
   exit 1
