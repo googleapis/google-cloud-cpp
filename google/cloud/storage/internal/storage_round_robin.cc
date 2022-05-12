@@ -161,6 +161,12 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageRoundRobin::GetHmacKey(
   return Child()->GetHmacKey(context, request);
 }
 
+StatusOr<google::storage::v2::HmacKeyMetadata> StorageRoundRobin::UpdateHmacKey(
+    grpc::ClientContext& context,
+    google::storage::v2::UpdateHmacKeyRequest const& request) {
+  return Child()->UpdateHmacKey(context, request);
+}
+
 std::shared_ptr<StorageStub> StorageRoundRobin::Child() {
   std::lock_guard<std::mutex> lk(mu_);
   auto child = children_[current_];

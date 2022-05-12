@@ -117,6 +117,10 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::GetHmacKeyRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::HmacKeyMetadata>, UpdateHmacKey,
+              (grpc::ClientContext&,
+               google::storage::v2::UpdateHmacKeyRequest const&),
+              (override));
 };
 
 class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<

@@ -666,8 +666,14 @@ StatusOr<HmacKeyMetadata> GrpcClient::GetHmacKey(
 }
 
 StatusOr<HmacKeyMetadata> GrpcClient::UpdateHmacKey(
-    UpdateHmacKeyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    UpdateHmacKeyRequest const& request) {
+  OptionsSpan span(options_);
+  auto proto = GrpcHmacKeyRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->UpdateHmacKey(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcHmacKeyMetadataParser::FromProto(*response);
 }
 
 StatusOr<SignBlobResponse> GrpcClient::SignBlob(SignBlobRequest const&) {

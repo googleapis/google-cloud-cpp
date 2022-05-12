@@ -1183,8 +1183,7 @@ service {
     "CreateNotification",
     "ListNotifications",
     "CreateHmacKey",
-    "ListHmacKeys",
-    "UpdateHmacKey"
+    "ListHmacKeys"
   ]
 }
 

@@ -28,6 +28,23 @@ namespace {
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
 
+TEST(GrpcBucketRequestParser, DeleteHmacKeyRequestAllOptions) {
+  v2::DeleteHmacKeyRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        access_id: "test-access-id"
+        project: "projects/test-project-id"
+        common_request_params: { user_project: "test-user-project" }
+      )pb",
+      &expected));
+
+  DeleteHmacKeyRequest req("test-project-id", "test-access-id");
+  req.set_multiple_options(UserProject("test-user-project"));
+
+  auto const actual = GrpcHmacKeyRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcBucketRequestParser, GetHmacKeyRequestAllOptions) {
   v2::GetHmacKeyRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
@@ -45,17 +62,24 @@ TEST(GrpcBucketRequestParser, GetHmacKeyRequestAllOptions) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcBucketRequestParser, DeleteHmacKeyRequestAllOptions) {
-  v2::DeleteHmacKeyRequest expected;
+TEST(GrpcBucketRequestParser, UpdateHmacKeyRequestAllOptions) {
+  v2::UpdateHmacKeyRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        access_id: "test-access-id"
-        project: "projects/test-project-id"
+        hmac_key {
+          access_id: "test-access-id"
+          project: "projects/test-project-id"
+          state: "INACTIVE"
+        }
         common_request_params: { user_project: "test-user-project" }
+        update_mask { paths: [ 'state' ] }
       )pb",
       &expected));
 
-  DeleteHmacKeyRequest req("test-project-id", "test-access-id");
+  UpdateHmacKeyRequest req("test-project-id", "test-access-id",
+                           HmacKeyMetadata()
+                               .set_state(HmacKeyMetadata::state_inactive())
+                               .set_etag("test-only-etag"));
   req.set_multiple_options(UserProject("test-user-project"));
 
   auto const actual = GrpcHmacKeyRequestParser::ToProto(req);
