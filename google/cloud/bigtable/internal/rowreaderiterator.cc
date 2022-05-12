@@ -41,14 +41,14 @@ RowReaderIterator& RowReaderIterator::operator++() {
 }
 
 void RowReaderIterator::Advance() {
-  auto status_or_optional_row = owner_->Advance();
-  if (!status_or_optional_row) {
-    row_ = StatusOr<bigtable::Row>(std::move(status_or_optional_row).status());
+  auto variant = owner_->Advance();
+  if (absl::holds_alternative<bigtable::Row>(variant)) {
+    row_ = absl::get<bigtable::Row>(std::move(variant));
     return;
   }
-  auto& optional_row = *status_or_optional_row;
-  if (optional_row) {
-    row_ = *std::move(optional_row);
+  auto status = absl::get<Status>(std::move(variant));
+  if (!status.ok()) {
+    row_ = std::move(status);
     return;
   }
   // Successful end()

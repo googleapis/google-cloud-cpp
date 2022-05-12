@@ -105,17 +105,18 @@ bool LegacyRowReaderImpl::NextChunk() {
   return true;
 }
 
-StatusOr<RowReaderImpl::OptionalRow> LegacyRowReaderImpl::Advance() {
+absl::variant<Status, bigtable::Row> LegacyRowReaderImpl::Advance() {
   if (operation_cancelled_) {
     return Status(StatusCode::kCancelled, "Operation cancelled.");
   }
   while (true) {
-    OptionalRow row;
-    grpc::Status status = AdvanceOrFail(row);
-    if (status.ok()) {
-      return row;
+    auto variant = AdvanceOrFail();
+    if (absl::holds_alternative<bigtable::Row>(variant)) {
+      return absl::get<bigtable::Row>(std::move(variant));
     }
-    row.reset();
+
+    auto status = absl::get<Status>(std::move(variant));
+    if (status.ok()) return Status{};
 
     // In the unlikely case when we have already reached the requested
     // number of rows and still receive an error (the parser can throw
@@ -123,7 +124,7 @@ StatusOr<RowReaderImpl::OptionalRow> LegacyRowReaderImpl::Advance() {
     // retry and we have no good value for rows_limit anyway.
     if (rows_limit_ != bigtable::RowReader::NO_ROWS_LIMIT &&
         rows_limit_ <= rows_count_) {
-      return row;
+      return Status{};
     }
 
     if (!last_read_row_key_.empty()) {
@@ -134,13 +135,9 @@ StatusOr<RowReaderImpl::OptionalRow> LegacyRowReaderImpl::Advance() {
     }
 
     // If we receive an error, but the retryable set is empty, stop.
-    if (row_set_.IsEmpty()) {
-      return row;
-    }
+    if (row_set_.IsEmpty()) return Status{};
 
-    if (!retry_policy_->OnFailure(status)) {
-      return MakeStatusFromRpcError(status);
-    }
+    if (!retry_policy_->OnFailure(status)) return status;
 
     auto delay = backoff_policy_->OnCompletion(status);
     std::this_thread::sleep_for(delay);
@@ -150,8 +147,7 @@ StatusOr<RowReaderImpl::OptionalRow> LegacyRowReaderImpl::Advance() {
   }
 }
 
-grpc::Status LegacyRowReaderImpl::AdvanceOrFail(OptionalRow& row) {
-  row.reset();
+absl::variant<Status, bigtable::Row> LegacyRowReaderImpl::AdvanceOrFail() {
   grpc::Status status;
   if (!stream_) {
     MakeRequest();
@@ -161,9 +157,7 @@ grpc::Status LegacyRowReaderImpl::AdvanceOrFail(OptionalRow& row) {
       parser_->HandleChunk(
           std::move(*(response_.mutable_chunks(processed_chunks_count_))),
           status);
-      if (!status.ok()) {
-        return status;
-      }
+      if (!status.ok()) return MakeStatusFromRpcError(status);
       continue;
     }
 
@@ -172,30 +166,23 @@ grpc::Status LegacyRowReaderImpl::AdvanceOrFail(OptionalRow& row) {
     // fails during cleanup.
     stream_is_open_ = false;
     status = stream_->Finish();
-    if (!status.ok()) {
-      return status;
-    }
+    if (!status.ok()) return MakeStatusFromRpcError(status);
     parser_->HandleEndOfStream(status);
-    return status;
+    return MakeStatusFromRpcError(status);
   }
 
   // We have a complete row in the parser.
   bigtable::Row parsed_row = parser_->Next(status);
-  if (!status.ok()) {
-    return status;
-  }
-  row.emplace(std::move(parsed_row));
-  ++rows_count_;
-  last_read_row_key_ = std::string(row.value().row_key());
+  if (!status.ok()) return MakeStatusFromRpcError(status);
 
-  return status;
+  ++rows_count_;
+  last_read_row_key_ = parsed_row.row_key();
+  return parsed_row;
 }
 
 void LegacyRowReaderImpl::Cancel() {
   operation_cancelled_ = true;
-  if (!stream_is_open_) {
-    return;
-  }
+  if (!stream_is_open_) return;
   context_->TryCancel();
 
   // Also drain any data left unread
