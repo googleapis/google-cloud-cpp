@@ -70,7 +70,7 @@ TEST(GrpcBucketRequestParser, CreateHmacKeyResponseFull) {
 
   auto actual = GrpcHmacKeyRequestParser::FromProto(input);
   // Obtained the magic base64 string using:
-  //     /bin/echo  -n "0123456789" | openssl base64 -e
+  //     /bin/echo -n "0123456789" | openssl base64 -e
   EXPECT_EQ(actual.secret, "MDEyMzQ1Njc4OQ==");
   auto const& metadata = actual.metadata;
   EXPECT_EQ(metadata.id(), "test-id");
@@ -167,8 +167,6 @@ TEST(GrpcBucketRequestParser, ListHmacKeysResponseFull) {
       &input));
 
   auto actual = GrpcHmacKeyRequestParser::FromProto(input);
-  // Obtained the magic base64 string using:
-  //     /bin/echo -n "0123456789" | openssl base64 -e
   EXPECT_EQ(actual.next_page_token, "test-next-page-token");
 
   auto make_matcher = [](std::string const& expected_id,
