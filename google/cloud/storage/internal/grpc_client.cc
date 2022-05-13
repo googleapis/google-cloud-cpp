@@ -589,8 +589,27 @@ StatusOr<BucketAccessControl> GrpcClient::CreateBucketAcl(
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteBucketAcl(
-    DeleteBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    DeleteBucketAclRequest const& request) {
+  auto get_request = GetBucketMetadataRequest(request.bucket_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto updater = [request](std::vector<BucketAccessControl> acl)
+      -> StatusOr<std::vector<BucketAccessControl>> {
+    auto i = std::remove_if(acl.begin(), acl.end(),
+                            [&](BucketAccessControl const& entry) {
+                              return entry.entity() == request.entity();
+                            });
+    if (i == acl.end()) {
+      return Status(StatusCode::kNotFound,
+                    "the entity <" + request.entity() +
+                        "> is not present in the ACL for bucket " +
+                        request.bucket_name());
+    }
+    acl.erase(i, acl.end());
+    return acl;
+  };
+  auto response = ModifyBucketAccessControl(get_request, updater);
+  if (!response) return std::move(response).status();
+  return EmptyResponse{};
 }
 
 StatusOr<ListObjectAclResponse> GrpcClient::ListObjectAcl(
