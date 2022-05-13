@@ -83,7 +83,9 @@ TEST_F(GrpcBucketAclIntegrationTest, AclCRUD) {
 
   auto get_acl = client->GetBucketAcl(bucket_name, existing_entity.entity());
   ASSERT_STATUS_OK(get_acl);
-  EXPECT_EQ(*get_acl, existing_entity);
+  EXPECT_EQ(get_acl->entity(), existing_entity.entity());
+  EXPECT_EQ(get_acl->role(), existing_entity.role());
+  EXPECT_EQ(get_acl->id(), existing_entity.id());
 
   auto not_found_acl = client->GetBucketAcl(bucket_name, "not-found-entity");
   EXPECT_THAT(not_found_acl, StatusIs(StatusCode::kNotFound));
