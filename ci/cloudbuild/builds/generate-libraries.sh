@@ -46,6 +46,9 @@ io::log_h2 "Formatting generated code"
 git ls-files -z | grep -zE '\.(cc|h)$' |
   xargs -P "$(nproc)" -n 1 -0 clang-format -i
 
+io::log_h2 "Updating protobuf lists/deps"
+external/googleapis/update_libraries.sh
+
 # This build should fail if any generated files differ from what was checked
 # in. We only look in the google/ directory so that the build doesn't fail if
 # it's run while editing files in generator/...
