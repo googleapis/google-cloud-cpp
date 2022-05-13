@@ -49,6 +49,30 @@ google::storage::v2::DeleteHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
   return result;
 }
 
+google::storage::v2::ListHmacKeysRequest GrpcHmacKeyRequestParser::ToProto(
+    ListHmacKeysRequest const& request) {
+  google::storage::v2::ListHmacKeysRequest result;
+  SetCommonParameters(result, request);
+  result.set_project("projects/" + request.project_id());
+  result.set_page_token(request.page_token());
+  result.set_page_size(
+      static_cast<std::int32_t>(request.GetOption<MaxResults>().value_or(0)));
+  result.set_service_account_email(
+      request.GetOption<ServiceAccountFilter>().value_or(""));
+  result.set_show_deleted_keys(request.GetOption<Deleted>().value_or(false));
+  return result;
+}
+
+ListHmacKeysResponse GrpcHmacKeyRequestParser::FromProto(
+    google::storage::v2::ListHmacKeysResponse const& response) {
+  ListHmacKeysResponse result;
+  result.next_page_token = response.next_page_token();
+  for (auto const& m : response.hmac_keys()) {
+    result.items.push_back(GrpcHmacKeyMetadataParser::FromProto(m));
+  }
+  return result;
+}
+
 google::storage::v2::GetHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
     GetHmacKeyRequest const& request) {
   google::storage::v2::GetHmacKeyRequest result;

@@ -168,6 +168,13 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageRoundRobin::GetHmacKey(
   return Child()->GetHmacKey(context, request);
 }
 
+StatusOr<google::storage::v2::ListHmacKeysResponse>
+StorageRoundRobin::ListHmacKeys(
+    grpc::ClientContext& context,
+    google::storage::v2::ListHmacKeysRequest const& request) {
+  return Child()->ListHmacKeys(context, request);
+}
+
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageRoundRobin::UpdateHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::UpdateHmacKeyRequest const& request) {

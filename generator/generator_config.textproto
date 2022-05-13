@@ -1181,8 +1181,7 @@ service {
     "DeleteNotification",
     "GetNotification",
     "CreateNotification",
-    "ListNotifications",
-    "ListHmacKeys"
+    "ListNotifications"
   ]
 }
 

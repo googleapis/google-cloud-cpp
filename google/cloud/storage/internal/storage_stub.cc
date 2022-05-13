@@ -298,6 +298,18 @@ StatusOr<google::storage::v2::HmacKeyMetadata> DefaultStorageStub::GetHmacKey(
   return response;
 }
 
+StatusOr<google::storage::v2::ListHmacKeysResponse>
+DefaultStorageStub::ListHmacKeys(
+    grpc::ClientContext& client_context,
+    google::storage::v2::ListHmacKeysRequest const& request) {
+  google::storage::v2::ListHmacKeysResponse response;
+  auto status = grpc_stub_->ListHmacKeys(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::storage::v2::HmacKeyMetadata>
 DefaultStorageStub::UpdateHmacKey(
     grpc::ClientContext& client_context,

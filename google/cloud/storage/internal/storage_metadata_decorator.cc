@@ -203,6 +203,14 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::GetHmacKey(
   return child_->GetHmacKey(context, request);
 }
 
+StatusOr<google::storage::v2::ListHmacKeysResponse>
+StorageMetadata::ListHmacKeys(
+    grpc::ClientContext& context,
+    google::storage::v2::ListHmacKeysRequest const& request) {
+  SetMetadata(context, {});
+  return child_->ListHmacKeys(context, request);
+}
+
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::UpdateHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::UpdateHmacKeyRequest const& request) {

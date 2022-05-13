@@ -28,6 +28,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
@@ -55,11 +56,25 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
                                 "metadata");
   auto client = MakeIntegrationTestClient();
 
+  auto get_ids = [&] {
+    std::vector<std::string> ids;
+    auto range = client->ListHmacKeys(ServiceAccountFilter(service_account));
+    std::transform(range.begin(), range.end(), std::back_inserter(ids),
+                   [](StatusOr<HmacKeyMetadata> x) { return x.value().id(); });
+    return ids;
+  };
+
+  auto const initial_ids = get_ids();
+
   auto create = client->CreateHmacKey(service_account);
   ASSERT_STATUS_OK(create);
   auto const key = create->second;
   auto const metadata = create->first;
   EXPECT_THAT(key, Not(IsEmpty()));
+
+  EXPECT_THAT(initial_ids, Not(Contains(metadata.id())));
+  auto current_ids = get_ids();
+  EXPECT_THAT(current_ids, Contains(metadata.id()));
 
   auto get = client->GetHmacKey(metadata.access_id());
   ASSERT_STATUS_OK(get);
@@ -81,6 +96,9 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
 
   auto delete_response = client->DeleteHmacKey(get->access_id());
   ASSERT_STATUS_OK(delete_response);
+
+  current_ids = get_ids();
+  EXPECT_THAT(current_ids, Not(Contains(metadata.id())));
 }
 
 }  // namespace

@@ -313,6 +313,18 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageLogging::GetHmacKey(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::ListHmacKeysResponse>
+StorageLogging::ListHmacKeys(
+    grpc::ClientContext& context,
+    google::storage::v2::ListHmacKeysRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::ListHmacKeysRequest const& request) {
+        return child_->ListHmacKeys(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageLogging::UpdateHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::UpdateHmacKeyRequest const& request) {
