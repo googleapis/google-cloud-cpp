@@ -51,3 +51,10 @@ git ls-files -z | grep -zE '\.(cc|h)$' |
 # it's run while editing files in generator/...
 io::log_h2 "Highlight generated code differences"
 git diff --exit-code generator/integration_tests/golden/ google/ ci/
+
+io::log_h2 "Highlight new files"
+if [[ -n "$(git status --porcelain)" ]]; then
+  io::log_red "New unmanaged files created by generator"
+  git status
+  exit 1
+fi
