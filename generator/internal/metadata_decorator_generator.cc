@@ -120,6 +120,18 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto constexpr kDeclaration = R"""(
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) override;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -289,6 +301,21 @@ $metadata_class_name$::Async$method_name$(
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto constexpr kDefinition = R"""(
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      $response_type$>>
+$metadata_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    $request_type$ const& request) {
+  SetMetadata(*context);
+  return child_->Async$method_name$(cq, std::move(context), request);
+}
+)""";
+      CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(

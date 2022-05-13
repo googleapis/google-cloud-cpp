@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_auth_decorator.h"
 #include "google/cloud/internal/async_read_write_stream_auth.h"
+#include "google/cloud/internal/async_streaming_read_rpc_auth.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
 
@@ -117,6 +118,23 @@ GoldenKitchenSinkAuth::WriteObject(
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
   return child_->WriteObject(std::move(context));
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::test::admin::database::v1::TailLogEntriesResponse>>
+GoldenKitchenSinkAuth::AsyncTailLogEntries(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
+    google::test::admin::database::v1::TailLogEntriesResponse>;
+
+  auto child = child_;
+  auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncTailLogEntries(cq, std::move(ctx), request);
+  };
+  return absl::make_unique<StreamAuth>(
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

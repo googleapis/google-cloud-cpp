@@ -172,6 +172,7 @@ Status ConnectionGenerator::GenerateHeader() {
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) continue;
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -333,6 +334,7 @@ $connection_class_name$::Async$method_name$(ExperimentalTag) {
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) continue;
     CcPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty, R"""(

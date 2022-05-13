@@ -80,6 +80,13 @@ class GoldenKitchenSinkLogging : public GoldenKitchenSinkStub {
    WriteObject(
       std::unique_ptr<grpc::ClientContext> context) override;
 
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      google::test::admin::database::v1::TailLogEntriesResponse>>
+  AsyncTailLogEntries(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
+
  private:
   std::shared_ptr<GoldenKitchenSinkStub> child_;
   TracingOptions tracing_options_;

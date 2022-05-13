@@ -20,6 +20,7 @@
 #include "absl/memory/memory.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
@@ -142,6 +143,19 @@ DefaultGoldenKitchenSinkStub::WriteObject(
   return absl::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
       google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>>(
     std::move(context), std::move(response), std::move(stream));
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::test::admin::database::v1::TailLogEntriesResponse>>
+DefaultGoldenKitchenSinkStub::AsyncTailLogEntries(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+  return google::cloud::internal::MakeStreamingReadRpc<google::test::admin::database::v1::TailLogEntriesRequest, google::test::admin::database::v1::TailLogEntriesResponse>(
+    cq, std::move(context), request,
+    [this](grpc::ClientContext* context, google::test::admin::database::v1::TailLogEntriesRequest const& request, grpc::CompletionQueue* cq) {
+      return grpc_stub_->PrepareAsyncTailLogEntries(context, request, cq);
+    });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

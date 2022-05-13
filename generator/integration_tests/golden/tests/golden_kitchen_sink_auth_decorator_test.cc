@@ -14,6 +14,7 @@
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_auth_decorator.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -29,10 +30,14 @@ namespace {
 
 using ::google::cloud::golden_internal::MockWriteObjectStreamingWriteRpc;
 using ::google::cloud::internal::StreamingReadRpcError;
+using ::google::cloud::testing_util::MakeTypicalAsyncMockAuth;
 using ::google::cloud::testing_util::MakeTypicalMockAuth;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::test::admin::database::v1::TailLogEntriesRequest;
+using ::google::test::admin::database::v1::TailLogEntriesResponse;
 using ::google::test::admin::database::v1::WriteObjectRequest;
 using ::google::test::admin::database::v1::WriteObjectResponse;
+using ::testing::ByMove;
 using ::testing::IsNull;
 using ::testing::Return;
 
@@ -183,6 +188,33 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, WriteObject) {
   EXPECT_FALSE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
   response = stream->Close();
   EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncTailLogEntries) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
+  using ErrorStream = ::google::cloud::internal::AsyncStreamingReadRpcError<
+      TailLogEntriesResponse>;
+  EXPECT_CALL(*mock, AsyncTailLogEntries)
+      .WillOnce(Return(ByMove(absl::make_unique<ErrorStream>(
+          Status(StatusCode::kAborted, "uh-oh")))));
+
+  google::cloud::CompletionQueue cq;
+  auto under_test = GoldenKitchenSinkAuth(MakeTypicalAsyncMockAuth(), mock);
+  ::google::test::admin::database::v1::TailLogEntriesRequest request;
+
+  auto auth_failure = under_test.AsyncTailLogEntries(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  auto start = auth_failure->Start().get();
+  EXPECT_FALSE(start);
+  auto finish = auth_failure->Finish().get();
+  EXPECT_THAT(finish, StatusIs(StatusCode::kInvalidArgument));
+
+  auto auth_success = under_test.AsyncTailLogEntries(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  start = auth_success->Start().get();
+  EXPECT_FALSE(start);
+  finish = auth_success->Finish().get();
+  EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 }
 
 }  // namespace

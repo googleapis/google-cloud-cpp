@@ -49,19 +49,22 @@ Status StubGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
+  auto const needs_completion_queue =
+      HasAsyncMethod() || HasBidirStreamingMethod();
   HeaderLocalIncludes(
-      {HasAsyncMethod() ? "google/cloud/completion_queue.h" : "",
+      {HasBidirStreamingMethod()
+           ? "google/cloud/async_streaming_read_write_rpc.h"
+           : "",
+       needs_completion_queue ? "google/cloud/completion_queue.h" : "",
        HasAsyncMethod() ? "google/cloud/future.h" : "",
-       "google/cloud/status_or.h",
+       HasAsynchronousStreamingReadMethod()
+           ? "google/cloud/internal/async_streaming_read_rpc.h"
+           : "",
        HasStreamingReadMethod() ? "google/cloud/internal/streaming_read_rpc.h"
                                 : "",
        HasStreamingWriteMethod() ? "google/cloud/internal/streaming_write_rpc.h"
                                  : "",
-       HasBidirStreamingMethod()
-           ? "google/cloud/async_streaming_read_write_rpc.h"
-           : "",
-       HasBidirStreamingMethod() ? "google/cloud/completion_queue.h" : "",
-       "google/cloud/version.h"});
+       "google/cloud/status_or.h", "google/cloud/version.h"});
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
   HeaderSystemIncludes(additional_pb_header_paths);
@@ -138,6 +141,18 @@ Status StubGenerator::GenerateHeader() {
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto constexpr kDeclaration = R"""(
+  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) = 0;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {
@@ -255,6 +270,18 @@ Status StubGenerator::GenerateHeader() {
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto constexpr kDeclaration = R"""(
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) override;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {
@@ -322,6 +349,9 @@ Status StubGenerator::GenerateCc() {
   CcPrint("\n");
   CcLocalIncludes({vars("stub_header_path"),
                    HasStreamingReadMethod() ? "absl/memory/memory.h" : "",
+                   HasAsynchronousStreamingReadMethod()
+                       ? "google/cloud/internal/async_streaming_read_rpc_impl.h"
+                       : "",
                    HasBidirStreamingMethod()
                        ? "google/cloud/internal/async_read_write_stream_impl.h"
                        : "",
@@ -433,6 +463,24 @@ Default$stub_class_name$::Async$method_name$(
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto constexpr kDefinition = R"""(
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    $response_type$>>
+Default$stub_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    $request_type$ const& request) {
+  return google::cloud::internal::MakeStreamingReadRpc<$request_type$, $response_type$>(
+    cq, std::move(context), request,
+    [this](grpc::ClientContext* context, $request_type$ const& request, grpc::CompletionQueue* cq) {
+      return grpc_stub_->PrepareAsync$method_name$(context, request, cq);
+    });
+}
+)""";
+      CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(

@@ -14,6 +14,7 @@
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.h"
 #include "google/cloud/log.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -30,6 +31,9 @@ namespace {
 using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
 using ::google::cloud::golden_internal::MockWriteObjectStreamingWriteRpc;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
+using ::google::test::admin::database::v1::TailLogEntriesRequest;
+using ::google::test::admin::database::v1::TailLogEntriesResponse;
 using ::google::test::admin::database::v1::WriteObjectRequest;
 using ::google::test::admin::database::v1::WriteObjectResponse;
 using ::testing::ByMove;
@@ -277,6 +281,31 @@ TEST_F(LoggingDecoratorTest, WriteObjectFullTracing) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("WriteObject")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Write(")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Close(")));
+}
+
+TEST_F(LoggingDecoratorTest, AsyncTailLogEntries) {
+  using ErrorStream = ::google::cloud::internal::AsyncStreamingReadRpcError<
+      TailLogEntriesResponse>;
+  EXPECT_CALL(*mock_, AsyncTailLogEntries)
+      .WillOnce(Return(ByMove(absl::make_unique<ErrorStream>(
+          Status(StatusCode::kAborted, "uh-oh")))));
+
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
+
+  google::cloud::CompletionQueue cq;
+  ::google::test::admin::database::v1::TailLogEntriesRequest request;
+  auto stream = stub.AsyncTailLogEntries(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+
+  auto start = stream->Start().get();
+  EXPECT_FALSE(start);
+  auto finish = stream->Finish().get();
+  EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncTailLogEntries")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Start(")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Finish(")));
 }
 
 }  // namespace
