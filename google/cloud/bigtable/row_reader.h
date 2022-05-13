@@ -60,6 +60,9 @@ class RowReader {
   // NOLINTNEXTLINE(readability-identifier-naming)
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
 
+  /// Default constructs an empty RowReader.
+  RowReader();
+
   GOOGLE_CLOUD_CPP_BIGTABLE_ROW_READER_CTOR_DEPRECATED()
   RowReader(std::shared_ptr<DataClient> client, std::string table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,

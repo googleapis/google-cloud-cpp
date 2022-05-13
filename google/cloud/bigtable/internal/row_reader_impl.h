@@ -33,6 +33,24 @@ class RowReaderImpl {
   virtual absl::variant<Status, bigtable::Row> Advance() = 0;
 };
 
+/**
+ * A simple `RowReader` implementation that returns a `Status`.
+ *
+ * An OK `StatusCode` represents a stream with no rows. Any other `StatusCode`
+ * represents a stream with an immediate failure.
+ */
+class StatusOnlyRowReader : public RowReaderImpl {
+ public:
+  explicit StatusOnlyRowReader(Status s) : status_(std::move(s)) {}
+
+  void Cancel() override{};
+
+  absl::variant<Status, bigtable::Row> Advance() override { return status_; }
+
+ private:
+  Status status_;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
