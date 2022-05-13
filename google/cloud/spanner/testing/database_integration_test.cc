@@ -69,7 +69,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           LastName   STRING(1024)
         ) PRIMARY KEY (SingerId)
       )sql");
-  std::string create_datatypes = R"sql(
+  request.add_extra_statements(R"sql(
         CREATE TABLE DataTypes (
           Id STRING(256) NOT NULL,
           BoolValue BOOL,
@@ -80,12 +80,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           TimestampValue TIMESTAMP,
           DateValue DATE,
           JsonValue JSON,
-      )sql";
-  if (!emulator) {
-    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-    create_datatypes.append(R"sql(NumericValue NUMERIC,)sql");
-  }
-  create_datatypes.append(R"sql(
+          NumericValue NUMERIC,
           ArrayBoolValue ARRAY<BOOL>,
           ArrayInt64Value ARRAY<INT64>,
           ArrayFloat64Value ARRAY<FLOAT64>,
@@ -93,25 +88,16 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           ArrayBytesValue ARRAY<BYTES(1024)>,
           ArrayTimestampValue ARRAY<TIMESTAMP>,
           ArrayDateValue ARRAY<DATE>,
-          ArrayJsonValue ARRAY<JSON>
-      )sql");
-  if (!emulator) {
-    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-    create_datatypes.append(R"sql(,ArrayNumericValue ARRAY<NUMERIC>)sql");
-  }
-  create_datatypes.append(R"sql(
+          ArrayJsonValue ARRAY<JSON>,
+          ArrayNumericValue ARRAY<NUMERIC>
         ) PRIMARY KEY (Id)
       )sql");
-  request.add_extra_statements(std::move(create_datatypes));
   // Verify that NUMERIC can be used as a table key.
-  if (!emulator) {
-    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-    request.add_extra_statements(R"sql(
-          CREATE TABLE NumericKey (
-            Key NUMERIC NOT NULL
-          ) PRIMARY KEY (Key)
-        )sql");
-  }
+  request.add_extra_statements(R"sql(
+        CREATE TABLE NumericKey (
+          Key NUMERIC NOT NULL
+        ) PRIMARY KEY (Key)
+      )sql");
   auto database_future = admin_client.CreateDatabase(request);
 
   int i = 0;

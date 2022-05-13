@@ -1173,14 +1173,6 @@ class RunAllExperiment : public Experiment {
     for (auto& kv : AvailableExperiments()) {
       // Do not recurse, skip this experiment.
       if (kv.first == "run-all") continue;
-      // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-      if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST")
-              .has_value()) {
-        auto pos = kv.first.rfind("-numeric");
-        if (pos != std::string::npos) {
-          continue;
-        }
-      }
 
       Config config = cfg;
       config.experiment = kv.first;
@@ -1357,13 +1349,6 @@ int main(int argc, char* argv[]) {
   request.set_create_statement(
       absl::StrCat("CREATE DATABASE `", database.database_id(), "`"));
   for (auto const& kv : available) {
-    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-    if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value()) {
-      auto pos = kv.first.rfind("-numeric");
-      if (pos != std::string::npos) {
-        continue;
-      }
-    }
     auto experiment = kv.second(generator);
     auto s = experiment->AdditionalDdlStatement();
     if (s.empty()) continue;
