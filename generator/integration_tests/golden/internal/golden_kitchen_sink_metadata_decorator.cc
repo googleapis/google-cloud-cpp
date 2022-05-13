@@ -114,7 +114,7 @@ GoldenKitchenSinkMetadata::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  SetMetadata(*context);
+  SetMetadata(*context, {});
   return child_->AsyncTailLogEntries(cq, std::move(context), request);
 }
 
