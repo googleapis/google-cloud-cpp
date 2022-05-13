@@ -28,7 +28,7 @@ source module ci/cloudbuild/builds/lib/git.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
-python3 -m pip uninstall -y --quiet googleapis-storage-testbench Werkzeug
+python3 -m pip uninstall -y --quiet googleapis-storage-testbench
 python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
   "git+https://github.com/googleapis/storage-testbench@v0.20.0"
 
