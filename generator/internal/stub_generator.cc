@@ -49,22 +49,22 @@ Status StubGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
+  auto const needs_completion_queue =
+      HasAsyncMethod() || HasBidirStreamingMethod();
   HeaderLocalIncludes(
-      {HasAsyncMethod() ? "google/cloud/completion_queue.h" : "",
+      {HasBidirStreamingMethod()
+           ? "google/cloud/async_streaming_read_write_rpc.h"
+           : "",
+       needs_completion_queue ? "google/cloud/completion_queue.h" : "",
        HasAsyncMethod() ? "google/cloud/future.h" : "",
-       "google/cloud/status_or.h",
+       HasAsynchronousStreamingReadMethod()
+           ? "google/cloud/internal/async_streaming_read_rpc.h"
+           : "",
        HasStreamingReadMethod() ? "google/cloud/internal/streaming_read_rpc.h"
                                 : "",
        HasStreamingWriteMethod() ? "google/cloud/internal/streaming_write_rpc.h"
                                  : "",
-       HasAsynchronousStreamingReadMethod()
-           ? "google/cloud/internal/async_streaming_read_rpc.h"
-           : "",
-       HasBidirStreamingMethod()
-           ? "google/cloud/async_streaming_read_write_rpc.h"
-           : "",
-       HasBidirStreamingMethod() ? "google/cloud/completion_queue.h" : "",
-       "google/cloud/version.h"});
+       "google/cloud/status_or.h", "google/cloud/version.h"});
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
   HeaderSystemIncludes(additional_pb_header_paths);
