@@ -314,7 +314,7 @@ $metadata_class_name$::Async$method_name$(
 )""",  // clang-format off
       HasRoutingHeader(method) ?
 "  SetMetadata(*context, \"$method_request_param_key$=\" + request.$method_request_param_value$);" :
-"  SetMetadata(*context, {});", // clang-format-on
+"  SetMetadata(*context);", // clang-format-on
           R"""(
   return child_->Async$method_name$(cq, std::move(context), request);
 }
