@@ -40,6 +40,19 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
+// Used in the implementation of `*BucketAcl()`.
+StatusOr<BucketAccessControl> FindBucketAccessControl(
+    StatusOr<BucketMetadata> response, std::string const& entity) {
+  if (!response) return std::move(response).status();
+  for (auto const& acl : response->acl()) {
+    if (acl.entity() == entity) return acl;
+  }
+  return Status(StatusCode::kNotFound, "cannot find entity <" + entity +
+                                           "> in bucket " + response->name());
+}
+
+}  // namespace
 
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
 using ::google::cloud::internal::OptionsSpan;
@@ -548,18 +561,30 @@ StatusOr<BucketAccessControl> GrpcClient::GetBucketAcl(
   auto get_request = GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
   auto get = GetBucketMetadata(get_request);
-  if (!get) return std::move(get).status();
-  for (auto const& acl : get->acl()) {
-    if (acl.entity() == request.entity()) return acl;
-  }
-  return Status(StatusCode::kNotFound, "cannot find entity <" +
-                                           request.entity() + "> in bucket " +
-                                           request.bucket_name());
+  return FindBucketAccessControl(std::move(get), request.entity());
 }
 
 StatusOr<BucketAccessControl> GrpcClient::CreateBucketAcl(
-    CreateBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    CreateBucketAclRequest const& request) {
+  auto get_request = GetBucketMetadataRequest(request.bucket_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto updater = [request](std::vector<BucketAccessControl> acl)
+      -> StatusOr<std::vector<BucketAccessControl>> {
+    for (auto const& entry : acl) {
+      if (entry.entity() == request.entity()) {
+        return Status(StatusCode::kAlreadyExists,
+                      "the entity <" + request.entity() +
+                          "> is already present in the ACL for bucket " +
+                          request.bucket_name());
+      }
+    }
+    acl.push_back(BucketAccessControl()
+                      .set_entity(request.entity())
+                      .set_role(request.role()));
+    return acl;
+  };
+  return FindBucketAccessControl(
+      ModifyBucketAccessControl(get_request, updater), request.entity());
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteBucketAcl(
@@ -725,6 +750,26 @@ StatusOr<NotificationMetadata> GrpcClient::GetNotification(
 StatusOr<EmptyResponse> GrpcClient::DeleteNotification(
     DeleteNotificationRequest const&) {
   return Status(StatusCode::kUnimplemented, __func__);
+}
+
+StatusOr<BucketMetadata> GrpcClient::ModifyBucketAccessControl(
+    GetBucketMetadataRequest const& request, BucketAclUpdater const& updater) {
+  auto get = GetBucketMetadata(request);
+  if (!get) return std::move(get).status();
+  auto acl = updater(get->acl());
+  if (!acl) return std::move(acl).status();
+  auto patch = PatchBucket(
+      PatchBucketRequest(request.bucket_name(),
+                         BucketMetadataPatchBuilder().SetAcl(*std::move(acl)))
+          .set_option(IfMetagenerationMatch(get->metageneration())));
+  // Retry on failed preconditions
+  if (patch.status().code() == StatusCode::kFailedPrecondition) {
+    return Status(
+        StatusCode::kUnavailable,
+        "retrying BucketAccessControl change due to conflict, bucket=" +
+            request.bucket_name());
+  }
+  return patch;
 }
 
 }  // namespace internal
