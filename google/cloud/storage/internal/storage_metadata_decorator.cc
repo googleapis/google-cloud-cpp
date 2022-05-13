@@ -36,28 +36,28 @@ StorageMetadata::StorageMetadata(std::shared_ptr<StorageStub> child)
 Status StorageMetadata::DeleteBucket(
     grpc::ClientContext& context,
     google::storage::v2::DeleteBucketRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->DeleteBucket(context, request);
 }
 
 StatusOr<google::storage::v2::Bucket> StorageMetadata::GetBucket(
     grpc::ClientContext& context,
     google::storage::v2::GetBucketRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetBucket(context, request);
 }
 
 StatusOr<google::storage::v2::Bucket> StorageMetadata::CreateBucket(
     grpc::ClientContext& context,
     google::storage::v2::CreateBucketRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->CreateBucket(context, request);
 }
 
 StatusOr<google::storage::v2::ListBucketsResponse> StorageMetadata::ListBuckets(
     grpc::ClientContext& context,
     google::storage::v2::ListBucketsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListBuckets(context, request);
 }
 
@@ -65,21 +65,21 @@ StatusOr<google::storage::v2::Bucket>
 StorageMetadata::LockBucketRetentionPolicy(
     grpc::ClientContext& context,
     google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->LockBucketRetentionPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> StorageMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> StorageMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SetIamPolicy(context, request);
 }
 
@@ -87,35 +87,35 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 StorageMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->TestIamPermissions(context, request);
 }
 
 StatusOr<google::storage::v2::Bucket> StorageMetadata::UpdateBucket(
     grpc::ClientContext& context,
     google::storage::v2::UpdateBucketRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->UpdateBucket(context, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageMetadata::ComposeObject(
     grpc::ClientContext& context,
     google::storage::v2::ComposeObjectRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ComposeObject(context, request);
 }
 
 Status StorageMetadata::DeleteObject(
     grpc::ClientContext& context,
     google::storage::v2::DeleteObjectRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->DeleteObject(context, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageMetadata::GetObject(
     grpc::ClientContext& context,
     google::storage::v2::GetObjectRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetObject(context, request);
 }
 
@@ -124,14 +124,14 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 StorageMetadata::ReadObject(
     std::unique_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->ReadObject(std::move(context), request);
 }
 
 StatusOr<google::storage::v2::Object> StorageMetadata::UpdateObject(
     grpc::ClientContext& context,
     google::storage::v2::UpdateObjectRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->UpdateObject(context, request);
 }
 
@@ -146,14 +146,14 @@ StorageMetadata::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
 StatusOr<google::storage::v2::ListObjectsResponse> StorageMetadata::ListObjects(
     grpc::ClientContext& context,
     google::storage::v2::ListObjectsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListObjects(context, request);
 }
 
 StatusOr<google::storage::v2::RewriteResponse> StorageMetadata::RewriteObject(
     grpc::ClientContext& context,
     google::storage::v2::RewriteObjectRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->RewriteObject(context, request);
 }
 
@@ -161,7 +161,7 @@ StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageMetadata::StartResumableWrite(
     grpc::ClientContext& context,
     google::storage::v2::StartResumableWriteRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->StartResumableWrite(context, request);
 }
 
@@ -169,7 +169,7 @@ StatusOr<google::storage::v2::QueryWriteStatusResponse>
 StorageMetadata::QueryWriteStatus(
     grpc::ClientContext& context,
     google::storage::v2::QueryWriteStatusRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->QueryWriteStatus(context, request);
 }
 
@@ -177,7 +177,7 @@ StatusOr<google::storage::v2::ServiceAccount>
 StorageMetadata::GetServiceAccount(
     grpc::ClientContext& context,
     google::storage::v2::GetServiceAccountRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetServiceAccount(context, request);
 }
 
@@ -185,21 +185,21 @@ StatusOr<google::storage::v2::CreateHmacKeyResponse>
 StorageMetadata::CreateHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::CreateHmacKeyRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->CreateHmacKey(context, request);
 }
 
 Status StorageMetadata::DeleteHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::DeleteHmacKeyRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->DeleteHmacKey(context, request);
 }
 
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::GetHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::GetHmacKeyRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetHmacKey(context, request);
 }
 
@@ -207,14 +207,14 @@ StatusOr<google::storage::v2::ListHmacKeysResponse>
 StorageMetadata::ListHmacKeys(
     grpc::ClientContext& context,
     google::storage::v2::ListHmacKeysRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListHmacKeys(context, request);
 }
 
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::UpdateHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::UpdateHmacKeyRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->UpdateHmacKey(context, request);
 }
 

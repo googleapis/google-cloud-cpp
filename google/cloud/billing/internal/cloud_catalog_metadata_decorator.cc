@@ -38,7 +38,7 @@ StatusOr<google::cloud::billing::v1::ListServicesResponse>
 CloudCatalogMetadata::ListServices(
     grpc::ClientContext& context,
     google::cloud::billing::v1::ListServicesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListServices(context, request);
 }
 

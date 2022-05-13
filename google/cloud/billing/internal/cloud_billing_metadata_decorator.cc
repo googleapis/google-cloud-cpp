@@ -46,7 +46,7 @@ StatusOr<google::cloud::billing::v1::ListBillingAccountsResponse>
 CloudBillingMetadata::ListBillingAccounts(
     grpc::ClientContext& context,
     google::cloud::billing::v1::ListBillingAccountsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListBillingAccounts(context, request);
 }
 
@@ -62,7 +62,7 @@ StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingMetadata::CreateBillingAccount(
     grpc::ClientContext& context,
     google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->CreateBillingAccount(context, request);
 }
 

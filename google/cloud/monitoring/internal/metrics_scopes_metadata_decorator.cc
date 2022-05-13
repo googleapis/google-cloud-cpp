@@ -49,7 +49,7 @@ MetricsScopesMetadata::ListMetricsScopesByMonitoredProject(
     grpc::ClientContext& context,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListMetricsScopesByMonitoredProject(context, request);
 }
 

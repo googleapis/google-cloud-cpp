@@ -159,14 +159,14 @@ StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>
 IAMMetadata::QueryGrantableRoles(
     grpc::ClientContext& context,
     google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->QueryGrantableRoles(context, request);
 }
 
 StatusOr<google::iam::admin::v1::ListRolesResponse> IAMMetadata::ListRoles(
     grpc::ClientContext& context,
     google::iam::admin::v1::ListRolesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListRoles(context, request);
 }
 
@@ -209,7 +209,7 @@ StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse>
 IAMMetadata::QueryTestablePermissions(
     grpc::ClientContext& context,
     google::iam::admin::v1::QueryTestablePermissionsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->QueryTestablePermissions(context, request);
 }
 
@@ -217,14 +217,14 @@ StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
 IAMMetadata::QueryAuditableServices(
     grpc::ClientContext& context,
     google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->QueryAuditableServices(context, request);
 }
 
 StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMMetadata::LintPolicy(
     grpc::ClientContext& context,
     google::iam::admin::v1::LintPolicyRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->LintPolicy(context, request);
 }
 

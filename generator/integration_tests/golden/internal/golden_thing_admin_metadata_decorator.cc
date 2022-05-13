@@ -178,7 +178,7 @@ GoldenThingAdminMetadata::AsyncLongRunningWithoutRouting(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncLongRunningWithoutRouting(cq, std::move(context), request);
 }
 

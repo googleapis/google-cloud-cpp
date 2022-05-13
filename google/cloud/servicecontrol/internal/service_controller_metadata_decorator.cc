@@ -38,7 +38,7 @@ StatusOr<google::api::servicecontrol::v1::CheckResponse>
 ServiceControllerMetadata::Check(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::CheckRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->Check(context, request);
 }
 
@@ -46,7 +46,7 @@ StatusOr<google::api::servicecontrol::v1::ReportResponse>
 ServiceControllerMetadata::Report(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::ReportRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->Report(context, request);
 }
 

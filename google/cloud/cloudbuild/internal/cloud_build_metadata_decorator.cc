@@ -38,14 +38,14 @@ CloudBuildMetadata::AsyncCreateBuild(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncCreateBuild(cq, std::move(context), request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildMetadata::GetBuild(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetBuild(context, request);
 }
 
@@ -53,7 +53,7 @@ StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>
 CloudBuildMetadata::ListBuilds(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListBuilds(context, request);
 }
 
@@ -61,7 +61,7 @@ StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildMetadata::CancelBuild(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->CancelBuild(context, request);
 }
 
@@ -70,7 +70,7 @@ CloudBuildMetadata::AsyncRetryBuild(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncRetryBuild(cq, std::move(context), request);
 }
 
@@ -88,7 +88,7 @@ CloudBuildMetadata::CreateBuildTrigger(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->CreateBuildTrigger(context, request);
 }
 
@@ -96,7 +96,7 @@ StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildMetadata::GetBuildTrigger(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetBuildTrigger(context, request);
 }
 
@@ -104,7 +104,7 @@ StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
 CloudBuildMetadata::ListBuildTriggers(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListBuildTriggers(context, request);
 }
 
@@ -112,7 +112,7 @@ Status CloudBuildMetadata::DeleteBuildTrigger(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->DeleteBuildTrigger(context, request);
 }
 
@@ -121,7 +121,7 @@ CloudBuildMetadata::UpdateBuildTrigger(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->UpdateBuildTrigger(context, request);
 }
 
@@ -130,7 +130,7 @@ CloudBuildMetadata::AsyncRunBuildTrigger(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncRunBuildTrigger(cq, std::move(context), request);
 }
 
@@ -139,7 +139,7 @@ CloudBuildMetadata::ReceiveTriggerWebhook(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ReceiveTriggerWebhook(context, request);
 }
 

@@ -38,7 +38,7 @@ IamCheckerMetadata::TroubleshootIamPolicy(
     grpc::ClientContext& context,
     google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->TroubleshootIamPolicy(context, request);
 }
 

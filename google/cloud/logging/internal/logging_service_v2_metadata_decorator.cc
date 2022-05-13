@@ -45,7 +45,7 @@ StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Metadata::WriteLogEntries(
     grpc::ClientContext& context,
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->WriteLogEntries(context, request);
 }
 
@@ -53,7 +53,7 @@ StatusOr<google::logging::v2::ListLogEntriesResponse>
 LoggingServiceV2Metadata::ListLogEntries(
     grpc::ClientContext& context,
     google::logging::v2::ListLogEntriesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListLogEntries(context, request);
 }
 
@@ -62,7 +62,7 @@ LoggingServiceV2Metadata::ListMonitoredResourceDescriptors(
     grpc::ClientContext& context,
     google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListMonitoredResourceDescriptors(context, request);
 }
 

@@ -45,7 +45,7 @@ StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 GoldenKitchenSinkMetadata::GenerateIdToken(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GenerateIdToken(context, request);
 }
 
@@ -53,7 +53,7 @@ StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 GoldenKitchenSinkMetadata::WriteLogEntries(
     grpc::ClientContext& context,
     google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->WriteLogEntries(context, request);
 }
 
@@ -69,7 +69,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::d
 GoldenKitchenSinkMetadata::TailLogEntries(
     std::unique_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->TailLogEntries(std::move(context), request);
 }
 
@@ -85,7 +85,7 @@ Status
 GoldenKitchenSinkMetadata::DoNothing(
     grpc::ClientContext& context,
     google::protobuf::Empty const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->DoNothing(context, request);
 }
 
