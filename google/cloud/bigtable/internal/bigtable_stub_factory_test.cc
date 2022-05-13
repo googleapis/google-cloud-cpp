@@ -19,6 +19,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -159,6 +160,50 @@ TEST_F(BigtableStubFactory, MutateRow) {
   auto response = stub->MutateRow(context, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("MutateRow")));
+}
+
+TEST_F(BigtableStubFactory, AsyncReadRows) {
+  ::testing::InSequence sequence;
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockBigtableStub>();
+        EXPECT_CALL(*mock, AsyncReadRows)
+            .WillOnce([this](CompletionQueue const&,
+                             std::unique_ptr<grpc::ClientContext> context,
+                             google::bigtable::v2::ReadRowsRequest const&) {
+              // Verify the Auth decorator is present
+              EXPECT_THAT(context->credentials(), NotNull());
+              // Verify the Metadata decorator is present
+              EXPECT_STATUS_OK(IsContextMDValid(
+                  *context, "google.bigtable.v2.Bigtable.ReadRows"));
+              using ErrorStream =
+                  ::google::cloud::internal::AsyncStreamingReadRpcError<
+                      google::bigtable::v2::ReadRowsResponse>;
+              return absl::make_unique<ErrorStream>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
+        return mock;
+      });
+  EXPECT_CALL(factory, Call)
+      .Times(kTestChannels - 1)
+      .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
+        return std::make_shared<MockBigtableStub>();
+      });
+
+  ScopedLog log;
+  CompletionQueue cq;
+  google::bigtable::v2::ReadRowsRequest req;
+  req.set_table_name(
+      "projects/the-project/instances/the-instance/tables/the-table");
+  auto stub = CreateTestStub(cq, factory.AsStdFunction());
+  auto stream =
+      stub->AsyncReadRows(cq, absl::make_unique<grpc::ClientContext>(), req);
+  auto start = stream->Start().get();
+  EXPECT_FALSE(start);
+  auto finish = stream->Finish().get();
+  EXPECT_THAT(finish, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("AsyncReadRows")));
 }
 
 TEST_F(BigtableStubFactory, AsyncMutateRow) {

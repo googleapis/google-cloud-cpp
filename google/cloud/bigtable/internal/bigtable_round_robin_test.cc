@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/bigtable_round_robin.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -76,6 +77,39 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 MakeMutateRowsStream(std::unique_ptr<grpc::ClientContext>,
                      google::bigtable::v2::MutateRowsRequest const&) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::bigtable::v2::MutateRowsResponse>;
+  return absl::make_unique<ErrorStream>(
+      Status(StatusCode::kPermissionDenied, "uh-oh"));
+}
+
+std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
+    google::bigtable::v2::ReadRowsResponse>>
+MakeAsyncReadRowsStream(CompletionQueue const&,
+                        std::unique_ptr<grpc::ClientContext>,
+                        google::bigtable::v2::ReadRowsRequest const&) {
+  using ErrorStream = ::google::cloud::internal::AsyncStreamingReadRpcError<
+      google::bigtable::v2::ReadRowsResponse>;
+  return absl::make_unique<ErrorStream>(
+      Status(StatusCode::kPermissionDenied, "uh-oh"));
+}
+
+std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
+    google::bigtable::v2::SampleRowKeysResponse>>
+MakeAsyncSampleRowKeysStream(
+    CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+    google::bigtable::v2::SampleRowKeysRequest const&) {
+  using ErrorStream = ::google::cloud::internal::AsyncStreamingReadRpcError<
+      google::bigtable::v2::SampleRowKeysResponse>;
+  return absl::make_unique<ErrorStream>(
+      Status(StatusCode::kPermissionDenied, "uh-oh"));
+}
+
+std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
+    google::bigtable::v2::MutateRowsResponse>>
+MakeAsyncMutateRowsStream(CompletionQueue const&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::bigtable::v2::MutateRowsRequest const&) {
+  using ErrorStream = ::google::cloud::internal::AsyncStreamingReadRpcError<
       google::bigtable::v2::MutateRowsResponse>;
   return absl::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
@@ -217,6 +251,51 @@ TEST(BigtableRoundRobinTest, ReadModifyWriteRow) {
   }
 }
 
+TEST(BigtableRoundRobinTest, AsyncReadRows) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, AsyncReadRows).WillOnce(MakeAsyncReadRowsStream);
+    }
+  }
+
+  CompletionQueue cq;
+  BigtableRoundRobin under_test(AsPlainStubs(mocks));
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    google::bigtable::v2::ReadRowsRequest request;
+    auto stream = under_test.AsyncReadRows(
+        cq, absl::make_unique<grpc::ClientContext>(), request);
+    auto start = stream->Start().get();
+    EXPECT_FALSE(start);
+    auto finish = stream->Finish().get();
+    EXPECT_THAT(finish, StatusIs(StatusCode::kPermissionDenied));
+  }
+}
+
+TEST(BigtableRoundRobinTest, AsyncSampleRowKeys) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, AsyncSampleRowKeys)
+          .WillOnce(MakeAsyncSampleRowKeysStream);
+    }
+  }
+
+  CompletionQueue cq;
+  BigtableRoundRobin under_test(AsPlainStubs(mocks));
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    google::bigtable::v2::SampleRowKeysRequest request;
+    auto stream = under_test.AsyncSampleRowKeys(
+        cq, absl::make_unique<grpc::ClientContext>(), request);
+    auto start = stream->Start().get();
+    EXPECT_FALSE(start);
+    auto finish = stream->Finish().get();
+    EXPECT_THAT(finish, StatusIs(StatusCode::kPermissionDenied));
+  }
+}
+
 TEST(BigtableRoundRobinTest, AsyncMutateRow) {
   auto mocks = MakeMocks();
   InSequence sequence;
@@ -239,6 +318,28 @@ TEST(BigtableRoundRobinTest, AsyncMutateRow) {
     auto response = under_test.AsyncMutateRow(
         cq, absl::make_unique<grpc::ClientContext>(), request);
     EXPECT_THAT(response.get(), StatusIs(StatusCode::kPermissionDenied));
+  }
+}
+
+TEST(BigtableRoundRobinTest, AsyncMutateRows) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, AsyncMutateRows).WillOnce(MakeAsyncMutateRowsStream);
+    }
+  }
+
+  CompletionQueue cq;
+  BigtableRoundRobin under_test(AsPlainStubs(mocks));
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    google::bigtable::v2::MutateRowsRequest request;
+    auto stream = under_test.AsyncMutateRows(
+        cq, absl::make_unique<grpc::ClientContext>(), request);
+    auto start = stream->Start().get();
+    EXPECT_FALSE(start);
+    auto finish = stream->Finish().get();
+    EXPECT_THAT(finish, StatusIs(StatusCode::kPermissionDenied));
   }
 }
 
@@ -266,6 +367,7 @@ TEST(BigtableRoundRobinTest, AsyncCheckAndMutateRow) {
     EXPECT_THAT(response.get(), StatusIs(StatusCode::kPermissionDenied));
   }
 }
+
 TEST(BigtableRoundRobinTest, AsyncReadModifyWriteRow) {
   auto mocks = MakeMocks();
   InSequence sequence;
