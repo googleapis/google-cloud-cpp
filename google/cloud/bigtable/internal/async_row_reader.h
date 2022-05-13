@@ -19,7 +19,6 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
-#include "google/cloud/bigtable/internal/rowreaderiterator.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/row_set.h"

@@ -55,11 +55,7 @@ LegacyRowReaderImpl::LegacyRowReaderImpl(
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
       metadata_update_policy_(std::move(metadata_update_policy)),
-      parser_factory_(std::move(parser_factory)),
-      stream_is_open_(false),
-      operation_cancelled_(false),
-      processed_chunks_count_(0),
-      rows_count_(0) {}
+      parser_factory_(std::move(parser_factory)) {}
 
 void LegacyRowReaderImpl::MakeRequest() {
   response_ = {};

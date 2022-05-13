@@ -112,16 +112,16 @@ class LegacyRowReaderImpl : public RowReaderImpl {
   std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
       stream_;
-  bool stream_is_open_;
-  bool operation_cancelled_;
+  bool stream_is_open_ = false;
+  bool operation_cancelled_ = false;
 
   /// The last received response, chunks are being parsed one by one from it.
   google::bigtable::v2::ReadRowsResponse response_;
   /// Number of chunks already parsed in response_.
-  int processed_chunks_count_;
+  int processed_chunks_count_ = 0;
 
   /// Number of rows read so far, used to set row_limit in retries.
-  std::int64_t rows_count_;
+  std::int64_t rows_count_ = 0;
   /// Holds the last read row key, for retries.
   bigtable::RowKeyType last_read_row_key_;
 };
