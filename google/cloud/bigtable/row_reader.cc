@@ -62,6 +62,10 @@ static_assert(std::is_same<decltype(++std::declval<RowReader::iterator>()),
               "++it when it is of RowReader::iterator type must be a "
               "RowReader::iterator &>");
 
+RowReader::RowReader()
+    : RowReader(
+          std::make_shared<bigtable_internal::StatusOnlyRowReader>(Status{})) {}
+
 RowReader::RowReader(
     std::shared_ptr<DataClient> client, std::string table_name, RowSet row_set,
     std::int64_t rows_limit, Filter filter,

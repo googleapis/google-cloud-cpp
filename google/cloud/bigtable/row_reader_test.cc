@@ -39,6 +39,7 @@ using ::google::cloud::bigtable::Row;
 using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::bigtable::testing::MockReadRowsReader;
 using ::google::cloud::bigtable::testing::MockRetryPolicy;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::_;
 using ::testing::An;
@@ -843,6 +844,22 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
   EXPECT_NE(it, reader.end());
   ASSERT_STATUS_OK(*it);
   EXPECT_EQ((*it)->row_key(), "r1");
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST(RowReader, DefaultConstructor) {
+  RowReader reader;
+  EXPECT_EQ(reader.begin(), reader.end());
+}
+
+TEST(RowReader, BadStatusOnly) {
+  auto impl = std::make_shared<bigtable_internal::StatusOnlyRowReader>(
+      Status(StatusCode::kUnimplemented, "unimplemented"));
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_THAT(*it, StatusIs(StatusCode::kUnimplemented));
   EXPECT_EQ(++it, reader.end());
 }
 
