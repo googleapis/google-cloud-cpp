@@ -232,9 +232,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadJson) {
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (UsingEmulator()) GTEST_SKIP();
-
   auto min = MakeNumeric("-99999999999999999999999999999.999999999");
   ASSERT_STATUS_OK(min);
   auto max = MakeNumeric("99999999999999999999999999999.999999999");
@@ -358,9 +355,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayJson) {
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (UsingEmulator()) GTEST_SKIP();
-
   std::vector<std::vector<Numeric>> const data = {
       std::vector<Numeric>{},
       std::vector<Numeric>{Numeric()},
@@ -376,9 +370,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
 }
 
 TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (UsingEmulator()) GTEST_SKIP();
-
   auto& client = *client_;
   auto const key = MakeNumeric(42).value();
 

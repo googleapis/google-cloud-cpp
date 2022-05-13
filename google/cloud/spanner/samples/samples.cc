@@ -4117,18 +4117,14 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_query_with_json_parameter");
   QueryWithJsonParameter(client);
 
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (!emulator) {
-    SampleBanner("spanner_add_numeric_column");
-    AddNumericColumn(database_admin_client, project_id, instance_id,
-                     database_id);
+  SampleBanner("spanner_add_numeric_column");
+  AddNumericColumn(database_admin_client, project_id, instance_id, database_id);
 
-    SampleBanner("spanner_update_data_with_numeric_column");
-    UpdateDataWithNumeric(client);
+  SampleBanner("spanner_update_data_with_numeric_column");
+  UpdateDataWithNumeric(client);
 
-    SampleBanner("spanner_query_with_numeric_parameter");
-    QueryWithNumericParameter(client);
-  }
+  SampleBanner("spanner_query_with_numeric_parameter");
+  QueryWithNumericParameter(client);
 
   SampleBanner("spanner_read_only_transaction");
   ReadOnlyTransaction(client);
