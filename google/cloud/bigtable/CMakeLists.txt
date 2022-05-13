@@ -190,8 +190,6 @@ add_library(
     internal/readrowsparser.cc
     internal/readrowsparser.h
     internal/row_reader_impl.h
-    internal/rowreaderiterator.cc
-    internal/rowreaderiterator.h
     internal/rpc_policy_parameters.h
     internal/rpc_policy_parameters.inc
     internal/unary_client_utils.h

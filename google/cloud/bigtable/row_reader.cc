@@ -92,14 +92,15 @@ std::int64_t constexpr RowReader::NO_ROWS_LIMIT;
 
 // The name must be all lowercase to work with range-for loops.
 RowReader::iterator RowReader::begin() {
-  return bigtable_internal::RowReaderIterator(impl_);
+  auto impl = impl_;
+  stream_ = google::cloud::internal::MakeStreamRange<Row>(
+      [impl] { return impl->Advance(); });
+  return stream_.begin();
 }
 
 // The name must be all lowercase to work with range-for loops.
 // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-RowReader::iterator RowReader::end() {
-  return bigtable_internal::RowReaderIterator();
-}
+RowReader::iterator RowReader::end() { return stream_.end(); }
 
 void RowReader::Cancel() { impl_->Cancel(); }
 
