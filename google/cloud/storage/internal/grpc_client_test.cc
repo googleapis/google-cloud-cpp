@@ -17,6 +17,7 @@
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/options.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -33,11 +34,14 @@ namespace {
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage_experimental::GrpcPluginOption;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
 using ::testing::AllOf;
+using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -818,6 +822,57 @@ TEST_F(GrpcClientTest, GetBucketAclSuccess) {
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "test-role1");
   EXPECT_EQ(response->bucket(), "test-bucket-id");
+}
+
+TEST_F(GrpcClientTest, CreateBucketAclFailure) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::GetBucketRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
+        EXPECT_THAT(request.common_request_params().user_project(),
+                    "test-user-project");
+        return PermanentError();
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->CreateBucketAcl(
+      CreateBucketAclRequest("test-bucket-name", "test-entity1", "test-role1")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user"),
+                                UserProject("test-user-project")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, CreateBucketAclPatchFails) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const&) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateBucket)
+      .WillOnce([](grpc::ClientContext&,
+                   v2::UpdateBucketRequest const& request) {
+        EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
+        auto expected = v2::BucketAccessControl();
+        expected.set_entity("test-new-entity");
+        expected.set_role("test-new-role");
+        EXPECT_THAT(request.bucket().acl(), Contains(IsProtoEqual(expected)));
+        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        return Status(StatusCode::kFailedPrecondition, "conflict");
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->CreateBucketAcl(CreateBucketAclRequest(
+      "test-bucket-id", "test-new-entity", "test-new-role"));
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientTest, GetServiceAccount) {

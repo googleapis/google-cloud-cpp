@@ -91,6 +91,14 @@ TEST_F(GrpcBucketAclIntegrationTest, AclCRUD) {
   auto not_found_acl = client->GetBucketAcl(bucket_name, "not-found-entity");
   EXPECT_THAT(not_found_acl, StatusIs(StatusCode::kNotFound));
 
+  auto create_acl = client->CreateBucketAcl(bucket_name, viewers,
+                                            BucketAccessControl::ROLE_READER());
+  ASSERT_STATUS_OK(create_acl);
+
+  current_acl = client->ListBucketAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(create_acl->entity()));
+
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }

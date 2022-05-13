@@ -20,6 +20,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include <google/storage/v2/storage.pb.h>
+#include <functional>
 #include <memory>
 #include <string>
 
@@ -188,6 +189,16 @@ class GrpcClient : public RawClient,
                       Options opts);
 
  private:
+  using BucketAclUpdater =
+      std::function<StatusOr<std::vector<BucketAccessControl>>(
+          std::vector<BucketAccessControl> acl)>;
+
+  // REST has RPCs that change `BucketAccessControl` resources atomically, gRPC
+  // lacks such RPCs, this function hijacks the retry loop to implement an OCC
+  // loop to make such changes.
+  StatusOr<BucketMetadata> ModifyBucketAccessControl(
+      GetBucketMetadataRequest const& request, BucketAclUpdater const& updater);
+
   Options options_;
   ClientOptions backwards_compatibility_options_;
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
