@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -35,11 +36,84 @@ using ::google::cloud::storage_experimental::GrpcPluginOption;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::google::protobuf::TextFormat;
+using ::testing::AllOf;
 using ::testing::Pair;
+using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
 auto constexpr kAuthority = "storage.googleapis.com";
+auto constexpr kBucketProtoText = R"pb(
+  name: "projects/_/buckets/test-bucket-id"
+  bucket_id: "test-bucket-id"
+  project: "projects/123456"
+  metageneration: 1234567
+  location: "test-location"
+  location_type: "REGIONAL"
+  storage_class: "test-storage-class"
+  rpo: "test-rpo"
+  acl: { role: "test-role1" entity: "test-entity1" }
+  acl: { role: "test-role2" entity: "test-entity2" }
+  default_object_acl: { role: "test-role3" entity: "test-entity3" }
+  default_object_acl: { role: "test-role4" entity: "test-entity4" }
+  lifecycle {
+    rule {
+      action { type: "Delete" }
+      condition {
+        age_days: 90
+        is_live: false
+        matches_storage_class: "NEARLINE"
+      }
+    }
+    rule {
+      action { type: "SetStorageClass" storage_class: "NEARLINE" }
+      condition { age_days: 7 is_live: true matches_storage_class: "STANDARD" }
+    }
+  }
+  create_time: { seconds: 1565194924 nanos: 123456000 }
+  cors: {
+    origin: "test-origin-0"
+    origin: "test-origin-1"
+    method: "GET"
+    method: "PUT"
+    response_header: "test-header-0"
+    response_header: "test-header-1"
+    max_age_seconds: 1800
+  }
+  cors: {
+    origin: "test-origin-2"
+    origin: "test-origin-3"
+    method: "POST"
+    response_header: "test-header-3"
+    max_age_seconds: 3600
+  }
+  update_time: { seconds: 1565194925 nanos: 123456000 }
+  default_event_based_hold: true
+  labels: { key: "test-key-1" value: "test-value-1" }
+  labels: { key: "test-key-2" value: "test-value-2" }
+  website { main_page_suffix: "index.html" not_found_page: "404.html" }
+  versioning { enabled: true }
+  logging {
+    log_bucket: "test-log-bucket"
+    log_object_prefix: "test-log-object-prefix"
+  }
+  owner { entity: "test-entity" entity_id: "test-entity-id" }
+  encryption { default_kms_key: "test-default-kms-key-name" }
+  billing { requester_pays: true }
+  retention_policy {
+    effective_time { seconds: 1565194926 nanos: 123456000 }
+    is_locked: true
+    retention_period: 86400
+  }
+  iam_config {
+    uniform_bucket_level_access {
+      enabled: true
+      lock_time { seconds: 1565194927 nanos: 123456000 }
+    }
+    public_access_prevention: "inherited"
+  }
+)pb";
 
 class GrpcClientTest : public ::testing::Test {
  protected:
@@ -633,6 +707,59 @@ TEST_F(GrpcClientTest, CreateResumableUpload) {
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, ListBucketAclFailure) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::GetBucketRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
+        EXPECT_THAT(request.common_request_params().user_project(),
+                    "test-user-project");
+        return PermanentError();
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->ListBucketAcl(
+      ListBucketAclRequest("test-bucket-name")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user"),
+                                UserProject("test-user-project")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, ListBucketAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const&) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->ListBucketAcl(ListBucketAclRequest("test-bucket-id"));
+  ASSERT_STATUS_OK(response);
+  auto make_matcher = [](std::string const& role, std::string const& entity) {
+    auto get_role = [](BucketAccessControl const& acl) { return acl.role(); };
+    auto get_entity = [](BucketAccessControl const& acl) {
+      return acl.entity();
+    };
+    auto get_bucket = [](BucketAccessControl const& acl) {
+      return acl.bucket();
+    };
+    return AllOf(ResultOf(get_role, role), ResultOf(get_entity, entity),
+                 ResultOf(get_bucket, "test-bucket-id"));
+  };
+  EXPECT_THAT(response->items,
+              UnorderedElementsAre(make_matcher("test-role1", "test-entity1"),
+                                   make_matcher("test-role2", "test-entity2")));
 }
 
 TEST_F(GrpcClientTest, GetServiceAccount) {

@@ -533,8 +533,15 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
 }
 
 StatusOr<ListBucketAclResponse> GrpcClient::ListBucketAcl(
-    ListBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ListBucketAclRequest const& request) {
+  auto get_request = GetBucketMetadataRequest(request.bucket_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  get_request.set_option(Projection::Full());
+  auto get = GetBucketMetadata(get_request);
+  if (!get) return std::move(get).status();
+  ListBucketAclResponse response;
+  response.items = get->acl();
+  return response;
 }
 
 StatusOr<BucketAccessControl> GrpcClient::GetBucketAcl(
