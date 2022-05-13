@@ -160,6 +160,7 @@ function extract() {
 DOCKER_DISTROS=(
   "demo-fedora.Dockerfile,Fedora (34)"
   "demo-opensuse-leap.Dockerfile,openSUSE (Leap)"
+  "demo-ubuntu-jammy.Dockerfile,Ubuntu (22.04 LTS - Jammy Jellyfish)"
   "demo-ubuntu-focal.Dockerfile,Ubuntu (20.04 LTS - Focal Fossa)"
   "demo-ubuntu-bionic.Dockerfile,Ubuntu (18.04 LTS - Bionic Beaver)"
   "demo-debian-bullseye.Dockerfile,Debian (11 - Bullseye)"
