@@ -461,6 +461,145 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
+<summary>Ubuntu (22.04 LTS - Jammy Jellyfish)</summary>
+<br>
+
+Install the minimal development tools, libcurl, OpenSSL and libc-ares:
+
+```bash
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get update && \
+sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        libssl-dev m4 make pkg-config tar wget zlib1g-dev
+```
+
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### Protobuf
+
+We need to install a version of Protobuf that is recent enough to support the
+Google Cloud Platform proto files:
+
+```bash
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Hcmake -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### gRPC
+
+We also need a version of gRPC that is recent enough to support the Google
+Cloud Platform proto files. We install it using:
+
+```bash
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.46.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### crc32c
+
+The project depends on the Crc32c library, we need to compile this from
+source:
+
+```bash
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DCRC32C_BUILD_TESTS=OFF \
+        -DCRC32C_BUILD_BENCHMARKS=OFF \
+        -DCRC32C_USE_GLOG=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### nlohmann_json library
+
+The project depends on the nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
+
+```bash
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### Compile and install the main project
+
+We can now compile and install `google-cloud-cpp`
+
+```bash
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -H. -Bcmake-out \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
+  -DCMAKE_INSTALL_MESSAGE=NEVER \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
+```
+
+</details>
+
+<details>
 <summary>Ubuntu (20.04 LTS - Focal Fossa)</summary>
 <br>
 
