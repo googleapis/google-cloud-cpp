@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) try {
 
 ## Installation
 
-Please consult the [packaging guide](../../../doc/packaging.md) for detailed
+Please consult the [packaging guide](/doc/packaging.md) for detailed
 instructions to install the Google Cloud C++ client libraries.
 If your project uses [CMake](https://cmake.org) or [Bazel](https://bazel.build)
 check the [quickstart](quickstart/README.md) example for instructions to use
@@ -90,10 +90,10 @@ this library in your project.
 
 ## Contributing changes
 
-See [`CONTRIBUTING.md`](../../../CONTRIBUTING.md) for details on how to
+See [`CONTRIBUTING.md`](/CONTRIBUTING.md) for details on how to
 contribute to this project, including how to build and test your changes
 as well as how to properly format your code.
 
 ## Licensing
 
-Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
+Apache 2.0; see [`LICENSE`](/LICENSE) for details.

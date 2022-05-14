@@ -34,7 +34,7 @@ configure the VM instance, and then install the development tools for whatever
 platform you chose. See [doc/packaging.md][packaging-doc-link] for install
 instructions for your platform.
 
-[packaging-doc-link]: ../../../../doc/packaging.md
+[packaging-doc-link]: /doc/packaging.md
 
 ### Compiling the library
 
