@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/async_row_reader.h"
+#include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
 #include "google/cloud/bigtable/resource_names.h"
@@ -41,15 +42,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-/// The branch taken by a Table::CheckAndMutateRow operation.
-enum class MutationBranch {
-  /// The predicate provided to CheckAndMutateRow did not match and the
-  /// `false_mutations` (if any) were applied.
-  kPredicateNotMatched,
-  /// The predicate provided to CheckAndMutateRow matched and the
-  /// `true_mutations` (if any) were applied.
-  kPredicateMatched,
-};
 
 class MutationBatcher;
 

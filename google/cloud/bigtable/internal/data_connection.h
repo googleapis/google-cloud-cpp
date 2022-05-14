@@ -16,8 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_H
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
-#include "google/cloud/bigtable/rpc_retry_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -29,17 +27,6 @@ namespace cloud {
 // TODO(#8860) - Make this class public, when it is ready.
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-using DataRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    bigtable::internal::SafeGrpcRetry>;
-
-using DataLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigtable::internal::SafeGrpcRetry>;
-
-using DataLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigtable::internal::SafeGrpcRetry>;
 
 /**
  * A connection to the Cloud Bigtable Data API.

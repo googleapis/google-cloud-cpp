@@ -39,8 +39,9 @@
  */
 
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
-#include "google/cloud/bigtable/internal/data_connection.h"
+#include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include <chrono>
 #include <string>
@@ -106,6 +107,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 // TODO(#8860) - Make these options public.
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+using DataRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
+    bigtable::internal::SafeGrpcRetry>;
+
+using DataLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        bigtable::internal::SafeGrpcRetry>;
+
+using DataLimitedErrorCountRetryPolicy =
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
+        bigtable::internal::SafeGrpcRetry>;
 
 /// Option to use with `google::cloud::Options`.
 struct DataRetryPolicyOption {

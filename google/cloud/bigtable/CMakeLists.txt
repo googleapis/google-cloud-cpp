@@ -199,6 +199,7 @@ add_library(
     metadata_update_policy.h
     mutation_batcher.cc
     mutation_batcher.h
+    mutation_branch.h
     mutations.cc
     mutations.h
     options.h
