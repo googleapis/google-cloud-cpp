@@ -61,11 +61,32 @@ class MockBigtableStub : public bigtable_internal::BigtableStub {
               (grpc::ClientContext&,
                google::bigtable::v2::ReadModifyWriteRowRequest const&),
               (override));
+  MOCK_METHOD(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+                  google::bigtable::v2::ReadRowsResponse>>,
+              AsyncReadRows,
+              (google::cloud::CompletionQueue const&,
+               std::unique_ptr<grpc::ClientContext>,
+               google::bigtable::v2::ReadRowsRequest const&),
+              (override));
+  MOCK_METHOD(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+                  google::bigtable::v2::SampleRowKeysResponse>>,
+              AsyncSampleRowKeys,
+              (google::cloud::CompletionQueue const&,
+               std::unique_ptr<grpc::ClientContext>,
+               google::bigtable::v2::SampleRowKeysRequest const&),
+              (override));
   MOCK_METHOD(future<StatusOr<google::bigtable::v2::MutateRowResponse>>,
               AsyncMutateRow,
               (google::cloud::CompletionQueue&,
                std::unique_ptr<grpc::ClientContext>,
                google::bigtable::v2::MutateRowRequest const&),
+              (override));
+  MOCK_METHOD(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+                  google::bigtable::v2::MutateRowsResponse>>,
+              AsyncMutateRows,
+              (google::cloud::CompletionQueue const&,
+               std::unique_ptr<grpc::ClientContext>,
+               google::bigtable::v2::MutateRowsRequest const&),
               (override));
   MOCK_METHOD(future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>,
               AsyncCheckAndMutateRow,
@@ -113,6 +134,40 @@ class MockSampleRowKeysStream
   MOCK_METHOD(SampleRowKeysResultType, Read, (), (override));
   MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
               (), (const, override));
+};
+
+class MockAsyncMutateRowsStream
+    : public google::cloud::internal::AsyncStreamingReadRpc<
+          google::bigtable::v2::MutateRowsResponse> {
+ public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<absl::optional<google::bigtable::v2::MutateRowsResponse>>,
+              Read, (), (override));
+  MOCK_METHOD(future<Status>, Finish, (), (override));
+};
+
+class MockAsyncReadRowsStream
+    : public google::cloud::internal::AsyncStreamingReadRpc<
+          google::bigtable::v2::ReadRowsResponse> {
+ public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<absl::optional<google::bigtable::v2::ReadRowsResponse>>,
+              Read, (), (override));
+  MOCK_METHOD(future<Status>, Finish, (), (override));
+};
+
+class MockAsyncSampleRowKeysStream
+    : public google::cloud::internal::AsyncStreamingReadRpc<
+          google::bigtable::v2::SampleRowKeysResponse> {
+ public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(
+      future<absl::optional<google::bigtable::v2::SampleRowKeysResponse>>, Read,
+      (), (override));
+  MOCK_METHOD(future<Status>, Finish, (), (override));
 };
 
 }  // namespace testing

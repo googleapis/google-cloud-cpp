@@ -17,6 +17,7 @@
 // source: google/bigtable/v2/bigtable.proto
 
 #include "google/cloud/bigtable/internal/bigtable_auth_decorator.h"
+#include "google/cloud/internal/async_streaming_read_rpc_auth.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <memory>
 
@@ -99,6 +100,40 @@ BigtableAuth::ReadModifyWriteRow(
   return child_->ReadModifyWriteRow(context, request);
 }
 
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::bigtable::v2::ReadRowsResponse>>
+BigtableAuth::AsyncReadRows(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::ReadRowsRequest const& request) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
+      google::bigtable::v2::ReadRowsResponse>;
+
+  auto child = child_;
+  auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncReadRows(cq, std::move(ctx), request);
+  };
+  return absl::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::bigtable::v2::SampleRowKeysResponse>>
+BigtableAuth::AsyncSampleRowKeys(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::SampleRowKeysRequest const& request) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
+      google::bigtable::v2::SampleRowKeysResponse>;
+
+  auto child = child_;
+  auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncSampleRowKeys(cq, std::move(ctx), request);
+  };
+  return absl::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+
 future<StatusOr<google::bigtable::v2::MutateRowResponse>>
 BigtableAuth::AsyncMutateRow(
     google::cloud::CompletionQueue& cq,
@@ -116,6 +151,23 @@ BigtableAuth::AsyncMutateRow(
         }
         return child->AsyncMutateRow(cq, *std::move(context), request);
       });
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::bigtable::v2::MutateRowsResponse>>
+BigtableAuth::AsyncMutateRows(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::MutateRowsRequest const& request) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
+      google::bigtable::v2::MutateRowsResponse>;
+
+  auto child = child_;
+  auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncMutateRows(cq, std::move(ctx), request);
+  };
+  return absl::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>

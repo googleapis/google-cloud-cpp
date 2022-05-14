@@ -155,7 +155,10 @@ service {
   gen_async_rpcs: [
    "CheckAndMutateRow",
    "MutateRow",
-   "ReadModifyWriteRow"
+   "MutateRows",
+   "ReadModifyWriteRow",
+   "ReadRows",
+   "SampleRowKeys"
   ]
 }
 
