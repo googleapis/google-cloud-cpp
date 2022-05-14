@@ -39,7 +39,7 @@ AccessContextManagerMetadata::ListAccessPolicies(
     grpc::ClientContext& context,
     google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListAccessPolicies(context, request);
 }
 
@@ -57,7 +57,7 @@ AccessContextManagerMetadata::AsyncCreateAccessPolicy(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncCreateAccessPolicy(cq, std::move(context), request);
 }
 

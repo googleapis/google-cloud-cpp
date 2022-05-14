@@ -39,7 +39,7 @@ ClusterControllerMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::CreateClusterRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
 
@@ -48,7 +48,7 @@ ClusterControllerMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
 }
 
@@ -57,7 +57,7 @@ ClusterControllerMetadata::AsyncStopCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::StopClusterRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncStopCluster(cq, std::move(context), request);
 }
 
@@ -66,7 +66,7 @@ ClusterControllerMetadata::AsyncStartCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncStartCluster(cq, std::move(context), request);
 }
 
@@ -75,7 +75,7 @@ ClusterControllerMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
 }
 
@@ -83,7 +83,7 @@ StatusOr<google::cloud::dataproc::v1::Cluster>
 ClusterControllerMetadata::GetCluster(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetClusterRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetCluster(context, request);
 }
 
@@ -91,7 +91,7 @@ StatusOr<google::cloud::dataproc::v1::ListClustersResponse>
 ClusterControllerMetadata::ListClusters(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListClustersRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListClusters(context, request);
 }
 
@@ -100,7 +100,7 @@ ClusterControllerMetadata::AsyncDiagnoseCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncDiagnoseCluster(cq, std::move(context), request);
 }
 

@@ -37,7 +37,7 @@ StatusOr<google::cloud::speech::v1::RecognizeResponse>
 SpeechMetadata::Recognize(
     grpc::ClientContext& context,
     google::cloud::speech::v1::RecognizeRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->Recognize(context, request);
 }
 
@@ -46,7 +46,7 @@ SpeechMetadata::AsyncLongRunningRecognize(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncLongRunningRecognize(cq, std::move(context), request);
 }
 

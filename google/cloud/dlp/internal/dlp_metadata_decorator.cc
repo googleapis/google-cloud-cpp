@@ -69,7 +69,7 @@ StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
 DlpServiceMetadata::ListInfoTypes(
     grpc::ClientContext& context,
     google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListInfoTypes(context, request);
 }
 

@@ -37,7 +37,7 @@ StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>
 Debugger2Metadata::SetBreakpoint(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::SetBreakpointRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SetBreakpoint(context, request);
 }
 
@@ -45,7 +45,7 @@ StatusOr<google::devtools::clouddebugger::v2::GetBreakpointResponse>
 Debugger2Metadata::GetBreakpoint(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::GetBreakpointRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetBreakpoint(context, request);
 }
 
@@ -53,7 +53,7 @@ Status Debugger2Metadata::DeleteBreakpoint(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::DeleteBreakpointRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->DeleteBreakpoint(context, request);
 }
 
@@ -62,7 +62,7 @@ Debugger2Metadata::ListBreakpoints(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::ListBreakpointsRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListBreakpoints(context, request);
 }
 
@@ -70,7 +70,7 @@ StatusOr<google::devtools::clouddebugger::v2::ListDebuggeesResponse>
 Debugger2Metadata::ListDebuggees(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::ListDebuggeesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListDebuggees(context, request);
 }
 

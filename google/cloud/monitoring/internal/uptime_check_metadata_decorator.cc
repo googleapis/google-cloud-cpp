@@ -78,7 +78,7 @@ StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
 UptimeCheckServiceMetadata::ListUptimeCheckIps(
     grpc::ClientContext& context,
     google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListUptimeCheckIps(context, request);
 }
 

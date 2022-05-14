@@ -38,7 +38,7 @@ Controller2Metadata::RegisterDebuggee(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->RegisterDebuggee(context, request);
 }
 
@@ -47,7 +47,7 @@ Controller2Metadata::ListActiveBreakpoints(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListActiveBreakpoints(context, request);
 }
 
@@ -56,7 +56,7 @@ Controller2Metadata::UpdateActiveBreakpoint(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->UpdateActiveBreakpoint(context, request);
 }
 

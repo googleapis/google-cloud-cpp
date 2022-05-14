@@ -359,7 +359,7 @@ StatusOr<google::cloud::channel::v1::ListProductsResponse>
 CloudChannelServiceMetadata::ListProducts(
     grpc::ClientContext& context,
     google::cloud::channel::v1::ListProductsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListProducts(context, request);
 }
 

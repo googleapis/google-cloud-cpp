@@ -37,7 +37,7 @@ StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse>
 DataCatalogMetadata::SearchCatalog(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::SearchCatalogRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SearchCatalog(context, request);
 }
 
@@ -114,7 +114,7 @@ StatusOr<google::cloud::datacatalog::v1::Entry>
 DataCatalogMetadata::LookupEntry(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->LookupEntry(context, request);
 }
 

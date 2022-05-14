@@ -47,7 +47,7 @@ OrganizationsMetadata::SearchOrganizations(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SearchOrganizations(context, request);
 }
 

@@ -254,7 +254,7 @@ $metadata_class_name$::Async$method_name$(
     "    $request_type$ const& request) {\n"},
    {HasRoutingHeader,
     "  SetMetadata(context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n",
-    "  SetMetadata(context, {});\n"},
+    "  SetMetadata(context);\n"},
    {"  return child_->$method_name$(context, request);\n"
     "}\n",}
                  // clang-format on
@@ -277,7 +277,7 @@ $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->Async$method_name$(cq, std::move(context), request);
 }
 )"""}},
@@ -292,7 +292,7 @@ $metadata_class_name$::Async$method_name$(
     "    $request_type$ const& request) {\n"},
    {HasRoutingHeader,
     "  SetMetadata(*context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n",
-    "  SetMetadata(*context, {});\n"},
+    "  SetMetadata(*context);\n"},
    {"  return child_->$method_name$(std::move(context), request);\n"
     "}\n",}
                  // clang-format on
@@ -336,7 +336,7 @@ $metadata_class_name$::Async$method_name$(
    {HasRoutingHeader, R"""(
   SetMetadata(*context, "$method_request_param_key$=" + request.$method_request_param_value$);)""",
    R"""(
-  SetMetadata(*context, {});)"""}, {R"""(
+  SetMetadata(*context);)"""}, {R"""(
   return child_->Async$method_name$(cq, std::move(context), request);
 }
 )"""}},

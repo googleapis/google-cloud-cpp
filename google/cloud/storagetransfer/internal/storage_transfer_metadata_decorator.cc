@@ -39,7 +39,7 @@ StorageTransferServiceMetadata::GetGoogleServiceAccount(
     grpc::ClientContext& context,
     google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetGoogleServiceAccount(context, request);
 }
 
@@ -47,7 +47,7 @@ StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceMetadata::CreateTransferJob(
     grpc::ClientContext& context,
     google::storagetransfer::v1::CreateTransferJobRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->CreateTransferJob(context, request);
 }
 
@@ -71,7 +71,7 @@ StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
 StorageTransferServiceMetadata::ListTransferJobs(
     grpc::ClientContext& context,
     google::storagetransfer::v1::ListTransferJobsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListTransferJobs(context, request);
 }
 

@@ -39,7 +39,7 @@ VideoIntelligenceServiceMetadata::AsyncAnnotateVideo(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncAnnotateVideo(cq, std::move(context), request);
 }
 

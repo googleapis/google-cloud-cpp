@@ -38,7 +38,7 @@ StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerMetadata::AllocateQuota(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->AllocateQuota(context, request);
 }
 

@@ -38,7 +38,7 @@ StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
 LanguageServiceMetadata::AnalyzeSentiment(
     grpc::ClientContext& context,
     google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->AnalyzeSentiment(context, request);
 }
 
@@ -46,7 +46,7 @@ StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
 LanguageServiceMetadata::AnalyzeEntities(
     grpc::ClientContext& context,
     google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->AnalyzeEntities(context, request);
 }
 
@@ -54,7 +54,7 @@ StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
 LanguageServiceMetadata::AnalyzeEntitySentiment(
     grpc::ClientContext& context,
     google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->AnalyzeEntitySentiment(context, request);
 }
 
@@ -62,7 +62,7 @@ StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
 LanguageServiceMetadata::AnalyzeSyntax(
     grpc::ClientContext& context,
     google::cloud::language::v1::AnalyzeSyntaxRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->AnalyzeSyntax(context, request);
 }
 
@@ -70,7 +70,7 @@ StatusOr<google::cloud::language::v1::ClassifyTextResponse>
 LanguageServiceMetadata::ClassifyText(
     grpc::ClientContext& context,
     google::cloud::language::v1::ClassifyTextRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ClassifyText(context, request);
 }
 
@@ -78,7 +78,7 @@ StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceMetadata::AnnotateText(
     grpc::ClientContext& context,
     google::cloud::language::v1::AnnotateTextRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->AnnotateText(context, request);
 }
 
