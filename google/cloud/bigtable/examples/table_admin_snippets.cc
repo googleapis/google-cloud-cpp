@@ -37,12 +37,9 @@ void CreateTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
      std::string const& instance_id, std::string const& table_id) {
     std::string instance_name = cbt::InstanceName(project_id, instance_id);
     // Example garbage collection rule.
-    google::bigtable::admin::v2::GcRule gc;
-    gc.set_max_num_versions(10);
-
     google::bigtable::admin::v2::Table t;
     auto& families = *t.mutable_column_families();
-    *families["fam"].mutable_gc_rule() = std::move(gc);
+    families["fam"].mutable_gc_rule()->set_max_num_versions(10);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.CreateTable(instance_name, table_id, std::move(t));
@@ -204,16 +201,13 @@ void ModifyTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     // Update
     ModifyColumnFamiliesRequest::Modification m2;
     m2.set_id("fam");
-    google::bigtable::admin::v2::GcRule gc2;
-    gc2.set_max_num_versions(5);
-    *m2.mutable_update()->mutable_gc_rule() = std::move(gc2);
+    m2.mutable_update()->mutable_gc_rule()->set_max_num_versions(5);
 
     // Create
     ModifyColumnFamiliesRequest::Modification m3;
     m3.set_id("fam");
-    google::bigtable::admin::v2::GcRule gc3;
-    gc3.mutable_max_age()->set_seconds(7 * kSecondsPerDay);
-    *m3.mutable_update()->mutable_gc_rule() = std::move(gc3);
+    m3.mutable_update()->mutable_gc_rule()->mutable_max_age()->set_seconds(
+        7 * kSecondsPerDay);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(
@@ -243,9 +237,8 @@ void CreateMaxAgeFamily(
 
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    google::bigtable::admin::v2::GcRule gc;
-    gc.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
-    *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+    mod.mutable_create()->mutable_gc_rule()->mutable_max_age()->set_seconds(
+        5 * kSecondsPerDay);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -272,9 +265,7 @@ void CreateMaxVersionsFamily(
 
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    google::bigtable::admin::v2::GcRule gc;
-    gc.set_max_num_versions(2);
-    *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+    mod.mutable_create()->mutable_gc_rule()->set_max_num_versions(2);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -301,19 +292,11 @@ void CreateUnionFamily(
     auto constexpr kSecondsPerDay =
         std::chrono::seconds(std::chrono::hours(24)).count();
 
-    google::bigtable::admin::v2::GcRule gc1;
-    gc1.set_max_num_versions(1);
-
-    google::bigtable::admin::v2::GcRule gc2;
-    gc2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
-
-    google::bigtable::admin::v2::GcRule gc_union;
-    *gc_union.mutable_union_()->add_rules() = std::move(gc1);
-    *gc_union.mutable_union_()->add_rules() = std::move(gc2);
-
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    *mod.mutable_create()->mutable_gc_rule() = std::move(gc_union);
+    auto& gc_union = *mod.mutable_create()->mutable_gc_rule()->mutable_union_();
+    gc_union.add_rules()->set_max_num_versions(1);
+    gc_union.add_rules()->mutable_max_age()->set_seconds(5 * kSecondsPerDay);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -340,19 +323,12 @@ void CreateIntersectionFamily(
     auto constexpr kSecondsPerDay =
         std::chrono::seconds(std::chrono::hours(24)).count();
 
-    google::bigtable::admin::v2::GcRule gc1;
-    gc1.set_max_num_versions(1);
-
-    google::bigtable::admin::v2::GcRule gc2;
-    gc2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
-
-    google::bigtable::admin::v2::GcRule gc_intersection;
-    *gc_intersection.mutable_intersection()->add_rules() = std::move(gc1);
-    *gc_intersection.mutable_intersection()->add_rules() = std::move(gc2);
-
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    *mod.mutable_create()->mutable_gc_rule() = std::move(gc_intersection);
+    auto& gc_int =
+        *mod.mutable_create()->mutable_gc_rule()->mutable_intersection();
+    gc_int.add_rules()->set_max_num_versions(1);
+    gc_int.add_rules()->mutable_max_age()->set_seconds(5 * kSecondsPerDay);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -379,25 +355,17 @@ void CreateNestedFamily(
     auto constexpr kSecondsPerDay =
         std::chrono::seconds(std::chrono::hours(24)).count();
 
-    google::bigtable::admin::v2::GcRule gc1;
-    gc1.set_max_num_versions(10);
-
-    google::bigtable::admin::v2::GcRule gc2_1;
-    gc2_1.set_max_num_versions(1);
-    google::bigtable::admin::v2::GcRule gc2_2;
-    gc2_2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
-
-    google::bigtable::admin::v2::GcRule gc2;
-    *gc2.mutable_intersection()->add_rules() = std::move(gc2_1);
-    *gc2.mutable_intersection()->add_rules() = std::move(gc2_2);
-
-    google::bigtable::admin::v2::GcRule gc;
-    *gc.mutable_union_()->add_rules() = std::move(gc1);
-    *gc.mutable_union_()->add_rules() = std::move(gc2);
-
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+    auto& gc = *mod.mutable_create()->mutable_gc_rule();
+    auto& gc_1 = *gc.mutable_union_()->add_rules();
+    auto& gc_2 = *gc.mutable_union_()->add_rules();
+    auto& gc_2_1 = *gc_2.mutable_intersection()->add_rules();
+    auto& gc_2_2 = *gc_2.mutable_intersection()->add_rules();
+
+    gc_1.set_max_num_versions(10);
+    gc_2_1.set_max_num_versions(1);
+    gc_2_2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -469,9 +437,7 @@ void GetOrCreateFamily(
       // Try to create the column family instead:
       ModifyColumnFamiliesRequest::Modification mod;
       mod.set_id(family_name);
-      google::bigtable::admin::v2::GcRule gc;
-      gc.set_max_num_versions(5);
-      *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+      mod.mutable_create()->mutable_gc_rule()->set_max_num_versions(5);
 
       auto modified = admin.ModifyColumnFamilies(table_name, {std::move(mod)});
       if (!modified) throw std::runtime_error(schema.status().message());
@@ -593,9 +559,7 @@ void UpdateGcRule(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
 
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    google::bigtable::admin::v2::GcRule gc;
-    gc.set_max_num_versions(1);
-    *mod.mutable_update()->mutable_gc_rule() = std::move(gc);
+    mod.mutable_update()->mutable_gc_rule()->set_max_num_versions(1);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -774,12 +738,8 @@ void RunAll(std::vector<std::string> const& argv) {
   // Create a table to run the tests on.
   google::bigtable::admin::v2::Table t;
   auto& families = *t.mutable_column_families();
-  google::bigtable::admin::v2::GcRule gc1;
-  gc1.set_max_num_versions(10);
-  *families["fam"].mutable_gc_rule() = std::move(gc1);
-  google::bigtable::admin::v2::GcRule gc2;
-  gc2.set_max_num_versions(3);
-  *families["foo"].mutable_gc_rule() = std::move(gc2);
+  families["fam"].mutable_gc_rule()->set_max_num_versions(10);
+  families["foo"].mutable_gc_rule()->set_max_num_versions(3);
 
   auto table_1 = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                    table_id_1, std::move(t));

@@ -103,9 +103,6 @@ std::string Benchmark::CreateTable() {
   auto admin = bigtable_admin::BigtableTableAdminClient(
       bigtable_admin::MakeBigtableTableAdminConnection(admin_opts));
 
-  google::bigtable::admin::v2::GcRule gc;
-  gc.set_max_num_versions(1);
-
   google::bigtable::admin::v2::CreateTableRequest r;
   r.set_parent(InstanceName(options_.project_id, options_.instance_id));
   r.set_table_id(options_.table_id);
@@ -113,7 +110,7 @@ std::string Benchmark::CreateTable() {
     r.add_initial_splits()->set_key("user" + std::to_string(i));
   }
   auto& families = *r.mutable_table()->mutable_column_families();
-  *families[kColumnFamily].mutable_gc_rule() = std::move(gc);
+  families[kColumnFamily].mutable_gc_rule()->set_max_num_versions(1);
 
   (void)admin.CreateTable(std::move(r));
   return options_.table_id;

@@ -55,18 +55,14 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
 
   //! [create table]
   // Define the schema
-  google::bigtable::admin::v2::GcRule gc_max_versions;
-  gc_max_versions.set_max_num_versions(10);
-
-  google::bigtable::admin::v2::GcRule gc_max_age;
   auto constexpr kSecondsPerDay =
       std::chrono::seconds(std::chrono::hours(24)).count();
-  gc_max_age.mutable_max_age()->set_seconds(3 * kSecondsPerDay);
 
   google::bigtable::admin::v2::Table t;
   auto& families = *t.mutable_column_families();
-  *families["fam"].mutable_gc_rule() = gc_max_versions;
-  *families["foo"].mutable_gc_rule() = gc_max_age;
+  families["fam"].mutable_gc_rule()->set_max_num_versions(10);
+  families["foo"].mutable_gc_rule()->mutable_max_age()->set_seconds(
+      3 * kSecondsPerDay);
 
   std::cout << "Creating a table:\n";
   std::string instance_name = cbt::InstanceName(project_id, instance_id);
@@ -110,13 +106,10 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
 
   //! [modify column family]
   std::cout << "Update a column family GC rule:\n";
-  google::bigtable::admin::v2::GcRule updated_gc;
-  updated_gc.set_max_num_versions(5);
-
   using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
   ModifyColumnFamiliesRequest::Modification mod;
   mod.set_id("fam");
-  *mod.mutable_update()->mutable_gc_rule() = std::move(updated_gc);
+  mod.mutable_update()->mutable_gc_rule()->set_max_num_versions(5);
 
   StatusOr<google::bigtable::admin::v2::Table> updated_schema =
       admin.ModifyColumnFamilies(table->name(), {std::move(mod)});

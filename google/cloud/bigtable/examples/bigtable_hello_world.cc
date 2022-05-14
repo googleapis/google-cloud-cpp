@@ -53,11 +53,9 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   //! [create table] [START bigtable_hw_create_table]
   // Define the desired schema for the Table.
-  google::bigtable::admin::v2::GcRule gc;
-  gc.set_max_num_versions(1);
   google::bigtable::admin::v2::Table t;
   auto& families = *t.mutable_column_families();
-  *families["family"].mutable_gc_rule() = std::move(gc);
+  families["family"].mutable_gc_rule()->set_max_num_versions(1);
 
   // Create a table.
   std::string instance_name = cbt::InstanceName(project_id, instance_id);

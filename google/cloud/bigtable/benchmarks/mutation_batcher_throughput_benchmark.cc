@@ -159,9 +159,6 @@ int main(int argc, char* argv[]) {
     auto generator = google::cloud::internal::MakeDefaultPRNG();
     table_id = RandomTableId(generator);
 
-    google::bigtable::admin::v2::GcRule gc;
-    gc.set_max_num_versions(10);
-
     google::bigtable::admin::v2::CreateTableRequest r;
     r.set_parent(cbt::InstanceName(options->project_id, options->instance_id));
     r.set_table_id(table_id);
@@ -171,7 +168,8 @@ int main(int argc, char* argv[]) {
       r.add_initial_splits()->set_key(MakeRowString(key_width, row_index));
     }
     auto& families = *r.mutable_table()->mutable_column_families();
-    *families[options->column_family].mutable_gc_rule() = std::move(gc);
+    families[options->column_family].mutable_gc_rule()->set_max_num_versions(
+        10);
 
     std::cout << "# Creating Table\n";
     auto table = admin.CreateTable(std::move(r));
