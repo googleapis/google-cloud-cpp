@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/metadata_decorator_generator.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
 #include "generator/internal/codegen_utils.h"
@@ -302,18 +303,23 @@ $metadata_class_name$::Async$method_name$(
 
   for (auto const& method : async_methods()) {
     if (IsStreamingRead(method)) {
-      auto constexpr kDefinition = R"""(
+      auto const definition = absl::StrCat(
+          R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       $response_type$>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
-  SetMetadata(*context);
+)""",  // clang-format off
+      HasRoutingHeader(method) ?
+"  SetMetadata(*context, \"$method_request_param_key$=\" + request.$method_request_param_value$);" :
+"  SetMetadata(*context);", // clang-format-on
+          R"""(
   return child_->Async$method_name$(cq, std::move(context), request);
 }
-)""";
-      CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
+)""");
+      CcPrintMethod(method, __FILE__, __LINE__, definition);
       continue;
     }
     CcPrintMethod(
