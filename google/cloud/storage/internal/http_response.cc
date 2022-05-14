@@ -148,17 +148,23 @@ StatusCode MapHttpCodeToStatus(long code) {  // NOLINT(google-runtime-int)
 ErrorInfo MakeErrorInfo(nlohmann::json const& details) {
   static auto constexpr kErrorInfoType =
       "type.googleapis.com/google.rpc.ErrorInfo";
+  if (!details.is_array()) return ErrorInfo{};
   for (auto const& e : details.items()) {
     auto const& v = e.value();
+    if (!v.is_object()) continue;
+    if (!v.contains("@type") || !v["@type"].is_string()) continue;
     if (v.value("@type", "") != kErrorInfoType) continue;
-    auto reason = v.value("reason", "");
-    auto domain = v.value("domain", "");
-    auto metadata_json = v.value("metadata", nlohmann::json::object());
+    if (!v.contains("reason") || !v["reason"].is_string()) continue;
+    if (!v.contains("domain") || !v["domain"].is_string()) continue;
+    if (!v.contains("metadata") || !v["metadata"].is_object()) continue;
+    auto const& metadata_json = v["metadata"];
     auto metadata = std::unordered_map<std::string, std::string>{};
     for (auto const& m : metadata_json.items()) {
+      if (!m.value().is_string()) continue;
       metadata[m.key()] = m.value();
     }
-    return ErrorInfo{std::move(reason), std::move(domain), std::move(metadata)};
+    return ErrorInfo{v.value("reason", ""), v.value("domain", ""),
+                     std::move(metadata)};
   }
   return ErrorInfo{};
 }
@@ -166,14 +172,16 @@ ErrorInfo MakeErrorInfo(nlohmann::json const& details) {
 }  // namespace
 
 Status AsStatus(HttpResponse const& http_response) {
-  auto const status_code = MapHttpCodeToStatus(http_response.status_code);
-  if (status_code == StatusCode::kOk) return Status{};
+  auto const code = MapHttpCodeToStatus(http_response.status_code);
+  if (code == StatusCode::kOk) return Status{};
+
+  auto default_error = [&] { return Status(code, http_response.payload); };
 
   // We try to parse the payload as JSON, which may allow us to provide a more
   // structured and useful error Status. If the payload fails to parse as JSON,
   // we simply attach the full error payload as the Status's message string.
   auto json = nlohmann::json::parse(http_response.payload, nullptr, false);
-  if (!json.is_object()) return Status(status_code, http_response.payload);
+  if (!json.is_object()) return default_error();
 
   // We expect JSON that looks like the following:
   //   {
@@ -186,11 +194,13 @@ Status AsStatus(HttpResponse const& http_response) {
   //     }
   //   }
   // See  https://cloud.google.com/apis/design/errors#http_mapping
-  auto error = json.value("error", nlohmann::json::object());
-  auto message = error.value("message", http_response.payload);
-  auto details = error.value("details", nlohmann::json::object());
-  auto error_info = MakeErrorInfo(details);
-  return Status(status_code, std::move(message), std::move(error_info));
+  if (!json.contains("error")) return default_error();
+  auto const& e = json["error"];
+  if (!e.is_object()) return default_error();
+  if (!e.contains("message") || !e.contains("details")) return default_error();
+  if (!e["message"].is_string()) return default_error();
+
+  return Status(code, e.value("message", ""), MakeErrorInfo(e["details"]));
 }
 
 std::ostream& operator<<(std::ostream& os, HttpResponse const& rhs) {
