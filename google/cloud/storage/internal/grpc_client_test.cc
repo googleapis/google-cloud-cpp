@@ -762,6 +762,64 @@ TEST_F(GrpcClientTest, ListBucketAclSuccess) {
                                    make_matcher("test-role2", "test-entity2")));
 }
 
+TEST_F(GrpcClientTest, GetBucketAclFailure) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::GetBucketRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
+        EXPECT_THAT(request.common_request_params().user_project(),
+                    "test-user-project");
+        return PermanentError();
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->GetBucketAcl(
+      GetBucketAclRequest("test-bucket-name", "test-entity1")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user"),
+                                UserProject("test-user-project")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, GetBucketAclNotFound) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const&) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->GetBucketAcl(
+      GetBucketAclRequest("test-bucket-id", "test-not-found"));
+  EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
+}
+
+TEST_F(GrpcClientTest, GetBucketAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const&) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->GetBucketAcl(
+      GetBucketAclRequest("test-bucket-id", "test-entity1"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "test-role1");
+  EXPECT_EQ(response->bucket(), "test-bucket-id");
+}
+
 TEST_F(GrpcClientTest, GetServiceAccount) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetServiceAccount)

@@ -536,7 +536,6 @@ StatusOr<ListBucketAclResponse> GrpcClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   auto get_request = GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
-  get_request.set_option(Projection::Full());
   auto get = GetBucketMetadata(get_request);
   if (!get) return std::move(get).status();
   ListBucketAclResponse response;
@@ -545,8 +544,17 @@ StatusOr<ListBucketAclResponse> GrpcClient::ListBucketAcl(
 }
 
 StatusOr<BucketAccessControl> GrpcClient::GetBucketAcl(
-    GetBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetBucketAclRequest const& request) {
+  auto get_request = GetBucketMetadataRequest(request.bucket_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto get = GetBucketMetadata(get_request);
+  if (!get) return std::move(get).status();
+  for (auto const& acl : get->acl()) {
+    if (acl.entity() == request.entity()) return acl;
+  }
+  return Status(StatusCode::kNotFound, "cannot find entity <" +
+                                           request.entity() + "> in bucket " +
+                                           request.bucket_name());
 }
 
 StatusOr<BucketAccessControl> GrpcClient::CreateBucketAcl(
