@@ -28,10 +28,10 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Contributing changes
 
-See [`CONTRIBUTING.md`](../../../CONTRIBUTING.md) for details on how to
+See [`CONTRIBUTING.md`](/CONTRIBUTING.md) for details on how to
 contribute to this project, including how to build and test your changes
 as well as how to properly format your code.
 
 ## Licensing
 
-Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
+Apache 2.0; see [`LICENSE`](/LICENSE) for details.

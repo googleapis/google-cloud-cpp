@@ -52,7 +52,7 @@ subscription while manual execution will use pre-existing Pub/Sub resources.
 The main audience for this guide are `google-cloud-cpp` developers who want to
 reproduce the benchmark results. This document assumes that you are familiar
 with the steps to compile the code in this repository, please check the
-top-level [README](../../../../README.md) if necessary.
+top-level [README](/README.md) if necessary.
 
 :warning: Running these benchmarks can easily exceed the free tier for Cloud
 Pub/Sub, generating hundreds of dollars in charges may take only a few minutes.

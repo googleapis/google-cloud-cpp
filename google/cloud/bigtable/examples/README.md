@@ -28,7 +28,7 @@ Instance ID, and Table ID as you will need them below.
 These examples are compiled as part of the build for the Cloud Bigtable C++
 Client.  The instructions on how to compile the code are in the
 [top-level README](/README.md) file. The Bigtable client library
-[quickstart](../quickstart/README.md) may also be relevant.
+[quickstart](/google/cloud/bigtable/quickstart/README.md) may also be relevant.
 
 ### Configure Environment
 
