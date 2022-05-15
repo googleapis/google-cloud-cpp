@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_bucket_access_control_parser.h"
+#include "google/cloud/storage/bucket_access_control.h"
+#include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/storage/version.h"
 
 namespace google {
@@ -59,6 +61,11 @@ BucketAccessControl GrpcBucketAccessControlParser::FromProto(
   result.self_link_.clear();
 
   return result;
+}
+
+std::string GrpcBucketAccessControlParser::Role(
+    BucketAccessControlPatchBuilder const& patch) {
+  return PatchBuilderDetails::GetPatch(patch.impl_).value("role", "");
 }
 
 }  // namespace internal

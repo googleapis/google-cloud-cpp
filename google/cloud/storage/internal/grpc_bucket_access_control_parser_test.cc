@@ -117,6 +117,11 @@ TEST(GrpcBucketAccessControlParser, MinimalFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcBucketAccessControlParser, Role) {
+  auto const patch = BucketAccessControlPatchBuilder().set_role("test-role");
+  EXPECT_EQ("test-role", GrpcBucketAccessControlParser::Role(patch));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
