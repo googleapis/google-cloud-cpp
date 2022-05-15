@@ -150,6 +150,8 @@ TEST(HttpResponseTest, ErrorInfoInvalidUnexpectedFormat) {
       R"js({"error": {"message": "the error", "details": {"@type": "invalid-@type"}}}})js",
       R"js({"error": {"message": "the error", "details": ["not-an-object"]}}})js",
       R"js({"error": {"message": "the error", "details": [{"@type": "invalid-@type"}]}}})js",
+      R"js(Service Unavailable)js",
+      R"js("Service Unavailable")js",
   };
   for (auto const& payload : cases) {
     Status expected{StatusCode::kInvalidArgument, payload};
