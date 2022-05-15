@@ -139,6 +139,24 @@ TEST(HttpResponseTest, ErrorInfoInvalidOnlyString) {
   EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
 }
 
+TEST(HttpResponseTest, ErrorInfoInvalidUnexpectedFormat) {
+  std::string cases[] = {
+      R"js({"error": "invalid_grant", "error_description": "Invalid grant: account not found"})js",
+      R"js({"error": ["invalid"], "error_description": "Invalid grant: account not found"})js",
+      R"js({"error": {"missing-message": "msg"}})js",
+      R"js({"error": {"message": "msg", "missing-details": {}}})js",
+      R"js({"error": {"message": ["not string"], "details": {}}}})js",
+      R"js({"error": {"message": "the error", "details": "not-an-array"}}})js",
+      R"js({"error": {"message": "the error", "details": {"@type": "invalid-@type"}}}})js",
+      R"js({"error": {"message": "the error", "details": ["not-an-object"]}}})js",
+      R"js({"error": {"message": "the error", "details": [{"@type": "invalid-@type"}]}}})js",
+  };
+  for (auto const& payload : cases) {
+    Status expected{StatusCode::kInvalidArgument, payload};
+    EXPECT_EQ(AsStatus(HttpResponse{400, payload, {}}), expected);
+  }
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
