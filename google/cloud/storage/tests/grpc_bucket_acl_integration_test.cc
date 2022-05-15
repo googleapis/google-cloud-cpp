@@ -99,6 +99,13 @@ TEST_F(GrpcBucketAclIntegrationTest, AclCRUD) {
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(create_acl->entity()));
 
+  auto updated_acl = client->UpdateBucketAcl(
+      bucket_name, BucketAccessControl().set_entity(viewers).set_role(
+                       BucketAccessControl::ROLE_OWNER()));
+  ASSERT_STATUS_OK(updated_acl);
+  EXPECT_EQ(updated_acl->entity(), create_acl->entity());
+  EXPECT_EQ(updated_acl->role(), BucketAccessControl::ROLE_OWNER());
+
   auto delete_acl = client->DeleteBucketAcl(bucket_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
 

@@ -612,18 +612,36 @@ StatusOr<EmptyResponse> GrpcClient::DeleteBucketAcl(
   return EmptyResponse{};
 }
 
-StatusOr<ListObjectAclResponse> GrpcClient::ListObjectAcl(
-    ListObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
-}
-
 StatusOr<BucketAccessControl> GrpcClient::UpdateBucketAcl(
-    UpdateBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    UpdateBucketAclRequest const& request) {
+  auto get_request = GetBucketMetadataRequest(request.bucket_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto updater = [&request](std::vector<BucketAccessControl> acl)
+      -> StatusOr<std::vector<BucketAccessControl>> {
+    auto i = std::find_if(acl.begin(), acl.end(),
+                          [&](BucketAccessControl const& entry) {
+                            return entry.entity() == request.entity();
+                          });
+    if (i == acl.end()) {
+      return Status(StatusCode::kNotFound,
+                    "the entity <" + request.entity() +
+                        "> is not present in the ACL for bucket " +
+                        request.bucket_name());
+    }
+    i->set_role(request.role());
+    return acl;
+  };
+  return FindBucketAccessControl(
+      ModifyBucketAccessControl(get_request, updater), request.entity());
 }
 
 StatusOr<BucketAccessControl> GrpcClient::PatchBucketAcl(
     PatchBucketAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
+}
+
+StatusOr<ListObjectAclResponse> GrpcClient::ListObjectAcl(
+    ListObjectAclRequest const&) {
   return Status(StatusCode::kUnimplemented, __func__);
 }
 
