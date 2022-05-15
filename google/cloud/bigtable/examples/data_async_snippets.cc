@@ -342,11 +342,9 @@ void RunAll(std::vector<std::string> const& argv) {
   // Create a table to run the tests on
   std::cout << "\nCreating table to run the examples (" << table_id << ")"
             << std::endl;
-  google::bigtable::admin::v2::GcRule gc;
-  gc.set_max_num_versions(10);
   google::bigtable::admin::v2::Table t;
   auto& families = *t.mutable_column_families();
-  *families["fam"].mutable_gc_rule() = std::move(gc);
+  families["fam"].mutable_gc_rule()->set_max_num_versions(10);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                   table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());

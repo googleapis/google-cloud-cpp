@@ -714,11 +714,9 @@ void RunMutateExamples(
 
   // Create a table to run the tests on
   auto table_id = cbt::testing::RandomTableId(generator);
-  google::bigtable::admin::v2::GcRule gc;
-  gc.set_max_num_versions(10);
   google::bigtable::admin::v2::Table t;
   auto& families = *t.mutable_column_families();
-  *families["fam"].mutable_gc_rule() = std::move(gc);
+  families["fam"].mutable_gc_rule()->set_max_num_versions(10);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                   table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
@@ -744,11 +742,9 @@ void RunWriteExamples(
 
   // Create a table to run the tests on
   auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
-  google::bigtable::admin::v2::GcRule gc;
-  gc.set_max_num_versions(11);
   google::bigtable::admin::v2::Table t;
   auto& families = *t.mutable_column_families();
-  *families["stats_summary"].mutable_gc_rule() = std::move(gc);
+  families["stats_summary"].mutable_gc_rule()->set_max_num_versions(11);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                   table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
@@ -777,11 +773,9 @@ void RunDataExamples(
   // Create a table to run the tests on
   auto table_id = cbt::testing::RandomTableId(generator);
   std::cout << "Creating table " << table_id << std::endl;
-  google::bigtable::admin::v2::GcRule gc;
-  gc.set_max_num_versions(10);
   google::bigtable::admin::v2::Table t;
   auto& families = *t.mutable_column_families();
-  *families["fam"].mutable_gc_rule() = std::move(gc);
+  families["fam"].mutable_gc_rule()->set_max_num_versions(10);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                   table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
