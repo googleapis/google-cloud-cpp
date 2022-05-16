@@ -41,6 +41,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
+
 // Used in the implementation of `*BucketAcl()`.
 StatusOr<BucketAccessControl> FindBucketAccessControl(
     StatusOr<BucketMetadata> response, std::string const& entity) {

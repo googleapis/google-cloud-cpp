@@ -193,8 +193,8 @@ class GrpcClient : public RawClient,
       std::function<StatusOr<std::vector<BucketAccessControl>>(
           std::vector<BucketAccessControl> acl)>;
 
-  // REST has RPCs that change `BucketAccessControl` resources atomically, gRPC
-  // lacks such RPCs, this function hijacks the retry loop to implement an OCC
+  // REST has RPCs that change `BucketAccessControl` resources atomically. gRPC
+  // lacks such RPCs. This function hijacks the retry loop to implement an OCC
   // loop to make such changes.
   StatusOr<BucketMetadata> ModifyBucketAccessControl(
       GetBucketMetadataRequest const& request, BucketAclUpdater const& updater);

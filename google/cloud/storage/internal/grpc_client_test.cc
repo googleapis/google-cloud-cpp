@@ -875,6 +875,22 @@ TEST_F(GrpcClientTest, CreateBucketAclPatchFails) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
+TEST_F(GrpcClientTest, CreateBucketAclAlreadyExists) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const&) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateBucket).Times(0);
+
+  auto client = CreateTestClient(mock);
+  auto response = client->CreateBucketAcl(CreateBucketAclRequest(
+      "test-bucket-id", "test-entity1", "test-new-role"));
+  EXPECT_THAT(response, StatusIs(StatusCode::kAlreadyExists));
+}
+
 TEST_F(GrpcClientTest, GetServiceAccount) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetServiceAccount)
