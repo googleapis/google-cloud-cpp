@@ -95,16 +95,16 @@ class IdentityAwareProxyOAuthServiceClient {
   /// Lists the existing brands for the project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::ListBrandsRequest,google/cloud/iap/v1/service.proto#L286}
+  /// @googleapis_link{google::cloud::iap::v1::ListBrandsRequest,google/cloud/iap/v1/service.proto#L505}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::ListBrandsResponse,google/cloud/iap/v1/service.proto#L293}
+  /// @googleapis_link{google::cloud::iap::v1::ListBrandsResponse,google/cloud/iap/v1/service.proto#L512}
   ///
   /// [google.cloud.iap.v1.ListBrandsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L286}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L505}
   /// [google.cloud.iap.v1.ListBrandsResponse]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L293}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L512}
   ///
   StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
       google::cloud::iap::v1::ListBrandsRequest const& request,
@@ -113,23 +113,24 @@ class IdentityAwareProxyOAuthServiceClient {
   ///
   /// Constructs a new OAuth brand for the project if one does not exist.
   /// The created brand is "internal only", meaning that OAuth clients created
-  /// under it only accept requests from users who belong to the same G Suite
-  /// organization as the project. The brand is created in an un-reviewed
-  /// status. NOTE: The "internal only" status can be manually changed in the
-  /// Google Cloud console. Requires that a brand does not already exist for the
-  /// project, and that the specified support email is owned by the caller.
+  /// under it only accept requests from users who belong to the same Google
+  /// Workspace organization as the project. The brand is created in an
+  /// un-reviewed status. NOTE: The "internal only" status can be manually
+  /// changed in the Google Cloud Console. Requires that a brand does not
+  /// already exist for the project, and that the specified support email is
+  /// owned by the caller.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::CreateBrandRequest,google/cloud/iap/v1/service.proto#L299}
+  /// @googleapis_link{google::cloud::iap::v1::CreateBrandRequest,google/cloud/iap/v1/service.proto#L518}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::Brand,google/cloud/iap/v1/service.proto#L384}
+  /// @googleapis_link{google::cloud::iap::v1::Brand,google/cloud/iap/v1/service.proto#L603}
   ///
   /// [google.cloud.iap.v1.CreateBrandRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L299}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L518}
   /// [google.cloud.iap.v1.Brand]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L384}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L603}
   ///
   StatusOr<google::cloud::iap::v1::Brand> CreateBrand(
       google::cloud::iap::v1::CreateBrandRequest const& request,
@@ -139,16 +140,16 @@ class IdentityAwareProxyOAuthServiceClient {
   /// Retrieves the OAuth brand of the project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::GetBrandRequest,google/cloud/iap/v1/service.proto#L309}
+  /// @googleapis_link{google::cloud::iap::v1::GetBrandRequest,google/cloud/iap/v1/service.proto#L528}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::Brand,google/cloud/iap/v1/service.proto#L384}
+  /// @googleapis_link{google::cloud::iap::v1::Brand,google/cloud/iap/v1/service.proto#L603}
   ///
   /// [google.cloud.iap.v1.GetBrandRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L309}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L528}
   /// [google.cloud.iap.v1.Brand]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L384}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L603}
   ///
   StatusOr<google::cloud::iap::v1::Brand> GetBrand(
       google::cloud::iap::v1::GetBrandRequest const& request,
@@ -160,16 +161,16 @@ class IdentityAwareProxyOAuthServiceClient {
   /// set for internal-only use.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest,google/cloud/iap/v1/service.proto#L347}
+  /// @googleapis_link{google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest,google/cloud/iap/v1/service.proto#L566}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::IdentityAwareProxyClient,google/cloud/iap/v1/service.proto#L402}
+  /// @googleapis_link{google::cloud::iap::v1::IdentityAwareProxyClient,google/cloud/iap/v1/service.proto#L621}
   ///
   /// [google.cloud.iap.v1.CreateIdentityAwareProxyClientRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L566}
   /// [google.cloud.iap.v1.IdentityAwareProxyClient]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L402}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L621}
   ///
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
   CreateIdentityAwareProxyClient(
@@ -181,16 +182,16 @@ class IdentityAwareProxyOAuthServiceClient {
   /// Lists the existing clients for the brand.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest,google/cloud/iap/v1/service.proto#L316}
+  /// @googleapis_link{google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest,google/cloud/iap/v1/service.proto#L535}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::IdentityAwareProxyClient,google/cloud/iap/v1/service.proto#L402}
+  /// @googleapis_link{google::cloud::iap::v1::IdentityAwareProxyClient,google/cloud/iap/v1/service.proto#L621}
   ///
   /// [google.cloud.iap.v1.ListIdentityAwareProxyClientsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L316}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L535}
   /// [google.cloud.iap.v1.IdentityAwareProxyClient]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L402}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L621}
   ///
   StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
   ListIdentityAwareProxyClients(
@@ -202,16 +203,16 @@ class IdentityAwareProxyOAuthServiceClient {
   /// Requires that the client is owned by IAP.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::GetIdentityAwareProxyClientRequest,google/cloud/iap/v1/service.proto#L359}
+  /// @googleapis_link{google::cloud::iap::v1::GetIdentityAwareProxyClientRequest,google/cloud/iap/v1/service.proto#L578}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::IdentityAwareProxyClient,google/cloud/iap/v1/service.proto#L402}
+  /// @googleapis_link{google::cloud::iap::v1::IdentityAwareProxyClient,google/cloud/iap/v1/service.proto#L621}
   ///
   /// [google.cloud.iap.v1.GetIdentityAwareProxyClientRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L359}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L578}
   /// [google.cloud.iap.v1.IdentityAwareProxyClient]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L402}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L621}
   ///
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
   GetIdentityAwareProxyClient(
@@ -223,16 +224,16 @@ class IdentityAwareProxyOAuthServiceClient {
   /// secret was compromised. Requires that the client is owned by IAP.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest,google/cloud/iap/v1/service.proto#L367}
+  /// @googleapis_link{google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest,google/cloud/iap/v1/service.proto#L586}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::IdentityAwareProxyClient,google/cloud/iap/v1/service.proto#L402}
+  /// @googleapis_link{google::cloud::iap::v1::IdentityAwareProxyClient,google/cloud/iap/v1/service.proto#L621}
   ///
   /// [google.cloud.iap.v1.ResetIdentityAwareProxyClientSecretRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L367}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L586}
   /// [google.cloud.iap.v1.IdentityAwareProxyClient]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L402}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L621}
   ///
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
   ResetIdentityAwareProxyClientSecret(
@@ -246,12 +247,12 @@ class IdentityAwareProxyOAuthServiceClient {
   /// cleaning up after tests. Requires that the client is owned by IAP.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest,google/cloud/iap/v1/service.proto#L375}
+  /// @googleapis_link{google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest,google/cloud/iap/v1/service.proto#L594}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.iap.v1.DeleteIdentityAwareProxyClientRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L375}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L594}
   ///
   Status DeleteIdentityAwareProxyClient(
       google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&

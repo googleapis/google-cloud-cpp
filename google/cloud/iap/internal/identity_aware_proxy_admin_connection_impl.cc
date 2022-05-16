@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
@@ -102,6 +103,94 @@ IdentityAwareProxyAdminServiceConnectionImpl::UpdateIapSettings(
       [this](grpc::ClientContext& context,
              google::cloud::iap::v1::UpdateIapSettingsRequest const& request) {
         return stub_->UpdateIapSettings(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceConnectionImpl::ListTunnelDestGroups(
+    google::cloud::iap::v1::ListTunnelDestGroupsRequest request) {
+  request.clear_page_token();
+  auto stub = stub_;
+  auto retry =
+      std::shared_ptr<iap::IdentityAwareProxyAdminServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListTunnelDestGroups(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::iap::v1::TunnelDestGroup>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::iap::v1::ListTunnelDestGroupsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::iap::v1::ListTunnelDestGroupsRequest const&
+                       request) {
+              return stub->ListTunnelDestGroups(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::iap::v1::ListTunnelDestGroupsResponse r) {
+        std::vector<google::cloud::iap::v1::TunnelDestGroup> result(
+            r.tunnel_dest_groups().size());
+        auto& messages = *r.mutable_tunnel_dest_groups();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceConnectionImpl::CreateTunnelDestGroup(
+    google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateTunnelDestGroup(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
+        return stub_->CreateTunnelDestGroup(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceConnectionImpl::GetTunnelDestGroup(
+    google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetTunnelDestGroup(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
+        return stub_->GetTunnelDestGroup(context, request);
+      },
+      request, __func__);
+}
+
+Status IdentityAwareProxyAdminServiceConnectionImpl::DeleteTunnelDestGroup(
+    google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteTunnelDestGroup(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
+        return stub_->DeleteTunnelDestGroup(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceConnectionImpl::UpdateTunnelDestGroup(
+    google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateTunnelDestGroup(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
+        return stub_->UpdateTunnelDestGroup(context, request);
       },
       request, __func__);
 }

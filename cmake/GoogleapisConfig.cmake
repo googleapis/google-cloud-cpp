@@ -17,11 +17,11 @@
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA
-    "a0d4c5c2a714a7317714ba6f0066a74ec8a9c10b"
+    "cf88418a2dea51a1007792ad19739d53d4ee510e"
     CACHE STRING "Configure the commit SHA (or tag) for the googleapis protos.")
 mark_as_advanced(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA)
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "523e5986bdb7f001807a96373f1f6a05833cebb98314bc34d0defd9126772285"
+    "17c34d62592df2c684c19102079c4146faaafdba8244f517d2a52848a3e6b8b7"
     CACHE STRING "Configure the SHA256 checksum of the googleapis tarball.")
 mark_as_advanced(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256)
 

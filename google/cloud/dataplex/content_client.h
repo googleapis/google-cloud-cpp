@@ -94,12 +94,12 @@ class ContentServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.CreateContentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L81}
   /// [google.cloud.dataplex.v1.Content]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
       std::string const& parent,
@@ -113,12 +113,12 @@ class ContentServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.CreateContentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L81}
   /// [google.cloud.dataplex.v1.Content]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
       google::cloud::dataplex::v1::CreateContentRequest const& request,
@@ -133,12 +133,12 @@ class ContentServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.UpdateContentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L100}
   /// [google.cloud.dataplex.v1.Content]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
       google::cloud::dataplex::v1::Content const& content,
@@ -152,12 +152,12 @@ class ContentServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.UpdateContentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L100}
   /// [google.cloud.dataplex.v1.Content]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
       google::cloud::dataplex::v1::UpdateContentRequest const& request,
@@ -199,12 +199,12 @@ class ContentServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.GetContentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L170}
   /// [google.cloud.dataplex.v1.Content]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   StatusOr<google::cloud::dataplex::v1::Content> GetContent(
       std::string const& name, Options opts = {});
@@ -217,12 +217,12 @@ class ContentServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.GetContentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L170}
   /// [google.cloud.dataplex.v1.Content]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   StatusOr<google::cloud::dataplex::v1::Content> GetContent(
       google::cloud::dataplex::v1::GetContentRequest const& request,
@@ -236,12 +236,12 @@ class ContentServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.ListContentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L126}
   /// [google.cloud.dataplex.v1.Content]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   StreamRange<google::cloud::dataplex::v1::Content> ListContent(
       std::string const& parent, Options opts = {});
@@ -254,12 +254,12 @@ class ContentServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.ListContentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L126}
   /// [google.cloud.dataplex.v1.Content]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L161}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   StreamRange<google::cloud::dataplex::v1::Content> ListContent(
       google::cloud::dataplex::v1::ListContentRequest request,

@@ -109,12 +109,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
   /// [google.cloud.dataplex.v1.CreateLakeRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L378}
   /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
       std::string const& parent, google::cloud::dataplex::v1::Lake const& lake,
@@ -128,12 +128,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
   /// [google.cloud.dataplex.v1.CreateLakeRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L378}
   /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
       google::cloud::dataplex::v1::CreateLakeRequest const& request,
@@ -148,12 +148,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
   /// [google.cloud.dataplex.v1.UpdateLakeRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L408}
   /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
       google::cloud::dataplex::v1::Lake const& lake,
@@ -167,12 +167,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
   /// [google.cloud.dataplex.v1.UpdateLakeRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L408}
   /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
       google::cloud::dataplex::v1::UpdateLakeRequest const& request,
@@ -227,12 +227,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
   /// [google.cloud.dataplex.v1.ListLakesRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L434}
   /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
       std::string const& parent, Options opts = {});
@@ -245,12 +245,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
   /// [google.cloud.dataplex.v1.ListLakesRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L434}
   /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
       google::cloud::dataplex::v1::ListLakesRequest request, Options opts = {});
@@ -263,12 +263,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
   /// [google.cloud.dataplex.v1.GetLakeRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L509}
   /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   StatusOr<google::cloud::dataplex::v1::Lake> GetLake(std::string const& name,
                                                       Options opts = {});
@@ -281,12 +281,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
   /// [google.cloud.dataplex.v1.GetLakeRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L509}
   /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L38}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   StatusOr<google::cloud::dataplex::v1::Lake> GetLake(
       google::cloud::dataplex::v1::GetLakeRequest const& request,
@@ -300,12 +300,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L308}
   ///
   /// [google.cloud.dataplex.v1.ListLakeActionsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L476}
   /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L308}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
       std::string const& parent, Options opts = {});
@@ -318,12 +318,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L308}
   ///
   /// [google.cloud.dataplex.v1.ListLakeActionsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L476}
   /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L308}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
       google::cloud::dataplex::v1::ListLakeActionsRequest request,
@@ -347,12 +347,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L148}
   ///
   /// [google.cloud.dataplex.v1.CreateZoneRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L521}
   /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L148}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
       std::string const& parent, google::cloud::dataplex::v1::Zone const& zone,
@@ -366,12 +366,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L148}
   ///
   /// [google.cloud.dataplex.v1.CreateZoneRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L521}
   /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L148}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
       google::cloud::dataplex::v1::CreateZoneRequest const& request,
@@ -386,12 +386,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L148}
   ///
   /// [google.cloud.dataplex.v1.UpdateZoneRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L551}
   /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L148}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
       google::cloud::dataplex::v1::Zone const& zone,
@@ -405,12 +405,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L148}
   ///
   /// [google.cloud.dataplex.v1.UpdateZoneRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L551}
   /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L148}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
       google::cloud::dataplex::v1::UpdateZoneRequest const& request,
@@ -463,12 +463,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L148}
   ///
   /// [google.cloud.dataplex.v1.ListZonesRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L577}
   /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L148}
   ///
   StreamRange<google::cloud::dataplex::v1::Zone> ListZones(
       std::string const& parent, Options opts = {});
@@ -481,12 +481,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L148}
   ///
   /// [google.cloud.dataplex.v1.ListZonesRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L577}
   /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L148}
   ///
   StreamRange<google::cloud::dataplex::v1::Zone> ListZones(
       google::cloud::dataplex::v1::ListZonesRequest request, Options opts = {});
@@ -499,12 +499,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L148}
   ///
   /// [google.cloud.dataplex.v1.GetZoneRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L638}
   /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L148}
   ///
   StatusOr<google::cloud::dataplex::v1::Zone> GetZone(std::string const& name,
                                                       Options opts = {});
@@ -517,12 +517,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L148}
   ///
   /// [google.cloud.dataplex.v1.GetZoneRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L638}
   /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L149}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L148}
   ///
   StatusOr<google::cloud::dataplex::v1::Zone> GetZone(
       google::cloud::dataplex::v1::GetZoneRequest const& request,
@@ -536,12 +536,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L308}
   ///
   /// [google.cloud.dataplex.v1.ListZoneActionsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L615}
   /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L308}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
       std::string const& parent, Options opts = {});
@@ -554,12 +554,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L308}
   ///
   /// [google.cloud.dataplex.v1.ListZoneActionsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L615}
   /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L308}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
       google::cloud::dataplex::v1::ListZoneActionsRequest request,
@@ -582,12 +582,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L514}
   ///
   /// [google.cloud.dataplex.v1.CreateAssetRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
   /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L514}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
       std::string const& parent,
@@ -602,12 +602,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L514}
   ///
   /// [google.cloud.dataplex.v1.CreateAssetRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
   /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L514}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
       google::cloud::dataplex::v1::CreateAssetRequest const& request,
@@ -622,12 +622,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L514}
   ///
   /// [google.cloud.dataplex.v1.UpdateAssetRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L679}
   /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L514}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
       google::cloud::dataplex::v1::Asset const& asset,
@@ -641,12 +641,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L514}
   ///
   /// [google.cloud.dataplex.v1.UpdateAssetRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L679}
   /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L514}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
       google::cloud::dataplex::v1::UpdateAssetRequest const& request,
@@ -699,12 +699,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L514}
   ///
   /// [google.cloud.dataplex.v1.ListAssetsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L514}
   ///
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
       std::string const& parent, Options opts = {});
@@ -717,12 +717,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L514}
   ///
   /// [google.cloud.dataplex.v1.ListAssetsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L514}
   ///
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
       google::cloud::dataplex::v1::ListAssetsRequest request,
@@ -736,12 +736,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L514}
   ///
   /// [google.cloud.dataplex.v1.GetAssetRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L767}
   /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L514}
   ///
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(std::string const& name,
                                                         Options opts = {});
@@ -754,12 +754,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L514}
   ///
   /// [google.cloud.dataplex.v1.GetAssetRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L767}
   /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L515}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L514}
   ///
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(
       google::cloud::dataplex::v1::GetAssetRequest const& request,
@@ -773,12 +773,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L308}
   ///
   /// [google.cloud.dataplex.v1.ListAssetActionsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L744}
   /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L308}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
       std::string const& parent, Options opts = {});
@@ -791,12 +791,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L308}
   ///
   /// [google.cloud.dataplex.v1.ListAssetActionsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L744}
   /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L309}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L308}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
       google::cloud::dataplex::v1::ListAssetActionsRequest request,
@@ -812,12 +812,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   /// [google.cloud.dataplex.v1.CreateTaskRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L806}
   /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
       std::string const& parent, google::cloud::dataplex::v1::Task const& task,
@@ -831,12 +831,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   /// [google.cloud.dataplex.v1.CreateTaskRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L806}
   /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
       google::cloud::dataplex::v1::CreateTaskRequest const& request,
@@ -851,12 +851,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   /// [google.cloud.dataplex.v1.UpdateTaskRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L828}
   /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
       google::cloud::dataplex::v1::Task const& task,
@@ -870,12 +870,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   /// [google.cloud.dataplex.v1.UpdateTaskRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L828}
   /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
       google::cloud::dataplex::v1::UpdateTaskRequest const& request,
@@ -926,12 +926,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   /// [google.cloud.dataplex.v1.ListTasksRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L854}
   /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   StreamRange<google::cloud::dataplex::v1::Task> ListTasks(
       std::string const& parent, Options opts = {});
@@ -944,12 +944,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   /// [google.cloud.dataplex.v1.ListTasksRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L854}
   /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   StreamRange<google::cloud::dataplex::v1::Task> ListTasks(
       google::cloud::dataplex::v1::ListTasksRequest request, Options opts = {});
@@ -962,12 +962,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   /// [google.cloud.dataplex.v1.GetTaskRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L895}
   /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   StatusOr<google::cloud::dataplex::v1::Task> GetTask(std::string const& name,
                                                       Options opts = {});
@@ -980,12 +980,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   /// [google.cloud.dataplex.v1.GetTaskRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L895}
   /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L32}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   StatusOr<google::cloud::dataplex::v1::Task> GetTask(
       google::cloud::dataplex::v1::GetTaskRequest const& request,
@@ -999,12 +999,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L274}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L273}
   ///
   /// [google.cloud.dataplex.v1.ListJobsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L919}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L274}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L273}
   ///
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       std::string const& parent, Options opts = {});
@@ -1017,12 +1017,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L274}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L273}
   ///
   /// [google.cloud.dataplex.v1.ListJobsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L919}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L274}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L273}
   ///
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       google::cloud::dataplex::v1::ListJobsRequest request, Options opts = {});
@@ -1035,12 +1035,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L274}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L273}
   ///
   /// [google.cloud.dataplex.v1.GetJobRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L907}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L274}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L273}
   ///
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(std::string const& name,
                                                     Options opts = {});
@@ -1053,12 +1053,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L274}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L273}
   ///
   /// [google.cloud.dataplex.v1.GetJobRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L907}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L274}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L273}
   ///
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(
       google::cloud::dataplex::v1::GetJobRequest const& request,
@@ -1106,12 +1106,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   /// [google.cloud.dataplex.v1.CreateEnvironmentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L964}
   /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
       std::string const& parent,
@@ -1126,12 +1126,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   /// [google.cloud.dataplex.v1.CreateEnvironmentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L964}
   /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
@@ -1146,12 +1146,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L991}
   /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
       google::cloud::dataplex::v1::Environment const& environment,
@@ -1165,12 +1165,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L991}
   /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
@@ -1224,12 +1224,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1017}
   /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
       std::string const& parent, Options opts = {});
@@ -1242,12 +1242,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1017}
   /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
       google::cloud::dataplex::v1::ListEnvironmentsRequest request,
@@ -1261,12 +1261,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   /// [google.cloud.dataplex.v1.GetEnvironmentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1056}
   /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
       std::string const& name, Options opts = {});
@@ -1279,12 +1279,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   /// [google.cloud.dataplex.v1.GetEnvironmentRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1056}
   /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L33}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
       google::cloud::dataplex::v1::GetEnvironmentRequest const& request,
@@ -1298,12 +1298,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Session,google/cloud/dataplex/v1/analyze.proto#L243}
+  /// @googleapis_link{google::cloud::dataplex::v1::Session,google/cloud/dataplex/v1/analyze.proto#L242}
   ///
   /// [google.cloud.dataplex.v1.ListSessionsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1068}
   /// [google.cloud.dataplex.v1.Session]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L243}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L242}
   ///
   StreamRange<google::cloud::dataplex::v1::Session> ListSessions(
       std::string const& parent, Options opts = {});
@@ -1316,12 +1316,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Session,google/cloud/dataplex/v1/analyze.proto#L243}
+  /// @googleapis_link{google::cloud::dataplex::v1::Session,google/cloud/dataplex/v1/analyze.proto#L242}
   ///
   /// [google.cloud.dataplex.v1.ListSessionsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1068}
   /// [google.cloud.dataplex.v1.Session]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L243}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L242}
   ///
   StreamRange<google::cloud::dataplex::v1::Session> ListSessions(
       google::cloud::dataplex::v1::ListSessionsRequest request,

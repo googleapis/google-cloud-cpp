@@ -88,15 +88,33 @@ class ApplicationsClient {
   ///
   /// Gets information about an application.
   ///
-  /// @param request
-  /// @googleapis_link{google::appengine::v1::GetApplicationRequest,google/appengine/v1/appengine.proto#L113}
+  /// @param name  Name of the Application resource to get. Example:
+  /// `apps/myapp`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
   /// [google.appengine.v1.GetApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L113}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L116}
+  /// [google.appengine.v1.Application]:
+  /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  ///
+  StatusOr<google::appengine::v1::Application> GetApplication(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Gets information about an application.
+  ///
+  /// @param request
+  /// @googleapis_link{google::appengine::v1::GetApplicationRequest,google/appengine/v1/appengine.proto#L116}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
+  ///
+  /// [google.appengine.v1.GetApplicationRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L116}
   /// [google.appengine.v1.Application]:
   /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
   ///
@@ -118,14 +136,14 @@ class ApplicationsClient {
   /// Billing](https://cloud.google.com/appengine/docs/standard/python/console/).
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::CreateApplicationRequest,google/appengine/v1/appengine.proto#L119}
+  /// @googleapis_link{google::appengine::v1::CreateApplicationRequest,google/appengine/v1/appengine.proto#L122}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
   /// [google.appengine.v1.CreateApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L119}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L122}
   /// [google.appengine.v1.Application]:
   /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
   ///
@@ -141,16 +159,17 @@ class ApplicationsClient {
   /// to the application.
   /// * `default_cookie_expiration` - Cookie expiration policy for the
   /// application.
+  /// * `iap` - Identity-Aware Proxy properties for the application.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::UpdateApplicationRequest,google/appengine/v1/appengine.proto#L125}
+  /// @googleapis_link{google::appengine::v1::UpdateApplicationRequest,google/appengine/v1/appengine.proto#L128}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
   /// [google.appengine.v1.UpdateApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L125}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L128}
   /// [google.appengine.v1.Application]:
   /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
   ///
@@ -172,14 +191,14 @@ class ApplicationsClient {
   /// Console Activity Log.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::RepairApplicationRequest,google/appengine/v1/appengine.proto#L137}
+  /// @googleapis_link{google::appengine::v1::RepairApplicationRequest,google/appengine/v1/appengine.proto#L140}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
   /// [google.appengine.v1.RepairApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L137}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L140}
   /// [google.appengine.v1.Application]:
   /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
   ///

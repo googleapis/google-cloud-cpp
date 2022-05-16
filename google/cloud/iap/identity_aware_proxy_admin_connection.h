@@ -25,6 +25,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -65,6 +66,24 @@ class IdentityAwareProxyAdminServiceConnection {
 
   virtual StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request);
+
+  virtual StreamRange<google::cloud::iap::v1::TunnelDestGroup>
+  ListTunnelDestGroups(
+      google::cloud::iap::v1::ListTunnelDestGroupsRequest request);
+
+  virtual StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  CreateTunnelDestGroup(
+      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request);
+
+  virtual StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
+      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request);
+
+  virtual Status DeleteTunnelDestGroup(
+      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request);
+
+  virtual StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  UpdateTunnelDestGroup(
+      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request);
 };
 
 std::shared_ptr<IdentityAwareProxyAdminServiceConnection>

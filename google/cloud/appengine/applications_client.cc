@@ -34,6 +34,14 @@ ApplicationsClient::ApplicationsClient(
 ApplicationsClient::~ApplicationsClient() = default;
 
 StatusOr<google::appengine::v1::Application> ApplicationsClient::GetApplication(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::appengine::v1::GetApplicationRequest request;
+  request.set_name(name);
+  return connection_->GetApplication(request);
+}
+
+StatusOr<google::appengine::v1::Application> ApplicationsClient::GetApplication(
     google::appengine::v1::GetApplicationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetApplication(request);

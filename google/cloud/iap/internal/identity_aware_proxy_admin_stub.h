@@ -53,6 +53,29 @@ class IdentityAwareProxyAdminServiceStub {
   virtual StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       grpc::ClientContext& context,
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
+  ListTunnelDestGroups(
+      grpc::ClientContext& context,
+      google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  CreateTunnelDestGroup(
+      grpc::ClientContext& context,
+      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
+      grpc::ClientContext& context,
+      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) = 0;
+
+  virtual Status DeleteTunnelDestGroup(
+      grpc::ClientContext& context,
+      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  UpdateTunnelDestGroup(
+      grpc::ClientContext& context,
+      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) = 0;
 };
 
 class DefaultIdentityAwareProxyAdminServiceStub
@@ -83,6 +106,32 @@ class DefaultIdentityAwareProxyAdminServiceStub
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       grpc::ClientContext& client_context,
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request) override;
+
+  StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
+  ListTunnelDestGroups(
+      grpc::ClientContext& client_context,
+      google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
+      grpc::ClientContext& client_context,
+      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request)
+      override;
+
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
+      grpc::ClientContext& client_context,
+      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request)
+      override;
+
+  Status DeleteTunnelDestGroup(
+      grpc::ClientContext& client_context,
+      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request)
+      override;
+
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
+      grpc::ClientContext& client_context,
+      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request)
+      override;
 
  private:
   std::unique_ptr<

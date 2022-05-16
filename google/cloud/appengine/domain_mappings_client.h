@@ -89,14 +89,14 @@ class DomainMappingsClient {
   /// Lists the domain mappings on an application.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::ListDomainMappingsRequest,google/appengine/v1/appengine.proto#L784}
+  /// @googleapis_link{google::appengine::v1::ListDomainMappingsRequest,google/appengine/v1/appengine.proto#L933}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
   /// [google.appengine.v1.ListDomainMappingsRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L784}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L933}
   /// [google.appengine.v1.DomainMapping]:
   /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
   ///
@@ -108,14 +108,14 @@ class DomainMappingsClient {
   /// Gets the specified domain mapping.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::GetDomainMappingRequest,google/appengine/v1/appengine.proto#L805}
+  /// @googleapis_link{google::appengine::v1::GetDomainMappingRequest,google/appengine/v1/appengine.proto#L954}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
   /// [google.appengine.v1.GetDomainMappingRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L805}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L954}
   /// [google.appengine.v1.DomainMapping]:
   /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
   ///
@@ -129,14 +129,14 @@ class DomainMappingsClient {
   /// authorized domains, see [`AuthorizedDomains.ListAuthorizedDomains`]().
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::CreateDomainMappingRequest,google/appengine/v1/appengine.proto#L812}
+  /// @googleapis_link{google::appengine::v1::CreateDomainMappingRequest,google/appengine/v1/appengine.proto#L978}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
   /// [google.appengine.v1.CreateDomainMappingRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L812}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L978}
   /// [google.appengine.v1.DomainMapping]:
   /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
   ///
@@ -151,14 +151,14 @@ class DomainMappingsClient {
   /// the associated domain in order to update a `DomainMapping` resource.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::UpdateDomainMappingRequest,google/appengine/v1/appengine.proto#L843}
+  /// @googleapis_link{google::appengine::v1::UpdateDomainMappingRequest,google/appengine/v1/appengine.proto#L991}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
   /// [google.appengine.v1.UpdateDomainMappingRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L843}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L991}
   /// [google.appengine.v1.DomainMapping]:
   /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
   ///
@@ -172,14 +172,14 @@ class DomainMappingsClient {
   /// resource.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::DeleteDomainMappingRequest,google/appengine/v1/appengine.proto#L857}
+  /// @googleapis_link{google::appengine::v1::DeleteDomainMappingRequest,google/appengine/v1/appengine.proto#L1005}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L30}
   ///
   /// [google.appengine.v1.DeleteDomainMappingRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L857}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L1005}
   /// [google.appengine.v1.OperationMetadataV1]:
   /// @googleapis_reference_link{google/appengine/v1/operation.proto#L30}
   ///
