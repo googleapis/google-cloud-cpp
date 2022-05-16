@@ -109,6 +109,21 @@ Status MetricServiceAuth::CreateServiceTimeSeries(
   return child_->CreateServiceTimeSeries(context, request);
 }
 
+future<Status> MetricServiceAuth::AsyncCreateTimeSeries(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) return make_ready_future(std::move(context).status());
+        return child->AsyncCreateTimeSeries(cq, *std::move(context), request);
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
 }  // namespace cloud

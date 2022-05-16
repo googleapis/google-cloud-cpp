@@ -194,6 +194,24 @@ Status MetricServiceClient::CreateServiceTimeSeries(
   return connection_->CreateServiceTimeSeries(request);
 }
 
+future<Status> MetricServiceClient::AsyncCreateTimeSeries(
+    std::string const& name,
+    std::vector<google::monitoring::v3::TimeSeries> const& time_series,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::monitoring::v3::CreateTimeSeriesRequest request;
+  request.set_name(name);
+  *request.mutable_time_series() = {time_series.begin(), time_series.end()};
+  return connection_->AsyncCreateTimeSeries(request);
+}
+
+future<Status> MetricServiceClient::AsyncCreateTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncCreateTimeSeries(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
 }  // namespace cloud

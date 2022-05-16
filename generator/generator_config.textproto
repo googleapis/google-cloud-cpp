@@ -834,6 +834,7 @@ service {
   service_proto_path: "google/monitoring/v3/metric_service.proto"
   product_path: "google/cloud/monitoring"
   initial_copyright_year: "2022"
+  gen_async_rpcs: ["CreateTimeSeries"]
   retryable_status_codes: ["kUnavailable"]
 }
 

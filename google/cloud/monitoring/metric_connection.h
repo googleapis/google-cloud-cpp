@@ -81,6 +81,9 @@ class MetricServiceConnection {
 
   virtual Status CreateServiceTimeSeries(
       google::monitoring::v3::CreateTimeSeriesRequest const& request);
+
+  virtual future<Status> AsyncCreateTimeSeries(
+      google::monitoring::v3::CreateTimeSeriesRequest const& request);
 };
 
 std::shared_ptr<MetricServiceConnection> MakeMetricServiceConnection(
