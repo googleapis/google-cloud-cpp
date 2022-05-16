@@ -72,7 +72,6 @@ class MinimalIamCredentialsRestStub : public MinimalIamCredentialsRest {
  private:
   static std::string MakeRequestPath(GenerateAccessTokenRequest const& request);
 
-  std::string endpoint_;
   std::shared_ptr<oauth2_internal::Credentials> credentials_;
   std::shared_ptr<rest_internal::RestClient> rest_client_;
   Options options_;
