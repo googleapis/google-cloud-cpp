@@ -31,16 +31,20 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+auto constexpr kIamCredentialsEndpoint =
+    "https://iamcredentials.googleapis.com/v1/";
+}
 
 MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
     std::shared_ptr<oauth2_internal::Credentials> credentials, Options options,
     std::shared_ptr<rest_internal::RestClient> rest_client)
-    : endpoint_(options.get<rest_internal::RestEndpointOption>()),
-      credentials_(std::move(credentials)),
+    : credentials_(std::move(credentials)),
       rest_client_(std::move(rest_client)),
       options_(std::move(options)) {
   if (!rest_client_) {
-    rest_client_ = rest_internal::MakeDefaultRestClient(endpoint_, options_);
+    rest_client_ =
+        rest_internal::MakeDefaultRestClient(kIamCredentialsEndpoint, options_);
   }
 }
 
@@ -117,10 +121,6 @@ MinimalIamCredentialsRestLogging::GenerateAccessToken(
 std::shared_ptr<MinimalIamCredentialsRest> MakeMinimalIamCredentialsRestStub(
     std::shared_ptr<oauth2_internal::Credentials> credentials,
     Options options) {
-  options = google::cloud::internal::MergeOptions(
-      Options{}.set<rest_internal::RestEndpointOption>(
-          "https://iamcredentials.googleapis.com/v1/"),
-      std::move(options));
   auto enable_logging =
       options.get<TracingComponentsOption>().count("rpc") != 0 ||
       options.get<TracingComponentsOption>().count("raw-client") != 0;

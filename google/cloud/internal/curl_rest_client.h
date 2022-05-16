@@ -34,7 +34,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CurlHandleFactory;
 class CurlImpl;
 
-// RestClient implementation using libcurl.
+// RestClient implementation using libcurl. In order to maximize the performance
+// of the connection that libcurl manages, the endpoint that the client connects
+// to cannot be changed after creation. If a service needs to communicate with
+// multiple endpoints, use a different CurlRestClient for each such endpoint.
 class CurlRestClient : public RestClient {
  public:
   static std::string HostHeader(Options const& options,

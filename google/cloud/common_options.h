@@ -30,7 +30,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * In almost all cases a suitable default will be chosen automatically.
  * Applications may need to be changed to (1) test against a fake or simulator,
- * or (2) use a beta or EAP version of the service.
+ * or (2) use a beta or EAP version of the service. When using a beta or EAP
+ * version of the service, the AuthorityOption should also be set to the usual
+ * hostname of the service.
  */
 struct EndpointOption {
   using Type = std::string;
