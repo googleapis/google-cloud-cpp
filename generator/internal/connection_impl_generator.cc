@@ -180,6 +180,7 @@ Status ConnectionImplGenerator::GenerateCc() {
 )""");
 
   // includes
+  auto const needs_async_retry_loop = !async_methods().empty();
   CcLocalIncludes(
       {vars("connection_impl_header_path"), vars("option_defaults_header_path"),
        "google/cloud/background_threads.h", "google/cloud/common_options.h",
@@ -188,6 +189,7 @@ Status ConnectionImplGenerator::GenerateCc() {
        HasLongrunningMethod()
            ? "google/cloud/internal/async_long_running_operation.h"
            : "",
+       needs_async_retry_loop ? "google/cloud/internal/async_retry_loop.h" : "",
        HasStreamingReadMethod()
            ? "google/cloud/internal/resumable_streaming_read_rpc.h"
            : "",
