@@ -500,6 +500,52 @@ class MetricServiceClient {
       google::monitoring::v3::CreateTimeSeriesRequest const& request,
       Options opts = {});
 
+  ///
+  /// Creates or adds data to one or more time series.
+  /// The response is empty if all time series in the request were written.
+  /// If any time series could not be written, a corresponding failure message
+  /// is included in the error response.
+  ///
+  /// @param name  Required. The
+  /// [project](https://cloud.google.com/monitoring/api/v3#project_name) on
+  ///  which to execute the request. The format is:
+  ///      projects/[PROJECT_ID_OR_NUMBER]
+  /// @param time_series  Required. The new data to be added to a list of time
+  /// series.
+  ///  Adds at most one data point to each of several time series.  The new data
+  ///  point must be more recent than any other point in its time series.  Each
+  ///  `TimeSeries` value must fully specify a unique time series by supplying
+  ///  all label values for the metric and the monitored resource.
+  ///  The maximum number of `TimeSeries` objects per `Create` request is 200.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  ///
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  ///
+  future<Status> AsyncCreateTimeSeries(
+      std::string const& name,
+      std::vector<google::monitoring::v3::TimeSeries> const& time_series,
+      Options opts = {});
+
+  ///
+  /// Creates or adds data to one or more time series.
+  /// The response is empty if all time series in the request were written.
+  /// If any time series could not be written, a corresponding failure message
+  /// is included in the error response.
+  ///
+  /// @param request
+  /// @googleapis_link{google::monitoring::v3::CreateTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L421}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  ///
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  ///
+  future<Status> AsyncCreateTimeSeries(
+      google::monitoring::v3::CreateTimeSeriesRequest const& request,
+      Options opts = {});
+
  private:
   std::shared_ptr<MetricServiceConnection> connection_;
   Options options_;

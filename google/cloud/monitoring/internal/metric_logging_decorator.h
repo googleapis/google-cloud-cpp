@@ -83,6 +83,11 @@ class MetricServiceLogging : public MetricServiceStub {
       grpc::ClientContext& context,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
+  future<Status> AsyncCreateTimeSeries(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
+
  private:
   std::shared_ptr<MetricServiceStub> child_;
   TracingOptions tracing_options_;

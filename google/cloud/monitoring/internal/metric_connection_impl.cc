@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -218,6 +219,19 @@ Status MetricServiceConnectionImpl::CreateServiceTimeSeries(
       [this](grpc::ClientContext& context,
              google::monitoring::v3::CreateTimeSeriesRequest const& request) {
         return stub_->CreateServiceTimeSeries(context, request);
+      },
+      request, __func__);
+}
+
+future<Status> MetricServiceConnectionImpl::AsyncCreateTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateTimeSeries(request), background_->cq(),
+      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+        return stub->AsyncCreateTimeSeries(cq, std::move(context), request);
       },
       request, __func__);
 }

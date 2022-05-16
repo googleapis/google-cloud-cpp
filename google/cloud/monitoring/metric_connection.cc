@@ -91,6 +91,12 @@ Status MetricServiceConnection::CreateServiceTimeSeries(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<Status> MetricServiceConnection::AsyncCreateTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const&) {
+  return google::cloud::make_ready_future(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<MetricServiceConnection> MakeMetricServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -105,6 +105,14 @@ Status MetricServiceMetadata::CreateServiceTimeSeries(
   return child_->CreateServiceTimeSeries(context, request);
 }
 
+future<Status> MetricServiceMetadata::AsyncCreateTimeSeries(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncCreateTimeSeries(cq, std::move(context), request);
+}
+
 void MetricServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
