@@ -93,6 +93,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "internal/wait_for_consistency.h",
     "metadata_update_policy.h",
     "mutation_batcher.h",
+    "mutation_branch.h",
     "mutations.h",
     "options.h",
     "polling_policy.h",
