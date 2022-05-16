@@ -210,6 +210,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Bare Metal Solution
+service {
+  service_proto_path: "google/cloud/baremetalsolution/v2/baremetalsolution.proto"
+  product_path: "google/cloud/bms"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Certificate Authority
 service {
   service_proto_path: "google/cloud/security/privateca/v1/service.proto"
