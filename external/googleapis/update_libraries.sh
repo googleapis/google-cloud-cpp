@@ -121,6 +121,7 @@ declare -A -r LIBRARIES=(
   )"
   ["networkmanagement"]="@com_google_googleapis//google/cloud/networkmanagement/v1:networkmanagement_cc_grpc"
   ["notebooks"]="@com_google_googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc"
+  ["optimization"]="@com_google_googleapis//google/cloud/optimization/v1:optimization_cc_grpc"
   ["orgpolicy"]="@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc"
   ["osconfig"]="$(
     printf ",%s" \

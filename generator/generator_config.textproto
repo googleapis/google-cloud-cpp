@@ -905,6 +905,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Optimization AI
+service {
+  service_proto_path: "google/cloud/optimization/v1/fleet_routing.proto"
+  product_path: "google/cloud/optimization"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Organization Policy
 service {
   service_proto_path: "google/cloud/orgpolicy/v2/orgpolicy.proto"
