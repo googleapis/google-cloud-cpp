@@ -99,6 +99,14 @@ TEST_F(GrpcBucketAclIntegrationTest, AclCRUD) {
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(create_acl->entity()));
 
+  auto delete_acl = client->DeleteBucketAcl(bucket_name, viewers);
+  ASSERT_STATUS_OK(delete_acl);
+
+  current_acl = client->ListBucketAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_THAT(AclEntityNames(*current_acl),
+              Not(Contains(create_acl->entity())));
+
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
