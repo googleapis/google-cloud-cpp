@@ -194,13 +194,12 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
     assertion_header["kid"] = info.private_key_id;
   }
 
-  // Scopes must be specified in a comma-delimited string.
-  std::string scope_str;
-  if (!info.scopes) {
-    scope_str = GoogleOAuthScopeCloudPlatform();
-  } else {
-    absl::StrAppend(&scope_str, absl::StrJoin(*(info.scopes), ","));
-  }
+  // Scopes must be specified in a space separated string:
+  //    https://google.aip.dev/auth/4112
+  auto scopes = [&info]() -> std::string {
+    if (!info.scopes) return GoogleOAuthScopeCloudPlatform();
+    return absl::StrJoin(*(info.scopes), " ");
+  }();
 
   auto expiration = now + GoogleOAuthAccessTokenLifetime();
   // As much as possible, do the time arithmetic using the std::chrono types.
@@ -213,10 +212,10 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
       std::chrono::system_clock::to_time_t(expiration));
   nlohmann::json assertion_payload = {
       {"iss", info.client_email},
-      {"scope", scope_str},
+      {"scope", scopes},
       {"aud", info.token_uri},
       {"iat", now_from_epoch},
-      // Resulting access token should be expire after one hour.
+      // Resulting access token should expire after one hour.
       {"exp", expiration_from_epoch}};
   if (info.subject) {
     assertion_payload["sub"] = *(info.subject);

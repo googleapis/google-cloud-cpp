@@ -48,8 +48,10 @@ using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
 
-constexpr char kAltScopeForTest[] =
+constexpr char kScopeForTest0[] =
     "https://www.googleapis.com/auth/devstorage.full_control";
+constexpr char kScopeForTest1[] =
+    "https://www.googleapis.com/auth/cloud-platform";
 // This "magic" assertion below was generated from helper script,
 // "make_jwt_assertion_for_test_data.py". Note that when our JSON library dumps
 // a string representation, the keys are always in alphabetical order; our
@@ -161,10 +163,29 @@ TEST_F(ServiceAccountCredentialsTest,
        RefreshingSendsCorrectRequestBodyAndParsesResponseForNonDefaultVals) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_STATUS_OK(info);
-  info->scopes = {kAltScopeForTest};
+  info->scopes = {kScopeForTest0};
   info->subject = std::string(kSubjectForGrant);
   CheckInfoYieldsExpectedAssertion(*info,
                                    kExpectedAssertionWithOptionalArgsParam);
+}
+
+TEST_F(ServiceAccountCredentialsTest, MultipleScopes) {
+  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_STATUS_OK(info);
+  auto expected_info = *info;
+  // .scopes is a `std::set<std::string>` so we need to preserve order.
+  ASSERT_LT(std::string{kScopeForTest1}, kScopeForTest0);
+  expected_info.scopes = {std::string{kScopeForTest1} + " " + kScopeForTest0};
+  expected_info.subject = std::string(kSubjectForGrant);
+  auto const now = std::chrono::system_clock::now();
+  auto const expected_components =
+      AssertionComponentsFromInfo(expected_info, now);
+
+  auto actual_info = *info;
+  actual_info.scopes = {kScopeForTest0, kScopeForTest1};
+  actual_info.subject = std::string(kSubjectForGrant);
+  auto const actual_components = AssertionComponentsFromInfo(actual_info, now);
+  EXPECT_EQ(actual_components, expected_components);
 }
 
 /// @test Verify that we refresh service account credentials appropriately.
