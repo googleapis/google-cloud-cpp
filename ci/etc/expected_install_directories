@@ -203,6 +203,10 @@
 ./include/google/cloud/notebooks/internal
 ./include/google/cloud/notebooks/mocks
 ./include/google/cloud/notebooks/v1
+./include/google/cloud/optimization
+./include/google/cloud/optimization/internal
+./include/google/cloud/optimization/mocks
+./include/google/cloud/optimization/v1
 ./include/google/cloud/orchestration
 ./include/google/cloud/orchestration/airflow
 ./include/google/cloud/orchestration/airflow/service
@@ -445,6 +449,7 @@
 ./lib64/cmake/google_cloud_cpp_monitoring
 ./lib64/cmake/google_cloud_cpp_networkmanagement
 ./lib64/cmake/google_cloud_cpp_notebooks
+./lib64/cmake/google_cloud_cpp_optimization
 ./lib64/cmake/google_cloud_cpp_orgpolicy
 ./lib64/cmake/google_cloud_cpp_osconfig
 ./lib64/cmake/google_cloud_cpp_oslogin
