@@ -24,6 +24,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include <memory>
 
 namespace google {
@@ -61,6 +62,37 @@ IdentityAwareProxyAdminServiceConnection::GetIapSettings(
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceConnection::UpdateIapSettings(
     google::cloud::iap::v1::UpdateIapSettingsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceConnection::ListTunnelDestGroups(
+    google::cloud::iap::v1::
+        ListTunnelDestGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::iap::v1::TunnelDestGroup>>();
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceConnection::CreateTunnelDestGroup(
+    google::cloud::iap::v1::CreateTunnelDestGroupRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceConnection::GetTunnelDestGroup(
+    google::cloud::iap::v1::GetTunnelDestGroupRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status IdentityAwareProxyAdminServiceConnection::DeleteTunnelDestGroup(
+    google::cloud::iap::v1::DeleteTunnelDestGroupRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceConnection::UpdateTunnelDestGroup(
+    google::cloud::iap::v1::UpdateTunnelDestGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

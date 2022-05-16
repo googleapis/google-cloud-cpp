@@ -74,6 +74,46 @@ IdentityAwareProxyAdminServiceMetadata::UpdateIapSettings(
   return child_->UpdateIapSettings(context, request);
 }
 
+StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
+IdentityAwareProxyAdminServiceMetadata::ListTunnelDestGroups(
+    grpc::ClientContext& context,
+    google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListTunnelDestGroups(context, request);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceMetadata::CreateTunnelDestGroup(
+    grpc::ClientContext& context,
+    google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateTunnelDestGroup(context, request);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceMetadata::GetTunnelDestGroup(
+    grpc::ClientContext& context,
+    google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetTunnelDestGroup(context, request);
+}
+
+Status IdentityAwareProxyAdminServiceMetadata::DeleteTunnelDestGroup(
+    grpc::ClientContext& context,
+    google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteTunnelDestGroup(context, request);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceMetadata::UpdateTunnelDestGroup(
+    grpc::ClientContext& context,
+    google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
+  SetMetadata(context,
+              "tunnel_dest_group.name=" + request.tunnel_dest_group().name());
+  return child_->UpdateTunnelDestGroup(context, request);
+}
+
 void IdentityAwareProxyAdminServiceMetadata::SetMetadata(
     grpc::ClientContext& context, std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

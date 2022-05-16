@@ -69,6 +69,31 @@ class DefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy
       google::cloud::iap::v1::UpdateIapSettingsRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
+
+  Idempotency ListTunnelDestGroups(
+      google::cloud::iap::v1::ListTunnelDestGroupsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency CreateTunnelDestGroup(
+      google::cloud::iap::v1::CreateTunnelDestGroupRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency GetTunnelDestGroup(
+      google::cloud::iap::v1::GetTunnelDestGroupRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency DeleteTunnelDestGroup(
+      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UpdateTunnelDestGroup(
+      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
 };
 }  // namespace
 

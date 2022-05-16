@@ -53,6 +53,21 @@ class IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency ListTunnelDestGroups(
+      google::cloud::iap::v1::ListTunnelDestGroupsRequest request) = 0;
+
+  virtual google::cloud::Idempotency CreateTunnelDestGroup(
+      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency GetTunnelDestGroup(
+      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency DeleteTunnelDestGroup(
+      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency UpdateTunnelDestGroup(
+      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) = 0;
 };
 
 std::unique_ptr<IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>

@@ -257,12 +257,12 @@ class ParticipantsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnalyzeContentResponse,google/cloud/dialogflow/v2/participant.proto#L368}
+  /// @googleapis_link{google::cloud::dialogflow::v2::AnalyzeContentResponse,google/cloud/dialogflow/v2/participant.proto#L376}
   ///
   /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L322}
   /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L368}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L376}
   ///
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
   AnalyzeContent(std::string const& participant,
@@ -285,12 +285,12 @@ class ParticipantsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnalyzeContentResponse,google/cloud/dialogflow/v2/participant.proto#L368}
+  /// @googleapis_link{google::cloud::dialogflow::v2::AnalyzeContentResponse,google/cloud/dialogflow/v2/participant.proto#L376}
   ///
   /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L322}
   /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L368}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L376}
   ///
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
   AnalyzeContent(std::string const& participant,
@@ -310,12 +310,12 @@ class ParticipantsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnalyzeContentResponse,google/cloud/dialogflow/v2/participant.proto#L368}
+  /// @googleapis_link{google::cloud::dialogflow::v2::AnalyzeContentResponse,google/cloud/dialogflow/v2/participant.proto#L376}
   ///
   /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L322}
   /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L368}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L376}
   ///
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
   AnalyzeContent(
@@ -333,12 +333,12 @@ class ParticipantsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestArticlesResponse,google/cloud/dialogflow/v2/participant.proto#L454}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestArticlesResponse,google/cloud/dialogflow/v2/participant.proto#L462}
   ///
   /// [google.cloud.dialogflow.v2.SuggestArticlesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L421}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L429}
   /// [google.cloud.dialogflow.v2.SuggestArticlesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L454}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L462}
   ///
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(std::string const& parent, Options opts = {});
@@ -348,16 +348,16 @@ class ParticipantsClient {
   /// messages.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestArticlesRequest,google/cloud/dialogflow/v2/participant.proto#L421}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestArticlesRequest,google/cloud/dialogflow/v2/participant.proto#L429}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestArticlesResponse,google/cloud/dialogflow/v2/participant.proto#L454}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestArticlesResponse,google/cloud/dialogflow/v2/participant.proto#L462}
   ///
   /// [google.cloud.dialogflow.v2.SuggestArticlesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L421}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L429}
   /// [google.cloud.dialogflow.v2.SuggestArticlesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L454}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L462}
   ///
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(
@@ -375,12 +375,12 @@ class ParticipantsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestFaqAnswersResponse,google/cloud/dialogflow/v2/participant.proto#L507}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestFaqAnswersResponse,google/cloud/dialogflow/v2/participant.proto#L515}
   ///
   /// [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L474}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L482}
   /// [google.cloud.dialogflow.v2.SuggestFaqAnswersResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L507}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L515}
   ///
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
   SuggestFaqAnswers(std::string const& parent, Options opts = {});
@@ -390,16 +390,16 @@ class ParticipantsClient {
   /// messages.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestFaqAnswersRequest,google/cloud/dialogflow/v2/participant.proto#L474}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestFaqAnswersRequest,google/cloud/dialogflow/v2/participant.proto#L482}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestFaqAnswersResponse,google/cloud/dialogflow/v2/participant.proto#L507}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestFaqAnswersResponse,google/cloud/dialogflow/v2/participant.proto#L515}
   ///
   /// [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L474}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L482}
   /// [google.cloud.dialogflow.v2.SuggestFaqAnswersResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L507}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L515}
   ///
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
   SuggestFaqAnswers(
@@ -417,12 +417,12 @@ class ParticipantsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestSmartRepliesResponse,google/cloud/dialogflow/v2/participant.proto#L559}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestSmartRepliesResponse,google/cloud/dialogflow/v2/participant.proto#L567}
   ///
   /// [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L527}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L535}
   /// [google.cloud.dialogflow.v2.SuggestSmartRepliesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L559}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L567}
   ///
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
   SuggestSmartReplies(std::string const& parent, Options opts = {});
@@ -432,16 +432,16 @@ class ParticipantsClient {
   /// messages.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestSmartRepliesRequest,google/cloud/dialogflow/v2/participant.proto#L527}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestSmartRepliesRequest,google/cloud/dialogflow/v2/participant.proto#L535}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestSmartRepliesResponse,google/cloud/dialogflow/v2/participant.proto#L559}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestSmartRepliesResponse,google/cloud/dialogflow/v2/participant.proto#L567}
   ///
   /// [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L527}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L535}
   /// [google.cloud.dialogflow.v2.SuggestSmartRepliesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L559}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L567}
   ///
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
   SuggestSmartReplies(

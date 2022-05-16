@@ -157,16 +157,16 @@ class IdentityAwareProxyAdminServiceClient {
   /// Gets the IAP settings on a particular IAP protected resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::GetIapSettingsRequest,google/cloud/iap/v1/service.proto#L91}
+  /// @googleapis_link{google::cloud::iap::v1::GetIapSettingsRequest,google/cloud/iap/v1/service.proto#L340}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L112}
+  /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L361}
   ///
   /// [google.cloud.iap.v1.GetIapSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L91}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L340}
   /// [google.cloud.iap.v1.IapSettings]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L112}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L361}
   ///
   StatusOr<google::cloud::iap::v1::IapSettings> GetIapSettings(
       google::cloud::iap::v1::GetIapSettingsRequest const& request,
@@ -177,19 +177,217 @@ class IdentityAwareProxyAdminServiceClient {
   /// replaces all fields unless the `update_mask` is set.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::UpdateIapSettingsRequest,google/cloud/iap/v1/service.proto#L99}
+  /// @googleapis_link{google::cloud::iap::v1::UpdateIapSettingsRequest,google/cloud/iap/v1/service.proto#L348}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L112}
+  /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L361}
   ///
   /// [google.cloud.iap.v1.UpdateIapSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L99}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L348}
   /// [google.cloud.iap.v1.IapSettings]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L112}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L361}
   ///
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Lists the existing TunnelDestGroups. To group across all locations, use a
+  /// `-` as the location ID. For example:
+  /// `/v1/projects/123/iap_tunnel/locations/-/destGroups`
+  ///
+  /// @param parent  Required. Google Cloud Project ID and location.
+  ///  In the following format:
+  ///  `projects/{project_number/id}/iap_tunnel/locations/{location}`.
+  ///  A `-` can be used for the location to group across all locations.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  ///
+  /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L141}
+  /// [google.cloud.iap.v1.TunnelDestGroup]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  ///
+  StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
+      std::string const& parent, Options opts = {});
+
+  ///
+  /// Lists the existing TunnelDestGroups. To group across all locations, use a
+  /// `-` as the location ID. For example:
+  /// `/v1/projects/123/iap_tunnel/locations/-/destGroups`
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::iap::v1::ListTunnelDestGroupsRequest,google/cloud/iap/v1/service.proto#L141}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  ///
+  /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L141}
+  /// [google.cloud.iap.v1.TunnelDestGroup]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  ///
+  StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
+      google::cloud::iap::v1::ListTunnelDestGroupsRequest request,
+      Options opts = {});
+
+  ///
+  /// Creates a new TunnelDestGroup.
+  ///
+  /// @param parent  Required. Google Cloud Project ID and location.
+  ///  In the following format:
+  ///  `projects/{project_number/id}/iap_tunnel/locations/{location}`.
+  /// @param tunnel_dest_group  Required. The TunnelDestGroup to create.
+  /// @param tunnel_dest_group_id  Required. The ID to use for the
+  /// TunnelDestGroup, which becomes the final component of
+  ///  the resource name.
+  ///  This value must be 4-63 characters, and valid characters
+  ///  are `[a-z][0-9]-`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  ///
+  /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L179}
+  /// [google.cloud.iap.v1.TunnelDestGroup]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  ///
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
+      std::string const& parent,
+      google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group,
+      std::string const& tunnel_dest_group_id, Options opts = {});
+
+  ///
+  /// Creates a new TunnelDestGroup.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::iap::v1::CreateTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L179}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  ///
+  /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L179}
+  /// [google.cloud.iap.v1.TunnelDestGroup]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  ///
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
+      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Retrieves an existing TunnelDestGroup.
+  ///
+  /// @param name  Required. Name of the TunnelDestGroup to be fetched.
+  ///  In the following format:
+  ///  `projects/{project_number/id}/iap_tunnel/locations/{location}/destGroups/{dest_group}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  ///
+  /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L202}
+  /// [google.cloud.iap.v1.TunnelDestGroup]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  ///
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Retrieves an existing TunnelDestGroup.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::iap::v1::GetTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L202}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  ///
+  /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L202}
+  /// [google.cloud.iap.v1.TunnelDestGroup]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  ///
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
+      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Deletes a TunnelDestGroup.
+  ///
+  /// @param name  Required. Name of the TunnelDestGroup to delete.
+  ///  In the following format:
+  ///  `projects/{project_number/id}/iap_tunnel/locations/{location}/destGroups/{dest_group}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  ///
+  /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L215}
+  ///
+  Status DeleteTunnelDestGroup(std::string const& name, Options opts = {});
+
+  ///
+  /// Deletes a TunnelDestGroup.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::iap::v1::DeleteTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L215}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  ///
+  /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L215}
+  ///
+  Status DeleteTunnelDestGroup(
+      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Updates a TunnelDestGroup.
+  ///
+  /// @param tunnel_dest_group  Required. The new values for the
+  /// TunnelDestGroup.
+  /// @param update_mask  A field mask that specifies which IAP settings to
+  /// update.
+  ///  If omitted, then all of the settings are updated. See
+  ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  ///
+  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L228}
+  /// [google.cloud.iap.v1.TunnelDestGroup]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  ///
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
+      google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  ///
+  /// Updates a TunnelDestGroup.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::iap::v1::UpdateTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L228}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  ///
+  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L228}
+  /// [google.cloud.iap.v1.TunnelDestGroup]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  ///
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
+      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request,
       Options opts = {});
 
  private:

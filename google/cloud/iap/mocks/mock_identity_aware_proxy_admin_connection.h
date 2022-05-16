@@ -52,6 +52,31 @@ class MockIdentityAwareProxyAdminServiceConnection
   MOCK_METHOD(StatusOr<google::cloud::iap::v1::IapSettings>, UpdateIapSettings,
               (google::cloud::iap::v1::UpdateIapSettingsRequest const& request),
               (override));
+
+  MOCK_METHOD(StreamRange<google::cloud::iap::v1::TunnelDestGroup>,
+              ListTunnelDestGroups,
+              (google::cloud::iap::v1::ListTunnelDestGroupsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::iap::v1::TunnelDestGroup>, CreateTunnelDestGroup,
+      (google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::iap::v1::TunnelDestGroup>, GetTunnelDestGroup,
+      (google::cloud::iap::v1::GetTunnelDestGroupRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteTunnelDestGroup,
+      (google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::iap::v1::TunnelDestGroup>, UpdateTunnelDestGroup,
+      (google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
