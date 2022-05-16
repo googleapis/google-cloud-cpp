@@ -32,7 +32,7 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-const char* const kIamCredentialsEndpoint =
+auto constexpr kIamCredentialsEndpoint =
     "https://iamcredentials.googleapis.com/v1/";
 }
 
