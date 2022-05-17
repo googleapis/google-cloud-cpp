@@ -156,7 +156,7 @@ Status SetObjectMetadata(google::storage::v2::Object& resource,
 // Only a few requests can set the storage class of the destination Object.
 template <typename StorageRequest>
 void SetStorageClass(google::storage::v2::Object& resource,
-                         StorageRequest const& req) {
+                     StorageRequest const& req) {
   if (!req.template HasOption<WithObjectMetadata>()) return;
   auto metadata = req.template GetOption<WithObjectMetadata>().value();
   resource.set_storage_class(metadata.storage_class());
