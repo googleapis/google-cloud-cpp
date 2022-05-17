@@ -33,6 +33,7 @@ declare -A -r LIBRARIES=(
   ["artifactregistry"]="@com_google_googleapis//google/devtools/artifactregistry/v1:artifactregistry_cc_grpc"
   ["asset"]="@com_google_googleapis//google/cloud/asset/v1:asset_cc_grpc"
   ["assuredworkloads"]="@com_google_googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_cc_grpc"
+  ["baremetalsolution"]="@com_google_googleapis//google/cloud/baremetalsolution/v2:baremetalsolution_cc_grpc"
   ["automl"]="@com_google_googleapis//google/cloud/automl/v1:automl_cc_grpc"
   ["bigquery"]="$(
     printf ",%s" \
