@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/grpc_bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_request_parser.h"
 #include "google/cloud/storage/internal/grpc_configure_client_context.h"
@@ -636,8 +637,26 @@ StatusOr<BucketAccessControl> GrpcClient::UpdateBucketAcl(
 }
 
 StatusOr<BucketAccessControl> GrpcClient::PatchBucketAcl(
-    PatchBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    PatchBucketAclRequest const& request) {
+  auto get_request = GetBucketMetadataRequest(request.bucket_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto updater = [&request](std::vector<BucketAccessControl> acl)
+      -> StatusOr<std::vector<BucketAccessControl>> {
+    auto i = std::find_if(acl.begin(), acl.end(),
+                          [&](BucketAccessControl const& entry) {
+                            return entry.entity() == request.entity();
+                          });
+    if (i == acl.end()) {
+      return Status(StatusCode::kNotFound,
+                    "the entity <" + request.entity() +
+                        "> is not present in the ACL for bucket " +
+                        request.bucket_name());
+    }
+    i->set_role(GrpcBucketAccessControlParser::Role(request.patch()));
+    return acl;
+  };
+  return FindBucketAccessControl(
+      ModifyBucketAccessControl(get_request, updater), request.entity());
 }
 
 StatusOr<ListObjectAclResponse> GrpcClient::ListObjectAcl(

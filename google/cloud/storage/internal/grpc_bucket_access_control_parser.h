@@ -23,6 +23,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class BucketAccessControlPatchBuilder;
 namespace internal {
 
 struct GrpcBucketAccessControlParser {
@@ -31,6 +32,8 @@ struct GrpcBucketAccessControlParser {
   static BucketAccessControl FromProto(
       google::storage::v2::BucketAccessControl acl,
       std::string const& bucket_name);
+
+  static std::string Role(BucketAccessControlPatchBuilder const&);
 };
 
 }  // namespace internal

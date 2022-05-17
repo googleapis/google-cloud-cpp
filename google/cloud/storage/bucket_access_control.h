@@ -129,6 +129,8 @@ class BucketAccessControlPatchBuilder {
   }
 
  private:
+  friend struct internal::GrpcBucketAccessControlParser;
+
   internal::PatchBuilder impl_;
 };
 
