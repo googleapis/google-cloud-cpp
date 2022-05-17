@@ -130,11 +130,18 @@ to grant, change, and revoke access to all
 
 ### New Libraries
 
-We are introducing a new client library: [Bare Metal Solution]. While we do not
-anticipate any API changes to this library before declaring it GA, we are
-releasing it early in case it elicits some feedback that requires changes.
+We are introducing 2 new client libraries for GCP services. While we do not
+anticipate any API changes to these libraries before declaring them GA, we are
+releasing them early in case they elicit some feedback that requires changes.
 
-[Bare Metal Solution]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/baremetalsolution/README.md
+<details>
+<summary> Expand to see the full list of new libraries...</summary>
+<br>
+
+* [Bare Metal Solution](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/baremetalsolution/README.md)
+* [Optimization AI](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/optimization/README.md)
+
+</details>
 
 ## v1.40.0 - 2022-05
 
