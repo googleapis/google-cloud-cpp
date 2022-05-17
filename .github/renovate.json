@@ -8,7 +8,8 @@
     {
       "fileMatch": [
         ".*\\.Dockerfile$",
-        ".*doc/packaging\\.md$"
+        ".*doc/packaging\\.md$",
+        ".*generator/internal/scaffold_generator\\.cc$"
       ],
       "matchStrings": [
         "https://github\\.com/(?<depName>.*?)/archive/(?<currentValue>.*?)\\.tar\\.gz",
