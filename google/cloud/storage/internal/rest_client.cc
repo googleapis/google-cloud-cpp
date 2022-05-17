@@ -107,15 +107,15 @@ Status AddAuthorizationHeader(Options const& options,
 std::shared_ptr<RestClient> RestClient::Create(Options options) {
   std::unique_ptr<rest::RestClient> storage_rest_client;
   std::unique_ptr<rest::RestClient> iam_rest_client;
-  auto curl_options = options;
   auto storage_endpoint = RestEndpoint(options);
   auto iam_endpoint = IamRestEndpoint(options);
 
   if (!options.has<AuthorityOption>() &&
-    absl::StrContains(storage_endpoint, "googleapis.com")) {
+      absl::StrContains(storage_endpoint, "googleapis.com")) {
+    auto storage_options = options;
+    storage_options.set<AuthorityOption>("storage.googleapis.com");
     storage_rest_client = rest::MakePooledRestClient(
-        storage_endpoint,
-        options.set<AuthorityOption>("storage.googleapis.com"));
+        storage_endpoint, std::move(storage_options));
   } else {
     storage_rest_client =
         rest::MakePooledRestClient(std::move(storage_endpoint), options);
@@ -123,27 +123,31 @@ std::shared_ptr<RestClient> RestClient::Create(Options options) {
 
   if (!options.has<AuthorityOption>() &&
       absl::StrContains(iam_endpoint, "googleapis.com")) {
-    iam_rest_client = rest::MakePooledRestClient(
-        iam_endpoint,
-        options.set<AuthorityOption>("iamcredentials.googleapis.com"));
+    auto iam_options = options;
+    iam_options.set<AuthorityOption>("iamcredentials.googleapis.com");
+    iam_rest_client =
+        rest::MakePooledRestClient(iam_endpoint, std::move(iam_options));
   } else {
     iam_rest_client =
         rest::MakePooledRestClient(std::move(iam_endpoint), options);
   }
 
+  std::shared_ptr<RawClient> curl_client =
+      internal::CurlClient::Create(options);
+
   return std::shared_ptr<RestClient>(
       new RestClient(std::move(storage_rest_client), std::move(iam_rest_client),
-                     std::move(curl_options)));
+                     std::move(curl_client), std::move(options)));
 }
 
 RestClient::RestClient(
     std::unique_ptr<google::cloud::rest_internal::RestClient>
         storage_rest_client,
     std::unique_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
-    google::cloud::Options options)
+    std::shared_ptr<RawClient> curl_client, google::cloud::Options options)
     : storage_rest_client_(std::move(storage_rest_client)),
       iam_rest_client_(std::move(iam_rest_client)),
-      curl_client_(internal::CurlClient::Create(options)),
+      curl_client_(std::move(curl_client)),
       options_(std::move(options)) {}
 
 StatusOr<ListBucketsResponse> RestClient::ListBuckets(

@@ -160,7 +160,7 @@ class RestClient : public RawClient,
       std::unique_ptr<google::cloud::rest_internal::RestClient>
           storage_rest_client,
       std::unique_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
-      Options options);
+      std::shared_ptr<RawClient> curl_client, Options options);
 
  private:
   std::unique_ptr<google::cloud::rest_internal::RestClient>
