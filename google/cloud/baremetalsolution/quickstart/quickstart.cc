@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/baremetalsolution/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/baremetalsolution/bare_metal_solution_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace baremetalsolution = ::google::cloud::baremetalsolution;
-  auto client = baremetalsolution::Client(
-      baremetalsolution::MakeConnection(/* EDIT HERE */));
+  namespace bms = ::google::cloud::baremetalsolution;
+  auto client =
+      bms::BareMetalSolutionClient(bms::MakeBareMetalSolutionConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListInstances(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

@@ -2,8 +2,9 @@
 
 @mainpage Bare Metal Solution API C++ Client Library
 
-An idiomatic C++ client library for the [Bare Metal Solution API][cloud-service-docs], a service
-to Provides ways to manage Bare Metal Solution hardware installed in a regional extension located near a Google Cloud data center.
+An idiomatic C++ client library for the [Bare Metal Solution API][cloud-service-docs],
+a service that provides ways to manage Bare Metal Solution hardware installed in
+a regional extension located near a Google Cloud data center.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -39,6 +40,10 @@ which should give you a taste of the Bare Metal Solution API C++ client library 
 ## Environment Variables
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_BARE_METAL_SOLUTION_ENDPOINT=...` changes the default endpoint
+  (baremetalsolution.googleapis.com) used by `BareMetalSolutionConnection`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
@@ -84,7 +89,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/baremetalsolution
+[cloud-service-docs]: https://cloud.google.com/bare-metal
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
