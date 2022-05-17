@@ -2006,9 +2006,9 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
       .WillOnce(Return(ByMove(MakeReader(
           {}, {grpc::StatusCode::INTERNAL,
                "Received unexpected EOS on DATA frame from server"}))))
-      .WillOnce(
-          Return(ByMove(MakeReader({}, {grpc::StatusCode::INTERNAL,
-                                        "HTTP/2 error code: INTERNAL_ERROR"}))))
+      .WillOnce(Return(ByMove(MakeReader(
+          {}, {grpc::StatusCode::INTERNAL,
+               "HTTP/2 error code: INTERNAL_ERROR\nReceived Rst Stream"}))))
       .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
   auto result = conn->ExecutePartitionedDml(
