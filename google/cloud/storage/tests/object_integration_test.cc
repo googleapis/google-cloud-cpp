@@ -824,7 +824,6 @@ TEST_F(ObjectIntegrationTest, DeleteResumableUpload) {
 }
 
 TEST_F(ObjectIntegrationTest, InsertWithCustomTime) {
-  if (UsingGrpc()) GTEST_SKIP();  // TODO(#4893) - no support in GCS+gRPC
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -847,7 +846,6 @@ TEST_F(ObjectIntegrationTest, InsertWithCustomTime) {
 }
 
 TEST_F(ObjectIntegrationTest, WriteWithCustomTime) {
-  if (UsingGrpc()) GTEST_SKIP();  // TODO(#4893) - no support in GCS+gRPC
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
