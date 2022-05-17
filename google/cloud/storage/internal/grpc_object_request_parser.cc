@@ -135,26 +135,31 @@ Status SetObjectMetadata(google::storage::v2::Object& resource,
   if (!metadata.content_type().empty()) {
     resource.set_content_type(metadata.content_type());
   }
-  if (metadata.event_based_hold()) {
-    resource.set_event_based_hold(metadata.event_based_hold());
-  }
-
+  resource.set_temporary_hold(metadata.temporary_hold());
   for (auto const& kv : metadata.metadata()) {
     (*resource.mutable_metadata())[kv.first] = kv.second;
   }
-
-  if (!metadata.storage_class().empty()) {
-    resource.set_storage_class(metadata.storage_class());
+  if (metadata.event_based_hold()) {
+    resource.set_event_based_hold(metadata.event_based_hold());
   }
-  resource.set_temporary_hold(metadata.temporary_hold());
-
-  if (metadata.has_customer_encryption()) {
-    auto encryption =
-        GrpcObjectMetadataParser::ToProto(metadata.customer_encryption());
-    if (!encryption) return std::move(encryption).status();
-    *resource.mutable_customer_encryption() = *std::move(encryption);
+  // The customer_encryption field is never set via the object resource, gRPC
+  // defines a separate message (`CommonObjectRequestParams`) and field in each
+  // request to include the encryption info.
+  // *resource.mutable_customer_encryption() = ...;
+  if (metadata.has_custom_time()) {
+    *resource.mutable_custom_time() =
+        google::cloud::internal::ToProtoTimestamp(metadata.custom_time());
   }
   return Status{};
+}
+
+// Only a few requests can set the storage class of the destination Object.
+template <typename StorageRequest>
+void SetStorageClass(google::storage::v2::Object& resource,
+                     StorageRequest const& req) {
+  if (!req.template HasOption<WithObjectMetadata>()) return;
+  auto metadata = req.template GetOption<WithObjectMetadata>().value();
+  resource.set_storage_class(metadata.storage_class());
 }
 
 }  // namespace
@@ -182,6 +187,7 @@ GrpcObjectRequestParser::ToProto(ComposeObjectRequest const& request) {
     destination.set_cache_control(metadata.cache_control());
     destination.set_content_language(metadata.content_language());
     destination.set_content_type(metadata.content_type());
+    destination.set_storage_class(metadata.storage_class());
     destination.set_temporary_hold(metadata.temporary_hold());
     destination.set_event_based_hold(metadata.event_based_hold());
     if (metadata.has_custom_time()) {
@@ -420,6 +426,7 @@ GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
   SetResourceOptions(resource, request);
   auto status = SetObjectMetadata(resource, request);
   if (!status.ok()) return status;
+  SetStorageClass(resource, request);
   SetPredefinedAcl(object_spec, request);
   SetGenerationConditions(object_spec, request);
   SetMetagenerationConditions(object_spec, request);
@@ -530,27 +537,9 @@ GrpcObjectRequestParser::ToProto(RewriteObjectRequest const& request) {
     auto& destination = *result.mutable_destination();
     destination.set_kms_key(
         request.GetOption<DestinationKmsKeyName>().value_or(""));
-    // Only a few fields can be set as part of the metadata request.
-    auto m = request.GetOption<WithObjectMetadata>().value();
-    destination.set_storage_class(m.storage_class());
-    destination.set_content_encoding(m.content_encoding());
-    destination.set_content_disposition(m.content_disposition());
-    destination.set_cache_control(m.cache_control());
-    destination.set_content_language(m.content_language());
-    destination.set_content_type(m.content_type());
-    destination.set_temporary_hold(m.temporary_hold());
-    for (auto const& kv : m.metadata()) {
-      (*destination.mutable_metadata())[kv.first] = kv.second;
-    }
-    if (m.event_based_hold()) {
-      // The proto is an optional<bool>, avoid setting it to `false`, seems
-      // confusing.
-      destination.set_event_based_hold(m.event_based_hold());
-    }
-    if (m.has_custom_time()) {
-      *destination.mutable_custom_time() =
-          google::cloud::internal::ToProtoTimestamp(m.custom_time());
-    }
+    status = SetObjectMetadata(destination, request);
+    if (!status.ok()) return status;
+    SetStorageClass(destination, request);
   }
   result.set_source_bucket("projects/_/buckets/" + request.source_bucket());
   result.set_source_object(request.source_object());
@@ -628,27 +617,9 @@ GrpcObjectRequestParser::ToProto(CopyObjectRequest const& request) {
     auto& destination = *result.mutable_destination();
     destination.set_kms_key(
         request.GetOption<DestinationKmsKeyName>().value_or(""));
-    // Only a few fields can be set as part of the metadata request.
-    auto m = request.GetOption<WithObjectMetadata>().value();
-    destination.set_storage_class(m.storage_class());
-    destination.set_content_encoding(m.content_encoding());
-    destination.set_content_disposition(m.content_disposition());
-    destination.set_cache_control(m.cache_control());
-    destination.set_content_language(m.content_language());
-    destination.set_content_type(m.content_type());
-    destination.set_temporary_hold(m.temporary_hold());
-    for (auto const& kv : m.metadata()) {
-      (*destination.mutable_metadata())[kv.first] = kv.second;
-    }
-    if (m.event_based_hold()) {
-      // The proto is an optional<bool>, avoid setting it to `false`, seems
-      // confusing.
-      destination.set_event_based_hold(m.event_based_hold());
-    }
-    if (m.has_custom_time()) {
-      *destination.mutable_custom_time() =
-          google::cloud::internal::ToProtoTimestamp(m.custom_time());
-    }
+    status = SetObjectMetadata(destination, request);
+    if (!status.ok()) return status;
+    SetStorageClass(destination, request);
   }
   result.set_source_bucket("projects/_/buckets/" + request.source_bucket());
   result.set_source_object(request.source_object());
@@ -703,6 +674,7 @@ GrpcObjectRequestParser::ToProto(ResumableUploadRequest const& request) {
   SetResourceOptions(resource, request);
   status = SetObjectMetadata(resource, request);
   if (!status.ok()) return status;
+  SetStorageClass(resource, request);
   SetPredefinedAcl(object_spec, request);
   SetGenerationConditions(object_spec, request);
   SetMetagenerationConditions(object_spec, request);
