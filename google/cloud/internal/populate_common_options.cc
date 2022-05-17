@@ -35,6 +35,7 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
   if (!opts.has<EndpointOption>()) {
     auto e = internal::GetEnv(endpoint_env_var.c_str());
     if (e && !e->empty()) {
+      opts.set<AuthorityOption>(*e);
       opts.set<EndpointOption>(*std::move(e));
     } else {
       opts.set<EndpointOption>(default_endpoint);

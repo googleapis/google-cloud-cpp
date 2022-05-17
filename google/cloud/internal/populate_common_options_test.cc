@@ -54,26 +54,28 @@ TEST(PopulateCommonOptions, Endpoint) {
     Options initial;
     absl::optional<std::string> default_env;
     absl::optional<std::string> emulator_env;
-    std::string expected;
+    std::string expected_endpoint;
+    std::string expected_authority;
   } test_cases[] = {
-      {"empty-0", empty, absl::nullopt, absl::nullopt, "default"},
-      {"empty-1", empty, absl::nullopt, "", "default"},
-      {"empty-2", empty, absl::nullopt, "emulator", "emulator"},
-      {"empty-3", empty, "", absl::nullopt, "default"},
-      {"empty-4", empty, "", "", "default"},
-      {"empty-5", empty, "", "emulator", "emulator"},
-      {"empty-6", empty, "env", absl::nullopt, "env"},
-      {"empty-7", empty, "env", "", "env"},
-      {"empty-8", empty, "env", "emulator", "emulator"},
-      {"with-ep-0", with_ep, absl::nullopt, absl::nullopt, "with-ep"},
-      {"with-ep-1", with_ep, absl::nullopt, "", "with-ep"},
-      {"with-ep-2", with_ep, absl::nullopt, "emulator", "emulator"},
-      {"with-ep-3", with_ep, "", absl::nullopt, "with-ep"},
-      {"with-ep-4", with_ep, "", "", "with-ep"},
-      {"with-ep-5", with_ep, "", "emulator", "emulator"},
-      {"with-ep-6", with_ep, "env", absl::nullopt, "with-ep"},
-      {"with-ep-7", with_ep, "env", "", "with-ep"},
-      {"with-ep-8", with_ep, "env", "emulator", "emulator"},
+      {"empty-0", empty, absl::nullopt, absl::nullopt, "default", "default"},
+      {"empty-1", empty, absl::nullopt, "", "default", "default"},
+      {"empty-2", empty, absl::nullopt, "emulator", "emulator", "default"},
+      {"empty-3", empty, "", absl::nullopt, "default", "default"},
+      {"empty-4", empty, "", "", "default", "default"},
+      {"empty-5", empty, "", "emulator", "emulator", "default"},
+      {"empty-6", empty, "env", absl::nullopt, "env", "env"},
+      {"empty-7", empty, "env", "", "env", "env"},
+      {"empty-8", empty, "env", "emulator", "emulator", "default"},
+      {"with-ep-0", with_ep, absl::nullopt, absl::nullopt, "with-ep",
+       "default"},
+      {"with-ep-1", with_ep, absl::nullopt, "", "with-ep", "default"},
+      {"with-ep-2", with_ep, absl::nullopt, "emulator", "emulator", "default"},
+      {"with-ep-3", with_ep, "", absl::nullopt, "with-ep", "default"},
+      {"with-ep-4", with_ep, "", "", "with-ep", "default"},
+      {"with-ep-5", with_ep, "", "emulator", "emulator", "default"},
+      {"with-ep-6", with_ep, "env", absl::nullopt, "with-ep", "default"},
+      {"with-ep-7", with_ep, "env", "", "with-ep", "default"},
+      {"with-ep-8", with_ep, "env", "emulator", "emulator", "default"},
   };
 
   for (auto const& test : test_cases) {
@@ -82,8 +84,8 @@ TEST(PopulateCommonOptions, Endpoint) {
     ScopedEnvironment emulator("EMULATOR", test.emulator_env);
     auto actual =
         PopulateCommonOptions(test.initial, "DEFAULT", "EMULATOR", "default");
-    EXPECT_EQ(actual.get<EndpointOption>(), test.expected);
-    EXPECT_EQ(actual.get<AuthorityOption>(), "default");
+    EXPECT_EQ(actual.get<EndpointOption>(), test.expected_endpoint);
+    EXPECT_EQ(actual.get<AuthorityOption>(), test.expected_authority);
   }
 }
 
