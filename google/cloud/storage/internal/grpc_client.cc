@@ -569,7 +569,7 @@ StatusOr<BucketAccessControl> GrpcClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
   auto get_request = GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
-  auto updater = [request](std::vector<BucketAccessControl> acl)
+  auto updater = [&request](std::vector<BucketAccessControl> acl)
       -> StatusOr<std::vector<BucketAccessControl>> {
     for (auto const& entry : acl) {
       if (entry.entity() == request.entity()) {
@@ -592,7 +592,7 @@ StatusOr<EmptyResponse> GrpcClient::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
   auto get_request = GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
-  auto updater = [request](std::vector<BucketAccessControl> acl)
+  auto updater = [&request](std::vector<BucketAccessControl> acl)
       -> StatusOr<std::vector<BucketAccessControl>> {
     auto i = std::remove_if(acl.begin(), acl.end(),
                             [&](BucketAccessControl const& entry) {
