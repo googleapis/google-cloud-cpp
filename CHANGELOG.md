@@ -55,6 +55,10 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 ## v1.40.0 - TBD
 
+## v1.39.2 - 2022-05
+
+* fix(GCS+gRPC): unused mutable Object fields ([#8997](https://github.com/googleapis/google-cloud-cpp/pull/8997))
+
 ## v1.39.1 - 2022-04
 
 * Update Bazel builds, CI builds, and packaging instructions to use grpc-1.45.2
