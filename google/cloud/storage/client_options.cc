@@ -214,14 +214,9 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
   auto tracing =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
   if (tracing.has_value()) {
-    std::set<std::string> const enabled = absl::StrSplit(*tracing, ',');
-    if (enabled.end() != enabled.find("http")) {
-      GCP_LOG(INFO) << "Enabling logging for http";
-      o.lookup<TracingComponentsOption>().insert("http");
-    }
-    if (enabled.end() != enabled.find("raw-client")) {
-      GCP_LOG(INFO) << "Enabling logging for RawClient functions";
-      o.lookup<TracingComponentsOption>().insert("raw-client");
+    for (auto c : absl::StrSplit(*tracing, ',')) {
+      GCP_LOG(INFO) << "Enabling logging for " << c;
+      o.lookup<TracingComponentsOption>().insert(std::string(c));
     }
   }
 
