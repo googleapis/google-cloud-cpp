@@ -36,10 +36,6 @@ bazel --batch query --noshow_progress --noshow_loading_progress \
 If this fails, send a CL to add the rule. Wait until that is submitted and
 exported before proceeding any further.
 
-## Edit the top-level CHANGELOG file
-
-Announce the new library in the CHANGELOG for the next release.
-
 ## Edit the scripts and configuration
 
 Update the `external/googleapis/update_libraries.sh` script.
@@ -160,13 +156,42 @@ add one dependency from `@com_github_googleapis//${subdir}`, which might not be
 correct. You may need to modify that dependency and/or add additional
 dependencies for more complex libraries.
 
+## Update the root files
+
+Manually edit the top level `BUILD.bazel` to include the new target as an
+experimental library. Take note of when the library was generated.
+
+<details>
+<summary>Expand for an example</summary>
+
+```diff
+diff --git a/BUILD.bazel b/BUILD.bazel
+index e43d85b64..1c35cf61d 100644
+--- a/BUILD.bazel
++++ b/BUILD.bazel
+@@ -21,6 +21,8 @@ exports_files([
+ ])
+
+ EXPERIMENTAL_LIBRARIES = [
++    # Introduced in 2022-05
++    "bms",
+     # Introduced in 2022-04
+     "dataplex",
+     "dialogflow_cx",
+```
+</details>
+
 ## Update the quickstart
 
 The generated quickstart will need some editing. Use a simple operation, maybe
 an admin operation listing top-level resources, to demonstrate how to use the
-API.
+API. Test your changes with:
 
-Also edit the tests so this new quickstart receives the right command-line
+```sh
+bazel run -- //google/cloud/${library}/quickstart:quickstart $params
+```
+
+Edit the tests so this new quickstart receives the right command-line
 arguments in the CI builds.
 
 - `google/cloud/${library}/CMakeLists.txt`
@@ -202,12 +227,9 @@ services=$(ls ${lib}/*_connection.h | xargs -I {} basename {} _connection.h)
 mv "main.dox.tmp" "${lib}/doc/main.dox"
 ```
 
-## Update the root files
+## Edit the top-level CHANGELOG file
 
-Manually edit the following files:
-
-- `BUILD.bazel` to reference the new targets in `//google/cloud/${library}`.
-  Initially prefix your targets with `:experimental-`.
+Announce the new library in the CHANGELOG for the next release.
 
 ## Fix formatting nits
 
@@ -250,5 +272,5 @@ index c4ce00489..1858b48dc 100755
 
 ```shell
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
-   "google/cloud/${library}" BUILD.bazel ci
+   "google/cloud/${library}" BUILD.bazel CHANGELOG.md ci
 ```
