@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Optimization API][cloud-service-docs], a service to Cloud Optimization API provides a portfolio of solvers to address common optimization use cases starting with optimal route planning for vehicle fleets.
+[Cloud Optimization API][cloud-service-root], a service that provides a
+portfolio of solvers to address common optimization use cases.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/optimization
+[cloud-service-root]: https://cloud.google.com/optimization
+[cloud-service-docs]: https://cloud.google.com/optimization/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-optimization/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/optimization
 
@@ -38,10 +40,14 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/optimization/ EDIT HERE .h"
+#include "google/cloud/optimization/fleet_routing_client.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/project.h"
+#include <google/protobuf/text_format.h>
 #include <iostream>
 #include <stdexcept>
+
+google::cloud::optimization::v1::OptimizeToursRequest LoadExampleModel();
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -49,20 +55,74 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  namespace gc = ::google::cloud;
   namespace optimization = ::google::cloud::optimization;
-  auto client =
-      optimization::Client(optimization::MakeConnection(/* EDIT HERE */));
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  auto options = gc::Options{}.set<gc::UserProjectOption>(argv[1]);
+  auto client = optimization::FleetRoutingClient(
+      optimization::MakeFleetRoutingConnection(options));
+
+  auto req = LoadExampleModel();
+  req.set_parent(gc::Project(argv[1]).FullName());
+
+  auto resp = client.OptimizeTours(req);
+  if (!resp) throw std::runtime_error(resp.status().message());
+  std::cout << resp->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
+}
+
+/**
+ * Returns a simple example request with exactly one vehicle and one shipment.
+ *
+ * It is not an interesting use case of the service, but it shows how to
+ * interact with the proto fields.
+ *
+ * For a more interesting example that optimizes multiple vehicles picking up
+ * multiple shipments, see the proto listed at:
+ * https://cloud.google.com/optimization/docs/introduction/example_problem#complete_request
+ *
+ * Protos can also be loaded from strings as follows:
+ *
+ * @code
+ * #include <google/protobuf/text_format.h>
+ *
+ * google::cloud::optimization::v1::OptimizeToursRequest req;
+ * google::protobuf::TextFormat::ParseFromString("model { ... }", &req);
+ * @endcode
+ */
+google::cloud::optimization::v1::OptimizeToursRequest LoadExampleModel() {
+  google::cloud::optimization::v1::OptimizeToursRequest req;
+
+  // Set the model's time constraints
+  req.mutable_model()->mutable_global_start_time()->set_seconds(0);
+  req.mutable_model()->mutable_global_end_time()->set_seconds(1792800);
+
+  // Add one vehicle and its constraints
+  auto& vehicle = *req.mutable_model()->add_vehicles();
+  auto& start_location = *vehicle.mutable_start_location();
+  start_location.set_latitude(48.863102);
+  start_location.set_longitude(2.341204);
+  vehicle.set_cost_per_traveled_hour(3600);
+  vehicle.add_end_time_windows()->mutable_end_time()->set_seconds(1236000);
+  (*vehicle.mutable_load_limits())["weight"].set_max_load(800);
+
+  // Add one shipment and its constraints
+  auto& shipment = *req.mutable_model()->add_shipments();
+  auto& pickup = *shipment.add_pickups();
+  auto& arrival_location = *pickup.mutable_arrival_location();
+  arrival_location.set_latitude(48.843561);
+  arrival_location.set_longitude(2.297602);
+  pickup.mutable_duration()->set_seconds(90000);
+  auto& window = *pickup.add_time_windows();
+  window.mutable_start_time()->set_seconds(912000);
+  window.mutable_end_time()->set_seconds(967000);
+  (*shipment.mutable_load_demands())["weight"].set_amount(40);
+
+  return req;
 }
 ```
 <!-- inject-quickstart-end -->
