@@ -106,6 +106,14 @@ to grant, change, and revoke access to all
 [resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
 [iam-policy-link]: https://cloud.google.com/iam/docs/manage-access-other-resources
 
+### New Libraries
+
+We are introducing a new client library: [Bare Metal Solution]. While we do not
+anticipate any API changes to this library before declaring it GA, we are
+releasing it early in case it elicits some feedback that requires changes.
+
+[Bare Metal Solution]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/baremetalsolution/README.md
+
 ## v1.40.0 - 2022-05
 
 We are happy to announce that the following GA libraries.  Unless specifically
