@@ -84,6 +84,10 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
 
 ## v1.41.0 - TBD
 
+## v1.40.2 - 2022-05
+
+* fix(GCS+gRPC): unused mutable Object fields ([#8998](https://github.com/googleapis/google-cloud-cpp/pull/8998))
+
 ## v1.40.1 - 2022-05
 
 * fix: correct check for storage vs. rest enabled ([#8850](https://github.com/googleapis/google-cloud-cpp/pull/8850))
