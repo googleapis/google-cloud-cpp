@@ -131,6 +131,7 @@ Options RestClient::ResolveStorageAuthority(Options const& options) {
     return options;
   return Options(options).set<AuthorityOption>("storage.googleapis.com");
 }
+
 Options RestClient::ResolveIamAuthority(Options const& options) {
   auto endpoint = IamEndpoint(options);
   if (options.has<AuthorityOption>() ||
