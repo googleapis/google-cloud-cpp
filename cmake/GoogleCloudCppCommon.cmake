@@ -240,6 +240,26 @@ function (google_cloud_cpp_add_executable target prefix source)
         PARENT_SCOPE)
 endfunction ()
 
+# We do not use macros a lot, so this deserves a comment. Unlike functions,
+# macros do not introduce a scope. This is an advantage when trying to set
+# global variables, as we do here.  It is obviously a disadvantage if you need
+# local variables.
+macro (google_cloud_cpp_set_pkgconfig_paths)
+    if (IS_ABSOLUTE "${CMAKE_INSTALL_LIBDIR}")
+        set(GOOGLE_CLOUD_CPP_PC_LIBDIR "${CMAKE_INSTALL_LIBDIR}")
+    else ()
+        set(GOOGLE_CLOUD_CPP_PC_LIBDIR
+            "\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}")
+    endif ()
+
+    if (IS_ABSOLUTE "${CMAKE_INSTALL_INCLUDEDIR}")
+        set(GOOGLE_CLOUD_CPP_PC_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}")
+    else ()
+        set(GOOGLE_CLOUD_CPP_PC_INCLUDEDIR
+            "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
+    endif ()
+endmacro ()
+
 #
 # Create the pkgconfig configuration file (aka *.pc file) and the rules to
 # install it.
@@ -252,6 +272,7 @@ function (google_cloud_cpp_add_pkgconfig library name description)
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION "${description}")
     set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_${library}")
     string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES ${ARGN})
+    google_cloud_cpp_set_pkgconfig_paths()
 
     # Create and install the pkg-config files.
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"

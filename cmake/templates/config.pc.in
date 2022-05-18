@@ -14,8 +14,8 @@
 
 prefix=${pcfiledir}/../..
 exec_prefix=${prefix}
-libdir=${exec_prefix}/@CMAKE_INSTALL_LIBDIR@
-includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+libdir=@GOOGLE_CLOUD_CPP_PC_LIBDIR@
+includedir=@GOOGLE_CLOUD_CPP_PC_INCLUDEDIR@
 
 Name: @GOOGLE_CLOUD_CPP_PC_NAME@
 Description: @GOOGLE_CLOUD_CPP_PC_DESCRIPTION@

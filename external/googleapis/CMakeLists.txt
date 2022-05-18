@@ -494,6 +494,7 @@ endforeach ()
 
 external_googleapis_install_pc_common(google_cloud_cpp_logging_type_protos)
 set(GOOGLE_CLOUD_CPP_PC_LIBS "")
+google_cloud_cpp_set_pkgconfig_paths()
 configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
                "google_cloud_cpp_logging_type_protos.pc" @ONLY)
 install(
@@ -538,6 +539,7 @@ string(
            " zlib"
            " libcares")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "")
+google_cloud_cpp_set_pkgconfig_paths()
 configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
                "googleapis.pc" @ONLY)
 install(
