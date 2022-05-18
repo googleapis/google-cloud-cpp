@@ -17,10 +17,10 @@ exec_prefix=${prefix}/@CMAKE_INSTALL_BINDIR@
 libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
 includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
 
-Name: @GOOGLE_CLOUD_PC_NAME@
-Description: @GOOGLE_CLOUD_PC_DESCRIPTION@
-Requires: @GOOGLE_CLOUD_PC_REQUIRES@
+Name: @GOOGLE_CLOUD_CPP_PC_NAME@
+Description: @GOOGLE_CLOUD_CPP_PC_DESCRIPTION@
+Requires: @GOOGLE_CLOUD_CPP_PC_REQUIRES@
 Version: @DOXYGEN_PROJECT_NUMBER@
 
-Libs: -L${libdir} @GOOGLE_CLOUD_PC_LIBS@
+Libs: -L${libdir} @GOOGLE_CLOUD_CPP_PC_LIBS@
 Cflags: -I${includedir}
