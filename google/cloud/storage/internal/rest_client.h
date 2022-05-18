@@ -35,16 +35,16 @@ namespace internal {
 class RestClient : public RawClient,
                    public std::enable_shared_from_this<RestClient> {
  public:
-  // Factory function for producing RestClient instances.
-  // rest_client_factory_function and curl_client_factory_function should only
-  // be overridden for testing purposes.
+  static std::shared_ptr<RestClient> Create(Options options);
   static std::shared_ptr<RestClient> Create(
       Options options,
-      std::function<std::unique_ptr<google::cloud::rest_internal::RestClient>(
-          std::string, Options)> const& rest_client_factory_function =
-          google::cloud::rest_internal::MakePooledRestClient,
-      std::function<std::shared_ptr<RawClient>(Options)> const&
-          curl_client_factory_function = CurlClientCreateFn);
+      std::shared_ptr<google::cloud::rest_internal::RestClient>
+          storage_rest_client,
+      std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
+      std::shared_ptr<RawClient> curl_client);
+
+  static Options ResolveStorageAuthority(Options const& options);
+  static Options ResolveIamAuthority(Options const& options);
 
   RestClient(RestClient const& rhs) = delete;
   RestClient(RestClient&& rhs) = delete;
@@ -166,22 +166,15 @@ class RestClient : public RawClient,
 
  protected:
   explicit RestClient(
-      std::unique_ptr<google::cloud::rest_internal::RestClient>
+      std::shared_ptr<google::cloud::rest_internal::RestClient>
           storage_rest_client,
-      std::unique_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
+      std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
       std::shared_ptr<RawClient> curl_client, Options options);
 
  private:
-  // This wrapper was necessary in order to provide a default for Create as
-  // the compiler complained when attempting to provide CurlClient::Create
-  // directly.
-  static std::shared_ptr<CurlClient> CurlClientCreateFn(Options options) {
-    return internal::CurlClient::Create(std::move(options));
-  }
-
-  std::unique_ptr<google::cloud::rest_internal::RestClient>
+  std::shared_ptr<google::cloud::rest_internal::RestClient>
       storage_rest_client_;
-  std::unique_ptr<google::cloud::rest_internal::RestClient> iam_rest_client_;
+  std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client_;
   std::shared_ptr<RawClient> curl_client_;
   google::cloud::Options options_;
 };

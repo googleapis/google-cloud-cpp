@@ -13,11 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/rest_client.h"
-#include "google/cloud/storage/testing/mock_client.h"
-#include "google/cloud/testing_util/mock_rest_client.h"
 #include <gmock/gmock.h>
-#include <memory>
-#include <utility>
 #include <vector>
 
 namespace google {
@@ -27,104 +23,67 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::storage::testing::MockClient;
-using ::google::cloud::testing_util::MockRestClient;
 using ::testing::Eq;
-using ::testing::MockFunction;
 
-struct EndpointAuthorityTestValue {
-  std::string storage_endpoint;
-  std::string iam_endpoint;
-  absl::optional<std::string> expected_storage_authority;
-  absl::optional<std::string> expected_iam_authority;
-  absl::optional<std::string> authority_option;
-};
-
-class CreateRestClientTest
-    : public ::testing::TestWithParam<EndpointAuthorityTestValue> {};
-
-TEST_P(CreateRestClientTest, CorrectClientParameters) {
-  EndpointAuthorityTestValue test_param = GetParam();
-  auto options = Options{}
-                     .set<RestEndpointOption>(test_param.storage_endpoint)
-                     .set<IamEndpointOption>(test_param.iam_endpoint);
-  if (test_param.authority_option.has_value()) {
-    options.set<AuthorityOption>(*test_param.authority_option);
-  }
-
-  MockFunction<std::unique_ptr<google::cloud::rest_internal::RestClient>(
-      std::string, Options)>
-      mock_rest_factory_fn;
-
-  EXPECT_CALL(mock_rest_factory_fn, Call)
-      .WillOnce([&](std::string const& endpoint, Options const& options) {
-        EXPECT_THAT(endpoint, Eq(test_param.storage_endpoint));
-        if (test_param.expected_storage_authority.has_value()) {
-          EXPECT_THAT(options.get<AuthorityOption>(),
-                      Eq(test_param.expected_storage_authority));
-        } else {
-          EXPECT_FALSE(options.has<AuthorityOption>());
-        }
-        return absl::make_unique<MockRestClient>();
-      })
-      .WillOnce([&](std::string const& endpoint, Options const& options) {
-        EXPECT_THAT(endpoint, Eq(test_param.iam_endpoint));
-        if (test_param.expected_iam_authority.has_value()) {
-          EXPECT_THAT(options.get<AuthorityOption>(),
-                      Eq(test_param.expected_iam_authority));
-        } else {
-          EXPECT_FALSE(options.has<AuthorityOption>());
-        }
-        return absl::make_unique<MockRestClient>();
-      });
-
-  MockFunction<std::shared_ptr<RawClient>(Options)> mock_curl_factory_fn;
-
-  EXPECT_CALL(mock_curl_factory_fn, Call).WillOnce([&](Options const& options) {
-    if (test_param.authority_option.has_value()) {
-      EXPECT_THAT(options.get<AuthorityOption>(),
-                  Eq(*test_param.authority_option));
-    } else {
-      EXPECT_FALSE(options.has<AuthorityOption>());
-    }
-    return std::make_shared<MockClient>();
-  });
-
-  auto client = RestClient::Create(std::move(options),
-                                   mock_rest_factory_fn.AsStdFunction(),
-                                   mock_curl_factory_fn.AsStdFunction());
+TEST(RestClientTest, ResolveStorageAuthorityProdEndpoint) {
+  auto options =
+      Options{}.set<RestEndpointOption>("https://storage.googleapis.com");
+  auto result_options = RestClient::ResolveStorageAuthority(options);
+  EXPECT_THAT(result_options.get<AuthorityOption>(),
+              Eq("storage.googleapis.com"));
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    CreateWithOptions, CreateRestClientTest,
-    ::testing::Values(
-        EndpointAuthorityTestValue{
-            "https://storage.googleapis.com",
-            "https://iamcredentials.googleapis.com", "storage.googleapis.com",
-            "iamcredentials.googleapis.com", absl::nullopt},
-        EndpointAuthorityTestValue{
-            "https://eap.googleapis.com",
-            "https://iamcredentials.googleapis.com", "storage.googleapis.com",
-            "iamcredentials.googleapis.com", absl::nullopt},
-        EndpointAuthorityTestValue{
-            "https://storage.googleapis.com", "https://private.googleapis.com",
-            "storage.googleapis.com", "iamcredentials.googleapis.com",
-            absl::nullopt},
-        EndpointAuthorityTestValue{
-            "https://eap.googleapis.com", "https://private.googleapis.com",
-            "storage.googleapis.com", "iamcredentials.googleapis.com",
-            absl::nullopt},
-        EndpointAuthorityTestValue{"https://storage.googleapis.com",
-                                   "https://iamcredentials.googleapis.com",
-                                   "authority_option", "authority_option",
-                                   "authority_option"},
-        EndpointAuthorityTestValue{
-            "https://eap.googleapis.com", "https://private.googleapis.com",
-            "authority_option", "authority_option", "authority_option"},
-        EndpointAuthorityTestValue{"localhost", "::1", absl::nullopt,
-                                   absl::nullopt, absl::nullopt},
-        EndpointAuthorityTestValue{"localhost", "::1", "authority_option",
-                                   "authority_option", "authority_option"}));
+TEST(RestClientTest, ResolveStorageAuthorityEapEndpoint) {
+  auto options =
+      Options{}.set<RestEndpointOption>("https://eap.googleapis.com");
+  auto result_options = RestClient::ResolveStorageAuthority(options);
+  EXPECT_THAT(result_options.get<AuthorityOption>(),
+              Eq("storage.googleapis.com"));
+}
+
+TEST(RestClientTest, ResolveStorageAuthorityNonGoogleEndpoint) {
+  auto options = Options{}.set<RestEndpointOption>("https://localhost");
+  auto result_options = RestClient::ResolveStorageAuthority(options);
+  EXPECT_FALSE(result_options.has<AuthorityOption>());
+}
+
+TEST(RestClientTest, ResolveStorageAuthorityOptionSpecified) {
+  auto options = Options{}
+                     .set<RestEndpointOption>("https://storage.googleapis.com")
+                     .set<AuthorityOption>("auth_option_set");
+  auto result_options = RestClient::ResolveStorageAuthority(options);
+  EXPECT_THAT(result_options.get<AuthorityOption>(), Eq("auth_option_set"));
+}
+
+TEST(RestClientTest, ResolveIamAuthorityProdEndpoint) {
+  auto options =
+      Options{}.set<IamEndpointOption>("https://iamcredentials.googleapis.com");
+  auto result_options = RestClient::ResolveIamAuthority(options);
+  EXPECT_THAT(result_options.get<AuthorityOption>(),
+              Eq("iamcredentials.googleapis.com"));
+}
+
+TEST(RestClientTest, ResolveIamAuthorityEapEndpoint) {
+  auto options = Options{}.set<IamEndpointOption>("https://eap.googleapis.com");
+  auto result_options = RestClient::ResolveIamAuthority(options);
+  EXPECT_THAT(result_options.get<AuthorityOption>(),
+              Eq("iamcredentials.googleapis.com"));
+}
+
+TEST(RestClientTest, ResolveIamAuthorityNonGoogleEndpoint) {
+  auto options = Options{}.set<IamEndpointOption>("https://localhost");
+  auto result_options = RestClient::ResolveIamAuthority(options);
+  EXPECT_FALSE(result_options.has<AuthorityOption>());
+}
+
+TEST(RestClientTest, ResolveIamAuthorityOptionSpecified) {
+  auto options =
+      Options{}
+          .set<IamEndpointOption>("https://iamcredentials.googleapis.com")
+          .set<AuthorityOption>("auth_option_set");
+  auto result_options = RestClient::ResolveIamAuthority(options);
+  EXPECT_THAT(result_options.get<AuthorityOption>(), Eq("auth_option_set"));
+}
 
 }  // namespace
 }  // namespace internal
