@@ -297,6 +297,106 @@ AssetServiceConnectionImpl::AnalyzeMove(
       request, __func__);
 }
 
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnectionImpl::CreateSavedQuery(
+    google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateSavedQuery(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
+        return stub_->CreateSavedQuery(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnectionImpl::GetSavedQuery(
+    google::cloud::asset::v1::GetSavedQueryRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetSavedQuery(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::GetSavedQueryRequest const& request) {
+        return stub_->GetSavedQuery(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnectionImpl::ListSavedQueries(
+    google::cloud::asset::v1::ListSavedQueriesRequest request) {
+  request.clear_page_token();
+  auto stub = stub_;
+  auto retry =
+      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListSavedQueries(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::asset::v1::SavedQuery>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::asset::v1::ListSavedQueriesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::asset::v1::ListSavedQueriesRequest const&
+                       request) {
+              return stub->ListSavedQueries(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::asset::v1::ListSavedQueriesResponse r) {
+        std::vector<google::cloud::asset::v1::SavedQuery> result(
+            r.saved_queries().size());
+        auto& messages = *r.mutable_saved_queries();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnectionImpl::UpdateSavedQuery(
+    google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateSavedQuery(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
+        return stub_->UpdateSavedQuery(context, request);
+      },
+      request, __func__);
+}
+
+Status AssetServiceConnectionImpl::DeleteSavedQuery(
+    google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteSavedQuery(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
+        return stub_->DeleteSavedQuery(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+AssetServiceConnectionImpl::BatchGetEffectiveIamPolicies(
+    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->BatchGetEffectiveIamPolicies(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+              request) {
+        return stub_->BatchGetEffectiveIamPolicies(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset_internal
 }  // namespace cloud

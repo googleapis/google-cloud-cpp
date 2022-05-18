@@ -107,6 +107,37 @@ class DefaultAssetServiceConnectionIdempotencyPolicy
       google::cloud::asset::v1::AnalyzeMoveRequest const&) override {
     return Idempotency::kIdempotent;
   }
+
+  Idempotency CreateSavedQuery(
+      google::cloud::asset::v1::CreateSavedQueryRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency GetSavedQuery(
+      google::cloud::asset::v1::GetSavedQueryRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListSavedQueries(
+      google::cloud::asset::v1::ListSavedQueriesRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency UpdateSavedQuery(
+      google::cloud::asset::v1::UpdateSavedQueryRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeleteSavedQuery(
+      google::cloud::asset::v1::DeleteSavedQueryRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency BatchGetEffectiveIamPolicies(
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
 };
 }  // namespace
 

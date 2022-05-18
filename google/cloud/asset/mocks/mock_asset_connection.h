@@ -94,6 +94,37 @@ class MockAssetServiceConnection : public asset::AssetServiceConnection {
               AnalyzeMove,
               (google::cloud::asset::v1::AnalyzeMoveRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::asset::v1::SavedQuery>, CreateSavedQuery,
+      (google::cloud::asset::v1::CreateSavedQueryRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::SavedQuery>, GetSavedQuery,
+              (google::cloud::asset::v1::GetSavedQueryRequest const& request),
+              (override));
+
+  MOCK_METHOD(StreamRange<google::cloud::asset::v1::SavedQuery>,
+              ListSavedQueries,
+              (google::cloud::asset::v1::ListSavedQueriesRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::asset::v1::SavedQuery>, UpdateSavedQuery,
+      (google::cloud::asset::v1::UpdateSavedQueryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteSavedQuery,
+      (google::cloud::asset::v1::DeleteSavedQueryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>,
+      BatchGetEffectiveIamPolicies,
+      (google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

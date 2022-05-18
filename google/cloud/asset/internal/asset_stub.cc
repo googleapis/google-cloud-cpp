@@ -193,6 +193,83 @@ DefaultAssetServiceStub::AnalyzeMove(
   return response;
 }
 
+StatusOr<google::cloud::asset::v1::SavedQuery>
+DefaultAssetServiceStub::CreateSavedQuery(
+    grpc::ClientContext& client_context,
+    google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
+  google::cloud::asset::v1::SavedQuery response;
+  auto status =
+      grpc_stub_->CreateSavedQuery(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+DefaultAssetServiceStub::GetSavedQuery(
+    grpc::ClientContext& client_context,
+    google::cloud::asset::v1::GetSavedQueryRequest const& request) {
+  google::cloud::asset::v1::SavedQuery response;
+  auto status = grpc_stub_->GetSavedQuery(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
+DefaultAssetServiceStub::ListSavedQueries(
+    grpc::ClientContext& client_context,
+    google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
+  google::cloud::asset::v1::ListSavedQueriesResponse response;
+  auto status =
+      grpc_stub_->ListSavedQueries(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+DefaultAssetServiceStub::UpdateSavedQuery(
+    grpc::ClientContext& client_context,
+    google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
+  google::cloud::asset::v1::SavedQuery response;
+  auto status =
+      grpc_stub_->UpdateSavedQuery(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultAssetServiceStub::DeleteSavedQuery(
+    grpc::ClientContext& client_context,
+    google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteSavedQuery(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+DefaultAssetServiceStub::BatchGetEffectiveIamPolicies(
+    grpc::ClientContext& client_context,
+    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+        request) {
+  google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse response;
+  auto status = grpc_stub_->BatchGetEffectiveIamPolicies(&client_context,
+                                                         request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAssetServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
