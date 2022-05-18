@@ -104,7 +104,12 @@ Status AddAuthorizationHeader(Options const& options,
   return {};
 }
 
-std::shared_ptr<RestClient> RestClient::Create(Options options) {
+std::shared_ptr<RestClient> RestClient::Create(
+    Options options,
+    std::function<std::unique_ptr<google::cloud::rest_internal::RestClient>(
+        std::string, Options)> const& rest_client_factory_function,
+    std::function<std::shared_ptr<RawClient>(Options)> const&
+        curl_client_factory_function) {
   std::unique_ptr<rest::RestClient> storage_rest_client;
   std::unique_ptr<rest::RestClient> iam_rest_client;
   auto storage_endpoint = RestEndpoint(options);
@@ -114,11 +119,11 @@ std::shared_ptr<RestClient> RestClient::Create(Options options) {
       absl::StrContains(storage_endpoint, "googleapis.com")) {
     auto storage_options = options;
     storage_options.set<AuthorityOption>("storage.googleapis.com");
-    storage_rest_client = rest::MakePooledRestClient(
+    storage_rest_client = rest_client_factory_function(
         storage_endpoint, std::move(storage_options));
   } else {
     storage_rest_client =
-        rest::MakePooledRestClient(std::move(storage_endpoint), options);
+        rest_client_factory_function(std::move(storage_endpoint), options);
   }
 
   if (!options.has<AuthorityOption>() &&
@@ -126,14 +131,14 @@ std::shared_ptr<RestClient> RestClient::Create(Options options) {
     auto iam_options = options;
     iam_options.set<AuthorityOption>("iamcredentials.googleapis.com");
     iam_rest_client =
-        rest::MakePooledRestClient(iam_endpoint, std::move(iam_options));
+        rest_client_factory_function(iam_endpoint, std::move(iam_options));
   } else {
     iam_rest_client =
-        rest::MakePooledRestClient(std::move(iam_endpoint), options);
+        rest_client_factory_function(std::move(iam_endpoint), options);
   }
 
   std::shared_ptr<RawClient> curl_client =
-      internal::CurlClient::Create(options);
+      curl_client_factory_function(options);
 
   return std::shared_ptr<RestClient>(
       new RestClient(std::move(storage_rest_client), std::move(iam_rest_client),
