@@ -239,3 +239,52 @@ function (google_cloud_cpp_add_executable target prefix source)
         "${target_name}"
         PARENT_SCOPE)
 endfunction ()
+
+# We do not use macros a lot, so this deserves a comment. Unlike functions,
+# macros do not introduce a scope. This is an advantage when trying to set
+# global variables, as we do here.  It is obviously a disadvantage if you need
+# local variables.
+macro (google_cloud_cpp_set_pkgconfig_paths)
+    if (IS_ABSOLUTE "${CMAKE_INSTALL_BINDIR}")
+        set(GOOGLE_CLOUD_CPP_PC_EXEC_PREFIX "${CMAKE_INSTALL_BINDIR}")
+    else ()
+        set(GOOGLE_CLOUD_CPP_PC_EXEC_PREFIX
+            "\${prefix}/${CMAKE_INSTALL_BINDIR}")
+    endif ()
+
+    if (IS_ABSOLUTE "${CMAKE_INSTALL_LIBDIR}")
+        set(GOOGLE_CLOUD_CPP_PC_LIBDIR "${CMAKE_INSTALL_LIBDIR}")
+    else ()
+        set(GOOGLE_CLOUD_CPP_PC_LIBDIR "\${prefix}/${CMAKE_INSTALL_LIBDIR}")
+    endif ()
+
+    if (IS_ABSOLUTE "${CMAKE_INSTALL_INCLUDEDIR}")
+        set(GOOGLE_CLOUD_CPP_PC_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}")
+    else ()
+        set(GOOGLE_CLOUD_CPP_PC_INCLUDEDIR
+            "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
+    endif ()
+endmacro ()
+
+#
+# Create the pkgconfig configuration file (aka *.pc file) and the rules to
+# install it.
+#
+# * library: the name of the library, such as `storage`, or `spanner`
+# * ARGN: the names of any pkgconfig modules the generated module depends on
+#
+function (google_cloud_cpp_add_pkgconfig library name description)
+    set(GOOGLE_CLOUD_CPP_PC_NAME "${name}")
+    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION "${description}")
+    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_${library}")
+    string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES ${ARGN})
+    google_cloud_cpp_set_pkgconfig_paths()
+
+    # Create and install the pkg-config files.
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.pc.in"
+                   "google_cloud_cpp_${library}.pc" @ONLY)
+    install(
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_${library}.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+        COMPONENT google_cloud_cpp_development)
+endfunction ()

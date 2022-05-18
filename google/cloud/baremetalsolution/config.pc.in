@@ -13,14 +13,14 @@
 # limitations under the License.
 
 prefix=${pcfiledir}/../..
-exec_prefix=${prefix}/@CMAKE_INSTALL_BINDIR@
-libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
-includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+exec_prefix=@GOOGLE_CLOUD_CPP_PC_EXEC_PREFIX@
+libdir=@GOOGLE_CLOUD_CPP_PC_LIBDIR@
+includedir=@GOOGLE_CLOUD_CPP_PC_INCLUDEDIR@
 
-Name: @GOOGLE_CLOUD_PC_NAME@
-Description: @GOOGLE_CLOUD_PC_DESCRIPTION@
-Requires: @GOOGLE_CLOUD_PC_REQUIRES@
+Name: @GOOGLE_CLOUD_CPP_PC_NAME@
+Description: @GOOGLE_CLOUD_CPP_PC_DESCRIPTION@
+Requires: @GOOGLE_CLOUD_CPP_PC_REQUIRES@
 Version: @DOXYGEN_PROJECT_NUMBER@
 
-Libs: -L${libdir} @GOOGLE_CLOUD_PC_LIBS@
+Libs: -L${libdir} @GOOGLE_CLOUD_CPP_PC_LIBS@
 Cflags: -I${includedir}

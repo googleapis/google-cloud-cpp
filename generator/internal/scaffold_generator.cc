@@ -177,16 +177,16 @@ void GenerateConfigPcIn(std::ostream& os,
 # limitations under the License.
 
 prefix=$${pcfiledir}/../..
-exec_prefix=$${prefix}/@CMAKE_INSTALL_BINDIR@
-libdir=$${prefix}/@CMAKE_INSTALL_LIBDIR@
-includedir=$${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+exec_prefix=@GOOGLE_CLOUD_CPP_PC_EXEC_PREFIX@
+libdir=@GOOGLE_CLOUD_CPP_PC_LIBDIR@
+includedir=@GOOGLE_CLOUD_CPP_PC_INCLUDEDIR@
 
-Name: @GOOGLE_CLOUD_PC_NAME@
-Description: @GOOGLE_CLOUD_PC_DESCRIPTION@
-Requires: @GOOGLE_CLOUD_PC_REQUIRES@
+Name: @GOOGLE_CLOUD_CPP_PC_NAME@
+Description: @GOOGLE_CLOUD_CPP_PC_DESCRIPTION@
+Requires: @GOOGLE_CLOUD_CPP_PC_REQUIRES@
 Version: @DOXYGEN_PROJECT_NUMBER@
 
-Libs: -L$${libdir} @GOOGLE_CLOUD_PC_LIBS@
+Libs: -L$${libdir} @GOOGLE_CLOUD_CPP_PC_LIBS@
 Cflags: -I$${includedir}
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
@@ -495,22 +495,13 @@ google_cloud_cpp_install_headers("google_cloud_cpp_$library$_mocks"
                                  "include/google/cloud/$library$")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR $${PROJECT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR $${PROJECT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH $${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The $title$ C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to use the $title$.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_$library$")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common" " google_cloud_cpp_$library$_protos")
-
-# Create and install the pkg-config files.
-configure_file("$${PROJECT_SOURCE_DIR}/google/cloud/$library$/config.pc.in"
-               "google_cloud_cpp_$library$.pc" @ONLY)
-install(
-    FILES "$${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_$library$.pc"
-    DESTINATION "$${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    $library$
+    "The $title$ API C++ Client Library"
+    "Provides C++ APIs to use the $title$."
+    "google_cloud_cpp_$library$_protos"
+    " google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
