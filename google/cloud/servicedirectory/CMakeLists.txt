@@ -179,9 +179,8 @@ string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_servicedirectory_protos")
 
 # Create and install the pkg-config files.
-configure_file(
-    "${PROJECT_SOURCE_DIR}/google/cloud/servicedirectory/config.pc.in"
-    "google_cloud_cpp_servicedirectory.pc" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
+               "google_cloud_cpp_servicedirectory.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_servicedirectory.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
