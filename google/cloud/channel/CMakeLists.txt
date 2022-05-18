@@ -151,11 +151,11 @@ google_cloud_cpp_install_headers("google_cloud_cpp_channel_mocks"
                                  "include/google/cloud/channel")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_PC_NAME "The Cloud Channel API C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION
+set(GOOGLE_CLOUD_CPP_PC_NAME "The Cloud Channel API C++ Client Library")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to use the Cloud Channel API.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_channel")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_channel")
+string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common" " google_cloud_cpp_channel_protos")
 
 # Create and install the pkg-config files.

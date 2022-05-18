@@ -161,11 +161,11 @@ google_cloud_cpp_install_headers("google_cloud_cpp_secretmanager_mocks"
                                  "include/google/cloud/secretmanager")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_PC_NAME "The Secret Manager API C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION
+set(GOOGLE_CLOUD_CPP_PC_NAME "The Secret Manager API C++ Client Library")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to use the Secret Manager API.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_secretmanager")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_secretmanager")
+string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common"
               " google_cloud_cpp_secretmanager_protos")
 

@@ -199,10 +199,11 @@ google_cloud_cpp_install_headers("google_cloud_cpp_iam_mocks"
                                  "include/google/cloud/iam")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_PC_NAME "The Google Cloud IAM C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to access Google Cloud IAM.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_iam")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
+set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud IAM C++ Client Library")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
+    "Provides C++ APIs to access Google Cloud IAM.")
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_iam")
+string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common" " google_cloud_cpp_iam_protos")
 
 # Create and install the pkg-config files.

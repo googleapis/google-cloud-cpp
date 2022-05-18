@@ -376,11 +376,11 @@ google_cloud_cpp_install_headers("google_cloud_cpp_pubsub_mocks"
                                  "include/google/cloud/pubsub")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_PC_NAME "The Google Cloud Pubsub C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION
+set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Pubsub C++ Client Library")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Pubsub.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_pubsub")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_pubsub")
+string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common" " google_cloud_cpp_pubsub_protos"
               " absl_str_format")
 
