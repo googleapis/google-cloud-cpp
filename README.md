@@ -33,7 +33,7 @@ This repository contains idiomatic C++ client libraries for the following
 > In particular, note that on (or about) **2022-06-01** this library will
 > require C++ >= 14.
 
-[CHANGELOG]: CHANGELOG.md
+[CHANGELOG]: /CHANGELOG.md
 
 <!-- inject-GA-libraries-start -->
 * [Access Approval API](google/cloud/accessapproval/README.md)
@@ -552,10 +552,10 @@ file a [GitHub issue][github-issue].
 
 ## Contributing changes
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for details on how to contribute to
+See [`CONTRIBUTING.md`](/CONTRIBUTING.md) for details on how to contribute to
 this project, including how to build and test your changes as well as how to
 properly format your code.
 
 ## Licensing
 
-Apache 2.0; see [`LICENSE`](LICENSE) for details.
+Apache 2.0; see [`LICENSE`](/LICENSE) for details.

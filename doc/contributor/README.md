@@ -15,20 +15,20 @@ is surprising (or wrong! We need to improve these documents too).
 
 ## Key Documents
 
-* [Forks and Pull Requests](howto-guide-forks-and-pull-requests.md): the basic
-  workflows for GitHub projects.
-* [Running CI builds locally](howto-guide-running-ci-builds-locally.md): how to
-  reproduce CI results locally, for faster edit -> build -> test cycles.
-* [Setup a development workstation](howto-guide-setup-development-workstation.md):
-  how to setup a Linux or Windows (workstation or VM) for `google-cloud-cpp`
+* [Forks and Pull Requests](/doc/contributor/howto-guide-forks-and-pull-requests.md):
+  the basic workflows for GitHub projects.
+* [Running CI builds locally](/doc/contributor/howto-guide-running-ci-builds-locally.md):
+  how to reproduce CI results locally, for faster edit -> build -> test cycles.
+* [Set up a development workstation](/doc/contributor/howto-guide-setup-development-workstation.md):
+  how to set up a Linux or Windows (workstation or VM) for `google-cloud-cpp`
   development.
-* [Setup CMake Dependencies](howto-guide-setup-cmake-environment.md): how to
-  install the dependencies of `google-cloud-cpp` in `$HOME` for easier and
-  faster development with CMake.
-* [Working with Bazel and CMake](working-with-bazel-and-cmake.md): this project
-  can be compiled with CMake or Bazel. Always update the CMake project files
-  first, as these files are used to generate `*.bzl` files loaded by Bazel.
-  More details in the linked document.
+* [Set up CMake Dependencies](/doc/contributor/howto-guide-setup-cmake-environment.md):
+  how to install the dependencies of `google-cloud-cpp` in `$HOME` for easier
+  and faster development with CMake.
+* [Working with Bazel and CMake](/doc/contributor/working-with-bazel-and-cmake.md):
+  this project can be compiled with CMake or Bazel. Always update the CMake
+  project files first, as these files are used to generate `*.bzl` files loaded
+  by Bazel. More details in the linked document.
 
 ## Style
 
@@ -46,8 +46,8 @@ code is formatted using `clang-format(1)` with our top-level `.clang-format`
 file, which you should be able to configure your editor or IDE to use. To use
 our format-checker build to format your code you must first set up your
 workstation to [run CI builds
-locally](howto-guide-running-ci-builds-locally.md), and then run the following
-command:
+locally](/doc/contributor/howto-guide-running-ci-builds-locally.md), and then
+run the following command:
 
 ```console
 $ ci/cloudbuild/build.sh -t checkers-pr --docker
@@ -57,10 +57,11 @@ NOTE: Please be advised that `clang-format` has been known to generate slightly
 different formatting between different versions. We update this version from
 time to time. As of 2021-02-09 we are using clang-format version 11. If you
 need to confirm the exact version we're using, look at the
-[Dockerfile](/ci/cloudbuild/dockerfiles/fedora.Dockerfile) used in the
+[Dockerfile](/ci/cloudbuild/dockerfiles/checkers.Dockerfile) used in the
 `checkers-pr` build, find out which version of Fedora is in use, and then find
-out what is the `clang` version included in that distro: search on pkgs.org,
-repology.org, or Google; or just ask around.
+out what is the `clang` version included in that distro: search on
+[pkgs.org](https://pkgs.org), [repology.org](https://repology.org), or Google;
+or just ask around.
 
 ## Generating doxygen documentation
 
