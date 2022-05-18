@@ -158,9 +158,6 @@ google_cloud_cpp_install_headers("google_cloud_cpp_appengine_mocks"
                                  "include/google/cloud/appengine")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The App Engine Admin API C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to use the App Engine Admin API.")
