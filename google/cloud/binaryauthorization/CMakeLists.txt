@@ -188,9 +188,8 @@ string(
            " google_cloud_cpp_grafeas_protos")
 
 # Create and install the pkg-config files.
-configure_file(
-    "${PROJECT_SOURCE_DIR}/google/cloud/binaryauthorization/config.pc.in"
-    "google_cloud_cpp_binaryauthorization.pc" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
+               "google_cloud_cpp_binaryauthorization.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_binaryauthorization.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
