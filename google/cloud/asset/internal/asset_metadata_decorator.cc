@@ -140,6 +140,54 @@ AssetServiceMetadata::AnalyzeMove(
   return child_->AnalyzeMove(context, request);
 }
 
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceMetadata::CreateSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateSavedQuery(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceMetadata::GetSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::GetSavedQueryRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetSavedQuery(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
+AssetServiceMetadata::ListSavedQueries(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListSavedQueries(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceMetadata::UpdateSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
+  SetMetadata(context, "saved_query.name=" + request.saved_query().name());
+  return child_->UpdateSavedQuery(context, request);
+}
+
+Status AssetServiceMetadata::DeleteSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteSavedQuery(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+AssetServiceMetadata::BatchGetEffectiveIamPolicies(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+        request) {
+  SetMetadata(context, "scope=" + request.scope());
+  return child_->BatchGetEffectiveIamPolicies(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

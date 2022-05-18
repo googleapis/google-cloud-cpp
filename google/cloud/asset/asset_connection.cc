@@ -117,6 +117,43 @@ AssetServiceConnection::AnalyzeMove(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnection::CreateSavedQuery(
+    google::cloud::asset::v1::CreateSavedQueryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnection::GetSavedQuery(
+    google::cloud::asset::v1::GetSavedQueryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnection::ListSavedQueries(
+    google::cloud::asset::v1::
+        ListSavedQueriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::asset::v1::SavedQuery>>();
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnection::UpdateSavedQuery(
+    google::cloud::asset::v1::UpdateSavedQueryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status AssetServiceConnection::DeleteSavedQuery(
+    google::cloud::asset::v1::DeleteSavedQueryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+AssetServiceConnection::BatchGetEffectiveIamPolicies(
+    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

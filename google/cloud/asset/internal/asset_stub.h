@@ -97,6 +97,34 @@ class AssetServiceStub {
       grpc::ClientContext& context,
       google::cloud::asset::v1::AnalyzeMoveRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::CreateSavedQueryRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::GetSavedQueryRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
+  ListSavedQueries(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::ListSavedQueriesRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::UpdateSavedQueryRequest const& request) = 0;
+
+  virtual Status DeleteSavedQuery(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::DeleteSavedQueryRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+  BatchGetEffectiveIamPolicies(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -178,6 +206,36 @@ class DefaultAssetServiceStub : public AssetServiceStub {
   StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
       grpc::ClientContext& client_context,
       google::cloud::asset::v1::AnalyzeMoveRequest const& request) override;
+
+  StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
+      grpc::ClientContext& client_context,
+      google::cloud::asset::v1::CreateSavedQueryRequest const& request)
+      override;
+
+  StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
+      grpc::ClientContext& client_context,
+      google::cloud::asset::v1::GetSavedQueryRequest const& request) override;
+
+  StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse> ListSavedQueries(
+      grpc::ClientContext& client_context,
+      google::cloud::asset::v1::ListSavedQueriesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
+      grpc::ClientContext& client_context,
+      google::cloud::asset::v1::UpdateSavedQueryRequest const& request)
+      override;
+
+  Status DeleteSavedQuery(
+      grpc::ClientContext& client_context,
+      google::cloud::asset::v1::DeleteSavedQueryRequest const& request)
+      override;
+
+  StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+  BatchGetEffectiveIamPolicies(
+      grpc::ClientContext& client_context,
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

@@ -165,6 +165,59 @@ AssetServiceAuth::AnalyzeMove(
   return child_->AnalyzeMove(context, request);
 }
 
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceAuth::CreateSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSavedQuery(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery> AssetServiceAuth::GetSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::GetSavedQueryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSavedQuery(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
+AssetServiceAuth::ListSavedQueries(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListSavedQueries(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceAuth::UpdateSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSavedQuery(context, request);
+}
+
+Status AssetServiceAuth::DeleteSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSavedQuery(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+AssetServiceAuth::BatchGetEffectiveIamPolicies(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchGetEffectiveIamPolicies(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

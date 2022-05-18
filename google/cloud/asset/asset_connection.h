@@ -100,6 +100,27 @@ class AssetServiceConnection {
 
   virtual StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
       google::cloud::asset::v1::AnalyzeMoveRequest const& request);
+
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
+      google::cloud::asset::v1::CreateSavedQueryRequest const& request);
+
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
+      google::cloud::asset::v1::GetSavedQueryRequest const& request);
+
+  virtual StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
+      google::cloud::asset::v1::ListSavedQueriesRequest request);
+
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
+      google::cloud::asset::v1::UpdateSavedQueryRequest const& request);
+
+  virtual Status DeleteSavedQuery(
+      google::cloud::asset::v1::DeleteSavedQueryRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+  BatchGetEffectiveIamPolicies(
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+          request);
 };
 
 std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(

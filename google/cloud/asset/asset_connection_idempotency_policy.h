@@ -78,6 +78,25 @@ class AssetServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AnalyzeMove(
       google::cloud::asset::v1::AnalyzeMoveRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency CreateSavedQuery(
+      google::cloud::asset::v1::CreateSavedQueryRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency GetSavedQuery(
+      google::cloud::asset::v1::GetSavedQueryRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency ListSavedQueries(
+      google::cloud::asset::v1::ListSavedQueriesRequest request) = 0;
+
+  virtual google::cloud::Idempotency UpdateSavedQuery(
+      google::cloud::asset::v1::UpdateSavedQueryRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency DeleteSavedQuery(
+      google::cloud::asset::v1::DeleteSavedQueryRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency BatchGetEffectiveIamPolicies(
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>

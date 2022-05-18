@@ -196,6 +196,80 @@ AssetServiceLogging::AnalyzeMove(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceLogging::CreateSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
+        return child_->CreateSavedQuery(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceLogging::GetSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::GetSavedQueryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::GetSavedQueryRequest const& request) {
+        return child_->GetSavedQuery(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
+AssetServiceLogging::ListSavedQueries(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
+        return child_->ListSavedQueries(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceLogging::UpdateSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
+        return child_->UpdateSavedQuery(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status AssetServiceLogging::DeleteSavedQuery(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
+        return child_->DeleteSavedQuery(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+AssetServiceLogging::BatchGetEffectiveIamPolicies(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+              request) {
+        return child_->BatchGetEffectiveIamPolicies(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

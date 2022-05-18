@@ -97,6 +97,29 @@ class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
   StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
       google::cloud::asset::v1::AnalyzeMoveRequest const& request) override;
 
+  StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
+      google::cloud::asset::v1::CreateSavedQueryRequest const& request)
+      override;
+
+  StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
+      google::cloud::asset::v1::GetSavedQueryRequest const& request) override;
+
+  StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
+      google::cloud::asset::v1::ListSavedQueriesRequest request) override;
+
+  StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
+      google::cloud::asset::v1::UpdateSavedQueryRequest const& request)
+      override;
+
+  Status DeleteSavedQuery(
+      google::cloud::asset::v1::DeleteSavedQueryRequest const& request)
+      override;
+
+  StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+  BatchGetEffectiveIamPolicies(
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+          request) override;
+
  private:
   std::unique_ptr<asset::AssetServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
