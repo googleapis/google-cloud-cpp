@@ -489,12 +489,12 @@ endforeach ()
 # Create and install the pkg-config files.
 foreach (target ${external_googleapis_installed_libraries_list}
                 google_cloud_cpp_logging_type_type_protos)
-    external_googleapis_install_pc("${target}" "${CMAKE_CURRENT_LIST_DIR}")
+    external_googleapis_install_pc("${target}")
 endforeach ()
 
 external_googleapis_install_pc_common(google_cloud_cpp_logging_type_protos)
 set(GOOGLE_CLOUD_CPP_PC_LIBS "")
-configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in"
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
                "google_cloud_cpp_logging_type_protos.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_logging_type_protos.pc"
@@ -538,7 +538,8 @@ string(
            " zlib"
            " libcares")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "")
-configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in" "googleapis.pc" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
+               "googleapis.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"

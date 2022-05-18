@@ -188,5 +188,4 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_dlp"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_dlp_protos"
-                               "${PROJECT_SOURCE_DIR}/external/googleapis")
+external_googleapis_install_pc("google_cloud_cpp_dlp_protos")

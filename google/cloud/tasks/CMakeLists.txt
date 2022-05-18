@@ -187,5 +187,4 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_tasks"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_tasks_protos"
-                               "${PROJECT_SOURCE_DIR}/external/googleapis")
+external_googleapis_install_pc("google_cloud_cpp_tasks_protos")

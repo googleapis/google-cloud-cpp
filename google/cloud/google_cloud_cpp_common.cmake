@@ -196,7 +196,7 @@ string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "absl_memory" " absl_optional"
               " absl_time" " openssl")
 
 # Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
                "google_cloud_cpp_common.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common.pc"

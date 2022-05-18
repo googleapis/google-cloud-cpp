@@ -123,7 +123,7 @@ string(
 string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage_grpc")
 
 # Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
                "google_cloud_cpp_storage_grpc.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage_grpc.pc"

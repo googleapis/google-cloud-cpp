@@ -203,5 +203,4 @@ install(
         "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_videointelligence"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_videointelligence_protos"
-                               "${PROJECT_SOURCE_DIR}/external/googleapis")
+external_googleapis_install_pc("google_cloud_cpp_videointelligence_protos")

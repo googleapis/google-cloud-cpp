@@ -321,7 +321,7 @@ string(
            " absl_variant")
 
 # Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
                "google_cloud_cpp_storage.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage.pc"
