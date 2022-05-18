@@ -79,7 +79,7 @@ ci/cloudbuild/build.sh -t cmake-install-pr
 ## Commit the generated changes
 
 ```shell
-git commit -m"Regenerate and reformat libraries"
+git commit -m"Regenerate libraries"
 ```
 
 ## Push the branch and create a pull request
