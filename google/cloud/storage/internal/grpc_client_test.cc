@@ -16,6 +16,7 @@
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -157,6 +158,33 @@ TEST_F(GrpcClientTest, DefaultOptionsGrpcWithEnv) {
   EXPECT_EQ(opts.get<GrpcPluginOption>(), "env");
   opts = DefaultOptionsGrpc(Options{}.set<GrpcPluginOption>("configured"));
   EXPECT_EQ(opts.get<GrpcPluginOption>(), "configured");
+}
+
+TEST_F(GrpcClientTest, DefaultOptionsGrpcChannelCount) {
+  using ::google::cloud::GrpcNumChannelsOption;
+  struct TestCase {
+    std::string endpoint;
+    int lower_bound;
+    int upper_bound;
+  } cases[] = {
+      {"storage.googleapis.com", 4, std::numeric_limits<int>::max()},
+      {"google-c2p:///storage.googleapis.com", 1, 1},
+      {"google-c2p-experimental:///storage.googleapis.com", 1, 1},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing with " + test.endpoint);
+    auto opts =
+        DefaultOptionsGrpc(Options{}.set<EndpointOption>(test.endpoint));
+    auto const count = opts.get<GrpcNumChannelsOption>();
+    EXPECT_LE(test.lower_bound, count);
+    EXPECT_GE(test.upper_bound, count);
+
+    auto override = DefaultOptionsGrpc(Options{}
+                                           .set<EndpointOption>(test.endpoint)
+                                           .set<GrpcNumChannelsOption>(42));
+    EXPECT_EQ(42, override.get<GrpcNumChannelsOption>());
+  }
 }
 
 TEST_F(GrpcClientTest, QueryResumableUpload) {

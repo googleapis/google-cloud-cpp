@@ -59,7 +59,20 @@ StatusOr<BucketAccessControl> FindBucketAccessControl(
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
 using ::google::cloud::internal::OptionsSpan;
 
-int DefaultGrpcNumChannels() {
+int DefaultGrpcNumChannels(std::string const& endpoint) {
+  // When using DirectPath the gRPC library already does load balancing across
+  // multiple sockets, it makes little sense to perform additional load
+  // balancing in the client library.
+  if (endpoint.rfind("google-c2p:///", 0) == 0 ||
+      endpoint.rfind("google-c2p-experimental:///", 0) == 0) {
+    return 1;
+  }
+  // When not using DirectPath, there are limits to the bandwidth per channel,
+  // we want to create more channels to avoid hitting said limits.  The value
+  // here is mostly a guess: we know 1 channel is too little for most
+  // applications, but the ideal number depends on the workload.  The
+  // application can always override this default, so it is not important to
+  // have it exactly right.
   auto constexpr kMinimumChannels = 4;
   auto const count = std::thread::hardware_concurrency();
   return (std::max)(kMinimumChannels, static_cast<int>(count));
@@ -92,7 +105,8 @@ Options DefaultOptionsGrpc(Options options) {
     options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   }
   if (!options.has<GrpcNumChannelsOption>()) {
-    options.set<GrpcNumChannelsOption>(DefaultGrpcNumChannels());
+    options.set<GrpcNumChannelsOption>(
+        DefaultGrpcNumChannels(options.get<EndpointOption>()));
   }
   return options;
 }
