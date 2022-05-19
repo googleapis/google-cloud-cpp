@@ -178,6 +178,23 @@ EventarcAuth::AsyncDeleteChannel(
       });
 }
 
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcAuth::GetProvider(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetProviderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetProvider(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
+EventarcAuth::ListProviders(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::ListProvidersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListProviders(context, request);
+}
+
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcAuth::GetChannelConnection(
     grpc::ClientContext& context,

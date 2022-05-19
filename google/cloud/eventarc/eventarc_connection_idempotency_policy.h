@@ -68,6 +68,12 @@ class EventarcConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteChannel(
       google::cloud::eventarc::v1::DeleteChannelRequest const& request) = 0;
 
+  virtual google::cloud::Idempotency GetProvider(
+      google::cloud::eventarc::v1::GetProviderRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency ListProviders(
+      google::cloud::eventarc::v1::ListProvidersRequest request) = 0;
+
   virtual google::cloud::Idempotency GetChannelConnection(
       google::cloud::eventarc::v1::GetChannelConnectionRequest const&
           request) = 0;

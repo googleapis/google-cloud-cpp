@@ -84,6 +84,12 @@ class EventarcConnection {
   virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
       google::cloud::eventarc::v1::DeleteChannelRequest const& request);
 
+  virtual StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
+      google::cloud::eventarc::v1::GetProviderRequest const& request);
+
+  virtual StreamRange<google::cloud::eventarc::v1::Provider> ListProviders(
+      google::cloud::eventarc::v1::ListProvidersRequest request);
+
   virtual StatusOr<google::cloud::eventarc::v1::ChannelConnection>
   GetChannelConnection(
       google::cloud::eventarc::v1::GetChannelConnectionRequest const& request);

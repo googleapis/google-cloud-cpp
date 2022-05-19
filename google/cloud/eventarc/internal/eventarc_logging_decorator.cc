@@ -164,6 +164,29 @@ EventarcLogging::AsyncDeleteChannel(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcLogging::GetProvider(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetProviderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::eventarc::v1::GetProviderRequest const& request) {
+        return child_->GetProvider(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
+EventarcLogging::ListProviders(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::ListProvidersRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::eventarc::v1::ListProvidersRequest const& request) {
+        return child_->ListProviders(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcLogging::GetChannelConnection(
     grpc::ClientContext& context,

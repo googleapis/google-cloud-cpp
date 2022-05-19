@@ -77,6 +77,14 @@ class MockEventarcConnection : public eventarc::EventarcConnection {
       (google::cloud::eventarc::v1::DeleteChannelRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::eventarc::v1::Provider>, GetProvider,
+              (google::cloud::eventarc::v1::GetProviderRequest const& request),
+              (override));
+
+  MOCK_METHOD(StreamRange<google::cloud::eventarc::v1::Provider>, ListProviders,
+              (google::cloud::eventarc::v1::ListProvidersRequest request),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::eventarc::v1::ChannelConnection>,
       GetChannelConnection,

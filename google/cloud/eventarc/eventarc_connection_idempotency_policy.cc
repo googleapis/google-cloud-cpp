@@ -91,6 +91,16 @@ class DefaultEventarcConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency GetProvider(
+      google::cloud::eventarc::v1::GetProviderRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListProviders(
+      google::cloud::eventarc::v1::ListProvidersRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
   Idempotency GetChannelConnection(
       google::cloud::eventarc::v1::GetChannelConnectionRequest const&)
       override {

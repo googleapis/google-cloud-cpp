@@ -84,6 +84,15 @@ class EventarcStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::eventarc::v1::DeleteChannelRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::v1::GetProviderRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
+  ListProviders(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::v1::ListProvidersRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::eventarc::v1::ChannelConnection>
   GetChannelConnection(
       grpc::ClientContext& context,
@@ -180,6 +189,15 @@ class DefaultEventarcStub : public EventarcStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::eventarc::v1::DeleteChannelRequest const& request)
+      override;
+
+  StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
+      grpc::ClientContext& client_context,
+      google::cloud::eventarc::v1::GetProviderRequest const& request) override;
+
+  StatusOr<google::cloud::eventarc::v1::ListProvidersResponse> ListProviders(
+      grpc::ClientContext& client_context,
+      google::cloud::eventarc::v1::ListProvidersRequest const& request)
       override;
 
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(

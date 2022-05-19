@@ -207,6 +207,36 @@ EventarcClient::DeleteChannel(
   return connection_->DeleteChannel(request);
 }
 
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcClient::GetProvider(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::eventarc::v1::GetProviderRequest request;
+  request.set_name(name);
+  return connection_->GetProvider(request);
+}
+
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcClient::GetProvider(
+    google::cloud::eventarc::v1::GetProviderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetProvider(request);
+}
+
+StreamRange<google::cloud::eventarc::v1::Provider>
+EventarcClient::ListProviders(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::eventarc::v1::ListProvidersRequest request;
+  request.set_parent(parent);
+  return connection_->ListProviders(request);
+}
+
+StreamRange<google::cloud::eventarc::v1::Provider>
+EventarcClient::ListProviders(
+    google::cloud::eventarc::v1::ListProvidersRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListProviders(std::move(request));
+}
+
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcClient::GetChannelConnection(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
