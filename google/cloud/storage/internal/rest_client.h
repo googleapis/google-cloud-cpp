@@ -35,9 +35,16 @@ namespace internal {
 class RestClient : public RawClient,
                    public std::enable_shared_from_this<RestClient> {
  public:
-  static std::shared_ptr<RestClient> Create(Options options) {
-    return std::shared_ptr<RestClient>(new RestClient(std::move(options)));
-  }
+  static std::shared_ptr<RestClient> Create(Options options);
+  static std::shared_ptr<RestClient> Create(
+      Options options,
+      std::shared_ptr<google::cloud::rest_internal::RestClient>
+          storage_rest_client,
+      std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
+      std::shared_ptr<RawClient> curl_client);
+
+  static Options ResolveStorageAuthority(Options const& options);
+  static Options ResolveIamAuthority(Options const& options);
 
   RestClient(RestClient const& rhs) = delete;
   RestClient(RestClient&& rhs) = delete;
@@ -158,12 +165,16 @@ class RestClient : public RawClient,
       DeleteNotificationRequest const&) override;
 
  protected:
-  explicit RestClient(Options options);
+  explicit RestClient(
+      std::shared_ptr<google::cloud::rest_internal::RestClient>
+          storage_rest_client,
+      std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
+      std::shared_ptr<RawClient> curl_client, Options options);
 
  private:
-  std::unique_ptr<google::cloud::rest_internal::RestClient>
+  std::shared_ptr<google::cloud::rest_internal::RestClient>
       storage_rest_client_;
-  std::unique_ptr<google::cloud::rest_internal::RestClient> iam_rest_client_;
+  std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client_;
   std::shared_ptr<RawClient> curl_client_;
   google::cloud::Options options_;
 };
