@@ -452,7 +452,7 @@ macro (external_googleapis_install_pc_common target)
     endif ()
 endmacro ()
 
-include(GoogleCloudCppCommon)
+include(AddPkgConfig)
 
 # Use a function to create a scope for the variables.
 function (external_googleapis_install_pc target)
