@@ -300,6 +300,52 @@ EventarcConnectionImpl::DeleteChannel(
       idempotency_policy()->DeleteChannel(request), polling_policy(), __func__);
 }
 
+StatusOr<google::cloud::eventarc::v1::Provider>
+EventarcConnectionImpl::GetProvider(
+    google::cloud::eventarc::v1::GetProviderRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetProvider(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::eventarc::v1::GetProviderRequest const& request) {
+        return stub_->GetProvider(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::eventarc::v1::Provider>
+EventarcConnectionImpl::ListProviders(
+    google::cloud::eventarc::v1::ListProvidersRequest request) {
+  request.clear_page_token();
+  auto stub = stub_;
+  auto retry =
+      std::shared_ptr<eventarc::EventarcRetryPolicy const>(retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListProviders(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::eventarc::v1::Provider>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::eventarc::v1::ListProvidersRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::eventarc::v1::ListProvidersRequest const&
+                       request) {
+              return stub->ListProviders(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::eventarc::v1::ListProvidersResponse r) {
+        std::vector<google::cloud::eventarc::v1::Provider> result(
+            r.providers().size());
+        auto& messages = *r.mutable_providers();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcConnectionImpl::GetChannelConnection(
     google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {

@@ -117,6 +117,21 @@ EventarcMetadata::AsyncDeleteChannel(
   return child_->AsyncDeleteChannel(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcMetadata::GetProvider(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetProviderRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetProvider(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
+EventarcMetadata::ListProviders(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::ListProvidersRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListProviders(context, request);
+}
+
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcMetadata::GetChannelConnection(
     grpc::ClientContext& context,

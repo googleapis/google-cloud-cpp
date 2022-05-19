@@ -41,7 +41,6 @@ TEST(GrpcBucketRequestParser, DeleteBucketMetadataAllOptions) {
         name: "projects/_/buckets/test-bucket"
         if_metageneration_match: 1
         if_metageneration_not_match: 2
-        common_request_params: { user_project: "test-user-project" }
       )pb",
       &expected));
 
@@ -62,7 +61,6 @@ TEST(GrpcBucketRequestParser, GetBucketMetadataAllOptions) {
         name: "projects/_/buckets/test-bucket"
         if_metageneration_match: 1
         if_metageneration_not_match: 2
-        common_request_params: { user_project: "test-user-project" }
         read_mask { paths: "*" }
       )pb",
       &expected));
@@ -175,7 +173,6 @@ TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
         page_token: "test-token"
         prefix: "test-prefix"
         read_mask { paths: [ "*" ] }
-        common_request_params: { user_project: "test-user-project" }
       )pb",
       &expected));
 
@@ -219,9 +216,7 @@ TEST(GrpcBucketRequestParser, LockBucketRetentionPolicyRequestAllOptions) {
   google::storage::v2::LockBucketRetentionPolicyRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        if_metageneration_match: 7
-        common_request_params: { user_project: "test-user-project" }
+        bucket: "projects/_/buckets/test-bucket" if_metageneration_match: 7
       )pb",
       &expected));
 
@@ -430,7 +425,6 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
         predefined_default_object_acl: "projectPrivate"
         if_metageneration_match: 3
         if_metageneration_not_match: 4
-        common_request_params: { user_project: "test-user-project" }
         update_mask {}
       )pb",
       &expected));
@@ -578,7 +572,6 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
         predefined_default_object_acl: "projectPrivate"
         if_metageneration_match: 3
         if_metageneration_not_match: 4
-        common_request_params: { user_project: "test-user-project" }
         update_mask {}
       )pb",
       &expected));

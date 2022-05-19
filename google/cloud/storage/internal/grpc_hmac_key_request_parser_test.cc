@@ -40,7 +40,6 @@ TEST(GrpcBucketRequestParser, CreateHmacKeyRequestAllOptions) {
       R"pb(
         project: "projects/test-project-id"
         service_account_email: "test-service-account-email"
-        common_request_params: { user_project: "test-user-project" }
       )pb",
       &expected));
 
@@ -87,9 +86,7 @@ TEST(GrpcBucketRequestParser, DeleteHmacKeyRequestAllOptions) {
   v2::DeleteHmacKeyRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        access_id: "test-access-id"
-        project: "projects/test-project-id"
-        common_request_params: { user_project: "test-user-project" }
+        access_id: "test-access-id" project: "projects/test-project-id"
       )pb",
       &expected));
 
@@ -104,9 +101,7 @@ TEST(GrpcBucketRequestParser, GetHmacKeyRequestAllOptions) {
   v2::GetHmacKeyRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        access_id: "test-access-id"
-        project: "projects/test-project-id"
-        common_request_params: { user_project: "test-user-project" }
+        access_id: "test-access-id" project: "projects/test-project-id"
       )pb",
       &expected));
 
@@ -126,7 +121,6 @@ TEST(GrpcBucketRequestParser, ListHmacKeysRequestAllOptions) {
         page_token: "test-page-token"
         service_account_email: "test-service-account-email"
         show_deleted_keys: true
-        common_request_params: { user_project: "test-user-project" }
       )pb",
       &expected));
 
@@ -203,7 +197,6 @@ TEST(GrpcBucketRequestParser, UpdateHmacKeyRequestAllOptions) {
           project: "projects/test-project-id"
           state: "INACTIVE"
         }
-        common_request_params: { user_project: "test-user-project" }
         update_mask { paths: [ 'state' ] }
       )pb",
       &expected));

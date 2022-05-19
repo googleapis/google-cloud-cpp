@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_service_account_parser.h"
-#include "google/cloud/storage/internal/grpc_common_request_params.h"
 
 namespace google {
 namespace cloud {
@@ -25,7 +24,6 @@ google::storage::v2::GetServiceAccountRequest GrpcServiceAccountParser::ToProto(
     GetProjectServiceAccountRequest const& request) {
   google::storage::v2::GetServiceAccountRequest proto;
   proto.set_project("projects/" + request.project_id());
-  SetCommonParameters(proto, request);
   return proto;
 }
 

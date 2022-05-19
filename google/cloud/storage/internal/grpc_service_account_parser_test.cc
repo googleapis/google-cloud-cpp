@@ -46,11 +46,7 @@ TEST(GrpcServiceAccountParser, FromProtoServiceAccount) {
 TEST(GrpcServiceAccountParser, ToProtoGetServiceAccount) {
   storage_proto::GetServiceAccountRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        project: "projects/test-only-project-id"
-        common_request_params { user_project: "test-only-user-project" }
-      )pb",
-      &expected));
+      R"pb(project: "projects/test-only-project-id")pb", &expected));
   GetProjectServiceAccountRequest request("test-only-project-id");
   request.set_multiple_options(UserProject("test-only-user-project"));
   auto const actual = GrpcServiceAccountParser::ToProto(request);

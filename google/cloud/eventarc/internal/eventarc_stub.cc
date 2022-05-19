@@ -160,6 +160,30 @@ DefaultEventarcStub::AsyncDeleteChannel(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::eventarc::v1::Provider>
+DefaultEventarcStub::GetProvider(
+    grpc::ClientContext& client_context,
+    google::cloud::eventarc::v1::GetProviderRequest const& request) {
+  google::cloud::eventarc::v1::Provider response;
+  auto status = grpc_stub_->GetProvider(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
+DefaultEventarcStub::ListProviders(
+    grpc::ClientContext& client_context,
+    google::cloud::eventarc::v1::ListProvidersRequest const& request) {
+  google::cloud::eventarc::v1::ListProvidersResponse response;
+  auto status = grpc_stub_->ListProviders(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 DefaultEventarcStub::GetChannelConnection(
     grpc::ClientContext& client_context,

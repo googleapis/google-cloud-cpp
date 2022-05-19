@@ -108,6 +108,19 @@ EventarcConnection::DeleteChannel(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcConnection::GetProvider(
+    google::cloud::eventarc::v1::GetProviderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::eventarc::v1::Provider>
+EventarcConnection::ListProviders(
+    google::cloud::eventarc::v1::
+        ListProvidersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::eventarc::v1::Provider>>();
+}
+
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcConnection::GetChannelConnection(
     google::cloud::eventarc::v1::GetChannelConnectionRequest const&) {

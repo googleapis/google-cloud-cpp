@@ -91,6 +91,15 @@ class EventarcLogging : public EventarcStub {
       google::cloud::eventarc::v1::DeleteChannelRequest const& request)
       override;
 
+  StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::v1::GetProviderRequest const& request) override;
+
+  StatusOr<google::cloud::eventarc::v1::ListProvidersResponse> ListProviders(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::v1::ListProvidersRequest const& request)
+      override;
+
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
       grpc::ClientContext& context,
       google::cloud::eventarc::v1::GetChannelConnectionRequest const& request)

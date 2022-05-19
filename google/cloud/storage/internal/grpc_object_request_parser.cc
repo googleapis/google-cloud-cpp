@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
-#include "google/cloud/storage/internal/grpc_common_request_params.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
@@ -30,6 +29,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
+
 template <typename GrpcRequest, typename StorageRequest>
 Status SetCommonObjectParameters(GrpcRequest& request,
                                  StorageRequest const& req) {
@@ -169,7 +169,6 @@ GrpcObjectRequestParser::ToProto(ComposeObjectRequest const& request) {
   google::storage::v2::ComposeObjectRequest result;
   auto status = SetCommonObjectParameters(result, request);
   if (!status.ok()) return status;
-  SetCommonParameters(result, request);
 
   auto& destination = *result.mutable_destination();
   destination.set_bucket("projects/_/buckets/" + request.bucket_name());
@@ -226,7 +225,6 @@ google::storage::v2::DeleteObjectRequest GrpcObjectRequestParser::ToProto(
   google::storage::v2::DeleteObjectRequest result;
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
-  SetCommonParameters(result, request);
   result.set_bucket("projects/_/buckets/" + request.bucket_name());
   result.set_object(request.object_name());
   result.set_generation(request.GetOption<Generation>().value_or(0));
@@ -238,7 +236,6 @@ google::storage::v2::GetObjectRequest GrpcObjectRequestParser::ToProto(
   google::storage::v2::GetObjectRequest result;
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
-  SetCommonParameters(result, request);
 
   result.set_bucket("projects/_/buckets/" + request.bucket_name());
   result.set_object(request.object_name());
@@ -278,7 +275,6 @@ GrpcObjectRequestParser::ToProto(ReadObjectRangeRequest const& request) {
   }
   SetGenerationConditions(r, request);
   SetMetagenerationConditions(r, request);
-  SetCommonParameters(r, request);
 
   return r;
 }
@@ -290,7 +286,6 @@ GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
   if (!status.ok()) return status;
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
-  SetCommonParameters(result, request);
   SetPredefinedAcl(result, request);
 
   auto& object = *result.mutable_object();
@@ -374,7 +369,6 @@ GrpcObjectRequestParser::ToProto(UpdateObjectRequest const& request) {
   if (!status.ok()) return status;
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
-  SetCommonParameters(result, request);
   SetPredefinedAcl(result, request);
 
   auto& object = *result.mutable_object();
@@ -432,7 +426,6 @@ GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
   SetMetagenerationConditions(object_spec, request);
   status = SetCommonObjectParameters(r, request);
   if (!status.ok()) return status;
-  SetCommonParameters(r, request);
 
   resource.set_bucket("projects/_/buckets/" + request.bucket_name());
   resource.set_name(request.object_name());
@@ -505,7 +498,6 @@ google::storage::v2::ListObjectsRequest GrpcObjectRequestParser::ToProto(
   result.set_versions(request.GetOption<Versions>().value_or(""));
   result.set_lexicographic_start(request.GetOption<StartOffset>().value_or(""));
   result.set_lexicographic_end(request.GetOption<EndOffset>().value_or(""));
-  SetCommonParameters(result, request);
   return result;
 }
 
@@ -524,7 +516,6 @@ ListObjectsResponse GrpcObjectRequestParser::FromProto(
 StatusOr<google::storage::v2::RewriteObjectRequest>
 GrpcObjectRequestParser::ToProto(RewriteObjectRequest const& request) {
   google::storage::v2::RewriteObjectRequest result;
-  SetCommonParameters(result, request);
   auto status = SetCommonObjectParameters(result, request);
   if (!status.ok()) return status;
 
@@ -604,7 +595,6 @@ RewriteObjectResponse GrpcObjectRequestParser::FromProto(
 StatusOr<google::storage::v2::RewriteObjectRequest>
 GrpcObjectRequestParser::ToProto(CopyObjectRequest const& request) {
   google::storage::v2::RewriteObjectRequest result;
-  SetCommonParameters(result, request);
   auto status = SetCommonObjectParameters(result, request);
   if (!status.ok()) return status;
 
@@ -678,7 +668,6 @@ GrpcObjectRequestParser::ToProto(ResumableUploadRequest const& request) {
   SetPredefinedAcl(object_spec, request);
   SetGenerationConditions(object_spec, request);
   SetMetagenerationConditions(object_spec, request);
-  SetCommonParameters(result, request);
 
   resource.set_bucket("projects/_/buckets/" + request.bucket_name());
   resource.set_name(request.object_name());

@@ -86,6 +86,12 @@ class EventarcConnectionImpl : public eventarc::EventarcConnection {
       google::cloud::eventarc::v1::DeleteChannelRequest const& request)
       override;
 
+  StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
+      google::cloud::eventarc::v1::GetProviderRequest const& request) override;
+
+  StreamRange<google::cloud::eventarc::v1::Provider> ListProviders(
+      google::cloud::eventarc::v1::ListProvidersRequest request) override;
+
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
       google::cloud::eventarc::v1::GetChannelConnectionRequest const& request)
       override;
