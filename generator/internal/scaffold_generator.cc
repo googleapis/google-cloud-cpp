@@ -103,7 +103,6 @@ void GenerateScaffold(
     Generator generator;
   } files[] = {
       {"config.cmake.in", GenerateCmakeConfigIn},
-      {"config.pc.in", GenerateConfigPcIn},
       {"README.md", GenerateReadme},
       {"BUILD.bazel", GenerateBuild},
       {"CMakeLists.txt", GenerateCMakeLists},
@@ -154,40 +153,6 @@ find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
 include("$${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_$library$-targets.cmake")
-)""";
-  google::protobuf::io::OstreamOutputStream output(&os);
-  google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, kText);
-}
-
-void GenerateConfigPcIn(std::ostream& os,
-                        std::map<std::string, std::string> const& variables) {
-  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-prefix=$${pcfiledir}/../..
-exec_prefix=$${prefix}/@CMAKE_INSTALL_BINDIR@
-libdir=$${prefix}/@CMAKE_INSTALL_LIBDIR@
-includedir=$${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
-
-Name: @GOOGLE_CLOUD_CPP_PC_NAME@
-Description: @GOOGLE_CLOUD_CPP_PC_DESCRIPTION@
-Requires: @GOOGLE_CLOUD_CPP_PC_REQUIRES@
-Version: @DOXYGEN_PROJECT_NUMBER@
-
-Libs: -L$${libdir} @GOOGLE_CLOUD_CPP_PC_LIBS@
-Cflags: -I$${includedir}
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');

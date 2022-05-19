@@ -141,16 +141,6 @@ TEST_F(ScaffoldGenerator, CmakeConfigIn) {
           R"""(include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_test-targets.cmake"))"""));
 }
 
-TEST_F(ScaffoldGenerator, ConfigPcIn) {
-  auto const vars = ScaffoldVars(path(), service());
-  std::ostringstream os;
-  GenerateConfigPcIn(os, vars);
-  auto const actual = std::move(os).str();
-  EXPECT_THAT(actual, HasSubstr("2034"));
-  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
-  EXPECT_THAT(actual, HasSubstr(R"""(prefix=${pcfiledir}/../..)"""));
-}
-
 TEST_F(ScaffoldGenerator, Readme) {
   auto const vars = ScaffoldVars(path(), service());
   std::ostringstream os;
