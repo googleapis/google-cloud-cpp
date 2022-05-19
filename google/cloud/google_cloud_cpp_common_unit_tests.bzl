@@ -59,4 +59,5 @@ google_cloud_cpp_common_unit_tests = [
     "stream_range_test.cc",
     "terminate_handler_test.cc",
     "tracing_options_test.cc",
+    "url_encoded_test.cc",
 ]

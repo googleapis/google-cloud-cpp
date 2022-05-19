@@ -82,6 +82,7 @@ google_cloud_cpp_common_hdrs = [
     "stream_range.h",
     "terminate_handler.h",
     "tracing_options.h",
+    "url_encoded.h",
     "version.h",
 ]
 
@@ -114,5 +115,6 @@ google_cloud_cpp_common_srcs = [
     "status.cc",
     "terminate_handler.cc",
     "tracing_options.cc",
+    "url_encoded.cc",
     "version.cc",
 ]
