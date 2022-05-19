@@ -14,7 +14,6 @@
 # limitations under the License.
 # ~~~
 
-
 # We do not use macros a lot, so this deserves a comment. Unlike functions,
 # macros do not introduce a scope. This is an advantage when trying to set
 # global variables, as we do here.  It is obviously a disadvantage if you need
@@ -24,14 +23,14 @@ macro (google_cloud_cpp_set_pkgconfig_paths)
         set(GOOGLE_CLOUD_CPP_PC_LIBDIR "${CMAKE_INSTALL_LIBDIR}")
     else ()
         set(GOOGLE_CLOUD_CPP_PC_LIBDIR
-                "\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}")
+            "\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}")
     endif ()
 
     if (IS_ABSOLUTE "${CMAKE_INSTALL_INCLUDEDIR}")
         set(GOOGLE_CLOUD_CPP_PC_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}")
     else ()
         set(GOOGLE_CLOUD_CPP_PC_INCLUDEDIR
-                "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
+            "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
     endif ()
 endmacro ()
 
@@ -51,9 +50,9 @@ function (google_cloud_cpp_add_pkgconfig library name description)
 
     # Create and install the pkg-config files.
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-            "google_cloud_cpp_${library}.pc" @ONLY)
+                   "google_cloud_cpp_${library}.pc" @ONLY)
     install(
-            FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_${library}.pc"
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-            COMPONENT google_cloud_cpp_development)
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_${library}.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+        COMPONENT google_cloud_cpp_development)
 endfunction ()
