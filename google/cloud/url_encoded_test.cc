@@ -70,6 +70,13 @@ TEST(UrlDecodeString, OneReservedCharacter) {
   EXPECT_EQ(result, "%");
 }
 
+TEST(UrlEncoding, RoundTrip) {
+  std::string printable_ascii_chars =
+      R"( !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~)";
+  auto result = UrlDecode(UrlEncode(printable_ascii_chars));
+  EXPECT_EQ(printable_ascii_chars, result);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

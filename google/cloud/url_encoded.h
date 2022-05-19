@@ -25,10 +25,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // Encodes the given string and returns a new string such that all input
 // characters that are not in [a-zA-z-._~] are converted to their "URL escaped"
 // version "%NN" where NN is the ASCII hex value.
+// Non-printable ASCII characters in input results in undefined behavior.
 std::string UrlEncode(std::string const& input);
 
 // Decodes the given string, interpreting any "%NN" sequence as an "URL escaped"
 // character and substitutes the ASCII character corresponding to hex value NN.
+// Malformed escaped sequences in input could result in non-printable characters
+// in the result or possibly thrown exceptions.
 std::string UrlDecode(std::string const& input);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,7 +33,6 @@ std::array<const char[4], 95> constexpr kEncode = {
 }  // namespace
 
 std::string UrlEncode(std::string const& input) {
-  if (input.empty()) return {};
   std::stringstream encoded;
   for (auto const& c : input) {
     encoded << kEncode[c - 0x20];
@@ -42,7 +41,6 @@ std::string UrlEncode(std::string const& input) {
 }
 
 std::string UrlDecode(std::string const& input) {
-  if (input.empty()) return {};
   std::stringstream decoded;
   for (std::size_t i = 0; i < input.size(); ++i) {
     if (input[i] == '%') {
