@@ -30,6 +30,10 @@ LifecycleRuleAction LifecycleRule::Delete() {
   return LifecycleRuleAction{"Delete", {}};
 }
 
+LifecycleRuleAction LifecycleRule::AbortIncompleteMultipartUpload() {
+  return LifecycleRuleAction{"AbortIncompleteMultipartUpload", {}};
+}
+
 LifecycleRuleAction LifecycleRule::SetStorageClassStandard() {
   return SetStorageClass(storage_class::Standard());
 }
