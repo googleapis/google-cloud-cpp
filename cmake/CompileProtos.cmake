@@ -453,9 +453,10 @@ macro (external_googleapis_install_pc_common target)
 endmacro ()
 
 # Use a function to create a scope for the variables.
-function (external_googleapis_install_pc target source_dir)
+function (external_googleapis_install_pc target)
     external_googleapis_install_pc_common("${target}")
-    configure_file("${source_dir}/config.pc.in" "${target}.pc" @ONLY)
+    configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
+                   "${target}.pc" @ONLY)
     install(
         FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"

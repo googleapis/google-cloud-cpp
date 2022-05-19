@@ -524,8 +524,7 @@ install(
     DESTINATION "$${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_$library$"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_$library$_protos"
-                               "$${PROJECT_SOURCE_DIR}/external/googleapis")
+external_googleapis_install_pc("google_cloud_cpp_$library$_protos")
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');

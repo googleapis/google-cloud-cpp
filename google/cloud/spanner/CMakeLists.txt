@@ -500,7 +500,7 @@ string(
            " absl_time")
 
 # Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/spanner/config.pc.in"
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
                "google_cloud_cpp_spanner.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_spanner.pc"
