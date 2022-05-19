@@ -106,29 +106,18 @@ else ()
     create_bazel_config(google_cloud_cpp_storage_grpc)
 endif ()
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_PC_NAME "The GCS (Google Cloud Storage) gRPC plugin")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "An extension to the GCS C++ client library using gRPC for transport.")
-string(
-    CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
-           "google_cloud_cpp_storage"
-           " google_cloud_cpp_grpc_utils"
-           " google_cloud_cpp_storage_protos"
-           " google_cloud_cpp_rpc_status_protos"
-           " google_cloud_cpp_rpc_error_details_protos"
-           " google_cloud_cpp_common"
-           " libcurl"
-           " openssl")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage_grpc")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_storage_grpc.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage_grpc.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    storage_grpc
+    "The GCS (Google Cloud Storage) gRPC plugin"
+    "An extension to the GCS C++ client library using gRPC for transport."
+    "google_cloud_cpp_storage"
+    " google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_storage_protos"
+    " google_cloud_cpp_rpc_status_protos"
+    " google_cloud_cpp_rpc_error_details_protos"
+    " google_cloud_cpp_common"
+    " libcurl"
+    " openssl")
 
 install(
     TARGETS google_cloud_cpp_storage_grpc

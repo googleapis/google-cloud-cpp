@@ -304,7 +304,10 @@ install(
 google_cloud_cpp_install_headers(google_cloud_cpp_storage
                                  include/google/cloud/storage)
 
-# Setup global variables used in the following *.in files.
+# Cannot use google_cloud_cpp_add_pkgconfig() for this library. There is a
+# horrible hack here, adding -lcrc32c to the 'Libs:` entry. We should be adding
+# this library to the `Requires:` line, but it does not create pkg-config
+# modules.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Storage.")
