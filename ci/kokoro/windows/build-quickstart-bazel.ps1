@@ -66,9 +66,13 @@ if ((Test-Path env:KOKORO_GFILE_DIR) -and
         "--remote_cache=${BAZEL_CACHE}/windows/${BuildName}",
         # Reduce the timeout for the remote cache from the 60s default:
         #     https://docs.bazel.build/versions/main/command-line-reference.html#flag--remote_timeout
-        # If the build machine has network problems we would rather build locally
-        # over blocking the build for 60s
-        "--remote_timeout=3"
+        # If the build machine has network problems we would rather build
+        # locally over blocking the build for 60s. When adjusting this
+        # parameter, keep in mind that:
+        # - Some of the objects in the cache in the ~60MiB range.
+        # - Without tuning uploads run in the 50 MiB/s range, and downloads in
+        #   the 150 MiB/s range.
+        "--remote_timeout=5"
         )
     $build_flags += @("--google_credentials=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")
     # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
