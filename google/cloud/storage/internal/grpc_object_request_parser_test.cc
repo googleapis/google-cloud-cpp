@@ -150,7 +150,6 @@ TEST(GrpcObjectRequestParser, ComposeObjectRequestAllOptions) {
     if_generation_match: 1
     if_metageneration_match: 3
     kms_key: "test-only-kms-key"
-    common_request_params: { user_project: "test-user-project" }
   )pb";
   google::storage::v2::ComposeObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -195,7 +194,6 @@ TEST(GrpcObjectRequestParser, DeleteObjectAllFields) {
         if_generation_not_match: 2
         if_metageneration_match: 3
         if_metageneration_not_match: 4
-        common_request_params: { user_project: "test-user-project" }
       )pb",
       &expected));
 
@@ -221,7 +219,6 @@ TEST(GrpcObjectRequestParser, GetObjectMetadataAllFields) {
         if_generation_not_match: 2
         if_metageneration_match: 3
         if_metageneration_not_match: 4
-        common_request_params: { user_project: "test-user-project" }
         read_mask { paths: "*" }
       )pb",
       &expected));
@@ -264,7 +261,6 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestAllFields) {
         if_generation_not_match: 2
         if_metageneration_match: 3
         if_metageneration_not_match: 4
-        common_request_params: { user_project: "test-user-project" }
       )pb",
       &expected));
   *expected.mutable_common_object_request_params() =
@@ -328,7 +324,6 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
     if_generation_not_match: 2
     if_metageneration_match: 3
     if_metageneration_not_match: 4
-    common_request_params: { user_project: "test-user-project" }
     update_mask {}
   )pb";
   google::storage::v2::UpdateObjectRequest expected;
@@ -393,7 +388,6 @@ TEST(GrpcObjectRequestParser, UpdateObjectRequestAllOptions) {
     if_generation_not_match: 2
     if_metageneration_match: 3
     if_metageneration_not_match: 4
-    common_request_params: { user_project: "test-user-project" }
     update_mask {}
   )pb";
   google::storage::v2::UpdateObjectRequest expected;
@@ -582,7 +576,6 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestAllOptions) {
       if_metageneration_match: 42
       if_metageneration_not_match: 84
     }
-    common_request_params: { user_project: "test-user-project" }
     object_checksums: {
       # See top-of-file comments for details on the magic numbers
       crc32c: 0x22620404
@@ -681,7 +674,6 @@ TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
         versions: true
         lexicographic_start: "test/prefix/a"
         lexicographic_end: "test/prefix/abc"
-        common_request_params: { user_project: "test-user-project" }
       )pb",
       &expected));
 
@@ -742,7 +734,6 @@ TEST(GrpcObjectRequestParser, RewriteObjectRequestAllOptions) {
     copy_source_encryption_key_bytes: "ABCDEFGH"
     # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic string
     copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
-    common_request_params: { user_project: "test-user-project" }
   )pb";
   google::storage::v2::RewriteObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -799,7 +790,6 @@ TEST(GrpcObjectRequestParser, RewriteObjectRequestNoDestination) {
         copy_source_encryption_key_bytes: "ABCDEFGH"
         # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic string
         copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
-        common_request_params: { user_project: "test-user-project" }
       )pb",
       &expected));
   *expected.mutable_common_object_request_params() =
@@ -868,7 +858,6 @@ TEST(GrpcObjectRequestParser, CopyObjectRequestAllOptions) {
     copy_source_encryption_key_bytes: "ABCDEFGH"
     # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic string
     copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
-    common_request_params { user_project: "test-user-project" }
   )pb";
   google::storage::v2::RewriteObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -921,7 +910,6 @@ TEST(GrpcObjectRequestParser, CopyObjectRequestNoDestination) {
         copy_source_encryption_key_bytes: "ABCDEFGH"
         # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic string
         copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
-        common_request_params: { user_project: "test-user-project" }
       )pb",
       &expected));
   *expected.mutable_common_object_request_params() =
@@ -984,7 +972,6 @@ TEST(GrpcObjectRequestParser, ResumableUploadRequestAllFields) {
           if_metageneration_match: 42
           if_metageneration_not_match: 84
         }
-        common_request_params: { user_project: "test-user-project" }
       )pb",
       &expected));
   *expected.mutable_common_object_request_params() =

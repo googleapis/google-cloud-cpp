@@ -724,8 +724,6 @@ TEST_F(GrpcClientTest, ListBucketAclFailure) {
                                   Pair("x-goog-quota-user", "test-quota-user"),
                                   Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
-        EXPECT_THAT(request.common_request_params().user_project(),
-                    "test-user-project");
         return PermanentError();
       });
 
@@ -777,8 +775,6 @@ TEST_F(GrpcClientTest, GetBucketAclFailure) {
                                   Pair("x-goog-quota-user", "test-quota-user"),
                                   Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
-        EXPECT_THAT(request.common_request_params().user_project(),
-                    "test-user-project");
         return PermanentError();
       });
 
@@ -835,8 +831,6 @@ TEST_F(GrpcClientTest, CreateBucketAclFailure) {
                                   Pair("x-goog-quota-user", "test-quota-user"),
                                   Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
-        EXPECT_THAT(request.common_request_params().user_project(),
-                    "test-user-project");
         return PermanentError();
       });
 
@@ -902,8 +896,6 @@ TEST_F(GrpcClientTest, DeleteBucketAclFailure) {
                                   Pair("x-goog-quota-user", "test-quota-user"),
                                   Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
-        EXPECT_THAT(request.common_request_params().user_project(),
-                    "test-user-project");
         return PermanentError();
       });
 
@@ -970,8 +962,6 @@ TEST_F(GrpcClientTest, UpdateBucketAclFailure) {
                                   Pair("x-goog-quota-user", "test-quota-user"),
                                   Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
-        EXPECT_THAT(request.common_request_params().user_project(),
-                    "test-user-project");
         return PermanentError();
       });
 
@@ -1037,8 +1027,6 @@ TEST_F(GrpcClientTest, PatchBucketAclFailure) {
                                   Pair("x-goog-quota-user", "test-quota-user"),
                                   Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
-        EXPECT_THAT(request.common_request_params().user_project(),
-                    "test-user-project");
         return PermanentError();
       });
 

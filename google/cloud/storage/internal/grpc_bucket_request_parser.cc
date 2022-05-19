@@ -16,7 +16,6 @@
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
-#include "google/cloud/storage/internal/grpc_common_request_params.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
@@ -33,7 +32,6 @@ namespace internal {
 google::storage::v2::DeleteBucketRequest GrpcBucketRequestParser::ToProto(
     DeleteBucketRequest const& request) {
   google::storage::v2::DeleteBucketRequest result;
-  SetCommonParameters(result, request);
   result.set_name("projects/_/buckets/" + request.bucket_name());
   if (request.HasOption<IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
@@ -49,7 +47,6 @@ google::storage::v2::DeleteBucketRequest GrpcBucketRequestParser::ToProto(
 google::storage::v2::GetBucketRequest GrpcBucketRequestParser::ToProto(
     GetBucketMetadataRequest const& request) {
   google::storage::v2::GetBucketRequest result;
-  SetCommonParameters(result, request);
   result.set_name("projects/_/buckets/" + request.bucket_name());
   if (request.HasOption<IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
@@ -90,7 +87,6 @@ google::storage::v2::CreateBucketRequest GrpcBucketRequestParser::ToProto(
 google::storage::v2::ListBucketsRequest GrpcBucketRequestParser::ToProto(
     ListBucketsRequest const& request) {
   google::storage::v2::ListBucketsRequest result;
-  SetCommonParameters(result, request);
   result.set_parent("projects/" + request.project_id());
   auto const page_size = request.GetOption<MaxResults>().value_or(0);
   // Clamp out of range values. The service will clamp to its own range
@@ -127,7 +123,6 @@ google::storage::v2::LockBucketRetentionPolicyRequest
 GrpcBucketRequestParser::ToProto(
     LockBucketRetentionPolicyRequest const& request) {
   google::storage::v2::LockBucketRetentionPolicyRequest result;
-  SetCommonParameters(result, request);
   result.set_bucket("projects/_/buckets/" + request.bucket_name());
   result.set_if_metageneration_match(request.metageneration());
   return result;
@@ -384,7 +379,6 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
     result.set_predefined_default_object_acl(
         request.GetOption<PredefinedDefaultObjectAcl>().value());
   }
-  SetCommonParameters(result, request);
 
   return result;
 }
@@ -506,7 +500,6 @@ google::storage::v2::UpdateBucketRequest GrpcBucketRequestParser::ToProto(
     result.set_predefined_default_object_acl(
         request.GetOption<PredefinedDefaultObjectAcl>().value());
   }
-  SetCommonParameters(result, request);
 
   return result;
 }

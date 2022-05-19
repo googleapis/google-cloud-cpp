@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_hmac_key_request_parser.h"
-#include "google/cloud/storage/internal/grpc_common_request_params.h"
 #include "google/cloud/storage/internal/grpc_hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 
@@ -26,7 +25,6 @@ namespace internal {
 google::storage::v2::CreateHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
     CreateHmacKeyRequest const& request) {
   google::storage::v2::CreateHmacKeyRequest result;
-  SetCommonParameters(result, request);
   result.set_project("projects/" + request.project_id());
   result.set_service_account_email(request.service_account());
   return result;
@@ -43,7 +41,6 @@ CreateHmacKeyResponse GrpcHmacKeyRequestParser::FromProto(
 google::storage::v2::DeleteHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
     DeleteHmacKeyRequest const& request) {
   google::storage::v2::DeleteHmacKeyRequest result;
-  SetCommonParameters(result, request);
   result.set_access_id(request.access_id());
   result.set_project("projects/" + request.project_id());
   return result;
@@ -52,7 +49,6 @@ google::storage::v2::DeleteHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
 google::storage::v2::ListHmacKeysRequest GrpcHmacKeyRequestParser::ToProto(
     ListHmacKeysRequest const& request) {
   google::storage::v2::ListHmacKeysRequest result;
-  SetCommonParameters(result, request);
   result.set_project("projects/" + request.project_id());
   result.set_page_token(request.page_token());
   result.set_page_size(
@@ -76,7 +72,6 @@ ListHmacKeysResponse GrpcHmacKeyRequestParser::FromProto(
 google::storage::v2::GetHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
     GetHmacKeyRequest const& request) {
   google::storage::v2::GetHmacKeyRequest result;
-  SetCommonParameters(result, request);
   result.set_access_id(request.access_id());
   result.set_project("projects/" + request.project_id());
   return result;
@@ -85,7 +80,6 @@ google::storage::v2::GetHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
 google::storage::v2::UpdateHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
     UpdateHmacKeyRequest const& request) {
   google::storage::v2::UpdateHmacKeyRequest result;
-  SetCommonParameters(result, request);
   result.mutable_hmac_key()->set_access_id(request.access_id());
   result.mutable_hmac_key()->set_project("projects/" + request.project_id());
   result.mutable_hmac_key()->set_state(request.resource().state());
