@@ -27,6 +27,9 @@ include(SelectMSVCRuntime)
 # Enable Werror
 include(EnableWerror)
 
+# Helper functions to create pkg-config(1) module files.
+include(AddPkgConfig)
+
 if (${CMAKE_VERSION} VERSION_LESS "3.12")
     # Old versions of CMake have really poor support for Doxygen generation.
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
@@ -238,26 +241,4 @@ function (google_cloud_cpp_add_executable target prefix source)
     set("${target}"
         "${target_name}"
         PARENT_SCOPE)
-endfunction ()
-
-#
-# Create the pkgconfig configuration file (aka *.pc file) and the rules to
-# install it.
-#
-# * library: the name of the library, such as `storage`, or `spanner`
-# * ARGN: the names of any pkgconfig modules the generated module depends on
-#
-function (google_cloud_cpp_add_pkgconfig library name description)
-    set(GOOGLE_CLOUD_CPP_PC_NAME "${name}")
-    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION "${description}")
-    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_${library}")
-    string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES ${ARGN})
-
-    # Create and install the pkg-config files.
-    configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-                   "google_cloud_cpp_${library}.pc" @ONLY)
-    install(
-        FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_${library}.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-        COMPONENT google_cloud_cpp_development)
 endfunction ()

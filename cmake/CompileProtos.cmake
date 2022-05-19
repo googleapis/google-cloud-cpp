@@ -452,9 +452,12 @@ macro (external_googleapis_install_pc_common target)
     endif ()
 endmacro ()
 
+include(AddPkgConfig)
+
 # Use a function to create a scope for the variables.
 function (external_googleapis_install_pc target)
     external_googleapis_install_pc_common("${target}")
+    google_cloud_cpp_set_pkgconfig_paths()
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
                    "${target}.pc" @ONLY)
     install(
