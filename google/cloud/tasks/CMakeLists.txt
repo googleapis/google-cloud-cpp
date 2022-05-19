@@ -156,21 +156,13 @@ google_cloud_cpp_install_headers("google_cloud_cpp_tasks"
 google_cloud_cpp_install_headers("google_cloud_cpp_tasks_mocks"
                                  "include/google/cloud/tasks")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_PC_NAME "The Cloud Tasks API C++ Client Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides C++ APIs to use the Cloud Tasks API.")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_tasks")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common" " google_cloud_cpp_tasks_protos")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_tasks.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_tasks.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    tasks
+    "The Cloud Tasks API C++ Client Library"
+    "Provides C++ APIs to use the Cloud Tasks API."
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_tasks_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

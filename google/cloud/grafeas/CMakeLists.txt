@@ -83,7 +83,6 @@ google_cloud_cpp_install_proto_library_protos("google_cloud_cpp_grafeas_protos"
 google_cloud_cpp_install_proto_library_headers(
     "google_cloud_cpp_grafeas_protos")
 
-# Setup global variables used in the following *.in files.
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

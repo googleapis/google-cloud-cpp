@@ -125,21 +125,10 @@ install(
 google_cloud_cpp_install_headers(google_cloud_cpp_rest_internal
                                  include/google/cloud)
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_PC_NAME
-    "REST library for the Google Cloud C++ Client Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides REST Transport for the Google Cloud C++ Client Library.")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_rest_internal")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_rest_internal.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_rest_internal.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    rest_internal "REST library for the Google Cloud C++ Client Library"
+    "Provides REST Transport for the Google Cloud C++ Client Library."
+    "google_cloud_cpp_common" " libcurl" " openssl")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
