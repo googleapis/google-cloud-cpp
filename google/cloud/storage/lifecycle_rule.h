@@ -153,11 +153,12 @@ class LifecycleRule {
   LifecycleRuleAction const& action() const { return action_; }
   LifecycleRuleCondition const& condition() const { return condition_; }
 
-  //@{
   /**
    * @name Creates different types of LifecycleRule actions.
    */
+  ///@{
   static LifecycleRuleAction Delete();
+  static LifecycleRuleAction AbortIncompleteMultipartUpload();
   static LifecycleRuleAction SetStorageClassStandard();
   static LifecycleRuleAction SetStorageClassMultiRegional();
   static LifecycleRuleAction SetStorageClassRegional();
@@ -166,12 +167,12 @@ class LifecycleRule {
   static LifecycleRuleAction SetStorageClassDurableReducedAvailability();
   static LifecycleRuleAction SetStorageClassArchive();
   static LifecycleRuleAction SetStorageClass(std::string storage_class);
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Creates different types of LifecycleRule rules.
    */
+  ///@{
   static LifecycleRuleCondition MaxAge(std::int32_t days) {
     LifecycleRuleCondition result;
     result.age.emplace(std::move(days));
@@ -273,7 +274,7 @@ class LifecycleRule {
     result.custom_time_before = date;
     return result;
   }
-  //@}
+  ///@}
 
   /**
    * Combines multiple LifecycleRule conditions using conjunction.
