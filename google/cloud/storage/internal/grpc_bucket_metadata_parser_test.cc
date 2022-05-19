@@ -314,6 +314,10 @@ TEST(GrpcBucketMetadataParser, LifecycleRuleConditionRoundtrip) {
     custom_time_before { year: 2022 month: 2 day: 15 }
     days_since_noncurrent_time: 5
     noncurrent_time_before { year: 2022 month: 1 day: 2 }
+    matches_prefix: "p1/"
+    matches_prefix: "p2/"
+    matches_suffix: ".txt"
+    matches_suffix: ".html"
   )pb";
   google::storage::v2::Bucket::Lifecycle::Rule::Condition start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
@@ -325,7 +329,9 @@ TEST(GrpcBucketMetadataParser, LifecycleRuleConditionRoundtrip) {
       LifecycleRule::DaysSinceCustomTime(4),
       LifecycleRule::CustomTimeBefore(absl::CivilDay(2022, 2, 15)),
       LifecycleRule::DaysSinceNoncurrentTime(5),
-      LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2022, 1, 2)));
+      LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2022, 1, 2)),
+      LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
+      LifecycleRule::MatchesSuffixes({".txt", ".html"}));
   auto const middle = GrpcBucketMetadataParser::FromProto(start);
   EXPECT_EQ(middle, expected);
   auto const end = GrpcBucketMetadataParser::ToProto(middle);
@@ -342,6 +348,10 @@ TEST(GrpcBucketMetadataParser, LifecycleRuleRoundtrip) {
       num_newer_versions: 3
       matches_storage_class: "STANDARD"
       matches_storage_class: "NEARLINE"
+      matches_prefix: "p1/"
+      matches_prefix: "p2/"
+      matches_suffix: ".txt"
+      matches_suffix: ".html"
     }
   )pb";
   google::storage::v2::Bucket::Lifecycle::Rule start;
@@ -351,7 +361,9 @@ TEST(GrpcBucketMetadataParser, LifecycleRuleRoundtrip) {
           LifecycleRule::MaxAge(7),
           LifecycleRule::CreatedBefore(absl::CivilDay(2021, 12, 20)),
           LifecycleRule::IsLive(true), LifecycleRule::NumNewerVersions(3),
-          LifecycleRule::MatchesStorageClasses({"STANDARD", "NEARLINE"})),
+          LifecycleRule::MatchesStorageClasses({"STANDARD", "NEARLINE"}),
+          LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
+          LifecycleRule::MatchesSuffixes({".txt", ".html"})),
       LifecycleRule::Delete());
   auto const middle = GrpcBucketMetadataParser::FromProto(start);
   EXPECT_EQ(middle, expected);

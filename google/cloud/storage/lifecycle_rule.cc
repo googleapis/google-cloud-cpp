@@ -21,6 +21,55 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+absl::optional<std::vector<std::string>> MergeStringListConditions(
+    absl::optional<std::vector<std::string>> result,
+    absl::optional<std::vector<std::string>> const& rhs) {
+  if (!rhs.has_value()) return result;
+  if (!result.has_value()) return *rhs;
+
+  std::sort(result->begin(), result->end());
+  std::vector<std::string> b = *rhs;
+  std::sort(b.begin(), b.end());
+  std::vector<std::string> tmp;
+  tmp.reserve((std::max)(result->size(), b.size()));
+  std::set_intersection(result->begin(), result->end(), b.begin(), b.end(),
+                        std::back_inserter(tmp));
+  tmp.shrink_to_fit();
+  return tmp;
+}
+
+}  // namespace
+
+bool operator==(LifecycleRuleCondition const& lhs,
+                LifecycleRuleCondition const& rhs) {
+  return lhs.age == rhs.age && lhs.created_before == rhs.created_before &&
+         lhs.is_live == rhs.is_live &&
+         lhs.matches_storage_class == rhs.matches_storage_class &&
+         lhs.num_newer_versions == rhs.num_newer_versions &&
+         lhs.days_since_noncurrent_time == rhs.days_since_noncurrent_time &&
+         lhs.noncurrent_time_before == rhs.noncurrent_time_before &&
+         lhs.days_since_custom_time == rhs.days_since_custom_time &&
+         lhs.custom_time_before == rhs.custom_time_before &&
+         lhs.matches_prefix == rhs.matches_prefix &&
+         lhs.matches_suffix == rhs.matches_suffix;
+}
+
+bool operator<(LifecycleRuleCondition const& lhs,
+               LifecycleRuleCondition const& rhs) {
+  return std::tie(lhs.age, lhs.created_before, lhs.is_live,
+                  lhs.matches_storage_class, lhs.num_newer_versions,
+                  lhs.days_since_noncurrent_time, lhs.noncurrent_time_before,
+                  lhs.days_since_custom_time, lhs.custom_time_before,
+                  lhs.matches_prefix, lhs.matches_suffix) <
+         std::tie(rhs.age, rhs.created_before, rhs.is_live,
+                  rhs.matches_storage_class, rhs.num_newer_versions,
+                  rhs.days_since_noncurrent_time, rhs.noncurrent_time_before,
+                  rhs.days_since_custom_time, rhs.custom_time_before,
+                  rhs.matches_prefix, rhs.matches_suffix);
+}
+
 std::ostream& operator<<(std::ostream& os, LifecycleRuleAction const& rhs) {
   return os << "LifecycleRuleAction={" << rhs.type << ", " << rhs.storage_class
             << "}";
@@ -109,6 +158,18 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs) {
   if (rhs.custom_time_before.has_value()) {
     os << sep << "custom_time_before=" << *rhs.custom_time_before;
   }
+  if (rhs.matches_prefix.has_value()) {
+    os << sep << "matches_prefix=[";
+    os << absl::StrJoin(*rhs.matches_prefix, ", ");
+    os << "]";
+    sep = ", ";
+  }
+  if (rhs.matches_suffix.has_value()) {
+    os << sep << "matches_suffix=[";
+    os << absl::StrJoin(*rhs.matches_suffix, ", ");
+    os << "]";
+    sep = ", ";
+  }
   return os << "}";
 }
 
@@ -142,22 +203,8 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
       result.is_live.emplace(std::forward<bool>(tmp));
     }
   }
-  if (rhs.matches_storage_class.has_value()) {
-    if (result.matches_storage_class.has_value()) {
-      std::vector<std::string> a;
-      a.swap(*result.matches_storage_class);
-      std::sort(a.begin(), a.end());
-      std::vector<std::string> b = *rhs.matches_storage_class;
-      std::sort(b.begin(), b.end());
-      std::vector<std::string> tmp;
-      std::set_intersection(a.begin(), a.end(), b.begin(), b.end(),
-                            std::back_inserter(tmp));
-      result.matches_storage_class.emplace(std::move(tmp));
-    } else {
-      auto tmp = *rhs.matches_storage_class;
-      result.matches_storage_class.emplace(std::move(tmp));
-    }
-  }
+  result.matches_storage_class = MergeStringListConditions(
+      std::move(result.matches_storage_class), rhs.matches_storage_class);
   if (rhs.num_newer_versions.has_value()) {
     if (result.num_newer_versions.has_value()) {
       result.num_newer_versions =
@@ -199,6 +246,10 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
       result.custom_time_before = *rhs.custom_time_before;
     }
   }
+  result.matches_prefix = MergeStringListConditions(
+      std::move(result.matches_prefix), rhs.matches_prefix);
+  result.matches_suffix = MergeStringListConditions(
+      std::move(result.matches_suffix), rhs.matches_suffix);
 }
 
 std::ostream& operator<<(std::ostream& os, LifecycleRule const& rhs) {

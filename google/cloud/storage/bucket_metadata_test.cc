@@ -14,13 +14,11 @@
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
-#include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
-#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
-#include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/storage_class.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 
@@ -30,6 +28,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -126,7 +125,9 @@ BucketMetadata CreateBucketMetadataForTest() {
           }
         }, {
           "condition": {
-            "createdBefore": "2016-01-01"
+            "createdBefore": "2016-01-01",
+            "matchesPrefix": [ "archive/", "obsolete/"],
+            "matchesSuffix": [ ".bak", ".delete-me"]
           },
           "action": {
             "type": "Delete"
@@ -216,22 +217,20 @@ TEST(BucketMetadataTest, Parse) {
 
   EXPECT_TRUE(actual.has_lifecycle());
   EXPECT_EQ(2, actual.lifecycle().rule.size());
-  LifecycleRuleCondition expected_condition_0 =
-      LifecycleRule::ConditionConjunction(
-          LifecycleRule::MaxAge(30),
-          LifecycleRule::MatchesStorageClassStandard());
-  EXPECT_EQ(expected_condition_0, actual.lifecycle().rule.at(0).condition());
 
-  LifecycleRuleAction expected_action_0 =
-      LifecycleRule::SetStorageClassNearline();
-  EXPECT_EQ(expected_action_0, actual.lifecycle().rule.at(0).action());
-
-  LifecycleRuleCondition expected_condition_1 =
-      LifecycleRule::CreatedBefore(absl::CivilDay(2016, 1, 1));
-  EXPECT_EQ(expected_condition_1, actual.lifecycle().rule.at(1).condition());
-
-  LifecycleRuleAction expected_action_1 = LifecycleRule::Delete();
-  EXPECT_EQ(expected_action_1, actual.lifecycle().rule.at(1).action());
+  EXPECT_THAT(
+      actual.lifecycle().rule,
+      ElementsAre(
+          LifecycleRule{LifecycleRule::ConditionConjunction(
+                            LifecycleRule::MaxAge(30),
+                            LifecycleRule::MatchesStorageClassStandard()),
+                        LifecycleRule::SetStorageClassNearline()},
+          LifecycleRule{
+              LifecycleRule::ConditionConjunction(
+                  LifecycleRule::CreatedBefore(absl::CivilDay(2016, 1, 1)),
+                  LifecycleRule::MatchesPrefixes({"archive/", "obsolete/"}),
+                  LifecycleRule::MatchesSuffixes({".bak", ".delete-me"})),
+              LifecycleRule::Delete()}));
 
   EXPECT_EQ("US", actual.location());
   EXPECT_EQ("regional", actual.location_type());
@@ -426,8 +425,13 @@ TEST(BucketMetadataTest, ToJsonString) {
             rule.value("action", nlohmann::json{}));
 
   rule = actual["lifecycle"]["rule"][1];
-  EXPECT_EQ(nlohmann::json({{"createdBefore", "2016-01-01"}}),
-            rule.value("condition", nlohmann::json{}));
+  EXPECT_EQ(
+      nlohmann::json({
+          {"createdBefore", "2016-01-01"},
+          {"matchesPrefix", std::vector<std::string>{"archive/", "obsolete/"}},
+          {"matchesSuffix", std::vector<std::string>{".bak", ".delete-me"}},
+      }),
+      rule.value("condition", nlohmann::json{}));
   EXPECT_EQ(nlohmann::json({{"type", "Delete"}}),
             rule.value("action", nlohmann::json{}));
 
@@ -472,6 +476,20 @@ TEST(BucketMetadataTest, ToJsonString) {
   ASSERT_TRUE(actual["website"].is_object()) << actual;
   EXPECT_EQ("index.html", actual["website"].value("mainPageSuffix", ""));
   EXPECT_EQ("404.html", actual["website"].value("notFoundPage", ""));
+}
+
+TEST(BucketMetadataTest, ToJsonLifecycleRoundtrip) {
+  auto input = CreateBucketMetadataForTest();
+  auto const actual_string = internal::BucketMetadataToJsonString(input);
+  auto actual = internal::BucketMetadataParser::FromString(actual_string);
+  ASSERT_STATUS_OK(actual);
+  // ToJsonString() drops many fields (it is used in requests that should only
+  // send mutable fields). We want test that complex fields are preserved.  The
+  // other fields are tested elsewhere.
+  EXPECT_EQ(actual->billing(), input.billing());
+  EXPECT_EQ(actual->cors(), input.cors());
+  EXPECT_EQ(actual->lifecycle(), input.lifecycle());
+  EXPECT_EQ(actual->website(), input.website());
 }
 
 /// @test Verify we can delete label fields.
@@ -1068,7 +1086,9 @@ TEST(BucketMetadataPatchBuilder, SetLifecycle) {
           LifecycleRule::DaysSinceNoncurrentTime(3),
           LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2022, 01, 02)),
           LifecycleRule::DaysSinceCustomTime(4),
-          LifecycleRule::CustomTimeBefore(absl::CivilDay(2022, 01, 03))),
+          LifecycleRule::CustomTimeBefore(absl::CivilDay(2022, 01, 03)),
+          LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
+          LifecycleRule::MatchesSuffixes({".exe", ".com"})),
       LifecycleRule::SetStorageClassColdline());
   lifecycle.rule.emplace_back(r1);
   lifecycle.rule.emplace_back(r2);
@@ -1093,7 +1113,9 @@ TEST(BucketMetadataPatchBuilder, SetLifecycle) {
             "daysSinceNoncurrentTime": 3,
             "noncurrentTimeBefore": "2022-01-02",
             "daysSinceCustomTime": 4,
-            "customTimeBefore": "2022-01-03"
+            "customTimeBefore": "2022-01-03",
+            "matchesPrefix": [ "p1/", "p2/" ],
+            "matchesSuffix": [ ".exe", ".com" ]
          }
         }
       ]

@@ -98,6 +98,8 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
                 age_days: 90
                 is_live: false
                 matches_storage_class: "NEARLINE"
+                matches_prefix: "p1/"
+                matches_suffix: ".txt"
               }
             }
           }
@@ -150,7 +152,9 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
           .set_lifecycle(BucketLifecycle{{LifecycleRule(
               LifecycleRule::ConditionConjunction(
                   LifecycleRule::MaxAge(90), LifecycleRule::IsLive(false),
-                  LifecycleRule::MatchesStorageClassNearline()),
+                  LifecycleRule::MatchesStorageClassNearline(),
+                  LifecycleRule::MatchesPrefix("p1/"),
+                  LifecycleRule::MatchesSuffix(".txt")),
               LifecycleRule::Delete())}})
           .set_logging(
               BucketLogging{/*.log_bucket=*/"test-log-bucket",
@@ -386,6 +390,9 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
                 days_since_custom_time: 42
                 days_since_noncurrent_time: 84
                 noncurrent_time_before { year: 2022 month: 2 day: 15 }
+                matches_prefix: "p1/"
+                matches_prefix: "p2/"
+                matches_suffix: ".html"
               }
             }
           }
@@ -449,7 +456,9 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
                   LifecycleRule::DaysSinceCustomTime(42),
                   LifecycleRule::DaysSinceNoncurrentTime(84),
                   LifecycleRule::NoncurrentTimeBefore(
-                      absl::CivilDay(2022, 2, 15))),
+                      absl::CivilDay(2022, 2, 15)),
+                  LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
+                  LifecycleRule::MatchesSuffix(".html")),
               LifecycleRule::Delete())}})
           .SetCors({
               CorsEntry{
