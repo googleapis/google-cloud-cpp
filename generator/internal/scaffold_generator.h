@@ -50,8 +50,6 @@ void GenerateScaffold(
 
 void GenerateCmakeConfigIn(std::ostream& os,
                            std::map<std::string, std::string> const& variables);
-void GenerateConfigPcIn(std::ostream& os,
-                        std::map<std::string, std::string> const& variables);
 void GenerateReadme(std::ostream& os,
                     std::map<std::string, std::string> const& variables);
 void GenerateBuild(std::ostream& os,
