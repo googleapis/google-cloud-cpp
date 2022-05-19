@@ -151,21 +151,10 @@ google_cloud_cpp_install_headers("google_cloud_cpp_tpu"
 google_cloud_cpp_install_headers("google_cloud_cpp_tpu_mocks"
                                  "include/google/cloud/tpu")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_PC_NAME "The Cloud TPU API C++ Client Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides C++ APIs to use the Cloud TPU API.")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_tpu")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common" " google_cloud_cpp_tpu_protos")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_tpu.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_tpu.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    tpu "The Cloud TPU API C++ Client Library"
+    "Provides C++ APIs to use the Cloud TPU API." "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common" " google_cloud_cpp_tpu_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

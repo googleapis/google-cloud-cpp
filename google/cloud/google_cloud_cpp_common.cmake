@@ -186,22 +186,14 @@ install(
 
 google_cloud_cpp_install_headers(google_cloud_cpp_common include/google/cloud)
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_PC_NAME
-    "Google Cloud C++ Client Library Common Components")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Common Components used by the Google Cloud C++ Client Libraries.")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_common")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "absl_memory" " absl_optional"
-              " absl_time" " openssl")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_common.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    "common"
+    "Google Cloud C++ Client Library Common Components"
+    "Common Components used by the Google Cloud C++ Client Libraries."
+    "absl_memory"
+    " absl_optional"
+    " absl_time"
+    " openssl")
 
 # Create and install the CMake configuration files.
 configure_file("config.cmake.in" "google_cloud_cpp_common-config.cmake" @ONLY)

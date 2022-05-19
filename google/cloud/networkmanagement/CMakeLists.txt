@@ -166,22 +166,13 @@ google_cloud_cpp_install_headers("google_cloud_cpp_networkmanagement"
 google_cloud_cpp_install_headers("google_cloud_cpp_networkmanagement_mocks"
                                  "include/google/cloud/networkmanagement")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_PC_NAME "The Network Management API C++ Client Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides C++ APIs to use the Network Management API.")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_networkmanagement")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common"
-              " google_cloud_cpp_networkmanagement_protos")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_networkmanagement.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_networkmanagement.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    networkmanagement
+    "The Network Management API C++ Client Library"
+    "Provides C++ APIs to use the Network Management API."
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_networkmanagement_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

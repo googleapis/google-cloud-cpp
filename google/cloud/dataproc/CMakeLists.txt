@@ -147,21 +147,13 @@ google_cloud_cpp_install_headers("google_cloud_cpp_dataproc"
 google_cloud_cpp_install_headers("google_cloud_cpp_dataproc_mocks"
                                  "include/google/cloud/dataproc")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_PC_NAME "The Cloud Dataproc API C++ Client Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides C++ APIs to use the Cloud Dataproc API.")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_dataproc")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common" " google_cloud_cpp_dataproc_protos")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_dataproc.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_dataproc.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    dataproc
+    "The Cloud Dataproc API C++ Client Library"
+    "Provides C++ APIs to use the Cloud Dataproc API."
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_dataproc_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

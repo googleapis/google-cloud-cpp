@@ -462,22 +462,14 @@ google_cloud_cpp_install_headers("google_cloud_cpp_bigtable"
 google_cloud_cpp_install_headers("google_cloud_cpp_bigtable_mocks"
                                  "include/google/cloud/bigtable")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Bigtable C++ Client Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides C++ APIs to access Google Cloud Bigtable.")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_bigtable")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common" " google_cloud_cpp_bigtable_protos"
-              " absl_memory")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_bigtable.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    bigtable
+    "The Google Cloud Bigtable C++ Client Library"
+    "Provides C++ APIs to access Google Cloud Bigtable."
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_bigtable_protos"
+    " absl_memory")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

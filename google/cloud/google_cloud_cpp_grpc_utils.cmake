@@ -157,27 +157,15 @@ install(
 google_cloud_cpp_install_headers(google_cloud_cpp_grpc_utils
                                  include/google/cloud)
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_PC_NAME
-    "gRPC Utilities for the Google Cloud C++ Client Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides gRPC Utilities for the Google Cloud C++ Client Library.")
-string(
-    CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
-           "google_cloud_cpp_common"
-           " google_cloud_cpp_iam_protos"
-           " google_cloud_cpp_longrunning_operations_protos"
-           " google_cloud_cpp_rpc_status_protos"
-           " openssl")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_grpc_utils")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_grpc_utils.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    grpc_utils
+    "gRPC Utilities for the Google Cloud C++ Client Library"
+    "Provides gRPC Utilities for the Google Cloud C++ Client Library."
+    "google_cloud_cpp_common"
+    " google_cloud_cpp_iam_protos"
+    " google_cloud_cpp_longrunning_operations_protos"
+    " google_cloud_cpp_rpc_status_protos"
+    " openssl")
 
 # Create and install the CMake configuration files.
 configure_file("grpc_utils/config.cmake.in"
