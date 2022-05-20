@@ -35,7 +35,10 @@ using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::IsSubsetOf;
 using ::testing::Not;
+using ::testing::Property;
 using ::testing::UnorderedElementsAreArray;
 
 class BucketIntegrationTest
@@ -800,13 +803,10 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   ASSERT_STATUS_OK(policy);
   auto const& bindings = policy->bindings();
   // There must always be at least an OWNER for the Bucket.
-  ASSERT_TRUE(google::cloud::internal::ContainsIf(
-      bindings, [](NativeIamBinding const& binding) {
-        return binding.role() == "roles/storage.legacyBucketOwner";
-      }));
+  ASSERT_THAT(bindings, Contains(Property(&NativeIamBinding::role,
+                                          "roles/storage.legacyBucketOwner")));
 
-  StatusOr<std::vector<BucketAccessControl>> acl =
-      client->ListBucketAcl(bucket_name);
+  auto acl = client->ListBucketAcl(bucket_name);
   ASSERT_STATUS_OK(acl);
   // Unfortunately we cannot compare the values in the ACL to the values in the
   // IamPolicy directly. The ids for entities have different formats, for
@@ -831,9 +831,7 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   NativeIamPolicy update = *policy;
   bool role_updated = false;
   for (auto& binding : update.bindings()) {
-    if (binding.role() != "roles/storage.objectViewer") {
-      continue;
-    }
+    if (binding.role() != "roles/storage.objectViewer") continue;
     role_updated = true;
     auto& members = binding.members();
     if (!google::cloud::internal::Contains(members, "allAuthenticatedUsers")) {
@@ -851,11 +849,18 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
 
   std::vector<std::string> expected_permissions{
       "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
-  StatusOr<std::vector<std::string>> actual_permissions =
+  auto const actual_permissions =
       client->TestBucketIamPermissions(bucket_name, expected_permissions);
   ASSERT_STATUS_OK(actual_permissions);
-  EXPECT_THAT(*actual_permissions,
-              UnorderedElementsAreArray(expected_permissions));
+  EXPECT_THAT(*actual_permissions, Not(IsEmpty()));
+  // In most runs, you would find that `actual_permissions` is equal to
+  // `expected_permissions`. But testing for this is inherently flaky. It can
+  // take up to 7 minutes for IAM changes to propagate through the systems.
+  //     https://cloud.google.com/iam/docs/faq#access_revoke
+  EXPECT_THAT(*actual_permissions, IsSubsetOf(expected_permissions));
+  if (UsingEmulator()) {
+    EXPECT_THAT(*actual_permissions, expected_permissions);
+  }
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
