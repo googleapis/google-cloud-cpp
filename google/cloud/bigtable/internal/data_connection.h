@@ -15,7 +15,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_H
 
+#include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/mutation_branch.h"
+#include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/bigtable/row.h"
+#include "google/cloud/bigtable/row_key_sample.h"
+#include "google/cloud/bigtable/row_reader.h"
+#include "google/cloud/bigtable/row_set.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,6 +52,67 @@ class DataConnection {
   virtual ~DataConnection() = 0;
 
   virtual Options options() { return Options{}; }
+
+  virtual Status Apply(std::string const& app_profile_id,
+                       std::string const& table_name,
+                       bigtable::SingleRowMutation mut);
+
+  virtual future<Status> AsyncApply(std::string const& app_profile_id,
+                                    std::string const& table_name,
+                                    bigtable::SingleRowMutation mut);
+
+  virtual std::vector<bigtable::FailedMutation> BulkApply(
+      std::string const& app_profile_id, std::string const& table_name,
+      bigtable::BulkMutation mut);
+
+  virtual future<std::vector<bigtable::FailedMutation>> AsyncBulkApply(
+      std::string const& app_profile_id, std::string const& table_name,
+      bigtable::BulkMutation mut);
+
+  virtual bigtable::RowReader ReadRows(std::string const& app_profile_id,
+                                       std::string const& table_name,
+                                       bigtable::RowSet row_set,
+                                       std::int64_t rows_limit,
+                                       bigtable::Filter filter);
+
+  virtual StatusOr<std::pair<bool, bigtable::Row>> ReadRow(
+      std::string const& app_profile_id, std::string const& table_name,
+      std::string row_key, bigtable::Filter filter);
+
+  virtual StatusOr<bigtable::MutationBranch> CheckAndMutateRow(
+      std::string const& app_profile_id, std::string const& table_name,
+      std::string row_key, bigtable::Filter filter,
+      std::vector<bigtable::Mutation> true_mutations,
+      std::vector<bigtable::Mutation> false_mutations);
+
+  virtual future<StatusOr<bigtable::MutationBranch>> AsyncCheckAndMutateRow(
+      std::string const& app_profile_id, std::string const& table_name,
+      std::string row_key, bigtable::Filter filter,
+      std::vector<bigtable::Mutation> true_mutations,
+      std::vector<bigtable::Mutation> false_mutations);
+
+  virtual StatusOr<std::vector<bigtable::RowKeySample>> SampleRows(
+      std::string const& app_profile_id, std::string const& table_name);
+
+  virtual future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows(
+      std::string const& app_profile_id, std::string const& table_name);
+
+  virtual StatusOr<bigtable::Row> ReadModifyWriteRow(
+      google::bigtable::v2::MutateRowRequest request);
+
+  virtual future<StatusOr<bigtable::Row>> AsyncReadModifyWriteRow(
+      google::bigtable::v2::MutateRowRequest request);
+
+  virtual void AsyncReadRows(std::string const& app_profile_id,
+                             std::string const& table_name,
+                             std::function<future<bool>(bigtable::Row)> on_row,
+                             std::function<void(Status)> on_finish,
+                             bigtable::RowSet row_set, std::int64_t rows_limit,
+                             bigtable::Filter filter);
+
+  virtual future<StatusOr<std::pair<bool, bigtable::Row>>> AsyncReadRow(
+      std::string const& app_profile_id, std::string const& table_name,
+      std::string row_key, bigtable::Filter filter);
 };
 
 /**
