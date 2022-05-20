@@ -106,6 +106,16 @@ to grant, change, and revoke access to all
 [resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
 [iam-policy-link]: https://cloud.google.com/iam/docs/manage-access-other-resources
 
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+**BREAKING CHANGES**
+
+* We have changed the preference order for determining the service endpoint from
+  (1) `${emulator_env}`, (2) `EndpointOption`, (3) `${endpoint_env}`, and (4)
+  default value, to (1) `${emulator_env}`, (2) `${endpoint_env}`, (3)
+  `EndpointOption`, and (4) default value. That is, the more dynamic
+  `${endpoint_env}` is now preferred over any `EndpointOption` set in the code.
+
 ### New Libraries
 
 We are introducing a new client library: [Bare Metal Solution]. While we do not

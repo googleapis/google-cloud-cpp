@@ -15,7 +15,7 @@
 #include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/testing_util/setenv.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gtest/gtest.h>
 #include <memory>
 
@@ -25,6 +25,8 @@ namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::ScopedEnvironment;
+
 TEST(GoldenThingAdminDefaultOptions, DefaultEndpoint) {
   Options options;
   auto updated_options = GoldenThingAdminDefaultOptions(options);
@@ -32,14 +34,15 @@ TEST(GoldenThingAdminDefaultOptions, DefaultEndpoint) {
 }
 
 TEST(GoldenThingAdminDefaultOptions, EnvVarEndpoint) {
-  testing_util::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
+  auto env =
+      ScopedEnvironment("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
   Options options;
+  options.set<EndpointOption>("bar.googleapis.com");
   auto updated_options = GoldenThingAdminDefaultOptions(options);
   EXPECT_EQ("foo.googleapis.com", updated_options.get<EndpointOption>());
 }
 
 TEST(GoldenThingAdminDefaultOptions, OptionEndpoint) {
-  testing_util::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
   Options options;
   options.set<EndpointOption>("bar.googleapis.com");
   auto updated_options = GoldenThingAdminDefaultOptions(options);
