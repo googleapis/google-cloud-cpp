@@ -199,6 +199,16 @@ class GrpcClient : public RawClient,
   StatusOr<BucketMetadata> ModifyBucketAccessControl(
       GetBucketMetadataRequest const& request, BucketAclUpdater const& updater);
 
+  using ObjectAclUpdater =
+      std::function<StatusOr<std::vector<ObjectAccessControl>>(
+          std::vector<ObjectAccessControl> acl)>;
+
+  // REST has RPCs that change `ObjectAccessControl` resources atomically. gRPC
+  // lacks such RPCs. This function hijacks the retry loop to implement an OCC
+  // loop to make such changes.
+  StatusOr<ObjectMetadata> ModifyObjectAccessControl(
+      GetObjectMetadataRequest const& request, ObjectAclUpdater const& updater);
+
   Options options_;
   ClientOptions backwards_compatibility_options_;
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

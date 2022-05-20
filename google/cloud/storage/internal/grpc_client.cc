@@ -54,6 +54,17 @@ StatusOr<BucketAccessControl> FindBucketAccessControl(
                                            "> in bucket " + response->name());
 }
 
+// Used in the implementation of `*ObjectAcl()`.
+StatusOr<ObjectAccessControl> FindObjectAccessControl(
+    StatusOr<ObjectMetadata> response, std::string const& entity) {
+  if (!response) return std::move(response).status();
+  for (auto const& acl : response->acl()) {
+    if (acl.entity() == entity) return acl;
+  }
+  return Status(StatusCode::kNotFound, "cannot find entity <" + entity +
+                                           "> in object id " + response->id());
+}
+
 }  // namespace
 
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
@@ -686,8 +697,27 @@ StatusOr<ListObjectAclResponse> GrpcClient::ListObjectAcl(
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::CreateObjectAcl(
-    CreateObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    CreateObjectAclRequest const& request) {
+  auto get_request =
+      GetObjectMetadataRequest(request.bucket_name(), request.object_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto updater = [&request](std::vector<ObjectAccessControl> acl)
+      -> StatusOr<std::vector<ObjectAccessControl>> {
+    for (auto const& entry : acl) {
+      if (entry.entity() == request.entity()) {
+        return Status(StatusCode::kAlreadyExists,
+                      "the entity <" + request.entity() +
+                          "> is already present in the ACL for object " +
+                          request.object_name());
+      }
+    }
+    acl.push_back(ObjectAccessControl()
+                      .set_entity(request.entity())
+                      .set_role(request.role()));
+    return acl;
+  };
+  return FindObjectAccessControl(
+      ModifyObjectAccessControl(get_request, updater), request.entity());
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteObjectAcl(
@@ -846,6 +876,26 @@ StatusOr<BucketMetadata> GrpcClient::ModifyBucketAccessControl(
         StatusCode::kUnavailable,
         "retrying BucketAccessControl change due to conflict, bucket=" +
             request.bucket_name());
+  }
+  return patch;
+}
+
+StatusOr<ObjectMetadata> GrpcClient::ModifyObjectAccessControl(
+    GetObjectMetadataRequest const& request, ObjectAclUpdater const& updater) {
+  auto get = GetObjectMetadata(request);
+  if (!get) return std::move(get).status();
+  auto acl = updater(get->acl());
+  if (!acl) return std::move(acl).status();
+  auto patch = PatchObject(
+      PatchObjectRequest(request.bucket_name(), request.object_name(),
+                         ObjectMetadataPatchBuilder().SetAcl(*std::move(acl)))
+          .set_option(IfMetagenerationMatch(get->metageneration())));
+  // Retry on failed preconditions
+  if (patch.status().code() == StatusCode::kFailedPrecondition) {
+    return Status(
+        StatusCode::kUnavailable,
+        "retrying ObjectAccessControl change due to conflict, bucket=" +
+            request.bucket_name() + ", object=" + request.object_name());
   }
   return patch;
 }

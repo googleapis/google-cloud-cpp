@@ -83,6 +83,14 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   EXPECT_THAT(AclEntityNames(*current_acl),
               ContainsOnce(existing_entity.entity()));
 
+  auto create_acl = client->CreateObjectAcl(bucket_name, object_name, viewers,
+                                            BucketAccessControl::ROLE_READER());
+  ASSERT_STATUS_OK(create_acl);
+
+  current_acl = client->ListObjectAcl(bucket_name, object_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(create_acl->entity()));
+
   auto status = client->DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(status);
 }
