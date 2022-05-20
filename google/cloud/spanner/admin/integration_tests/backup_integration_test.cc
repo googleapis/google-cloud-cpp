@@ -111,13 +111,6 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
                       .get();
   ASSERT_STATUS_OK(database);
   EXPECT_EQ(database->name(), db.FullName());
-  if (database->database_dialect() ==
-      google::spanner::admin::database::v1::DatabaseDialect::
-          DATABASE_DIALECT_UNSPECIFIED) {
-    // TODO(#8573): Remove when CreateDatabase() returns correct dialect.
-    database->set_database_dialect(google::spanner::admin::database::v1::
-                                       DatabaseDialect::GOOGLE_STANDARD_SQL);
-  }
   EXPECT_EQ(database->database_dialect(),
             google::spanner::admin::database::v1::DatabaseDialect::
                 GOOGLE_STANDARD_SQL);
