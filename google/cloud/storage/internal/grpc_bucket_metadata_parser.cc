@@ -307,6 +307,16 @@ GrpcBucketMetadataParser::ToProto(LifecycleRuleCondition rhs) {
   if (rhs.custom_time_before.has_value()) {
     *result.mutable_custom_time_before() = ToProtoDate(*rhs.custom_time_before);
   }
+  if (rhs.matches_prefix.has_value()) {
+    for (auto& v : *rhs.matches_prefix) {
+      *result.add_matches_prefix() = std::move(v);
+    }
+  }
+  if (rhs.matches_suffix.has_value()) {
+    for (auto& v : *rhs.matches_suffix) {
+      *result.add_matches_suffix() = std::move(v);
+    }
+  }
   return result;
 }
 
@@ -343,6 +353,20 @@ LifecycleRuleCondition GrpcBucketMetadataParser::FromProto(
   }
   if (rhs.has_custom_time_before()) {
     result.custom_time_before = ToCivilDay(rhs.custom_time_before());
+  }
+  if (rhs.matches_prefix_size() != 0) {
+    std::vector<std::string> tmp;
+    for (auto& v : *rhs.mutable_matches_prefix()) {
+      tmp.push_back(std::move(v));
+    }
+    result.matches_prefix = std::move(tmp);
+  }
+  if (rhs.matches_suffix_size() != 0) {
+    std::vector<std::string> tmp;
+    for (auto& v : *rhs.mutable_matches_suffix()) {
+      tmp.push_back(std::move(v));
+    }
+    result.matches_suffix = std::move(tmp);
   }
   return result;
 }

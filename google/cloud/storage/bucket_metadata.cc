@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
@@ -394,17 +395,21 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
       condition["daysSinceNoncurrentTime"] = *c.days_since_noncurrent_time;
     }
     if (c.noncurrent_time_before.has_value()) {
-      condition["noncurrentTimeBefore"] = absl::StrFormat(
-          "%04d-%02d-%02d", c.noncurrent_time_before->year(),
-          c.noncurrent_time_before->month(), c.noncurrent_time_before->day());
+      condition["noncurrentTimeBefore"] =
+          internal::ToJsonString(*c.noncurrent_time_before);
     }
     if (c.days_since_custom_time.has_value()) {
       condition["daysSinceCustomTime"] = *c.days_since_custom_time;
     }
     if (c.custom_time_before.has_value()) {
-      condition["customTimeBefore"] = absl::StrFormat(
-          "%04d-%02d-%02d", c.custom_time_before->year(),
-          c.custom_time_before->month(), c.custom_time_before->day());
+      condition["customTimeBefore"] =
+          internal::ToJsonString(*c.custom_time_before);
+    }
+    if (c.matches_prefix.has_value()) {
+      condition["matchesPrefix"] = *c.matches_prefix;
+    }
+    if (c.matches_suffix.has_value()) {
+      condition["matchesSuffix"] = *c.matches_suffix;
     }
     nlohmann::json action;
     if (!a.action().type.empty()) {

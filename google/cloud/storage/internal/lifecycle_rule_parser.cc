@@ -30,70 +30,84 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
     result.action_.type = json["action"].value("type", "");
     result.action_.storage_class = json["action"].value("storageClass", "");
   }
-  if (json.count("condition") != 0) {
-    auto condition = json["condition"];
-    if (condition.count("age") != 0) {
-      auto age = internal::ParseIntField(condition, "age");
-      if (!age) return std::move(age).status();
-      result.condition_.age.emplace(*age);
+  if (json.count("condition") == 0) return result;
+
+  auto condition = json["condition"];
+  if (condition.count("age") != 0) {
+    auto age = internal::ParseIntField(condition, "age");
+    if (!age) return std::move(age).status();
+    result.condition_.age.emplace(*age);
+  }
+  if (condition.count("createdBefore") != 0) {
+    auto const date = condition.value("createdBefore", "");
+    absl::CivilDay day;
+    if (!absl::ParseCivilTime(date, &day)) {
+      return Status(
+          StatusCode::kInvalidArgument,
+          "Cannot parse createdBefore value (" + date + ") as a date");
     }
-    if (condition.count("createdBefore") != 0) {
-      auto const date = condition.value("createdBefore", "");
-      absl::CivilDay day;
-      if (!absl::ParseCivilTime(date, &day)) {
-        return Status(
-            StatusCode::kInvalidArgument,
-            "Cannot parse createdBefore value (" + date + ") as a date");
-      }
-      result.condition_.created_before.emplace(std::move(day));
+    result.condition_.created_before.emplace(std::move(day));
+  }
+  if (condition.count("isLive") != 0) {
+    auto is_live = internal::ParseBoolField(condition, "isLive");
+    if (!is_live.ok()) return std::move(is_live).status();
+    result.condition_.is_live.emplace(*is_live);
+  }
+  if (condition.count("matchesStorageClass") != 0) {
+    std::vector<std::string> matches;
+    for (auto const& kv : condition["matchesStorageClass"].items()) {
+      matches.emplace_back(kv.value().get<std::string>());
     }
-    if (condition.count("isLive") != 0) {
-      auto is_live = internal::ParseBoolField(condition, "isLive");
-      if (!is_live.ok()) return std::move(is_live).status();
-      result.condition_.is_live.emplace(*is_live);
+    result.condition_.matches_storage_class.emplace(std::move(matches));
+  }
+  if (condition.count("numNewerVersions") != 0) {
+    auto v = internal::ParseIntField(condition, "numNewerVersions");
+    if (!v) return std::move(v).status();
+    result.condition_.num_newer_versions.emplace(*v);
+  }
+  if (condition.count("daysSinceNoncurrentTime") != 0) {
+    auto v = internal::ParseIntField(condition, "daysSinceNoncurrentTime");
+    if (!v) return std::move(v).status();
+    result.condition_.days_since_noncurrent_time.emplace(*v);
+  }
+  if (condition.count("noncurrentTimeBefore") != 0) {
+    auto const date = condition.value("noncurrentTimeBefore", "");
+    absl::CivilDay day;
+    if (!absl::ParseCivilTime(date, &day)) {
+      return Status(
+          StatusCode::kInvalidArgument,
+          "Cannot parse noncurrentTimeBefore value (" + date + ") as a date");
     }
-    if (condition.count("matchesStorageClass") != 0) {
-      std::vector<std::string> matches;
-      for (auto const& kv : condition["matchesStorageClass"].items()) {
-        matches.emplace_back(kv.value().get<std::string>());
-      }
-      result.condition_.matches_storage_class.emplace(std::move(matches));
+    result.condition_.noncurrent_time_before.emplace(std::move(day));
+  }
+  if (condition.count("daysSinceCustomTime") != 0) {
+    auto v = internal::ParseIntField(condition, "daysSinceCustomTime");
+    if (!v) return std::move(v).status();
+    result.condition_.days_since_custom_time.emplace(*v);
+  }
+  if (condition.count("customTimeBefore") != 0) {
+    auto const date = condition.value("customTimeBefore", "");
+    absl::CivilDay day;
+    if (!absl::ParseCivilTime(date, &day)) {
+      return Status(
+          StatusCode::kInvalidArgument,
+          "Cannot parse customTimeBefore value (" + date + ") as a date");
     }
-    if (condition.count("numNewerVersions") != 0) {
-      auto v = internal::ParseIntField(condition, "numNewerVersions");
-      if (!v) return std::move(v).status();
-      result.condition_.num_newer_versions.emplace(*v);
+    result.condition_.custom_time_before.emplace(std::move(day));
+  }
+  if (condition.count("matchesPrefix") != 0) {
+    std::vector<std::string> matches;
+    for (auto const& kv : condition["matchesPrefix"].items()) {
+      matches.emplace_back(kv.value().get<std::string>());
     }
-    if (condition.count("daysSinceNoncurrentTime") != 0) {
-      auto v = internal::ParseIntField(condition, "daysSinceNoncurrentTime");
-      if (!v) return std::move(v).status();
-      result.condition_.days_since_noncurrent_time.emplace(*v);
+    result.condition_.matches_prefix.emplace(std::move(matches));
+  }
+  if (condition.count("matchesSuffix") != 0) {
+    std::vector<std::string> matches;
+    for (auto const& kv : condition["matchesSuffix"].items()) {
+      matches.emplace_back(kv.value().get<std::string>());
     }
-    if (condition.count("noncurrentTimeBefore") != 0) {
-      auto const date = condition.value("noncurrentTimeBefore", "");
-      absl::CivilDay day;
-      if (!absl::ParseCivilTime(date, &day)) {
-        return Status(
-            StatusCode::kInvalidArgument,
-            "Cannot parse noncurrentTimeBefore value (" + date + ") as a date");
-      }
-      result.condition_.noncurrent_time_before.emplace(std::move(day));
-    }
-    if (condition.count("daysSinceCustomTime") != 0) {
-      auto v = internal::ParseIntField(condition, "daysSinceCustomTime");
-      if (!v) return std::move(v).status();
-      result.condition_.days_since_custom_time.emplace(*v);
-    }
-    if (condition.count("customTimeBefore") != 0) {
-      auto const date = condition.value("customTimeBefore", "");
-      absl::CivilDay day;
-      if (!absl::ParseCivilTime(date, &day)) {
-        return Status(
-            StatusCode::kInvalidArgument,
-            "Cannot parse customTimeBefore value (" + date + ") as a date");
-      }
-      result.condition_.custom_time_before.emplace(std::move(day));
-    }
+    result.condition_.matches_suffix.emplace(std::move(matches));
   }
   return result;
 }

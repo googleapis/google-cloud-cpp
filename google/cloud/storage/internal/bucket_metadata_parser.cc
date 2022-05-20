@@ -336,9 +336,7 @@ void ToJsonLifecycle(nlohmann::json& json, BucketMetadata const& meta) {
       condition["age"] = *c.age;
     }
     if (c.created_before.has_value()) {
-      condition["createdBefore"] =
-          absl::StrFormat("%04d-%02d-%02d", c.created_before->year(),
-                          c.created_before->month(), c.created_before->day());
+      condition["createdBefore"] = ToJsonString(*c.created_before);
     }
     if (c.is_live) {
       condition["isLive"] = *c.is_live;
@@ -349,7 +347,19 @@ void ToJsonLifecycle(nlohmann::json& json, BucketMetadata const& meta) {
     if (c.num_newer_versions) {
       condition["numNewerVersions"] = *c.num_newer_versions;
     }
+    if (c.days_since_custom_time) {
+      condition["daysSinceCustomTime"] = *c.days_since_custom_time;
+    }
+    if (c.custom_time_before) {
+      condition["customTimeBefore"] = ToJsonString(*c.custom_time_before);
+    }
+    if (c.matches_prefix) condition["matchesPrefix"] = *c.matches_prefix;
+    if (c.matches_suffix) condition["matchesSuffix"] = *c.matches_suffix;
+
     nlohmann::json action{{"type", v.action().type}};
+    if (!v.action().storage_class.empty()) {
+      action["storageClass"] = v.action().storage_class;
+    }
     if (!v.action().storage_class.empty()) {
       action["storageClass"] = v.action().storage_class;
     }
@@ -488,6 +498,11 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromString(
     std::string const& payload) {
   auto json = nlohmann::json::parse(payload, nullptr, false);
   return FromJson(json);
+}
+
+std::string ToJsonString(absl::CivilDay date) {
+  return absl::StrFormat("%04d-%02d-%02d", date.year(), date.month(),
+                         date.day());
 }
 
 std::string BucketMetadataToJsonString(BucketMetadata const& meta) {

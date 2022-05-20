@@ -400,7 +400,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   ASSERT_STATUS_OK(status);
 }
 
-// @test Verify that we can set the iam_configuration() in a Bucket.
+/// @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
@@ -433,7 +433,7 @@ TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
   ASSERT_STATUS_OK(status);
 }
 
-// @test Verify that we can set the iam_configuration() in a Bucket.
+/// @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
@@ -465,7 +465,7 @@ TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
   ASSERT_STATUS_OK(status);
 }
 
-// @test Verify that we can set the RPO in a Bucket.
+/// @test Verify that we can set the RPO in a Bucket.
 TEST_F(BucketIntegrationTest, RpoPatch) {
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
@@ -490,6 +490,40 @@ TEST_F(BucketIntegrationTest, RpoPatch) {
   ASSERT_STATUS_OK(patched);
 
   EXPECT_EQ(patched->rpo(), RpoDefault()) << "patched=" << *patched;
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
+/// @test Verify that we can use MatchesPrefixes() and MatchesSuffixes()
+TEST_F(BucketIntegrationTest, MatchesPrefixSuffixPatch) {
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto const bucket_name = MakeRandomBucketName();
+  auto client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto const insert_meta = client->CreateBucketForProject(
+      bucket_name, project_id_, BucketMetadata(), PredefinedAcl("private"),
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
+  ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
+
+  // Patch the lifecycle().
+  auto lifecycle =
+      insert_meta->lifecycle_as_optional().value_or(BucketLifecycle{});
+  lifecycle.rule.emplace_back(
+      LifecycleRule::ConditionConjunction(
+          LifecycleRule::MaxAge(30),
+          LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
+          LifecycleRule::MatchesSuffixes({".test", ".bad"})),
+      LifecycleRule::Delete());
+
+  auto patched = client->PatchBucket(
+      bucket_name, BucketMetadataPatchBuilder().SetLifecycle(lifecycle));
+  ASSERT_STATUS_OK(patched);
+
+  ASSERT_TRUE(patched->has_lifecycle()) << "patched=" << *patched;
+  ASSERT_EQ(patched->lifecycle(), lifecycle);
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
