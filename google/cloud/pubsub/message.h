@@ -54,14 +54,14 @@ class MessageBuilder;
  * type to automatically detect what is the representation for this field and
  * use the correct mapping.
  *
- * External users of the Cloud Pubsub C++ client library should treat this as
+ * External users of the Cloud Pub/Sub C++ client library should treat this as
  * a complicated `typedef` for `std::string`. We have no plans to change the
  * type in the external version of the C++ client library for the foreseeable
  * future. In the eventuality that we do decide to change the type, this would
  * be a reason update the library major version number, and we would give users
  * time to migrate.
  *
- * In other words, external users of the Cloud Pubsub C++ client should simply
+ * In other words, external users of the Cloud Pub/Sub C++ client should simply
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */

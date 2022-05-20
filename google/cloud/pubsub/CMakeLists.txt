@@ -377,8 +377,8 @@ google_cloud_cpp_install_headers("google_cloud_cpp_pubsub_mocks"
 
 google_cloud_cpp_add_pkgconfig(
     pubsub
-    "The Google Cloud Pubsub C++ Client Library"
-    "Provides C++ APIs to access Google Cloud Pubsub."
+    "The Google Cloud Pub/Sub C++ Client Library"
+    "Provides C++ APIs to access Google Cloud Pub/Sub."
     "google_cloud_cpp_grpc_utils"
     " google_cloud_cpp_common"
     " google_cloud_cpp_pubsub_protos"
