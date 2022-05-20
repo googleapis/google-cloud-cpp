@@ -120,6 +120,44 @@ auto constexpr kBucketProtoText = R"pb(
   }
 )pb";
 
+auto constexpr kObjectProtoText = R"pb(
+  name: "test-object-id"
+  bucket: "test-bucket-id"
+  acl: { role: "test-role1" entity: "test-entity1" }
+  acl: { role: "test-role2" entity: "test-entity2" }
+  content_encoding: "test-content-encoding"
+  content_disposition: "test-content-disposition"
+  cache_control: "test-cache-control"
+  content_language: "test-content-language"
+  metageneration: 42
+  delete_time: { seconds: 1565194924 nanos: 123456789 }
+  content_type: "test-content-type"
+  size: 123456
+  create_time: { seconds: 1565194924 nanos: 234567890 }
+  # These magic numbers can be obtained using `gsutil hash` and then
+  # transforming the output from base64 to binary using tools like xxd(1).
+  checksums {
+    crc32c: 576848900
+    md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+  }
+  component_count: 7
+  update_time: { seconds: 1565194924 nanos: 345678901 }
+  storage_class: "test-storage-class"
+  kms_key: "test-kms-key-name"
+  update_storage_class_time: { seconds: 1565194924 nanos: 456789012 }
+  temporary_hold: true
+  retention_expire_time: { seconds: 1565194924 nanos: 567890123 }
+  metadata: { key: "test-key-1" value: "test-value-1" }
+  metadata: { key: "test-key-2" value: "test-value-2" }
+  event_based_hold: true
+  generation: 2345
+  owner: { entity: "test-entity" entity_id: "test-entity-id" }
+  customer_encryption: {
+    encryption_algorithm: "test-encryption-algorithm"
+    key_sha256_bytes: "01234567"
+  }
+)pb";
+
 class GrpcClientTest : public ::testing::Test {
  protected:
   std::multimap<std::string, std::string> GetMetadata(
@@ -1111,6 +1149,63 @@ TEST_F(GrpcClientTest, PatchBucketAclNotFound) {
       "test-bucket-id", "test-not-found",
       BucketAccessControlPatchBuilder().set_role("updated-role")));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
+}
+
+TEST_F(GrpcClientTest, ListObjectAclFailure) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetObject)
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::GetObjectRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket-name");
+        EXPECT_THAT(request.object(), "test-object-id");
+        return PermanentError();
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->ListObjectAcl(
+      ListObjectAclRequest("test-bucket-name", "test-object-id")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user"),
+                                UserProject("test-user-project")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, ListObjectAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetObject)
+      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const&) {
+        v2::Object response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->ListObjectAcl(
+      ListObjectAclRequest("test-bucket-id", "test-object-id"));
+  ASSERT_STATUS_OK(response);
+  auto make_matcher = [](std::string const& role, std::string const& entity) {
+    auto get_role = [](ObjectAccessControl const& acl) { return acl.role(); };
+    auto get_entity = [](ObjectAccessControl const& acl) {
+      return acl.entity();
+    };
+    auto get_bucket = [](ObjectAccessControl const& acl) {
+      return acl.bucket();
+    };
+    auto get_object = [](ObjectAccessControl const& acl) {
+      return acl.object();
+    };
+    return AllOf(ResultOf(get_role, role), ResultOf(get_entity, entity),
+                 ResultOf(get_bucket, "test-bucket-id"),
+                 ResultOf(get_object, "test-object-id"));
+  };
+  EXPECT_THAT(response->items,
+              UnorderedElementsAre(make_matcher("test-role1", "test-entity1"),
+                                   make_matcher("test-role2", "test-entity2")));
 }
 
 TEST_F(GrpcClientTest, GetServiceAccount) {
