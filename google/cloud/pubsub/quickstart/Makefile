@@ -31,6 +31,6 @@ PUBSUB_CXXFLAGS   := $(shell pkg-config $(PUBSUB_DEPS) --cflags)
 PUBSUB_CXXLDFLAGS := $(shell pkg-config $(PUBSUB_DEPS) --libs-only-L)
 PUBSUB_LIBS       := $(shell pkg-config $(PUBSUB_DEPS) --libs-only-l)
 
-# A target using the Cloud Pubsub C++ client library.
+# A target using the Cloud Pub/Sub C++ client library.
 $(BIN)/quickstart: quickstart.cc
 	$(CXXLD) $(CXXFLAGS) $(PUBSUB_CXXFLAGS) $(PUBSUB_CXXLDFLAGS) -o $@ $^ $(PUBSUB_LIBS)
