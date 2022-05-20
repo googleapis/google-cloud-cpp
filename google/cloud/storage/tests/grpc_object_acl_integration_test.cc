@@ -61,7 +61,7 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   // Create a new object to run the tests.
   auto object_name = MakeRandomObjectName();
   auto insert = client->InsertObject(bucket_name, object_name, LoremIpsum(),
-                                     IfGenerationMatch(0));
+                                     IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
