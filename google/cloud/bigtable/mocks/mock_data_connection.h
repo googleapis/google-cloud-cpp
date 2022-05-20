@@ -63,7 +63,7 @@ class MockDataConnection : public bigtable_internal::DataConnection {
                bigtable::Filter filter),
               (override));
 
-  MOCK_METHOD(StatusOr<std::pair<bool, , bigtable::Row>> ReadRow,
+  MOCK_METHOD((StatusOr<std::pair<bool, bigtable::Row>>), ReadRow,
               (std::string const& app_profile_id, std::string const& table_name,
                std::string row_key, bigtable::Filter filter),
               (override));
@@ -107,7 +107,7 @@ class MockDataConnection : public bigtable_internal::DataConnection {
                std::int64_t rows_limit, bigtable::Filter filter),
               (override));
 
-  MOCK_METHOD(future<StatusOr<std::pair<bool, , bigtable::Row>>> AsyncReadRow,
+  MOCK_METHOD((future<StatusOr<std::pair<bool, bigtable::Row>>>), AsyncReadRow,
               (std::string const& app_profile_id, std::string const& table_name,
                std::string row_key, bigtable::Filter filter),
               (override));
