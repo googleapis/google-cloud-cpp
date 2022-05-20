@@ -39,13 +39,12 @@ TEST(GoldenKitchenSinkDefaultOptions, EnvVarEndpoint) {
   auto env =
       ScopedEnvironment("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
   Options options;
+  options.set<EndpointOption>("bar.googleapis.com");
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("foo.googleapis.com", updated_options.get<EndpointOption>());
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, OptionEndpoint) {
-  auto env =
-      ScopedEnvironment("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
   Options options;
   options.set<EndpointOption>("bar.googleapis.com");
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);

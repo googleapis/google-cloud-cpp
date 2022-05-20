@@ -185,10 +185,10 @@ TEST(Options, PassThroughUnknown) {
 
 TEST(Options, OverrideEndpoint) {
   testing_util::ScopedEnvironment endpoint_env(
-      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", "no.thank.you");
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", "foo.bar.baz");
   testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
                                                absl::nullopt);
-  auto opts = Options{}.set<EndpointOption>("foo.bar.baz");
+  auto opts = Options{}.set<EndpointOption>("no.thank.you");
   opts = spanner_internal::DefaultOptions(std::move(opts));
   EXPECT_EQ("foo.bar.baz", opts.get<EndpointOption>());
 }

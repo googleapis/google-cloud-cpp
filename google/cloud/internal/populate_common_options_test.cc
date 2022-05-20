@@ -71,8 +71,8 @@ TEST(PopulateCommonOptions, Endpoint) {
       {"with-ep-3", with_ep, "", absl::nullopt, "with-ep"},
       {"with-ep-4", with_ep, "", "", "with-ep"},
       {"with-ep-5", with_ep, "", "emulator", "emulator"},
-      {"with-ep-6", with_ep, "env", absl::nullopt, "with-ep"},
-      {"with-ep-7", with_ep, "env", "", "with-ep"},
+      {"with-ep-6", with_ep, "env", absl::nullopt, "env"},
+      {"with-ep-7", with_ep, "env", "", "env"},
       {"with-ep-8", with_ep, "env", "emulator", "emulator"},
   };
 
