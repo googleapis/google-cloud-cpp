@@ -34,6 +34,7 @@ using ::google::cloud::storage::testing::CountMatchingEntities;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::AllOf;
 using ::testing::HasSubstr;
+using ::testing::MatchesRegex;
 using ::testing::Not;
 
 constexpr auto kJsonEnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON";
@@ -554,21 +555,38 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
  * the server.  To verify that the parameter appears in the request we rely
  * on the logging facilities in the library, which is ugly to do.
  */
-TEST_P(ObjectInsertIntegrationTest, InsertWithUserIp) {
+TEST_P(ObjectInsertIntegrationTest, InsertMultipartWithUserIp) {
   Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
   StatusOr<ObjectMetadata> insert_meta =
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), UserIp("127.0.0.1"));
+                          IfGenerationMatch(0), UserIp("10.0.0.1"));
   ASSERT_STATUS_OK(insert_meta);
   ScheduleForDelete(*insert_meta);
 
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
-                             HasSubstr("userIp=127.0.0.1"))));
+                             HasSubstr("userIp=10.0.0.1"))));
+}
+
+TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIp) {
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+  auto object_name = MakeRandomObjectName();
+
+  testing_util::ScopedLog log;
+  StatusOr<ObjectMetadata> insert_meta =
+      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), DisableCrc32cChecksum(true), DisableMD5Hash(true), UserIp("10.0.0.1"));
+  ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
+
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(HasSubstr(" POST "),
+                             HasSubstr("/b/" + bucket_name_ + "/o"),
+                             HasSubstr("userIp=10.0.0.1"))));
 }
 
 /**
@@ -580,7 +598,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIp) {
  * the server.  To verify that the parameter appears in the request we rely
  * on the logging facilities in the library, which is ugly to do.
  */
-TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
+TEST_P(ObjectInsertIntegrationTest, InsertMultipartWithUserIpBlank) {
   Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
@@ -605,7 +623,35 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
-                             HasSubstr("userIp="))));
+                             MatchesRegex(".*userIp=([0-9]+\.){3}[0-9]+.*"))));
+}
+
+TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIpBlank) {
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+  auto object_name = MakeRandomObjectName();
+
+  // Make sure at least one connection was created before we run the test, the
+  // IP address can only be obtained once the first request to a given endpoint
+  // is completed.
+  {
+    auto seed_object_name = MakeRandomObjectName();
+    auto insert =
+        client.InsertObject(bucket_name_, seed_object_name, LoremIpsum());
+    ASSERT_STATUS_OK(insert);
+    ScheduleForDelete(*insert);
+  }
+
+  testing_util::ScopedLog log;
+  StatusOr<ObjectMetadata> insert_meta =
+      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), DisableCrc32cChecksum(true), DisableMD5Hash(true), UserIp(""));
+  ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
+
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(HasSubstr(" POST "),
+                             HasSubstr("/b/" + bucket_name_ + "/o"),
+                             MatchesRegex(".*userIp=([0-9]+\.){3}[0-9]+.*"))));
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithContentType) {
