@@ -620,10 +620,11 @@ TEST_P(ObjectInsertIntegrationTest, InsertMultipartWithUserIpBlank) {
   ASSERT_STATUS_OK(insert_meta);
   ScheduleForDelete(*insert_meta);
 
-  EXPECT_THAT(log.ExtractLines(),
-              Contains(AllOf(HasSubstr(" POST "),
-                             HasSubstr("/b/" + bucket_name_ + "/o"),
-                             MatchesRegex(R"regex(.*userIp=([0-9]+\.){3}[0-9]+.*)regex"))));
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(
+          AllOf(HasSubstr(" POST "), HasSubstr("/b/" + bucket_name_ + "/o"),
+                MatchesRegex(R"regex(.*userIp=([0-9]+\.){3}[0-9]+.*)regex"))));
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIpBlank) {
@@ -648,10 +649,11 @@ TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIpBlank) {
   ASSERT_STATUS_OK(insert_meta);
   ScheduleForDelete(*insert_meta);
 
-  EXPECT_THAT(log.ExtractLines(),
-              Contains(AllOf(HasSubstr(" POST "),
-                             HasSubstr("/b/" + bucket_name_ + "/o"),
-                             MatchesRegex(R"regex(.*userIp=([0-9]+\.){3}[0-9]+.*)regex"))));
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(
+          AllOf(HasSubstr(" POST "), HasSubstr("/b/" + bucket_name_ + "/o"),
+                MatchesRegex(R"regex(.*userIp=([0-9]+\.){3}[0-9]+.*)regex"))));
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithContentType) {
