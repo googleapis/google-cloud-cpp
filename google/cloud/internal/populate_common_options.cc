@@ -29,13 +29,17 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
   if (!opts.has<EndpointOption>()) {
     opts.set<EndpointOption>(default_endpoint);
   }
-  auto ep = internal::GetEnv(endpoint_env_var.c_str());
-  if (ep && !ep->empty()) {
-    opts.set<EndpointOption>(*std::move(ep));
+  if (!endpoint_env_var.empty()) {
+    auto e = internal::GetEnv(endpoint_env_var.c_str());
+    if (e && !e->empty()) {
+      opts.set<EndpointOption>(*std::move(e));
+    }
   }
-  auto em = internal::GetEnv(emulator_env_var.c_str());
-  if (em && !em->empty()) {
-    opts.set<EndpointOption>(*std::move(em));
+  if (!emulator_env_var.empty()) {
+    auto e = internal::GetEnv(emulator_env_var.c_str());
+    if (e && !e->empty()) {
+      opts.set<EndpointOption>(*std::move(e));
+    }
   }
 
   if (!opts.has<AuthorityOption>()) {

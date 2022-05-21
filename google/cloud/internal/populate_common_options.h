@@ -27,23 +27,25 @@ namespace internal {
 /**
  * Modify @p opts to have default values for common options.
  *
- * Add default values for common options, including
- * `EndpointOption`,`UserAgentProductsOption`, `TracingComponentsOption`, and
- * `UserProjectOption`.
+ * Add default values for common options, including:
+ *  - `AuthorityOption`
+ *  - `EndpointOption`
+ *  - `TracingComponentsOption`
+ *  - `UserAgentProductsOption`
+ *  - `UserProjectOption`
  *
  * @param opts the current options. Any values already present in this
  *     collection are not modified.
- * @param endpoint_env_var an environment variable name to override the
+ * @param endpoint_env_var an environment variable name used to override the
  *     default endpoint. If no `EndpointOption` is set in `opts`, **and** this
  *     environment variable is set, **and** its value is not the empty string,
  *     use the environment variable value for `EndpointOption`. This parameter
- *     is ignored if empty. This is useful on libraries that do not have an
- *     environment variable to override the endpoint value.
+ *     is ignored if empty, which is useful when a service does not need an
+ *     override.
  * @param emulator_env_var an environment variable name to override the endpoint
  *     and the default credentials. If this environment variable is set, use its
- *     value for `EndpointOption`. Not all services have emulators, in this
- *     case, the library can provide an empty value for this environment
- *     variable.
+ *     value for `EndpointOption`. This parameter is ignored if empty, which is
+ *     useful when a service does not have an emulator.
  * @param default_endpoint the default value for `EndpointOption`, if none of
  *     the other mechanisms has set a value.
  *
