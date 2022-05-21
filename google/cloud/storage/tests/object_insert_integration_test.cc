@@ -577,9 +577,9 @@ TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIp) {
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
-  StatusOr<ObjectMetadata> insert_meta =
-      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), DisableCrc32cChecksum(true), DisableMD5Hash(true), UserIp("10.0.0.1"));
+  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
+      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
+      DisableCrc32cChecksum(true), DisableMD5Hash(true), UserIp("10.0.0.1"));
   ASSERT_STATUS_OK(insert_meta);
   ScheduleForDelete(*insert_meta);
 
@@ -623,7 +623,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertMultipartWithUserIpBlank) {
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
-                             MatchesRegex(".*userIp=([0-9]+\.){3}[0-9]+.*"))));
+                             MatchesRegex(R"regex(.*userIp=([0-9]+\.){3}[0-9]+.*)regex"))));
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIpBlank) {
@@ -642,16 +642,16 @@ TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIpBlank) {
   }
 
   testing_util::ScopedLog log;
-  StatusOr<ObjectMetadata> insert_meta =
-      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), DisableCrc32cChecksum(true), DisableMD5Hash(true), UserIp(""));
+  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
+      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
+      DisableCrc32cChecksum(true), DisableMD5Hash(true), UserIp(""));
   ASSERT_STATUS_OK(insert_meta);
   ScheduleForDelete(*insert_meta);
 
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
-                             MatchesRegex(".*userIp=([0-9]+\.){3}[0-9]+.*"))));
+                             MatchesRegex(R"regex(.*userIp=([0-9]+\.){3}[0-9]+.*)regex"))));
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithContentType) {
