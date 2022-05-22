@@ -43,7 +43,7 @@ requires(!std::is_void_v<T> && !std::is_reference_v<T>) /**/
 
     void return_value(T const& value) noexcept(
         std::is_nothrow_copy_constructible_v<T>) {
-      this->set_value(value);
+      impl.set_value(value);
     }
     void return_value(T&& value) noexcept(
         std::is_nothrow_move_constructible_v<T>) {

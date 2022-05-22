@@ -41,6 +41,20 @@ TEST(FutureCoroutines, BaseGeneric) {
   EXPECT_EQ(pending.get(), "42");
 }
 
+future<std::string> CoReturnConst(future<void> ready) {
+  co_await std::move(ready);
+  auto const value = std::string("The quick brown fox jumps over the lazy dog");
+  co_return value;
+}
+
+TEST(FutureCoroutines, CoReturnConst) {
+  promise<void> release;
+  auto pending = CoReturnConst(release.get_future());
+  EXPECT_FALSE(pending.is_ready());
+  release.set_value();
+  EXPECT_EQ(pending.get(), "The quick brown fox jumps over the lazy dog");
+}
+
 future<void> WaitAll(std::vector<future<void>> futures) {
   for (auto& f : futures) co_await std::move(f);
 }
