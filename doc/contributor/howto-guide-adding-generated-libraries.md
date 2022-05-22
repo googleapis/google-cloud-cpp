@@ -217,6 +217,7 @@ services=$(ls ${lib}/*_connection.h | xargs -I {} basename {} _connection.h)
   sed '/<!-- inject-endpoint-env-vars-start -->/q' "${lib}/doc/main.dox"
   echo ""
   for service in ${services[@]}; do
+    # Should we generate documentation for GOOGLE_CLOUD_CPP_.*_AUTHORITY?
     env_var=$(grep -o "GOOGLE_CLOUD_CPP_.*_ENDPOINT" ${lib}/internal/${service}_option_defaults.cc)
     endpoint=$(grep -ro "\"[[:alnum:]]*\.googleapis\.com" ${lib}/internal/${service}_option_defaults.cc)
     connection=$(grep -ro "\~[[:alnum:]]*()" ${lib}/${service}_connection.h)

@@ -46,13 +46,16 @@ namespace internal {
  *     and the default credentials. If this environment variable is set, use its
  *     value for `EndpointOption`. This parameter is ignored if empty, which is
  *     useful when a service does not have an emulator.
- * @param default_endpoint the default value for `EndpointOption`, if none of
- *     the other mechanisms has set a value.
+ * @param authority_env_var an environment variable name to override the value
+ *     for `AuthorityOption`. This parameter is ignored if empty.
+ * @param default_endpoint the default value for `EndpointOption` and
+ *     `AuthorityOption` if none of the other mechanisms has set a value.
  *
  * @return opts with some common defaults set.
  */
 Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
+                              std::string const& authority_env_var,
                               std::string default_endpoint);
 
 /// Compute the default value for the tracing components.
