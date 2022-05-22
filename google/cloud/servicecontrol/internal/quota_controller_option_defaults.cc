@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options QuotaControllerDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_QUOTA_CONTROLLER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_QUOTA_CONTROLLER_AUTHORITY",
       "servicecontrol.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

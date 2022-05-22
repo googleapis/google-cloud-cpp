@@ -35,7 +35,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options WorkflowTemplateServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_ENDPOINT",
-      "", "dataproc.googleapis.com");
+      "", "GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_AUTHORITY",
+      "dataproc.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<dataproc::WorkflowTemplateServiceRetryPolicyOption>()) {

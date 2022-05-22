@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options AccessApprovalDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ACCESS_APPROVAL_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ACCESS_APPROVAL_AUTHORITY",
       "accessapproval.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

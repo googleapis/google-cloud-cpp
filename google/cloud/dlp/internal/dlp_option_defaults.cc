@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options DlpServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DLP_SERVICE_ENDPOINT", "",
-      "dlp.googleapis.com");
+      "GOOGLE_CLOUD_CPP_DLP_SERVICE_AUTHORITY", "dlp.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<dlp::DlpServiceRetryPolicyOption>()) {

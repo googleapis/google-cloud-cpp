@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options TranslationServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TRANSLATION_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TRANSLATION_SERVICE_AUTHORITY",
       "translate.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

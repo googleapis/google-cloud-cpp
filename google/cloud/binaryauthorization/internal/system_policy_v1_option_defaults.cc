@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options SystemPolicyV1DefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_AUTHORITY",
       "binaryauthorization.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

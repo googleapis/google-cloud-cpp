@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options GroupServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_GROUP_SERVICE_ENDPOINT", "",
-      "monitoring.googleapis.com");
+      "GOOGLE_CLOUD_CPP_GROUP_SERVICE_AUTHORITY", "monitoring.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<monitoring::GroupServiceRetryPolicyOption>()) {

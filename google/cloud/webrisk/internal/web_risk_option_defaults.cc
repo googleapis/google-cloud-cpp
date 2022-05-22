@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options WebRiskServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_WEB_RISK_SERVICE_ENDPOINT", "",
-      "webrisk.googleapis.com");
+      "GOOGLE_CLOUD_CPP_WEB_RISK_SERVICE_AUTHORITY", "webrisk.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<webrisk::WebRiskServiceRetryPolicyOption>()) {

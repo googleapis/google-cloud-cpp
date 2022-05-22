@@ -35,7 +35,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options CloudFunctionsServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_FUNCTIONS_SERVICE_ENDPOINT",
-      "", "cloudfunctions.googleapis.com");
+      "", "GOOGLE_CLOUD_CPP_CLOUD_FUNCTIONS_SERVICE_AUTHORITY",
+      "cloudfunctions.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<functions::CloudFunctionsServiceRetryPolicyOption>()) {

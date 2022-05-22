@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options CloudBuildDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_BUILD_ENDPOINT", "",
-      "cloudbuild.googleapis.com");
+      "GOOGLE_CLOUD_CPP_CLOUD_BUILD_AUTHORITY", "cloudbuild.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<cloudbuild::CloudBuildRetryPolicyOption>()) {

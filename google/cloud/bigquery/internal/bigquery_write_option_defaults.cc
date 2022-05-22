@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options BigQueryWriteDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_AUTHORITY",
       "bigquerystorage.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

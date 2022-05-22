@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options WebSecurityScannerDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_WEB_SECURITY_SCANNER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_WEB_SECURITY_SCANNER_AUTHORITY",
       "websecurityscanner.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

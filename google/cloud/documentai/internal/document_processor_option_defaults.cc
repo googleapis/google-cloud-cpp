@@ -36,6 +36,7 @@ Options DocumentProcessorServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_AUTHORITY",
       "documentai.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

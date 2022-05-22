@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options ClusterManagerDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLUSTER_MANAGER_ENDPOINT", "",
-      "container.googleapis.com");
+      "GOOGLE_CLOUD_CPP_CLUSTER_MANAGER_AUTHORITY", "container.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<container::ClusterManagerRetryPolicyOption>()) {

@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options AuthorizedDomainsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_AUTHORIZED_DOMAINS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_AUTHORIZED_DOMAINS_AUTHORITY",
       "appengine.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

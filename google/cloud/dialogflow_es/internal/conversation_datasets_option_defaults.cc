@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options ConversationDatasetsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CONVERSATION_DATASETS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CONVERSATION_DATASETS_AUTHORITY",
       "dialogflow.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

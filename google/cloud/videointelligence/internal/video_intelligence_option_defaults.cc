@@ -36,6 +36,7 @@ Options VideoIntelligenceServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_VIDEO_INTELLIGENCE_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_VIDEO_INTELLIGENCE_SERVICE_AUTHORITY",
       "videointelligence.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

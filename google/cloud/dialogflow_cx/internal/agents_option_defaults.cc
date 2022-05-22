@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options AgentsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_AGENTS_ENDPOINT", "",
-      "dialogflow.googleapis.com");
+      "GOOGLE_CLOUD_CPP_AGENTS_AUTHORITY", "dialogflow.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<dialogflow_cx::AgentsRetryPolicyOption>()) {
