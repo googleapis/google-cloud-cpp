@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
@@ -41,6 +42,7 @@ namespace {
 using ::google::cloud::spanner_mocks::MockConnection;
 using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::ByMove;
@@ -395,12 +397,19 @@ TEST(ClientTest, MakeConnectionOptionalArguments) {
   EXPECT_EQ(conn->options().get<EndpointOption>(),
             spanner_internal::DefaultOptions().get<EndpointOption>());
 
-  conn = MakeConnection(db, Options{}.set<EndpointOption>("endpoint"));
-  ASSERT_NE(conn, nullptr);
-  ASSERT_TRUE(conn->options().has<EndpointOption>());
-  EXPECT_NE(conn->options().get<EndpointOption>(),
-            spanner_internal::DefaultOptions().get<EndpointOption>());
-  EXPECT_EQ(conn->options().get<EndpointOption>(), "endpoint");
+  {
+    // Setting `EndpointOption` only has an effect when it is not overridden
+    // from the environment.
+    ScopedEnvironment endpoint("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
+                               absl::nullopt);
+    ScopedEnvironment emulator("SPANNER_EMULATOR_HOST", absl::nullopt);
+    conn = MakeConnection(db, Options{}.set<EndpointOption>("endpoint"));
+    ASSERT_NE(conn, nullptr);
+    ASSERT_TRUE(conn->options().has<EndpointOption>());
+    EXPECT_NE(conn->options().get<EndpointOption>(),
+              spanner_internal::DefaultOptions().get<EndpointOption>());
+    EXPECT_EQ(conn->options().get<EndpointOption>(), "endpoint");
+  }
 }
 
 TEST(ClientTest, CommitMutatorSuccess) {
