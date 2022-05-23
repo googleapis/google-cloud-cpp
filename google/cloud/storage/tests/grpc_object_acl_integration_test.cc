@@ -91,6 +91,10 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(create_acl->entity()));
 
+  auto get_acl = client->GetObjectAcl(bucket_name, object_name, viewers);
+  ASSERT_STATUS_OK(get_acl);
+  EXPECT_EQ(*create_acl, *get_acl);
+
   auto status = client->DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(status);
 }

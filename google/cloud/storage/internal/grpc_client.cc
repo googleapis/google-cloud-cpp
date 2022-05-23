@@ -726,8 +726,12 @@ StatusOr<EmptyResponse> GrpcClient::DeleteObjectAcl(
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::GetObjectAcl(
-    GetObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetObjectAclRequest const& request) {
+  auto get_request =
+      GetObjectMetadataRequest(request.bucket_name(), request.object_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto get = GetObjectMetadata(get_request);
+  return FindObjectAccessControl(std::move(get), request.entity());
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::UpdateObjectAcl(
