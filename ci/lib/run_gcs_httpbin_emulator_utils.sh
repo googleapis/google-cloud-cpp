@@ -111,7 +111,7 @@ start_emulator() {
     cat gcs_emulator.log
     exit 1
   fi
-  export CLOUD_STORAGE_GRPC_ENDPOINT="localhost:${grpc_port}"
+  export CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT="localhost:${grpc_port}"
 }
 
 # Create the testbench resources used in integration tests
