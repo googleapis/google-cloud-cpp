@@ -33,8 +33,8 @@ namespace {
 using ::google::cloud::storage::testing::CountMatchingEntities;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::AllOf;
+using ::testing::ContainsRegex;
 using ::testing::HasSubstr;
-using ::testing::MatchesRegex;
 using ::testing::Not;
 
 constexpr auto kJsonEnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON";
@@ -620,11 +620,10 @@ TEST_P(ObjectInsertIntegrationTest, InsertMultipartWithUserIpBlank) {
   ASSERT_STATUS_OK(insert_meta);
   ScheduleForDelete(*insert_meta);
 
-  EXPECT_THAT(
-      log.ExtractLines(),
-      Contains(
-          AllOf(HasSubstr(" POST "), HasSubstr("/b/" + bucket_name_ + "/o"),
-                MatchesRegex(R"regex(.*userIp=([0-9]+\.){3}[0-9]+.*)regex"))));
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(
+                  HasSubstr(" POST "), HasSubstr("/b/" + bucket_name_ + "/o"),
+                  ContainsRegex(R"regex(userIp=([0-9]+\.){3}[0-9]+)regex"))));
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIpBlank) {
@@ -649,11 +648,10 @@ TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIpBlank) {
   ASSERT_STATUS_OK(insert_meta);
   ScheduleForDelete(*insert_meta);
 
-  EXPECT_THAT(
-      log.ExtractLines(),
-      Contains(
-          AllOf(HasSubstr(" POST "), HasSubstr("/b/" + bucket_name_ + "/o"),
-                MatchesRegex(R"regex(.*userIp=([0-9]+\.){3}[0-9]+.*)regex"))));
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(
+                  HasSubstr(" POST "), HasSubstr("/b/" + bucket_name_ + "/o"),
+                  ContainsRegex(R"regex(userIp=([0-9]+\.){3}[0-9]+)regex"))));
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithContentType) {
