@@ -44,7 +44,7 @@ class GrpcClientFailuresTest
   GrpcClientFailuresTest()
       : grpc_config_("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", {}),
         rest_endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", {}),
-        grpc_endpoint_("CLOUD_STORAGE_GRPC_ENDPOINT", {}) {}
+        grpc_endpoint_("CLOUD_STORAGE_TESTBENCH_GRPC_ENDPOINT", {}) {}
 
   void SetUp() override {
     std::string const grpc_config = GetParam();

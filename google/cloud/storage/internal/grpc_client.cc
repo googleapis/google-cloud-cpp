@@ -99,9 +99,15 @@ Options DefaultOptionsGrpc(Options options) {
     options.set<UnifiedCredentialsOption>(
         google::cloud::MakeGoogleDefaultCredentials());
   }
+  auto const testbench = GetEnv("CLOUD_STORAGE_TESTBENCH_GRPC_ENDPOINT");
+  if (testbench.has_value()) {
+    options.set<EndpointOption>(*testbench);
+    // The emulator does not support HTTPS or authentication, use insecure
+    // (sometimes called "anonymous") credentials, which disable SSL.
+    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+  }
   if (!options.has<EndpointOption>()) {
-    options.set<EndpointOption>(GetEnv("CLOUD_STORAGE_GRPC_ENDPOINT")
-                                    .value_or("storage.googleapis.com"));
+    options.set<EndpointOption>("storage.googleapis.com");
   }
   if (!options.has<AuthorityOption>()) {
     options.set<AuthorityOption>("storage.googleapis.com");
@@ -109,11 +115,6 @@ Options DefaultOptionsGrpc(Options options) {
   if (!options.has<GrpcPluginOption>()) {
     options.set<GrpcPluginOption>(
         GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG").value_or("none"));
-  }
-  if (GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT")) {
-    // The emulator does not support HTTPS or authentication, use insecure
-    // (sometimes called "anonymous") credentials, which disable SSL.
-    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   }
   if (!options.has<GrpcNumChannelsOption>()) {
     options.set<GrpcNumChannelsOption>(

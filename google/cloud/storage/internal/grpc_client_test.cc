@@ -227,6 +227,30 @@ TEST_F(GrpcClientTest, DefaultOptionsGrpcChannelCount) {
   }
 }
 
+TEST_F(GrpcClientTest, DefaultOptionsGrpcEndpointNoEnv) {
+  auto expected = std::string("storage.googleapis.com");
+  auto alternatives = [](std::string const& value) {
+    return std::vector<absl::optional<std::string>>{absl::nullopt, value};
+  };
+
+  for (auto const& opt : alternatives("from-option")) {
+    SCOPED_TRACE("Testing with opt " + opt.value_or("<unset>"));
+    auto options = TestOptions();
+    if (opt.has_value()) {
+      expected = *opt;
+      options.set<EndpointOption>(*opt);
+    }
+    for (auto const& env : alternatives("from-env")) {
+      SCOPED_TRACE("Testing with env " + opt.value_or("<unset>"));
+      auto setenv =
+          ScopedEnvironment("CLOUD_STORAGE_TESTBENCH_GRPC_ENDPOINT", env);
+      if (env.has_value()) expected = *env;
+      auto actual = DefaultOptionsGrpc(options);
+      EXPECT_EQ(actual.get<EndpointOption>(), expected);
+    }
+  }
+}
+
 TEST_F(GrpcClientTest, QueryResumableUpload) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, QueryWriteStatus)
