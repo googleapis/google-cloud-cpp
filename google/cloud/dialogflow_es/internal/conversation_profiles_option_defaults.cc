@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options ConversationProfilesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CONVERSATION_PROFILES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CONVERSATION_PROFILES_AUTHORITY",
       "dialogflow.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

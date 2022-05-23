@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options ImageAnnotatorDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_ENDPOINT", "",
-      "vision.googleapis.com");
+      "GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_AUTHORITY", "vision.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<vision::ImageAnnotatorRetryPolicyOption>()) {

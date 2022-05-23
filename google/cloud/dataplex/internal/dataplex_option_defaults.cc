@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options DataplexServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DATAPLEX_SERVICE_ENDPOINT", "",
-      "dataplex.googleapis.com");
+      "GOOGLE_CLOUD_CPP_DATAPLEX_SERVICE_AUTHORITY", "dataplex.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<dataplex::DataplexServiceRetryPolicyOption>()) {

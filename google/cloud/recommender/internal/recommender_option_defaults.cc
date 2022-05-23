@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options RecommenderDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_RECOMMENDER_ENDPOINT", "",
-      "recommender.googleapis.com");
+      "GOOGLE_CLOUD_CPP_RECOMMENDER_AUTHORITY", "recommender.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<recommender::RecommenderRetryPolicyOption>()) {

@@ -77,6 +77,7 @@ export GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID="test-instance"
 export GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT="spanner-iam-test-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 export GOOGLE_CLOUD_CPP_SPANNER_TEST_QUICKSTART_DATABASE="quickstart-db"
 #export GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT="staging-wrenchworks.sandbox.googleapis.com"
+#export GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY="${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT}"
 
 # Cloud Pub/Sub configuration parameters
 export GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"

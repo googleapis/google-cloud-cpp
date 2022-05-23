@@ -25,6 +25,7 @@ namespace internal {
 
 Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
+                              std::string const& authority_env_var,
                               std::string default_endpoint) {
   if (!opts.has<EndpointOption>()) {
     opts.set<EndpointOption>(default_endpoint);
@@ -44,6 +45,12 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
 
   if (!opts.has<AuthorityOption>()) {
     opts.set<AuthorityOption>(std::move(default_endpoint));
+  }
+  if (!authority_env_var.empty()) {
+    auto e = internal::GetEnv(authority_env_var.c_str());
+    if (e && !e->empty()) {
+      opts.set<AuthorityOption>(*std::move(e));
+    }
   }
 
   auto e = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");

@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options Controller2DefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CONTROLLER2_ENDPOINT", "",
-      "clouddebugger.googleapis.com");
+      "GOOGLE_CLOUD_CPP_CONTROLLER2_AUTHORITY", "clouddebugger.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<debugger::Controller2RetryPolicyOption>()) {

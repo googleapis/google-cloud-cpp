@@ -35,7 +35,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options ConnectionServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_APIGEE_CONNECTION_SERVICE_ENDPOINT",
-      "", "apigeeconnect.googleapis.com");
+      "", "GOOGLE_CLOUD_CPP_APIGEE_CONNECTION_SERVICE_AUTHORITY",
+      "apigeeconnect.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<apigeeconnect::ConnectionServiceRetryPolicyOption>()) {

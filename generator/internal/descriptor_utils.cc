@@ -18,6 +18,7 @@
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
+#include "absl/strings/strip.h"
 #include "absl/types/variant.h"
 #include "generator/internal/auth_decorator_generator.h"
 #include "generator/internal/client_generator.h"
@@ -727,6 +728,17 @@ VarsDictionary CreateServiceVars(
         absl::AsciiStrToUpper(CamelCaseToSnakeCase(descriptor.name())),
         "_ENDPOINT");
   }
+  absl::string_view service_endpoint_env_var_prefix = service_endpoint_env_var;
+  if (!absl::ConsumeSuffix(&service_endpoint_env_var_prefix, "_ENDPOINT")) {
+    // Until we have a need for a service_endpoint_env_var that does not end
+    // with "_ENDPOINT", this allows us to generate service_authority_env_var,
+    // and so avoid needing to add anything to message ServiceConfiguration.
+    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                   << R"(: For now we require that service_endpoint_env_var ")"
+                   << service_endpoint_env_var << R"(" ends with "_ENDPOINT")";
+  }
+  vars["service_authority_env_var"] =
+      absl::StrCat(service_endpoint_env_var_prefix, "_AUTHORITY");
   vars["service_name"] = descriptor.name();
   vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
   vars["stub_cc_path"] =

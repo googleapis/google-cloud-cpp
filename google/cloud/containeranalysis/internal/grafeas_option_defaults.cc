@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options GrafeasDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_GRAFEAS_ENDPOINT", "",
-      "containeranalysis.googleapis.com");
+      "GOOGLE_CLOUD_CPP_GRAFEAS_AUTHORITY", "containeranalysis.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<containeranalysis::GrafeasRetryPolicyOption>()) {

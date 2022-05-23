@@ -36,6 +36,7 @@ Options ConnectionServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_AUTHORITY",
       "bigqueryconnection.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

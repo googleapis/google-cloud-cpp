@@ -36,6 +36,7 @@ Options CertificateAuthorityServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_CERTIFICATE_AUTHORITY_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CERTIFICATE_AUTHORITY_SERVICE_AUTHORITY",
       "privateca.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

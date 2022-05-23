@@ -94,7 +94,8 @@ Status OptionDefaultsGenerator::GenerateCc() {
 Options $service_name$DefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "$service_endpoint_env_var$",
-      "$emulator_endpoint_env_var$", "$service_endpoint$");
+      "$emulator_endpoint_env_var$", "$service_authority_env_var$",
+      "$service_endpoint$");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "$emulator_endpoint_env_var$");
 )"""

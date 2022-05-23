@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options ContainerAnalysisDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CONTAINER_ANALYSIS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CONTAINER_ANALYSIS_AUTHORITY",
       "containeranalysis.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

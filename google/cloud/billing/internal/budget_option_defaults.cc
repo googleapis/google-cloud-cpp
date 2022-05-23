@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options BudgetServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_BUDGET_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BUDGET_SERVICE_AUTHORITY",
       "billingbudgets.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options VmMigrationDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_VM_MIGRATION_ENDPOINT", "",
-      "vmmigration.googleapis.com");
+      "GOOGLE_CLOUD_CPP_VM_MIGRATION_AUTHORITY", "vmmigration.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<vmmigration::VmMigrationRetryPolicyOption>()) {

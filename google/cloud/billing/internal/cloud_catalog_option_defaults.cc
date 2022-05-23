@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options CloudCatalogDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_CATALOG_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CLOUD_CATALOG_AUTHORITY",
       "cloudbilling.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

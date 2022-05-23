@@ -28,101 +28,97 @@ namespace {
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::IsEmpty;
 
 TEST(PopulateCommonOptions, Simple) {
-  // Unset all the relevant environment variables
+  // Unset all the relevant environment variables.
   ScopedEnvironment user("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
   ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
-  auto actual =
-      PopulateCommonOptions(Options{}, {}, {}, "default.googleapis.com");
+  auto actual = PopulateCommonOptions(Options{}, {}, {}, {}, "default");
   EXPECT_TRUE(actual.has<EndpointOption>());
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
   EXPECT_TRUE(actual.has<AuthorityOption>());
+  EXPECT_THAT(actual.get<AuthorityOption>(), Eq("default"));
+  EXPECT_FALSE(actual.has<UserProjectOption>());
+  EXPECT_TRUE(actual.has<TracingComponentsOption>());
+  EXPECT_THAT(actual.get<TracingComponentsOption>(), IsEmpty());
   EXPECT_TRUE(actual.has<UserAgentProductsOption>());
   EXPECT_THAT(actual.get<UserAgentProductsOption>(),
               Contains(UserAgentPrefix()));
-  EXPECT_TRUE(actual.has<TracingComponentsOption>());
-  EXPECT_THAT(actual.get<TracingComponentsOption>(), IsEmpty());
-  EXPECT_FALSE(actual.has<UserProjectOption>());
 }
 
-TEST(PopulateCommonOptions, Endpoint) {
-  auto const empty = Options{};
-  auto const with_ep = Options{}.set<EndpointOption>("with-ep");
-  struct TestCase {
-    std::string name;
-    Options initial;
-    absl::optional<std::string> default_env;
-    absl::optional<std::string> emulator_env;
-    std::string expected;
-  } test_cases[] = {
-      {"empty-0", empty, absl::nullopt, absl::nullopt, "default"},
-      {"empty-1", empty, absl::nullopt, "", "default"},
-      {"empty-2", empty, absl::nullopt, "emulator", "emulator"},
-      {"empty-3", empty, "", absl::nullopt, "default"},
-      {"empty-4", empty, "", "", "default"},
-      {"empty-5", empty, "", "emulator", "emulator"},
-      {"empty-6", empty, "env", absl::nullopt, "env"},
-      {"empty-7", empty, "env", "", "env"},
-      {"empty-8", empty, "env", "emulator", "emulator"},
-      {"with-ep-0", with_ep, absl::nullopt, absl::nullopt, "with-ep"},
-      {"with-ep-1", with_ep, absl::nullopt, "", "with-ep"},
-      {"with-ep-2", with_ep, absl::nullopt, "emulator", "emulator"},
-      {"with-ep-3", with_ep, "", absl::nullopt, "with-ep"},
-      {"with-ep-4", with_ep, "", "", "with-ep"},
-      {"with-ep-5", with_ep, "", "emulator", "emulator"},
-      {"with-ep-6", with_ep, "env", absl::nullopt, "env"},
-      {"with-ep-7", with_ep, "env", "", "env"},
-      {"with-ep-8", with_ep, "env", "emulator", "emulator"},
+TEST(PopulateCommonOptions, EndpointAuthority) {
+  Options optionses[] = {
+      Options{},
+      Options{}.set<EndpointOption>("endpoint_option"),
+      Options{}.set<AuthorityOption>("authority_option"),
+      Options{}
+          .set<EndpointOption>("endpoint_option")
+          .set<AuthorityOption>("authority_option"),
   };
+  absl::optional<std::string> endpoints[] = {absl::nullopt, "", "endpoint"};
+  absl::optional<std::string> emulators[] = {absl::nullopt, "", "emulator"};
+  absl::optional<std::string> authorities[] = {absl::nullopt, "", "authority"};
+  for (auto const& options : optionses) {
+    for (auto const& endpoint_env : endpoints) {
+      for (auto const& emulator_env : emulators) {
+        for (auto const& authority_env : authorities) {
+          ScopedEnvironment endpoint("SERVICE_ENDPOINT", endpoint_env);
+          ScopedEnvironment emulator("SERVICE_EMULATOR", emulator_env);
+          ScopedEnvironment authority("SERVICE_AUTHORITY", authority_env);
 
-  for (auto const& test : test_cases) {
-    SCOPED_TRACE("Running test case " + test.name);
-    ScopedEnvironment env("DEFAULT", test.default_env);
-    ScopedEnvironment emulator("EMULATOR", test.emulator_env);
-    auto actual =
-        PopulateCommonOptions(test.initial, "DEFAULT", "EMULATOR", "default");
-    EXPECT_EQ(actual.get<EndpointOption>(), test.expected);
-    EXPECT_EQ(actual.get<AuthorityOption>(), "default");
+          auto actual = PopulateCommonOptions(options, "SERVICE_ENDPOINT",
+                                              "SERVICE_EMULATOR",
+                                              "SERVICE_AUTHORITY", "default");
+
+          ASSERT_TRUE(actual.has<EndpointOption>());
+          auto const& actual_endpoint = actual.get<EndpointOption>();
+          if (emulator_env.has_value() && !emulator_env->empty()) {
+            EXPECT_THAT(actual_endpoint, Eq(*emulator_env));
+          } else if (endpoint_env.has_value() && !endpoint_env->empty()) {
+            EXPECT_THAT(actual_endpoint, Eq(*endpoint_env));
+          } else if (options.has<EndpointOption>()) {
+            EXPECT_THAT(actual_endpoint, Eq(options.get<EndpointOption>()));
+          } else {
+            EXPECT_THAT(actual_endpoint, Eq("default"));
+          }
+
+          ASSERT_TRUE(actual.has<AuthorityOption>());
+          auto const& actual_authority = actual.get<AuthorityOption>();
+          if (authority_env.has_value() && !authority_env->empty()) {
+            EXPECT_THAT(actual_authority, Eq(*authority_env));
+          } else if (options.has<AuthorityOption>()) {
+            EXPECT_THAT(actual_authority, Eq(options.get<AuthorityOption>()));
+          } else {
+            EXPECT_THAT(actual_authority, Eq("default"));
+          }
+        }
+      }
+    }
   }
 }
 
 TEST(PopulateCommonOptions, UserProject) {
-  auto const empty = Options{};
-  auto const with_value = Options{}.set<UserProjectOption>("with-value");
-  struct TestCase {
-    std::string name;
-    Options initial;
-    absl::optional<std::string> env;
-    std::string expected;
-  } test_cases[] = {
-      {"without-value", empty, "user-project", "user-project"},
-      {"with-value-0", with_value, absl::nullopt, "with-value"},
-      {"with-value-1", with_value, "user-project", "user-project"},
+  Options optionses[] = {
+      Options{},
+      Options{}.set<UserProjectOption>("project_option"),
   };
-
-  for (auto const& test : test_cases) {
-    SCOPED_TRACE("Running test case " + test.name);
-    ScopedEnvironment env("GOOGLE_CLOUD_CPP_USER_PROJECT", test.env);
-    auto actual = PopulateCommonOptions(test.initial, {}, {}, "default");
-    EXPECT_EQ(actual.get<UserProjectOption>(), test.expected);
+  absl::optional<std::string> projects[] = {absl::nullopt, "", "project"};
+  for (auto const& options : optionses) {
+    for (auto const& project_env : projects) {
+      ScopedEnvironment projects("GOOGLE_CLOUD_CPP_USER_PROJECT", project_env);
+      auto actual = PopulateCommonOptions(options, {}, {}, {}, "default");
+      if (project_env.has_value() && !project_env->empty()) {
+        EXPECT_THAT(actual.get<UserProjectOption>(), Eq(*project_env));
+      } else if (options.has<UserProjectOption>()) {
+        EXPECT_THAT(actual.get<UserProjectOption>(),
+                    Eq(options.get<UserProjectOption>()));
+      } else {
+        EXPECT_FALSE(actual.has<UserProjectOption>());
+      }
+    }
   }
-
-  // Also test the case where nothing is set.
-  ScopedEnvironment unset("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
-  auto actual = PopulateCommonOptions(Options{}, {}, {}, "default");
-  EXPECT_FALSE(actual.has<UserProjectOption>());
-}
-
-TEST(PopulateCommonOptions, OverrideAuthorityOption) {
-  // Unset all the relevant environment variables
-  ScopedEnvironment user("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
-  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
-  auto actual = PopulateCommonOptions(
-      Options{}.set<AuthorityOption>("custom-authority.googleapis.com"), {}, {},
-      "default.googleapis.com");
-  EXPECT_EQ(actual.get<EndpointOption>(), "default.googleapis.com");
-  EXPECT_EQ(actual.get<AuthorityOption>(), "custom-authority.googleapis.com");
 }
 
 TEST(PopulateCommonOptions, DefaultTracingComponentsNoEnvironment) {

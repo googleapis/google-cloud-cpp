@@ -36,6 +36,7 @@ Options AutoscalingPolicyServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_AUTHORITY",
       "dataproc.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

@@ -34,7 +34,8 @@ namespace {
 void SetBasicDefaults(Options& opts) {
   opts = internal::PopulateCommonOptions(
       std::move(opts), "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
-      "SPANNER_EMULATOR_HOST", "spanner.googleapis.com");
+      "SPANNER_EMULATOR_HOST", "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY",
+      "spanner.googleapis.com");
   opts =
       internal::PopulateGrpcOptions(std::move(opts), "SPANNER_EMULATOR_HOST");
   if (!opts.has<GrpcNumChannelsOption>()) {

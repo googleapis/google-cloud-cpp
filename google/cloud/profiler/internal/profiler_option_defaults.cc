@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options ProfilerServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_PROFILER_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_PROFILER_SERVICE_AUTHORITY",
       "cloudprofiler.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

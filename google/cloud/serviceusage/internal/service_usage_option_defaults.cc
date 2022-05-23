@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options ServiceUsageDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_USAGE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SERVICE_USAGE_AUTHORITY",
       "serviceusage.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

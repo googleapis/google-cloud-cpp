@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options TenantServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TENANT_SERVICE_ENDPOINT", "",
-      "jobs.googleapis.com");
+      "GOOGLE_CLOUD_CPP_TENANT_SERVICE_AUTHORITY", "jobs.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<talent::TenantServiceRetryPolicyOption>()) {

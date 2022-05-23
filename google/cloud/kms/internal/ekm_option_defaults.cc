@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options EkmServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_EKM_SERVICE_ENDPOINT", "",
-      "cloudkms.googleapis.com");
+      "GOOGLE_CLOUD_CPP_EKM_SERVICE_AUTHORITY", "cloudkms.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<kms::EkmServiceRetryPolicyOption>()) {

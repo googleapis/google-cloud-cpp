@@ -35,7 +35,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options GoldenThingAdminDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOLDEN_KITCHEN_SINK_ENDPOINT",
-      "GOLDEN_KITCHEN_SINK_EMULATOR_HOST", "test.googleapis.com");
+      "GOLDEN_KITCHEN_SINK_EMULATOR_HOST", "GOLDEN_KITCHEN_SINK_AUTHORITY",
+      "test.googleapis.com");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "GOLDEN_KITCHEN_SINK_EMULATOR_HOST");
   if (!options.has<golden::GoldenThingAdminRetryPolicyOption>()) {

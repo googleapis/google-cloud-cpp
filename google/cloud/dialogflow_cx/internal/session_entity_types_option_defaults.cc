@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options SessionEntityTypesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SESSION_ENTITY_TYPES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SESSION_ENTITY_TYPES_AUTHORITY",
       "dialogflow.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

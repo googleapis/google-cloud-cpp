@@ -125,7 +125,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
   }
   opts = google::cloud::internal::PopulateCommonOptions(
       std::move(opts), /*endpoint_env_var=*/{}, /*emulator_env_var=*/{},
-      "pubsublite.googleapis.com");
+      /*authority_env_var=*/{}, "pubsublite.googleapis.com");
 
   std::unique_ptr<BackgroundThreads> background_threads =
       MakeBackgroundThreadsFactory(opts)();

@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options WorkflowsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_WORKFLOWS_ENDPOINT", "",
-      "workflows.googleapis.com");
+      "GOOGLE_CLOUD_CPP_WORKFLOWS_AUTHORITY", "workflows.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<workflows::WorkflowsRetryPolicyOption>()) {

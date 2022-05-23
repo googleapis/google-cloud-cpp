@@ -71,7 +71,7 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
                                                   "-pubsublite.googleapis.com"),
                     ""),
                 /*endpoint_env_var=*/{}, /*emulator_env_var=*/{},
-                "pubsublite.googleapis.com"))} {
+                /*authority_env_var=*/{}, "pubsublite.googleapis.com"))} {
     auto topic_id = RandomTopicName();
 
     GarbageCollect();
