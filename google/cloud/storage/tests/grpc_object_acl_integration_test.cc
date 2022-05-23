@@ -103,6 +103,14 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   EXPECT_EQ(updated_acl->entity(), create_acl->entity());
   EXPECT_EQ(updated_acl->role(), ObjectAccessControl::ROLE_OWNER());
 
+  auto patched_acl =
+      client->PatchObjectAcl(bucket_name, object_name, create_acl->entity(),
+                             ObjectAccessControlPatchBuilder().set_role(
+                                 ObjectAccessControl::ROLE_READER()));
+  ASSERT_STATUS_OK(patched_acl);
+  EXPECT_EQ(patched_acl->entity(), create_acl->entity());
+  EXPECT_EQ(patched_acl->role(), ObjectAccessControl::ROLE_READER());
+
   auto delete_acl = client->DeleteObjectAcl(bucket_name, object_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
 
