@@ -721,8 +721,28 @@ StatusOr<ObjectAccessControl> GrpcClient::CreateObjectAcl(
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteObjectAcl(
-    DeleteObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    DeleteObjectAclRequest const& request) {
+  auto get_request =
+      GetObjectMetadataRequest(request.bucket_name(), request.object_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto updater = [&request](std::vector<ObjectAccessControl> acl)
+      -> StatusOr<std::vector<ObjectAccessControl>> {
+    auto i = std::remove_if(acl.begin(), acl.end(),
+                            [&](ObjectAccessControl const& entry) {
+                              return entry.entity() == request.entity();
+                            });
+    if (i == acl.end()) {
+      return Status(StatusCode::kNotFound,
+                    "the entity <" + request.entity() +
+                        "> is not present in the ACL for object " +
+                        request.object_name());
+    }
+    acl.erase(i, acl.end());
+    return acl;
+  };
+  auto response = ModifyObjectAccessControl(get_request, updater);
+  if (!response) return std::move(response).status();
+  return EmptyResponse{};
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::GetObjectAcl(
