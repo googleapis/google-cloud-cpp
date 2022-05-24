@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/storage_round_robin.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -55,6 +56,17 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 MakeReadObjectStream(std::unique_ptr<grpc::ClientContext>,
                      google::storage::v2::ReadObjectRequest const&) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::storage::v2::ReadObjectResponse>;
+  return absl::make_unique<ErrorStream>(
+      Status(StatusCode::kPermissionDenied, "uh-oh"));
+}
+
+std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
+MakeAsyncReadObjectStream(google::cloud::CompletionQueue const&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::storage::v2::ReadObjectRequest const&) {
+  using ErrorStream = ::google::cloud::internal::AsyncStreamingReadRpcError<
       google::storage::v2::ReadObjectResponse>;
   return absl::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
@@ -542,6 +554,27 @@ TEST(StorageRoundRobinTest, UpdateHmacKey) {
     grpc::ClientContext ctx;
     auto response = under_test.UpdateHmacKey(ctx, request);
     EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
+  }
+}
+
+TEST(StorageRoundRobinTest, AsyncReadObject) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, AsyncReadObject).WillOnce(MakeAsyncReadObjectStream);
+    }
+  }
+
+  StorageRoundRobin under_test(AsPlainStubs(mocks));
+  google::cloud::CompletionQueue cq;
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    google::storage::v2::ReadObjectRequest request;
+    auto response = under_test.AsyncReadObject(
+        cq, absl::make_unique<grpc::ClientContext>(), request);
+    EXPECT_FALSE(response->Read().get());
+    auto status = response->Finish().get();
+    EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
   }
 }
 

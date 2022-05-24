@@ -130,6 +130,13 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::UpdateHmacKeyRequest const&),
               (override));
+  MOCK_METHOD(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+                  google::storage::v2::ReadObjectResponse>>,
+              AsyncReadObject,
+              (google::cloud::CompletionQueue const&,
+               std::unique_ptr<grpc::ClientContext>,
+               google::storage::v2::ReadObjectRequest const&),
+              (override));
 };
 
 class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<
