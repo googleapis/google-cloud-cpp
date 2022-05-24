@@ -41,8 +41,9 @@ which should give you a taste of the Bare Metal Solution API C++ client library 
 
 <!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_BARE_METAL_SOLUTION_ENDPOINT=...` changes the default endpoint
-  (baremetalsolution.googleapis.com) used by `BareMetalSolutionConnection`.
+- `GOOGLE_CLOUD_CPP_BARE_METAL_SOLUTION_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "baremetalsolution.googleapis.com")
+  used by `MakeBareMetalSolutionConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 
