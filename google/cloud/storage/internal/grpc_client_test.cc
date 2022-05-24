@@ -173,17 +173,19 @@ Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "uh-oh");
 }
 
+google::cloud::Options TestOptions() {
+  return Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+}
+
 std::shared_ptr<GrpcClient> CreateTestClient(
     std::shared_ptr<storage_internal::StorageStub> stub) {
-  return GrpcClient::CreateMock(
-      std::move(stub),
-      Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
+  return GrpcClient::CreateMock(std::move(stub), TestOptions());
 }
 
 TEST_F(GrpcClientTest, DefaultOptionsGrpcNoEnv) {
   auto grpc_config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto opts = DefaultOptionsGrpc();
+  auto opts = DefaultOptionsGrpc(TestOptions());
   EXPECT_EQ(opts.get<GrpcPluginOption>(), "none");
   opts = DefaultOptionsGrpc(Options{}.set<GrpcPluginOption>("configured"));
   EXPECT_EQ(opts.get<GrpcPluginOption>(), "configured");
@@ -192,7 +194,7 @@ TEST_F(GrpcClientTest, DefaultOptionsGrpcNoEnv) {
 TEST_F(GrpcClientTest, DefaultOptionsGrpcWithEnv) {
   auto grpc_config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", "env");
-  auto opts = DefaultOptionsGrpc();
+  auto opts = DefaultOptionsGrpc(TestOptions());
   EXPECT_EQ(opts.get<GrpcPluginOption>(), "env");
   opts = DefaultOptionsGrpc(Options{}.set<GrpcPluginOption>("configured"));
   EXPECT_EQ(opts.get<GrpcPluginOption>(), "configured");
@@ -213,12 +215,12 @@ TEST_F(GrpcClientTest, DefaultOptionsGrpcChannelCount) {
   for (auto const& test : cases) {
     SCOPED_TRACE("Testing with " + test.endpoint);
     auto opts =
-        DefaultOptionsGrpc(Options{}.set<EndpointOption>(test.endpoint));
+        DefaultOptionsGrpc(TestOptions().set<EndpointOption>(test.endpoint));
     auto const count = opts.get<GrpcNumChannelsOption>();
     EXPECT_LE(test.lower_bound, count);
     EXPECT_GE(test.upper_bound, count);
 
-    auto override = DefaultOptionsGrpc(Options{}
+    auto override = DefaultOptionsGrpc(TestOptions()
                                            .set<EndpointOption>(test.endpoint)
                                            .set<GrpcNumChannelsOption>(42));
     EXPECT_EQ(42, override.get<GrpcNumChannelsOption>());
