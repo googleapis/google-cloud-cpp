@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/mocks/mock_data_connection.h"
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/background_threads_impl.h"
@@ -155,6 +156,18 @@ TEST_F(TableTest, ConstructorWithAppProfileAndPolicies) {
               AlwaysRetryMutationPolicy(), LimitedErrorCountRetryPolicy(42));
   EXPECT_EQ("test-profile-id", table.app_profile_id());
   EXPECT_THAT(table.table_name(), HasSubstr("some-table"));
+}
+
+TEST_F(TableTest, ConnectionConstructor) {
+  auto conn = std::make_shared<bigtable_mocks::internal::MockDataConnection>();
+  auto table = bigtable_internal::MakeTable(conn, "the-project", "the-instance",
+                                            "the-profile", "the-table");
+  EXPECT_EQ("the-profile", table.app_profile_id());
+  EXPECT_EQ("the-project", table.project_id());
+  EXPECT_EQ("the-instance", table.instance_id());
+  EXPECT_EQ("the-table", table.table_id());
+  EXPECT_EQ("projects/the-project/instances/the-instance/tables/the-table",
+            table.table_name());
 }
 
 std::string const kProjectId = "the-project";
