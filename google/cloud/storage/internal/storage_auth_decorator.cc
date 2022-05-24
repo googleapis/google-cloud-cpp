@@ -17,6 +17,7 @@
 // source: google/storage/v2/storage.proto
 
 #include "google/cloud/storage/internal/storage_auth_decorator.h"
+#include "google/cloud/internal/async_streaming_read_rpc_auth.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <memory>
 
@@ -238,6 +239,23 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageAuth::UpdateHmacKey(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateHmacKey(context, request);
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
+StorageAuth::AsyncReadObject(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::ReadObjectRequest const& request) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
+      google::storage::v2::ReadObjectResponse>;
+
+  auto child = child_;
+  auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncReadObject(cq, std::move(ctx), request);
+  };
+  return absl::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

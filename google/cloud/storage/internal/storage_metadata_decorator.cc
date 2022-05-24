@@ -218,6 +218,16 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::UpdateHmacKey(
   return child_->UpdateHmacKey(context, request);
 }
 
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
+StorageMetadata::AsyncReadObject(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::ReadObjectRequest const& request) {
+  SetMetadata(*context);
+  return child_->AsyncReadObject(cq, std::move(context), request);
+}
+
 void StorageMetadata::SetMetadata(grpc::ClientContext& context,
                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

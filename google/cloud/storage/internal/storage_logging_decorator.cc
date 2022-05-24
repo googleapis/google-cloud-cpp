@@ -17,6 +17,7 @@
 // source: google/storage/v2/storage.proto
 
 #include "google/cloud/storage/internal/storage_logging_decorator.h"
+#include "google/cloud/internal/async_streaming_read_rpc_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/internal/streaming_write_rpc_logging.h"
@@ -334,6 +335,25 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageLogging::UpdateHmacKey(
         return child_->UpdateHmacKey(context, request);
       },
       context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
+StorageLogging::AsyncReadObject(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::ReadObjectRequest const& request) {
+  using LoggingStream = ::google::cloud::internal::AsyncStreamingReadRpcLogging<
+      google::storage::v2::ReadObjectResponse>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->AsyncReadObject(cq, std::move(context), request);
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
