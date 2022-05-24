@@ -41,32 +41,45 @@ which should give you a taste of the Cloud Monitoring API C++ client library API
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_ALERT_POLICY_SERVICE_ENDPOINT=...` changes the default endpoint
-  (monitoring.googleapis.com) used by `AlertPolicyServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_DASHBOARDS_SERVICE_ENDPOINT=...` changes the default endpoint
-  (monitoring.googleapis.com) used by `DashboardsServiceConnection`.
+- `GOOGLE_CLOUD_CPP_ALERT_POLICY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeAlertPolicyServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_GROUP_SERVICE_ENDPOINT=...` changes the default endpoint
-  (monitoring.googleapis.com) used by `GroupServiceConnection`.
+- `GOOGLE_CLOUD_CPP_DASHBOARDS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeDashboardsServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT=...` changes the default endpoint
-  (monitoring.googleapis.com) used by `MetricServiceConnection`.
+- `GOOGLE_CLOUD_CPP_GROUP_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeGroupServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_METRICS_SCOPES_ENDPOINT=...` changes the default endpoint
-  (monitoring.googleapis.com) used by `MetricsScopesConnection`.
+- `GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeMetricServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_NOTIFICATION_CHANNEL_SERVICE_ENDPOINT=...` changes the default endpoint
-  (monitoring.googleapis.com) used by `NotificationChannelServiceConnection`.
+- `GOOGLE_CLOUD_CPP_METRICS_SCOPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeMetricsScopesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_QUERY_SERVICE_ENDPOINT=...` changes the default endpoint
-  (monitoring.googleapis.com) used by `QueryServiceConnection`.
+- `GOOGLE_CLOUD_CPP_NOTIFICATION_CHANNEL_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeNotificationChannelServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_SERVICE_MONITORING_SERVICE_ENDPOINT=...` changes the default endpoint
-  (monitoring.googleapis.com) used by `ServiceMonitoringServiceConnection`.
+- `GOOGLE_CLOUD_CPP_QUERY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeQueryServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_UPTIME_CHECK_SERVICE_ENDPOINT=...` changes the default endpoint
-  (monitoring.googleapis.com) used by `UptimeCheckServiceConnection`.
+- `GOOGLE_CLOUD_CPP_SERVICE_MONITORING_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeServiceMonitoringServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_UPTIME_CHECK_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeUptimeCheckServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

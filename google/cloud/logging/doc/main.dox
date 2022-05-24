@@ -40,8 +40,13 @@ which should give you a taste of the Cloud Logging API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_LOGGING_SERVICE_V2_ENDPOINT=...` changes the default endpoint
-  (logging.googleapis.com) used by `LoggingServiceV2Connection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_LOGGING_SERVICE_V2_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "logging.googleapis.com")
+  used by `MakeLoggingServiceV2Connection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

@@ -39,8 +39,13 @@ which should give you a taste of the Access Context Manager API C++ client libra
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_ACCESS_CONTEXT_MANAGER_ENDPOINT=...` changes the default endpoint
-  (accesscontextmanager.googleapis.com) used by `AccessContextManagerConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_ACCESS_CONTEXT_MANAGER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "accesscontextmanager.googleapis.com")
+  used by `MakeAccessContextManagerConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

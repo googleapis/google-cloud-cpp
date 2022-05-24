@@ -41,53 +41,73 @@ which should give you a taste of the Dialogflow API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_AGENTS_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `AgentsConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_CHANGELOGS_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `ChangelogsConnection`.
+- `GOOGLE_CLOUD_CPP_AGENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeAgentsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_DEPLOYMENTS_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `DeploymentsConnection`.
+- `GOOGLE_CLOUD_CPP_CHANGELOGS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeChangelogsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_ENTITY_TYPES_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `EntityTypesConnection`.
+- `GOOGLE_CLOUD_CPP_DEPLOYMENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeDeploymentsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENT_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `EnvironmentsConnection`.
+- `GOOGLE_CLOUD_CPP_ENTITY_TYPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeEntityTypesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_EXPERIMENTS_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `ExperimentsConnection`.
+- `GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENT_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeEnvironmentsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_FLOWS_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `FlowsConnection`.
+- `GOOGLE_CLOUD_CPP_EXPERIMENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeExperimentsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_INTENTS_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `IntentsConnection`.
+- `GOOGLE_CLOUD_CPP_FLOWS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeFlowsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_PAGES_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `PagesConnection`.
+- `GOOGLE_CLOUD_CPP_INTENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeIntentsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_SECURITY_SETTINGS_SERVICE_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `SecuritySettingsServiceConnection`.
+- `GOOGLE_CLOUD_CPP_PAGES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakePagesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_SESSION_ENTITY_TYPES_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `SessionEntityTypesConnection`.
+- `GOOGLE_CLOUD_CPP_SECURITY_SETTINGS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeSecuritySettingsServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_SESSIONS_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `SessionsConnection`.
+- `GOOGLE_CLOUD_CPP_SESSION_ENTITY_TYPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeSessionEntityTypesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_TEST_CASES_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `TestCasesConnection`.
+- `GOOGLE_CLOUD_CPP_SESSIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeSessionsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_TRANSITION_ROUTE_GROUPS_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `TransitionRouteGroupsConnection`.
+- `GOOGLE_CLOUD_CPP_TEST_CASES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeTestCasesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `VersionsConnection`.
+- `GOOGLE_CLOUD_CPP_TRANSITION_ROUTE_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeTransitionRouteGroupsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_WEBHOOKS_ENDPOINT=...` changes the default endpoint
-  (dialogflow.googleapis.com) used by `WebhooksConnection`.
+- `GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeVersionsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_WEBHOOKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dialogflow.googleapis.com")
+  used by `MakeWebhooksConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

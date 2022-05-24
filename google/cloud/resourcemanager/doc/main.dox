@@ -39,14 +39,21 @@ which should give you a taste of the Cloud Resource Manager API C++ client libra
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_FOLDERS_ENDPOINT=...` changes the default endpoint
-  (cloudresourcemanager.googleapis.com) used by `FoldersConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_ORGANIZATIONS_ENDPOINT=...` changes the default endpoint
-  (cloudresourcemanager.googleapis.com) used by `OrganizationsConnection`.
+- `GOOGLE_CLOUD_CPP_FOLDERS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudresourcemanager.googleapis.com")
+  used by `MakeFoldersConnection()`.
 
-- `GOOGLE_CLOUD_CPP_PROJECTS_ENDPOINT=...` changes the default endpoint
-  (cloudresourcemanager.googleapis.com) used by `ProjectsConnection`.
+- `GOOGLE_CLOUD_CPP_ORGANIZATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudresourcemanager.googleapis.com")
+  used by `MakeOrganizationsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PROJECTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudresourcemanager.googleapis.com")
+  used by `MakeProjectsConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

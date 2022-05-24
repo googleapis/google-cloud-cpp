@@ -40,11 +40,17 @@ which should give you a taste of the Workflow Executions API C++ client library 
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_EXECUTIONS_ENDPOINT=...` changes the default endpoint
-  (workflowexecutions.googleapis.com) used by `ExecutionsConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_WORKFLOWS_ENDPOINT=...` changes the default endpoint
-  (workflows.googleapis.com) used by `WorkflowsConnection`.
+- `GOOGLE_CLOUD_CPP_EXECUTIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "workflowexecutions.googleapis.com")
+  used by `MakeExecutionsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_WORKFLOWS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "workflows.googleapis.com")
+  used by `MakeWorkflowsConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

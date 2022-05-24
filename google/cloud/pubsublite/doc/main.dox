@@ -41,11 +41,17 @@ which should give you a taste of the Pub/Sub Lite API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_ADMIN_SERVICE_ENDPOINT=...` changes the default endpoint
-  (pubsublite.googleapis.com) used by `AdminServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_TOPIC_STATS_SERVICE_ENDPOINT=...` changes the default endpoint
-  (pubsublite.googleapis.com) used by `TopicStatsServiceConnection`.
+- `GOOGLE_CLOUD_CPP_ADMIN_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "pubsublite.googleapis.com")
+  used by `MakeAdminServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TOPIC_STATS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "pubsublite.googleapis.com")
+  used by `MakeTopicStatsServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

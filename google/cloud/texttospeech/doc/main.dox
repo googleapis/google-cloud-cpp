@@ -39,8 +39,13 @@ which should give you a taste of the Cloud Text-to-Speech API C++ client library
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_TEXT_TO_SPEECH_ENDPOINT=...` changes the default endpoint
-  (texttospeech.googleapis.com) used by `TextToSpeechConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_TEXT_TO_SPEECH_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "texttospeech.googleapis.com")
+  used by `MakeTextToSpeechConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

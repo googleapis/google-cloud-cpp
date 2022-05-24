@@ -40,8 +40,13 @@ which should give you a taste of the Resource Settings API C++ client library AP
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_RESOURCE_SETTINGS_SERVICE_ENDPOINT=...` changes the default endpoint
-  (resourcesettings.googleapis.com) used by `ResourceSettingsServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_RESOURCE_SETTINGS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "resourcesettings.googleapis.com")
+  used by `MakeResourceSettingsServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

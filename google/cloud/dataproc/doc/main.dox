@@ -41,20 +41,29 @@ which should give you a taste of the Cloud Dataproc API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_ENDPOINT=...` changes the default endpoint
-  (dataproc.googleapis.com) used by `AutoscalingPolicyServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_BATCH_CONTROLLER_ENDPOINT=...` changes the default endpoint
-  (dataproc.googleapis.com) used by `BatchControllerConnection`.
+- `GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataproc.googleapis.com")
+  used by `MakeAutoscalingPolicyServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_CLUSTER_CONTROLLER_ENDPOINT=...` changes the default endpoint
-  (dataproc.googleapis.com) used by `ClusterControllerConnection`.
+- `GOOGLE_CLOUD_CPP_BATCH_CONTROLLER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataproc.googleapis.com")
+  used by `MakeBatchControllerConnection()`.
 
-- `GOOGLE_CLOUD_CPP_JOB_CONTROLLER_ENDPOINT=...` changes the default endpoint
-  (dataproc.googleapis.com) used by `JobControllerConnection`.
+- `GOOGLE_CLOUD_CPP_CLUSTER_CONTROLLER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataproc.googleapis.com")
+  used by `MakeClusterControllerConnection()`.
 
-- `GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_ENDPOINT=...` changes the default endpoint
-  (dataproc.googleapis.com) used by `WorkflowTemplateServiceConnection`.
+- `GOOGLE_CLOUD_CPP_JOB_CONTROLLER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataproc.googleapis.com")
+  used by `MakeJobControllerConnection()`.
+
+- `GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataproc.googleapis.com")
+  used by `MakeWorkflowTemplateServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

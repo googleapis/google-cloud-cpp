@@ -40,8 +40,13 @@ which should give you a taste of the Cloud Scheduler API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_CLOUD_SCHEDULER_ENDPOINT=...` changes the default endpoint
-  (cloudscheduler.googleapis.com) used by `CloudSchedulerConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_CLOUD_SCHEDULER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudscheduler.googleapis.com")
+  used by `MakeCloudSchedulerConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

@@ -37,8 +37,13 @@ which should give you a taste of the Service Management API C++ client library A
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_SERVICE_MANAGER_ENDPOINT=...` changes the default endpoint
-  (servicemanagement.googleapis.com) used by `ServiceManagerConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_SERVICE_MANAGER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "servicemanagement.googleapis.com")
+  used by `MakeServiceManagerConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

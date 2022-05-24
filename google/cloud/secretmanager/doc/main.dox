@@ -41,8 +41,13 @@ which should give you a taste of the Secret Manager API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_SECRET_MANAGER_SERVICE_ENDPOINT=...` changes the default endpoint
-  (secretmanager.googleapis.com) used by `SecretManagerServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_SECRET_MANAGER_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "secretmanager.googleapis.com")
+  used by `MakeSecretManagerServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

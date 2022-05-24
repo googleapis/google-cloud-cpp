@@ -39,11 +39,17 @@ which should give you a taste of the Notebooks API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_MANAGED_NOTEBOOK_SERVICE_ENDPOINT=...` changes the default endpoint
-  (notebooks.googleapis.com) used by `ManagedNotebookServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_NOTEBOOK_SERVICE_ENDPOINT=...` changes the default endpoint
-  (notebooks.googleapis.com) used by `NotebookServiceConnection`.
+- `GOOGLE_CLOUD_CPP_MANAGED_NOTEBOOK_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "notebooks.googleapis.com")
+  used by `MakeManagedNotebookServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NOTEBOOK_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "notebooks.googleapis.com")
+  used by `MakeNotebookServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

@@ -39,8 +39,13 @@ which should give you a taste of the Cloud Document AI API C++ client library AP
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_ENDPOINT=...` changes the default endpoint
-  (documentai.googleapis.com) used by `DocumentProcessorServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "documentai.googleapis.com")
+  used by `MakeDocumentProcessorServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

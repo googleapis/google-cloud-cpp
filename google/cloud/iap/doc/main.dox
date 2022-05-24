@@ -38,11 +38,17 @@ which should give you a taste of the Cloud Identity-Aware Proxy API C++ client l
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_ADMIN_SERVICE_ENDPOINT=...` changes the default endpoint
-  (iap.googleapis.com) used by `IdentityAwareProxyAdminServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_ENDPOINT=...` changes the default endpoint
-  (iap.googleapis.com) used by `IdentityAwareProxyOAuthServiceConnection`.
+- `GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_ADMIN_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "iap.googleapis.com")
+  used by `MakeIdentityAwareProxyAdminServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "iap.googleapis.com")
+  used by `MakeIdentityAwareProxyOAuthServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

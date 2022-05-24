@@ -39,20 +39,29 @@ which should give you a taste of the Cloud Talent Solution C++ client library AP
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_COMPANY_SERVICE_ENDPOINT=...` changes the default endpoint
-  (jobs.googleapis.com) used by `CompanyServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_COMPLETION_ENDPOINT=...` changes the default endpoint
-  (jobs.googleapis.com) used by `CompletionConnection`.
+- `GOOGLE_CLOUD_CPP_COMPANY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "jobs.googleapis.com")
+  used by `MakeCompanyServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_EVENT_SERVICE_ENDPOINT=...` changes the default endpoint
-  (jobs.googleapis.com) used by `EventServiceConnection`.
+- `GOOGLE_CLOUD_CPP_COMPLETION_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "jobs.googleapis.com")
+  used by `MakeCompletionConnection()`.
 
-- `GOOGLE_CLOUD_CPP_JOB_SERVICE_ENDPOINT=...` changes the default endpoint
-  (jobs.googleapis.com) used by `JobServiceConnection`.
+- `GOOGLE_CLOUD_CPP_EVENT_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "jobs.googleapis.com")
+  used by `MakeEventServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_TENANT_SERVICE_ENDPOINT=...` changes the default endpoint
-  (jobs.googleapis.com) used by `TenantServiceConnection`.
+- `GOOGLE_CLOUD_CPP_JOB_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "jobs.googleapis.com")
+  used by `MakeJobServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TENANT_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "jobs.googleapis.com")
+  used by `MakeTenantServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

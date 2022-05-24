@@ -38,11 +38,17 @@ which should give you a taste of the Cloud Composer C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_ENVIRONMENTS_ENDPOINT=...` changes the default endpoint
-  (composer.googleapis.com) used by `EnvironmentsConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_IMAGE_VERSIONS_ENDPOINT=...` changes the default endpoint
-  (composer.googleapis.com) used by `ImageVersionsConnection`.
+- `GOOGLE_CLOUD_CPP_ENVIRONMENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "composer.googleapis.com")
+  used by `MakeEnvironmentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_IMAGE_VERSIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "composer.googleapis.com")
+  used by `MakeImageVersionsConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

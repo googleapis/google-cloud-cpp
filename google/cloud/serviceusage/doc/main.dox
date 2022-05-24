@@ -39,8 +39,13 @@ which should give you a taste of the Service Usage API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_SERVICE_USAGE_ENDPOINT=...` changes the default endpoint
-  (serviceusage.googleapis.com) used by `ServiceUsageConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_SERVICE_USAGE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "serviceusage.googleapis.com")
+  used by `MakeServiceUsageConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
