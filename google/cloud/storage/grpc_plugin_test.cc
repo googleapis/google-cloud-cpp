@@ -36,11 +36,10 @@ using ::testing::IsNull;
 using ::testing::NotNull;
 
 TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
-  // Disable the RestClient, while this is not the default, it is enabled in
-  // some of our CI builds.
+  // Explicitly disable the RestClient, which may be enabled by our CI builds.
   auto rest = ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
                                 absl::nullopt);
-  // Disable logging, also enabled in most of our CI builds
+  // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
@@ -55,10 +54,10 @@ TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
 }
 
 TEST(GrpcPluginTest, EnvironmentOverrides) {
-  // Disable the RestClient, while this is not the default, it is enabled in
-  // some of our CI builds.
+  // Explicitly disable the RestClient, which may be enabled by our CI builds.
   auto rest = ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
                                 absl::nullopt);
+  // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
@@ -72,10 +71,10 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
 }
 
 TEST(GrpcPluginTest, UnsetConfigCreatesCurl) {
-  // Disable the RestClient, while this is not the default, it is enabled in
-  // some of our CI builds.
+  // Explicitly disable the RestClient, which may be enabled by our CI builds.
   auto rest = ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
                                 absl::nullopt);
+  // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
@@ -89,10 +88,10 @@ TEST(GrpcPluginTest, UnsetConfigCreatesCurl) {
 }
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
-  // Disable the RestClient, while this is not the default, it is enabled in
-  // some of our CI builds.
+  // Explicitly disable the RestClient, which may be enabled by our CI builds.
   auto rest = ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
                                 absl::nullopt);
+  // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
@@ -106,10 +105,10 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
 }
 
 TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
-  // Disable the RestClient, while this is not the default, it is enabled in
-  // some of our CI builds.
+  // Explicitly disable the RestClient, which may be enabled by our CI builds.
   auto rest = ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
                                 absl::nullopt);
+  // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
