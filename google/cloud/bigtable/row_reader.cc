@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
-#include "google/cloud/bigtable/internal/legacy_row_reader_impl.h"
+#include "google/cloud/bigtable/internal/legacy_row_reader.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -73,7 +73,7 @@ RowReader::RowReader(
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     MetadataUpdatePolicy metadata_update_policy,
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
-    : RowReader(std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
+    : RowReader(std::make_shared<bigtable_internal::LegacyRowReader>(
           std::move(client), std::move(table_name), std::move(row_set),
           rows_limit, std::move(filter), std::move(retry_policy),
           std::move(backoff_policy), std::move(metadata_update_policy),
@@ -86,7 +86,7 @@ RowReader::RowReader(
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     MetadataUpdatePolicy metadata_update_policy,
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
-    : RowReader(std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
+    : RowReader(std::make_shared<bigtable_internal::LegacyRowReader>(
           std::move(client), std::move(app_profile_id), std::move(table_name),
           std::move(row_set), rows_limit, std::move(filter),
           std::move(retry_policy), std::move(backoff_policy),

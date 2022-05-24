@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/legacy_row_reader_impl.h"
+#include "google/cloud/bigtable/internal/legacy_row_reader.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -25,20 +25,20 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-LegacyRowReaderImpl::LegacyRowReaderImpl(
+LegacyRowReader::LegacyRowReader(
     std::shared_ptr<bigtable::DataClient> client, std::string table_name,
     bigtable::RowSet row_set, std::int64_t rows_limit, bigtable::Filter filter,
     std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy,
     std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
     bigtable::MetadataUpdatePolicy metadata_update_policy,
     std::unique_ptr<bigtable::internal::ReadRowsParserFactory> parser_factory)
-    : LegacyRowReaderImpl(
-          std::move(client), std::string(""), std::move(table_name),
-          std::move(row_set), rows_limit, std::move(filter),
-          std::move(retry_policy), std::move(backoff_policy),
-          std::move(metadata_update_policy), std::move(parser_factory)) {}
+    : LegacyRowReader(std::move(client), std::string(""), std::move(table_name),
+                      std::move(row_set), rows_limit, std::move(filter),
+                      std::move(retry_policy), std::move(backoff_policy),
+                      std::move(metadata_update_policy),
+                      std::move(parser_factory)) {}
 
-LegacyRowReaderImpl::LegacyRowReaderImpl(
+LegacyRowReader::LegacyRowReader(
     std::shared_ptr<bigtable::DataClient> client, std::string app_profile_id,
     std::string table_name, bigtable::RowSet row_set, std::int64_t rows_limit,
     bigtable::Filter filter,
@@ -57,7 +57,7 @@ LegacyRowReaderImpl::LegacyRowReaderImpl(
       metadata_update_policy_(std::move(metadata_update_policy)),
       parser_factory_(std::move(parser_factory)) {}
 
-void LegacyRowReaderImpl::MakeRequest() {
+void LegacyRowReader::MakeRequest() {
   response_ = {};
   processed_chunks_count_ = 0;
 
@@ -85,7 +85,7 @@ void LegacyRowReaderImpl::MakeRequest() {
   parser_ = parser_factory_->Create();
 }
 
-bool LegacyRowReaderImpl::NextChunk() {
+bool LegacyRowReader::NextChunk() {
   ++processed_chunks_count_;
   while (processed_chunks_count_ >= response_.chunks_size()) {
     processed_chunks_count_ = 0;
@@ -101,7 +101,7 @@ bool LegacyRowReaderImpl::NextChunk() {
   return true;
 }
 
-absl::variant<Status, bigtable::Row> LegacyRowReaderImpl::Advance() {
+absl::variant<Status, bigtable::Row> LegacyRowReader::Advance() {
   if (operation_cancelled_) {
     return Status(StatusCode::kCancelled, "Operation cancelled.");
   }
@@ -143,7 +143,7 @@ absl::variant<Status, bigtable::Row> LegacyRowReaderImpl::Advance() {
   }
 }
 
-absl::variant<Status, bigtable::Row> LegacyRowReaderImpl::AdvanceOrFail() {
+absl::variant<Status, bigtable::Row> LegacyRowReader::AdvanceOrFail() {
   grpc::Status status;
   if (!stream_) {
     MakeRequest();
@@ -176,7 +176,7 @@ absl::variant<Status, bigtable::Row> LegacyRowReaderImpl::AdvanceOrFail() {
   return parsed_row;
 }
 
-void LegacyRowReaderImpl::Cancel() {
+void LegacyRowReader::Cancel() {
   operation_cancelled_ = true;
   if (!stream_is_open_) return;
   context_->TryCancel();
@@ -190,7 +190,7 @@ void LegacyRowReaderImpl::Cancel() {
   (void)stream_->Finish();  // ignore errors
 }
 
-LegacyRowReaderImpl::~LegacyRowReaderImpl() {
+LegacyRowReader::~LegacyRowReader() {
   // Make sure we don't leave open streams.
   Cancel();
 }

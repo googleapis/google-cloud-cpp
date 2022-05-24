@@ -29,7 +29,7 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 template <typename RowFunctor, typename FinishFunctor>
 class AsyncRowReader;
-class LegacyRowReaderImpl;
+class LegacyRowReader;
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 namespace bigtable {
@@ -116,7 +116,7 @@ class DataClient {
   friend class internal::AsyncRetryBulkApply;
   friend class internal::AsyncRowSampler;
   friend class internal::BulkMutator;
-  friend class bigtable_internal::LegacyRowReaderImpl;
+  friend class bigtable_internal::LegacyRowReader;
   template <typename RowFunctor, typename FinishFunctor>
   friend class bigtable_internal::AsyncRowReader;
   friend class internal::LoggingDataClient;

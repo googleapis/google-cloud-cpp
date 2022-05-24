@@ -183,8 +183,8 @@ add_library(
     internal/defaults.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
-    internal/legacy_row_reader_impl.cc
-    internal/legacy_row_reader_impl.h
+    internal/legacy_row_reader.cc
+    internal/legacy_row_reader.h
     internal/logging_data_client.cc
     internal/logging_data_client.h
     internal/prefix_range_end.cc
@@ -337,6 +337,7 @@ if (BUILD_TESTING)
         internal/data_connection_impl_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
+        internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
         internal/prefix_range_end_test.cc
         internal/wait_for_consistency_test.cc
