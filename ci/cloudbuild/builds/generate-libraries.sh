@@ -66,8 +66,9 @@ for dox in google/cloud/*/doc/main.dox; do
     endpoint=$(grep -Pom1 "${endpoint_re}" "${option_defaults_cc}")
     make_connection_re='Make.*?Connection()'
     make_connection=$(grep -Pom1 "${make_connection_re}" "${connection_h}")
-    env_vars+=("- \`${variable}=...\` changes the default \`EndpointOption\`,")
-    env_vars+=("  ${endpoint}, used by \`${make_connection}()\`.")
+    env_vars+=("- \`${variable}=...\` overrides the")
+    env_vars+=("  \`EndpointOption\` (which defaults to ${endpoint})")
+    env_vars+=("  used by \`${make_connection}()\`.")
     env_vars+=("")
   done
   sed -i -f - "${dox}" <<EOT
