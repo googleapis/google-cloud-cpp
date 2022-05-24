@@ -45,7 +45,9 @@ target_sources(
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_bigtable_instance_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_bigtable_table_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_data_connection.h)
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_data_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_row_reader.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_row_reader.h)
 target_link_libraries(
     google_cloud_cpp_bigtable_mocks
     INTERFACE google-cloud-cpp::bigtable GTest::gmock_main GTest::gmock
@@ -339,6 +341,7 @@ if (BUILD_TESTING)
         internal/prefix_range_end_test.cc
         internal/wait_for_consistency_test.cc
         metadata_update_policy_test.cc
+        mocks/mock_row_reader_test.cc
         mutation_batcher_test.cc
         mutations_test.cc
         polling_policy_test.cc

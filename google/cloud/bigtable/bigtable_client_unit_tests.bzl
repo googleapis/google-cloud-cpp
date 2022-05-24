@@ -53,6 +53,7 @@ bigtable_client_unit_tests = [
     "internal/prefix_range_end_test.cc",
     "internal/wait_for_consistency_test.cc",
     "metadata_update_policy_test.cc",
+    "mocks/mock_row_reader_test.cc",
     "mutation_batcher_test.cc",
     "mutations_test.cc",
     "polling_policy_test.cc",
