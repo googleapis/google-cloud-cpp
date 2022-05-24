@@ -39,8 +39,13 @@ which should give you a taste of the Cloud Shell API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_CLOUD_SHELL_SERVICE_ENDPOINT=...` changes the default endpoint
-  (cloudshell.googleapis.com) used by `CloudShellServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_CLOUD_SHELL_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudshell.googleapis.com")
+  used by `MakeCloudShellServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

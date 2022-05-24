@@ -39,11 +39,17 @@ which should give you a taste of the Service Control API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_QUOTA_CONTROLLER_ENDPOINT=...` changes the default endpoint
-  (servicecontrol.googleapis.com) used by `QuotaControllerConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_SERVICE_CONTROLLER_ENDPOINT=...` changes the default endpoint
-  (servicecontrol.googleapis.com) used by `ServiceControllerConnection`.
+- `GOOGLE_CLOUD_CPP_QUOTA_CONTROLLER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "servicecontrol.googleapis.com")
+  used by `MakeQuotaControllerConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SERVICE_CONTROLLER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "servicecontrol.googleapis.com")
+  used by `MakeServiceControllerConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

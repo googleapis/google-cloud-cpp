@@ -38,8 +38,13 @@ which should give you a taste of the Cloud Translation API C++ client library AP
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_TRANSLATION_SERVICE_ENDPOINT=...` changes the default endpoint
-  (translate.googleapis.com) used by `TranslationServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_TRANSLATION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "translate.googleapis.com")
+  used by `MakeTranslationServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

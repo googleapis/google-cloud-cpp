@@ -40,14 +40,21 @@ which should give you a taste of the Cloud Billing Budget API C++ client library
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_BUDGET_SERVICE_ENDPOINT=...` changes the default endpoint
-  (billingbudgets.googleapis.com) used by `BudgetServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_CLOUD_BILLING_ENDPOINT=...` changes the default endpoint
-  (cloudbilling.googleapis.com) used by `CloudBillingConnection`.
+- `GOOGLE_CLOUD_CPP_BUDGET_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "billingbudgets.googleapis.com")
+  used by `MakeBudgetServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_CLOUD_CATALOG_ENDPOINT=...` changes the default endpoint
-  (cloudbilling.googleapis.com) used by `CloudCatalogConnection`.
+- `GOOGLE_CLOUD_CPP_CLOUD_BILLING_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudbilling.googleapis.com")
+  used by `MakeCloudBillingConnection()`.
+
+- `GOOGLE_CLOUD_CPP_CLOUD_CATALOG_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudbilling.googleapis.com")
+  used by `MakeCloudCatalogConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

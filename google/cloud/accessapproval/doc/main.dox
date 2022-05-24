@@ -40,8 +40,13 @@ which should give you a taste of the Access Approval API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_ACCESS_APPROVAL_ENDPOINT=...` changes the default endpoint
-  (accessapproval.googleapis.com) used by `AccessApprovalConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_ACCESS_APPROVAL_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "accessapproval.googleapis.com")
+  used by `MakeAccessApprovalConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

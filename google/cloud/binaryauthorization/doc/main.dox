@@ -39,14 +39,21 @@ which should give you a taste of the Binary Authorization API C++ client library
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_ENDPOINT=...` changes the default endpoint
-  (binaryauthorization.googleapis.com) used by `BinauthzManagementServiceV1Connection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_ENDPOINT=...` changes the default endpoint
-  (binaryauthorization.googleapis.com) used by `SystemPolicyV1Connection`.
+- `GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "binaryauthorization.googleapis.com")
+  used by `MakeBinauthzManagementServiceV1Connection()`.
 
-- `GOOGLE_CLOUD_CPP_VALIDATION_HELPER_V1_ENDPOINT=...` changes the default endpoint
-  (binaryauthorization.googleapis.com) used by `ValidationHelperV1Connection`.
+- `GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "binaryauthorization.googleapis.com")
+  used by `MakeSystemPolicyV1Connection()`.
+
+- `GOOGLE_CLOUD_CPP_VALIDATION_HELPER_V1_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "binaryauthorization.googleapis.com")
+  used by `MakeValidationHelperV1Connection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

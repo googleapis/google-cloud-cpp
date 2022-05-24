@@ -40,8 +40,13 @@ which should give you a taste of the Cloud Functions API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_CLOUD_FUNCTIONS_SERVICE_ENDPOINT=...` changes the default endpoint
-  (cloudfunctions.googleapis.com) used by `CloudFunctionsServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_CLOUD_FUNCTIONS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudfunctions.googleapis.com")
+  used by `MakeCloudFunctionsServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

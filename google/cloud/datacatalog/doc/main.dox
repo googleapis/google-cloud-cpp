@@ -38,14 +38,21 @@ which should give you a taste of the Google Cloud Data Catalog API C++ client li
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_DATA_CATALOG_ENDPOINT=...` changes the default endpoint
-  (datacatalog.googleapis.com) used by `DataCatalogConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_ENDPOINT=...` changes the default endpoint
-  (datacatalog.googleapis.com) used by `PolicyTagManagerConnection`.
+- `GOOGLE_CLOUD_CPP_DATA_CATALOG_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "datacatalog.googleapis.com")
+  used by `MakeDataCatalogConnection()`.
 
-- `GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_SERIALIZATION_ENDPOINT=...` changes the default endpoint
-  (datacatalog.googleapis.com) used by `PolicyTagManagerSerializationConnection`.
+- `GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "datacatalog.googleapis.com")
+  used by `MakePolicyTagManagerConnection()`.
+
+- `GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_SERIALIZATION_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "datacatalog.googleapis.com")
+  used by `MakePolicyTagManagerSerializationConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

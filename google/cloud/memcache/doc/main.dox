@@ -39,8 +39,13 @@ which should give you a taste of the Cloud Memorystore for Memcached API C++ cli
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_CLOUD_MEMCACHE_ENDPOINT=...` changes the default endpoint
-  (memcache.googleapis.com) used by `CloudMemcacheConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_CLOUD_MEMCACHE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "memcache.googleapis.com")
+  used by `MakeCloudMemcacheConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

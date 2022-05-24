@@ -40,11 +40,17 @@ which should give you a taste of the Cloud Vision API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_ENDPOINT=...` changes the default endpoint
-  (vision.googleapis.com) used by `ImageAnnotatorConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_PRODUCT_SEARCH_ENDPOINT=...` changes the default endpoint
-  (vision.googleapis.com) used by `ProductSearchConnection`.
+- `GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "vision.googleapis.com")
+  used by `MakeImageAnnotatorConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PRODUCT_SEARCH_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "vision.googleapis.com")
+  used by `MakeProductSearchConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

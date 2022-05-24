@@ -39,8 +39,13 @@ which should give you a taste of the GKE Hub C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_GKE_HUB_ENDPOINT=...` changes the default endpoint
-  (gkehub.googleapis.com) used by `GkeHubConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_GKE_HUB_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "gkehub.googleapis.com")
+  used by `MakeGkeHubConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC

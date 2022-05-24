@@ -46,8 +46,13 @@ which should give you a taste of the Cloud Profiler API C++ client library API.
 
 ## Environment Variables
 
-- `GOOGLE_CLOUD_CPP_PROFILER_SERVICE_ENDPOINT=...` changes the default endpoint
-  (cloudprofiler.googleapis.com) used by `ProfilerServiceConnection`.
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_PROFILER_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudprofiler.googleapis.com")
+  used by `MakeProfilerServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
