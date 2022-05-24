@@ -33,7 +33,6 @@ mapfile -t args < <(bazel::common_args)
 # Run as many of the integration tests as possible using production and gRPC:
 # "media" says to use the hybrid gRPC/REST client. For more details see
 # https://github.com/googleapis/google-cloud-cpp/issues/6268
-# TODO(#7257) - restore production tests
-#    readonly GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media
+readonly GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media
 mapfile -t integration_args < <(integration::bazel_args)
 bazel test "${args[@]}" "${integration_args[@]}" -- //google/cloud/storage/... "${excluded_rules[@]}"

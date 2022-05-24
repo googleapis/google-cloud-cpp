@@ -44,7 +44,7 @@ class GrpcObjectAclIntegrationTest
 TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                 "metadata");
-  // TODO(#7257) - restore gRPC integration tests against production
+  // TODO(#5673) - restore gRPC integration tests against production
   if (!UsingEmulator()) GTEST_SKIP();
 
   auto const bucket_name =

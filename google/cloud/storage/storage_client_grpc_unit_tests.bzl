@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_client_grpc_unit_tests = [
+    "grpc_plugin_test.cc",
     "internal/grpc_bucket_access_control_parser_test.cc",
     "internal/grpc_bucket_metadata_parser_test.cc",
     "internal/grpc_bucket_request_parser_test.cc",

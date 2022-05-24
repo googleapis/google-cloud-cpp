@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc_bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_request_parser.h"
@@ -91,7 +90,6 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
 
 Options DefaultOptionsGrpc(Options options) {
   using ::google::cloud::internal::GetEnv;
-  using ::google::cloud::storage_experimental::GrpcPluginOption;
 
   options = DefaultOptionsWithCredentials(std::move(options));
   if (!options.has<UnifiedCredentialsOption>() &&
@@ -105,10 +103,6 @@ Options DefaultOptionsGrpc(Options options) {
   }
   if (!options.has<AuthorityOption>()) {
     options.set<AuthorityOption>("storage.googleapis.com");
-  }
-  if (!options.has<GrpcPluginOption>()) {
-    options.set<GrpcPluginOption>(
-        GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG").value_or("none"));
   }
   if (GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT")) {
     // The emulator does not support HTTPS or authentication, use insecure
