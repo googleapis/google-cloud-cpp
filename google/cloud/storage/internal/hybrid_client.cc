@@ -26,7 +26,8 @@ std::shared_ptr<RawClient> HybridClient::Create(Options const& options) {
 }
 
 HybridClient::HybridClient(Options const& options)
-    : grpc_(GrpcClient::Create(options)), curl_(CurlClient::Create(options)) {}
+    : grpc_(GrpcClient::Create(DefaultOptionsGrpc(std::move(options)))),
+      curl_(CurlClient::Create(DefaultOptionsWithCredentials(options))) {}
 
 ClientOptions const& HybridClient::client_options() const {
   return curl_->client_options();

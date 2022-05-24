@@ -189,6 +189,8 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadLast) {
   EXPECT_THAT(contents.size(), insert->size());
 
   for (auto const& test : cases) {
+    // TODO(#9058) - disable this workaround
+    if (test.count > kObjectSize && UsingGrpc()) continue;
     SCOPED_TRACE("Testing last " + std::to_string(test.count));
     auto reader =
         client->ReadObject(bucket_name(), object_name, ReadLast(test.count));

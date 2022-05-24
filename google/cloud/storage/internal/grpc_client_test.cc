@@ -19,7 +19,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
@@ -34,9 +33,7 @@ namespace {
 
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::internal::CurrentOptions;
-using ::google::cloud::storage_experimental::GrpcPluginOption;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
@@ -180,24 +177,6 @@ google::cloud::Options TestOptions() {
 std::shared_ptr<GrpcClient> CreateTestClient(
     std::shared_ptr<storage_internal::StorageStub> stub) {
   return GrpcClient::CreateMock(std::move(stub), TestOptions());
-}
-
-TEST_F(GrpcClientTest, DefaultOptionsGrpcNoEnv) {
-  auto grpc_config =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto opts = DefaultOptionsGrpc(TestOptions());
-  EXPECT_EQ(opts.get<GrpcPluginOption>(), "none");
-  opts = DefaultOptionsGrpc(Options{}.set<GrpcPluginOption>("configured"));
-  EXPECT_EQ(opts.get<GrpcPluginOption>(), "configured");
-}
-
-TEST_F(GrpcClientTest, DefaultOptionsGrpcWithEnv) {
-  auto grpc_config =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", "env");
-  auto opts = DefaultOptionsGrpc(TestOptions());
-  EXPECT_EQ(opts.get<GrpcPluginOption>(), "env");
-  opts = DefaultOptionsGrpc(Options{}.set<GrpcPluginOption>("configured"));
-  EXPECT_EQ(opts.get<GrpcPluginOption>(), "configured");
 }
 
 TEST_F(GrpcClientTest, DefaultOptionsGrpcChannelCount) {

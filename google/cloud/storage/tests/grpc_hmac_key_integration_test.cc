@@ -38,7 +38,7 @@ class GrpcHmacKeyMetadataIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
-  // TODO(#7257) - restore gRPC integration tests against production, even then
+  // TODO(#5673) - restore gRPC integration tests against production, even then
   //     generally we do not create HMAC keys in production because they are
   //     an extremely limited resource.
   if (!UsingEmulator()) GTEST_SKIP();
