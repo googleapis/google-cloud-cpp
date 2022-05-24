@@ -863,6 +863,39 @@ TEST(RowReader, BadStatusOnly) {
   EXPECT_EQ(++it, reader.end());
 }
 
+TEST(RowReader, OptionsSpan) {
+  struct TestOption {
+    using Type = std::string;
+  };
+
+  class MockRowReader : public bigtable_internal::RowReaderImpl {
+   public:
+    MOCK_METHOD(void, Cancel, (), (override));
+    MOCK_METHOD((absl::variant<Status, bigtable::Row>), Advance, (),
+                (override));
+  };
+
+  auto mock = std::make_shared<MockRowReader>();
+
+  ::testing::InSequence s;
+  EXPECT_CALL(*mock, Advance).Times(3).WillRepeatedly([]() {
+    // Verify that the OptionsSpan from construction applies for each Advance.
+    EXPECT_TRUE(google::cloud::internal::CurrentOptions().has<TestOption>());
+    return Row("row", {});
+  });
+  EXPECT_CALL(*mock, Advance).WillOnce(Return(Status()));
+
+  // Construct a RowReader with an active OptionsSpan.
+  google::cloud::internal::OptionsSpan span(Options{}.set<TestOption>("set"));
+  auto reader = bigtable_internal::MakeRowReader(std::move(mock));
+
+  // Clear the OptionsSpan before we call begin().
+  google::cloud::internal::OptionsSpan overlay(Options{});
+  for (auto const& sor : reader) {
+    EXPECT_STATUS_OK(sor);
+  }
+}
+
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

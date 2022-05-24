@@ -117,6 +117,7 @@ class RowReader {
   explicit RowReader(std::shared_ptr<bigtable_internal::RowReaderImpl> impl)
       : impl_(std::move(impl)) {}
 
+  Options options_ = google::cloud::internal::CurrentOptions();
   StreamRange<Row> stream_;
   std::shared_ptr<bigtable_internal::RowReaderImpl> impl_;
 };
