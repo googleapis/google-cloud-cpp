@@ -21,9 +21,10 @@
 
 namespace google {
 namespace cloud {
-// TODO(#8860) - Move this mock class into bigtable_mocks.
-namespace bigtable_internal {
+namespace bigtable_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+// TODO(#8860) - Remove the internal namespace
+namespace internal {
 
 /**
  * A class to mock `google::cloud::bigtable::DataConnection`.
@@ -113,8 +114,9 @@ class MockDataConnection : public bigtable_internal::DataConnection {
               (override));
 };
 
+}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_internal
+}  // namespace bigtable_mocks
 }  // namespace cloud
 }  // namespace google
 

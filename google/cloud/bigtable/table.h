@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/async_row_reader.h"
+#include "google/cloud/bigtable/internal/data_connection.h"
 #include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
@@ -40,6 +41,21 @@
 
 namespace google {
 namespace cloud {
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+// Make a `Table` that is implemented by a `DataConnection`, instead of a
+// `DataClient`. We will use this in tests while the `DataConnection` is under
+// development.
+//
+// TODO(#8860) - remove this when we make the `DataConnection` constructor
+// public.
+bigtable::Table MakeTable(std::shared_ptr<DataConnection> conn,
+                          std::string project_id, std::string instance_id,
+                          std::string app_profile_id, std::string table_id);
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -899,6 +915,21 @@ class Table {
                                                       Filter filter);
 
  private:
+  friend Table bigtable_internal::MakeTable(
+      std::shared_ptr<bigtable_internal::DataConnection>, std::string,
+      std::string, std::string, std::string);
+  explicit Table(std::shared_ptr<bigtable_internal::DataConnection> conn,
+                 std::string project_id, std::string instance_id,
+                 std::string app_profile_id, std::string table_id)
+      : app_profile_id_(std::move(app_profile_id)),
+        project_id_(std::move(project_id)),
+        instance_id_(std::move(instance_id)),
+        table_name_(TableName(project_id_, instance_id_, table_id)),
+        table_id_(std::move(table_id)),
+        metadata_update_policy_(
+            MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
+        connection_(std::move(conn)) {}
+
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
@@ -969,10 +1000,26 @@ class Table {
   MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   std::shared_ptr<BackgroundThreads> background_threads_;
+  std::shared_ptr<bigtable_internal::DataConnection> connection_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+inline bigtable::Table MakeTable(std::shared_ptr<DataConnection> conn,
+                                 std::string project_id,
+                                 std::string instance_id,
+                                 std::string app_profile_id,
+                                 std::string table_id) {
+  return bigtable::Table(std::move(conn), std::move(project_id),
+                         std::move(instance_id), std::move(app_profile_id),
+                         std::move(table_id));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 
