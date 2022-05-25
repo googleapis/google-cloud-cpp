@@ -138,6 +138,13 @@ class StorageMetadata : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateHmacKeyRequest const& request) override;
 
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      google::storage::v2::ReadObjectResponse>>
+  AsyncReadObject(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::ReadObjectRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

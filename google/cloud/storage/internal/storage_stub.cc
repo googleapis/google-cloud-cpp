@@ -18,6 +18,7 @@
 
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/status_or.h"
 #include "absl/memory/memory.h"
 #include <google/storage/v2/storage.grpc.pb.h>
@@ -320,6 +321,23 @@ DefaultStorageStub::UpdateHmacKey(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
+DefaultStorageStub::AsyncReadObject(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::ReadObjectRequest const& request) {
+  return google::cloud::internal::MakeStreamingReadRpc<
+      google::storage::v2::ReadObjectRequest,
+      google::storage::v2::ReadObjectResponse>(
+      cq, std::move(context), request,
+      [this](grpc::ClientContext* context,
+             google::storage::v2::ReadObjectRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncReadObject(context, request, cq);
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

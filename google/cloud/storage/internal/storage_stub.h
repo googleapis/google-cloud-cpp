@@ -19,6 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_STORAGE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_STORAGE_STUB_H
 
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
+#include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/status_or.h"
@@ -139,6 +142,12 @@ class StorageStub {
   virtual StatusOr<google::storage::v2::HmacKeyMetadata> UpdateHmacKey(
       grpc::ClientContext& context,
       google::storage::v2::UpdateHmacKeyRequest const& request) = 0;
+
+  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      google::storage::v2::ReadObjectResponse>>
+  AsyncReadObject(google::cloud::CompletionQueue const& cq,
+                  std::unique_ptr<grpc::ClientContext> context,
+                  google::storage::v2::ReadObjectRequest const& request) = 0;
 };
 
 class DefaultStorageStub : public StorageStub {
@@ -250,6 +259,13 @@ class DefaultStorageStub : public StorageStub {
   StatusOr<google::storage::v2::HmacKeyMetadata> UpdateHmacKey(
       grpc::ClientContext& client_context,
       google::storage::v2::UpdateHmacKeyRequest const& request) override;
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      google::storage::v2::ReadObjectResponse>>
+  AsyncReadObject(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::ReadObjectRequest const& request) override;
 
  private:
   std::unique_ptr<google::storage::v2::Storage::StubInterface> grpc_stub_;
