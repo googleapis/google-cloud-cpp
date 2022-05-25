@@ -33,6 +33,7 @@ add_library(
     expect_future_error.h
     integration_test.cc
     integration_test.h
+    mock_backoff_policy.h
     mock_fake_clock.cc
     mock_fake_clock.h
     scoped_environment.cc

@@ -27,6 +27,7 @@ google_cloud_cpp_testing_hdrs = [
     "expect_future_error.h",
     "integration_test.h",
     "mock_fake_clock.h",
+    "mock_backoff_policy.h",
     "scoped_environment.h",
     "scoped_log.h",
     "scoped_thread.h",

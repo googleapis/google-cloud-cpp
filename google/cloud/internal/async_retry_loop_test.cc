@@ -16,6 +16,7 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -30,6 +31,7 @@ namespace {
 
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::HasSubstr;
@@ -178,12 +180,6 @@ TEST(AsyncRetryLoopTest, ReturnJustStatus) {
   Status actual = pending.get();
   ASSERT_THAT(actual, IsOk());
 }
-
-class MockBackoffPolicy : public BackoffPolicy {
- public:
-  MOCK_METHOD(std::unique_ptr<BackoffPolicy>, clone, (), (const, override));
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (), (override));
-};
 
 class RetryPolicyWithSetup {
  public:

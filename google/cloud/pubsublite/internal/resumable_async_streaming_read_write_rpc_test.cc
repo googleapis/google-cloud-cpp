@@ -14,10 +14,10 @@
 
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
 #include "google/cloud/pubsublite/testing/mock_async_reader_writer.h"
-#include "google/cloud/pubsublite/testing/mock_backoff_policy.h"
 #include "google/cloud/pubsublite/testing/mock_retry_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -39,8 +39,8 @@ using ::testing::MockFunction;
 using ::testing::Return;
 using ::testing::StrictMock;
 
-using ::google::cloud::pubsublite_testing::MockBackoffPolicy;
 using ::google::cloud::pubsublite_testing::MockRetryPolicy;
+using ::google::cloud::testing_util::MockBackoffPolicy;
 
 using ms = std::chrono::milliseconds;
 auto const kFutureWaitMs = std::chrono::milliseconds(25);
