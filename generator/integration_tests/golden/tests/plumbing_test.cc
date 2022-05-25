@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_thing_admin_client.h"
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
@@ -25,6 +26,7 @@ namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::testing::AtLeast;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
@@ -35,12 +37,6 @@ class MockRetryPolicy : public GoldenThingAdminRetryPolicy {
               (const, override));
   MOCK_METHOD(bool, IsExhausted, (), (const, override));
   MOCK_METHOD(void, OnFailureImpl, (), (override));
-};
-
-class MockBackoffPolicy : public BackoffPolicy {
- public:
-  MOCK_METHOD(std::unique_ptr<BackoffPolicy>, clone, (), (const, override));
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (), (override));
 };
 
 TEST(PlumbingTest, RetryLoopUsesPerCallPolicies) {
