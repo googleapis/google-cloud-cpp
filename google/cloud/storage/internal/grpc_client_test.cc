@@ -19,6 +19,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
@@ -34,6 +35,7 @@ namespace {
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
@@ -203,6 +205,30 @@ TEST_F(GrpcClientTest, DefaultOptionsGrpcChannelCount) {
                                            .set<EndpointOption>(test.endpoint)
                                            .set<GrpcNumChannelsOption>(42));
     EXPECT_EQ(42, override.get<GrpcNumChannelsOption>());
+  }
+}
+
+TEST_F(GrpcClientTest, DefaultOptionsGrpcEndpointNoEnv) {
+  auto expected = std::string("storage.googleapis.com");
+  auto alternatives = [](std::string const& value) {
+    return std::vector<absl::optional<std::string>>{absl::nullopt, value};
+  };
+
+  for (auto const& opt : alternatives("from-option")) {
+    SCOPED_TRACE("Testing with opt " + opt.value_or("<unset>"));
+    auto options = TestOptions();
+    if (opt.has_value()) {
+      expected = *opt;
+      options.set<EndpointOption>(*opt);
+    }
+    for (auto const& env : alternatives("from-env")) {
+      SCOPED_TRACE("Testing with env " + opt.value_or("<unset>"));
+      auto setenv = ScopedEnvironment(
+          "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", env);
+      if (env.has_value()) expected = *env;
+      auto actual = DefaultOptionsGrpc(options);
+      EXPECT_EQ(actual.get<EndpointOption>(), expected);
+    }
   }
 }
 
