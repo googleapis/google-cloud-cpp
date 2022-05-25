@@ -85,6 +85,20 @@ DefaultAccessApprovalStub::DismissApprovalRequest(
   return response;
 }
 
+StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+DefaultAccessApprovalStub::InvalidateApprovalRequest(
+    grpc::ClientContext& client_context,
+    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+        request) {
+  google::cloud::accessapproval::v1::ApprovalRequest response;
+  auto status = grpc_stub_->InvalidateApprovalRequest(&client_context, request,
+                                                      &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 DefaultAccessApprovalStub::GetAccessApprovalSettings(
     grpc::ClientContext& client_context,
@@ -124,6 +138,20 @@ Status DefaultAccessApprovalStub::DeleteAccessApprovalSettings(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return google::cloud::Status();
+}
+
+StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+DefaultAccessApprovalStub::GetAccessApprovalServiceAccount(
+    grpc::ClientContext& client_context,
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalServiceAccountMessage const& request) {
+  google::cloud::accessapproval::v1::AccessApprovalServiceAccount response;
+  auto status = grpc_stub_->GetAccessApprovalServiceAccount(&client_context,
+                                                            request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

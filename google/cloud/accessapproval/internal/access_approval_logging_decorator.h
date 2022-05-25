@@ -62,6 +62,12 @@ class AccessApprovalLogging : public AccessApprovalStub {
       google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
           request) override;
 
+  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+  InvalidateApprovalRequest(
+      grpc::ClientContext& context,
+      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+          request) override;
+
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
   GetAccessApprovalSettings(
       grpc::ClientContext& context,
@@ -78,6 +84,12 @@ class AccessApprovalLogging : public AccessApprovalStub {
       grpc::ClientContext& context,
       google::cloud::accessapproval::v1::
           DeleteAccessApprovalSettingsMessage const& request) override;
+
+  StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+  GetAccessApprovalServiceAccount(
+      grpc::ClientContext& context,
+      google::cloud::accessapproval::v1::
+          GetAccessApprovalServiceAccountMessage const& request) override;
 
  private:
   std::shared_ptr<AccessApprovalStub> child_;

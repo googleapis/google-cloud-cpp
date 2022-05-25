@@ -70,6 +70,16 @@ AccessApprovalAuth::DismissApprovalRequest(
   return child_->DismissApprovalRequest(context, request);
 }
 
+StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+AccessApprovalAuth::InvalidateApprovalRequest(
+    grpc::ClientContext& context,
+    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->InvalidateApprovalRequest(context, request);
+}
+
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 AccessApprovalAuth::GetAccessApprovalSettings(
     grpc::ClientContext& context,
@@ -97,6 +107,16 @@ Status AccessApprovalAuth::DeleteAccessApprovalSettings(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAccessApprovalSettings(context, request);
+}
+
+StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+AccessApprovalAuth::GetAccessApprovalServiceAccount(
+    grpc::ClientContext& context,
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalServiceAccountMessage const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAccessApprovalServiceAccount(context, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

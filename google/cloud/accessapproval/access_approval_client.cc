@@ -86,6 +86,15 @@ AccessApprovalClient::DismissApprovalRequest(
   return connection_->DismissApprovalRequest(request);
 }
 
+StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+AccessApprovalClient::InvalidateApprovalRequest(
+    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InvalidateApprovalRequest(request);
+}
+
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 AccessApprovalClient::GetAccessApprovalSettings(std::string const& name,
                                                 Options opts) {
@@ -140,6 +149,25 @@ Status AccessApprovalClient::DeleteAccessApprovalSettings(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAccessApprovalSettings(request);
+}
+
+StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+AccessApprovalClient::GetAccessApprovalServiceAccount(std::string const& name,
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage
+      request;
+  request.set_name(name);
+  return connection_->GetAccessApprovalServiceAccount(request);
+}
+
+StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+AccessApprovalClient::GetAccessApprovalServiceAccount(
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalServiceAccountMessage const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAccessApprovalServiceAccount(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

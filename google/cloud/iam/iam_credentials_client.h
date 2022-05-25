@@ -125,12 +125,12 @@ class IAMCredentialsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L73}
   ///
   /// [google.iam.credentials.v1.GenerateAccessTokenRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L35}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L36}
   /// [google.iam.credentials.v1.GenerateAccessTokenResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L72}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L73}
   ///
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& name,
@@ -143,16 +143,16 @@ class IAMCredentialsClient {
   /// Generates an OAuth 2.0 access token for a service account.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L35}
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L36}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L73}
   ///
   /// [google.iam.credentials.v1.GenerateAccessTokenRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L35}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L36}
   /// [google.iam.credentials.v1.GenerateAccessTokenResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L72}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L73}
   ///
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
@@ -188,12 +188,12 @@ class IAMCredentialsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L187}
   ///
   /// [google.iam.credentials.v1.GenerateIdTokenRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L153}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L154}
   /// [google.iam.credentials.v1.GenerateIdTokenResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L186}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L187}
   ///
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name,
@@ -205,16 +205,16 @@ class IAMCredentialsClient {
   /// Generates an OpenID Connect ID token for a service account.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L153}
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L154}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L187}
   ///
   /// [google.iam.credentials.v1.GenerateIdTokenRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L153}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L154}
   /// [google.iam.credentials.v1.GenerateIdTokenResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L186}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L187}
   ///
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(
@@ -245,12 +245,12 @@ class IAMCredentialsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L110}
   ///
   /// [google.iam.credentials.v1.SignBlobRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L81}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L82}
   /// [google.iam.credentials.v1.SignBlobResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L109}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L110}
   ///
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       std::string const& name, std::vector<std::string> const& delegates,
@@ -260,16 +260,16 @@ class IAMCredentialsClient {
   /// Signs a blob using a service account's system-managed private key.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L81}
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L82}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L110}
   ///
   /// [google.iam.credentials.v1.SignBlobRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L81}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L82}
   /// [google.iam.credentials.v1.SignBlobResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L109}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L110}
   ///
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       google::iam::credentials::v1::SignBlobRequest const& request,
@@ -300,12 +300,12 @@ class IAMCredentialsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
+  /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L146}
   ///
   /// [google.iam.credentials.v1.SignJwtRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L117}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L118}
   /// [google.iam.credentials.v1.SignJwtResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L145}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L146}
   ///
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       std::string const& name, std::vector<std::string> const& delegates,
@@ -315,16 +315,16 @@ class IAMCredentialsClient {
   /// Signs a JWT using a service account's system-managed private key.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::SignJwtRequest,google/iam/credentials/v1/common.proto#L117}
+  /// @googleapis_link{google::iam::credentials::v1::SignJwtRequest,google/iam/credentials/v1/common.proto#L118}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
+  /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L146}
   ///
   /// [google.iam.credentials.v1.SignJwtRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L117}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L118}
   /// [google.iam.credentials.v1.SignJwtResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L145}
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L146}
   ///
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       google::iam::credentials::v1::SignJwtRequest const& request,

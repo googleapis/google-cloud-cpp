@@ -66,6 +66,12 @@ class DefaultAccessApprovalConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency InvalidateApprovalRequest(
+      google::cloud::accessapproval::v1::
+          InvalidateApprovalRequestMessage const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency GetAccessApprovalSettings(
       google::cloud::accessapproval::v1::
           GetAccessApprovalSettingsMessage const&) override {
@@ -82,6 +88,12 @@ class DefaultAccessApprovalConnectionIdempotencyPolicy
       google::cloud::accessapproval::v1::
           DeleteAccessApprovalSettingsMessage const&) override {
     return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency GetAccessApprovalServiceAccount(
+      google::cloud::accessapproval::v1::
+          GetAccessApprovalServiceAccountMessage const&) override {
+    return Idempotency::kIdempotent;
   }
 };
 }  // namespace
