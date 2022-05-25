@@ -99,7 +99,7 @@ Options DefaultOptionsGrpc(Options options) {
   }
   auto const testbench =
       GetEnv("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT");
-  if (testbench.has_value()) {
+  if (testbench.has_value() && !testbench->empty()) {
     options.set<EndpointOption>(*testbench);
     // The emulator does not support HTTPS or authentication, use insecure
     // (sometimes called "anonymous") credentials, which disable SSL.
