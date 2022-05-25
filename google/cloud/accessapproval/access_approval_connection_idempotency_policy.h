@@ -54,6 +54,10 @@ class AccessApprovalConnectionIdempotencyPolicy {
       google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
           request) = 0;
 
+  virtual google::cloud::Idempotency InvalidateApprovalRequest(
+      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+          request) = 0;
+
   virtual google::cloud::Idempotency GetAccessApprovalSettings(
       google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
           request) = 0;
@@ -65,6 +69,10 @@ class AccessApprovalConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteAccessApprovalSettings(
       google::cloud::accessapproval::v1::
           DeleteAccessApprovalSettingsMessage const& request) = 0;
+
+  virtual google::cloud::Idempotency GetAccessApprovalServiceAccount(
+      google::cloud::accessapproval::v1::
+          GetAccessApprovalServiceAccountMessage const& request) = 0;
 };
 
 std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>

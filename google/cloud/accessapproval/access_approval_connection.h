@@ -71,6 +71,11 @@ class AccessApprovalConnection {
       google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
           request);
 
+  virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+  InvalidateApprovalRequest(
+      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+          request);
+
   virtual StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
   GetAccessApprovalSettings(
       google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
@@ -84,6 +89,12 @@ class AccessApprovalConnection {
   virtual Status DeleteAccessApprovalSettings(
       google::cloud::accessapproval::v1::
           DeleteAccessApprovalSettingsMessage const& request);
+
+  virtual StatusOr<
+      google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+  GetAccessApprovalServiceAccount(
+      google::cloud::accessapproval::v1::
+          GetAccessApprovalServiceAccountMessage const& request);
 };
 
 std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(

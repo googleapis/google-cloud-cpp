@@ -70,6 +70,15 @@ AccessApprovalMetadata::DismissApprovalRequest(
   return child_->DismissApprovalRequest(context, request);
 }
 
+StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+AccessApprovalMetadata::InvalidateApprovalRequest(
+    grpc::ClientContext& context,
+    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->InvalidateApprovalRequest(context, request);
+}
+
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 AccessApprovalMetadata::GetAccessApprovalSettings(
     grpc::ClientContext& context,
@@ -94,6 +103,15 @@ Status AccessApprovalMetadata::DeleteAccessApprovalSettings(
         DeleteAccessApprovalSettingsMessage const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->DeleteAccessApprovalSettings(context, request);
+}
+
+StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+AccessApprovalMetadata::GetAccessApprovalServiceAccount(
+    grpc::ClientContext& context,
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalServiceAccountMessage const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetAccessApprovalServiceAccount(context, request);
 }
 
 void AccessApprovalMetadata::SetMetadata(grpc::ClientContext& context,

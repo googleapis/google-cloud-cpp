@@ -60,6 +60,13 @@ AccessApprovalConnection::DismissApprovalRequest(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+AccessApprovalConnection::InvalidateApprovalRequest(
+    google::cloud::accessapproval::v1::
+        InvalidateApprovalRequestMessage const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 AccessApprovalConnection::GetAccessApprovalSettings(
     google::cloud::accessapproval::v1::
@@ -77,6 +84,13 @@ AccessApprovalConnection::UpdateAccessApprovalSettings(
 Status AccessApprovalConnection::DeleteAccessApprovalSettings(
     google::cloud::accessapproval::v1::
         DeleteAccessApprovalSettingsMessage const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+AccessApprovalConnection::GetAccessApprovalServiceAccount(
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalServiceAccountMessage const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

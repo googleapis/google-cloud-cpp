@@ -69,6 +69,11 @@ class AccessApprovalConnectionImpl
       google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
           request) override;
 
+  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+  InvalidateApprovalRequest(
+      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+          request) override;
+
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
   GetAccessApprovalSettings(
       google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
@@ -82,6 +87,11 @@ class AccessApprovalConnectionImpl
   Status DeleteAccessApprovalSettings(
       google::cloud::accessapproval::v1::
           DeleteAccessApprovalSettingsMessage const& request) override;
+
+  StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+  GetAccessApprovalServiceAccount(
+      google::cloud::accessapproval::v1::
+          GetAccessApprovalServiceAccountMessage const& request) override;
 
  private:
   std::unique_ptr<accessapproval::AccessApprovalRetryPolicy> retry_policy() {
