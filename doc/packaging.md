@@ -100,15 +100,15 @@ quickstart guides also cover this use-case.
 
 `google-cloud-cpp` directly depends on the following libraries:
 
-| Library | Minimum version | Description |
-| ------- | --------------: | ----------- |
-| [Abseil][abseil-gh] | 20200923, Patch 3 | Abseil C++ common library (Requires >= `20210324.2` for `pkg-config` files to work correctly)|
-| [gRPC][gRPC-gh] | 1.35.x | An RPC library and framework (not needed for Google Cloud Storage client) |
-| [libcurl][libcurl-gh] | 7.47.0  | HTTP client library for the Google Cloud Storage client |
-| [crc32c][crc32c-gh]  | 1.0.6 | Hardware-accelerated CRC32C implementation |
-| [OpenSSL][OpenSSL-gh] | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
-| [nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ |
-| [protobuf][protobuf-gh] | 3.15.8 | C++ Microgenerator support |
+| Library                           |   Minimum version | Description                                                                                   |
+|-----------------------------------|------------------:|-----------------------------------------------------------------------------------------------|
+| [Abseil][abseil-gh]               | 20200923, Patch 3 | Abseil C++ common library (Requires >= `20210324.2` for `pkg-config` files to work correctly) |
+| [gRPC][gRPC-gh]                   |            1.35.x | An RPC library and framework (not needed for Google Cloud Storage client)                     |
+| [libcurl][libcurl-gh]             |            7.47.0 | HTTP client library for the Google Cloud Storage client                                       |
+| [crc32c][crc32c-gh]               |             1.0.6 | Hardware-accelerated CRC32C implementation                                                    |
+| [OpenSSL][OpenSSL-gh]             |             1.0.2 | Crypto functions for Google Cloud Storage authentication                                      |
+| [nlohmann/json][nlohmann-json-gh] |             3.4.0 | JSON for Modern C++                                                                           |
+| [protobuf][protobuf-gh]           |             v21.0 | C++ Micro-generator support                                                                   |
 
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [gRPC-gh]: https://github.com/grpc/grpc
@@ -242,13 +242,14 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
@@ -349,13 +350,14 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -502,13 +504,14 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -641,13 +644,14 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -779,13 +783,14 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -967,13 +972,14 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
@@ -1105,13 +1111,14 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
@@ -1206,13 +1213,14 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1409,13 +1417,14 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1587,13 +1596,14 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1735,6 +1745,8 @@ cmake -S . -B cmake-out \
 cmake --build cmake-out
 cmake --build cmake-out --target install
 ```
+
+</details>
 
 [storage-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage#readme
 [spanner-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner#readme

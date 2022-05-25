@@ -84,13 +84,14 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
