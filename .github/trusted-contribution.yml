@@ -1,3 +1,5 @@
 annotations:
   - type: label
     text: "kokoro:force-run"
+  - type: comment
+    text: "/gcbrun"
