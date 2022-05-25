@@ -138,6 +138,8 @@ class ObjectAccessControlPatchBuilder {
   }
 
  private:
+  friend struct internal::GrpcObjectAccessControlParser;
+
   internal::PatchBuilder impl_;
 };
 
