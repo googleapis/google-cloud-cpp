@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_BACKOFF_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_BACKOFF_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_BACKOFF_POLICY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_BACKOFF_POLICY_H
 
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/version.h"
@@ -21,18 +21,18 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace testing_util {
 
-class MockBackoffPolicy : public google::cloud::internal::BackoffPolicy {
+class MockBackoffPolicy : public BackoffPolicy {
  public:
-  MOCK_METHOD(std::unique_ptr<BackoffPolicy>, clone, (), (const override));
+  MOCK_METHOD(std::unique_ptr<BackoffPolicy>, clone, (), (const, override));
   MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (), (override));
 };
 
+}  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite_testing
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_BACKOFF_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_BACKOFF_POLICY_H
