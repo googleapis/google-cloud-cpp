@@ -95,6 +95,14 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   ASSERT_STATUS_OK(get_acl);
   EXPECT_EQ(*create_acl, *get_acl);
 
+  auto updated_acl = client->UpdateObjectAcl(
+      bucket_name, object_name,
+      ObjectAccessControl().set_entity(viewers).set_role(
+          ObjectAccessControl::ROLE_OWNER()));
+  ASSERT_STATUS_OK(updated_acl);
+  EXPECT_EQ(updated_acl->entity(), create_acl->entity());
+  EXPECT_EQ(updated_acl->role(), ObjectAccessControl::ROLE_OWNER());
+
   auto delete_acl = client->DeleteObjectAcl(bucket_name, object_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
 

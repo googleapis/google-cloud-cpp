@@ -749,8 +749,27 @@ StatusOr<ObjectAccessControl> GrpcClient::GetObjectAcl(
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::UpdateObjectAcl(
-    UpdateObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    UpdateObjectAclRequest const& request) {
+  auto get_request =
+      GetObjectMetadataRequest(request.bucket_name(), request.object_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto updater = [&request](std::vector<ObjectAccessControl> acl)
+      -> StatusOr<std::vector<ObjectAccessControl>> {
+    auto i = std::find_if(acl.begin(), acl.end(),
+                          [&](ObjectAccessControl const& entry) {
+                            return entry.entity() == request.entity();
+                          });
+    if (i == acl.end()) {
+      return Status(StatusCode::kNotFound,
+                    "the entity <" + request.entity() +
+                        "> is not present in the ACL for object " +
+                        request.object_name());
+    }
+    i->set_role(request.role());
+    return acl;
+  };
+  return FindObjectAccessControl(
+      ModifyObjectAccessControl(get_request, updater), request.entity());
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::PatchObjectAcl(
