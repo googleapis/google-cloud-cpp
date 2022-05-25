@@ -40,6 +40,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
 using ::testing::AllOf;
+using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Pair;
@@ -591,8 +592,9 @@ TEST_F(GrpcClientTest, GetObjectMetadata) {
 
 TEST_F(GrpcClientTest, ReadObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context,
+  EXPECT_CALL(*mock, AsyncReadObject)
+      .WillOnce([this](google::cloud::CompletionQueue const&,
+                       std::unique_ptr<grpc::ClientContext> context,
                        v2::ReadObjectRequest const& request) {
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -601,7 +603,9 @@ TEST_F(GrpcClientTest, ReadObject) {
         EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
         EXPECT_THAT(request.object(), "test-object");
         auto stream = absl::make_unique<testing::MockObjectMediaStream>();
-        return std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+        EXPECT_CALL(*stream, Start)
+            .WillOnce(Return(ByMove(make_ready_future(true))));
+        return std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
             google::storage::v2::ReadObjectResponse>>(std::move(stream));
       });
   auto client = CreateTestClient(mock);

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
@@ -34,7 +35,9 @@ using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::google::storage::v2::ReadObjectRequest;
+using ::testing::ByMove;
 using ::testing::NotNull;
+using ::testing::Return;
 
 /// @test Verify downloads have a default timeout.
 TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
@@ -45,17 +48,15 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
       TextFormat::ParseFromString(kExpectedRequestText, &expected_request));
 
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([&](std::unique_ptr<grpc::ClientContext> context,
+  EXPECT_CALL(*mock, AsyncReadObject)
+      .WillOnce([&](google::cloud::CompletionQueue const&,
+                    std::unique_ptr<grpc::ClientContext>,
                     ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
-        auto const timeout =
-            context->deadline() - std::chrono::system_clock::now();
-        // The default stall timeout is 2 minutes, but let's be generous to
-        // avoid flakiness.
-        EXPECT_LT(timeout, std::chrono::minutes(5))
-            << ", timeout=" << absl::FromChrono(timeout);
-        return absl::make_unique<MockObjectMediaStream>();
+        auto stream = absl::make_unique<MockObjectMediaStream>();
+        EXPECT_CALL(*stream, Start)
+            .WillOnce(Return(ByMove(make_ready_future(true))));
+        return stream;
       });
 
   auto client = GrpcClient::CreateMock(mock);
@@ -63,6 +64,9 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
       client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);
   ASSERT_THAT(stream->get(), NotNull());
+  auto* reader = dynamic_cast<GrpcObjectReadSource*>(stream->get());
+  ASSERT_THAT(reader, NotNull());
+  EXPECT_GE(reader->download_stall_timeout(), std::chrono::minutes(2));
 }
 
 /// @test Verify options can configured a non-default timeout.
@@ -76,15 +80,15 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
   auto const configured_timeout = std::chrono::seconds(3);
 
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([&](std::unique_ptr<grpc::ClientContext> context,
+  EXPECT_CALL(*mock, AsyncReadObject)
+      .WillOnce([&](google::cloud::CompletionQueue const&,
+                    std::unique_ptr<grpc::ClientContext>,
                     ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
-        auto const timeout =
-            context->deadline() - std::chrono::system_clock::now();
-        EXPECT_LE(timeout, configured_timeout)
-            << ", timeout=" << absl::FromChrono(timeout);
-        return absl::make_unique<MockObjectMediaStream>();
+        auto stream = absl::make_unique<MockObjectMediaStream>();
+        EXPECT_CALL(*stream, Start)
+            .WillOnce(Return(ByMove(make_ready_future(true))));
+        return stream;
       });
 
   auto client = GrpcClient::CreateMock(
@@ -93,6 +97,9 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
       client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);
   ASSERT_THAT(stream->get(), NotNull());
+  auto* reader = dynamic_cast<GrpcObjectReadSource*>(stream->get());
+  ASSERT_THAT(reader, NotNull());
+  EXPECT_EQ(reader->download_stall_timeout(), configured_timeout);
 }
 
 }  // namespace

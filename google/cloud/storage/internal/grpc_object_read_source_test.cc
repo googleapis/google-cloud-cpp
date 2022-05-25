@@ -30,38 +30,48 @@ namespace {
 
 using ::google::cloud::internal::StreamingRpcMetadata;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ByMove;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
 namespace storage_proto = ::google::storage::v2;
 
-class MockStream : public google::cloud::internal::StreamingReadRpc<
+class MockStream : public google::cloud::internal::AsyncStreamingReadRpc<
                        storage_proto::ReadObjectResponse> {
  public:
-  using ReadReturn = absl::variant<Status, storage_proto::ReadObjectResponse>;
-  MOCK_METHOD(ReadReturn, Read, (), (override));
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<absl::optional<storage_proto::ReadObjectResponse>>, Read,
+              (), (override));
+  MOCK_METHOD(future<Status>, Finish, (), (override));
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
+future<absl::optional<storage_proto::ReadObjectResponse>> MakeClosingRead() {
+  return make_ready_future(absl::optional<storage_proto::ReadObjectResponse>());
+}
+
 TEST(GrpcObjectReadSource, Simple) {
   auto mock = absl::make_unique<MockStream>();
+  ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("0123456789");
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content(
             " The quick brown fox jumps over the lazy dog");
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
-      .WillOnce(Return(Status{}));
+      .WillOnce(Return(ByMove(MakeClosingRead())));
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock));
+  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
   std::string expected =
       "0123456789 The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
@@ -79,11 +89,15 @@ TEST(GrpcObjectReadSource, Simple) {
 
 TEST(GrpcObjectReadSource, EmptyWithError) {
   auto mock = absl::make_unique<MockStream>();
-  EXPECT_CALL(*mock, Read)
-      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, Read).WillOnce(Return(ByMove(MakeClosingRead())));
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(ByMove(
+          make_ready_future(Status(StatusCode::kPermissionDenied, "uh-oh")))));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock));
+  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
   std::vector<char> buffer(1024);
   EXPECT_THAT(tested.Read(buffer.data(), buffer.size()),
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
@@ -94,16 +108,21 @@ TEST(GrpcObjectReadSource, EmptyWithError) {
 
 TEST(GrpcObjectReadSource, DataWithError) {
   auto mock = absl::make_unique<MockStream>();
+
+  ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("0123456789");
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
-      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(ByMove(MakeClosingRead())));
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(ByMove(
+          make_ready_future(Status(StatusCode::kPermissionDenied, "uh-oh")))));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock));
+  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
   std::string expected = "0123456789";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -122,16 +141,20 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
   std::string const expected_2(trailer_size, 'A');
   ASSERT_LT(expected_1.size(), expected_2.size());
   std::string const contents = expected_1 + expected_2;
+
+  ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
       .WillOnce([&contents]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content(contents);
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
-      .WillOnce(Return(Status{}));
+      .WillOnce(Return(ByMove(MakeClosingRead())));
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock));
+  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
   std::vector<char> buffer(trailer_size);
   auto response = tested.Read(buffer.data(), expected_1.size());
   ASSERT_STATUS_OK(response);
@@ -156,16 +179,20 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
 TEST(GrpcObjectReadSource, UseSpillBufferMany) {
   auto mock = absl::make_unique<MockStream>();
   std::string const contents = "0123456789";
+
+  ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
       .WillOnce([&contents]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content(contents);
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
-      .WillOnce(Return(Status{}));
+      .WillOnce(Return(ByMove(MakeClosingRead())));
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock));
+  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), 3);
   ASSERT_STATUS_OK(response);
@@ -199,6 +226,8 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
       "The quick brown fox jumps over the lazy dog";
   auto const expected_md5 = ComputeMD5Hash(expected_payload);
   auto const expected_crc32c = ComputeCrc32cChecksum(expected_payload);
+
+  ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
       .WillOnce([&]() {
         storage_proto::ReadObjectResponse response;
@@ -207,7 +236,7 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
             GrpcObjectMetadataParser::MD5ToProto(expected_md5).value());
         response.mutable_object_checksums()->set_crc32c(
             GrpcObjectMetadataParser::Crc32cToProto(expected_crc32c).value());
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
       .WillOnce([&] {
         storage_proto::ReadObjectResponse response;
@@ -219,12 +248,14 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
             GrpcObjectMetadataParser::MD5ToProto(expected_md5).value());
         response.mutable_object_checksums()->set_crc32c(
             GrpcObjectMetadataParser::Crc32cToProto(expected_crc32c).value());
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
-      .WillOnce(Return(Status{}));
+      .WillOnce(Return(ByMove(MakeClosingRead())));
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock));
+  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
   ASSERT_STATUS_OK(response);
@@ -251,20 +282,22 @@ TEST(GrpcObjectReadSource, CaptureGeneration) {
         storage_proto::ReadObjectResponse response;
         response.mutable_metadata()->set_generation(1234);
         response.mutable_checksummed_data()->set_content("The quick brown");
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
       .WillOnce([&] {
         // The last response, without metadata or generation.
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content(
             " fox jumps over the lazy dog");
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
-      .WillOnce(Return(Status{}));
+      .WillOnce(Return(ByMove(MakeClosingRead())));
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
 
-  GrpcObjectReadSource tested(std::move(mock));
+  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
   ASSERT_STATUS_OK(response);
@@ -275,29 +308,35 @@ TEST(GrpcObjectReadSource, CaptureGeneration) {
 
 TEST(GrpcObjectReadSource, HandleEmptyResponses) {
   auto mock = absl::make_unique<MockStream>();
+  auto make_empty_response = [] {
+    return make_ready_future(
+        absl::make_optional(storage_proto::ReadObjectResponse{}));
+  };
   EXPECT_CALL(*mock, Read)
-      .WillOnce([] { return storage_proto::ReadObjectResponse{}; })
+      .WillOnce(make_empty_response)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("The quick brown ");
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
-      .WillOnce([] { return storage_proto::ReadObjectResponse{}; })
+      .WillOnce(make_empty_response)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("fox jumps over ");
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
-      .WillOnce([] { return storage_proto::ReadObjectResponse{}; })
+      .WillOnce(make_empty_response)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("the lazy dog");
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
-      .WillOnce(Return(Status{}));
+      .WillOnce(Return(ByMove(MakeClosingRead())));
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock));
+  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -319,12 +358,14 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content(
             "The quick brown fox jumps over the lazy dog");
-        return response;
+        return make_ready_future(absl::make_optional(response));
       })
-      .WillOnce(Return(Status{}));
+      .WillOnce(Return(ByMove(MakeClosingRead())));
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock));
+  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -342,6 +383,27 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
   auto status = tested.Close();
   EXPECT_STATUS_OK(status);
   EXPECT_EQ(200, status->status_code);
+}
+
+TEST(GrpcObjectReadSource, StallTimeout) {
+  auto mock = absl::make_unique<MockStream>();
+
+  promise<void> hold_response;
+
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, Read).WillOnce([&] {
+    return hold_response.get_future().then([](future<void>) {
+      return absl::optional<storage_proto::ReadObjectResponse>();
+    });
+  });
+  EXPECT_CALL(*mock, Cancel).WillOnce([&] { hold_response.set_value(); });
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+
+  GrpcObjectReadSource tested(std::move(mock), std::chrono::milliseconds(3));
+  std::vector<char> buffer(1024);
+  auto response = tested.Read(buffer.data(), buffer.size());
+  EXPECT_THAT(response, StatusIs(StatusCode::kDeadlineExceeded));
 }
 
 }  // namespace
