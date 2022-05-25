@@ -38,7 +38,34 @@ class DataConnectionImpl : public DataConnection {
 
   Options options() override { return options_; }
 
+  Status Apply(std::string const& app_profile_id, std::string const& table_name,
+               bigtable::SingleRowMutation mut) override;
+
  private:
+  std::unique_ptr<DataRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DataRetryPolicyOption>()) {
+      return options.get<DataRetryPolicyOption>()->clone();
+    }
+    return options_.get<DataRetryPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DataBackoffPolicyOption>()) {
+      return options.get<DataBackoffPolicyOption>()->clone();
+    }
+    return options_.get<DataBackoffPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<bigtable::IdempotentMutationPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IdempotentMutationPolicyOption>()) {
+      return options.get<IdempotentMutationPolicyOption>()->clone();
+    }
+    return options_.get<IdempotentMutationPolicyOption>()->clone();
+  }
+
   std::unique_ptr<BackgroundThreads> background_;
   std::shared_ptr<BigtableStub> stub_;
   Options options_;

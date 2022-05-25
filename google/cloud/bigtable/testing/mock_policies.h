@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_POLICIES_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_POLICIES_H
 
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
@@ -29,6 +30,26 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace testing {
+
+class MockDataRetryPolicy : public bigtable_internal::DataRetryPolicy {
+ public:
+  MOCK_METHOD(std::unique_ptr<bigtable_internal::DataRetryPolicy>, clone, (),
+              (const, override));
+  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
+  MOCK_METHOD(void, OnFailureImpl, (), (override));
+  MOCK_METHOD(bool, IsExhausted, (), (const, override));
+};
+
+class MockIdempotentMutationPolicy : public bigtable::IdempotentMutationPolicy {
+ public:
+  MOCK_METHOD(std::unique_ptr<bigtable::IdempotentMutationPolicy>, clone, (),
+              (const, override));
+  MOCK_METHOD(bool, is_idempotent, (google::bigtable::v2::Mutation const&),
+              (override));
+  MOCK_METHOD(bool, is_idempotent,
+              (google::bigtable::v2::CheckAndMutateRowRequest const&),
+              (override));
+};
 
 class MockRetryPolicy : public RPCRetryPolicy {
  public:
