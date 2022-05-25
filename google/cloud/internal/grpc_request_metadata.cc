@@ -34,14 +34,6 @@ std::string ToString(grpc_compression_algorithm algo) {
 }
 }  // namespace
 
-std::string FormatForLoggingDecorator(StreamingRpcMetadata const& metadata) {
-  auto formatter = [](std::string* output,
-                      StreamingRpcMetadata::value_type const& p) {
-    *output += absl::StrCat("{", p.first, ": ", p.second, "}");
-  };
-  return absl::StrJoin(metadata.begin(), metadata.end(), ", ", formatter);
-}
-
 StreamingRpcMetadata GetRequestMetadataFromContext(
     grpc::ClientContext const& context) {
   StreamingRpcMetadata metadata{
@@ -71,6 +63,14 @@ StreamingRpcMetadata GetRequestMetadataFromContext(
         metadata.emplace_hint(hint, std::move(key), std::move(value)));
   }
   return metadata;
+}
+
+std::string FormatForLoggingDecorator(StreamingRpcMetadata const& metadata) {
+  auto formatter = [](std::string* output,
+                      StreamingRpcMetadata::value_type const& p) {
+    *output += absl::StrCat("{", p.first, ": ", p.second, "}");
+  };
+  return absl::StrJoin(metadata.begin(), metadata.end(), ", ", formatter);
 }
 
 }  // namespace internal
