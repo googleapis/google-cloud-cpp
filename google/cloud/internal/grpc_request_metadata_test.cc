@@ -12,32 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
-
-#include "google/cloud/version.h"
-#include <grpcpp/grpcpp.h>
-#include <map>
-#include <string>
+#include "google/cloud/internal/grpc_request_metadata.h"
+#include <gmock/gmock.h>
+#include <algorithm>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
 
-/// A simple representation of request metadata.
-using StreamingRpcMetadata = std::multimap<std::string, std::string>;
+TEST(GrpcRequestMetadata, FormatForLoggingDecorator) {
+  struct Test {
+    StreamingRpcMetadata metadata;
+    std::string expected;
+  } cases[] = {
+      {{}, ""},
+      {{{"a", "b"}}, "{a: b}"},
+      {{{"a", "b"}, {"k", "v"}}, "{a: b}, {k: v}"},
+  };
+  for (auto const& test : cases) {
+    auto const actual = FormatForLoggingDecorator(test.metadata);
+    EXPECT_EQ(test.expected, actual);
+  }
+}
 
-/// Return interesting bits of metadata stored in the client context.
-StreamingRpcMetadata GetRequestMetadataFromContext(
-    grpc::ClientContext const& context);
-
-/// Format metadata for logging decorators.
-std::string FormatForLoggingDecorator(StreamingRpcMetadata const& metadata);
-
+}  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H

@@ -13,23 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-
-std::string FormatMetadata(StreamingRpcMetadata const& metadata) {
-  auto formatter = [](std::string* output,
-                      StreamingRpcMetadata::value_type const& p) {
-    *output += absl::StrCat("{", p.first, ": ", p.second, "}");
-  };
-  return absl::StrJoin(metadata.begin(), metadata.end(), ", ", formatter);
-}
-
-}  // namespace internal
+namespace internal {}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

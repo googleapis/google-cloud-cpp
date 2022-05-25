@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
-#include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/scoped_log.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/tracing_options.h"
 #include "absl/memory/memory.h"
 #include "absl/types/variant.h"
@@ -98,21 +96,6 @@ TEST_F(StreamingReadRpcLoggingTest, Read) {
       log_lines,
       Contains(HasSubstr(StatusCodeToString(StatusCode::kInvalidArgument))));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Invalid argument.")));
-}
-
-TEST_F(StreamingReadRpcLoggingTest, FormatMetadata) {
-  struct Test {
-    StreamingRpcMetadata metadata;
-    std::string expected;
-  } cases[] = {
-      {{}, ""},
-      {{{"a", "b"}}, "{a: b}"},
-      {{{"a", "b"}, {"k", "v"}}, "{a: b}, {k: v}"},
-  };
-  for (auto const& test : cases) {
-    auto const actual = FormatMetadata(test.metadata);
-    EXPECT_EQ(test.expected, actual);
-  }
 }
 
 }  // namespace

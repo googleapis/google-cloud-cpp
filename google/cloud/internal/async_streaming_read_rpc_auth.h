@@ -62,6 +62,10 @@ class AsyncStreamingReadRpcAuth : public AsyncStreamingReadRpc<Response> {
 
   future<Status> Finish() override { return state_->Finish(); }
 
+  StreamingRpcMetadata GetRequestMetadata() const override {
+    return state_->GetRequestMetadata();
+  }
+
  private:
   struct SharedState {
     SharedState(StreamFactory factory,
@@ -93,6 +97,11 @@ class AsyncStreamingReadRpcAuth : public AsyncStreamingReadRpc<Response> {
       std::lock_guard<std::mutex> g{mu};
       cancelled = true;  // ensure stream is not recreated after Finish
       return stream->Finish();
+    }
+
+    StreamingRpcMetadata GetRequestMetadata() {
+      std::lock_guard<std::mutex> g{mu};
+      return stream->GetRequestMetadata();
     }
 
     void Cancel() {
