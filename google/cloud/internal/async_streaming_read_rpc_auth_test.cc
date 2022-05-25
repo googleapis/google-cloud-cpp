@@ -29,6 +29,8 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockAuthenticationStrategy;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
+using ::testing::Pair;
 using ::testing::StrictMock;
 
 struct FakeResponse {
@@ -45,6 +47,7 @@ class MockStream : public BaseStream {
   MOCK_METHOD(future<bool>, Start, (), (override));
   MOCK_METHOD(future<absl::optional<FakeResponse>>, Read, (), (override));
   MOCK_METHOD(future<Status>, Finish, (), (override));
+  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 TEST(AsyncStreamReadWriteAuth, Start) {
@@ -57,6 +60,9 @@ TEST(AsyncStreamReadWriteAuth, Start) {
     });
     EXPECT_CALL(*mock, Finish).WillOnce([] {
       return make_ready_future(Status{});
+    });
+    EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
+      return StreamingRpcMetadata({{"test-only", "value"}});
     });
     return std::unique_ptr<BaseStream>(std::move(mock));
   });
@@ -73,6 +79,7 @@ TEST(AsyncStreamReadWriteAuth, Start) {
   EXPECT_EQ(response->key, "k0");
   EXPECT_EQ(response->value, "v0");
   EXPECT_THAT(uut->Finish().get(), IsOk());
+  EXPECT_THAT(uut->GetRequestMetadata(), Contains(Pair("test-only", "value")));
 }
 
 TEST(AsyncStreamReadWriteAuth, AuthFails) {

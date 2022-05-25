@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_READ_RPC_LOGGING_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_READ_RPC_LOGGING_H
 
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/tracing_options.h"
@@ -74,6 +75,15 @@ class AsyncStreamingReadRpcLogging : public AsyncStreamingReadRpc<Response> {
       GCP_LOG(DEBUG) << prefix << " >> " << status;
       return status;
     });
+  }
+
+  StreamingRpcMetadata GetRequestMetadata() const override {
+    auto prefix = std::string(__func__) + "(" + request_id_ + ")";
+    GCP_LOG(DEBUG) << prefix << " <<";
+    auto metadata = child_->GetRequestMetadata();
+    GCP_LOG(DEBUG) << prefix << " >> metadata={"
+                   << FormatForLoggingDecorator(metadata) << "}";
+    return metadata;
   }
 
  private:

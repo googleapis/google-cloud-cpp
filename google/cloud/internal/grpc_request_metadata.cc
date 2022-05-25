@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_request_metadata.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <grpc/compression.h>
 
 namespace google {
@@ -61,6 +63,14 @@ StreamingRpcMetadata GetRequestMetadataFromContext(
         metadata.emplace_hint(hint, std::move(key), std::move(value)));
   }
   return metadata;
+}
+
+std::string FormatForLoggingDecorator(StreamingRpcMetadata const& metadata) {
+  auto formatter = [](std::string* output,
+                      StreamingRpcMetadata::value_type const& p) {
+    *output += absl::StrCat("{", p.first, ": ", p.second, "}");
+  };
+  return absl::StrJoin(metadata.begin(), metadata.end(), ", ", formatter);
 }
 
 }  // namespace internal

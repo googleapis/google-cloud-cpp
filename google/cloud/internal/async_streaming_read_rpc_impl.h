@@ -107,6 +107,10 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
     return op->p.get_future();
   }
 
+  StreamingRpcMetadata GetRequestMetadata() const override {
+    return GetRequestMetadataFromContext(*context_);
+  }
+
  private:
   std::shared_ptr<CompletionQueueImpl> cq_;
   std::unique_ptr<grpc::ClientContext> context_;
@@ -160,6 +164,7 @@ class AsyncStreamingReadRpcError : public AsyncStreamingReadRpc<Response> {
     return make_ready_future<absl::optional<Response>>(absl::nullopt);
   }
   future<Status> Finish() override { return make_ready_future(status_); }
+  StreamingRpcMetadata GetRequestMetadata() const override { return {}; }
 
  private:
   Status status_;

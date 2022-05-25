@@ -32,6 +32,9 @@ using StreamingRpcMetadata = std::multimap<std::string, std::string>;
 StreamingRpcMetadata GetRequestMetadataFromContext(
     grpc::ClientContext const& context);
 
+/// Format metadata for logging decorators.
+std::string FormatForLoggingDecorator(StreamingRpcMetadata const& metadata);
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

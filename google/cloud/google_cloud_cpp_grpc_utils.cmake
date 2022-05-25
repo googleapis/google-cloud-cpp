@@ -81,7 +81,6 @@ add_library(
     internal/setup_context.h
     internal/streaming_read_rpc.cc
     internal/streaming_read_rpc.h
-    internal/streaming_read_rpc_logging.cc
     internal/streaming_read_rpc_logging.h
     internal/streaming_write_rpc.cc
     internal/streaming_write_rpc.h
@@ -233,6 +232,7 @@ if (BUILD_TESTING)
         internal/grpc_access_token_authentication_test.cc
         internal/grpc_async_access_token_cache_test.cc
         internal/grpc_channel_credentials_authentication_test.cc
+        internal/grpc_request_metadata_test.cc
         internal/grpc_service_account_authentication_test.cc
         internal/log_wrapper_test.cc
         internal/minimal_iam_credentials_stub_test.cc

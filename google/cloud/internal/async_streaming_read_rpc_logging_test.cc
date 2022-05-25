@@ -31,6 +31,7 @@ using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Pair;
 
 template <typename Response>
 class MockAsyncStreamingReadRpc : public AsyncStreamingReadRpc<Response> {
@@ -41,6 +42,7 @@ class MockAsyncStreamingReadRpc : public AsyncStreamingReadRpc<Response> {
   MOCK_METHOD(future<bool>, Start, (), (override));
   MOCK_METHOD(future<absl::optional<Response>>, Read, (), (override));
   MOCK_METHOD(future<Status>, Finish, (), (override));
+  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 class StreamingReadRpcLoggingTest : public ::testing::Test {
@@ -113,6 +115,21 @@ TEST(StreamingReadRpcLoggingTest, Finish) {
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr("Finish"), HasSubstr("test-id"),
                              HasSubstr("try-again"))));
+}
+
+TEST(StreamingReadRpcLoggingTest, GetRequestMetadata) {
+  ScopedLog log;
+
+  auto mock = absl::make_unique<MockStream>();
+  EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
+    return StreamingRpcMetadata({{":test-only", "value"}});
+  });
+  TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
+  EXPECT_THAT(stream.GetRequestMetadata(),
+              Contains(Pair(":test-only", "value")));
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(HasSubstr("GetRequestMetadata(test-id)"),
+                             HasSubstr("{:test-only: value}"))));
 }
 
 }  // namespace

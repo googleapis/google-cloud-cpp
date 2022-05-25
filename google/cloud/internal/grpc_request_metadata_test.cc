@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,23 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/streaming_read_rpc_logging.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/grpc_request_metadata.h"
+#include <gmock/gmock.h>
+#include <algorithm>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
 
-std::string FormatMetadata(StreamingRpcMetadata const& metadata) {
-  auto formatter = [](std::string* output,
-                      StreamingRpcMetadata::value_type const& p) {
-    *output += absl::StrCat("{", p.first, ": ", p.second, "}");
+TEST(GrpcRequestMetadata, FormatForLoggingDecorator) {
+  struct Test {
+    StreamingRpcMetadata metadata;
+    std::string expected;
+  } cases[] = {
+      {{}, ""},
+      {{{"a", "b"}}, "{a: b}"},
+      {{{"a", "b"}, {"k", "v"}}, "{a: b}, {k: v}"},
   };
-  return absl::StrJoin(metadata.begin(), metadata.end(), ", ", formatter);
+  for (auto const& test : cases) {
+    auto const actual = FormatForLoggingDecorator(test.metadata);
+    EXPECT_EQ(test.expected, actual);
+  }
 }
 
+}  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
