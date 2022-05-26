@@ -413,6 +413,50 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
       .WillOnce([](std::unique_ptr<grpc::ClientContext>,
                    google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
+        // We should have two rows in the initial request: "r1" and "r2".
+        EXPECT_THAT(request, RequestWithRowKeysCount(2));
+        auto stream = absl::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce(Return(MalformedResponse()));
+        return stream;
+      })
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>,
+                   google::bigtable::v2::ReadRowsRequest const& request) {
+        EXPECT_THAT(request, HasCorrectResourceNames());
+        // We have read "r1". The new request should only contain: "r2".
+        EXPECT_THAT(request, RequestWithRowKeysCount(1));
+        auto stream = absl::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
+        return stream;
+      });
+
+  internal::OptionsSpan span(TestOptions(/*expected_streams=*/2));
+
+  // The parser only returns INTERNAL errors. Our default policies do not retry
+  // on this StatusCode. We will use a mock policy to override this behavior.
+  auto retry = absl::make_unique<MockDataRetryPolicy>();
+  EXPECT_CALL(*retry, OnFailure).WillOnce(Return(true));
+
+  auto impl = std::make_shared<DefaultRowReader>(
+      mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2"),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      retry_.clone(), backoff_.clone());
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r1");
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>,
+                   google::bigtable::v2::ReadRowsRequest const& request) {
+        EXPECT_THAT(request, HasCorrectResourceNames());
         // We start our call with 3 rows in the set: "r1", "r2", "r3".
         EXPECT_THAT(request, RequestWithRowKeysCount(3));
         auto stream = absl::make_unique<MockReadRowsStream>();
@@ -459,8 +503,6 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
   EXPECT_EQ((*it)->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
 }
-
-TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyScannedRows) {}
 
 TEST_F(DefaultRowReaderTest, FailedParseWithPermanentError) {
   auto mock = std::make_shared<MockBigtableStub>();
