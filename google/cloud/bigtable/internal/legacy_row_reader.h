@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ROW_READER_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ROW_READER_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ROW_READER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ROW_READER_H
 
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
@@ -39,29 +39,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * `RowReaderImpl` that interacts with the Bigtable service via `DataClient`.
  */
-class LegacyRowReaderImpl : public RowReaderImpl {
+class LegacyRowReader : public RowReaderImpl {
  public:
-  LegacyRowReaderImpl(
-      std::shared_ptr<bigtable::DataClient> client, std::string table_name,
-      bigtable::RowSet row_set, std::int64_t rows_limit,
-      bigtable::Filter filter,
-      std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy,
-      std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
-      bigtable::MetadataUpdatePolicy metadata_update_policy,
-      std::unique_ptr<bigtable::internal::ReadRowsParserFactory>
-          parser_factory);
+  LegacyRowReader(std::shared_ptr<bigtable::DataClient> client,
+                  std::string table_name, bigtable::RowSet row_set,
+                  std::int64_t rows_limit, bigtable::Filter filter,
+                  std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy,
+                  std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
+                  bigtable::MetadataUpdatePolicy metadata_update_policy,
+                  std::unique_ptr<bigtable::internal::ReadRowsParserFactory>
+                      parser_factory);
 
-  LegacyRowReaderImpl(
-      std::shared_ptr<bigtable::DataClient> client, std::string app_profile_id,
-      std::string table_name, bigtable::RowSet row_set, std::int64_t rows_limit,
-      bigtable::Filter filter,
-      std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy,
-      std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
-      bigtable::MetadataUpdatePolicy metadata_update_policy,
-      std::unique_ptr<bigtable::internal::ReadRowsParserFactory>
-          parser_factory);
+  LegacyRowReader(std::shared_ptr<bigtable::DataClient> client,
+                  std::string app_profile_id, std::string table_name,
+                  bigtable::RowSet row_set, std::int64_t rows_limit,
+                  bigtable::Filter filter,
+                  std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy,
+                  std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
+                  bigtable::MetadataUpdatePolicy metadata_update_policy,
+                  std::unique_ptr<bigtable::internal::ReadRowsParserFactory>
+                      parser_factory);
 
-  ~LegacyRowReaderImpl() override;
+  ~LegacyRowReader() override;
 
   void Cancel() override;
 
@@ -131,4 +130,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ROW_READER_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ROW_READER_H

@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
-#include "google/cloud/bigtable/internal/legacy_row_reader_impl.h"
+#include "google/cloud/bigtable/internal/legacy_row_reader.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
 #include <thread>
@@ -187,7 +187,7 @@ future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
-  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReader>(
       client_, app_profile_id_, table_name_, std::move(row_set),
       RowReader::NO_ROWS_LIMIT, std::move(filter), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(), metadata_update_policy_,
@@ -197,7 +197,7 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter) {
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
-  auto impl = std::make_shared<bigtable_internal::LegacyRowReaderImpl>(
+  auto impl = std::make_shared<bigtable_internal::LegacyRowReader>(
       client_, app_profile_id_, table_name_, std::move(row_set), rows_limit,
       std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       metadata_update_policy_,
