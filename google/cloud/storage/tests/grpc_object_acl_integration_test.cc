@@ -32,6 +32,7 @@ using ::google::cloud::internal::GetEnv;
 using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -91,11 +92,31 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(create_acl->entity()));
 
+  auto c2 = client->CreateObjectAcl(bucket_name, object_name, viewers,
+                                    BucketAccessControl::ROLE_READER());
+  ASSERT_STATUS_OK(c2);
+  EXPECT_EQ(*create_acl, *c2);
+
   auto get_acl = client->GetObjectAcl(bucket_name, object_name, viewers);
   ASSERT_STATUS_OK(get_acl);
   EXPECT_EQ(*create_acl, *get_acl);
 
+  auto not_found_acl =
+      client->GetObjectAcl(bucket_name, object_name, "not-found-entity");
+  EXPECT_THAT(not_found_acl, StatusIs(StatusCode::kNotFound));
+
   auto updated_acl = client->UpdateObjectAcl(
+      bucket_name, object_name,
+      ObjectAccessControl().set_entity(viewers).set_role(
+          ObjectAccessControl::ROLE_OWNER()));
+  ASSERT_STATUS_OK(updated_acl);
+  EXPECT_EQ(updated_acl->entity(), create_acl->entity());
+  EXPECT_EQ(updated_acl->role(), ObjectAccessControl::ROLE_OWNER());
+
+  // "Updating" an entity that does not exist should create the entity
+  auto delete_acl = client->DeleteObjectAcl(bucket_name, object_name, viewers);
+  ASSERT_STATUS_OK(delete_acl);
+  updated_acl = client->UpdateObjectAcl(
       bucket_name, object_name,
       ObjectAccessControl().set_entity(viewers).set_role(
           ObjectAccessControl::ROLE_OWNER()));
@@ -111,7 +132,18 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   EXPECT_EQ(patched_acl->entity(), create_acl->entity());
   EXPECT_EQ(patched_acl->role(), ObjectAccessControl::ROLE_READER());
 
-  auto delete_acl = client->DeleteObjectAcl(bucket_name, object_name, viewers);
+  // "Patching" an entity that does not exist should create the entity
+  delete_acl = client->DeleteObjectAcl(bucket_name, object_name, viewers);
+  ASSERT_STATUS_OK(delete_acl);
+  patched_acl =
+      client->PatchObjectAcl(bucket_name, object_name, create_acl->entity(),
+                             ObjectAccessControlPatchBuilder().set_role(
+                                 ObjectAccessControl::ROLE_READER()));
+  ASSERT_STATUS_OK(patched_acl);
+  EXPECT_EQ(patched_acl->entity(), create_acl->entity());
+  EXPECT_EQ(patched_acl->role(), ObjectAccessControl::ROLE_READER());
+
+  delete_acl = client->DeleteObjectAcl(bucket_name, object_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
 
   current_acl = client->ListObjectAcl(bucket_name, object_name);

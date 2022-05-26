@@ -942,22 +942,6 @@ TEST_F(GrpcClientTest, CreateBucketAclPatchFails) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST_F(GrpcClientTest, CreateBucketAclAlreadyExists) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const&) {
-        v2::Bucket response;
-        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
-        return response;
-      });
-  EXPECT_CALL(*mock, UpdateBucket).Times(0);
-
-  auto client = CreateTestClient(mock);
-  auto response = client->CreateBucketAcl(CreateBucketAclRequest(
-      "test-bucket-id", "test-entity1", "test-new-role"));
-  EXPECT_THAT(response, StatusIs(StatusCode::kAlreadyExists));
-}
-
 TEST_F(GrpcClientTest, DeleteBucketAclFailure) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
@@ -1073,22 +1057,6 @@ TEST_F(GrpcClientTest, UpdateBucketAclPatchFails) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST_F(GrpcClientTest, UpdateBucketAclNotFound) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const&) {
-        v2::Bucket response;
-        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
-        return response;
-      });
-  EXPECT_CALL(*mock, UpdateBucket).Times(0);
-
-  auto client = CreateTestClient(mock);
-  auto response = client->UpdateBucketAcl(UpdateBucketAclRequest(
-      "test-bucket-id", "test-not-found", "updated-role"));
-  EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
-}
-
 TEST_F(GrpcClientTest, PatchBucketAclFailure) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
@@ -1139,23 +1107,6 @@ TEST_F(GrpcClientTest, PatchBucketAclPatchFails) {
       "test-bucket-id", "test-entity1",
       BucketAccessControlPatchBuilder().set_role("updated-role")));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
-}
-
-TEST_F(GrpcClientTest, PatchBucketAclNotFound) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const&) {
-        v2::Bucket response;
-        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
-        return response;
-      });
-  EXPECT_CALL(*mock, UpdateBucket).Times(0);
-
-  auto client = CreateTestClient(mock);
-  auto response = client->PatchBucketAcl(PatchBucketAclRequest(
-      "test-bucket-id", "test-not-found",
-      BucketAccessControlPatchBuilder().set_role("updated-role")));
-  EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(GrpcClientTest, ListObjectAclFailure) {
@@ -1325,22 +1276,6 @@ TEST_F(GrpcClientTest, CreateObjectAclPatchFails) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST_F(GrpcClientTest, CreateObjectAclAlreadyExists) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const&) {
-        v2::Object response;
-        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
-        return response;
-      });
-  EXPECT_CALL(*mock, UpdateObject).Times(0);
-
-  auto client = CreateTestClient(mock);
-  auto response = client->CreateObjectAcl(CreateObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-entity1", "test-new-role"));
-  EXPECT_THAT(response, StatusIs(StatusCode::kAlreadyExists));
-}
-
 TEST_F(GrpcClientTest, DeleteObjectAclFailure) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
@@ -1463,22 +1398,6 @@ TEST_F(GrpcClientTest, UpdateObjectAclPatchFails) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST_F(GrpcClientTest, UpdateObjectAclNotFound) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const&) {
-        v2::Object response;
-        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
-        return response;
-      });
-  EXPECT_CALL(*mock, UpdateObject).Times(0);
-
-  auto client = CreateTestClient(mock);
-  auto response = client->UpdateObjectAcl(UpdateObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-not-found", "updated-role"));
-  EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
-}
-
 TEST_F(GrpcClientTest, PatchObjectAclFailure) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
@@ -1532,23 +1451,6 @@ TEST_F(GrpcClientTest, PatchObjectAclPatchFails) {
       "test-bucket-id", "test-object-id", "test-entity1",
       ObjectAccessControlPatchBuilder().set_role("updated-role")));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
-}
-
-TEST_F(GrpcClientTest, PatchObjectAclNotFound) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const&) {
-        v2::Object response;
-        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
-        return response;
-      });
-  EXPECT_CALL(*mock, UpdateObject).Times(0);
-
-  auto client = CreateTestClient(mock);
-  auto response = client->PatchObjectAcl(PatchObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-not-found",
-      ObjectAccessControlPatchBuilder().set_role("updated-role")));
-  EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(GrpcClientTest, GetServiceAccount) {

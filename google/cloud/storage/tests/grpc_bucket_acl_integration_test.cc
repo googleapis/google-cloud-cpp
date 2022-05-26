@@ -96,12 +96,25 @@ TEST_F(GrpcBucketAclIntegrationTest, AclCRUD) {
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(create_acl->entity()));
 
+  auto c2 = client->CreateBucketAcl(bucket_name, viewers,
+                                    BucketAccessControl::ROLE_READER());
+  ASSERT_STATUS_OK(c2);
+  EXPECT_EQ(*create_acl, *c2);
+
   auto updated_acl = client->UpdateBucketAcl(
       bucket_name, BucketAccessControl().set_entity(viewers).set_role(
                        BucketAccessControl::ROLE_OWNER()));
   ASSERT_STATUS_OK(updated_acl);
   EXPECT_EQ(updated_acl->entity(), create_acl->entity());
   EXPECT_EQ(updated_acl->role(), BucketAccessControl::ROLE_OWNER());
+
+  // "Updating" an entity that does not exist should create the entity
+  auto delete_acl = client->DeleteBucketAcl(bucket_name, viewers);
+  ASSERT_STATUS_OK(delete_acl);
+  updated_acl = client->UpdateBucketAcl(
+      bucket_name, BucketAccessControl().set_entity(viewers).set_role(
+                       BucketAccessControl::ROLE_OWNER()));
+  ASSERT_STATUS_OK(updated_acl);
 
   auto patched_acl =
       client->PatchBucketAcl(bucket_name, viewers,
@@ -111,7 +124,18 @@ TEST_F(GrpcBucketAclIntegrationTest, AclCRUD) {
   EXPECT_EQ(patched_acl->entity(), create_acl->entity());
   EXPECT_EQ(patched_acl->role(), BucketAccessControl::ROLE_READER());
 
-  auto delete_acl = client->DeleteBucketAcl(bucket_name, viewers);
+  // "Patching" an entity that does not exist should create the entity
+  delete_acl = client->DeleteBucketAcl(bucket_name, viewers);
+  ASSERT_STATUS_OK(delete_acl);
+  patched_acl =
+      client->PatchBucketAcl(bucket_name, viewers,
+                             BucketAccessControlPatchBuilder().set_role(
+                                 BucketAccessControl::ROLE_READER()));
+  ASSERT_STATUS_OK(patched_acl);
+  EXPECT_EQ(patched_acl->entity(), create_acl->entity());
+  EXPECT_EQ(patched_acl->role(), BucketAccessControl::ROLE_READER());
+
+  delete_acl = client->DeleteBucketAcl(bucket_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
 
   current_acl = client->ListBucketAcl(bucket_name);

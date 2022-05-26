@@ -42,6 +42,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+template <typename AccessControl>
+StatusOr<std::vector<AccessControl>> UpsertAcl(std::vector<AccessControl> acl,
+                                               std::string const& entity,
+                                               std::string const& role) {
+  auto i = std::find_if(
+      acl.begin(), acl.end(),
+      [&](AccessControl const& entry) { return entry.entity() == entity; });
+  if (i != acl.end()) {
+    i->set_role(role);
+    return acl;
+  }
+  acl.push_back(AccessControl().set_entity(entity).set_role(role));
+  return acl;
+}
+
 // Used in the implementation of `*BucketAcl()`.
 StatusOr<BucketAccessControl> FindBucketAccessControl(
     StatusOr<BucketMetadata> response, std::string const& entity) {
@@ -591,20 +606,8 @@ StatusOr<BucketAccessControl> GrpcClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
   auto get_request = GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
-  auto updater = [&request](std::vector<BucketAccessControl> acl)
-      -> StatusOr<std::vector<BucketAccessControl>> {
-    for (auto const& entry : acl) {
-      if (entry.entity() == request.entity()) {
-        return Status(StatusCode::kAlreadyExists,
-                      "the entity <" + request.entity() +
-                          "> is already present in the ACL for bucket " +
-                          request.bucket_name());
-      }
-    }
-    acl.push_back(BucketAccessControl()
-                      .set_entity(request.entity())
-                      .set_role(request.role()));
-    return acl;
+  auto updater = [&request](std::vector<BucketAccessControl> acl) {
+    return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
   return FindBucketAccessControl(
       ModifyBucketAccessControl(get_request, updater), request.entity());
@@ -638,20 +641,8 @@ StatusOr<BucketAccessControl> GrpcClient::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
   auto get_request = GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
-  auto updater = [&request](std::vector<BucketAccessControl> acl)
-      -> StatusOr<std::vector<BucketAccessControl>> {
-    auto i = std::find_if(acl.begin(), acl.end(),
-                          [&](BucketAccessControl const& entry) {
-                            return entry.entity() == request.entity();
-                          });
-    if (i == acl.end()) {
-      return Status(StatusCode::kNotFound,
-                    "the entity <" + request.entity() +
-                        "> is not present in the ACL for bucket " +
-                        request.bucket_name());
-    }
-    i->set_role(request.role());
-    return acl;
+  auto updater = [&request](std::vector<BucketAccessControl> acl) {
+    return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
   return FindBucketAccessControl(
       ModifyBucketAccessControl(get_request, updater), request.entity());
@@ -661,20 +652,9 @@ StatusOr<BucketAccessControl> GrpcClient::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
   auto get_request = GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
-  auto updater = [&request](std::vector<BucketAccessControl> acl)
-      -> StatusOr<std::vector<BucketAccessControl>> {
-    auto i = std::find_if(acl.begin(), acl.end(),
-                          [&](BucketAccessControl const& entry) {
-                            return entry.entity() == request.entity();
-                          });
-    if (i == acl.end()) {
-      return Status(StatusCode::kNotFound,
-                    "the entity <" + request.entity() +
-                        "> is not present in the ACL for bucket " +
-                        request.bucket_name());
-    }
-    i->set_role(GrpcBucketAccessControlParser::Role(request.patch()));
-    return acl;
+  auto updater = [&request](std::vector<BucketAccessControl> acl) {
+    return UpsertAcl(std::move(acl), request.entity(),
+                     GrpcBucketAccessControlParser::Role(request.patch()));
   };
   return FindBucketAccessControl(
       ModifyBucketAccessControl(get_request, updater), request.entity());
@@ -697,20 +677,8 @@ StatusOr<ObjectAccessControl> GrpcClient::CreateObjectAcl(
   auto get_request =
       GetObjectMetadataRequest(request.bucket_name(), request.object_name());
   request.ForEachOption(CopyCommonOptions(get_request));
-  auto updater = [&request](std::vector<ObjectAccessControl> acl)
-      -> StatusOr<std::vector<ObjectAccessControl>> {
-    for (auto const& entry : acl) {
-      if (entry.entity() == request.entity()) {
-        return Status(StatusCode::kAlreadyExists,
-                      "the entity <" + request.entity() +
-                          "> is already present in the ACL for object " +
-                          request.object_name());
-      }
-    }
-    acl.push_back(ObjectAccessControl()
-                      .set_entity(request.entity())
-                      .set_role(request.role()));
-    return acl;
+  auto updater = [&request](std::vector<ObjectAccessControl> acl) {
+    return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
   return FindObjectAccessControl(
       ModifyObjectAccessControl(get_request, updater), request.entity());
@@ -755,20 +723,8 @@ StatusOr<ObjectAccessControl> GrpcClient::UpdateObjectAcl(
   auto get_request =
       GetObjectMetadataRequest(request.bucket_name(), request.object_name());
   request.ForEachOption(CopyCommonOptions(get_request));
-  auto updater = [&request](std::vector<ObjectAccessControl> acl)
-      -> StatusOr<std::vector<ObjectAccessControl>> {
-    auto i = std::find_if(acl.begin(), acl.end(),
-                          [&](ObjectAccessControl const& entry) {
-                            return entry.entity() == request.entity();
-                          });
-    if (i == acl.end()) {
-      return Status(StatusCode::kNotFound,
-                    "the entity <" + request.entity() +
-                        "> is not present in the ACL for object " +
-                        request.object_name());
-    }
-    i->set_role(request.role());
-    return acl;
+  auto updater = [&request](std::vector<ObjectAccessControl> acl) {
+    return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
   return FindObjectAccessControl(
       ModifyObjectAccessControl(get_request, updater), request.entity());
@@ -779,20 +735,9 @@ StatusOr<ObjectAccessControl> GrpcClient::PatchObjectAcl(
   auto get_request =
       GetObjectMetadataRequest(request.bucket_name(), request.object_name());
   request.ForEachOption(CopyCommonOptions(get_request));
-  auto updater = [&request](std::vector<ObjectAccessControl> acl)
-      -> StatusOr<std::vector<ObjectAccessControl>> {
-    auto i = std::find_if(acl.begin(), acl.end(),
-                          [&](ObjectAccessControl const& entry) {
-                            return entry.entity() == request.entity();
-                          });
-    if (i == acl.end()) {
-      return Status(StatusCode::kNotFound,
-                    "the entity <" + request.entity() +
-                        "> is not present in the ACL for object " +
-                        request.object_name());
-    }
-    i->set_role(GrpcObjectAccessControlParser::Role(request.patch()));
-    return acl;
+  auto updater = [&request](std::vector<ObjectAccessControl> acl) {
+    return UpsertAcl(std::move(acl), request.entity(),
+                     GrpcObjectAccessControlParser::Role(request.patch()));
   };
   return FindObjectAccessControl(
       ModifyObjectAccessControl(get_request, updater), request.entity());
