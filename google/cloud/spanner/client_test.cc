@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
+#include "google/cloud/spanner/mocks/row.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/timestamp.h"
@@ -99,8 +100,8 @@ TEST(ClientTest, ReadSuccess) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
-      .WillOnce(Return(MakeTestRow("Steve", 12)))
-      .WillOnce(Return(MakeTestRow("Ann", 42)))
+      .WillOnce(Return(spanner_mocks::MakeRow("Steve", 12)))
+      .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
       .WillOnce(Return(Row()));
 
   EXPECT_CALL(*conn, Read)
@@ -140,8 +141,8 @@ TEST(ClientTest, ReadFailure) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
-      .WillOnce(Return(MakeTestRow("Steve")))
-      .WillOnce(Return(MakeTestRow("Ann")))
+      .WillOnce(Return(spanner_mocks::MakeRow("Steve")))
+      .WillOnce(Return(spanner_mocks::MakeRow("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
   EXPECT_CALL(*conn, Read)
@@ -186,8 +187,8 @@ TEST(ClientTest, ExecuteQuerySuccess) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
-      .WillOnce(Return(MakeTestRow("Steve", 12)))
-      .WillOnce(Return(MakeTestRow("Ann", 42)))
+      .WillOnce(Return(spanner_mocks::MakeRow("Steve", 12)))
+      .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
       .WillOnce(Return(Row()));
 
   EXPECT_CALL(*conn, ExecuteQuery)
@@ -227,8 +228,8 @@ TEST(ClientTest, ExecuteQueryFailure) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
-      .WillOnce(Return(MakeTestRow("Steve")))
-      .WillOnce(Return(MakeTestRow("Ann")))
+      .WillOnce(Return(spanner_mocks::MakeRow("Steve")))
+      .WillOnce(Return(spanner_mocks::MakeRow("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
   EXPECT_CALL(*conn, ExecuteQuery)
@@ -435,7 +436,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
-      .WillOnce(Return(MakeTestRow("Bob")))
+      .WillOnce(Return(spanner_mocks::MakeRow("Bob")))
       .WillOnce(Return(Row()));
 
   EXPECT_CALL(*conn, Read)
@@ -1006,7 +1007,7 @@ TEST(ClientTest, ProfileQuerySuccess) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText1, &stats));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
-      .WillOnce(Return(MakeTestRow("Ann", 42)))
+      .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
       .WillOnce(Return(Row()));
   EXPECT_CALL(*source, Stats()).WillRepeatedly(Return(stats));
 
@@ -1070,7 +1071,7 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText1, &stats));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
-      .WillOnce(Return(MakeTestRow("Ann", 42)))
+      .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
       .WillOnce(Return(Row()));
   EXPECT_CALL(*source, Stats()).WillRepeatedly(Return(stats));
 

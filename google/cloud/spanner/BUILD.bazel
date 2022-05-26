@@ -119,8 +119,9 @@ load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks")
     srcs = [benchmark],
     tags = ["benchmark"],
     deps = [
+        ":google_cloud_cpp_spanner",
+        ":google_cloud_cpp_spanner_mocks",
         "//:common",
-        "//:spanner",
         "@com_google_benchmark//:benchmark_main",
     ],
 ) for benchmark in spanner_client_benchmarks]
