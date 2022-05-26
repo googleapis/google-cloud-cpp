@@ -170,8 +170,9 @@ class DefaultArtifactRegistryConnectionIdempotencyPolicy
   }
 
   Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
+      google::iam::v1::SetIamPolicyRequest const& request) override {
+    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                           : Idempotency::kIdempotent;
   }
 
   Idempotency GetIamPolicy(

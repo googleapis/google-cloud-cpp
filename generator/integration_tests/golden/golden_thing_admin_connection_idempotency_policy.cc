@@ -70,8 +70,9 @@ class DefaultGoldenThingAdminConnectionIdempotencyPolicy : public GoldenThingAdm
   }
 
   Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override {
+    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                           : Idempotency::kIdempotent;
   }
 
   Idempotency

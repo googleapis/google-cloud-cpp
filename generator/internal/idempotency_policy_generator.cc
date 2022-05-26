@@ -155,7 +155,25 @@ Status IdempotencyPolicyGenerator::GenerateCc() {
     "  }\n");
   // clang-format on
 
+  auto is_set_iam_policy = [](google::protobuf::MethodDescriptor const& m) {
+    return m.output_type()->full_name() == "google.iam.v1.Policy" &&
+           m.input_type()->full_name() == "google.iam.v1.SetIamPolicyRequest";
+  };
   for (auto const& method : methods()) {
+    // SetIamPolicy() methods are common. They are idempotent if the request
+    // has an `ETag` pre-condition.  This is one of the few (only?) cases where
+    // a policy based on the request contents is known.
+    if (is_set_iam_policy(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  Idempotency
+  $method_name$(google::iam::v1::SetIamPolicyRequest const& request) override {
+    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                           : Idempotency::kIdempotent;
+  }
+)""");
+      continue;
+    }
+
     CcPrintMethod(
         method,
         {MethodPattern(
