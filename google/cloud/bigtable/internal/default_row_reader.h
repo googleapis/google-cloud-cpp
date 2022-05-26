@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ROW_READER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ROW_READER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DEFAULT_ROW_READER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DEFAULT_ROW_READER_H
 
-#include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
+#include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "absl/types/variant.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <cinttypes>
 #include <string>
@@ -37,30 +37,19 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * `RowReaderImpl` that interacts with the Bigtable service via `DataClient`.
+ * `RowReaderImpl` that interacts with the Bigtable service using a
+ * `BigtableStub`.
  */
-class LegacyRowReader : public RowReaderImpl {
+class DefaultRowReader : public RowReaderImpl {
  public:
-  LegacyRowReader(std::shared_ptr<bigtable::DataClient> client,
-                  std::string table_name, bigtable::RowSet row_set,
-                  std::int64_t rows_limit, bigtable::Filter filter,
-                  std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy,
-                  std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
-                  bigtable::MetadataUpdatePolicy metadata_update_policy,
-                  std::unique_ptr<bigtable::internal::ReadRowsParserFactory>
-                      parser_factory);
+  DefaultRowReader(std::shared_ptr<BigtableStub> stub,
+                   std::string app_profile_id, std::string table_name,
+                   bigtable::RowSet row_set, std::int64_t rows_limit,
+                   bigtable::Filter filter,
+                   std::unique_ptr<DataRetryPolicy> retry_policy,
+                   std::unique_ptr<BackoffPolicy> backoff_policy);
 
-  LegacyRowReader(std::shared_ptr<bigtable::DataClient> client,
-                  std::string app_profile_id, std::string table_name,
-                  bigtable::RowSet row_set, std::int64_t rows_limit,
-                  bigtable::Filter filter,
-                  std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy,
-                  std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
-                  bigtable::MetadataUpdatePolicy metadata_update_policy,
-                  std::unique_ptr<bigtable::internal::ReadRowsParserFactory>
-                      parser_factory);
-
-  ~LegacyRowReader() override;
+  ~DefaultRowReader() override;
 
   void Cancel() override;
 
@@ -94,26 +83,26 @@ class LegacyRowReader : public RowReaderImpl {
   /// Sends the ReadRows request to the stub.
   void MakeRequest();
 
-  std::shared_ptr<bigtable::DataClient> client_;
+  std::shared_ptr<BigtableStub> stub_;
   std::string app_profile_id_;
   std::string table_name_;
   bigtable::RowSet row_set_;
   std::int64_t rows_limit_;
   bigtable::Filter filter_;
-  std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy_;
-  std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy_;
-  bigtable::MetadataUpdatePolicy metadata_update_policy_;
+  std::unique_ptr<DataRetryPolicy> retry_policy_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_;
 
   std::unique_ptr<grpc::ClientContext> context_;
 
-  std::unique_ptr<bigtable::internal::ReadRowsParserFactory> parser_factory_;
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;
   std::unique_ptr<
-      grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
+      internal::StreamingReadRpc<google::bigtable::v2::ReadRowsResponse>>
       stream_;
   bool stream_is_open_ = false;
   bool operation_cancelled_ = false;
 
+  /// The end of stream Status.
+  Status last_status_;
   /// The last received response, chunks are being parsed one by one from it.
   google::bigtable::v2::ReadRowsResponse response_;
   /// Number of chunks already parsed in response_.
@@ -130,4 +119,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ROW_READER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DEFAULT_ROW_READER_H

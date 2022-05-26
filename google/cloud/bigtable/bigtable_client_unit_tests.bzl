@@ -47,6 +47,7 @@ bigtable_client_unit_tests = [
     "internal/connection_refresh_state_test.cc",
     "internal/convert_policies_test.cc",
     "internal/data_connection_impl_test.cc",
+    "internal/default_row_reader_test.cc",
     "internal/defaults_test.cc",
     "internal/google_bytes_traits_test.cc",
     "internal/legacy_row_reader_test.cc",

@@ -179,6 +179,8 @@ add_library(
     internal/data_connection.h
     internal/data_connection_impl.cc
     internal/data_connection_impl.h
+    internal/default_row_reader.cc
+    internal/default_row_reader.h
     internal/defaults.cc
     internal/defaults.h
     internal/google_bytes_traits.cc
@@ -335,6 +337,7 @@ if (BUILD_TESTING)
         internal/connection_refresh_state_test.cc
         internal/convert_policies_test.cc
         internal/data_connection_impl_test.cc
+        internal/default_row_reader_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
         internal/legacy_row_reader_test.cc
