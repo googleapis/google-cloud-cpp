@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/idempotency.h"
+#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -30,6 +32,33 @@ DataConnectionImpl::DataConnectionImpl(
       options_(internal::MergeOptions(
           std::move(options),
           bigtable::internal::DefaultDataOptions(DataConnection::options()))) {}
+
+Status DataConnectionImpl::Apply(std::string const& app_profile_id,
+                                 std::string const& table_name,
+                                 bigtable::SingleRowMutation mut) {
+  google::bigtable::v2::MutateRowRequest request;
+  request.set_app_profile_id(app_profile_id);
+  request.set_table_name(table_name);
+  mut.MoveTo(request);
+
+  auto idempotent_policy = idempotency_policy();
+  bool const is_idempotent = std::all_of(
+      request.mutations().begin(), request.mutations().end(),
+      [&idempotent_policy](google::bigtable::v2::Mutation const& m) {
+        return idempotent_policy->is_idempotent(m);
+      });
+
+  auto sor = google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
+      [this](grpc::ClientContext& context,
+             google::bigtable::v2::MutateRowRequest const& request) {
+        return stub_->MutateRow(context, request);
+      },
+      request, __func__);
+  if (!sor) return std::move(sor).status();
+  return Status{};
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
