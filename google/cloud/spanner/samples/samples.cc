@@ -3732,24 +3732,22 @@ void RunAllSlowInstanceTests(
                                 "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT")
                                 .value_or("")
                                 .empty();
+  auto const instance_config_predicate =
+      [prod_service](
+          google::spanner::admin::instance::v1::InstanceConfig const& config) {
+        auto config_id = Basename(config.name());
+        // Skip non-US configs. They are too slow.
+        if (!absl::StartsWith(config_id, "regional-us-")) return false;
+        // Allow all US configs for non-production services.
+        if (!prod_service) return true;
+        // Exclude the US configs where we keep most prod test instances.
+        return config_id != "regional-us-central1" &&
+               config_id != "regional-us-east1";
+      };
   auto const config_id =
       Basename(google::cloud::spanner_testing::PickInstanceConfig(
           google::cloud::Project(project_id), generator,
-          [prod_service](
-              google::spanner::admin::instance::v1::InstanceConfig const&
-                  config) {
-            auto config_id = Basename(config.name());
-            // Skip non-US configs. They are too slow.
-            if (!absl::StartsWith(config_id, "regional-us-")) return false;
-            if (prod_service) {
-              // Exclude US configs where we keep most prod test instances.
-              if (config_id == "regional-us-central1" ||
-                  config_id == "regional-us-east1") {
-                return false;
-              }
-            }
-            return true;
-          }));
+          instance_config_predicate));
   if (config_id.empty()) throw std::runtime_error("Failed to pick a config");
 
   auto const crud_instance_id =
