@@ -75,7 +75,9 @@ fi
 
 io::log_h2 "Installing the docuploader package"
 python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
-  --no-warn-script-location gcp-docuploader protobuf
+  --no-warn-script-location \
+  "git+https://github.com/googleapis/docuploader@993badb47be3bf548a4c1726658eadba4bafeaca"
+python3 -m pip list
 
 # For docuploader to work
 export LC_ALL=C.UTF-8
