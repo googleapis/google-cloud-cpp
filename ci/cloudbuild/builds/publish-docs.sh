@@ -96,11 +96,13 @@ function upload_docs() {
   io::log_h2 "Uploading docs: ${package}"
   io::log "docs_dir=${docs_dir}"
 
-  env -C "${docs_dir}" python3 -m docuploader create-metadata \
+  env -C "${docs_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
+    python3 -m docuploader create-metadata \
     --name "${package}" \
     --version "${version}" \
     --language cpp
-  env -C "${docs_dir}" python3 -m docuploader upload . --staging-bucket "${bucket}"
+  env -C "${docs_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
+    python3 -m docuploader upload . --staging-bucket "${bucket}"
 }
 
 io::log_h2 "Publishing docs"
