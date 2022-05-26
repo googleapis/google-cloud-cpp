@@ -441,7 +441,7 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      retry_.clone(), backoff_.clone());
+      std::move(retry), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
