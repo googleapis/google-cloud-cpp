@@ -124,10 +124,11 @@ class ClientOptions {
    * Return the current endpoint for data RPCs.
    *
    * @deprecated Please configure `google::cloud::Options` with
-   *     `bigtable::DataEndpointOption` instead.
+   *     `google::cloud::EndpointOption` instead.
    */
   GOOGLE_CLOUD_CPP_DEPRECATED(
-      "use `google::cloud::Options` with `DataEndpointOption` instead")
+      "use `google::cloud::Options` with `google::cloud::EndpointOption` "
+      "instead")
   std::string const& data_endpoint() const {
     return opts_.get<DataEndpointOption>();
   }
@@ -136,10 +137,11 @@ class ClientOptions {
    * Set the current endpoint for data RPCs.
    *
    * @deprecated Please configure `google::cloud::Options` with
-   *     `bigtable::DataEndpointOption` instead.
+   *     `google::cloud::EndpointOption` instead.
    */
   GOOGLE_CLOUD_CPP_DEPRECATED(
-      "use `google::cloud::Options` with `DataEndpointOption` instead")
+      "use `google::cloud::Options` with `google::cloud::EndpointOption` "
+      "instead")
   ClientOptions& set_data_endpoint(std::string endpoint) {
     opts_.set<DataEndpointOption>(std::move(endpoint));
     return *this;
@@ -149,12 +151,11 @@ class ClientOptions {
    * Return the current endpoint for admin RPCs.
    *
    * @deprecated Please configure `google::cloud::Options` with
-   *     `bigtable::AdminEndpointOption` and
-   *     `bigtable::InstanceAdminEndpointOption` instead.
+   *     `google::cloud::EndpointOption` instead.
    */
   GOOGLE_CLOUD_CPP_DEPRECATED(
-      "use `google::cloud::Options` with `AdminEndpointOption` and "
-      "`InstanceAdminEndpointOption` instead")
+      "use `google::cloud::Options` with `google::cloud::EndpointOption` "
+      "instead")
   std::string const& admin_endpoint() const {
     return opts_.get<AdminEndpointOption>();
   }
@@ -163,12 +164,11 @@ class ClientOptions {
    * Set the current endpoint for admin RPCs.
    *
    * @deprecated Please configure `google::cloud::Options` with
-   *     `bigtable::AdminEndpointOption` and
-   *     `bigtable::InstanceAdminEndpointOption` instead.
+   *     `google::cloud::EndpointOption` instead.
    */
   GOOGLE_CLOUD_CPP_DEPRECATED(
-      "use `google::cloud::Options` with `AdminEndpointOption` and "
-      "`InstanceAdminEndpointOption` instead")
+      "use `google::cloud::Options` with `google::cloud::EndpointOption` "
+      "instead")
   ClientOptions& set_admin_endpoint(std::string endpoint) {
     opts_.set<AdminEndpointOption>(endpoint);
     // These two endpoints are generally equivalent, but they may differ in

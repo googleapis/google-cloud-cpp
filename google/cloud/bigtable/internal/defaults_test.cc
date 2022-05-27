@@ -125,12 +125,30 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
   EXPECT_THAT(*s, HasSubstr("test-prefix"));
 }
 
+TEST(OptionsTest, EndpointOptionSetsAll) {
+  auto options =
+      Options{}
+          .set<EndpointOption>("endpoint-option")
+          .set<DataEndpointOption>("overridden-data")
+          .set<AdminEndpointOption>("overridden-table-admin")
+          .set<InstanceAdminEndpointOption>("overridden-instance-admin");
+  options = DefaultOptions(std::move(options));
+  EXPECT_EQ("endpoint-option", options.get<EndpointOption>());
+  EXPECT_EQ("endpoint-option", options.get<DataEndpointOption>());
+  EXPECT_EQ("endpoint-option", options.get<AdminEndpointOption>());
+  EXPECT_EQ("endpoint-option", options.get<InstanceAdminEndpointOption>());
+}
+
 TEST(OptionsTest, DefaultDataOptionsEndpoint) {
   auto options =
       Options{}
           .set<DataEndpointOption>("data.googleapis.com")
           .set<AdminEndpointOption>("tableadmin.googleapis.com")
           .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+  options = DefaultDataOptions(std::move(options));
+  EXPECT_EQ("data.googleapis.com", options.get<EndpointOption>());
+
+  options = Options{}.set<EndpointOption>("data.googleapis.com");
   options = DefaultDataOptions(std::move(options));
   EXPECT_EQ("data.googleapis.com", options.get<EndpointOption>());
 }
@@ -143,6 +161,10 @@ TEST(OptionsTest, DefaultInstanceAdminOptions) {
           .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
   options = DefaultInstanceAdminOptions(std::move(options));
   EXPECT_EQ("instanceadmin.googleapis.com", options.get<EndpointOption>());
+
+  options = Options{}.set<EndpointOption>("instanceadmin.googleapis.com");
+  options = DefaultInstanceAdminOptions(std::move(options));
+  EXPECT_EQ("instanceadmin.googleapis.com", options.get<EndpointOption>());
 }
 
 TEST(OptionsTest, DefaultTableAdminOptions) {
@@ -151,6 +173,10 @@ TEST(OptionsTest, DefaultTableAdminOptions) {
           .set<DataEndpointOption>("data.googleapis.com")
           .set<AdminEndpointOption>("tableadmin.googleapis.com")
           .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+  options = DefaultTableAdminOptions(std::move(options));
+  EXPECT_EQ("tableadmin.googleapis.com", options.get<EndpointOption>());
+
+  options = Options{}.set<EndpointOption>("tableadmin.googleapis.com");
   options = DefaultTableAdminOptions(std::move(options));
   EXPECT_EQ("tableadmin.googleapis.com", options.get<EndpointOption>());
 }
@@ -220,6 +246,7 @@ TEST(EndpointEnvTest, EmulatorEnvOverridesUserOptions) {
 
   auto opts = DefaultOptions(
       Options{}
+          .set<EndpointOption>("ignored-any")
           .set<DataEndpointOption>("ignored-data")
           .set<AdminEndpointOption>("ignored-admin")
           .set<InstanceAdminEndpointOption>("ignored-instance-admin"));
@@ -234,7 +261,9 @@ TEST(EndpointEnvTest, InstanceEmulatorEnvOverridesUserOption) {
                                       "instance-emulator-host:9000");
 
   auto opts = DefaultOptions(
-      Options{}.set<InstanceAdminEndpointOption>("ignored-instance-admin"));
+      Options{}
+          .set<EndpointOption>("ignored-any")
+          .set<InstanceAdminEndpointOption>("ignored-instance-admin"));
 
   EXPECT_EQ("instance-emulator-host:9000",
             opts.get<InstanceAdminEndpointOption>());
