@@ -107,14 +107,23 @@ Status ConnectionGenerator::GenerateHeader() {
   }
 
   // Abstract interface Connection base class
-  HeaderPrint(  // clang-format off
-    "\n"
-    "class $connection_class_name$ {\n"
-    " public:\n"
-    "  virtual ~$connection_class_name$() = 0;\n");
-  // clang-format on
-
   HeaderPrint(R"""(
+/**
+ * The `$connection_class_name$` object for `$client_class_name$`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `$client_class_name$`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `$client_class_name$` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `Make$connection_class_name$()`.
+ *
+ * For mocking, see `$product_namespace$_mocks::$mock_connection_class_name$`.
+ */
+class $connection_class_name$ {
+ public:
+  virtual ~$connection_class_name$() = 0;
+
   virtual Options options() { return Options{}; }
 )""");
 
@@ -192,10 +201,32 @@ Status ConnectionGenerator::GenerateHeader() {
   // close abstract interface Connection base class
   HeaderPrint("};\n");
 
-  HeaderPrint(  // clang-format off
-    "\nstd::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    Options options = {});\n");
-  // clang-format on
+  HeaderPrint(R"""(
+/**
+ * A factory function to construct a `$connection_class_name$` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `$client_class_name$` instance, and methods should be
+ * invoked on `$client_class_name$`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `$connection_class_name$`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::$product_namespace$::$service_name$PolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `$connection_class_name$` created by
+ * this function.
+ */
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
+    Options options = {});
+)""");
 
   HeaderCloseNamespaces();
 
