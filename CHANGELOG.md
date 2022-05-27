@@ -116,6 +116,14 @@ to grant, change, and revoke access to all
   `EndpointOption`, and (4) default value. That is, the more dynamic
   `${endpoint_env}` is now preferred over any `EndpointOption` set in the code.
 
+### [Document AI](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/documentai/README.md)
+
+**BREAKING CHANGES**
+
+* We mistakenly declared GA for this library. Though the current public APIs are
+  unlikely to change, the quickstart is not yet operable. We apologize for any
+  confusion or inconvenience this caused.
+
 ### New Libraries
 
 We are introducing a new client library: [Bare Metal Solution]. While we do not

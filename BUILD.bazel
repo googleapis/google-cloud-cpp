@@ -27,7 +27,9 @@ EXPERIMENTAL_LIBRARIES = [
     "dataplex",
     "dialogflow_cx",
     "dialogflow_es",
-    # This is WIP, it needs a number of hand-crafted APIs.
+    # This is WIP. The quickstart doesn't work.
+    "documentai",
+    # This is WIP. it needs a number of hand-crafted APIs.
     "pubsublite",
 ]
 
@@ -61,7 +63,6 @@ GA_LIBRARIES = [
     "dataproc",
     "debugger",
     "dlp",
-    "documentai",
     "eventarc",
     "filestore",
     "functions",

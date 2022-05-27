@@ -1,5 +1,7 @@
 # Cloud Document AI API C++ Client Library
 
+:construction:
+
 :warning: This library will not be declared GA until the quickstart is operable.
 
 This directory contains an idiomatic C++ client library for the
@@ -8,9 +10,6 @@ learning on a scalable cloud-based platform to help your organization
 efficiently scan, analyze, and understand documents.
 
 This library is **experimental**. Its APIs are subject to change without notice.
-
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms
 
