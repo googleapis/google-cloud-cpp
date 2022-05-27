@@ -48,6 +48,18 @@ using DocumentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_es_internal::DocumentsRetryTraits>;
 
+/**
+ * The `DocumentsConnection` object for `DocumentsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DocumentsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `DocumentsClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeDocumentsConnection()`.
+ *
+ * For mocking, see `dialogflow_es_mocks::MockDocumentsConnection`.
+ */
 class DocumentsConnection {
  public:
   virtual ~DocumentsConnection() = 0;
@@ -87,6 +99,28 @@ class DocumentsConnection {
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request);
 };
 
+/**
+ * A factory function to construct a `DocumentsConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `DocumentsClient` instance, and methods should be
+ * invoked on `DocumentsClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DocumentsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_es::DocumentsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `DocumentsConnection` created by
+ * this function.
+ */
 std::shared_ptr<DocumentsConnection> MakeDocumentsConnection(
     Options options = {});
 

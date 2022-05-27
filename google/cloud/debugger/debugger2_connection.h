@@ -44,6 +44,18 @@ using Debugger2LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         debugger_internal::Debugger2RetryTraits>;
 
+/**
+ * The `Debugger2Connection` object for `Debugger2Client`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `Debugger2Client`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `Debugger2Client` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeDebugger2Connection()`.
+ *
+ * For mocking, see `debugger_mocks::MockDebugger2Connection`.
+ */
 class Debugger2Connection {
  public:
   virtual ~Debugger2Connection() = 0;
@@ -72,6 +84,28 @@ class Debugger2Connection {
       google::devtools::clouddebugger::v2::ListDebuggeesRequest const& request);
 };
 
+/**
+ * A factory function to construct a `Debugger2Connection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `Debugger2Client` instance, and methods should be
+ * invoked on `Debugger2Client`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `Debugger2Connection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::debugger::Debugger2PolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `Debugger2Connection` created by
+ * this function.
+ */
 std::shared_ptr<Debugger2Connection> MakeDebugger2Connection(
     Options options = {});
 

@@ -46,6 +46,18 @@ using ConnectionServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         apigeeconnect_internal::ConnectionServiceRetryTraits>;
 
+/**
+ * The `ConnectionServiceConnection` object for `ConnectionServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ConnectionServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `ConnectionServiceClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeConnectionServiceConnection()`.
+ *
+ * For mocking, see `apigeeconnect_mocks::MockConnectionServiceConnection`.
+ */
 class ConnectionServiceConnection {
  public:
   virtual ~ConnectionServiceConnection() = 0;
@@ -57,6 +69,28 @@ class ConnectionServiceConnection {
       google::cloud::apigeeconnect::v1::ListConnectionsRequest request);
 };
 
+/**
+ * A factory function to construct a `ConnectionServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ConnectionServiceClient` instance, and methods should
+ * be invoked on `ConnectionServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ConnectionServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::apigeeconnect::ConnectionServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ConnectionServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
     Options options = {});
 

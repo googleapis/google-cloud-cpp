@@ -49,6 +49,18 @@ using BatchControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dataproc_internal::BatchControllerRetryTraits>;
 
+/**
+ * The `BatchControllerConnection` object for `BatchControllerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `BatchControllerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `BatchControllerClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeBatchControllerConnection()`.
+ *
+ * For mocking, see `dataproc_mocks::MockBatchControllerConnection`.
+ */
 class BatchControllerConnection {
  public:
   virtual ~BatchControllerConnection() = 0;
@@ -68,6 +80,28 @@ class BatchControllerConnection {
       google::cloud::dataproc::v1::DeleteBatchRequest const& request);
 };
 
+/**
+ * A factory function to construct a `BatchControllerConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `BatchControllerClient` instance, and methods should be
+ * invoked on `BatchControllerClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `BatchControllerConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dataproc::BatchControllerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `BatchControllerConnection` created
+ * by this function.
+ */
 std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
     Options options = {});
 

@@ -46,6 +46,18 @@ using AlertPolicyServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::AlertPolicyServiceRetryTraits>;
 
+/**
+ * The `AlertPolicyServiceConnection` object for `AlertPolicyServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AlertPolicyServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `AlertPolicyServiceClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeAlertPolicyServiceConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockAlertPolicyServiceConnection`.
+ */
 class AlertPolicyServiceConnection {
  public:
   virtual ~AlertPolicyServiceConnection() = 0;
@@ -68,6 +80,28 @@ class AlertPolicyServiceConnection {
       google::monitoring::v3::UpdateAlertPolicyRequest const& request);
 };
 
+/**
+ * A factory function to construct a `AlertPolicyServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `AlertPolicyServiceClient` instance, and methods should
+ * be invoked on `AlertPolicyServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `AlertPolicyServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::monitoring::AlertPolicyServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `AlertPolicyServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<AlertPolicyServiceConnection> MakeAlertPolicyServiceConnection(
     Options options = {});
 

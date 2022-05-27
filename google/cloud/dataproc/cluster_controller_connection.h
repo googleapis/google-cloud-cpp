@@ -49,6 +49,18 @@ using ClusterControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dataproc_internal::ClusterControllerRetryTraits>;
 
+/**
+ * The `ClusterControllerConnection` object for `ClusterControllerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ClusterControllerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `ClusterControllerClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeClusterControllerConnection()`.
+ *
+ * For mocking, see `dataproc_mocks::MockClusterControllerConnection`.
+ */
 class ClusterControllerConnection {
  public:
   virtual ~ClusterControllerConnection() = 0;
@@ -83,6 +95,28 @@ class ClusterControllerConnection {
       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request);
 };
 
+/**
+ * A factory function to construct a `ClusterControllerConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ClusterControllerClient` instance, and methods should
+ * be invoked on `ClusterControllerClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ClusterControllerConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dataproc::ClusterControllerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ClusterControllerConnection` created
+ * by this function.
+ */
 std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
     Options options = {});
 

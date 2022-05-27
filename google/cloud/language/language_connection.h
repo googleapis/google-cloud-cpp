@@ -45,6 +45,18 @@ using LanguageServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         language_internal::LanguageServiceRetryTraits>;
 
+/**
+ * The `LanguageServiceConnection` object for `LanguageServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `LanguageServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `LanguageServiceClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeLanguageServiceConnection()`.
+ *
+ * For mocking, see `language_mocks::MockLanguageServiceConnection`.
+ */
 class LanguageServiceConnection {
  public:
   virtual ~LanguageServiceConnection() = 0;
@@ -75,6 +87,28 @@ class LanguageServiceConnection {
   AnnotateText(google::cloud::language::v1::AnnotateTextRequest const& request);
 };
 
+/**
+ * A factory function to construct a `LanguageServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `LanguageServiceClient` instance, and methods should be
+ * invoked on `LanguageServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `LanguageServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::language::LanguageServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `LanguageServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<LanguageServiceConnection> MakeLanguageServiceConnection(
     Options options = {});
 

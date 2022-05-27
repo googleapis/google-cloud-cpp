@@ -49,6 +49,19 @@ using CloudFilestoreManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         filestore_internal::CloudFilestoreManagerRetryTraits>;
 
+/**
+ * The `CloudFilestoreManagerConnection` object for
+ * `CloudFilestoreManagerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CloudFilestoreManagerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `CloudFilestoreManagerClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeCloudFilestoreManagerConnection()`.
+ *
+ * For mocking, see `filestore_mocks::MockCloudFilestoreManagerConnection`.
+ */
 class CloudFilestoreManagerConnection {
  public:
   virtual ~CloudFilestoreManagerConnection() = 0;
@@ -94,6 +107,28 @@ class CloudFilestoreManagerConnection {
       google::cloud::filestore::v1::UpdateBackupRequest const& request);
 };
 
+/**
+ * A factory function to construct a `CloudFilestoreManagerConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `CloudFilestoreManagerClient` instance, and methods
+ * should be invoked on `CloudFilestoreManagerClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `CloudFilestoreManagerConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::filestore::CloudFilestoreManagerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `CloudFilestoreManagerConnection`
+ * created by this function.
+ */
 std::shared_ptr<CloudFilestoreManagerConnection>
 MakeCloudFilestoreManagerConnection(Options options = {});
 

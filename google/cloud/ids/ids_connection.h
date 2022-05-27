@@ -48,6 +48,18 @@ using IDSLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         ids_internal::IDSRetryTraits>;
 
+/**
+ * The `IDSConnection` object for `IDSClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IDSClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `IDSClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeIDSConnection()`.
+ *
+ * For mocking, see `ids_mocks::MockIDSConnection`.
+ */
 class IDSConnection {
  public:
   virtual ~IDSConnection() = 0;
@@ -67,6 +79,28 @@ class IDSConnection {
   DeleteEndpoint(google::cloud::ids::v1::DeleteEndpointRequest const& request);
 };
 
+/**
+ * A factory function to construct a `IDSConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `IDSClient` instance, and methods should be
+ * invoked on `IDSClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `IDSConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::ids::IDSPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `IDSConnection` created by
+ * this function.
+ */
 std::shared_ptr<IDSConnection> MakeIDSConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -45,6 +45,18 @@ using SystemPolicyV1LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         binaryauthorization_internal::SystemPolicyV1RetryTraits>;
 
+/**
+ * The `SystemPolicyV1Connection` object for `SystemPolicyV1Client`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `SystemPolicyV1Client`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `SystemPolicyV1Client` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeSystemPolicyV1Connection()`.
+ *
+ * For mocking, see `binaryauthorization_mocks::MockSystemPolicyV1Connection`.
+ */
 class SystemPolicyV1Connection {
  public:
   virtual ~SystemPolicyV1Connection() = 0;
@@ -57,6 +69,28 @@ class SystemPolicyV1Connection {
           request);
 };
 
+/**
+ * A factory function to construct a `SystemPolicyV1Connection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `SystemPolicyV1Client` instance, and methods should be
+ * invoked on `SystemPolicyV1Client`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `SystemPolicyV1Connection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::binaryauthorization::SystemPolicyV1PolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `SystemPolicyV1Connection` created by
+ * this function.
+ */
 std::shared_ptr<SystemPolicyV1Connection> MakeSystemPolicyV1Connection(
     Options options = {});
 

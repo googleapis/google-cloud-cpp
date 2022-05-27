@@ -48,6 +48,18 @@ using PredictionServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         automl_internal::PredictionServiceRetryTraits>;
 
+/**
+ * The `PredictionServiceConnection` object for `PredictionServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `PredictionServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `PredictionServiceClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakePredictionServiceConnection()`.
+ *
+ * For mocking, see `automl_mocks::MockPredictionServiceConnection`.
+ */
 class PredictionServiceConnection {
  public:
   virtual ~PredictionServiceConnection() = 0;
@@ -61,6 +73,28 @@ class PredictionServiceConnection {
   BatchPredict(google::cloud::automl::v1::BatchPredictRequest const& request);
 };
 
+/**
+ * A factory function to construct a `PredictionServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `PredictionServiceClient` instance, and methods should
+ * be invoked on `PredictionServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `PredictionServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::automl::PredictionServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `PredictionServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     Options options = {});
 

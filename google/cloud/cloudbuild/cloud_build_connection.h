@@ -48,6 +48,18 @@ using CloudBuildLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         cloudbuild_internal::CloudBuildRetryTraits>;
 
+/**
+ * The `CloudBuildConnection` object for `CloudBuildClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CloudBuildClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `CloudBuildClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeCloudBuildConnection()`.
+ *
+ * For mocking, see `cloudbuild_mocks::MockCloudBuildConnection`.
+ */
 class CloudBuildConnection {
  public:
   virtual ~CloudBuildConnection() = 0;
@@ -126,6 +138,28 @@ class CloudBuildConnection {
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request);
 };
 
+/**
+ * A factory function to construct a `CloudBuildConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `CloudBuildClient` instance, and methods should be
+ * invoked on `CloudBuildClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `CloudBuildConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::cloudbuild::CloudBuildPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `CloudBuildConnection` created by
+ * this function.
+ */
 std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(
     Options options = {});
 

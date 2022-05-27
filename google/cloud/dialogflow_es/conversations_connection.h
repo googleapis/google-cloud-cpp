@@ -46,6 +46,18 @@ using ConversationsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_es_internal::ConversationsRetryTraits>;
 
+/**
+ * The `ConversationsConnection` object for `ConversationsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ConversationsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `ConversationsClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeConversationsConnection()`.
+ *
+ * For mocking, see `dialogflow_es_mocks::MockConversationsConnection`.
+ */
 class ConversationsConnection {
  public:
   virtual ~ConversationsConnection() = 0;
@@ -72,6 +84,28 @@ class ConversationsConnection {
       google::cloud::dialogflow::v2::ListMessagesRequest request);
 };
 
+/**
+ * A factory function to construct a `ConversationsConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ConversationsClient` instance, and methods should be
+ * invoked on `ConversationsClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ConversationsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_es::ConversationsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ConversationsConnection` created by
+ * this function.
+ */
 std::shared_ptr<ConversationsConnection> MakeConversationsConnection(
     Options options = {});
 

@@ -49,6 +49,18 @@ using ProductSearchLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         vision_internal::ProductSearchRetryTraits>;
 
+/**
+ * The `ProductSearchConnection` object for `ProductSearchClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ProductSearchClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `ProductSearchClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeProductSearchConnection()`.
+ *
+ * For mocking, see `vision_mocks::MockProductSearchConnection`.
+ */
 class ProductSearchConnection {
  public:
   virtual ~ProductSearchConnection() = 0;
@@ -118,6 +130,28 @@ class ProductSearchConnection {
   PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request);
 };
 
+/**
+ * A factory function to construct a `ProductSearchConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ProductSearchClient` instance, and methods should be
+ * invoked on `ProductSearchClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ProductSearchConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::vision::ProductSearchPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ProductSearchConnection` created by
+ * this function.
+ */
 std::shared_ptr<ProductSearchConnection> MakeProductSearchConnection(
     Options options = {});
 

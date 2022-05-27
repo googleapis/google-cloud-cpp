@@ -27,6 +27,21 @@ namespace cloud {
 namespace resourcemanager_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `FoldersConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors from a `FoldersClient`. To do so, construct a
+ * `FoldersClient` with an instance of this class. Then use the Google
+ * Test framework functions to program the behavior of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]:
+ * https://googleapis.dev/cpp/google-cloud-bigquery/latest/bigquery-read-mock.html
+ */
 class MockFoldersConnection : public resourcemanager::FoldersConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));

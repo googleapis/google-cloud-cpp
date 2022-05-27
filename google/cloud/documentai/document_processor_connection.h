@@ -48,6 +48,20 @@ using DocumentProcessorServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         documentai_internal::DocumentProcessorServiceRetryTraits>;
 
+/**
+ * The `DocumentProcessorServiceConnection` object for
+ * `DocumentProcessorServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DocumentProcessorServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a
+ * `DocumentProcessorServiceClient` object for use in their own tests.
+ *
+ * To create a concrete instance, see
+ * `MakeDocumentProcessorServiceConnection()`.
+ *
+ * For mocking, see `documentai_mocks::MockDocumentProcessorServiceConnection`.
+ */
 class DocumentProcessorServiceConnection {
  public:
   virtual ~DocumentProcessorServiceConnection() = 0;
@@ -67,6 +81,29 @@ class DocumentProcessorServiceConnection {
       google::cloud::documentai::v1::ReviewDocumentRequest const& request);
 };
 
+/**
+ * A factory function to construct a `DocumentProcessorServiceConnection`
+ * object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `DocumentProcessorServiceClient` instance, and methods
+ * should be invoked on `DocumentProcessorServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DocumentProcessorServiceConnection`. Expected options are any of
+ * the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::documentai::DocumentProcessorServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `DocumentProcessorServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<DocumentProcessorServiceConnection>
 MakeDocumentProcessorServiceConnection(Options options = {});
 

@@ -46,6 +46,19 @@ using TransitionRouteGroupsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_cx_internal::TransitionRouteGroupsRetryTraits>;
 
+/**
+ * The `TransitionRouteGroupsConnection` object for
+ * `TransitionRouteGroupsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `TransitionRouteGroupsClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `TransitionRouteGroupsClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeTransitionRouteGroupsConnection()`.
+ *
+ * For mocking, see `dialogflow_cx_mocks::MockTransitionRouteGroupsConnection`.
+ */
 class TransitionRouteGroupsConnection {
  public:
   virtual ~TransitionRouteGroupsConnection() = 0;
@@ -77,6 +90,28 @@ class TransitionRouteGroupsConnection {
           DeleteTransitionRouteGroupRequest const& request);
 };
 
+/**
+ * A factory function to construct a `TransitionRouteGroupsConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `TransitionRouteGroupsClient` instance, and methods
+ * should be invoked on `TransitionRouteGroupsClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `TransitionRouteGroupsConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_cx::TransitionRouteGroupsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `TransitionRouteGroupsConnection`
+ * created by this function.
+ */
 std::shared_ptr<TransitionRouteGroupsConnection>
 MakeTransitionRouteGroupsConnection(Options options = {});
 

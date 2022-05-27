@@ -46,6 +46,20 @@ using AutoscalingPolicyServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dataproc_internal::AutoscalingPolicyServiceRetryTraits>;
 
+/**
+ * The `AutoscalingPolicyServiceConnection` object for
+ * `AutoscalingPolicyServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AutoscalingPolicyServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a
+ * `AutoscalingPolicyServiceClient` object for use in their own tests.
+ *
+ * To create a concrete instance, see
+ * `MakeAutoscalingPolicyServiceConnection()`.
+ *
+ * For mocking, see `dataproc_mocks::MockAutoscalingPolicyServiceConnection`.
+ */
 class AutoscalingPolicyServiceConnection {
  public:
   virtual ~AutoscalingPolicyServiceConnection() = 0;
@@ -75,6 +89,29 @@ class AutoscalingPolicyServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct a `AutoscalingPolicyServiceConnection`
+ * object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `AutoscalingPolicyServiceClient` instance, and methods
+ * should be invoked on `AutoscalingPolicyServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `AutoscalingPolicyServiceConnection`. Expected options are any of
+ * the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dataproc::AutoscalingPolicyServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `AutoscalingPolicyServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<AutoscalingPolicyServiceConnection>
 MakeAutoscalingPolicyServiceConnection(Options options = {});
 

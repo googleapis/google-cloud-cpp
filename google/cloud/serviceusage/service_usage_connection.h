@@ -49,6 +49,18 @@ using ServiceUsageLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         serviceusage_internal::ServiceUsageRetryTraits>;
 
+/**
+ * The `ServiceUsageConnection` object for `ServiceUsageClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ServiceUsageClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `ServiceUsageClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeServiceUsageConnection()`.
+ *
+ * For mocking, see `serviceusage_mocks::MockServiceUsageConnection`.
+ */
 class ServiceUsageConnection {
  public:
   virtual ~ServiceUsageConnection() = 0;
@@ -80,6 +92,28 @@ class ServiceUsageConnection {
       google::api::serviceusage::v1::BatchGetServicesRequest const& request);
 };
 
+/**
+ * A factory function to construct a `ServiceUsageConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ServiceUsageClient` instance, and methods should be
+ * invoked on `ServiceUsageClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ServiceUsageConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::serviceusage::ServiceUsagePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ServiceUsageConnection` created by
+ * this function.
+ */
 std::shared_ptr<ServiceUsageConnection> MakeServiceUsageConnection(
     Options options = {});
 

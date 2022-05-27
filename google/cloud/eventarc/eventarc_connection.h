@@ -48,6 +48,18 @@ using EventarcLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         eventarc_internal::EventarcRetryTraits>;
 
+/**
+ * The `EventarcConnection` object for `EventarcClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `EventarcClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `EventarcClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeEventarcConnection()`.
+ *
+ * For mocking, see `eventarc_mocks::MockEventarcConnection`.
+ */
 class EventarcConnection {
  public:
   virtual ~EventarcConnection() = 0;
@@ -109,6 +121,28 @@ class EventarcConnection {
           request);
 };
 
+/**
+ * A factory function to construct a `EventarcConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `EventarcClient` instance, and methods should be
+ * invoked on `EventarcClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `EventarcConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::eventarc::EventarcPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `EventarcConnection` created by
+ * this function.
+ */
 std::shared_ptr<EventarcConnection> MakeEventarcConnection(
     Options options = {});
 

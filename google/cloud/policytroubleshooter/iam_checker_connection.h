@@ -44,6 +44,18 @@ using IamCheckerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         policytroubleshooter_internal::IamCheckerRetryTraits>;
 
+/**
+ * The `IamCheckerConnection` object for `IamCheckerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IamCheckerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `IamCheckerClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeIamCheckerConnection()`.
+ *
+ * For mocking, see `policytroubleshooter_mocks::MockIamCheckerConnection`.
+ */
 class IamCheckerConnection {
  public:
   virtual ~IamCheckerConnection() = 0;
@@ -56,6 +68,28 @@ class IamCheckerConnection {
                             TroubleshootIamPolicyRequest const& request);
 };
 
+/**
+ * A factory function to construct a `IamCheckerConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `IamCheckerClient` instance, and methods should be
+ * invoked on `IamCheckerClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `IamCheckerConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::policytroubleshooter::IamCheckerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `IamCheckerConnection` created by
+ * this function.
+ */
 std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
     Options options = {});
 

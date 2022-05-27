@@ -49,6 +49,18 @@ using ArtifactRegistryLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         artifactregistry_internal::ArtifactRegistryRetryTraits>;
 
+/**
+ * The `ArtifactRegistryConnection` object for `ArtifactRegistryClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ArtifactRegistryClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `ArtifactRegistryClient` object for
+ * use in their own tests.
+ *
+ * To create a concrete instance, see `MakeArtifactRegistryConnection()`.
+ *
+ * For mocking, see `artifactregistry_mocks::MockArtifactRegistryConnection`.
+ */
 class ArtifactRegistryConnection {
  public:
   virtual ~ArtifactRegistryConnection() = 0;
@@ -167,6 +179,28 @@ class ArtifactRegistryConnection {
                             UpdateProjectSettingsRequest const& request);
 };
 
+/**
+ * A factory function to construct a `ArtifactRegistryConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ArtifactRegistryClient` instance, and methods should be
+ * invoked on `ArtifactRegistryClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ArtifactRegistryConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::artifactregistry::ArtifactRegistryPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ArtifactRegistryConnection` created
+ * by this function.
+ */
 std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
     Options options = {});
 

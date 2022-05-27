@@ -46,6 +46,19 @@ using WebSecurityScannerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         websecurityscanner_internal::WebSecurityScannerRetryTraits>;
 
+/**
+ * The `WebSecurityScannerConnection` object for `WebSecurityScannerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `WebSecurityScannerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `WebSecurityScannerClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeWebSecurityScannerConnection()`.
+ *
+ * For mocking, see
+ * `websecurityscanner_mocks::MockWebSecurityScannerConnection`.
+ */
 class WebSecurityScannerConnection {
  public:
   virtual ~WebSecurityScannerConnection() = 0;
@@ -107,6 +120,28 @@ class WebSecurityScannerConnection {
           request);
 };
 
+/**
+ * A factory function to construct a `WebSecurityScannerConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `WebSecurityScannerClient` instance, and methods should
+ * be invoked on `WebSecurityScannerClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `WebSecurityScannerConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::websecurityscanner::WebSecurityScannerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `WebSecurityScannerConnection`
+ * created by this function.
+ */
 std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
     Options options = {});
 

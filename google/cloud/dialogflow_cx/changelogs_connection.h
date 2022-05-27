@@ -45,6 +45,18 @@ using ChangelogsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_cx_internal::ChangelogsRetryTraits>;
 
+/**
+ * The `ChangelogsConnection` object for `ChangelogsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ChangelogsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `ChangelogsClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeChangelogsConnection()`.
+ *
+ * For mocking, see `dialogflow_cx_mocks::MockChangelogsConnection`.
+ */
 class ChangelogsConnection {
  public:
   virtual ~ChangelogsConnection() = 0;
@@ -59,6 +71,28 @@ class ChangelogsConnection {
       google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request);
 };
 
+/**
+ * A factory function to construct a `ChangelogsConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ChangelogsClient` instance, and methods should be
+ * invoked on `ChangelogsClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ChangelogsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_cx::ChangelogsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ChangelogsConnection` created by
+ * this function.
+ */
 std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
     Options options = {});
 

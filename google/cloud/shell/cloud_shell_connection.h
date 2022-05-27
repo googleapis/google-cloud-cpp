@@ -48,6 +48,18 @@ using CloudShellServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         shell_internal::CloudShellServiceRetryTraits>;
 
+/**
+ * The `CloudShellServiceConnection` object for `CloudShellServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CloudShellServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `CloudShellServiceClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeCloudShellServiceConnection()`.
+ *
+ * For mocking, see `shell_mocks::MockCloudShellServiceConnection`.
+ */
 class CloudShellServiceConnection {
  public:
   virtual ~CloudShellServiceConnection() = 0;
@@ -74,6 +86,28 @@ class CloudShellServiceConnection {
       google::cloud::shell::v1::RemovePublicKeyRequest const& request);
 };
 
+/**
+ * A factory function to construct a `CloudShellServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `CloudShellServiceClient` instance, and methods should
+ * be invoked on `CloudShellServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `CloudShellServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::shell::CloudShellServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `CloudShellServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<CloudShellServiceConnection> MakeCloudShellServiceConnection(
     Options options = {});
 

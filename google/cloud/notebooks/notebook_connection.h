@@ -49,6 +49,18 @@ using NotebookServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         notebooks_internal::NotebookServiceRetryTraits>;
 
+/**
+ * The `NotebookServiceConnection` object for `NotebookServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `NotebookServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `NotebookServiceClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeNotebookServiceConnection()`.
+ *
+ * For mocking, see `notebooks_mocks::MockNotebookServiceConnection`.
+ */
 class NotebookServiceConnection {
  public:
   virtual ~NotebookServiceConnection() = 0;
@@ -187,6 +199,28 @@ class NotebookServiceConnection {
       google::cloud::notebooks::v1::CreateExecutionRequest const& request);
 };
 
+/**
+ * A factory function to construct a `NotebookServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `NotebookServiceClient` instance, and methods should be
+ * invoked on `NotebookServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `NotebookServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::notebooks::NotebookServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `NotebookServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<NotebookServiceConnection> MakeNotebookServiceConnection(
     Options options = {});
 

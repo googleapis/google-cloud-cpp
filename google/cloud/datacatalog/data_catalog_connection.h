@@ -45,6 +45,18 @@ using DataCatalogLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         datacatalog_internal::DataCatalogRetryTraits>;
 
+/**
+ * The `DataCatalogConnection` object for `DataCatalogClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DataCatalogClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `DataCatalogClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeDataCatalogConnection()`.
+ *
+ * For mocking, see `datacatalog_mocks::MockDataCatalogConnection`.
+ */
 class DataCatalogConnection {
  public:
   virtual ~DataCatalogConnection() = 0;
@@ -165,6 +177,28 @@ class DataCatalogConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct a `DataCatalogConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `DataCatalogClient` instance, and methods should be
+ * invoked on `DataCatalogClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DataCatalogConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::datacatalog::DataCatalogPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `DataCatalogConnection` created by
+ * this function.
+ */
 std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
     Options options = {});
 

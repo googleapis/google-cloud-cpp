@@ -49,6 +49,18 @@ using BareMetalSolutionLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         baremetalsolution_internal::BareMetalSolutionRetryTraits>;
 
+/**
+ * The `BareMetalSolutionConnection` object for `BareMetalSolutionClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `BareMetalSolutionClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `BareMetalSolutionClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeBareMetalSolutionConnection()`.
+ *
+ * For mocking, see `baremetalsolution_mocks::MockBareMetalSolutionConnection`.
+ */
 class BareMetalSolutionConnection {
  public:
   virtual ~BareMetalSolutionConnection() = 0;
@@ -140,6 +152,28 @@ class BareMetalSolutionConnection {
       google::cloud::baremetalsolution::v2::ListLunsRequest request);
 };
 
+/**
+ * A factory function to construct a `BareMetalSolutionConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `BareMetalSolutionClient` instance, and methods should
+ * be invoked on `BareMetalSolutionClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `BareMetalSolutionConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::baremetalsolution::BareMetalSolutionPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `BareMetalSolutionConnection` created
+ * by this function.
+ */
 std::shared_ptr<BareMetalSolutionConnection> MakeBareMetalSolutionConnection(
     Options options = {});
 

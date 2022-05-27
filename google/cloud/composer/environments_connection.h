@@ -49,6 +49,18 @@ using EnvironmentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         composer_internal::EnvironmentsRetryTraits>;
 
+/**
+ * The `EnvironmentsConnection` object for `EnvironmentsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `EnvironmentsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `EnvironmentsClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeEnvironmentsConnection()`.
+ *
+ * For mocking, see `composer_mocks::MockEnvironmentsConnection`.
+ */
 class EnvironmentsConnection {
  public:
   virtual ~EnvironmentsConnection() = 0;
@@ -81,6 +93,28 @@ class EnvironmentsConnection {
                         DeleteEnvironmentRequest const& request);
 };
 
+/**
+ * A factory function to construct a `EnvironmentsConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `EnvironmentsClient` instance, and methods should be
+ * invoked on `EnvironmentsClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `EnvironmentsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::composer::EnvironmentsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `EnvironmentsConnection` created by
+ * this function.
+ */
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
     Options options = {});
 

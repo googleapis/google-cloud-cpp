@@ -45,6 +45,18 @@ using RecommenderLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         recommender_internal::RecommenderRetryTraits>;
 
+/**
+ * The `RecommenderConnection` object for `RecommenderClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `RecommenderClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `RecommenderClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeRecommenderConnection()`.
+ *
+ * For mocking, see `recommender_mocks::MockRecommenderConnection`.
+ */
 class RecommenderConnection {
  public:
   virtual ~RecommenderConnection() = 0;
@@ -85,6 +97,28 @@ class RecommenderConnection {
           request);
 };
 
+/**
+ * A factory function to construct a `RecommenderConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `RecommenderClient` instance, and methods should be
+ * invoked on `RecommenderClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `RecommenderConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::recommender::RecommenderPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `RecommenderConnection` created by
+ * this function.
+ */
 std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
     Options options = {});
 

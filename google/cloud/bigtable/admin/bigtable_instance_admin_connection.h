@@ -49,6 +49,19 @@ using BigtableInstanceAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigtable_admin_internal::BigtableInstanceAdminRetryTraits>;
 
+/**
+ * The `BigtableInstanceAdminConnection` object for
+ * `BigtableInstanceAdminClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `BigtableInstanceAdminClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `BigtableInstanceAdminClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeBigtableInstanceAdminConnection()`.
+ *
+ * For mocking, see `bigtable_admin_mocks::MockBigtableInstanceAdminConnection`.
+ */
 class BigtableInstanceAdminConnection {
  public:
   virtual ~BigtableInstanceAdminConnection() = 0;
@@ -124,6 +137,28 @@ class BigtableInstanceAdminConnection {
       google::bigtable::admin::v2::ListHotTabletsRequest request);
 };
 
+/**
+ * A factory function to construct a `BigtableInstanceAdminConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `BigtableInstanceAdminClient` instance, and methods
+ * should be invoked on `BigtableInstanceAdminClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `BigtableInstanceAdminConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::bigtable_admin::BigtableInstanceAdminPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `BigtableInstanceAdminConnection`
+ * created by this function.
+ */
 std::shared_ptr<BigtableInstanceAdminConnection>
 MakeBigtableInstanceAdminConnection(Options options = {});
 

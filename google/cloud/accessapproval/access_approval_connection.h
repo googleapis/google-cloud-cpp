@@ -46,6 +46,18 @@ using AccessApprovalLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         accessapproval_internal::AccessApprovalRetryTraits>;
 
+/**
+ * The `AccessApprovalConnection` object for `AccessApprovalClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AccessApprovalClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `AccessApprovalClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeAccessApprovalConnection()`.
+ *
+ * For mocking, see `accessapproval_mocks::MockAccessApprovalConnection`.
+ */
 class AccessApprovalConnection {
  public:
   virtual ~AccessApprovalConnection() = 0;
@@ -97,6 +109,28 @@ class AccessApprovalConnection {
           GetAccessApprovalServiceAccountMessage const& request);
 };
 
+/**
+ * A factory function to construct a `AccessApprovalConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `AccessApprovalClient` instance, and methods should be
+ * invoked on `AccessApprovalClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `AccessApprovalConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::accessapproval::AccessApprovalPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `AccessApprovalConnection` created by
+ * this function.
+ */
 std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
     Options options = {});
 

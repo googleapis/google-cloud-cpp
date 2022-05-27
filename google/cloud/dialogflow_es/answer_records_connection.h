@@ -46,6 +46,18 @@ using AnswerRecordsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_es_internal::AnswerRecordsRetryTraits>;
 
+/**
+ * The `AnswerRecordsConnection` object for `AnswerRecordsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AnswerRecordsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `AnswerRecordsClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeAnswerRecordsConnection()`.
+ *
+ * For mocking, see `dialogflow_es_mocks::MockAnswerRecordsConnection`.
+ */
 class AnswerRecordsConnection {
  public:
   virtual ~AnswerRecordsConnection() = 0;
@@ -61,6 +73,28 @@ class AnswerRecordsConnection {
       google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request);
 };
 
+/**
+ * A factory function to construct a `AnswerRecordsConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `AnswerRecordsClient` instance, and methods should be
+ * invoked on `AnswerRecordsClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `AnswerRecordsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_es::AnswerRecordsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `AnswerRecordsConnection` created by
+ * this function.
+ */
 std::shared_ptr<AnswerRecordsConnection> MakeAnswerRecordsConnection(
     Options options = {});
 

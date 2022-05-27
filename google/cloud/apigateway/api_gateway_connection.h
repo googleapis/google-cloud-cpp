@@ -49,6 +49,18 @@ using ApiGatewayServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         apigateway_internal::ApiGatewayServiceRetryTraits>;
 
+/**
+ * The `ApiGatewayServiceConnection` object for `ApiGatewayServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ApiGatewayServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `ApiGatewayServiceClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeApiGatewayServiceConnection()`.
+ *
+ * For mocking, see `apigateway_mocks::MockApiGatewayServiceConnection`.
+ */
 class ApiGatewayServiceConnection {
  public:
   virtual ~ApiGatewayServiceConnection() = 0;
@@ -107,6 +119,28 @@ class ApiGatewayServiceConnection {
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request);
 };
 
+/**
+ * A factory function to construct a `ApiGatewayServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ApiGatewayServiceClient` instance, and methods should
+ * be invoked on `ApiGatewayServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ApiGatewayServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::apigateway::ApiGatewayServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ApiGatewayServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<ApiGatewayServiceConnection> MakeApiGatewayServiceConnection(
     Options options = {});
 

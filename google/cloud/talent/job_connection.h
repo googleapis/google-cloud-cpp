@@ -48,6 +48,18 @@ using JobServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         talent_internal::JobServiceRetryTraits>;
 
+/**
+ * The `JobServiceConnection` object for `JobServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `JobServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `JobServiceClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeJobServiceConnection()`.
+ *
+ * For mocking, see `talent_mocks::MockJobServiceConnection`.
+ */
 class JobServiceConnection {
  public:
   virtual ~JobServiceConnection() = 0;
@@ -89,6 +101,28 @@ class JobServiceConnection {
       google::cloud::talent::v4::SearchJobsRequest const& request);
 };
 
+/**
+ * A factory function to construct a `JobServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `JobServiceClient` instance, and methods should be
+ * invoked on `JobServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `JobServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::talent::JobServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `JobServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<JobServiceConnection> MakeJobServiceConnection(
     Options options = {});
 

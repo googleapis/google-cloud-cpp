@@ -45,6 +45,18 @@ using WebRiskServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         webrisk_internal::WebRiskServiceRetryTraits>;
 
+/**
+ * The `WebRiskServiceConnection` object for `WebRiskServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `WebRiskServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `WebRiskServiceClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeWebRiskServiceConnection()`.
+ *
+ * For mocking, see `webrisk_mocks::MockWebRiskServiceConnection`.
+ */
 class WebRiskServiceConnection {
  public:
   virtual ~WebRiskServiceConnection() = 0;
@@ -65,6 +77,28 @@ class WebRiskServiceConnection {
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request);
 };
 
+/**
+ * A factory function to construct a `WebRiskServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `WebRiskServiceClient` instance, and methods should be
+ * invoked on `WebRiskServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `WebRiskServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::webrisk::WebRiskServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `WebRiskServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
     Options options = {});
 

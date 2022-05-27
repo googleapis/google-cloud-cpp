@@ -46,6 +46,18 @@ using DataTransferServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigquery_internal::DataTransferServiceRetryTraits>;
 
+/**
+ * The `DataTransferServiceConnection` object for `DataTransferServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DataTransferServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `DataTransferServiceClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeDataTransferServiceConnection()`.
+ *
+ * For mocking, see `bigquery_mocks::MockDataTransferServiceConnection`.
+ */
 class DataTransferServiceConnection {
  public:
   virtual ~DataTransferServiceConnection() = 0;
@@ -125,6 +137,28 @@ class DataTransferServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct a `DataTransferServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `DataTransferServiceClient` instance, and methods should
+ * be invoked on `DataTransferServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DataTransferServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::bigquery::DataTransferServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `DataTransferServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<DataTransferServiceConnection>
 MakeDataTransferServiceConnection(Options options = {});
 

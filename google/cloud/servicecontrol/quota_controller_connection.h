@@ -45,6 +45,18 @@ using QuotaControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         servicecontrol_internal::QuotaControllerRetryTraits>;
 
+/**
+ * The `QuotaControllerConnection` object for `QuotaControllerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `QuotaControllerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `QuotaControllerClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeQuotaControllerConnection()`.
+ *
+ * For mocking, see `servicecontrol_mocks::MockQuotaControllerConnection`.
+ */
 class QuotaControllerConnection {
  public:
   virtual ~QuotaControllerConnection() = 0;
@@ -56,6 +68,28 @@ class QuotaControllerConnection {
       google::api::servicecontrol::v1::AllocateQuotaRequest const& request);
 };
 
+/**
+ * A factory function to construct a `QuotaControllerConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `QuotaControllerClient` instance, and methods should be
+ * invoked on `QuotaControllerClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `QuotaControllerConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::servicecontrol::QuotaControllerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `QuotaControllerConnection` created
+ * by this function.
+ */
 std::shared_ptr<QuotaControllerConnection> MakeQuotaControllerConnection(
     Options options = {});
 

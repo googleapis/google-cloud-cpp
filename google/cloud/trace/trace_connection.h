@@ -45,6 +45,18 @@ using TraceServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         trace_internal::TraceServiceRetryTraits>;
 
+/**
+ * The `TraceServiceConnection` object for `TraceServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `TraceServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `TraceServiceClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeTraceServiceConnection()`.
+ *
+ * For mocking, see `trace_mocks::MockTraceServiceConnection`.
+ */
 class TraceServiceConnection {
  public:
   virtual ~TraceServiceConnection() = 0;
@@ -58,6 +70,28 @@ class TraceServiceConnection {
       google::devtools::cloudtrace::v2::Span const& request);
 };
 
+/**
+ * A factory function to construct a `TraceServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `TraceServiceClient` instance, and methods should be
+ * invoked on `TraceServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `TraceServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::trace::TraceServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `TraceServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<TraceServiceConnection> MakeTraceServiceConnection(
     Options options = {});
 

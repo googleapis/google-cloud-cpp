@@ -45,6 +45,18 @@ using ContainerAnalysisLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         containeranalysis_internal::ContainerAnalysisRetryTraits>;
 
+/**
+ * The `ContainerAnalysisConnection` object for `ContainerAnalysisClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ContainerAnalysisClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `ContainerAnalysisClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeContainerAnalysisConnection()`.
+ *
+ * For mocking, see `containeranalysis_mocks::MockContainerAnalysisConnection`.
+ */
 class ContainerAnalysisConnection {
  public:
   virtual ~ContainerAnalysisConnection() = 0;
@@ -67,6 +79,28 @@ class ContainerAnalysisConnection {
           GetVulnerabilityOccurrencesSummaryRequest const& request);
 };
 
+/**
+ * A factory function to construct a `ContainerAnalysisConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ContainerAnalysisClient` instance, and methods should
+ * be invoked on `ContainerAnalysisClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ContainerAnalysisConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::containeranalysis::ContainerAnalysisPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ContainerAnalysisConnection` created
+ * by this function.
+ */
 std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
     Options options = {});
 

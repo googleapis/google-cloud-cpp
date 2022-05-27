@@ -48,6 +48,18 @@ using UserEventServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         retail_internal::UserEventServiceRetryTraits>;
 
+/**
+ * The `UserEventServiceConnection` object for `UserEventServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `UserEventServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `UserEventServiceClient` object for
+ * use in their own tests.
+ *
+ * To create a concrete instance, see `MakeUserEventServiceConnection()`.
+ *
+ * For mocking, see `retail_mocks::MockUserEventServiceConnection`.
+ */
 class UserEventServiceConnection {
  public:
   virtual ~UserEventServiceConnection() = 0;
@@ -73,6 +85,28 @@ class UserEventServiceConnection {
       google::cloud::retail::v2::RejoinUserEventsRequest const& request);
 };
 
+/**
+ * A factory function to construct a `UserEventServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `UserEventServiceClient` instance, and methods should be
+ * invoked on `UserEventServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `UserEventServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::retail::UserEventServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `UserEventServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
     Options options = {});
 

@@ -46,6 +46,20 @@ using IdentityAwareProxyOAuthServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         iap_internal::IdentityAwareProxyOAuthServiceRetryTraits>;
 
+/**
+ * The `IdentityAwareProxyOAuthServiceConnection` object for
+ * `IdentityAwareProxyOAuthServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IdentityAwareProxyOAuthServiceClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) in a
+ * `IdentityAwareProxyOAuthServiceClient` object for use in their own tests.
+ *
+ * To create a concrete instance, see
+ * `MakeIdentityAwareProxyOAuthServiceConnection()`.
+ *
+ * For mocking, see `iap_mocks::MockIdentityAwareProxyOAuthServiceConnection`.
+ */
 class IdentityAwareProxyOAuthServiceConnection {
  public:
   virtual ~IdentityAwareProxyOAuthServiceConnection() = 0;
@@ -85,6 +99,29 @@ class IdentityAwareProxyOAuthServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct a `IdentityAwareProxyOAuthServiceConnection`
+ * object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `IdentityAwareProxyOAuthServiceClient` instance, and
+ * methods should be invoked on `IdentityAwareProxyOAuthServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `IdentityAwareProxyOAuthServiceConnection`. Expected options are any
+ * of the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::iap::IdentityAwareProxyOAuthServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the
+ * `IdentityAwareProxyOAuthServiceConnection` created by this function.
+ */
 std::shared_ptr<IdentityAwareProxyOAuthServiceConnection>
 MakeIdentityAwareProxyOAuthServiceConnection(Options options = {});
 

@@ -49,6 +49,19 @@ using ManagedNotebookServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         notebooks_internal::ManagedNotebookServiceRetryTraits>;
 
+/**
+ * The `ManagedNotebookServiceConnection` object for
+ * `ManagedNotebookServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ManagedNotebookServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a
+ * `ManagedNotebookServiceClient` object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeManagedNotebookServiceConnection()`.
+ *
+ * For mocking, see `notebooks_mocks::MockManagedNotebookServiceConnection`.
+ */
 class ManagedNotebookServiceConnection {
  public:
   virtual ~ManagedNotebookServiceConnection() = 0;
@@ -91,6 +104,28 @@ class ManagedNotebookServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct a `ManagedNotebookServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ManagedNotebookServiceClient` instance, and methods
+ * should be invoked on `ManagedNotebookServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ManagedNotebookServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::notebooks::ManagedNotebookServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ManagedNotebookServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<ManagedNotebookServiceConnection>
 MakeManagedNotebookServiceConnection(Options options = {});
 

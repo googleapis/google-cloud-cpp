@@ -46,6 +46,20 @@ using ResourceSettingsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         resourcesettings_internal::ResourceSettingsServiceRetryTraits>;
 
+/**
+ * The `ResourceSettingsServiceConnection` object for
+ * `ResourceSettingsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ResourceSettingsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a
+ * `ResourceSettingsServiceClient` object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeResourceSettingsServiceConnection()`.
+ *
+ * For mocking, see
+ * `resourcesettings_mocks::MockResourceSettingsServiceConnection`.
+ */
 class ResourceSettingsServiceConnection {
  public:
   virtual ~ResourceSettingsServiceConnection() = 0;
@@ -63,6 +77,28 @@ class ResourceSettingsServiceConnection {
       google::cloud::resourcesettings::v1::UpdateSettingRequest const& request);
 };
 
+/**
+ * A factory function to construct a `ResourceSettingsServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ResourceSettingsServiceClient` instance, and methods
+ * should be invoked on `ResourceSettingsServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ResourceSettingsServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::resourcesettings::ResourceSettingsServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ResourceSettingsServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<ResourceSettingsServiceConnection>
 MakeResourceSettingsServiceConnection(Options options = {});
 

@@ -46,6 +46,18 @@ using GroupServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::GroupServiceRetryTraits>;
 
+/**
+ * The `GroupServiceConnection` object for `GroupServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `GroupServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `GroupServiceClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeGroupServiceConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockGroupServiceConnection`.
+ */
 class GroupServiceConnection {
  public:
   virtual ~GroupServiceConnection() = 0;
@@ -71,6 +83,28 @@ class GroupServiceConnection {
       google::monitoring::v3::ListGroupMembersRequest request);
 };
 
+/**
+ * A factory function to construct a `GroupServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `GroupServiceClient` instance, and methods should be
+ * invoked on `GroupServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `GroupServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::monitoring::GroupServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `GroupServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<GroupServiceConnection> MakeGroupServiceConnection(
     Options options = {});
 

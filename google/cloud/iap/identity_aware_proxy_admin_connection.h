@@ -46,6 +46,20 @@ using IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         iap_internal::IdentityAwareProxyAdminServiceRetryTraits>;
 
+/**
+ * The `IdentityAwareProxyAdminServiceConnection` object for
+ * `IdentityAwareProxyAdminServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IdentityAwareProxyAdminServiceClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) in a
+ * `IdentityAwareProxyAdminServiceClient` object for use in their own tests.
+ *
+ * To create a concrete instance, see
+ * `MakeIdentityAwareProxyAdminServiceConnection()`.
+ *
+ * For mocking, see `iap_mocks::MockIdentityAwareProxyAdminServiceConnection`.
+ */
 class IdentityAwareProxyAdminServiceConnection {
  public:
   virtual ~IdentityAwareProxyAdminServiceConnection() = 0;
@@ -86,6 +100,29 @@ class IdentityAwareProxyAdminServiceConnection {
       google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request);
 };
 
+/**
+ * A factory function to construct a `IdentityAwareProxyAdminServiceConnection`
+ * object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `IdentityAwareProxyAdminServiceClient` instance, and
+ * methods should be invoked on `IdentityAwareProxyAdminServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `IdentityAwareProxyAdminServiceConnection`. Expected options are any
+ * of the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::iap::IdentityAwareProxyAdminServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the
+ * `IdentityAwareProxyAdminServiceConnection` created by this function.
+ */
 std::shared_ptr<IdentityAwareProxyAdminServiceConnection>
 MakeIdentityAwareProxyAdminServiceConnection(Options options = {});
 

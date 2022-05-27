@@ -27,6 +27,21 @@ namespace cloud {
 namespace ids_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `IDSConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors from a `IDSClient`. To do so, construct a
+ * `IDSClient` with an instance of this class. Then use the Google
+ * Test framework functions to program the behavior of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]:
+ * https://googleapis.dev/cpp/google-cloud-bigquery/latest/bigquery-read-mock.html
+ */
 class MockIDSConnection : public ids::IDSConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));

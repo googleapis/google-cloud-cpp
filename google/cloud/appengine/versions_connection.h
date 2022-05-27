@@ -48,6 +48,18 @@ using VersionsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         appengine_internal::VersionsRetryTraits>;
 
+/**
+ * The `VersionsConnection` object for `VersionsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `VersionsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `VersionsClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeVersionsConnection()`.
+ *
+ * For mocking, see `appengine_mocks::MockVersionsConnection`.
+ */
 class VersionsConnection {
  public:
   virtual ~VersionsConnection() = 0;
@@ -70,6 +82,28 @@ class VersionsConnection {
   DeleteVersion(google::appengine::v1::DeleteVersionRequest const& request);
 };
 
+/**
+ * A factory function to construct a `VersionsConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `VersionsClient` instance, and methods should be
+ * invoked on `VersionsClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `VersionsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::appengine::VersionsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `VersionsConnection` created by
+ * this function.
+ */
 std::shared_ptr<VersionsConnection> MakeVersionsConnection(
     Options options = {});
 

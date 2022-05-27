@@ -44,6 +44,18 @@ using IAMPolicyLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         iam_internal::IAMPolicyRetryTraits>;
 
+/**
+ * The `IAMPolicyConnection` object for `IAMPolicyClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IAMPolicyClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `IAMPolicyClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeIAMPolicyConnection()`.
+ *
+ * For mocking, see `iam_mocks::MockIAMPolicyConnection`.
+ */
 class IAMPolicyConnection {
  public:
   virtual ~IAMPolicyConnection() = 0;
@@ -60,6 +72,28 @@ class IAMPolicyConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct a `IAMPolicyConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `IAMPolicyClient` instance, and methods should be
+ * invoked on `IAMPolicyClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `IAMPolicyConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::iam::IAMPolicyPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `IAMPolicyConnection` created by
+ * this function.
+ */
 std::shared_ptr<IAMPolicyConnection> MakeIAMPolicyConnection(
     Options options = {});
 

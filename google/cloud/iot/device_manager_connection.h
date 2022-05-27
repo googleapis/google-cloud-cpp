@@ -46,6 +46,18 @@ using DeviceManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         iot_internal::DeviceManagerRetryTraits>;
 
+/**
+ * The `DeviceManagerConnection` object for `DeviceManagerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DeviceManagerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `DeviceManagerClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeDeviceManagerConnection()`.
+ *
+ * For mocking, see `iot_mocks::MockDeviceManagerConnection`.
+ */
 class DeviceManagerConnection {
  public:
   virtual ~DeviceManagerConnection() = 0;
@@ -117,6 +129,28 @@ class DeviceManagerConnection {
       google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request);
 };
 
+/**
+ * A factory function to construct a `DeviceManagerConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `DeviceManagerClient` instance, and methods should be
+ * invoked on `DeviceManagerClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DeviceManagerConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::iot::DeviceManagerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `DeviceManagerConnection` created by
+ * this function.
+ */
 std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
     Options options = {});
 

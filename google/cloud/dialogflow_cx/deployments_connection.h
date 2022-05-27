@@ -45,6 +45,18 @@ using DeploymentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_cx_internal::DeploymentsRetryTraits>;
 
+/**
+ * The `DeploymentsConnection` object for `DeploymentsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DeploymentsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `DeploymentsClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeDeploymentsConnection()`.
+ *
+ * For mocking, see `dialogflow_cx_mocks::MockDeploymentsConnection`.
+ */
 class DeploymentsConnection {
  public:
   virtual ~DeploymentsConnection() = 0;
@@ -59,6 +71,28 @@ class DeploymentsConnection {
       google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request);
 };
 
+/**
+ * A factory function to construct a `DeploymentsConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `DeploymentsClient` instance, and methods should be
+ * invoked on `DeploymentsClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DeploymentsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_cx::DeploymentsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `DeploymentsConnection` created by
+ * this function.
+ */
 std::shared_ptr<DeploymentsConnection> MakeDeploymentsConnection(
     Options options = {});
 

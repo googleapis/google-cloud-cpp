@@ -45,6 +45,18 @@ using TextToSpeechLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         texttospeech_internal::TextToSpeechRetryTraits>;
 
+/**
+ * The `TextToSpeechConnection` object for `TextToSpeechClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `TextToSpeechClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `TextToSpeechClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeTextToSpeechConnection()`.
+ *
+ * For mocking, see `texttospeech_mocks::MockTextToSpeechConnection`.
+ */
 class TextToSpeechConnection {
  public:
   virtual ~TextToSpeechConnection() = 0;
@@ -59,6 +71,28 @@ class TextToSpeechConnection {
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request);
 };
 
+/**
+ * A factory function to construct a `TextToSpeechConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `TextToSpeechClient` instance, and methods should be
+ * invoked on `TextToSpeechClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `TextToSpeechConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::texttospeech::TextToSpeechPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `TextToSpeechConnection` created by
+ * this function.
+ */
 std::shared_ptr<TextToSpeechConnection> MakeTextToSpeechConnection(
     Options options = {});
 

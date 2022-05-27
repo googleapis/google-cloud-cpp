@@ -45,6 +45,19 @@ using ValidationHelperV1LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         binaryauthorization_internal::ValidationHelperV1RetryTraits>;
 
+/**
+ * The `ValidationHelperV1Connection` object for `ValidationHelperV1Client`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ValidationHelperV1Client`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `ValidationHelperV1Client`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeValidationHelperV1Connection()`.
+ *
+ * For mocking, see
+ * `binaryauthorization_mocks::MockValidationHelperV1Connection`.
+ */
 class ValidationHelperV1Connection {
  public:
   virtual ~ValidationHelperV1Connection() = 0;
@@ -58,6 +71,28 @@ class ValidationHelperV1Connection {
           ValidateAttestationOccurrenceRequest const& request);
 };
 
+/**
+ * A factory function to construct a `ValidationHelperV1Connection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ValidationHelperV1Client` instance, and methods should
+ * be invoked on `ValidationHelperV1Client`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ValidationHelperV1Connection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::binaryauthorization::ValidationHelperV1PolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ValidationHelperV1Connection`
+ * created by this function.
+ */
 std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
     Options options = {});
 

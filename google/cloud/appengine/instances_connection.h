@@ -48,6 +48,18 @@ using InstancesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         appengine_internal::InstancesRetryTraits>;
 
+/**
+ * The `InstancesConnection` object for `InstancesClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `InstancesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `InstancesClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeInstancesConnection()`.
+ *
+ * For mocking, see `appengine_mocks::MockInstancesConnection`.
+ */
 class InstancesConnection {
  public:
   virtual ~InstancesConnection() = 0;
@@ -67,6 +79,28 @@ class InstancesConnection {
       google::appengine::v1::DebugInstanceRequest const& request);
 };
 
+/**
+ * A factory function to construct a `InstancesConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `InstancesClient` instance, and methods should be
+ * invoked on `InstancesClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `InstancesConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::appengine::InstancesPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `InstancesConnection` created by
+ * this function.
+ */
 std::shared_ptr<InstancesConnection> MakeInstancesConnection(
     Options options = {});
 

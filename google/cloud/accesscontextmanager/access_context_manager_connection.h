@@ -49,6 +49,19 @@ using AccessContextManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         accesscontextmanager_internal::AccessContextManagerRetryTraits>;
 
+/**
+ * The `AccessContextManagerConnection` object for `AccessContextManagerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AccessContextManagerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `AccessContextManagerClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeAccessContextManagerConnection()`.
+ *
+ * For mocking, see
+ * `accesscontextmanager_mocks::MockAccessContextManagerConnection`.
+ */
 class AccessContextManagerConnection {
  public:
   virtual ~AccessContextManagerConnection() = 0;
@@ -174,6 +187,28 @@ class AccessContextManagerConnection {
           DeleteGcpUserAccessBindingRequest const& request);
 };
 
+/**
+ * A factory function to construct a `AccessContextManagerConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `AccessContextManagerClient` instance, and methods
+ * should be invoked on `AccessContextManagerClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `AccessContextManagerConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::accesscontextmanager::AccessContextManagerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `AccessContextManagerConnection`
+ * created by this function.
+ */
 std::shared_ptr<AccessContextManagerConnection>
 MakeAccessContextManagerConnection(Options options = {});
 

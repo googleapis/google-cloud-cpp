@@ -48,6 +48,18 @@ using ServicesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         appengine_internal::ServicesRetryTraits>;
 
+/**
+ * The `ServicesConnection` object for `ServicesClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ServicesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `ServicesClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeServicesConnection()`.
+ *
+ * For mocking, see `appengine_mocks::MockServicesConnection`.
+ */
 class ServicesConnection {
  public:
   virtual ~ServicesConnection() = 0;
@@ -67,6 +79,28 @@ class ServicesConnection {
   DeleteService(google::appengine::v1::DeleteServiceRequest const& request);
 };
 
+/**
+ * A factory function to construct a `ServicesConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `ServicesClient` instance, and methods should be
+ * invoked on `ServicesClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ServicesConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::appengine::ServicesPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ServicesConnection` created by
+ * this function.
+ */
 std::shared_ptr<ServicesConnection> MakeServicesConnection(
     Options options = {});
 

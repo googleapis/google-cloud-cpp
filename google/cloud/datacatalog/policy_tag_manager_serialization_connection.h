@@ -45,6 +45,21 @@ using PolicyTagManagerSerializationLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         datacatalog_internal::PolicyTagManagerSerializationRetryTraits>;
 
+/**
+ * The `PolicyTagManagerSerializationConnection` object for
+ * `PolicyTagManagerSerializationClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `PolicyTagManagerSerializationClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) in a
+ * `PolicyTagManagerSerializationClient` object for use in their own tests.
+ *
+ * To create a concrete instance, see
+ * `MakePolicyTagManagerSerializationConnection()`.
+ *
+ * For mocking, see
+ * `datacatalog_mocks::MockPolicyTagManagerSerializationConnection`.
+ */
 class PolicyTagManagerSerializationConnection {
  public:
   virtual ~PolicyTagManagerSerializationConnection() = 0;
@@ -63,6 +78,29 @@ class PolicyTagManagerSerializationConnection {
       google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request);
 };
 
+/**
+ * A factory function to construct a `PolicyTagManagerSerializationConnection`
+ * object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `PolicyTagManagerSerializationClient` instance, and
+ * methods should be invoked on `PolicyTagManagerSerializationClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `PolicyTagManagerSerializationConnection`. Expected options are any
+ * of the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::datacatalog::PolicyTagManagerSerializationPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the
+ * `PolicyTagManagerSerializationConnection` created by this function.
+ */
 std::shared_ptr<PolicyTagManagerSerializationConnection>
 MakePolicyTagManagerSerializationConnection(Options options = {});
 

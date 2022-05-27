@@ -48,6 +48,18 @@ using MetricsScopesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::MetricsScopesRetryTraits>;
 
+/**
+ * The `MetricsScopesConnection` object for `MetricsScopesClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `MetricsScopesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `MetricsScopesClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeMetricsScopesConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockMetricsScopesConnection`.
+ */
 class MetricsScopesConnection {
  public:
   virtual ~MetricsScopesConnection() = 0;
@@ -78,6 +90,28 @@ class MetricsScopesConnection {
           request);
 };
 
+/**
+ * A factory function to construct a `MetricsScopesConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `MetricsScopesClient` instance, and methods should be
+ * invoked on `MetricsScopesClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `MetricsScopesConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::monitoring::MetricsScopesPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `MetricsScopesConnection` created by
+ * this function.
+ */
 std::shared_ptr<MetricsScopesConnection> MakeMetricsScopesConnection(
     Options options = {});
 

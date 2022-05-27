@@ -46,6 +46,18 @@ using OsConfigServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         osconfig_internal::OsConfigServiceRetryTraits>;
 
+/**
+ * The `OsConfigServiceConnection` object for `OsConfigServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `OsConfigServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) in a `OsConfigServiceClient` object for use
+ * in their own tests.
+ *
+ * To create a concrete instance, see `MakeOsConfigServiceConnection()`.
+ *
+ * For mocking, see `osconfig_mocks::MockOsConfigServiceConnection`.
+ */
 class OsConfigServiceConnection {
  public:
   virtual ~OsConfigServiceConnection() = 0;
@@ -96,6 +108,28 @@ class OsConfigServiceConnection {
       google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request);
 };
 
+/**
+ * A factory function to construct a `OsConfigServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `OsConfigServiceClient` instance, and methods should be
+ * invoked on `OsConfigServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `OsConfigServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::osconfig::OsConfigServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `OsConfigServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
     Options options = {});
 

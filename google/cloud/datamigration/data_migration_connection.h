@@ -49,6 +49,18 @@ using DataMigrationServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         datamigration_internal::DataMigrationServiceRetryTraits>;
 
+/**
+ * The `DataMigrationServiceConnection` object for `DataMigrationServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DataMigrationServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `DataMigrationServiceClient`
+ * object for use in their own tests.
+ *
+ * To create a concrete instance, see `MakeDataMigrationServiceConnection()`.
+ *
+ * For mocking, see `datamigration_mocks::MockDataMigrationServiceConnection`.
+ */
 class DataMigrationServiceConnection {
  public:
   virtual ~DataMigrationServiceConnection() = 0;
@@ -125,6 +137,28 @@ class DataMigrationServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct a `DataMigrationServiceConnection` object.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `DataMigrationServiceClient` instance, and methods
+ * should be invoked on `DataMigrationServiceClient`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DataMigrationServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::datamigration::DataMigrationServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `DataMigrationServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<DataMigrationServiceConnection>
 MakeDataMigrationServiceConnection(Options options = {});
 
