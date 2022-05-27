@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
+#include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -27,9 +28,11 @@ namespace {
 
 namespace btproto = ::google::bigtable::v2;
 
+using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
+using ::testing::An;
 using ::testing::Not;
 using ::testing::Return;
 
@@ -40,6 +43,11 @@ class TableBulkApplyTest
   TableBulkApplyTest() : TableTestFixture(CompletionQueue{}) {}
 };
 using ::google::cloud::bigtable::testing::MockMutateRowsReader;
+
+TEST_F(TableBulkApplyTest, Empty) {
+  auto failures = table_.BulkApply(BulkMutation());
+  EXPECT_TRUE(failures.empty());
+}
 
 /// @test Verify that Table::BulkApply() works in the easy case.
 TEST_F(TableBulkApplyTest, Simple) {
@@ -298,6 +306,48 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
   EXPECT_FALSE(failures.empty());
   EXPECT_EQ(google::cloud::StatusCode::kFailedPrecondition,
             failures.front().status().code());
+}
+
+TEST_F(TableBulkApplyTest, NoSleepIfNoPendingMutations) {
+  auto reader = absl::make_unique<MockMutateRowsReader>(
+      "google.bigtable.v2.Bigtable.MutateRows");
+  EXPECT_CALL(*reader, Read)
+      .WillOnce([](btproto::MutateRowsResponse* r) {
+        {
+          auto& e = *r->add_entries();
+          e.set_index(0);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
+        }
+        {
+          auto& e = *r->add_entries();
+          e.set_index(1);
+          e.mutable_status()->set_code(grpc::StatusCode::PERMISSION_DENIED);
+        }
+        return true;
+      })
+      .WillOnce(Return(false));
+  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+
+  EXPECT_CALL(*client_, MutateRows)
+      .WillOnce(reader.release()->MakeMockReturner());
+
+  // The backoff policy is cloned once in the Table constructor, and once before
+  // the start of the `BulkApply` call. We set expectations on the second clone.
+  auto b1 = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*b1, clone).WillOnce([]() {
+    auto b2 = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*b2, clone).WillOnce([]() {
+      auto mock = absl::make_unique<MockBackoffPolicy>();
+      EXPECT_CALL(*mock, Setup).Times(1);
+      EXPECT_CALL(*mock, OnCompletion(An<grpc::Status const&>())).Times(0);
+      return mock;
+    });
+    return b2;
+  });
+  auto table = Table(client_, kTableId, std::move(*b1));
+  (void)table.BulkApply(BulkMutation(
+      SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+      SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "qux")})));
 }
 
 }  // anonymous namespace
