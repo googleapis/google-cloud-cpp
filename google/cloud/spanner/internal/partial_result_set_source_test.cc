@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
+#include "google/cloud/spanner/mocks/row.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/mock_partial_result_set_reader.h"
 #include "google/cloud/spanner/value.h"
@@ -33,7 +34,6 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::spanner::MakeTestRow;
 using ::google::cloud::spanner_testing::MockPartialResultSetReader;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -133,8 +133,8 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
-  EXPECT_THAT((*reader)->NextRow(),
-              IsValidAndEquals(MakeTestRow({{"AnInt", spanner::Value(80)}})));
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow(
+                                        {{"AnInt", spanner::Value(80)}})));
   auto row = (*reader)->NextRow();
   EXPECT_THAT(row, StatusIs(StatusCode::kCancelled, "cancelled"));
 }
@@ -271,7 +271,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   EXPECT_THAT(*actual_metadata, IsProtoEqual(expected_metadata));
 
   // Verify the returned rows are correct.
-  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(MakeTestRow({
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow({
                                         {"UserId", spanner::Value(10)},
                                         {"UserName", spanner::Value("user10")},
                                     })));
@@ -375,16 +375,16 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned rows are correct.
-  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(MakeTestRow({
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow({
                                         {"UserId", spanner::Value(10)},
                                         {"UserName", spanner::Value("user10")},
                                     })));
-  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(MakeTestRow({
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow({
                                         {"UserId", spanner::Value(22)},
                                         {"UserName", spanner::Value("user22")},
                                     })));
   EXPECT_THAT((*reader)->NextRow(),
-              IsValidAndEquals(MakeTestRow({
+              IsValidAndEquals(spanner_mocks::MakeRow({
                   {"UserId", spanner::Value(99)},
                   {"UserName", spanner::Value("99user99")},
               })));
@@ -432,8 +432,8 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned row is correct.
-  EXPECT_THAT((*reader)->NextRow(),
-              IsValidAndEquals(MakeTestRow({{"UserId", spanner::Value(22)}})));
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow(
+                                        {{"UserId", spanner::Value(22)}})));
 
   // At end of stream, we get an 'ok' response with an empty row.
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner::Row{}));
@@ -501,9 +501,8 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
        {"not_chunked", "first_chunksecond_chunkthird_chunk",
         "second group first_chunk second group second_chunk",
         "also not_chunked", "still not_chunked"}) {
-    EXPECT_THAT(
-        (*reader)->NextRow(),
-        IsValidAndEquals(MakeTestRow({{"Prose", spanner::Value(value)}})));
+    EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow(
+                                          {{"Prose", spanner::Value(value)}})));
   }
 
   // At end of stream, we get an 'ok' response with an empty row.
@@ -756,11 +755,11 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the first two rows are correct.
-  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(MakeTestRow({
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow({
                                         {"UserId", spanner::Value(10)},
                                         {"UserName", spanner::Value("user10")},
                                     })));
-  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(MakeTestRow({
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow({
                                         {"UserId", spanner::Value(22)},
                                         {"UserName", spanner::Value("user22")},
                                     })));

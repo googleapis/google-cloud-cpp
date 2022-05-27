@@ -235,7 +235,8 @@ target_sources(
         ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_instance_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/row.h)
 target_link_libraries(
     google_cloud_cpp_spanner_mocks
     INTERFACE google-cloud-cpp::spanner GTest::gmock_main GTest::gmock
@@ -415,8 +416,10 @@ function (spanner_client_define_benchmarks)
     foreach (fname ${spanner_client_benchmarks})
         google_cloud_cpp_add_executable(target "spanner" "${fname}")
         add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(${target} PRIVATE google-cloud-cpp::spanner
-                                                benchmark::benchmark_main)
+        target_link_libraries(
+            ${target}
+            PRIVATE google-cloud-cpp::spanner google-cloud-cpp::spanner_mocks
+                    benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
 
         add_dependencies(spanner-client-benchmarks ${target})

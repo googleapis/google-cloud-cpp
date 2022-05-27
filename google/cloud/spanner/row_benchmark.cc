@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/mocks/row.h"
 #include "google/cloud/spanner/row.h"
 #include <benchmark/benchmark.h>
 
@@ -35,7 +36,7 @@ namespace {
 // BM_RowGetByColumnName               195 ns          194 ns      3590333
 
 void BM_RowGetByPosition(benchmark::State& state) {
-  Row row = MakeTestRow(1, "blah", true);
+  Row row = spanner_mocks::MakeRow(1, "blah", true);
   for (auto _ : state) {
     benchmark::DoNotOptimize(row.get(0));
     benchmark::DoNotOptimize(row.get(1));
@@ -45,7 +46,7 @@ void BM_RowGetByPosition(benchmark::State& state) {
 BENCHMARK(BM_RowGetByPosition);
 
 void BM_RowGetByColumnName(benchmark::State& state) {
-  Row row = MakeTestRow({
+  Row row = spanner_mocks::MakeRow({
       {"a", Value(1)},       //
       {"b", Value("blah")},  //
       {"c", Value(true)}     //

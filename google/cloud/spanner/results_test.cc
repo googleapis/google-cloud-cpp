@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
+#include "google/cloud/spanner/mocks/row.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -54,8 +55,8 @@ TEST(RowStream, IterateNoRows) {
 TEST(RowStream, IterateOverRows) {
   auto mock_source = absl::make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextRow())
-      .WillOnce(Return(MakeTestRow(5, true, "foo")))
-      .WillOnce(Return(MakeTestRow(10, false, "bar")))
+      .WillOnce(Return(spanner_mocks::MakeRow(5, true, "foo")))
+      .WillOnce(Return(spanner_mocks::MakeRow(10, false, "bar")))
       .WillOnce(Return(Row()));
 
   RowStream rows(std::move(mock_source));
@@ -87,7 +88,7 @@ TEST(RowStream, IterateOverRows) {
 TEST(RowStream, IterateError) {
   auto mock_source = absl::make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextRow())
-      .WillOnce(Return(MakeTestRow(5, true, "foo")))
+      .WillOnce(Return(spanner_mocks::MakeRow(5, true, "foo")))
       .WillOnce(Return(Status(StatusCode::kUnknown, "oops")));
 
   RowStream rows(std::move(mock_source));
