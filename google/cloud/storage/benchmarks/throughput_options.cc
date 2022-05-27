@@ -160,6 +160,23 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          options.direct_path_endpoint = val;
        }},
+      {"--transfer-stall-timeout",
+       "configure the storage::TransferStallTimeoutOption: the maximum time"
+       " allowed for data to 'stall' (make no progress) on all operations,"
+       " except for downloads (see --download-stall-timeout)."
+       " This option is intended for troubleshooting, most of the time the"
+       " value is not expected to change the library performance.",
+       [&options](std::string const& val) {
+         options.transfer_stall_timeout = ParseDuration(val);
+       }},
+      {"--download-stall-timeout",
+       "configure the storage::DownloadStallTimeoutOption: the maximum time"
+       " allowed for data to 'stall' during a download."
+       " This option is intended for troubleshooting, most of the time the"
+       " value is not expected to change the library performance.",
+       [&options](std::string const& val) {
+         options.download_stall_timeout = ParseDuration(val);
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 
