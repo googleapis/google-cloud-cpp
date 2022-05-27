@@ -94,6 +94,5 @@ time {
     exit 1
   fi
   chmod +x /var/tmp/codecov
-  env -i CODECOV_TOKEN="${CODECOV_TOKEN:-}" HOME="${HOME}" \
-    /var/tmp/codecov -t "${CODECOV_TOKEN}" "${codecov_args[@]}"
+  env -i HOME="${HOME}" /var/tmp/codecov -t "${CODECOV_TOKEN}" "${codecov_args[@]}"
 }
