@@ -152,13 +152,15 @@ class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<
               (override));
 };
 
-class MockObjectMediaStream : public google::cloud::internal::StreamingReadRpc<
-                                  google::storage::v2::ReadObjectResponse> {
+class MockObjectMediaStream
+    : public google::cloud::internal::AsyncStreamingReadRpc<
+          google::storage::v2::ReadObjectResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  using ReadResultType =
-      absl::variant<Status, google::storage::v2::ReadObjectResponse>;
-  MOCK_METHOD(ReadResultType, Read, (), (override));
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<absl::optional<google::storage::v2::ReadObjectResponse>>,
+              Read, (), (override));
+  MOCK_METHOD(future<Status>, Finish, (), (override));
   MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
               (), (const, override));
 };

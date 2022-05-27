@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/streaming_read_rpc.h"
+#include "google/cloud/internal/async_streaming_read_rpc.h"
 #include <google/storage/v2/storage.pb.h>
 #include <functional>
 #include <string>
@@ -40,10 +40,12 @@ namespace internal {
  */
 class GrpcObjectReadSource : public ObjectReadSource {
  public:
-  using StreamingRpc = ::google::cloud::internal::StreamingReadRpc<
+  using StreamingRpc = ::google::cloud::internal::AsyncStreamingReadRpc<
       google::storage::v2::ReadObjectResponse>;
 
-  explicit GrpcObjectReadSource(std::unique_ptr<StreamingRpc> stream);
+  explicit GrpcObjectReadSource(
+      std::unique_ptr<StreamingRpc> stream,
+      std::chrono::milliseconds download_stall_timeout);
 
   ~GrpcObjectReadSource() override = default;
 
@@ -56,8 +58,13 @@ class GrpcObjectReadSource : public ObjectReadSource {
   /// codes.
   StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override;
 
+  std::chrono::milliseconds download_stall_timeout() const {
+    return download_stall_timeout_;
+  }
+
  private:
   std::unique_ptr<StreamingRpc> stream_;
+  std::chrono::milliseconds download_stall_timeout_;
 
   // In some cases the gRPC response may contain more data than the buffer
   // provided by the application. This buffer stores any excess results.

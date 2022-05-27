@@ -363,15 +363,17 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   }
   auto context = absl::make_unique<grpc::ClientContext>();
   ApplyQueryParameters(*context, request);
-  auto const timeout = options_.get<DownloadStallTimeoutOption>();
-  if (timeout.count() != 0) {
-    context->set_deadline(std::chrono::system_clock::now() + timeout);
-  }
   auto proto_request = GrpcObjectRequestParser::ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
+  auto stream = stub_->AsyncReadObject(background_->cq(), std::move(context),
+                                       *proto_request);
+  auto start = stream->Start().get();
+  if (!start) {
+    return stream->Finish().get();
+  }
   return std::unique_ptr<ObjectReadSource>(
       absl::make_unique<GrpcObjectReadSource>(
-          stub_->ReadObject(std::move(context), *proto_request)));
+          std::move(stream), options_.get<DownloadStallTimeoutOption>()));
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
