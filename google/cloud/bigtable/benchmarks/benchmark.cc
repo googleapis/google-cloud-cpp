@@ -79,9 +79,7 @@ Benchmark::Benchmark(BenchmarkOptions options)
     server_thread_ = std::thread([this]() { server_->Wait(); });
 
     opts_.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-        .set<DataEndpointOption>(address)
-        .set<AdminEndpointOption>(address)
-        .set<InstanceAdminEndpointOption>(address);
+        .set<EndpointOption>(address);
   }
 }
 
@@ -98,10 +96,8 @@ Benchmark::~Benchmark() {
 
 std::string Benchmark::CreateTable() {
   // Create the table, with an initial split.
-  auto admin_opts = opts_;
-  admin_opts.set<EndpointOption>(opts_.get<AdminEndpointOption>());
   auto admin = bigtable_admin::BigtableTableAdminClient(
-      bigtable_admin::MakeBigtableTableAdminConnection(admin_opts));
+      bigtable_admin::MakeBigtableTableAdminConnection(opts_));
 
   google::bigtable::admin::v2::CreateTableRequest r;
   r.set_parent(InstanceName(options_.project_id, options_.instance_id));
@@ -117,10 +113,8 @@ std::string Benchmark::CreateTable() {
 }
 
 void Benchmark::DeleteTable() {
-  auto admin_opts = opts_;
-  admin_opts.set<EndpointOption>(opts_.get<AdminEndpointOption>());
   auto admin = bigtable_admin::BigtableTableAdminClient(
-      bigtable_admin::MakeBigtableTableAdminConnection(admin_opts));
+      bigtable_admin::MakeBigtableTableAdminConnection(opts_));
   auto status = admin.DeleteTable(
       TableName(options_.project_id, options_.instance_id, options_.table_id));
   if (!status.ok()) {

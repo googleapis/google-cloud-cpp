@@ -73,7 +73,7 @@ TEST(EmbeddedServer, TableApply) {
   auto options =
       Options{}
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<DataEndpointOption>(server->address());
+          .set<EndpointOption>(server->address());
 
   Table table(MakeDataClient("fake-project", "fake-instance", options),
               "fake-table");
@@ -98,7 +98,7 @@ TEST(EmbeddedServer, TableBulkApply) {
   auto options =
       Options{}
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<DataEndpointOption>(server->address());
+          .set<EndpointOption>(server->address());
 
   Table table(MakeDataClient("fake-project", "fake-instance", options),
               "fake-table");
@@ -125,7 +125,7 @@ TEST(EmbeddedServer, ReadRows1) {
   auto options =
       Options{}
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<DataEndpointOption>(server->address());
+          .set<EndpointOption>(server->address());
 
   Table table(MakeDataClient("fake-project", "fake-instance", options),
               "fake-table");
@@ -147,7 +147,7 @@ TEST(EmbeddedServer, ReadRows100) {
   auto options =
       Options{}
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<DataEndpointOption>(server->address());
+          .set<EndpointOption>(server->address());
 
   Table table(MakeDataClient("fake-project", "fake-instance", options),
               "fake-table");

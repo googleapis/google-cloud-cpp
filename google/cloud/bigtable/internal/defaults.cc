@@ -79,6 +79,19 @@ int DefaultConnectionPoolSize() {
 Options DefaultOptions(Options opts) {
   using ::google::cloud::internal::GetEnv;
 
+  if (opts.has<EndpointOption>()) {
+    auto const& ep = opts.get<EndpointOption>();
+    if (!opts.has<DataEndpointOption>()) {
+      opts.set<DataEndpointOption>(ep);
+    }
+    if (!opts.has<AdminEndpointOption>()) {
+      opts.set<AdminEndpointOption>(ep);
+    }
+    if (!opts.has<InstanceAdminEndpointOption>()) {
+      opts.set<InstanceAdminEndpointOption>(ep);
+    }
+  }
+
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
   if (emulator) {
     opts.set<DataEndpointOption>(*emulator);

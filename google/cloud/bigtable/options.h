@@ -51,12 +51,20 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// The endpoint for data operations.
+/**
+ * The endpoint for data operations.
+ *
+ * @deprecated Please use `google::cloud::EndpointOption` instead.
+ */
 struct DataEndpointOption {
   using Type = std::string;
 };
 
-/// The endpoint for table admin operations.
+/**
+ * The endpoint for table admin operations.
+ *
+ * @deprecated Please use `google::cloud::EndpointOption` instead.
+ */
 struct AdminEndpointOption {
   using Type = std::string;
 };
@@ -67,6 +75,8 @@ struct AdminEndpointOption {
  * In most scenarios this should have the same value as `AdminEndpointOption`.
  * The most common exception is testing, where the emulator for instance admin
  * operations may be different than the emulator for admin and data operations.
+ *
+ * @deprecated Please use `google::cloud::EndpointOption` instead.
  */
 struct InstanceAdminEndpointOption {
   using Type = std::string;
