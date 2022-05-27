@@ -126,17 +126,24 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
 }
 
 TEST(OptionsTest, EndpointOptionSetsAll) {
-  auto options =
-      Options{}
-          .set<EndpointOption>("endpoint-option")
-          .set<DataEndpointOption>("overridden-data")
-          .set<AdminEndpointOption>("overridden-table-admin")
-          .set<InstanceAdminEndpointOption>("overridden-instance-admin");
+  auto options = Options{}.set<EndpointOption>("endpoint-option");
   options = DefaultOptions(std::move(options));
   EXPECT_EQ("endpoint-option", options.get<EndpointOption>());
   EXPECT_EQ("endpoint-option", options.get<DataEndpointOption>());
   EXPECT_EQ("endpoint-option", options.get<AdminEndpointOption>());
   EXPECT_EQ("endpoint-option", options.get<InstanceAdminEndpointOption>());
+}
+
+TEST(OptionsTest, EndpointOptionOverridden) {
+  auto options = Options{}
+                     .set<EndpointOption>("ignored")
+                     .set<DataEndpointOption>("data")
+                     .set<AdminEndpointOption>("table-admin")
+                     .set<InstanceAdminEndpointOption>("instance-admin");
+  options = DefaultOptions(std::move(options));
+  EXPECT_EQ("data", options.get<DataEndpointOption>());
+  EXPECT_EQ("table-admin", options.get<AdminEndpointOption>());
+  EXPECT_EQ("instance-admin", options.get<InstanceAdminEndpointOption>());
 }
 
 TEST(OptionsTest, DefaultDataOptionsEndpoint) {

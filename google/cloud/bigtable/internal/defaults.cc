@@ -81,9 +81,15 @@ Options DefaultOptions(Options opts) {
 
   if (opts.has<EndpointOption>()) {
     auto const& ep = opts.get<EndpointOption>();
-    opts.set<DataEndpointOption>(ep);
-    opts.set<AdminEndpointOption>(ep);
-    opts.set<InstanceAdminEndpointOption>(ep);
+    if (!opts.has<DataEndpointOption>()) {
+      opts.set<DataEndpointOption>(ep);
+    }
+    if (!opts.has<AdminEndpointOption>()) {
+      opts.set<AdminEndpointOption>(ep);
+    }
+    if (!opts.has<InstanceAdminEndpointOption>()) {
+      opts.set<InstanceAdminEndpointOption>(ep);
+    }
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
