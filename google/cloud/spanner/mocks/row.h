@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/value.h"
+#include "google/cloud/version.h"
 #include <string>
 #include <utility>
 #include <vector>
@@ -25,6 +26,9 @@ namespace google {
 namespace cloud {
 namespace spanner_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+// TODO(#9086): Delete this when the MakeRow() implementation is moved here.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 /**
  * Creates a `spanner::Row` with the specified column names and values.
@@ -56,6 +60,9 @@ template <typename... Ts>
 spanner::Row MakeRow(Ts&&... ts) {
   return spanner::MakeTestRow(std::forward<Ts>(ts)...);
 }
+
+// TODO(#9086): Delete this when the MakeRow() implementation is moved here.
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_mocks

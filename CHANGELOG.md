@@ -95,6 +95,18 @@ on it.
 For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/8854
 </details>
 
+<details>
+<summary>2023-06-01: remove `spanner::MakeTestRow()`</summary>
+<br>
+
+* On 2023-06-01 (or shortly after) we will remove `spanner::MakeTestRow()`,
+  which has been replaced by `spanner_mocks::MakeRow()`. Starting with the
+  v1.41.0 release, and depending on your compiler settings, using
+  `spanner::MakeTestRow()` may elicit a deprecation warning. See
+  [#9086](https://github.com/googleapis/google-cloud-cpp/issues/9086) for more
+  details.
+</details>
+
 ## v1.41.0 - TBD
 
 ### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
