@@ -20,8 +20,8 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 
-export CC=gcc
-export CXX=g++
+export CC=clang
+export CXX=clang++
 
 # Explicitly list the patterns that match hand-crafted code. Excluding the
 # generated code results in a longer list and more maintenance.
@@ -40,6 +40,7 @@ instrumentation_filter="$(printf ",%s" "${instrumented_patterns[@]}")"
 instrumentation_filter="${instrumentation_filter:1}"
 
 mapfile -t args < <(bazel::common_args)
+args+=("--experimental_use_llvm_covmap")
 args+=("--instrumentation_filter=${instrumentation_filter}")
 args+=("--instrument_test_targets")
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
