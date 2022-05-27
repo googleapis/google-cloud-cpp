@@ -87,10 +87,11 @@ time {
   codecov="$(mktemp -u -t codecov.XXXXXXXXXX)"
   curl -sSL -o "${codecov}" https://uploader.codecov.io/v0.2.3/linux/codecov
   sha256sum="648b599397548e4bb92429eec6391374c2cbb0edb835e3b3f03d4281c011f401"
-  if ! sha256sum -c <(echo "${sha256sum} *${codecov}") <"${codecov}"; then
+  if ! sha256sum -c <(echo "${sha256sum} *${codecov}"); then
     io::log_h2 "ERROR: Invalid sha256sum for codecov program"
     exit 1
   fi
   chmod +x "${codecov}"
   env -i HOME="${HOME}" "${codecov}" -t "${CODECOV_TOKEN}" "${codecov_args[@]}"
+  rm "${codecov}"
 }
