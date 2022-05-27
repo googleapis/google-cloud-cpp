@@ -151,6 +151,7 @@ future<Status> Table::AsyncApply(SingleRowMutation mut) {
 }
 
 std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
+  if (mut.empty()) return {};
   grpc::Status status;
 
   // Copy the policies in effect for this operation.  Many policy classes change
@@ -162,7 +163,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
 
   bigtable::internal::BulkMutator mutator(app_profile_id_, table_name_,
                                           *idempotent_policy, std::move(mut));
-  while (mutator.HasPendingMutations()) {
+  while (true) {
     grpc::ClientContext client_context;
     backoff_policy->Setup(client_context);
     retry_policy->Setup(client_context);
@@ -171,6 +172,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
     if (!status.ok() && !retry_policy->OnFailure(status)) {
       break;
     }
+    if (!mutator.HasPendingMutations()) break;
     auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
   }
