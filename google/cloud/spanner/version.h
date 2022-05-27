@@ -27,6 +27,13 @@
       " Please use google::cloud::spanner_admin::" name                     \
       " instead. See GitHub issue #7356 for more information.")
 
+#define GOOGLE_CLOUD_CPP_SPANNER_MAKE_TEST_ROW_DEPRECATED()      \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                   \
+      "google::cloud::spanner::MakeTestRow() is deprecated, and" \
+      " will be removed on or shortly after 2023-06-01. Please"  \
+      " use google::cloud::spanner_mocks::MakeRow() instead."    \
+      " See GitHub issue #9086 for more information.")
+
 // This preprocessor symbol is deprecated and should never be used anywhere. It
 // exists solely for backward compatibility to avoid breaking anyone who may
 // have been using it.
