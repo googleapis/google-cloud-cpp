@@ -84,14 +84,16 @@ io::log "Flags: ${codecov_args[*]}"
 TIMEFORMAT="==> 🕑 codecov.io upload done in %R seconds"
 time {
   # Verifies the codecov bash uploader before executing it.
-  sha256sum="d6aa3207c4908d123bd8af62ec0538e3f2b9f257c3de62fad4e29cd3b59b41d9"
+  curl -sSL -o /var/tmp/codecov https://uploader.codecov.io/v0.2.3/linux/codecov
+  sha256sum="648b599397548e4bb92429eec6391374c2cbb0edb835e3b3f03d4281c011f401"
   codecov_url="https://raw.githubusercontent.com/codecov/codecov-bash/1b4b96ac38946b20043b3ca3bad88d95462259b6/codecov"
   codecov_script="$(curl -s "${codecov_url}")"
-  if ! sha256sum -c <(echo "${sha256sum} -") <<<"${codecov_script}"; then
+  if ! sha256sum -c <(echo "${sha256sum} -") </var/tmp/codecov; then
     io::log_h2 "ERROR: Invalid sha256sum for codecov_script:"
     echo "${codecov_script}"
     exit 1
   fi
+  chmod +x /var/tmp/codecov
   env -i CODECOV_TOKEN="${CODECOV_TOKEN:-}" HOME="${HOME}" \
-    bash <(echo "${codecov_script}") "${codecov_args[@]}"
+    /var/tmp/codecov -t "${CODECOV_TOKEN}" "${codecov_args[@]}"
 }
