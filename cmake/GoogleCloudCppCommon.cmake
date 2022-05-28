@@ -122,6 +122,7 @@ elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
         "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
         # The Bigtable and Spanner libraries have some public APIs in `admin`.
         "${CMAKE_CURRENT_SOURCE_DIR}/admin"
+        "${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks"
         # The Storage library has some public APIs in `oauth2`.
         "${CMAKE_CURRENT_SOURCE_DIR}/oauth2"
         # Scan the examples, the directory name depends on the library
