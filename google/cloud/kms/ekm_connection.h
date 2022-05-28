@@ -50,8 +50,8 @@ using EkmServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `EkmServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `EkmServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `EkmServiceClient`.
  *
  * To create a concrete instance, see `MakeEkmServiceConnection()`.
  *
@@ -77,11 +77,11 @@ class EkmServiceConnection {
 };
 
 /**
- * A factory function to construct a `EkmServiceConnection` object.
+ * A factory function to construct an object of type `EkmServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `EkmServiceClient` instance, and methods should be
- * invoked on `EkmServiceClient`.
+ * should be passed as an argument to the constructor of EkmServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `EkmServiceConnection`. Expected options are any of the types in

@@ -52,8 +52,8 @@ using BigQueryWriteLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `BigQueryWriteClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `BigQueryWriteClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `BigQueryWriteClient`.
  *
  * To create a concrete instance, see `MakeBigQueryWriteConnection()`.
  *
@@ -97,11 +97,11 @@ class BigQueryWriteConnection {
 };
 
 /**
- * A factory function to construct a `BigQueryWriteConnection` object.
+ * A factory function to construct an object of type `BigQueryWriteConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `BigQueryWriteClient` instance, and methods should be
- * invoked on `BigQueryWriteClient`.
+ * should be passed as an argument to the constructor of BigQueryWriteClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `BigQueryWriteConnection`. Expected options are any of the types in

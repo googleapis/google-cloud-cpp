@@ -51,8 +51,8 @@ using DataTransferServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `DataTransferServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `DataTransferServiceClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `DataTransferServiceClient`.
  *
  * To create a concrete instance, see `MakeDataTransferServiceConnection()`.
  *
@@ -138,11 +138,12 @@ class DataTransferServiceConnection {
 };
 
 /**
- * A factory function to construct a `DataTransferServiceConnection` object.
+ * A factory function to construct an object of type
+ * `DataTransferServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `DataTransferServiceClient` instance, and methods should
- * be invoked on `DataTransferServiceClient`.
+ * should be passed as an argument to the constructor of
+ * DataTransferServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `DataTransferServiceConnection`. Expected options are any of the

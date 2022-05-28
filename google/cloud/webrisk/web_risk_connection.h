@@ -50,8 +50,8 @@ using WebRiskServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `WebRiskServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `WebRiskServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `WebRiskServiceClient`.
  *
  * To create a concrete instance, see `MakeWebRiskServiceConnection()`.
  *
@@ -78,11 +78,11 @@ class WebRiskServiceConnection {
 };
 
 /**
- * A factory function to construct a `WebRiskServiceConnection` object.
+ * A factory function to construct an object of type `WebRiskServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `WebRiskServiceClient` instance, and methods should be
- * invoked on `WebRiskServiceClient`.
+ * should be passed as an argument to the constructor of WebRiskServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `WebRiskServiceConnection`. Expected options are any of the types in

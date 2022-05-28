@@ -50,8 +50,8 @@ using ValidationHelperV1LimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ValidationHelperV1Client`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `ValidationHelperV1Client`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ValidationHelperV1Client`.
  *
  * To create a concrete instance, see `MakeValidationHelperV1Connection()`.
  *
@@ -72,11 +72,12 @@ class ValidationHelperV1Connection {
 };
 
 /**
- * A factory function to construct a `ValidationHelperV1Connection` object.
+ * A factory function to construct an object of type
+ * `ValidationHelperV1Connection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ValidationHelperV1Client` instance, and methods should
- * be invoked on `ValidationHelperV1Client`.
+ * should be passed as an argument to the constructor of
+ * ValidationHelperV1Client, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ValidationHelperV1Connection`. Expected options are any of the

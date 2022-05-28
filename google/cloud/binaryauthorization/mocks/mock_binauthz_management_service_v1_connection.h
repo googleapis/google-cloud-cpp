@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `BinauthzManagementServiceV1Connection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors from a `BinauthzManagementServiceV1Client`. To do so,
- * construct a `BinauthzManagementServiceV1Client` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `BinauthzManagementServiceV1Client`.
+ * To do so, construct an object of type `BinauthzManagementServiceV1Client`
+ * with an instance of this class. Then use the Google Test framework functions
+ * to program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with
  * GoogleTest. While the example showcases types from the BigQuery library, the

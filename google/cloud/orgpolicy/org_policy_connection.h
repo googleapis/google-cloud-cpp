@@ -50,8 +50,8 @@ using OrgPolicyLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `OrgPolicyClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `OrgPolicyClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `OrgPolicyClient`.
  *
  * To create a concrete instance, see `MakeOrgPolicyConnection()`.
  *
@@ -86,11 +86,11 @@ class OrgPolicyConnection {
 };
 
 /**
- * A factory function to construct a `OrgPolicyConnection` object.
+ * A factory function to construct an object of type `OrgPolicyConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `OrgPolicyClient` instance, and methods should be
- * invoked on `OrgPolicyClient`.
+ * should be passed as an argument to the constructor of OrgPolicyClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `OrgPolicyConnection`. Expected options are any of the types in

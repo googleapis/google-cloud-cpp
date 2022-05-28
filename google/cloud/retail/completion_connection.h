@@ -53,8 +53,8 @@ using CompletionServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `CompletionServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `CompletionServiceClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CompletionServiceClient`.
  *
  * To create a concrete instance, see `MakeCompletionServiceConnection()`.
  *
@@ -76,11 +76,12 @@ class CompletionServiceConnection {
 };
 
 /**
- * A factory function to construct a `CompletionServiceConnection` object.
+ * A factory function to construct an object of type
+ * `CompletionServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `CompletionServiceClient` instance, and methods should
- * be invoked on `CompletionServiceClient`.
+ * should be passed as an argument to the constructor of
+ * CompletionServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `CompletionServiceConnection`. Expected options are any of the types

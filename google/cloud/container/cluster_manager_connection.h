@@ -51,8 +51,8 @@ using ClusterManagerLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ClusterManagerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `ClusterManagerClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ClusterManagerClient`.
  *
  * To create a concrete instance, see `MakeClusterManagerConnection()`.
  *
@@ -163,11 +163,11 @@ class ClusterManagerConnection {
 };
 
 /**
- * A factory function to construct a `ClusterManagerConnection` object.
+ * A factory function to construct an object of type `ClusterManagerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ClusterManagerClient` instance, and methods should be
- * invoked on `ClusterManagerClient`.
+ * should be passed as an argument to the constructor of ClusterManagerClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ClusterManagerConnection`. Expected options are any of the types in

@@ -49,8 +49,8 @@ using IAMPolicyLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `IAMPolicyClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `IAMPolicyClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `IAMPolicyClient`.
  *
  * To create a concrete instance, see `MakeIAMPolicyConnection()`.
  *
@@ -73,11 +73,11 @@ class IAMPolicyConnection {
 };
 
 /**
- * A factory function to construct a `IAMPolicyConnection` object.
+ * A factory function to construct an object of type `IAMPolicyConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `IAMPolicyClient` instance, and methods should be
- * invoked on `IAMPolicyClient`.
+ * should be passed as an argument to the constructor of IAMPolicyClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `IAMPolicyConnection`. Expected options are any of the types in

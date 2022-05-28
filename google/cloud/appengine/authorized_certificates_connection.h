@@ -52,8 +52,8 @@ using AuthorizedCertificatesLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `AuthorizedCertificatesClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a
- * `AuthorizedCertificatesClient` object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AuthorizedCertificatesClient`.
  *
  * To create a concrete instance, see `MakeAuthorizedCertificatesConnection()`.
  *
@@ -86,11 +86,12 @@ class AuthorizedCertificatesConnection {
 };
 
 /**
- * A factory function to construct a `AuthorizedCertificatesConnection` object.
+ * A factory function to construct an object of type
+ * `AuthorizedCertificatesConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `AuthorizedCertificatesClient` instance, and methods
- * should be invoked on `AuthorizedCertificatesClient`.
+ * should be passed as an argument to the constructor of
+ * AuthorizedCertificatesClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `AuthorizedCertificatesConnection`. Expected options are any of the

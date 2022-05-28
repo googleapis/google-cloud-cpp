@@ -51,8 +51,8 @@ using ReservationServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ReservationServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `ReservationServiceClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ReservationServiceClient`.
  *
  * To create a concrete instance, see `MakeReservationServiceConnection()`.
  *
@@ -163,11 +163,12 @@ class ReservationServiceConnection {
 };
 
 /**
- * A factory function to construct a `ReservationServiceConnection` object.
+ * A factory function to construct an object of type
+ * `ReservationServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ReservationServiceClient` instance, and methods should
- * be invoked on `ReservationServiceClient`.
+ * should be passed as an argument to the constructor of
+ * ReservationServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ReservationServiceConnection`. Expected options are any of the

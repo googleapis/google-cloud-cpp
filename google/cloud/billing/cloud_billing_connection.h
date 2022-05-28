@@ -51,8 +51,8 @@ using CloudBillingLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `CloudBillingClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `CloudBillingClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CloudBillingClient`.
  *
  * To create a concrete instance, see `MakeCloudBillingConnection()`.
  *
@@ -104,11 +104,11 @@ class CloudBillingConnection {
 };
 
 /**
- * A factory function to construct a `CloudBillingConnection` object.
+ * A factory function to construct an object of type `CloudBillingConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `CloudBillingClient` instance, and methods should be
- * invoked on `CloudBillingClient`.
+ * should be passed as an argument to the constructor of CloudBillingClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `CloudBillingConnection`. Expected options are any of the types in

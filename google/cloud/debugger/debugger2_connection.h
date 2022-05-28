@@ -49,8 +49,8 @@ using Debugger2LimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `Debugger2Client`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `Debugger2Client` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `Debugger2Client`.
  *
  * To create a concrete instance, see `MakeDebugger2Connection()`.
  *
@@ -85,11 +85,11 @@ class Debugger2Connection {
 };
 
 /**
- * A factory function to construct a `Debugger2Connection` object.
+ * A factory function to construct an object of type `Debugger2Connection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `Debugger2Client` instance, and methods should be
- * invoked on `Debugger2Client`.
+ * should be passed as an argument to the constructor of Debugger2Client,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `Debugger2Connection`. Expected options are any of the types in

@@ -51,8 +51,8 @@ using KeyManagementServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `KeyManagementServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `KeyManagementServiceClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `KeyManagementServiceClient`.
  *
  * To create a concrete instance, see `MakeKeyManagementServiceConnection()`.
  *
@@ -155,11 +155,12 @@ class KeyManagementServiceConnection {
 };
 
 /**
- * A factory function to construct a `KeyManagementServiceConnection` object.
+ * A factory function to construct an object of type
+ * `KeyManagementServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `KeyManagementServiceClient` instance, and methods
- * should be invoked on `KeyManagementServiceClient`.
+ * should be passed as an argument to the constructor of
+ * KeyManagementServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `KeyManagementServiceConnection`. Expected options are any of the

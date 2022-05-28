@@ -53,8 +53,8 @@ using ServicesLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ServicesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `ServicesClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ServicesClient`.
  *
  * To create a concrete instance, see `MakeServicesConnection()`.
  *
@@ -80,11 +80,11 @@ class ServicesConnection {
 };
 
 /**
- * A factory function to construct a `ServicesConnection` object.
+ * A factory function to construct an object of type `ServicesConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ServicesClient` instance, and methods should be
- * invoked on `ServicesClient`.
+ * should be passed as an argument to the constructor of ServicesClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ServicesConnection`. Expected options are any of the types in

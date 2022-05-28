@@ -50,8 +50,8 @@ using QuotaControllerLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `QuotaControllerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `QuotaControllerClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `QuotaControllerClient`.
  *
  * To create a concrete instance, see `MakeQuotaControllerConnection()`.
  *
@@ -69,11 +69,12 @@ class QuotaControllerConnection {
 };
 
 /**
- * A factory function to construct a `QuotaControllerConnection` object.
+ * A factory function to construct an object of type
+ * `QuotaControllerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `QuotaControllerClient` instance, and methods should be
- * invoked on `QuotaControllerClient`.
+ * should be passed as an argument to the constructor of QuotaControllerClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `QuotaControllerConnection`. Expected options are any of the types

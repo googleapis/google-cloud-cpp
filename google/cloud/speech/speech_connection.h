@@ -54,8 +54,8 @@ using SpeechLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `SpeechClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `SpeechClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SpeechClient`.
  *
  * To create a concrete instance, see `MakeSpeechConnection()`.
  *
@@ -82,11 +82,11 @@ class SpeechConnection {
 };
 
 /**
- * A factory function to construct a `SpeechConnection` object.
+ * A factory function to construct an object of type `SpeechConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `SpeechClient` instance, and methods should be
- * invoked on `SpeechClient`.
+ * should be passed as an argument to the constructor of SpeechClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `SpeechConnection`. Expected options are any of the types in

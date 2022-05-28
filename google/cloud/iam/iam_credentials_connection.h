@@ -50,8 +50,8 @@ using IAMCredentialsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `IAMCredentialsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `IAMCredentialsClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `IAMCredentialsClient`.
  *
  * To create a concrete instance, see `MakeIAMCredentialsConnection()`.
  *
@@ -79,11 +79,11 @@ class IAMCredentialsConnection {
 };
 
 /**
- * A factory function to construct a `IAMCredentialsConnection` object.
+ * A factory function to construct an object of type `IAMCredentialsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `IAMCredentialsClient` instance, and methods should be
- * invoked on `IAMCredentialsClient`.
+ * should be passed as an argument to the constructor of IAMCredentialsClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `IAMCredentialsConnection`. Expected options are any of the types in

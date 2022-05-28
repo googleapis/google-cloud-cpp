@@ -53,8 +53,8 @@ using WorkflowsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `WorkflowsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `WorkflowsClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `WorkflowsClient`.
  *
  * To create a concrete instance, see `MakeWorkflowsConnection()`.
  *
@@ -86,11 +86,11 @@ class WorkflowsConnection {
 };
 
 /**
- * A factory function to construct a `WorkflowsConnection` object.
+ * A factory function to construct an object of type `WorkflowsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `WorkflowsClient` instance, and methods should be
- * invoked on `WorkflowsClient`.
+ * should be passed as an argument to the constructor of WorkflowsClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `WorkflowsConnection`. Expected options are any of the types in

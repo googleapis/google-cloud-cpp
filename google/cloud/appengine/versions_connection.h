@@ -53,8 +53,8 @@ using VersionsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `VersionsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `VersionsClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `VersionsClient`.
  *
  * To create a concrete instance, see `MakeVersionsConnection()`.
  *
@@ -83,11 +83,11 @@ class VersionsConnection {
 };
 
 /**
- * A factory function to construct a `VersionsConnection` object.
+ * A factory function to construct an object of type `VersionsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `VersionsClient` instance, and methods should be
- * invoked on `VersionsClient`.
+ * should be passed as an argument to the constructor of VersionsClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `VersionsConnection`. Expected options are any of the types in

@@ -50,8 +50,8 @@ using LanguageServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `LanguageServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `LanguageServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `LanguageServiceClient`.
  *
  * To create a concrete instance, see `MakeLanguageServiceConnection()`.
  *
@@ -88,11 +88,12 @@ class LanguageServiceConnection {
 };
 
 /**
- * A factory function to construct a `LanguageServiceConnection` object.
+ * A factory function to construct an object of type
+ * `LanguageServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `LanguageServiceClient` instance, and methods should be
- * invoked on `LanguageServiceClient`.
+ * should be passed as an argument to the constructor of LanguageServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `LanguageServiceConnection`. Expected options are any of the types

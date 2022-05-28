@@ -55,8 +55,8 @@ using ManagedIdentitiesServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ManagedIdentitiesServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a
- * `ManagedIdentitiesServiceClient` object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ManagedIdentitiesServiceClient`.
  *
  * To create a concrete instance, see
  * `MakeManagedIdentitiesServiceConnection()`.
@@ -114,12 +114,12 @@ class ManagedIdentitiesServiceConnection {
 };
 
 /**
- * A factory function to construct a `ManagedIdentitiesServiceConnection`
- * object.
+ * A factory function to construct an object of type
+ * `ManagedIdentitiesServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ManagedIdentitiesServiceClient` instance, and methods
- * should be invoked on `ManagedIdentitiesServiceClient`.
+ * should be passed as an argument to the constructor of
+ * ManagedIdentitiesServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ManagedIdentitiesServiceConnection`. Expected options are any of

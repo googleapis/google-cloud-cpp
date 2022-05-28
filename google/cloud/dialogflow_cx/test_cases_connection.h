@@ -53,8 +53,8 @@ using TestCasesLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `TestCasesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `TestCasesClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `TestCasesClient`.
  *
  * To create a concrete instance, see `MakeTestCasesConnection()`.
  *
@@ -120,11 +120,11 @@ class TestCasesConnection {
 };
 
 /**
- * A factory function to construct a `TestCasesConnection` object.
+ * A factory function to construct an object of type `TestCasesConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `TestCasesClient` instance, and methods should be
- * invoked on `TestCasesClient`.
+ * should be passed as an argument to the constructor of TestCasesClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `TestCasesConnection`. Expected options are any of the types in

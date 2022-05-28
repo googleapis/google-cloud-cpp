@@ -52,8 +52,8 @@ using NotificationChannelServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `NotificationChannelServiceClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) in a
- * `NotificationChannelServiceClient` object for use in their own tests.
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `NotificationChannelServiceClient`.
  *
  * To create a concrete instance, see
  * `MakeNotificationChannelServiceConnection()`.
@@ -112,12 +112,12 @@ class NotificationChannelServiceConnection {
 };
 
 /**
- * A factory function to construct a `NotificationChannelServiceConnection`
- * object.
+ * A factory function to construct an object of type
+ * `NotificationChannelServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `NotificationChannelServiceClient` instance, and methods
- * should be invoked on `NotificationChannelServiceClient`.
+ * should be passed as an argument to the constructor of
+ * NotificationChannelServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `NotificationChannelServiceConnection`. Expected options are any of

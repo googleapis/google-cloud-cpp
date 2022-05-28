@@ -54,8 +54,8 @@ using SecurityCenterLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `SecurityCenterClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `SecurityCenterClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SecurityCenterClient`.
  *
  * To create a concrete instance, see `MakeSecurityCenterConnection()`.
  *
@@ -217,11 +217,11 @@ class SecurityCenterConnection {
 };
 
 /**
- * A factory function to construct a `SecurityCenterConnection` object.
+ * A factory function to construct an object of type `SecurityCenterConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `SecurityCenterClient` instance, and methods should be
- * invoked on `SecurityCenterClient`.
+ * should be passed as an argument to the constructor of SecurityCenterClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `SecurityCenterConnection`. Expected options are any of the types in

@@ -52,8 +52,8 @@ using BinauthzManagementServiceV1LimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `BinauthzManagementServiceV1Client`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) in a
- * `BinauthzManagementServiceV1Client` object for use in their own tests.
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `BinauthzManagementServiceV1Client`.
  *
  * To create a concrete instance, see
  * `MakeBinauthzManagementServiceV1Connection()`.
@@ -98,12 +98,12 @@ class BinauthzManagementServiceV1Connection {
 };
 
 /**
- * A factory function to construct a `BinauthzManagementServiceV1Connection`
- * object.
+ * A factory function to construct an object of type
+ * `BinauthzManagementServiceV1Connection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `BinauthzManagementServiceV1Client` instance, and
- * methods should be invoked on `BinauthzManagementServiceV1Client`.
+ * should be passed as an argument to the constructor of
+ * BinauthzManagementServiceV1Client, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `BinauthzManagementServiceV1Connection`. Expected options are any of

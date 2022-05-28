@@ -51,8 +51,8 @@ using CatalogServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `CatalogServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `CatalogServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CatalogServiceClient`.
  *
  * To create a concrete instance, see `MakeCatalogServiceConnection()`.
  *
@@ -79,11 +79,11 @@ class CatalogServiceConnection {
 };
 
 /**
- * A factory function to construct a `CatalogServiceConnection` object.
+ * A factory function to construct an object of type `CatalogServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `CatalogServiceClient` instance, and methods should be
- * invoked on `CatalogServiceClient`.
+ * should be passed as an argument to the constructor of CatalogServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `CatalogServiceConnection`. Expected options are any of the types in

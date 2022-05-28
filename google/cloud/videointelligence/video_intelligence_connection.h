@@ -54,8 +54,8 @@ using VideoIntelligenceServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `VideoIntelligenceServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a
- * `VideoIntelligenceServiceClient` object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `VideoIntelligenceServiceClient`.
  *
  * To create a concrete instance, see
  * `MakeVideoIntelligenceServiceConnection()`.
@@ -77,12 +77,12 @@ class VideoIntelligenceServiceConnection {
 };
 
 /**
- * A factory function to construct a `VideoIntelligenceServiceConnection`
- * object.
+ * A factory function to construct an object of type
+ * `VideoIntelligenceServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `VideoIntelligenceServiceClient` instance, and methods
- * should be invoked on `VideoIntelligenceServiceClient`.
+ * should be passed as an argument to the constructor of
+ * VideoIntelligenceServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `VideoIntelligenceServiceConnection`. Expected options are any of

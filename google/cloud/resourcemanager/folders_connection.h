@@ -53,8 +53,8 @@ using FoldersLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `FoldersClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `FoldersClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `FoldersClient`.
  *
  * To create a concrete instance, see `MakeFoldersConnection()`.
  *
@@ -106,11 +106,11 @@ class FoldersConnection {
 };
 
 /**
- * A factory function to construct a `FoldersConnection` object.
+ * A factory function to construct an object of type `FoldersConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `FoldersClient` instance, and methods should be
- * invoked on `FoldersClient`.
+ * should be passed as an argument to the constructor of FoldersClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `FoldersConnection`. Expected options are any of the types in

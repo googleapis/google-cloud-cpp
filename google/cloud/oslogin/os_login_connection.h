@@ -50,8 +50,8 @@ using OsLoginServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `OsLoginServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `OsLoginServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `OsLoginServiceClient`.
  *
  * To create a concrete instance, see `MakeOsLoginServiceConnection()`.
  *
@@ -86,11 +86,11 @@ class OsLoginServiceConnection {
 };
 
 /**
- * A factory function to construct a `OsLoginServiceConnection` object.
+ * A factory function to construct an object of type `OsLoginServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `OsLoginServiceClient` instance, and methods should be
- * invoked on `OsLoginServiceClient`.
+ * should be passed as an argument to the constructor of OsLoginServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `OsLoginServiceConnection`. Expected options are any of the types in

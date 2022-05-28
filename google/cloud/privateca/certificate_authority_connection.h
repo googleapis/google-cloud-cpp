@@ -55,8 +55,8 @@ using CertificateAuthorityServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `CertificateAuthorityServiceClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) in a
- * `CertificateAuthorityServiceClient` object for use in their own tests.
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CertificateAuthorityServiceClient`.
  *
  * To create a concrete instance, see
  * `MakeCertificateAuthorityServiceConnection()`.
@@ -228,12 +228,12 @@ class CertificateAuthorityServiceConnection {
 };
 
 /**
- * A factory function to construct a `CertificateAuthorityServiceConnection`
- * object.
+ * A factory function to construct an object of type
+ * `CertificateAuthorityServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `CertificateAuthorityServiceClient` instance, and
- * methods should be invoked on `CertificateAuthorityServiceClient`.
+ * should be passed as an argument to the constructor of
+ * CertificateAuthorityServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `CertificateAuthorityServiceConnection`. Expected options are any of

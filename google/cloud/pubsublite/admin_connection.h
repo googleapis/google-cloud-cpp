@@ -54,8 +54,8 @@ using AdminServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `AdminServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `AdminServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AdminServiceClient`.
  *
  * To create a concrete instance, see `MakeAdminServiceConnection()`.
  *
@@ -139,11 +139,11 @@ class AdminServiceConnection {
 };
 
 /**
- * A factory function to construct a `AdminServiceConnection` object.
+ * A factory function to construct an object of type `AdminServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `AdminServiceClient` instance, and methods should be
- * invoked on `AdminServiceClient`.
+ * should be passed as an argument to the constructor of AdminServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `AdminServiceConnection`. Expected options are any of the types in

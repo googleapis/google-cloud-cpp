@@ -55,8 +55,8 @@ using GameServerConfigsServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `GameServerConfigsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a
- * `GameServerConfigsServiceClient` object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `GameServerConfigsServiceClient`.
  *
  * To create a concrete instance, see
  * `MakeGameServerConfigsServiceConnection()`.
@@ -88,12 +88,12 @@ class GameServerConfigsServiceConnection {
 };
 
 /**
- * A factory function to construct a `GameServerConfigsServiceConnection`
- * object.
+ * A factory function to construct an object of type
+ * `GameServerConfigsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `GameServerConfigsServiceClient` instance, and methods
- * should be invoked on `GameServerConfigsServiceClient`.
+ * should be passed as an argument to the constructor of
+ * GameServerConfigsServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `GameServerConfigsServiceConnection`. Expected options are any of

@@ -59,8 +59,8 @@ void BigQueryReadReadRowsStreamingUpdater(
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `BigQueryReadClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `BigQueryReadClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `BigQueryReadClient`.
  *
  * To create a concrete instance, see `MakeBigQueryReadConnection()`.
  *
@@ -89,11 +89,11 @@ class BigQueryReadConnection {
 };
 
 /**
- * A factory function to construct a `BigQueryReadConnection` object.
+ * A factory function to construct an object of type `BigQueryReadConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `BigQueryReadClient` instance, and methods should be
- * invoked on `BigQueryReadClient`.
+ * should be passed as an argument to the constructor of BigQueryReadClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `BigQueryReadConnection`. Expected options are any of the types in

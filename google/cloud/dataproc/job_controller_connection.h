@@ -54,8 +54,8 @@ using JobControllerLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `JobControllerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `JobControllerClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `JobControllerClient`.
  *
  * To create a concrete instance, see `MakeJobControllerConnection()`.
  *
@@ -91,11 +91,11 @@ class JobControllerConnection {
 };
 
 /**
- * A factory function to construct a `JobControllerConnection` object.
+ * A factory function to construct an object of type `JobControllerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `JobControllerClient` instance, and methods should be
- * invoked on `JobControllerClient`.
+ * should be passed as an argument to the constructor of JobControllerClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `JobControllerConnection`. Expected options are any of the types in

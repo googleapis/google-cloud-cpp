@@ -51,8 +51,8 @@ using DeviceManagerLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `DeviceManagerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `DeviceManagerClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DeviceManagerClient`.
  *
  * To create a concrete instance, see `MakeDeviceManagerConnection()`.
  *
@@ -130,11 +130,11 @@ class DeviceManagerConnection {
 };
 
 /**
- * A factory function to construct a `DeviceManagerConnection` object.
+ * A factory function to construct an object of type `DeviceManagerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `DeviceManagerClient` instance, and methods should be
- * invoked on `DeviceManagerClient`.
+ * should be passed as an argument to the constructor of DeviceManagerClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `DeviceManagerConnection`. Expected options are any of the types in

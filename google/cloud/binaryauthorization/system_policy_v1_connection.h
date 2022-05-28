@@ -50,8 +50,8 @@ using SystemPolicyV1LimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `SystemPolicyV1Client`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `SystemPolicyV1Client` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SystemPolicyV1Client`.
  *
  * To create a concrete instance, see `MakeSystemPolicyV1Connection()`.
  *
@@ -70,11 +70,11 @@ class SystemPolicyV1Connection {
 };
 
 /**
- * A factory function to construct a `SystemPolicyV1Connection` object.
+ * A factory function to construct an object of type `SystemPolicyV1Connection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `SystemPolicyV1Client` instance, and methods should be
- * invoked on `SystemPolicyV1Client`.
+ * should be passed as an argument to the constructor of SystemPolicyV1Client,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `SystemPolicyV1Connection`. Expected options are any of the types in

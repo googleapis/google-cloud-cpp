@@ -51,8 +51,8 @@ using OrganizationsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `OrganizationsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `OrganizationsClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `OrganizationsClient`.
  *
  * To create a concrete instance, see `MakeOrganizationsConnection()`.
  *
@@ -84,11 +84,11 @@ class OrganizationsConnection {
 };
 
 /**
- * A factory function to construct a `OrganizationsConnection` object.
+ * A factory function to construct an object of type `OrganizationsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `OrganizationsClient` instance, and methods should be
- * invoked on `OrganizationsClient`.
+ * should be passed as an argument to the constructor of OrganizationsClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `OrganizationsConnection`. Expected options are any of the types in

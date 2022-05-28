@@ -54,8 +54,8 @@ using ConversationDatasetsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ConversationDatasetsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `ConversationDatasetsClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ConversationDatasetsClient`.
  *
  * To create a concrete instance, see `MakeConversationDatasetsConnection()`.
  *
@@ -95,11 +95,12 @@ class ConversationDatasetsConnection {
 };
 
 /**
- * A factory function to construct a `ConversationDatasetsConnection` object.
+ * A factory function to construct an object of type
+ * `ConversationDatasetsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ConversationDatasetsClient` instance, and methods
- * should be invoked on `ConversationDatasetsClient`.
+ * should be passed as an argument to the constructor of
+ * ConversationDatasetsClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ConversationDatasetsConnection`. Expected options are any of the

@@ -52,8 +52,8 @@ using TransitionRouteGroupsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `TransitionRouteGroupsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `TransitionRouteGroupsClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TransitionRouteGroupsClient`.
  *
  * To create a concrete instance, see `MakeTransitionRouteGroupsConnection()`.
  *
@@ -91,11 +91,12 @@ class TransitionRouteGroupsConnection {
 };
 
 /**
- * A factory function to construct a `TransitionRouteGroupsConnection` object.
+ * A factory function to construct an object of type
+ * `TransitionRouteGroupsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `TransitionRouteGroupsClient` instance, and methods
- * should be invoked on `TransitionRouteGroupsClient`.
+ * should be passed as an argument to the constructor of
+ * TransitionRouteGroupsClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `TransitionRouteGroupsConnection`. Expected options are any of the

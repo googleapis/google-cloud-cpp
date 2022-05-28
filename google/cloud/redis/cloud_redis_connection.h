@@ -53,8 +53,8 @@ using CloudRedisLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `CloudRedisClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `CloudRedisClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CloudRedisClient`.
  *
  * To create a concrete instance, see `MakeCloudRedisConnection()`.
  *
@@ -104,11 +104,11 @@ class CloudRedisConnection {
 };
 
 /**
- * A factory function to construct a `CloudRedisConnection` object.
+ * A factory function to construct an object of type `CloudRedisConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `CloudRedisClient` instance, and methods should be
- * invoked on `CloudRedisClient`.
+ * should be passed as an argument to the constructor of CloudRedisClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `CloudRedisConnection`. Expected options are any of the types in

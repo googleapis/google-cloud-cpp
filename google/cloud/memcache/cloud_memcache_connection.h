@@ -54,8 +54,8 @@ using CloudMemcacheLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `CloudMemcacheClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `CloudMemcacheClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CloudMemcacheClient`.
  *
  * To create a concrete instance, see `MakeCloudMemcacheConnection()`.
  *
@@ -95,11 +95,11 @@ class CloudMemcacheConnection {
 };
 
 /**
- * A factory function to construct a `CloudMemcacheConnection` object.
+ * A factory function to construct an object of type `CloudMemcacheConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `CloudMemcacheClient` instance, and methods should be
- * invoked on `CloudMemcacheClient`.
+ * should be passed as an argument to the constructor of CloudMemcacheClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `CloudMemcacheConnection`. Expected options are any of the types in

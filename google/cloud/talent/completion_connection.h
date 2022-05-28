@@ -49,8 +49,8 @@ using CompletionLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `CompletionClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `CompletionClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CompletionClient`.
  *
  * To create a concrete instance, see `MakeCompletionConnection()`.
  *
@@ -67,11 +67,11 @@ class CompletionConnection {
 };
 
 /**
- * A factory function to construct a `CompletionConnection` object.
+ * A factory function to construct an object of type `CompletionConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `CompletionClient` instance, and methods should be
- * invoked on `CompletionClient`.
+ * should be passed as an argument to the constructor of CompletionClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `CompletionConnection`. Expected options are any of the types in

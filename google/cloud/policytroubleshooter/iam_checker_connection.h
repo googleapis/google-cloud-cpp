@@ -49,8 +49,8 @@ using IamCheckerLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `IamCheckerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `IamCheckerClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `IamCheckerClient`.
  *
  * To create a concrete instance, see `MakeIamCheckerConnection()`.
  *
@@ -69,11 +69,11 @@ class IamCheckerConnection {
 };
 
 /**
- * A factory function to construct a `IamCheckerConnection` object.
+ * A factory function to construct an object of type `IamCheckerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `IamCheckerClient` instance, and methods should be
- * invoked on `IamCheckerClient`.
+ * should be passed as an argument to the constructor of IamCheckerClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `IamCheckerConnection`. Expected options are any of the types in

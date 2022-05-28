@@ -54,8 +54,8 @@ using InstanceAdminLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `InstanceAdminClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `InstanceAdminClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `InstanceAdminClient`.
  *
  * To create a concrete instance, see `MakeInstanceAdminConnection()`.
  *
@@ -108,11 +108,11 @@ class InstanceAdminConnection {
 };
 
 /**
- * A factory function to construct a `InstanceAdminConnection` object.
+ * A factory function to construct an object of type `InstanceAdminConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `InstanceAdminClient` instance, and methods should be
- * invoked on `InstanceAdminClient`.
+ * should be passed as an argument to the constructor of InstanceAdminClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `InstanceAdminConnection`. Expected options are any of the types in

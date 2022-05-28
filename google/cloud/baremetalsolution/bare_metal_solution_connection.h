@@ -54,8 +54,8 @@ using BareMetalSolutionLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `BareMetalSolutionClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `BareMetalSolutionClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `BareMetalSolutionClient`.
  *
  * To create a concrete instance, see `MakeBareMetalSolutionConnection()`.
  *
@@ -153,11 +153,12 @@ class BareMetalSolutionConnection {
 };
 
 /**
- * A factory function to construct a `BareMetalSolutionConnection` object.
+ * A factory function to construct an object of type
+ * `BareMetalSolutionConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `BareMetalSolutionClient` instance, and methods should
- * be invoked on `BareMetalSolutionClient`.
+ * should be passed as an argument to the constructor of
+ * BareMetalSolutionClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `BareMetalSolutionConnection`. Expected options are any of the types

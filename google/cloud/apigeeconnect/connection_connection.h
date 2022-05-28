@@ -51,8 +51,8 @@ using ConnectionServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ConnectionServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `ConnectionServiceClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ConnectionServiceClient`.
  *
  * To create a concrete instance, see `MakeConnectionServiceConnection()`.
  *
@@ -70,11 +70,12 @@ class ConnectionServiceConnection {
 };
 
 /**
- * A factory function to construct a `ConnectionServiceConnection` object.
+ * A factory function to construct an object of type
+ * `ConnectionServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ConnectionServiceClient` instance, and methods should
- * be invoked on `ConnectionServiceClient`.
+ * should be passed as an argument to the constructor of
+ * ConnectionServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ConnectionServiceConnection`. Expected options are any of the types

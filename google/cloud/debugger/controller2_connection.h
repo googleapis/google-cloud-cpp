@@ -49,8 +49,8 @@ using Controller2LimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `Controller2Client`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `Controller2Client` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `Controller2Client`.
  *
  * To create a concrete instance, see `MakeController2Connection()`.
  *
@@ -82,11 +82,11 @@ class Controller2Connection {
 };
 
 /**
- * A factory function to construct a `Controller2Connection` object.
+ * A factory function to construct an object of type `Controller2Connection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `Controller2Client` instance, and methods should be
- * invoked on `Controller2Client`.
+ * should be passed as an argument to the constructor of Controller2Client,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `Controller2Connection`. Expected options are any of the types in

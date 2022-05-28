@@ -50,8 +50,8 @@ using EntityTypesLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `EntityTypesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `EntityTypesClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `EntityTypesClient`.
  *
  * To create a concrete instance, see `MakeEntityTypesConnection()`.
  *
@@ -86,11 +86,11 @@ class EntityTypesConnection {
 };
 
 /**
- * A factory function to construct a `EntityTypesConnection` object.
+ * A factory function to construct an object of type `EntityTypesConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `EntityTypesClient` instance, and methods should be
- * invoked on `EntityTypesClient`.
+ * should be passed as an argument to the constructor of EntityTypesClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `EntityTypesConnection`. Expected options are any of the types in

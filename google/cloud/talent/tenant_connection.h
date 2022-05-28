@@ -51,8 +51,8 @@ using TenantServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `TenantServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `TenantServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `TenantServiceClient`.
  *
  * To create a concrete instance, see `MakeTenantServiceConnection()`.
  *
@@ -81,11 +81,11 @@ class TenantServiceConnection {
 };
 
 /**
- * A factory function to construct a `TenantServiceConnection` object.
+ * A factory function to construct an object of type `TenantServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `TenantServiceClient` instance, and methods should be
- * invoked on `TenantServiceClient`.
+ * should be passed as an argument to the constructor of TenantServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `TenantServiceConnection`. Expected options are any of the types in

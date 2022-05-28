@@ -55,8 +55,8 @@ using CloudFilestoreManagerLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `CloudFilestoreManagerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `CloudFilestoreManagerClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CloudFilestoreManagerClient`.
  *
  * To create a concrete instance, see `MakeCloudFilestoreManagerConnection()`.
  *
@@ -108,11 +108,12 @@ class CloudFilestoreManagerConnection {
 };
 
 /**
- * A factory function to construct a `CloudFilestoreManagerConnection` object.
+ * A factory function to construct an object of type
+ * `CloudFilestoreManagerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `CloudFilestoreManagerClient` instance, and methods
- * should be invoked on `CloudFilestoreManagerClient`.
+ * should be passed as an argument to the constructor of
+ * CloudFilestoreManagerClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `CloudFilestoreManagerConnection`. Expected options are any of the

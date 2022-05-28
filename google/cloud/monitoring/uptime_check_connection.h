@@ -51,8 +51,8 @@ using UptimeCheckServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `UptimeCheckServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `UptimeCheckServiceClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `UptimeCheckServiceClient`.
  *
  * To create a concrete instance, see `MakeUptimeCheckServiceConnection()`.
  *
@@ -88,11 +88,12 @@ class UptimeCheckServiceConnection {
 };
 
 /**
- * A factory function to construct a `UptimeCheckServiceConnection` object.
+ * A factory function to construct an object of type
+ * `UptimeCheckServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `UptimeCheckServiceClient` instance, and methods should
- * be invoked on `UptimeCheckServiceClient`.
+ * should be passed as an argument to the constructor of
+ * UptimeCheckServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `UptimeCheckServiceConnection`. Expected options are any of the

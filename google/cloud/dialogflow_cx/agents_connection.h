@@ -53,8 +53,8 @@ using AgentsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `AgentsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `AgentsClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AgentsClient`.
  *
  * To create a concrete instance, see `MakeAgentsConnection()`.
  *
@@ -100,11 +100,11 @@ class AgentsConnection {
 };
 
 /**
- * A factory function to construct a `AgentsConnection` object.
+ * A factory function to construct an object of type `AgentsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `AgentsClient` instance, and methods should be
- * invoked on `AgentsClient`.
+ * should be passed as an argument to the constructor of AgentsClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `AgentsConnection`. Expected options are any of the types in

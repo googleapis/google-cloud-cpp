@@ -50,8 +50,8 @@ using ExperimentsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ExperimentsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `ExperimentsClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ExperimentsClient`.
  *
  * To create a concrete instance, see `MakeExperimentsConnection()`.
  *
@@ -94,11 +94,11 @@ class ExperimentsConnection {
 };
 
 /**
- * A factory function to construct a `ExperimentsConnection` object.
+ * A factory function to construct an object of type `ExperimentsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ExperimentsClient` instance, and methods should be
- * invoked on `ExperimentsClient`.
+ * should be passed as an argument to the constructor of ExperimentsClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ExperimentsConnection`. Expected options are any of the types in

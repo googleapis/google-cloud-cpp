@@ -53,8 +53,8 @@ using EventarcLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `EventarcClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `EventarcClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `EventarcClient`.
  *
  * To create a concrete instance, see `MakeEventarcConnection()`.
  *
@@ -122,11 +122,11 @@ class EventarcConnection {
 };
 
 /**
- * A factory function to construct a `EventarcConnection` object.
+ * A factory function to construct an object of type `EventarcConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `EventarcClient` instance, and methods should be
- * invoked on `EventarcClient`.
+ * should be passed as an argument to the constructor of EventarcClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `EventarcConnection`. Expected options are any of the types in

@@ -54,8 +54,8 @@ using ApiGatewayServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ApiGatewayServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `ApiGatewayServiceClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ApiGatewayServiceClient`.
  *
  * To create a concrete instance, see `MakeApiGatewayServiceConnection()`.
  *
@@ -120,11 +120,12 @@ class ApiGatewayServiceConnection {
 };
 
 /**
- * A factory function to construct a `ApiGatewayServiceConnection` object.
+ * A factory function to construct an object of type
+ * `ApiGatewayServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ApiGatewayServiceClient` instance, and methods should
- * be invoked on `ApiGatewayServiceClient`.
+ * should be passed as an argument to the constructor of
+ * ApiGatewayServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ApiGatewayServiceConnection`. Expected options are any of the types

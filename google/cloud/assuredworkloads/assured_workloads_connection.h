@@ -55,8 +55,8 @@ using AssuredWorkloadsServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `AssuredWorkloadsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a
- * `AssuredWorkloadsServiceClient` object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AssuredWorkloadsServiceClient`.
  *
  * To create a concrete instance, see `MakeAssuredWorkloadsServiceConnection()`.
  *
@@ -92,11 +92,12 @@ class AssuredWorkloadsServiceConnection {
 };
 
 /**
- * A factory function to construct a `AssuredWorkloadsServiceConnection` object.
+ * A factory function to construct an object of type
+ * `AssuredWorkloadsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `AssuredWorkloadsServiceClient` instance, and methods
- * should be invoked on `AssuredWorkloadsServiceClient`.
+ * should be passed as an argument to the constructor of
+ * AssuredWorkloadsServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `AssuredWorkloadsServiceConnection`. Expected options are any of the

@@ -51,8 +51,8 @@ using AccessApprovalLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `AccessApprovalClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `AccessApprovalClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AccessApprovalClient`.
  *
  * To create a concrete instance, see `MakeAccessApprovalConnection()`.
  *
@@ -110,11 +110,11 @@ class AccessApprovalConnection {
 };
 
 /**
- * A factory function to construct a `AccessApprovalConnection` object.
+ * A factory function to construct an object of type `AccessApprovalConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `AccessApprovalClient` instance, and methods should be
- * invoked on `AccessApprovalClient`.
+ * should be passed as an argument to the constructor of AccessApprovalClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `AccessApprovalConnection`. Expected options are any of the types in

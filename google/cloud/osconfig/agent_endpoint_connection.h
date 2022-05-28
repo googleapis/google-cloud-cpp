@@ -51,8 +51,8 @@ using AgentEndpointServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `AgentEndpointServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `AgentEndpointServiceClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AgentEndpointServiceClient`.
  *
  * To create a concrete instance, see `MakeAgentEndpointServiceConnection()`.
  *
@@ -99,11 +99,12 @@ class AgentEndpointServiceConnection {
 };
 
 /**
- * A factory function to construct a `AgentEndpointServiceConnection` object.
+ * A factory function to construct an object of type
+ * `AgentEndpointServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `AgentEndpointServiceClient` instance, and methods
- * should be invoked on `AgentEndpointServiceClient`.
+ * should be passed as an argument to the constructor of
+ * AgentEndpointServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `AgentEndpointServiceConnection`. Expected options are any of the

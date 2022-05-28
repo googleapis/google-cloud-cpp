@@ -53,8 +53,8 @@ using CloudBuildLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `CloudBuildClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `CloudBuildClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CloudBuildClient`.
  *
  * To create a concrete instance, see `MakeCloudBuildConnection()`.
  *
@@ -139,11 +139,11 @@ class CloudBuildConnection {
 };
 
 /**
- * A factory function to construct a `CloudBuildConnection` object.
+ * A factory function to construct an object of type `CloudBuildConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `CloudBuildClient` instance, and methods should be
- * invoked on `CloudBuildClient`.
+ * should be passed as an argument to the constructor of CloudBuildClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `CloudBuildConnection`. Expected options are any of the types in

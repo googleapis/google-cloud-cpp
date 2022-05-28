@@ -54,8 +54,8 @@ using DataplexServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `DataplexServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `DataplexServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DataplexServiceClient`.
  *
  * To create a concrete instance, see `MakeDataplexServiceConnection()`.
  *
@@ -169,11 +169,12 @@ class DataplexServiceConnection {
 };
 
 /**
- * A factory function to construct a `DataplexServiceConnection` object.
+ * A factory function to construct an object of type
+ * `DataplexServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `DataplexServiceClient` instance, and methods should be
- * invoked on `DataplexServiceClient`.
+ * should be passed as an argument to the constructor of DataplexServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `DataplexServiceConnection`. Expected options are any of the types

@@ -51,8 +51,8 @@ using ImageVersionsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ImageVersionsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `ImageVersionsClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ImageVersionsClient`.
  *
  * To create a concrete instance, see `MakeImageVersionsConnection()`.
  *
@@ -71,11 +71,11 @@ class ImageVersionsConnection {
 };
 
 /**
- * A factory function to construct a `ImageVersionsConnection` object.
+ * A factory function to construct an object of type `ImageVersionsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ImageVersionsClient` instance, and methods should be
- * invoked on `ImageVersionsClient`.
+ * should be passed as an argument to the constructor of ImageVersionsClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ImageVersionsConnection`. Expected options are any of the types in

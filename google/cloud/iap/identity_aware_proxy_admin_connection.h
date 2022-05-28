@@ -52,8 +52,8 @@ using IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `IdentityAwareProxyAdminServiceClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) in a
- * `IdentityAwareProxyAdminServiceClient` object for use in their own tests.
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `IdentityAwareProxyAdminServiceClient`.
  *
  * To create a concrete instance, see
  * `MakeIdentityAwareProxyAdminServiceConnection()`.
@@ -101,12 +101,12 @@ class IdentityAwareProxyAdminServiceConnection {
 };
 
 /**
- * A factory function to construct a `IdentityAwareProxyAdminServiceConnection`
- * object.
+ * A factory function to construct an object of type
+ * `IdentityAwareProxyAdminServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `IdentityAwareProxyAdminServiceClient` instance, and
- * methods should be invoked on `IdentityAwareProxyAdminServiceClient`.
+ * should be passed as an argument to the constructor of
+ * IdentityAwareProxyAdminServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `IdentityAwareProxyAdminServiceConnection`. Expected options are any

@@ -51,8 +51,8 @@ using QueryServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `QueryServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `QueryServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `QueryServiceClient`.
  *
  * To create a concrete instance, see `MakeQueryServiceConnection()`.
  *
@@ -69,11 +69,11 @@ class QueryServiceConnection {
 };
 
 /**
- * A factory function to construct a `QueryServiceConnection` object.
+ * A factory function to construct an object of type `QueryServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `QueryServiceClient` instance, and methods should be
- * invoked on `QueryServiceClient`.
+ * should be passed as an argument to the constructor of QueryServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `QueryServiceConnection`. Expected options are any of the types in

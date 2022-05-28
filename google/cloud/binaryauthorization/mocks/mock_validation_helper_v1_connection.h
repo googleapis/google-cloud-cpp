@@ -31,9 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `ValidationHelperV1Connection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors from a `ValidationHelperV1Client`. To do so, construct a
- * `ValidationHelperV1Client` with an instance of this class. Then use the
- * Google Test framework functions to program the behavior of this mock.
+ * including errors, from an object of type `ValidationHelperV1Client`. To do
+ * so, construct an object of type `ValidationHelperV1Client` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with
  * GoogleTest. While the example showcases types from the BigQuery library, the

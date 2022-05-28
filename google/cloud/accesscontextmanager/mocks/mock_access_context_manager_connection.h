@@ -31,9 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `AccessContextManagerConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors from a `AccessContextManagerClient`. To do so, construct a
- * `AccessContextManagerClient` with an instance of this class. Then use the
- * Google Test framework functions to program the behavior of this mock.
+ * including errors, from an object of type `AccessContextManagerClient`. To do
+ * so, construct an object of type `AccessContextManagerClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with
  * GoogleTest. While the example showcases types from the BigQuery library, the

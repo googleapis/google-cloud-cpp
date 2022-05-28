@@ -50,8 +50,8 @@ using ExecutionsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ExecutionsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `ExecutionsClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ExecutionsClient`.
  *
  * To create a concrete instance, see `MakeExecutionsConnection()`.
  *
@@ -84,11 +84,11 @@ class ExecutionsConnection {
 };
 
 /**
- * A factory function to construct a `ExecutionsConnection` object.
+ * A factory function to construct an object of type `ExecutionsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ExecutionsClient` instance, and methods should be
- * invoked on `ExecutionsClient`.
+ * should be passed as an argument to the constructor of ExecutionsClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ExecutionsConnection`. Expected options are any of the types in

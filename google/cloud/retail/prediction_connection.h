@@ -50,8 +50,8 @@ using PredictionServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `PredictionServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `PredictionServiceClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `PredictionServiceClient`.
  *
  * To create a concrete instance, see `MakePredictionServiceConnection()`.
  *
@@ -68,11 +68,12 @@ class PredictionServiceConnection {
 };
 
 /**
- * A factory function to construct a `PredictionServiceConnection` object.
+ * A factory function to construct an object of type
+ * `PredictionServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `PredictionServiceClient` instance, and methods should
- * be invoked on `PredictionServiceClient`.
+ * should be passed as an argument to the constructor of
+ * PredictionServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `PredictionServiceConnection`. Expected options are any of the types

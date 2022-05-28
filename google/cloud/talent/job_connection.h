@@ -53,8 +53,8 @@ using JobServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `JobServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `JobServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `JobServiceClient`.
  *
  * To create a concrete instance, see `MakeJobServiceConnection()`.
  *
@@ -102,11 +102,11 @@ class JobServiceConnection {
 };
 
 /**
- * A factory function to construct a `JobServiceConnection` object.
+ * A factory function to construct an object of type `JobServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `JobServiceClient` instance, and methods should be
- * invoked on `JobServiceClient`.
+ * should be passed as an argument to the constructor of JobServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `JobServiceConnection`. Expected options are any of the types in

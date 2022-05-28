@@ -53,8 +53,8 @@ using LoggingServiceV2LimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `LoggingServiceV2Client`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `LoggingServiceV2Client` object for
- * use in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `LoggingServiceV2Client`.
  *
  * To create a concrete instance, see `MakeLoggingServiceV2Connection()`.
  *
@@ -89,11 +89,12 @@ class LoggingServiceV2Connection {
 };
 
 /**
- * A factory function to construct a `LoggingServiceV2Connection` object.
+ * A factory function to construct an object of type
+ * `LoggingServiceV2Connection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `LoggingServiceV2Client` instance, and methods should be
- * invoked on `LoggingServiceV2Client`.
+ * should be passed as an argument to the constructor of LoggingServiceV2Client,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `LoggingServiceV2Connection`. Expected options are any of the types

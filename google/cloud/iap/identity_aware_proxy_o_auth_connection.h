@@ -52,8 +52,8 @@ using IdentityAwareProxyOAuthServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `IdentityAwareProxyOAuthServiceClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) in a
- * `IdentityAwareProxyOAuthServiceClient` object for use in their own tests.
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `IdentityAwareProxyOAuthServiceClient`.
  *
  * To create a concrete instance, see
  * `MakeIdentityAwareProxyOAuthServiceConnection()`.
@@ -100,12 +100,12 @@ class IdentityAwareProxyOAuthServiceConnection {
 };
 
 /**
- * A factory function to construct a `IdentityAwareProxyOAuthServiceConnection`
- * object.
+ * A factory function to construct an object of type
+ * `IdentityAwareProxyOAuthServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `IdentityAwareProxyOAuthServiceClient` instance, and
- * methods should be invoked on `IdentityAwareProxyOAuthServiceClient`.
+ * should be passed as an argument to the constructor of
+ * IdentityAwareProxyOAuthServiceClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `IdentityAwareProxyOAuthServiceConnection`. Expected options are any

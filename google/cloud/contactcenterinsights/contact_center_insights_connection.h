@@ -55,8 +55,8 @@ using ContactCenterInsightsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ContactCenterInsightsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `ContactCenterInsightsClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ContactCenterInsightsClient`.
  *
  * To create a concrete instance, see `MakeContactCenterInsightsConnection()`.
  *
@@ -230,11 +230,12 @@ class ContactCenterInsightsConnection {
 };
 
 /**
- * A factory function to construct a `ContactCenterInsightsConnection` object.
+ * A factory function to construct an object of type
+ * `ContactCenterInsightsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ContactCenterInsightsClient` instance, and methods
- * should be invoked on `ContactCenterInsightsClient`.
+ * should be passed as an argument to the constructor of
+ * ContactCenterInsightsClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ContactCenterInsightsConnection`. Expected options are any of the

@@ -54,8 +54,8 @@ using ClusterControllerLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ClusterControllerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `ClusterControllerClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ClusterControllerClient`.
  *
  * To create a concrete instance, see `MakeClusterControllerConnection()`.
  *
@@ -96,11 +96,12 @@ class ClusterControllerConnection {
 };
 
 /**
- * A factory function to construct a `ClusterControllerConnection` object.
+ * A factory function to construct an object of type
+ * `ClusterControllerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ClusterControllerClient` instance, and methods should
- * be invoked on `ClusterControllerClient`.
+ * should be passed as an argument to the constructor of
+ * ClusterControllerClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ClusterControllerConnection`. Expected options are any of the types

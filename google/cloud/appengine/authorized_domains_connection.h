@@ -51,8 +51,8 @@ using AuthorizedDomainsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `AuthorizedDomainsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `AuthorizedDomainsClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AuthorizedDomainsClient`.
  *
  * To create a concrete instance, see `MakeAuthorizedDomainsConnection()`.
  *
@@ -70,11 +70,12 @@ class AuthorizedDomainsConnection {
 };
 
 /**
- * A factory function to construct a `AuthorizedDomainsConnection` object.
+ * A factory function to construct an object of type
+ * `AuthorizedDomainsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `AuthorizedDomainsClient` instance, and methods should
- * be invoked on `AuthorizedDomainsClient`.
+ * should be passed as an argument to the constructor of
+ * AuthorizedDomainsClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `AuthorizedDomainsConnection`. Expected options are any of the types

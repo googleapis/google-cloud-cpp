@@ -54,8 +54,8 @@ using ServiceUsageLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ServiceUsageClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `ServiceUsageClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ServiceUsageClient`.
  *
  * To create a concrete instance, see `MakeServiceUsageConnection()`.
  *
@@ -93,11 +93,11 @@ class ServiceUsageConnection {
 };
 
 /**
- * A factory function to construct a `ServiceUsageConnection` object.
+ * A factory function to construct an object of type `ServiceUsageConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ServiceUsageClient` instance, and methods should be
- * invoked on `ServiceUsageClient`.
+ * should be passed as an argument to the constructor of ServiceUsageClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ServiceUsageConnection`. Expected options are any of the types in

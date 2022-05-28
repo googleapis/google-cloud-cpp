@@ -50,8 +50,8 @@ using DlpServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `DlpServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `DlpServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DlpServiceClient`.
  *
  * To create a concrete instance, see `MakeDlpServiceConnection()`.
  *
@@ -183,11 +183,11 @@ class DlpServiceConnection {
 };
 
 /**
- * A factory function to construct a `DlpServiceConnection` object.
+ * A factory function to construct an object of type `DlpServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `DlpServiceClient` instance, and methods should be
- * invoked on `DlpServiceClient`.
+ * should be passed as an argument to the constructor of DlpServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `DlpServiceConnection`. Expected options are any of the types in

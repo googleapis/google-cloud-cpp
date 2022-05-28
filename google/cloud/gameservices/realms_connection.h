@@ -54,8 +54,8 @@ using RealmsServiceLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `RealmsServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `RealmsServiceClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `RealmsServiceClient`.
  *
  * To create a concrete instance, see `MakeRealmsServiceConnection()`.
  *
@@ -88,11 +88,11 @@ class RealmsServiceConnection {
 };
 
 /**
- * A factory function to construct a `RealmsServiceConnection` object.
+ * A factory function to construct an object of type `RealmsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `RealmsServiceClient` instance, and methods should be
- * invoked on `RealmsServiceClient`.
+ * should be passed as an argument to the constructor of RealmsServiceClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `RealmsServiceConnection`. Expected options are any of the types in

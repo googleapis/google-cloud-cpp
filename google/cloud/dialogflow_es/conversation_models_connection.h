@@ -54,8 +54,8 @@ using ConversationModelsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ConversationModelsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `ConversationModelsClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ConversationModelsClient`.
  *
  * To create a concrete instance, see `MakeConversationModelsConnection()`.
  *
@@ -118,11 +118,12 @@ class ConversationModelsConnection {
 };
 
 /**
- * A factory function to construct a `ConversationModelsConnection` object.
+ * A factory function to construct an object of type
+ * `ConversationModelsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ConversationModelsClient` instance, and methods should
- * be invoked on `ConversationModelsClient`.
+ * should be passed as an argument to the constructor of
+ * ConversationModelsClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ConversationModelsConnection`. Expected options are any of the

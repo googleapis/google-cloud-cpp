@@ -51,8 +51,8 @@ using AnswerRecordsLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `AnswerRecordsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `AnswerRecordsClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AnswerRecordsClient`.
  *
  * To create a concrete instance, see `MakeAnswerRecordsConnection()`.
  *
@@ -74,11 +74,11 @@ class AnswerRecordsConnection {
 };
 
 /**
- * A factory function to construct a `AnswerRecordsConnection` object.
+ * A factory function to construct an object of type `AnswerRecordsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `AnswerRecordsClient` instance, and methods should be
- * invoked on `AnswerRecordsClient`.
+ * should be passed as an argument to the constructor of AnswerRecordsClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `AnswerRecordsConnection`. Expected options are any of the types in

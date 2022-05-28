@@ -50,8 +50,8 @@ using ContainerAnalysisLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `ContainerAnalysisClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `ContainerAnalysisClient`
- * object for use in their own tests.
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ContainerAnalysisClient`.
  *
  * To create a concrete instance, see `MakeContainerAnalysisConnection()`.
  *
@@ -80,11 +80,12 @@ class ContainerAnalysisConnection {
 };
 
 /**
- * A factory function to construct a `ContainerAnalysisConnection` object.
+ * A factory function to construct an object of type
+ * `ContainerAnalysisConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `ContainerAnalysisClient` instance, and methods should
- * be invoked on `ContainerAnalysisClient`.
+ * should be passed as an argument to the constructor of
+ * ContainerAnalysisClient, and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `ContainerAnalysisConnection`. Expected options are any of the types
