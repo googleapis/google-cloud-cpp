@@ -123,7 +123,6 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz |
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
-        -Dprotobuf_ABSL_PROVIDER=package \
         -H. -Bcmake-out -GNinja && \
     cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \

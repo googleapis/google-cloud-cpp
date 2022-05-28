@@ -130,7 +130,7 @@ quickstart guides also cover this use-case.
 | [crc32c][crc32c-gh]               |             1.0.6 | Hardware-accelerated CRC32C implementation                                                    |
 | [OpenSSL][OpenSSL-gh]             |             1.0.2 | Crypto functions for Google Cloud Storage authentication                                      |
 | [nlohmann/json][nlohmann-json-gh] |             3.4.0 | JSON for Modern C++                                                                           |
-| [protobuf][protobuf-gh]           |             v21.0 | C++ Micro-generator support                                                                   |
+| [protobuf][protobuf-gh]           |             v21.1 | C++ Micro-generator support                                                                   |
 
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [gRPC-gh]: https://github.com/grpc/grpc
