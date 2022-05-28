@@ -51,8 +51,8 @@ using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `GoldenKitchenSinkClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `GoldenKitchenSinkClient` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `GoldenKitchenSinkClient`.
  *
  * To create a concrete instance, see `MakeGoldenKitchenSinkConnection()`.
  *
@@ -92,11 +92,11 @@ class GoldenKitchenSinkConnection {
 };
 
 /**
- * A factory function to construct a `GoldenKitchenSinkConnection` object.
+ * A factory function to construct an object of type `GoldenKitchenSinkConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `GoldenKitchenSinkClient` instance, and methods should be
- * invoked on `GoldenKitchenSinkClient`.
+ * should be passed as an argument to the constructor of GoldenKitchenSinkClient,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `GoldenKitchenSinkConnection`. Expected options are any of the types in

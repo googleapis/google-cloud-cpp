@@ -113,8 +113,8 @@ Status ConnectionGenerator::GenerateHeader() {
  *
  * This interface defines virtual methods for each of the user-facing overload
  * sets in `$client_class_name$`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) in a `$client_class_name$` object for use
- * in their own tests.
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `$client_class_name$`.
  *
  * To create a concrete instance, see `Make$connection_class_name$()`.
  *
@@ -203,11 +203,11 @@ class $connection_class_name$ {
 
   HeaderPrint(R"""(
 /**
- * A factory function to construct a `$connection_class_name$` object.
+ * A factory function to construct an object of type `$connection_class_name$`.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `$client_class_name$` instance, and methods should be
- * invoked on `$client_class_name$`.
+ * should be passed as an argument to the constructor of $client_class_name$,
+ * and that class used instead.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `$connection_class_name$`. Expected options are any of the types in
