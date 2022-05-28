@@ -116,14 +116,17 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
       // `Read()` call to complete before calling `Finish()`, and we do not
       // want to block waiting for that here.
       using ::google::storage::v2::ReadObjectResponse;
-      struct CaptureByMove {
+      struct WaitForFinish {
+        std::unique_ptr<StreamingRpc> stream;
+        void operator()(future<Status>) {}
+      };
+      struct WaitForRead {
         std::unique_ptr<StreamingRpc> stream;
         void operator()(future<absl::optional<ReadObjectResponse>>) {
-          (void)stream->Finish();
-          stream.reset();
+          (void)stream->Finish().then(WaitForFinish{std::move(stream)});
         }
       };
-      (void)data_future.then(CaptureByMove{std::move(stream_)});
+      (void)data_future.then(WaitForRead{std::move(stream_)});
       return status_;
     }
     auto data = data_future.get();
