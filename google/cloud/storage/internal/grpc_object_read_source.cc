@@ -123,7 +123,8 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
       struct WaitForRead {
         std::unique_ptr<StreamingRpc> stream;
         void operator()(future<absl::optional<ReadObjectResponse>>) {
-          (void)stream->Finish().then(WaitForFinish{std::move(stream)});
+          auto finish = stream->Finish();
+          (void)finish.then(WaitForFinish{std::move(stream)});
         }
       };
       (void)data_future.then(WaitForRead{std::move(stream_)});
