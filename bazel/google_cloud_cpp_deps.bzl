@@ -108,7 +108,7 @@ def google_cloud_cpp_deps():
             urls = [
                 "https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz",
             ],
-            sha256 = "a079db826d7d667ebf7683e8ca75506665f00d79e94a2805620251d4bcd52383",
+            sha256 = "f1a83673cbcaff6346a8fba87a9c02c0f943a4a696b6c7d1b71586d97609db12",
         )
 
     # Load BoringSSL, this is used by gRPC, but as I write this (2021-06-03, circa gRPC-1.37.1), the version used by
