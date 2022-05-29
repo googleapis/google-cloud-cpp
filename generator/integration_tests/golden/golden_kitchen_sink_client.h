@@ -344,7 +344,7 @@ class GoldenKitchenSinkClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
-  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L52}
+  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L51}
   ///
   Status
   DoNothing(Options opts = {});
@@ -352,11 +352,11 @@ class GoldenKitchenSinkClient {
   ///
   /// Does Nothing.
   ///
-  /// @param request @googleapis_link{google::protobuf::Empty,google/protobuf/empty.proto#L52}
+  /// @param request @googleapis_link{google::protobuf::Empty,google/protobuf/empty.proto#L51}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
-  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L52}
+  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L51}
   ///
   Status
   DoNothing(google::protobuf::Empty const& request, Options opts = {});

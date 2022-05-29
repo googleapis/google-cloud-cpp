@@ -37,7 +37,7 @@
 #include "generator/internal/stub_generator.h"
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
-#include <google/protobuf/compiler/cpp/cpp_names.h>
+#include <google/protobuf/compiler/cpp/names.h>
 #include <regex>
 #include <string>
 

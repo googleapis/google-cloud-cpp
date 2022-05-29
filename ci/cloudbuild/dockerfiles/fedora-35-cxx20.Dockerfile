@@ -125,14 +125,15 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.20.1.tar.gz | \
+RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=20 \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out -GNinja && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out -GNinja && \
     cmake --build cmake-out --target install && \
     ldconfig && \
     cd /var/tmp && rm -fr build
