@@ -41,7 +41,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -B cmake-out && \
+      -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -61,7 +61,7 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz |
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
-        -H. -B cmake-out && \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -78,7 +78,7 @@ RUN curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
         -DRE2_BUILD_TESTING=OFF \
-        -H. -B cmake-out && \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -103,7 +103,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.46.3.tar.gz | \
         -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
-        -H. -B cmake-out && \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -124,7 +124,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
         -DCRC32C_BUILD_TESTS=OFF \
         -DCRC32C_BUILD_BENCHMARKS=OFF \
         -DCRC32C_USE_GLOG=OFF \
-        -H. -B cmake-out && \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -146,7 +146,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -DJSON_BuildTests=OFF \
-      -H. -B cmake-out && \
+      -H. -Bcmake-out && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 # ```
