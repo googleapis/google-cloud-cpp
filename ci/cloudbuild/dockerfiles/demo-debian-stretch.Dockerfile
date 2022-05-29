@@ -47,7 +47,6 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
-      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -116,6 +115,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.46.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
@@ -171,8 +171,8 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -DJSON_BuildTests=OFF \
-      -H. -Bcmake-out/nlohmann/json && \
-    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+      -H. -Bcmake-out && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 # ```
 

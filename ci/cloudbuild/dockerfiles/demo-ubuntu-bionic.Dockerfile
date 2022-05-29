@@ -146,8 +146,8 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -DJSON_BuildTests=OFF \
-      -H. -Bcmake-out/nlohmann/json && \
-    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+      -H. -Bcmake-out && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 # ```
 
