@@ -14,16 +14,6 @@
 # limitations under the License.
 # ~~~
 
-# TODO(#8785): Enable on macOS.
-if (APPLE)
-    message(
-        WARNING
-            "Cannot build google/cloud/storagetransfer on Apple platforms."
-            " More details at https://github.com/googleapis/google-cloud-cpp/issues/8785 ."
-    )
-    return()
-endif ()
-
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Storage Transfer API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Storage Transfer API")
