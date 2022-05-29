@@ -56,6 +56,12 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
   for (auto i : {1, 2, 3, 4}) {
     SCOPED_TRACE("Creating objects #" + std::to_string(i));
     auto object_name = MakeRandomObjectName();
+    // GCC issues an apparently false positive maybe-uninitialized warning for
+    // the `precondition` variable.
+#if (__GNUC__ == 11)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
     // ASSERT_TRUE does not work inside this lambda because the return type is
     // not `void`, use `.value()` instead to throw (or crash) on the unexpected
     // error.
@@ -70,6 +76,9 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
       expected.emplace_back(meta.name(), meta.generation());
       precondition = storage::IfGenerationMatch{};
     }
+#if (__GNUC__ == 11)
+#pragma GCC diagnostic pop
+#endif
   }
 
   ListObjectsReader reader = client->ListObjects(bucket_name, Versions(true));
