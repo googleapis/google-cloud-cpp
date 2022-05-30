@@ -189,16 +189,18 @@ future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
-  auto impl = std::make_shared<bigtable_internal::LegacyRowReader>(
-      client_, app_profile_id_, table_name_, std::move(row_set),
-      RowReader::NO_ROWS_LIMIT, std::move(filter), clone_rpc_retry_policy(),
-      clone_rpc_backoff_policy(), metadata_update_policy_,
-      absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
-  return bigtable_internal::MakeRowReader(std::move(impl));
+  return ReadRows(std::move(row_set), RowReader::NO_ROWS_LIMIT,
+                  std::move(filter));
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
+  if (connection_) {
+    return connection_->ReadRows(app_profile_id_, table_name_,
+                                 std::move(row_set), rows_limit,
+                                 std::move(filter));
+  }
+
   auto impl = std::make_shared<bigtable_internal::LegacyRowReader>(
       client_, app_profile_id_, table_name_, std::move(row_set), rows_limit,
       std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),

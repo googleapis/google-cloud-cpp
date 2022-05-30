@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/mocks/mock_data_connection.h"
+#include "google/cloud/bigtable/mocks/mock_row_reader.h"
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/background_threads_impl.h"
@@ -26,8 +27,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace btproto = ::google::bigtable::v2;
+namespace v2 = ::google::bigtable::v2;
+using ::google::cloud::bigtable_mocks::internal::MockDataConnection;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::Matcher;
+using ::testing::Property;
+
+auto const* const kAppProfileId = "the-profile";
+
+Status PermanentError() {
+  return Status(StatusCode::kPermissionDenied, "fail");
+}
+
+RowSet TestRowSet() { return RowSet("r1", "r2"); }
+
+Matcher<RowSet> IsTestRowSet() {
+  return Property(&RowSet::as_proto,
+                  Property(&v2::RowSet::row_keys, ElementsAre("r1", "r2")));
+}
+
+Filter TestFilter() { return Filter::Latest(5); }
+
+Matcher<Filter> IsTestFilter() {
+  return Property(
+      &Filter::as_proto,
+      Property(&v2::RowFilter::cells_per_column_limit_filter, Eq(5)));
+}
 
 /// Define types and functions used in the tests.
 namespace {
@@ -159,15 +188,64 @@ TEST_F(TableTest, ConstructorWithAppProfileAndPolicies) {
 }
 
 TEST_F(TableTest, ConnectionConstructor) {
-  auto conn = std::make_shared<bigtable_mocks::internal::MockDataConnection>();
-  auto table = bigtable_internal::MakeTable(conn, "the-project", "the-instance",
-                                            "the-profile", "the-table");
-  EXPECT_EQ("the-profile", table.app_profile_id());
-  EXPECT_EQ("the-project", table.project_id());
-  EXPECT_EQ("the-instance", table.instance_id());
-  EXPECT_EQ("the-table", table.table_id());
-  EXPECT_EQ("projects/the-project/instances/the-instance/tables/the-table",
-            table.table_name());
+  auto conn = std::make_shared<MockDataConnection>();
+  auto table = bigtable_internal::MakeTable(conn, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  EXPECT_EQ(kAppProfileId, table.app_profile_id());
+  EXPECT_EQ(kProjectId, table.project_id());
+  EXPECT_EQ(kInstanceId, table.instance_id());
+  EXPECT_EQ(kTableId, table.table_id());
+  EXPECT_EQ(kTableName, table.table_name());
+}
+
+TEST_F(TableTest, ReadRows) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](std::string const& app_profile_id,
+                   // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                   std::string const& table_name, bigtable::RowSet row_set,
+                   // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                   std::int64_t rows_limit, bigtable::Filter filter) {
+        EXPECT_EQ(kAppProfileId, app_profile_id);
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_THAT(row_set, IsTestRowSet());
+        EXPECT_EQ(rows_limit, RowReader::NO_ROWS_LIMIT);
+        EXPECT_THAT(filter, IsTestFilter());
+        return bigtable_mocks::internal::MakeTestRowReader({},
+                                                           PermanentError());
+      });
+
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  auto reader = table.ReadRows(TestRowSet(), TestFilter());
+  auto it = reader.begin();
+  EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST_F(TableTest, ReadRowsWithRowLimit) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](std::string const& app_profile_id,
+                   // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                   std::string const& table_name, bigtable::RowSet row_set,
+                   // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                   std::int64_t rows_limit, bigtable::Filter filter) {
+        EXPECT_EQ(kAppProfileId, app_profile_id);
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_THAT(row_set, IsTestRowSet());
+        EXPECT_EQ(rows_limit, 42);
+        EXPECT_THAT(filter, IsTestFilter());
+        return bigtable_mocks::internal::MakeTestRowReader({},
+                                                           PermanentError());
+      });
+
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  auto reader = table.ReadRows(TestRowSet(), 42, TestFilter());
+  auto it = reader.begin();
+  EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_EQ(++it, reader.end());
 }
 
 std::string const kProjectId = "the-project";

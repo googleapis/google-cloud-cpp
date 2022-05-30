@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/idempotency.h"
@@ -58,6 +59,16 @@ Status DataConnectionImpl::Apply(std::string const& app_profile_id,
       request, __func__);
   if (!sor) return std::move(sor).status();
   return Status{};
+}
+
+bigtable::RowReader DataConnectionImpl::ReadRows(
+    std::string const& app_profile_id, std::string const& table_name,
+    bigtable::RowSet row_set, std::int64_t rows_limit,
+    bigtable::Filter filter) {
+  auto impl = std::make_shared<DefaultRowReader>(
+      stub_, app_profile_id, table_name, std::move(row_set), rows_limit,
+      std::move(filter), retry_policy(), backoff_policy());
+  return MakeRowReader(std::move(impl));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
