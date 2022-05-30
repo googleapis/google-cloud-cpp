@@ -69,4 +69,11 @@ function (google_cloud_cpp_add_common_options target)
         target_compile_options(${target}
                                PRIVATE "-Wno-missing-field-initializers")
     endif ()
+    # Require C++ >= 11.  Unfortunately CMake can only express such requirements
+    # starting with CMake == 3.8.0. Note that this is a *minimum* requirement.
+    # It is still possible to compile the library (and its dependencies) with
+    # C++14 or higher.
+    if (NOT ("${CMAKE_VERSION}" VERSION_LESS 3.8))
+        target_compile_features(${target} PUBLIC cxx_std_11)
+    endif ()
 endfunction ()
