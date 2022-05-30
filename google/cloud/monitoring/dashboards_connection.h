@@ -46,6 +46,18 @@ using DashboardsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::DashboardsServiceRetryTraits>;
 
+/**
+ * The `DashboardsServiceConnection` object for `DashboardsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DashboardsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `DashboardsServiceClient`.
+ *
+ * To create a concrete instance, see `MakeDashboardsServiceConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockDashboardsServiceConnection`.
+ */
 class DashboardsServiceConnection {
  public:
   virtual ~DashboardsServiceConnection() = 0;
@@ -71,6 +83,29 @@ class DashboardsServiceConnection {
       google::monitoring::dashboard::v1::UpdateDashboardRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `DashboardsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * DashboardsServiceClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DashboardsServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::monitoring::DashboardsServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `DashboardsServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<DashboardsServiceConnection> MakeDashboardsServiceConnection(
     Options options = {});
 

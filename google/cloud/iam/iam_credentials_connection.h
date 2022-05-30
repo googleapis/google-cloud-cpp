@@ -45,6 +45,18 @@ using IAMCredentialsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         iam_internal::IAMCredentialsRetryTraits>;
 
+/**
+ * The `IAMCredentialsConnection` object for `IAMCredentialsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IAMCredentialsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `IAMCredentialsClient`.
+ *
+ * To create a concrete instance, see `MakeIAMCredentialsConnection()`.
+ *
+ * For mocking, see `iam_mocks::MockIAMCredentialsConnection`.
+ */
 class IAMCredentialsConnection {
  public:
   virtual ~IAMCredentialsConnection() = 0;
@@ -66,6 +78,28 @@ class IAMCredentialsConnection {
       google::iam::credentials::v1::SignJwtRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `IAMCredentialsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of IAMCredentialsClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `IAMCredentialsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::iam::IAMCredentialsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `IAMCredentialsConnection` created by
+ * this function.
+ */
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options = {});
 

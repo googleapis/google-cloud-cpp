@@ -46,6 +46,18 @@ using SessionsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_es_internal::SessionsRetryTraits>;
 
+/**
+ * The `SessionsConnection` object for `SessionsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `SessionsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SessionsClient`.
+ *
+ * To create a concrete instance, see `MakeSessionsConnection()`.
+ *
+ * For mocking, see `dialogflow_es_mocks::MockSessionsConnection`.
+ */
 class SessionsConnection {
  public:
   virtual ~SessionsConnection() = 0;
@@ -62,6 +74,28 @@ class SessionsConnection {
       AsyncStreamingDetectIntent(ExperimentalTag);
 };
 
+/**
+ * A factory function to construct an object of type `SessionsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of SessionsClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `SessionsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_es::SessionsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `SessionsConnection` created by
+ * this function.
+ */
 std::shared_ptr<SessionsConnection> MakeSessionsConnection(
     Options options = {});
 

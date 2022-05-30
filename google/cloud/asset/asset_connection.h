@@ -49,6 +49,18 @@ using AssetServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         asset_internal::AssetServiceRetryTraits>;
 
+/**
+ * The `AssetServiceConnection` object for `AssetServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AssetServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AssetServiceClient`.
+ *
+ * To create a concrete instance, see `MakeAssetServiceConnection()`.
+ *
+ * For mocking, see `asset_mocks::MockAssetServiceConnection`.
+ */
 class AssetServiceConnection {
  public:
   virtual ~AssetServiceConnection() = 0;
@@ -123,6 +135,28 @@ class AssetServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type `AssetServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of AssetServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `AssetServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::asset::AssetServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `AssetServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
     Options options = {});
 

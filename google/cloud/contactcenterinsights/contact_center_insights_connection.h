@@ -49,6 +49,20 @@ using ContactCenterInsightsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         contactcenterinsights_internal::ContactCenterInsightsRetryTraits>;
 
+/**
+ * The `ContactCenterInsightsConnection` object for
+ * `ContactCenterInsightsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ContactCenterInsightsClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ContactCenterInsightsClient`.
+ *
+ * To create a concrete instance, see `MakeContactCenterInsightsConnection()`.
+ *
+ * For mocking, see
+ * `contactcenterinsights_mocks::MockContactCenterInsightsConnection`.
+ */
 class ContactCenterInsightsConnection {
  public:
   virtual ~ContactCenterInsightsConnection() = 0;
@@ -215,6 +229,30 @@ class ContactCenterInsightsConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `ContactCenterInsightsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * ContactCenterInsightsClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ContactCenterInsightsConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * -
+ * `google::cloud::contactcenterinsights::ContactCenterInsightsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ContactCenterInsightsConnection`
+ * created by this function.
+ */
 std::shared_ptr<ContactCenterInsightsConnection>
 MakeContactCenterInsightsConnection(Options options = {});
 

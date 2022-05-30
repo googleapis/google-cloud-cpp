@@ -45,6 +45,18 @@ using EntityTypesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_cx_internal::EntityTypesRetryTraits>;
 
+/**
+ * The `EntityTypesConnection` object for `EntityTypesClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `EntityTypesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `EntityTypesClient`.
+ *
+ * To create a concrete instance, see `MakeEntityTypesConnection()`.
+ *
+ * For mocking, see `dialogflow_cx_mocks::MockEntityTypesConnection`.
+ */
 class EntityTypesConnection {
  public:
   virtual ~EntityTypesConnection() = 0;
@@ -73,6 +85,28 @@ class EntityTypesConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type `EntityTypesConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of EntityTypesClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `EntityTypesConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_cx::EntityTypesPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `EntityTypesConnection` created by
+ * this function.
+ */
 std::shared_ptr<EntityTypesConnection> MakeEntityTypesConnection(
     Options options = {});
 

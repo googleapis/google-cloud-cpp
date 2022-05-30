@@ -49,6 +49,18 @@ using DatabaseAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         spanner_admin_internal::DatabaseAdminRetryTraits>;
 
+/**
+ * The `DatabaseAdminConnection` object for `DatabaseAdminClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DatabaseAdminClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DatabaseAdminClient`.
+ *
+ * To create a concrete instance, see `MakeDatabaseAdminConnection()`.
+ *
+ * For mocking, see `spanner_admin_mocks::MockDatabaseAdminConnection`.
+ */
 class DatabaseAdminConnection {
  public:
   virtual ~DatabaseAdminConnection() = 0;
@@ -124,6 +136,28 @@ class DatabaseAdminConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type `DatabaseAdminConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of DatabaseAdminClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DatabaseAdminConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::spanner_admin::DatabaseAdminPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `DatabaseAdminConnection` created by
+ * this function.
+ */
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options options = {});
 

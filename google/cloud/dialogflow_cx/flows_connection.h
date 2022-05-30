@@ -48,6 +48,18 @@ using FlowsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_cx_internal::FlowsRetryTraits>;
 
+/**
+ * The `FlowsConnection` object for `FlowsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `FlowsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `FlowsClient`.
+ *
+ * To create a concrete instance, see `MakeFlowsConnection()`.
+ *
+ * For mocking, see `dialogflow_cx_mocks::MockFlowsConnection`.
+ */
 class FlowsConnection {
  public:
   virtual ~FlowsConnection() = 0;
@@ -92,6 +104,28 @@ class FlowsConnection {
       google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `FlowsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of FlowsClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `FlowsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_cx::FlowsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `FlowsConnection` created by
+ * this function.
+ */
 std::shared_ptr<FlowsConnection> MakeFlowsConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

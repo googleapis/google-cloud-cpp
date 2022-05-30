@@ -49,6 +49,18 @@ using ProductServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         retail_internal::ProductServiceRetryTraits>;
 
+/**
+ * The `ProductServiceConnection` object for `ProductServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ProductServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ProductServiceClient`.
+ *
+ * To create a concrete instance, see `MakeProductServiceConnection()`.
+ *
+ * For mocking, see `retail_mocks::MockProductServiceConnection`.
+ */
 class ProductServiceConnection {
  public:
   virtual ~ProductServiceConnection() = 0;
@@ -98,6 +110,28 @@ class ProductServiceConnection {
       google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `ProductServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ProductServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ProductServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::retail::ProductServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ProductServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
     Options options = {});
 

@@ -45,6 +45,18 @@ using ProfilerServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         profiler_internal::ProfilerServiceRetryTraits>;
 
+/**
+ * The `ProfilerServiceConnection` object for `ProfilerServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ProfilerServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ProfilerServiceClient`.
+ *
+ * To create a concrete instance, see `MakeProfilerServiceConnection()`.
+ *
+ * For mocking, see `profiler_mocks::MockProfilerServiceConnection`.
+ */
 class ProfilerServiceConnection {
  public:
   virtual ~ProfilerServiceConnection() = 0;
@@ -63,6 +75,29 @@ class ProfilerServiceConnection {
       google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `ProfilerServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ProfilerServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ProfilerServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::profiler::ProfilerServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ProfilerServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
     Options options = {});
 

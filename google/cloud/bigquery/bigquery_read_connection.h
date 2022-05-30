@@ -54,6 +54,18 @@ void BigQueryReadReadRowsStreamingUpdater(
     google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
     google::cloud::bigquery::storage::v1::ReadRowsRequest& request);
 
+/**
+ * The `BigQueryReadConnection` object for `BigQueryReadClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `BigQueryReadClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `BigQueryReadClient`.
+ *
+ * To create a concrete instance, see `MakeBigQueryReadConnection()`.
+ *
+ * For mocking, see `bigquery_mocks::MockBigQueryReadConnection`.
+ */
 class BigQueryReadConnection {
  public:
   virtual ~BigQueryReadConnection() = 0;
@@ -76,6 +88,28 @@ class BigQueryReadConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type `BigQueryReadConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of BigQueryReadClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `BigQueryReadConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::bigquery::BigQueryReadPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `BigQueryReadConnection` created by
+ * this function.
+ */
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options = {});
 

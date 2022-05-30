@@ -46,6 +46,18 @@ using MetadataServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dataplex_internal::MetadataServiceRetryTraits>;
 
+/**
+ * The `MetadataServiceConnection` object for `MetadataServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `MetadataServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `MetadataServiceClient`.
+ *
+ * To create a concrete instance, see `MakeMetadataServiceConnection()`.
+ *
+ * For mocking, see `dataplex_mocks::MockMetadataServiceConnection`.
+ */
 class MetadataServiceConnection {
  public:
   virtual ~MetadataServiceConnection() = 0;
@@ -80,6 +92,29 @@ class MetadataServiceConnection {
       google::cloud::dataplex::v1::ListPartitionsRequest request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `MetadataServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of MetadataServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `MetadataServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dataplex::MetadataServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `MetadataServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
     Options options = {});
 

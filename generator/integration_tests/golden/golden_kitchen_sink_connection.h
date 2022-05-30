@@ -46,6 +46,18 @@ using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenKitchenSinkRetryTraits>;
 
+/**
+ * The `GoldenKitchenSinkConnection` object for `GoldenKitchenSinkClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `GoldenKitchenSinkClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `GoldenKitchenSinkClient`.
+ *
+ * To create a concrete instance, see `MakeGoldenKitchenSinkConnection()`.
+ *
+ * For mocking, see `golden_mocks::MockGoldenKitchenSinkConnection`.
+ */
 class GoldenKitchenSinkConnection {
  public:
   virtual ~GoldenKitchenSinkConnection() = 0;
@@ -79,6 +91,28 @@ class GoldenKitchenSinkConnection {
   AsyncAppendRows(ExperimentalTag);
 };
 
+/**
+ * A factory function to construct an object of type `GoldenKitchenSinkConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of GoldenKitchenSinkClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `GoldenKitchenSinkConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::golden::GoldenKitchenSinkPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `GoldenKitchenSinkConnection` created by
+ * this function.
+ */
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options = {});
 

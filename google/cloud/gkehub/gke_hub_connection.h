@@ -48,6 +48,18 @@ using GkeHubLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         gkehub_internal::GkeHubRetryTraits>;
 
+/**
+ * The `GkeHubConnection` object for `GkeHubClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `GkeHubClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `GkeHubClient`.
+ *
+ * To create a concrete instance, see `MakeGkeHubConnection()`.
+ *
+ * For mocking, see `gkehub_mocks::MockGkeHubConnection`.
+ */
 class GkeHubConnection {
  public:
   virtual ~GkeHubConnection() = 0;
@@ -92,6 +104,28 @@ class GkeHubConnection {
       google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `GkeHubConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of GkeHubClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `GkeHubConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::gkehub::GkeHubPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `GkeHubConnection` created by
+ * this function.
+ */
 std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

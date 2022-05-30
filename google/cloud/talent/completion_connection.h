@@ -44,6 +44,18 @@ using CompletionLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         talent_internal::CompletionRetryTraits>;
 
+/**
+ * The `CompletionConnection` object for `CompletionClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CompletionClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CompletionClient`.
+ *
+ * To create a concrete instance, see `MakeCompletionConnection()`.
+ *
+ * For mocking, see `talent_mocks::MockCompletionConnection`.
+ */
 class CompletionConnection {
  public:
   virtual ~CompletionConnection() = 0;
@@ -54,6 +66,28 @@ class CompletionConnection {
   CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `CompletionConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of CompletionClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `CompletionConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::talent::CompletionPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `CompletionConnection` created by
+ * this function.
+ */
 std::shared_ptr<CompletionConnection> MakeCompletionConnection(
     Options options = {});
 

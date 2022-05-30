@@ -47,6 +47,18 @@ using BigQueryWriteLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigquery_internal::BigQueryWriteRetryTraits>;
 
+/**
+ * The `BigQueryWriteConnection` object for `BigQueryWriteClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `BigQueryWriteClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `BigQueryWriteClient`.
+ *
+ * To create a concrete instance, see `MakeBigQueryWriteConnection()`.
+ *
+ * For mocking, see `bigquery_mocks::MockBigQueryWriteConnection`.
+ */
 class BigQueryWriteConnection {
  public:
   virtual ~BigQueryWriteConnection() = 0;
@@ -84,6 +96,28 @@ class BigQueryWriteConnection {
       google::cloud::bigquery::storage::v1::FlushRowsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `BigQueryWriteConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of BigQueryWriteClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `BigQueryWriteConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::bigquery::BigQueryWritePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `BigQueryWriteConnection` created by
+ * this function.
+ */
 std::shared_ptr<BigQueryWriteConnection> MakeBigQueryWriteConnection(
     Options options = {});
 

@@ -46,6 +46,19 @@ using AuthorizedCertificatesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         appengine_internal::AuthorizedCertificatesRetryTraits>;
 
+/**
+ * The `AuthorizedCertificatesConnection` object for
+ * `AuthorizedCertificatesClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AuthorizedCertificatesClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AuthorizedCertificatesClient`.
+ *
+ * To create a concrete instance, see `MakeAuthorizedCertificatesConnection()`.
+ *
+ * For mocking, see `appengine_mocks::MockAuthorizedCertificatesConnection`.
+ */
 class AuthorizedCertificatesConnection {
  public:
   virtual ~AuthorizedCertificatesConnection() = 0;
@@ -72,6 +85,29 @@ class AuthorizedCertificatesConnection {
       google::appengine::v1::DeleteAuthorizedCertificateRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `AuthorizedCertificatesConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * AuthorizedCertificatesClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `AuthorizedCertificatesConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::appengine::AuthorizedCertificatesPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `AuthorizedCertificatesConnection`
+ * created by this function.
+ */
 std::shared_ptr<AuthorizedCertificatesConnection>
 MakeAuthorizedCertificatesConnection(Options options = {});
 

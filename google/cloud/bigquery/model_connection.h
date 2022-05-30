@@ -45,6 +45,18 @@ using ModelServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigquery_internal::ModelServiceRetryTraits>;
 
+/**
+ * The `ModelServiceConnection` object for `ModelServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ModelServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ModelServiceClient`.
+ *
+ * To create a concrete instance, see `MakeModelServiceConnection()`.
+ *
+ * For mocking, see `bigquery_mocks::MockModelServiceConnection`.
+ */
 class ModelServiceConnection {
  public:
   virtual ~ModelServiceConnection() = 0;
@@ -64,6 +76,28 @@ class ModelServiceConnection {
       google::cloud::bigquery::v2::DeleteModelRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `ModelServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ModelServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ModelServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::bigquery::ModelServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ModelServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<ModelServiceConnection> MakeModelServiceConnection(
     Options options = {});
 

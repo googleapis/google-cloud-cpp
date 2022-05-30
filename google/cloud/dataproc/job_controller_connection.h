@@ -49,6 +49,18 @@ using JobControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dataproc_internal::JobControllerRetryTraits>;
 
+/**
+ * The `JobControllerConnection` object for `JobControllerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `JobControllerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `JobControllerClient`.
+ *
+ * To create a concrete instance, see `MakeJobControllerConnection()`.
+ *
+ * For mocking, see `dataproc_mocks::MockJobControllerConnection`.
+ */
 class JobControllerConnection {
  public:
   virtual ~JobControllerConnection() = 0;
@@ -78,6 +90,28 @@ class JobControllerConnection {
       google::cloud::dataproc::v1::DeleteJobRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `JobControllerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of JobControllerClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `JobControllerConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dataproc::JobControllerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `JobControllerConnection` created by
+ * this function.
+ */
 std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
     Options options = {});
 

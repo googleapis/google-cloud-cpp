@@ -48,6 +48,18 @@ using ProjectsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         resourcemanager_internal::ProjectsRetryTraits>;
 
+/**
+ * The `ProjectsConnection` object for `ProjectsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ProjectsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ProjectsClient`.
+ *
+ * To create a concrete instance, see `MakeProjectsConnection()`.
+ *
+ * For mocking, see `resourcemanager_mocks::MockProjectsConnection`.
+ */
 class ProjectsConnection {
  public:
   virtual ~ProjectsConnection() = 0;
@@ -95,6 +107,28 @@ class ProjectsConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `ProjectsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ProjectsClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ProjectsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::resourcemanager::ProjectsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ProjectsConnection` created by
+ * this function.
+ */
 std::shared_ptr<ProjectsConnection> MakeProjectsConnection(
     Options options = {});
 

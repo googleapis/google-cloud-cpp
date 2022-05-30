@@ -45,6 +45,18 @@ using ServiceControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         servicecontrol_internal::ServiceControllerRetryTraits>;
 
+/**
+ * The `ServiceControllerConnection` object for `ServiceControllerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ServiceControllerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ServiceControllerClient`.
+ *
+ * To create a concrete instance, see `MakeServiceControllerConnection()`.
+ *
+ * For mocking, see `servicecontrol_mocks::MockServiceControllerConnection`.
+ */
 class ServiceControllerConnection {
  public:
   virtual ~ServiceControllerConnection() = 0;
@@ -58,6 +70,29 @@ class ServiceControllerConnection {
       google::api::servicecontrol::v1::ReportRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `ServiceControllerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * ServiceControllerClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ServiceControllerConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::servicecontrol::ServiceControllerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ServiceControllerConnection` created
+ * by this function.
+ */
 std::shared_ptr<ServiceControllerConnection> MakeServiceControllerConnection(
     Options options = {});
 

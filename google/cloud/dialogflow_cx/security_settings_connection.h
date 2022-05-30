@@ -46,6 +46,20 @@ using SecuritySettingsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_cx_internal::SecuritySettingsServiceRetryTraits>;
 
+/**
+ * The `SecuritySettingsServiceConnection` object for
+ * `SecuritySettingsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `SecuritySettingsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `SecuritySettingsServiceClient`.
+ *
+ * To create a concrete instance, see `MakeSecuritySettingsServiceConnection()`.
+ *
+ * For mocking, see
+ * `dialogflow_cx_mocks::MockSecuritySettingsServiceConnection`.
+ */
 class SecuritySettingsServiceConnection {
  public:
   virtual ~SecuritySettingsServiceConnection() = 0;
@@ -76,6 +90,29 @@ class SecuritySettingsServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `SecuritySettingsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * SecuritySettingsServiceClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `SecuritySettingsServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_cx::SecuritySettingsServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `SecuritySettingsServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<SecuritySettingsServiceConnection>
 MakeSecuritySettingsServiceConnection(Options options = {});
 

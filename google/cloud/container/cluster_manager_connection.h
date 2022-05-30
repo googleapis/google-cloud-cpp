@@ -46,6 +46,18 @@ using ClusterManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         container_internal::ClusterManagerRetryTraits>;
 
+/**
+ * The `ClusterManagerConnection` object for `ClusterManagerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ClusterManagerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ClusterManagerClient`.
+ *
+ * To create a concrete instance, see `MakeClusterManagerConnection()`.
+ *
+ * For mocking, see `container_mocks::MockClusterManagerConnection`.
+ */
 class ClusterManagerConnection {
  public:
   virtual ~ClusterManagerConnection() = 0;
@@ -150,6 +162,28 @@ class ClusterManagerConnection {
       google::container::v1::ListUsableSubnetworksRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `ClusterManagerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ClusterManagerClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ClusterManagerConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::container::ClusterManagerPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ClusterManagerConnection` created by
+ * this function.
+ */
 std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
     Options options = {});
 

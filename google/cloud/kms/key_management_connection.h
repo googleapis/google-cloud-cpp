@@ -46,6 +46,18 @@ using KeyManagementServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         kms_internal::KeyManagementServiceRetryTraits>;
 
+/**
+ * The `KeyManagementServiceConnection` object for `KeyManagementServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `KeyManagementServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `KeyManagementServiceClient`.
+ *
+ * To create a concrete instance, see `MakeKeyManagementServiceConnection()`.
+ *
+ * For mocking, see `kms_mocks::MockKeyManagementServiceConnection`.
+ */
 class KeyManagementServiceConnection {
  public:
   virtual ~KeyManagementServiceConnection() = 0;
@@ -142,6 +154,29 @@ class KeyManagementServiceConnection {
       google::cloud::kms::v1::GenerateRandomBytesRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `KeyManagementServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * KeyManagementServiceClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `KeyManagementServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::kms::KeyManagementServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `KeyManagementServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<KeyManagementServiceConnection>
 MakeKeyManagementServiceConnection(Options options = {});
 

@@ -45,6 +45,18 @@ using EkmServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         kms_internal::EkmServiceRetryTraits>;
 
+/**
+ * The `EkmServiceConnection` object for `EkmServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `EkmServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `EkmServiceClient`.
+ *
+ * To create a concrete instance, see `MakeEkmServiceConnection()`.
+ *
+ * For mocking, see `kms_mocks::MockEkmServiceConnection`.
+ */
 class EkmServiceConnection {
  public:
   virtual ~EkmServiceConnection() = 0;
@@ -64,6 +76,28 @@ class EkmServiceConnection {
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `EkmServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of EkmServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `EkmServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::kms::EkmServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `EkmServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<EkmServiceConnection> MakeEkmServiceConnection(
     Options options = {});
 

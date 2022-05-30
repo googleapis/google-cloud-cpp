@@ -49,6 +49,18 @@ using SpeechLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         speech_internal::SpeechRetryTraits>;
 
+/**
+ * The `SpeechConnection` object for `SpeechClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `SpeechClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SpeechClient`.
+ *
+ * To create a concrete instance, see `MakeSpeechConnection()`.
+ *
+ * For mocking, see `speech_mocks::MockSpeechConnection`.
+ */
 class SpeechConnection {
  public:
   virtual ~SpeechConnection() = 0;
@@ -69,6 +81,28 @@ class SpeechConnection {
       AsyncStreamingRecognize(ExperimentalTag);
 };
 
+/**
+ * A factory function to construct an object of type `SpeechConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of SpeechClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `SpeechConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::speech::SpeechPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `SpeechConnection` created by
+ * this function.
+ */
 std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

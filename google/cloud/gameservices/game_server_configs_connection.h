@@ -49,6 +49,21 @@ using GameServerConfigsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         gameservices_internal::GameServerConfigsServiceRetryTraits>;
 
+/**
+ * The `GameServerConfigsServiceConnection` object for
+ * `GameServerConfigsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `GameServerConfigsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `GameServerConfigsServiceClient`.
+ *
+ * To create a concrete instance, see
+ * `MakeGameServerConfigsServiceConnection()`.
+ *
+ * For mocking, see
+ * `gameservices_mocks::MockGameServerConfigsServiceConnection`.
+ */
 class GameServerConfigsServiceConnection {
  public:
   virtual ~GameServerConfigsServiceConnection() = 0;
@@ -72,6 +87,29 @@ class GameServerConfigsServiceConnection {
       google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `GameServerConfigsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * GameServerConfigsServiceClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `GameServerConfigsServiceConnection`. Expected options are any of
+ * the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::gameservices::GameServerConfigsServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `GameServerConfigsServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<GameServerConfigsServiceConnection>
 MakeGameServerConfigsServiceConnection(Options options = {});
 

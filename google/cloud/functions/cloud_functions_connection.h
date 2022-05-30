@@ -49,6 +49,19 @@ using CloudFunctionsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         functions_internal::CloudFunctionsServiceRetryTraits>;
 
+/**
+ * The `CloudFunctionsServiceConnection` object for
+ * `CloudFunctionsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CloudFunctionsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CloudFunctionsServiceClient`.
+ *
+ * To create a concrete instance, see `MakeCloudFunctionsServiceConnection()`.
+ *
+ * For mocking, see `functions_mocks::MockCloudFunctionsServiceConnection`.
+ */
 class CloudFunctionsServiceConnection {
  public:
   virtual ~CloudFunctionsServiceConnection() = 0;
@@ -95,6 +108,29 @@ class CloudFunctionsServiceConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `CloudFunctionsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * CloudFunctionsServiceClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `CloudFunctionsServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::functions::CloudFunctionsServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `CloudFunctionsServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<CloudFunctionsServiceConnection>
 MakeCloudFunctionsServiceConnection(Options options = {});
 

@@ -48,6 +48,18 @@ using WorkflowsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         workflows_internal::WorkflowsRetryTraits>;
 
+/**
+ * The `WorkflowsConnection` object for `WorkflowsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `WorkflowsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `WorkflowsClient`.
+ *
+ * To create a concrete instance, see `MakeWorkflowsConnection()`.
+ *
+ * For mocking, see `workflows_mocks::MockWorkflowsConnection`.
+ */
 class WorkflowsConnection {
  public:
   virtual ~WorkflowsConnection() = 0;
@@ -73,6 +85,28 @@ class WorkflowsConnection {
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `WorkflowsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of WorkflowsClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `WorkflowsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::workflows::WorkflowsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `WorkflowsConnection` created by
+ * this function.
+ */
 std::shared_ptr<WorkflowsConnection> MakeWorkflowsConnection(
     Options options = {});
 

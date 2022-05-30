@@ -45,6 +45,18 @@ using TopicStatsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         pubsublite_internal::TopicStatsServiceRetryTraits>;
 
+/**
+ * The `TopicStatsServiceConnection` object for `TopicStatsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `TopicStatsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TopicStatsServiceClient`.
+ *
+ * To create a concrete instance, see `MakeTopicStatsServiceConnection()`.
+ *
+ * For mocking, see `pubsublite_mocks::MockTopicStatsServiceConnection`.
+ */
 class TopicStatsServiceConnection {
  public:
   virtual ~TopicStatsServiceConnection() = 0;
@@ -64,6 +76,29 @@ class TopicStatsServiceConnection {
       google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `TopicStatsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * TopicStatsServiceClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `TopicStatsServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::pubsublite::TopicStatsServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `TopicStatsServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<TopicStatsServiceConnection> MakeTopicStatsServiceConnection(
     Options options = {});
 

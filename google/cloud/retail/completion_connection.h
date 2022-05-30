@@ -48,6 +48,18 @@ using CompletionServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         retail_internal::CompletionServiceRetryTraits>;
 
+/**
+ * The `CompletionServiceConnection` object for `CompletionServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CompletionServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CompletionServiceClient`.
+ *
+ * To create a concrete instance, see `MakeCompletionServiceConnection()`.
+ *
+ * For mocking, see `retail_mocks::MockCompletionServiceConnection`.
+ */
 class CompletionServiceConnection {
  public:
   virtual ~CompletionServiceConnection() = 0;
@@ -63,6 +75,29 @@ class CompletionServiceConnection {
       google::cloud::retail::v2::ImportCompletionDataRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `CompletionServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * CompletionServiceClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `CompletionServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::retail::CompletionServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `CompletionServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
     Options options = {});
 

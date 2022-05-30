@@ -49,6 +49,18 @@ using AdminServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         pubsublite_internal::AdminServiceRetryTraits>;
 
+/**
+ * The `AdminServiceConnection` object for `AdminServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AdminServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AdminServiceClient`.
+ *
+ * To create a concrete instance, see `MakeAdminServiceConnection()`.
+ *
+ * For mocking, see `pubsublite_mocks::MockAdminServiceConnection`.
+ */
 class AdminServiceConnection {
  public:
   virtual ~AdminServiceConnection() = 0;
@@ -126,6 +138,28 @@ class AdminServiceConnection {
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `AdminServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of AdminServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `AdminServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::pubsublite::AdminServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `AdminServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<AdminServiceConnection> MakeAdminServiceConnection(
     Options options = {});
 

@@ -48,6 +48,18 @@ using FoldersLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         resourcemanager_internal::FoldersRetryTraits>;
 
+/**
+ * The `FoldersConnection` object for `FoldersClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `FoldersClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `FoldersClient`.
+ *
+ * To create a concrete instance, see `MakeFoldersConnection()`.
+ *
+ * For mocking, see `resourcemanager_mocks::MockFoldersConnection`.
+ */
 class FoldersConnection {
  public:
   virtual ~FoldersConnection() = 0;
@@ -93,6 +105,28 @@ class FoldersConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `FoldersConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of FoldersClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `FoldersConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::resourcemanager::FoldersPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `FoldersConnection` created by
+ * this function.
+ */
 std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

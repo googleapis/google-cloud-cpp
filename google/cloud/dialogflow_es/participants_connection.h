@@ -46,6 +46,18 @@ using ParticipantsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_es_internal::ParticipantsRetryTraits>;
 
+/**
+ * The `ParticipantsConnection` object for `ParticipantsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ParticipantsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ParticipantsClient`.
+ *
+ * To create a concrete instance, see `MakeParticipantsConnection()`.
+ *
+ * For mocking, see `dialogflow_es_mocks::MockParticipantsConnection`.
+ */
 class ParticipantsConnection {
  public:
   virtual ~ParticipantsConnection() = 0;
@@ -84,6 +96,28 @@ class ParticipantsConnection {
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `ParticipantsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ParticipantsClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `ParticipantsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_es::ParticipantsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `ParticipantsConnection` created by
+ * this function.
+ */
 std::shared_ptr<ParticipantsConnection> MakeParticipantsConnection(
     Options options = {});
 

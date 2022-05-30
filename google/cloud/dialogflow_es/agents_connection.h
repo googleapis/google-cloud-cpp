@@ -48,6 +48,18 @@ using AgentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_es_internal::AgentsRetryTraits>;
 
+/**
+ * The `AgentsConnection` object for `AgentsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AgentsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AgentsClient`.
+ *
+ * To create a concrete instance, see `MakeAgentsConnection()`.
+ *
+ * For mocking, see `dialogflow_es_mocks::MockAgentsConnection`.
+ */
 class AgentsConnection {
  public:
   virtual ~AgentsConnection() = 0;
@@ -83,6 +95,28 @@ class AgentsConnection {
       google::cloud::dialogflow::v2::GetValidationResultRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `AgentsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of AgentsClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `AgentsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_es::AgentsPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `AgentsConnection` created by
+ * this function.
+ */
 std::shared_ptr<AgentsConnection> MakeAgentsConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

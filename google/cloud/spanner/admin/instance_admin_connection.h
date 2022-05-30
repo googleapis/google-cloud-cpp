@@ -49,6 +49,18 @@ using InstanceAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         spanner_admin_internal::InstanceAdminRetryTraits>;
 
+/**
+ * The `InstanceAdminConnection` object for `InstanceAdminClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `InstanceAdminClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `InstanceAdminClient`.
+ *
+ * To create a concrete instance, see `MakeInstanceAdminConnection()`.
+ *
+ * For mocking, see `spanner_admin_mocks::MockInstanceAdminConnection`.
+ */
 class InstanceAdminConnection {
  public:
   virtual ~InstanceAdminConnection() = 0;
@@ -95,6 +107,28 @@ class InstanceAdminConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `InstanceAdminConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of InstanceAdminClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `InstanceAdminConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::spanner_admin::InstanceAdminPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `InstanceAdminConnection` created by
+ * this function.
+ */
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options = {});
 

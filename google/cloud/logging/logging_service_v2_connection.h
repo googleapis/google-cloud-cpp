@@ -48,6 +48,18 @@ using LoggingServiceV2LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         logging_internal::LoggingServiceV2RetryTraits>;
 
+/**
+ * The `LoggingServiceV2Connection` object for `LoggingServiceV2Client`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `LoggingServiceV2Client`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `LoggingServiceV2Client`.
+ *
+ * To create a concrete instance, see `MakeLoggingServiceV2Connection()`.
+ *
+ * For mocking, see `logging_mocks::MockLoggingServiceV2Connection`.
+ */
 class LoggingServiceV2Connection {
  public:
   virtual ~LoggingServiceV2Connection() = 0;
@@ -76,6 +88,29 @@ class LoggingServiceV2Connection {
       AsyncTailLogEntries(ExperimentalTag);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `LoggingServiceV2Connection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of LoggingServiceV2Client,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `LoggingServiceV2Connection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::logging::LoggingServiceV2PolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `LoggingServiceV2Connection` created
+ * by this function.
+ */
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options = {});
 

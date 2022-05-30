@@ -46,6 +46,18 @@ using KnowledgeBasesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_es_internal::KnowledgeBasesRetryTraits>;
 
+/**
+ * The `KnowledgeBasesConnection` object for `KnowledgeBasesClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `KnowledgeBasesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `KnowledgeBasesClient`.
+ *
+ * To create a concrete instance, see `MakeKnowledgeBasesConnection()`.
+ *
+ * For mocking, see `dialogflow_es_mocks::MockKnowledgeBasesConnection`.
+ */
 class KnowledgeBasesConnection {
  public:
   virtual ~KnowledgeBasesConnection() = 0;
@@ -72,6 +84,28 @@ class KnowledgeBasesConnection {
       google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `KnowledgeBasesConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of KnowledgeBasesClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `KnowledgeBasesConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_es::KnowledgeBasesPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `KnowledgeBasesConnection` created by
+ * this function.
+ */
 std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(
     Options options = {});
 

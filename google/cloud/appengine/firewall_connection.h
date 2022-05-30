@@ -45,6 +45,18 @@ using FirewallLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         appengine_internal::FirewallRetryTraits>;
 
+/**
+ * The `FirewallConnection` object for `FirewallClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `FirewallClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `FirewallClient`.
+ *
+ * To create a concrete instance, see `MakeFirewallConnection()`.
+ *
+ * For mocking, see `appengine_mocks::MockFirewallConnection`.
+ */
 class FirewallConnection {
  public:
   virtual ~FirewallConnection() = 0;
@@ -71,6 +83,28 @@ class FirewallConnection {
       google::appengine::v1::DeleteIngressRuleRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `FirewallConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of FirewallClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `FirewallConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::appengine::FirewallPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `FirewallConnection` created by
+ * this function.
+ */
 std::shared_ptr<FirewallConnection> MakeFirewallConnection(
     Options options = {});
 

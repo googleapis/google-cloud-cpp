@@ -44,6 +44,18 @@ using Controller2LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         debugger_internal::Controller2RetryTraits>;
 
+/**
+ * The `Controller2Connection` object for `Controller2Client`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `Controller2Client`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `Controller2Client`.
+ *
+ * To create a concrete instance, see `MakeController2Connection()`.
+ *
+ * For mocking, see `debugger_mocks::MockController2Connection`.
+ */
 class Controller2Connection {
  public:
   virtual ~Controller2Connection() = 0;
@@ -69,6 +81,28 @@ class Controller2Connection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type `Controller2Connection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of Controller2Client,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `Controller2Connection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::debugger::Controller2PolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `Controller2Connection` created by
+ * this function.
+ */
 std::shared_ptr<Controller2Connection> MakeController2Connection(
     Options options = {});
 

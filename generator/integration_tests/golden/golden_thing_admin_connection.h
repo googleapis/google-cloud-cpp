@@ -47,6 +47,18 @@ using GoldenThingAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenThingAdminRetryTraits>;
 
+/**
+ * The `GoldenThingAdminConnection` object for `GoldenThingAdminClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `GoldenThingAdminClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `GoldenThingAdminClient`.
+ *
+ * To create a concrete instance, see `MakeGoldenThingAdminConnection()`.
+ *
+ * For mocking, see `golden_mocks::MockGoldenThingAdminConnection`.
+ */
 class GoldenThingAdminConnection {
  public:
   virtual ~GoldenThingAdminConnection() = 0;
@@ -114,6 +126,28 @@ class GoldenThingAdminConnection {
   AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `GoldenThingAdminConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of GoldenThingAdminClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `GoldenThingAdminConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::golden::GoldenThingAdminPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `GoldenThingAdminConnection` created by
+ * this function.
+ */
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     Options options = {});
 

@@ -46,6 +46,18 @@ using CompanyServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         talent_internal::CompanyServiceRetryTraits>;
 
+/**
+ * The `CompanyServiceConnection` object for `CompanyServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CompanyServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CompanyServiceClient`.
+ *
+ * To create a concrete instance, see `MakeCompanyServiceConnection()`.
+ *
+ * For mocking, see `talent_mocks::MockCompanyServiceConnection`.
+ */
 class CompanyServiceConnection {
  public:
   virtual ~CompanyServiceConnection() = 0;
@@ -68,6 +80,28 @@ class CompanyServiceConnection {
       google::cloud::talent::v4::ListCompaniesRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `CompanyServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of CompanyServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `CompanyServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::talent::CompanyServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `CompanyServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<CompanyServiceConnection> MakeCompanyServiceConnection(
     Options options = {});
 

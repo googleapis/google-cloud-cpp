@@ -46,6 +46,18 @@ using SecretManagerServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         secretmanager_internal::SecretManagerServiceRetryTraits>;
 
+/**
+ * The `SecretManagerServiceConnection` object for `SecretManagerServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `SecretManagerServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `SecretManagerServiceClient`.
+ *
+ * To create a concrete instance, see `MakeSecretManagerServiceConnection()`.
+ *
+ * For mocking, see `secretmanager_mocks::MockSecretManagerServiceConnection`.
+ */
 class SecretManagerServiceConnection {
  public:
   virtual ~SecretManagerServiceConnection() = 0;
@@ -110,6 +122,29 @@ class SecretManagerServiceConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `SecretManagerServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * SecretManagerServiceClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `SecretManagerServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::secretmanager::SecretManagerServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `SecretManagerServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<SecretManagerServiceConnection>
 MakeSecretManagerServiceConnection(Options options = {});
 

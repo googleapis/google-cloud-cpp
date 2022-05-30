@@ -46,6 +46,18 @@ using SearchServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         retail_internal::SearchServiceRetryTraits>;
 
+/**
+ * The `SearchServiceConnection` object for `SearchServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `SearchServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SearchServiceClient`.
+ *
+ * To create a concrete instance, see `MakeSearchServiceConnection()`.
+ *
+ * For mocking, see `retail_mocks::MockSearchServiceConnection`.
+ */
 class SearchServiceConnection {
  public:
   virtual ~SearchServiceConnection() = 0;
@@ -56,6 +68,28 @@ class SearchServiceConnection {
   Search(google::cloud::retail::v2::SearchRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `SearchServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of SearchServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `SearchServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::retail::SearchServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `SearchServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
     Options options = {});
 

@@ -44,6 +44,18 @@ using PublisherLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         eventarc_internal::PublisherRetryTraits>;
 
+/**
+ * The `PublisherConnection` object for `PublisherClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `PublisherClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `PublisherClient`.
+ *
+ * To create a concrete instance, see `MakePublisherConnection()`.
+ *
+ * For mocking, see `eventarc_mocks::MockPublisherConnection`.
+ */
 class PublisherConnection {
  public:
   virtual ~PublisherConnection() = 0;
@@ -63,6 +75,28 @@ class PublisherConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type `PublisherConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of PublisherClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `PublisherConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::eventarc::PublisherPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `PublisherConnection` created by
+ * this function.
+ */
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Options options = {});
 

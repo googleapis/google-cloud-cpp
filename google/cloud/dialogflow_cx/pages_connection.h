@@ -45,6 +45,18 @@ using PagesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_cx_internal::PagesRetryTraits>;
 
+/**
+ * The `PagesConnection` object for `PagesClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `PagesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `PagesClient`.
+ *
+ * To create a concrete instance, see `MakePagesConnection()`.
+ *
+ * For mocking, see `dialogflow_cx_mocks::MockPagesConnection`.
+ */
 class PagesConnection {
  public:
   virtual ~PagesConnection() = 0;
@@ -67,6 +79,28 @@ class PagesConnection {
       google::cloud::dialogflow::cx::v3::DeletePageRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `PagesConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of PagesClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `PagesConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_cx::PagesPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `PagesConnection` created by
+ * this function.
+ */
 std::shared_ptr<PagesConnection> MakePagesConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

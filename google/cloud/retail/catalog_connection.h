@@ -46,6 +46,18 @@ using CatalogServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         retail_internal::CatalogServiceRetryTraits>;
 
+/**
+ * The `CatalogServiceConnection` object for `CatalogServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CatalogServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CatalogServiceClient`.
+ *
+ * To create a concrete instance, see `MakeCatalogServiceConnection()`.
+ *
+ * For mocking, see `retail_mocks::MockCatalogServiceConnection`.
+ */
 class CatalogServiceConnection {
  public:
   virtual ~CatalogServiceConnection() = 0;
@@ -66,6 +78,28 @@ class CatalogServiceConnection {
       google::cloud::retail::v2::GetDefaultBranchRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `CatalogServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of CatalogServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `CatalogServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::retail::CatalogServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `CatalogServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<CatalogServiceConnection> MakeCatalogServiceConnection(
     Options options = {});
 

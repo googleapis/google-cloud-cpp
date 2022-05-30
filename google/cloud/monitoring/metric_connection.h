@@ -46,6 +46,18 @@ using MetricServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::MetricServiceRetryTraits>;
 
+/**
+ * The `MetricServiceConnection` object for `MetricServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `MetricServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `MetricServiceClient`.
+ *
+ * To create a concrete instance, see `MakeMetricServiceConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockMetricServiceConnection`.
+ */
 class MetricServiceConnection {
  public:
   virtual ~MetricServiceConnection() = 0;
@@ -86,6 +98,28 @@ class MetricServiceConnection {
       google::monitoring::v3::CreateTimeSeriesRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `MetricServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of MetricServiceClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `MetricServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::monitoring::MetricServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `MetricServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<MetricServiceConnection> MakeMetricServiceConnection(
     Options options = {});
 

@@ -49,6 +49,20 @@ using AssuredWorkloadsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         assuredworkloads_internal::AssuredWorkloadsServiceRetryTraits>;
 
+/**
+ * The `AssuredWorkloadsServiceConnection` object for
+ * `AssuredWorkloadsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AssuredWorkloadsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AssuredWorkloadsServiceClient`.
+ *
+ * To create a concrete instance, see `MakeAssuredWorkloadsServiceConnection()`.
+ *
+ * For mocking, see
+ * `assuredworkloads_mocks::MockAssuredWorkloadsServiceConnection`.
+ */
 class AssuredWorkloadsServiceConnection {
  public:
   virtual ~AssuredWorkloadsServiceConnection() = 0;
@@ -77,6 +91,29 @@ class AssuredWorkloadsServiceConnection {
       google::cloud::assuredworkloads::v1::ListWorkloadsRequest request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `AssuredWorkloadsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * AssuredWorkloadsServiceClient, and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `AssuredWorkloadsServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::assuredworkloads::AssuredWorkloadsServicePolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `AssuredWorkloadsServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<AssuredWorkloadsServiceConnection>
 MakeAssuredWorkloadsServiceConnection(Options options = {});
 

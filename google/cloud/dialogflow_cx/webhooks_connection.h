@@ -45,6 +45,18 @@ using WebhooksLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dialogflow_cx_internal::WebhooksRetryTraits>;
 
+/**
+ * The `WebhooksConnection` object for `WebhooksClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `WebhooksClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `WebhooksClient`.
+ *
+ * To create a concrete instance, see `MakeWebhooksConnection()`.
+ *
+ * For mocking, see `dialogflow_cx_mocks::MockWebhooksConnection`.
+ */
 class WebhooksConnection {
  public:
   virtual ~WebhooksConnection() = 0;
@@ -67,6 +79,28 @@ class WebhooksConnection {
       google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `WebhooksConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of WebhooksClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `WebhooksConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::dialogflow_cx::WebhooksPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `WebhooksConnection` created by
+ * this function.
+ */
 std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(
     Options options = {});
 
