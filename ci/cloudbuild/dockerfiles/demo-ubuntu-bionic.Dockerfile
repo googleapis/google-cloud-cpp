@@ -73,7 +73,7 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz |
 
 # ```bash
 WORKDIR /var/tmp/build/re2
-RUN curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
+RUN curl -sSL https://github.com/google/re2/archive/2022-04-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
