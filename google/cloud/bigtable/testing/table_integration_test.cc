@@ -112,6 +112,7 @@ void TableAdminTestEnvironment::TearDown() {
 }
 
 void TableIntegrationTest::SetUp() {
+  data_connection_ = bigtable_internal::MakeDataConnection();
   data_client_ = bigtable::MakeDataClient(TableTestEnvironment::project_id(),
                                           TableTestEnvironment::instance_id());
 
@@ -153,7 +154,14 @@ void TableIntegrationTest::SetUp() {
   }
 }
 
-bigtable::Table TableIntegrationTest::GetTable() {
+bigtable::Table TableIntegrationTest::GetTable(
+    std::string const& implementation) {
+  if (implementation == "with-data-connection") {
+    return bigtable_internal::MakeTable(data_connection_,
+                                        TableTestEnvironment::project_id(),
+                                        TableTestEnvironment::instance_id(), "",
+                                        TableTestEnvironment::table_id());
+  }
   return bigtable::Table(data_client_, TableTestEnvironment::table_id());
 }
 

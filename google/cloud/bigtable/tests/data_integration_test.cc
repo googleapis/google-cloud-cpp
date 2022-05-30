@@ -34,8 +34,16 @@ using ::std::chrono::milliseconds;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
-using DataIntegrationTest =
+using DataIntegrationTestClientOnly =
     ::google::cloud::bigtable::testing::TableIntegrationTest;
+
+class DataIntegrationTest : public DataIntegrationTestClientOnly,
+                            public ::testing::WithParamInterface<std::string> {
+};
+
+INSTANTIATE_TEST_SUITE_P(, DataIntegrationTest,
+                         ::testing::Values("with-data-connection",
+                                           "with-data-client"));
 
 /// Use Table::Apply() to insert a single row.
 void Apply(Table& table, std::string const& row_key,
@@ -76,7 +84,7 @@ std::string const kFamily2 = "family2";
 std::string const kFamily3 = "family3";
 std::string const kFamily4 = "family4";
 
-TEST_F(DataIntegrationTest, TableApply) {
+TEST_F(DataIntegrationTestClientOnly, TableApply) {
   auto table = GetTable();
 
   std::string const row_key = "row-key-1";
@@ -90,7 +98,7 @@ TEST_F(DataIntegrationTest, TableApply) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableBulkApply) {
+TEST_F(DataIntegrationTestClientOnly, TableBulkApply) {
   auto table = GetTable();
 
   std::vector<Cell> created{{"row-key-1", kFamily4, "c0", 1000, "v1000"},
@@ -115,7 +123,7 @@ TEST_F(DataIntegrationTest, TableBulkApply) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableSingleRow) {
+TEST_F(DataIntegrationTestClientOnly, TableSingleRow) {
   std::string const row_key = "row-key-1";
   auto table = GetTable();
 
@@ -132,7 +140,7 @@ TEST_F(DataIntegrationTest, TableSingleRow) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableReadRowTest) {
+TEST_F(DataIntegrationTestClientOnly, TableReadRowTest) {
   auto table = GetTable();
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
@@ -149,7 +157,7 @@ TEST_F(DataIntegrationTest, TableReadRowTest) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
+TEST_F(DataIntegrationTestClientOnly, TableReadRowNotExistTest) {
   auto table = GetTable();
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
@@ -162,7 +170,7 @@ TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
   EXPECT_FALSE(row_cell->first);
 }
 
-TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
+TEST_F(DataIntegrationTestClientOnly, TableReadRowsAllRows) {
   auto table = GetTable();
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
@@ -194,7 +202,7 @@ TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
   CheckEqualUnordered(created, MoveCellsFromReader(read4));
 }
 
-TEST_F(DataIntegrationTest, TableReadRowsPartialRows) {
+TEST_F(DataIntegrationTestClientOnly, TableReadRowsPartialRows) {
   auto table = GetTable();
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
@@ -236,7 +244,7 @@ TEST_F(DataIntegrationTest, TableReadRowsPartialRows) {
   }
 }
 
-TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
+TEST_F(DataIntegrationTestClientOnly, TableReadRowsNoRows) {
   auto table = GetTable();
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
@@ -262,22 +270,21 @@ TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
   CheckEqualUnordered(expected, MoveCellsFromReader(read3));
 }
 
-TEST_F(DataIntegrationTest, TableReadRowsWrongTable) {
-  std::string const table_id = RandomTableId();
+TEST_P(DataIntegrationTest, TableReadRowsWrongTable) {
+  auto table = GetTable(GetParam());
+  auto other_table = table.WithNewTarget(table.project_id(),
+                                         table.instance_id(), RandomTableId());
 
-  Table table(data_client_, table_id);
-
-  auto read1 = table.ReadRows(RowSet(RowRange::InfiniteRange()),
-                              Filter::PassAllFilter());
+  auto read1 = other_table.ReadRows(RowSet(RowRange::InfiniteRange()),
+                                    Filter::PassAllFilter());
 
   auto it = read1.begin();
   ASSERT_NE(read1.end(), it);
-  EXPECT_FALSE(*it);
-  ++it;
+  EXPECT_FALSE(*it++);
   EXPECT_EQ(read1.end(), it);
 }
 
-TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
+TEST_F(DataIntegrationTestClientOnly, TableCheckAndMutateRowPass) {
   auto table = GetTable();
   std::string const key = "row-key";
 
@@ -295,7 +302,7 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
+TEST_F(DataIntegrationTestClientOnly, TableCheckAndMutateRowFail) {
   auto table = GetTable();
   std::string const key = "row-key";
 
@@ -313,7 +320,7 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
+TEST_F(DataIntegrationTestClientOnly, TableReadModifyWriteAppendValueTest) {
   auto table = GetTable();
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
@@ -349,7 +356,8 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
                       actual_cells_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
+TEST_F(DataIntegrationTestClientOnly,
+       TableReadModifyWriteRowIncrementAmountTest) {
   auto table = GetTable();
   std::string const key = "row-key";
 
@@ -376,7 +384,7 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
+TEST_F(DataIntegrationTestClientOnly, TableReadModifyWriteRowMultipleTest) {
   auto table = GetTable();
   std::string const key = "row-key";
 
@@ -420,7 +428,7 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
+TEST_F(DataIntegrationTestClientOnly, TableCellValueInt64Test) {
   auto table = GetTable();
   std::string const key = "row-key";
 
@@ -455,7 +463,7 @@ TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
+TEST_F(DataIntegrationTestClientOnly, TableReadMultipleCellsBigValue) {
   auto table = GetTable();
 
   std::string const row_key = "row-key-1";
@@ -507,7 +515,7 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTest, TableApplyWithLogging) {
+TEST_F(DataIntegrationTestClientOnly, TableApplyWithLogging) {
   // In our ci builds, we set GOOGLE_CLOUD_CPP_ENABLE_TRACING to log our tests,
   // by default. We should unset this variable and create a fresh client in
   // order to have a conclusive test.
