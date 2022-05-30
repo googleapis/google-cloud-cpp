@@ -85,6 +85,11 @@ export GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"
 # Cloud BigQuery configuration parameters
 export GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE="projects/bigquery-public-data/datasets/usa_names/tables/usa_1910_current"
 
+# Document AI
+export GOOGLE_CLOUD_CPP_DOCUMENTAI_TEST_LOCATION_ID="us"
+export GOOGLE_CLOUD_CPP_DOCUMENTAI_TEST_PROCESSOR_ID="3cb572567f9df97f"
+export GOOGLE_CLOUD_CPP_DOCUMENTAI_TEST_FILENAME="${PROJECT_ROOT}/google/cloud/documentai/quickstart/resources/invoice.pdf"
+
 # Cloud IAM configuration parameters
 export GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT="iam-credentials-test-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 export GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT="iam-test-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
