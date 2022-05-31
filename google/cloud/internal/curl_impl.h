@@ -59,21 +59,29 @@ class CurlImpl {
   void SetUrl(std::string const& endpoint, RestRequest const& request,
               RestRequest::HttpParameters const& additional_parameters);
 
-  inline std::string LastClientIpAddress() const {
+  std::string LastClientIpAddress() const {
     return factory_->LastClientIpAddress();
   }
+
   HttpStatusCode status_code() const {
     return static_cast<HttpStatusCode>(http_code_);
   }
-  inline std::multimap<std::string, std::string> const& headers() const {
+
+  std::multimap<std::string, std::string> const& headers() const {
     return received_headers_;
   }
+
   std::string const& url() const { return url_; }
+
+  bool HasUnreadData() const { return !(curl_closed_ && spill_offset_ == 0); }
+
   std::string MakeEscapedString(std::string const& payload) {
     return handle_.MakeEscapedString(payload).get();
   }
+
   Status MakeRequest(CurlImpl::HttpMethod method,
                      std::vector<absl::Span<char const>> payload = {});
+
   StatusOr<std::size_t> Read(absl::Span<char> output);
 
  private:
