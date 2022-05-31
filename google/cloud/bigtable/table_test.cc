@@ -45,14 +45,14 @@ Status PermanentError() {
 
 RowSet TestRowSet() { return RowSet("r1", "r2"); }
 
-Matcher<RowSet> IsTestRowSet() {
+Matcher<RowSet const&> IsTestRowSet() {
   return Property(&RowSet::as_proto,
                   Property(&v2::RowSet::row_keys, ElementsAre("r1", "r2")));
 }
 
 Filter TestFilter() { return Filter::Latest(5); }
 
-Matcher<Filter> IsTestFilter() {
+Matcher<Filter const&> IsTestFilter() {
   return Property(
       &Filter::as_proto,
       Property(&v2::RowFilter::cells_per_column_limit_filter, Eq(5)));
@@ -202,10 +202,9 @@ TEST_F(TableTest, ReadRows) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](std::string const& app_profile_id,
-                   // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                   std::string const& table_name, bigtable::RowSet row_set,
-                   // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                   std::int64_t rows_limit, bigtable::Filter filter) {
+                   std::string const& table_name,
+                   bigtable::RowSet const& row_set, std::int64_t rows_limit,
+                   bigtable::Filter const& filter) {
         EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_THAT(row_set, IsTestRowSet());
@@ -227,10 +226,9 @@ TEST_F(TableTest, ReadRowsWithRowLimit) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](std::string const& app_profile_id,
-                   // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                   std::string const& table_name, bigtable::RowSet row_set,
-                   // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                   std::int64_t rows_limit, bigtable::Filter filter) {
+                   std::string const& table_name,
+                   bigtable::RowSet const& row_set, std::int64_t rows_limit,
+                   bigtable::Filter const& filter) {
         EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_THAT(row_set, IsTestRowSet());
