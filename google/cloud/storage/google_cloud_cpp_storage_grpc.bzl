@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_storage_grpc - DO NOT EDIT."""
 
 google_cloud_cpp_storage_grpc_hdrs = [
+    "async_client.h",
     "grpc_plugin.h",
     "internal/async_connection.h",
     "internal/async_connection_impl.h",
@@ -44,6 +45,7 @@ google_cloud_cpp_storage_grpc_hdrs = [
 ]
 
 google_cloud_cpp_storage_grpc_srcs = [
+    "async_client.cc",
     "grpc_plugin.cc",
     "internal/async_connection_impl.cc",
     "internal/grpc_bucket_access_control_parser.cc",
