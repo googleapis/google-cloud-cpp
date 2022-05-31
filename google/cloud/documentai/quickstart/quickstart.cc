@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) try {
 
   namespace gc = ::google::cloud;
   namespace documentai = ::google::cloud::documentai;
-  // The Document AI service requires using an endpoint matching the processors
+  // The Document AI service requires using an endpoint matching the processor's
   // location.
   auto options = gc::Options{}.set<gc::EndpointOption>(
       location + "-documentai.googleapis.com");

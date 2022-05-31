@@ -1,13 +1,9 @@
 # Cloud Document AI API C++ Client Library
 
-:warning: This library will not be declared GA until the quickstart is operable.
-
 This directory contains an idiomatic C++ client library for the
 [Cloud Document AI API][cloud-service], a service that uses machine
 learning on a scalable cloud-based platform to help your organization
 efficiently scan, analyze, and understand documents.
-
-This library is **experimental**. Its APIs are subject to change without notice.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -61,7 +57,7 @@ int main(int argc, char* argv[]) try {
 
   namespace gc = ::google::cloud;
   namespace documentai = ::google::cloud::documentai;
-  // The Document AI service requires using an endpoint matching the processors
+  // The Document AI service requires using an endpoint matching the processor's
   // location.
   auto options = gc::Options{}.set<gc::EndpointOption>(
       location + "-documentai.googleapis.com");
