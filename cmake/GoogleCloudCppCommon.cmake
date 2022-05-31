@@ -101,22 +101,19 @@ elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
     set(GOOGLE_CLOUD_CPP_COMMON_TAG
         "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag")
     set(GOOGLE_CLOUD_CPP_DOXYGEN_VERSION "${PROJECT_VERSION}")
+    if ("${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
+        # Match the version string used in publish-docs.sh
+        set(GOOGLE_CLOUD_CPP_DOXYGEN_VERSION "HEAD")
+    endif ()
     if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
-        if ("${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
-            # Match the version string used in publish-docs.sh
-            set(GOOGLE_CLOUD_CPP_DOXYGEN_VERSION "HEAD")
-        endif ()
         set(DOXYGEN_TAGFILES
             "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/"
         )
+        include(GoogleapisConfig)
+        list(APPEND DOXYGEN_ALIASES
+            "googleapis_dev_link{2}=\"https://googleapis.dev/cpp/google-cloud-\\1/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/\\2\""
+        )
     endif ()
-
-    # Make sure we append to DOXYGEN_ALIASES, instead of overwriting it.
-    include(GoogleapisConfig)
-    set(DOXYGEN_ALIASES
-        ${DOXYGEN_ALIASES}
-        "bq_mock_link=\"https://googleapis.dev/cpp/google-cloud-bigquery/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/bigquery-read-mock.html\""
-    )
 
     set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS)
     set(GOOGLE_CLOUD_CPP_DOXYGEN_POSSIBLE_INPUTS

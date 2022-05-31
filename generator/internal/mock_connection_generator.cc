@@ -68,7 +68,7 @@ Status MockConnectionGenerator::GenerateHeader() {
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @bq_mock_link
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class $mock_connection_class_name$ : public $product_namespace$::$connection_class_name$ {
  public:
