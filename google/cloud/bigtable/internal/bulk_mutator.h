@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/retry_policy.h"
@@ -49,13 +50,16 @@ class BulkMutatorState {
    *
    * Returns the original index of any successful operations.
    */
-  std::vector<int> OnRead(google::bigtable::v2::MutateRowsResponse& response);
+  std::vector<int> OnRead(google::bigtable::v2::MutateRowsResponse&& response);
 
   /// Handle the result of a `Finish()` operation on the MutateRows() RPC.
   void OnFinish(google::cloud::Status finish_status);
 
   /// Terminate the retry loop and return all the failures.
   std::vector<FailedMutation> OnRetryDone() &&;
+
+  /// The status of the most recent stream.
+  Status last_status() const { return last_status_; };
 
  private:
   /// The current request proto.
@@ -115,6 +119,9 @@ class BulkMutator {
   /// Synchronously send one batch request to the given stub.
   grpc::Status MakeOneRequest(bigtable::DataClient& client,
                               grpc::ClientContext& client_context);
+
+  /// Synchronously send one batch request to the given stub.
+  Status MakeOneRequest(bigtable_internal::BigtableStub& stub);
 
   /// Give up on any pending mutations, move them to the failures array.
   std::vector<FailedMutation> OnRetryDone() &&;

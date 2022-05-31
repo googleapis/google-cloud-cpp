@@ -47,7 +47,6 @@ auto const* const kAppProfile = "the-profile";
 auto const* const kTableName =
     "projects/the-project/instances/the-instance/tables/the-table";
 
-// Match the number of expected row keys in a request in EXPECT_CALL
 Matcher<ReadRowsRequest const&> HasCorrectResourceNames() {
   return AllOf(Property(&ReadRowsRequest::app_profile_id, Eq(kAppProfile)),
                Property(&ReadRowsRequest::table_name, Eq(kTableName)));

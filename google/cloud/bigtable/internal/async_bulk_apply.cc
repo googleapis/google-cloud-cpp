@@ -76,7 +76,7 @@ void AsyncRetryBulkApply::StartIteration(CompletionQueue cq) {
 
 void AsyncRetryBulkApply::OnRead(
     google::bigtable::v2::MutateRowsResponse response) {
-  state_.OnRead(response);
+  state_.OnRead(std::move(response));
 }
 
 void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status const& status) {
