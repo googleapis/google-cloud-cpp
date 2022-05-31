@@ -40,8 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * GoogleTest. While the example showcases types from the BigQuery library, the
  * underlying principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]:
- * https://googleapis.dev/cpp/google-cloud-bigquery/latest/bigquery-read-mock.html
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockGameServerClustersServiceConnection
     : public gameservices::GameServerClustersServiceConnection {
