@@ -33,9 +33,14 @@ namespace v2 = ::google::bigtable::v2;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::bigtable::testing::MockDataRetryPolicy;
 using ::google::cloud::bigtable::testing::MockIdempotentMutationPolicy;
+using ::google::cloud::bigtable::testing::MockReadRowsStream;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ByMove;
+using ::testing::ElementsAre;
+using ::testing::Eq;
+using ::testing::Matcher;
+using ::testing::Property;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
 
@@ -60,6 +65,21 @@ bigtable::SingleRowMutation IdempotentMutation() {
 bigtable::SingleRowMutation NonIdempotentMutation() {
   return bigtable::SingleRowMutation("row",
                                      {bigtable::SetCell("fam", "col", "val")});
+}
+
+bigtable::RowSet TestRowSet() { return bigtable::RowSet("r1", "r2"); }
+
+Matcher<v2::ReadRowsRequest const&> HasTestRowSet() {
+  return Property(&v2::ReadRowsRequest::rows,
+                  Property(&v2::RowSet::row_keys, ElementsAre("r1", "r2")));
+}
+
+bigtable::Filter TestFilter() { return bigtable::Filter::Latest(5); }
+
+Matcher<v2::ReadRowsRequest const&> HasTestFilter() {
+  return Property(
+      &v2::ReadRowsRequest::filter,
+      Property(&v2::RowFilter::cells_per_column_limit_filter, Eq(5)));
 }
 
 class DataConnectionTest : public ::testing::Test {
@@ -242,6 +262,29 @@ TEST_F(DataConnectionTest, ApplyRetryIdempotentOnly) {
   auto status =
       connection->Apply(kAppProfile, kTableName, NonIdempotentMutation());
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
+}
+
+// The DefaultRowReader is tested extensively in `default_row_reader_test.cc`.
+// In this test, we just verify that the configuration is passed along.
+TEST_F(DataConnectionTest, ReadRows) {
+  EXPECT_CALL(*mock_stub_, ReadRows)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>,
+                   google::bigtable::v2::ReadRowsRequest const& request) {
+        EXPECT_THAT(kAppProfile, request.app_profile_id());
+        EXPECT_THAT(kTableName, request.table_name());
+        EXPECT_THAT(42, request.rows_limit());
+        EXPECT_THAT(request, HasTestRowSet());
+        EXPECT_THAT(request, HasTestFilter());
+
+        auto stream = absl::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto connection = TestConnection();
+  auto reader = connection->ReadRows(kAppProfile, kTableName, TestRowSet(), 42,
+                                     TestFilter());
+  EXPECT_EQ(reader.begin(), reader.end());
 }
 
 }  // namespace

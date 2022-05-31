@@ -41,6 +41,12 @@ class DataConnectionImpl : public DataConnection {
   Status Apply(std::string const& app_profile_id, std::string const& table_name,
                bigtable::SingleRowMutation mut) override;
 
+  bigtable::RowReader ReadRows(std::string const& app_profile_id,
+                               std::string const& table_name,
+                               bigtable::RowSet row_set,
+                               std::int64_t rows_limit,
+                               bigtable::Filter filter) override;
+
  private:
   std::unique_ptr<DataRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
