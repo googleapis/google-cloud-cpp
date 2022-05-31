@@ -105,13 +105,14 @@ elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
         # Match the version string used in publish-docs.sh
         set(GOOGLE_CLOUD_CPP_DOXYGEN_VERSION "HEAD")
     endif ()
+    list(
+        APPEND
+        DOXYGEN_ALIASES
+        "googleapis_dev_link{2}=\"https://googleapis.dev/cpp/google-cloud-\\1/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/\\2\""
+    )
     if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
         set(DOXYGEN_TAGFILES
             "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/"
-        )
-        include(GoogleapisConfig)
-        list(APPEND DOXYGEN_ALIASES
-            "googleapis_dev_link{2}=\"https://googleapis.dev/cpp/google-cloud-\\1/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/\\2\""
         )
     endif ()
 
