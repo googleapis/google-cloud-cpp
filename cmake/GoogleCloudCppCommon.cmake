@@ -100,19 +100,23 @@ elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
         "${PROJECT_SOURCE_DIR}/ci/etc/doxygen/DoxygenLayout.xml")
     set(GOOGLE_CLOUD_CPP_COMMON_TAG
         "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag")
+    set(GOOGLE_CLOUD_CPP_DOXYGEN_VERSION "${PROJECT_VERSION}")
     if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
-        if (NOT "${GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV}")
-            set(DOXYGEN_TAGFILES
-                "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/latest/"
-            )
-        elseif (NOT "${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
-            set(DOXYGEN_TAGFILES
-                "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/latest/"
-            )
-        else ()
-            set(DOXYGEN_TAGFILES "${GOOGLE_CLOUD_CPP_COMMON_TAG}=../../html/")
+        if ("${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
+            # Match the version string used in publish-docs.sh
+            set(GOOGLE_CLOUD_CPP_DOXYGEN_VERSION "HEAD")
         endif ()
+        set(DOXYGEN_TAGFILES
+            "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/"
+        )
     endif ()
+
+    # Make sure we append to DOXYGEN_ALIASES, instead of overwriting it.
+    include(GoogleapisConfig)
+    set(DOXYGEN_ALIASES
+        ${DOXYGEN_ALIASES}
+        "bq_mock_link=\"https://googleapis.dev/cpp/google-cloud-bigquery/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/bigquery-read-mock.html\""
+    )
 
     set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS)
     set(GOOGLE_CLOUD_CPP_DOXYGEN_POSSIBLE_INPUTS
