@@ -1,13 +1,9 @@
 # Cloud Document AI API C++ Client Library
 
-:warning: This library will not be declared GA until the quickstart is operable.
-
 This directory contains an idiomatic C++ client library for the
 [Cloud Document AI API][cloud-service], a service that uses machine
 learning on a scalable cloud-based platform to help your organization
 efficiently scan, analyze, and understand documents.
-
-This library is **experimental**. Its APIs are subject to change without notice.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -43,13 +39,14 @@ this library.
 ```cc
 #include "google/cloud/documentai/document_processor_client.h"
 #include "google/cloud/common_options.h"
+#include <fstream>
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
+  if (argc != 5) {
     std::cerr << "Usage: " << argv[0]
-              << " project-id location-id processor-id\n";
+              << " project-id location-id processor-id filename (PDF only)\n";
     return 1;
   }
   std::string const location = argv[2];
@@ -59,11 +56,11 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace gc = ::google::cloud;
+  namespace documentai = ::google::cloud::documentai;
+  // The Document AI service requires using an endpoint matching the processor's
+  // location.
   auto options = gc::Options{}.set<gc::EndpointOption>(
       location + "-documentai.googleapis.com");
-  options.set<google::cloud::TracingComponentsOption>({"rpc"});
-
-  namespace documentai = ::google::cloud::documentai;
   auto client = documentai::DocumentProcessorServiceClient(
       documentai::MakeDocumentProcessorServiceConnection(options));
 
@@ -73,9 +70,10 @@ int main(int argc, char* argv[]) try {
   google::cloud::documentai::v1::ProcessRequest req;
   req.set_name(resource);
   req.set_skip_human_review(true);
-  auto& doc = *req.mutable_inline_document();
+  auto& doc = *req.mutable_raw_document();
   doc.set_mime_type("application/pdf");
-  doc.set_uri("gs://cloud-samples-data/documentai/invoice.pdf");
+  std::ifstream is(argv[4]);
+  doc.set_content(std::string{std::istreambuf_iterator<char>(is), {}});
 
   auto resp = client.ProcessDocument(std::move(req));
   if (!resp) throw std::runtime_error(resp.status().message());

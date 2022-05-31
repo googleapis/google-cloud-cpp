@@ -1,7 +1,5 @@
 # HOWTO: using the Cloud Document AI API C++ client in your project
 
-:warning: This quickstart is not yet operable.
-
 This directory contains small examples showing how to use the Cloud Document AI API C++
 client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
