@@ -251,8 +251,12 @@ gcs_bm::ClientProvider PerTransport(gcs_bm::ClientProvider const& provider) {
 
 gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
   return [=](ExperimentTransport t) {
-    auto opts =
-        google::cloud::Options{}.set<gcs::ProjectIdOption>(options.project_id);
+    auto opts = google::cloud::Options{}
+                    .set<gcs::ProjectIdOption>(options.project_id)
+                    .set<gcs::DownloadStallTimeoutOption>(
+                        options.download_stall_timeout)
+                    .set<gcs::TransferStallTimeoutOption>(
+                        options.transfer_stall_timeout);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     using ::google::cloud::storage_experimental::DefaultGrpcClient;
     if (t == ExperimentTransport::kDirectPath) {

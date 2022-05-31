@@ -53,6 +53,8 @@ TEST(ThroughputOptions, Basic) {
       "--rest-endpoint=test-only-rest",
       "--grpc-endpoint=test-only-grpc",
       "--direct-path-endpoint=test-only-direct-path",
+      "--transfer-stall-timeout=86400s",
+      "--download-stall-timeout=86401s",
   });
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
@@ -83,6 +85,8 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ("test-only-rest", options->rest_endpoint);
   EXPECT_EQ("test-only-grpc", options->grpc_endpoint);
   EXPECT_EQ("test-only-direct-path", options->direct_path_endpoint);
+  EXPECT_EQ(std::chrono::seconds(86400), options->transfer_stall_timeout);
+  EXPECT_EQ(std::chrono::seconds(86401), options->download_stall_timeout);
 }
 
 TEST(ThroughputOptions, Description) {
