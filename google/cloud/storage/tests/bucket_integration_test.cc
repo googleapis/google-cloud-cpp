@@ -500,7 +500,6 @@ TEST_F(BucketIntegrationTest, RpoPatch) {
 
 /// @test Verify that we can use MatchesPrefixes() and MatchesSuffixes()
 TEST_F(BucketIntegrationTest, MatchesPrefixSuffixPatch) {
-  if (!UsingEmulator()) GTEST_SKIP();
   auto const bucket_name = MakeRandomBucketName();
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
