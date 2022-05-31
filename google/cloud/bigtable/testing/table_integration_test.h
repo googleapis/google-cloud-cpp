@@ -96,7 +96,8 @@ class TableIntegrationTest
   void SetUp() override;
 
   /// Gets a Table object for the current test.
-  bigtable::Table GetTable();
+  bigtable::Table GetTable(
+      std::string const& implementation = "with-data-client");
 
   /// Return all the cells in @p table that pass @p filter.
   static std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
@@ -179,6 +180,7 @@ class TableIntegrationTest
   }
 
   std::shared_ptr<bigtable::DataClient> data_client_;
+  std::shared_ptr<bigtable_internal::DataConnection> data_connection_;
 };
 
 }  // namespace testing
