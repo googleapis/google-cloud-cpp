@@ -27,6 +27,7 @@ namespace {
 
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ByMove;
 using ::testing::InSequence;
 using ::testing::Return;
 
@@ -553,6 +554,30 @@ TEST(StorageRoundRobinTest, UpdateHmacKey) {
     google::storage::v2::UpdateHmacKeyRequest request;
     grpc::ClientContext ctx;
     auto response = under_test.UpdateHmacKey(ctx, request);
+    EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
+  }
+}
+
+TEST(StorageRoundRobinTest, AsyncDeleteObject) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, AsyncDeleteObject)
+          .WillOnce(Return(ByMove(make_ready_future(
+              Status(StatusCode::kPermissionDenied, "uh-oh")))));
+    }
+  }
+
+  StorageRoundRobin under_test(AsPlainStubs(mocks));
+  google::cloud::CompletionQueue cq;
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    google::storage::v2::DeleteObjectRequest request;
+    auto response =
+        under_test
+            .AsyncDeleteObject(cq, absl::make_unique<grpc::ClientContext>(),
+                               request)
+            .get();
     EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
   }
 }

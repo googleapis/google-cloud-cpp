@@ -323,6 +323,23 @@ DefaultStorageStub::UpdateHmacKey(
   return response;
 }
 
+future<Status> DefaultStorageStub::AsyncDeleteObject(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::DeleteObjectRequest const& request) {
+  return cq
+      .MakeUnaryRpc(
+          [this](grpc::ClientContext* context,
+                 google::storage::v2::DeleteObjectRequest const& request,
+                 grpc::CompletionQueue* cq) {
+            return grpc_stub_->AsyncDeleteObject(context, request, cq);
+          },
+          request, std::move(context))
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 DefaultStorageStub::AsyncReadObject(

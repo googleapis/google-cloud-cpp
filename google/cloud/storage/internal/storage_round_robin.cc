@@ -181,6 +181,13 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageRoundRobin::UpdateHmacKey(
   return Child()->UpdateHmacKey(context, request);
 }
 
+future<Status> StorageRoundRobin::AsyncDeleteObject(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::DeleteObjectRequest const& request) {
+  return Child()->AsyncDeleteObject(cq, std::move(context), request);
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageRoundRobin::AsyncReadObject(

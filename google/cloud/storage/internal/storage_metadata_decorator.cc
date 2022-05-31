@@ -218,6 +218,14 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::UpdateHmacKey(
   return child_->UpdateHmacKey(context, request);
 }
 
+future<Status> StorageMetadata::AsyncDeleteObject(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::DeleteObjectRequest const& request) {
+  SetMetadata(*context);
+  return child_->AsyncDeleteObject(cq, std::move(context), request);
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageMetadata::AsyncReadObject(

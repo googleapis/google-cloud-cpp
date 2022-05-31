@@ -337,6 +337,19 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageLogging::UpdateHmacKey(
       context, request, __func__, tracing_options_);
 }
 
+future<Status> StorageLogging::AsyncDeleteObject(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::DeleteObjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::storage::v2::DeleteObjectRequest const& request) {
+        return child_->AsyncDeleteObject(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageLogging::AsyncReadObject(

@@ -241,6 +241,21 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageAuth::UpdateHmacKey(
   return child_->UpdateHmacKey(context, request);
 }
 
+future<Status> StorageAuth::AsyncDeleteObject(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::DeleteObjectRequest const& request) {
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) return make_ready_future(std::move(context).status());
+        return child->AsyncDeleteObject(cq, *std::move(context), request);
+      });
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageAuth::AsyncReadObject(
