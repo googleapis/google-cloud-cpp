@@ -147,7 +147,6 @@ to grant, change, and revoke access to all
 
 ### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
 
-* fix(common)!: adjust env/option/default override order for endpoints ([#9032](https://github.com/googleapis/google-cloud-cpp/pull/9032))
 * doc(spanner): add a comment about building a "NaN" PgNumeric ([#8891](https://github.com/googleapis/google-cloud-cpp/pull/8891))
 * feat(spanner): spanner::Value support for spanner::PgNumeric ([#8872](https://github.com/googleapis/google-cloud-cpp/pull/8872))
 * feat(spanner): add support for spanner::PgNumeric ([#8856](https://github.com/googleapis/google-cloud-cpp/pull/8856))
