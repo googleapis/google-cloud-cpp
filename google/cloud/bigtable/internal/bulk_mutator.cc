@@ -216,11 +216,11 @@ Status BulkMutator::MakeOneRequest(bigtable_internal::BigtableStub& stub) {
 
   struct UnpackVariant {
     BulkMutatorState& state;
-    bool operator()(btproto::MutateRowsResponse&& r) {
+    bool operator()(btproto::MutateRowsResponse r) {
       state.OnRead(std::move(r));
       return true;
     }
-    bool operator()(Status&& s) {
+    bool operator()(Status s) {
       state.OnFinish(std::move(s));
       return false;
     }
