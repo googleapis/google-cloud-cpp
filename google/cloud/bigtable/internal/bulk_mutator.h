@@ -50,7 +50,7 @@ class BulkMutatorState {
    *
    * Returns the original index of any successful operations.
    */
-  std::vector<int> OnRead(google::bigtable::v2::MutateRowsResponse&& response);
+  std::vector<int> OnRead(google::bigtable::v2::MutateRowsResponse response);
 
   /// Handle the result of a `Finish()` operation on the MutateRows() RPC.
   void OnFinish(google::cloud::Status finish_status);

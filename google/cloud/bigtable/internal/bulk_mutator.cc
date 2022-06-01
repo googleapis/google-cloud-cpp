@@ -79,7 +79,7 @@ google::bigtable::v2::MutateRowsRequest const& BulkMutatorState::BeforeStart() {
 }
 
 std::vector<int> BulkMutatorState::OnRead(
-    google::bigtable::v2::MutateRowsResponse&& response) {
+    google::bigtable::v2::MutateRowsResponse response) {
   std::vector<int> res;
   for (auto& entry : *response.mutable_entries()) {
     // The type of `entry.index()` is a 64-bit int. But we can never create more
