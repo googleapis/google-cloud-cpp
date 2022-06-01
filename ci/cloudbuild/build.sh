@@ -105,7 +105,7 @@ CLEAN_FLAG="false"
 LOCAL_FLAG="false"
 DOCKER_FLAG="false"
 SHELL_FLAG="false"
-VERBOSE_FLAG="false"
+: "${VERBOSE_FLAG:=false}"
 while true; do
   case "$1" in
     --build)
