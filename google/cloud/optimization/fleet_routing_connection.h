@@ -48,6 +48,18 @@ using FleetRoutingLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         optimization_internal::FleetRoutingRetryTraits>;
 
+/**
+ * The `FleetRoutingConnection` object for `FleetRoutingClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `FleetRoutingClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `FleetRoutingClient`.
+ *
+ * To create a concrete instance, see `MakeFleetRoutingConnection()`.
+ *
+ * For mocking, see `optimization_mocks::MockFleetRoutingConnection`.
+ */
 class FleetRoutingConnection {
  public:
   virtual ~FleetRoutingConnection() = 0;
@@ -65,6 +77,28 @@ class FleetRoutingConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type `FleetRoutingConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of FleetRoutingClient,
+ * and that class used instead.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `FleetRoutingConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::optimization::FleetRoutingPolicyOptionList`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @param options (optional) Configure the `FleetRoutingConnection` created by
+ * this function.
+ */
 std::shared_ptr<FleetRoutingConnection> MakeFleetRoutingConnection(
     Options options = {});
 

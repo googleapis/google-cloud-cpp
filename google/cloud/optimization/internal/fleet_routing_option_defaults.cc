@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options FleetRoutingDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_FLEET_ROUTING_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_FLEET_ROUTING_AUTHORITY",
       "cloudoptimization.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

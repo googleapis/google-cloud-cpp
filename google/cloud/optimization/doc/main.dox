@@ -41,8 +41,9 @@ which should give you a taste of the Cloud Optimization API C++ client library A
 
 <!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_FLEET_ROUTING_ENDPOINT=...` changes the default endpoint
-  (cloudoptimization.googleapis.com) used by `FleetRoutingConnection`.
+- `GOOGLE_CLOUD_CPP_FLEET_ROUTING_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudoptimization.googleapis.com")
+  used by `MakeFleetRoutingConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 

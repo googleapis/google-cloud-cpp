@@ -159,25 +159,13 @@ google_cloud_cpp_install_headers("google_cloud_cpp_optimization"
 google_cloud_cpp_install_headers("google_cloud_cpp_optimization_mocks"
                                  "include/google/cloud/optimization")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Cloud Optimization API C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to use the Cloud Optimization API.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_optimization")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common"
-              " google_cloud_cpp_optimization_protos")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/optimization/config.pc.in"
-               "google_cloud_cpp_optimization.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_optimization.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    composer
+    "The Cloud Optimization API C++ Client Library"
+    "Provides C++ APIs to use the Cloud Optimization API."
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_optimization_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
