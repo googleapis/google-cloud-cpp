@@ -63,6 +63,8 @@ TEST_F(AsyncConnectionImplTest, AsyncDeleteObject) {
       .WillOnce(
           [this](CompletionQueue&, std::unique_ptr<grpc::ClientContext> context,
                  google::storage::v2::DeleteObjectRequest const& request) {
+            // Verify at least one option is initialized with the correct
+            // values.
             EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
             auto metadata = GetMetadata(*context);
             EXPECT_THAT(metadata,
@@ -75,6 +77,9 @@ TEST_F(AsyncConnectionImplTest, AsyncDeleteObject) {
           });
   CompletionQueue cq;
   auto connection = MakeTestConnection(cq, mock);
+  // Simulate the option span created by the `*Client` class. The
+  // `AuthorityOption` value is used by the `*Stub` classes. We want to verify
+  // it is initialized properly by the time it makes it to the mocked call.
   OptionsSpan span(connection->options());
   auto response =
       connection
