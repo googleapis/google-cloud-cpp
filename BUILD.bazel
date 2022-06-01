@@ -23,6 +23,7 @@ exports_files([
 EXPERIMENTAL_LIBRARIES = [
     # Introduced in 2022-05
     "baremetalsolution",
+    "optimization",
     # Introduced in 2022-04
     "dataplex",
     "dialogflow_cx",
