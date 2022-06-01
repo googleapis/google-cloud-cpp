@@ -27,6 +27,7 @@ namespace testing_util {
 class MockHttpPayload : public rest_internal::HttpPayload {
  public:
   ~MockHttpPayload() override = default;
+  MOCK_METHOD(bool, HasUnreadData, (), (const, override));
   MOCK_METHOD(StatusOr<std::size_t>, Read, (absl::Span<char> buffer),
               (override));
 };
