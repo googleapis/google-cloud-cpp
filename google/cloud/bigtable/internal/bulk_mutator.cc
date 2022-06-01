@@ -79,7 +79,7 @@ google::bigtable::v2::MutateRowsRequest const& BulkMutatorState::BeforeStart() {
 }
 
 std::vector<int> BulkMutatorState::OnRead(
-    google::bigtable::v2::MutateRowsResponse& response) {
+    google::bigtable::v2::MutateRowsResponse response) {
   std::vector<int> res;
   for (auto& entry : *response.mutable_entries()) {
     // The type of `entry.index()` is a 64-bit int. But we can never create more
@@ -197,12 +197,40 @@ grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
   // Read the stream of responses.
   btproto::MutateRowsResponse response;
   while (stream->Read(&response)) {
-    state_.OnRead(response);
+    state_.OnRead(std::move(response));
   }
   // Handle any errors in the stream.
   auto grpc_status = stream->Finish();
   state_.OnFinish(MakeStatusFromRpcError(grpc_status));
   return grpc_status;
+}
+
+Status BulkMutator::MakeOneRequest(bigtable_internal::BigtableStub& stub) {
+  // Send the request to the server.
+  auto const& mutations = state_.BeforeStart();
+
+  // Configure the context
+  auto const& options = google::cloud::internal::CurrentOptions();
+  auto context = absl::make_unique<grpc::ClientContext>();
+  google::cloud::internal::ConfigureContext(*context, options);
+
+  struct UnpackVariant {
+    BulkMutatorState& state;
+    bool operator()(btproto::MutateRowsResponse r) {
+      state.OnRead(std::move(r));
+      return true;
+    }
+    bool operator()(Status s) {
+      state.OnFinish(std::move(s));
+      return false;
+    }
+  };
+
+  // Read the stream of responses.
+  auto stream = stub.MutateRows(std::move(context), mutations);
+  while (absl::visit(UnpackVariant{state_}, stream->Read())) {
+  }
+  return state_.last_status();
 }
 
 std::vector<FailedMutation> BulkMutator::OnRetryDone() && {
