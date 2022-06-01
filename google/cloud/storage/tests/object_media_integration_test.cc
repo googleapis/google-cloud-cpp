@@ -362,6 +362,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
   // for a regression of #3051.
   std::vector<char> buffer(contents.size() - kUnreadBytes);
   stream.read(buffer.data(), buffer.size());
+  std::string actual{buffer.begin(), buffer.end()};
   EXPECT_FALSE(stream.eof());
   EXPECT_FALSE(stream.fail());
   EXPECT_FALSE(stream.bad());
@@ -370,9 +371,11 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
   // Read the remaining data.
   buffer.resize(contents.size());
   stream.read(buffer.data(), buffer.size());
+  actual.append(buffer.data(), kUnreadBytes);
   EXPECT_TRUE(stream.eof());
   EXPECT_TRUE(stream.fail());
   EXPECT_FALSE(stream.bad());
+  EXPECT_EQ(contents, actual);
   EXPECT_FALSE(stream.IsOpen());
 }
 
