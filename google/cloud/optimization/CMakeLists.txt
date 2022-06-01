@@ -113,8 +113,10 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(optimization_quickstart)
     add_test(
         NAME optimization_quickstart
-        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-                $<TARGET_FILE:optimization_quickstart> GOOGLE_CLOUD_PROJECT)
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:optimization_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET)
     set_tests_properties(optimization_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

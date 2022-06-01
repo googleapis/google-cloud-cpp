@@ -43,17 +43,21 @@ this library.
 #include "google/cloud/optimization/fleet_routing_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/project.h"
-#include <google/protobuf/text_format.h>
 #include <iostream>
 #include <stdexcept>
 
-google::cloud::optimization::v1::OptimizeToursRequest LoadExampleModel();
-
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id destination\n"
+              << "  destination is a GCS bucket\n";
     return 1;
   }
+  // This quickstart loads an example model from a known GCS bucket. The service
+  // solves the model, and writes the solution to the destination GCS bucket.
+  std::string const source =
+      "gs://cloud-samples-data/optimization-ai/async_request_model.json";
+  auto const destination =
+      std::string{"gs://"} + argv[2] + "/optimization_quickstart_solution.json";
 
   namespace gc = ::google::cloud;
   namespace optimization = ::google::cloud::optimization;
@@ -62,67 +66,26 @@ int main(int argc, char* argv[]) try {
   auto client = optimization::FleetRoutingClient(
       optimization::MakeFleetRoutingConnection(options));
 
-  auto req = LoadExampleModel();
+  google::cloud::optimization::v1::BatchOptimizeToursRequest req;
   req.set_parent(gc::Project(argv[1]).FullName());
+  auto& config = *req.add_model_configs();
+  auto& input = *config.mutable_input_config();
+  input.mutable_gcs_source()->set_uri(source);
+  input.set_data_format(google::cloud::optimization::v1::JSON);
+  auto& output = *config.mutable_output_config();
+  output.mutable_gcs_destination()->set_uri(destination);
+  output.set_data_format(google::cloud::optimization::v1::JSON);
 
-  auto resp = client.OptimizeTours(req);
+  auto fut = client.BatchOptimizeTours(req);
+  std::cout << "Request sent to the service...\n";
+  auto resp = fut.get();
   if (!resp) throw std::runtime_error(resp.status().message());
-  std::cout << resp->DebugString() << "\n";
+  std::cout << "Solution written to: " << destination << "\n";
 
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
-}
-
-/**
- * Returns a simple example request with exactly one vehicle and one shipment.
- *
- * It is not an interesting use case of the service, but it shows how to
- * interact with the proto fields.
- *
- * For a more interesting example that optimizes multiple vehicles picking up
- * multiple shipments, see the proto listed at:
- * https://cloud.google.com/optimization/docs/introduction/example_problem#complete_request
- *
- * Protos can also be loaded from strings as follows:
- *
- * @code
- * #include <google/protobuf/text_format.h>
- *
- * google::cloud::optimization::v1::OptimizeToursRequest req;
- * google::protobuf::TextFormat::ParseFromString("model { ... }", &req);
- * @endcode
- */
-google::cloud::optimization::v1::OptimizeToursRequest LoadExampleModel() {
-  google::cloud::optimization::v1::OptimizeToursRequest req;
-
-  // Set the model's time constraints
-  req.mutable_model()->mutable_global_start_time()->set_seconds(0);
-  req.mutable_model()->mutable_global_end_time()->set_seconds(1792800);
-
-  // Add one vehicle and its constraints
-  auto& vehicle = *req.mutable_model()->add_vehicles();
-  auto& start_location = *vehicle.mutable_start_location();
-  start_location.set_latitude(48.863102);
-  start_location.set_longitude(2.341204);
-  vehicle.set_cost_per_traveled_hour(3600);
-  vehicle.add_end_time_windows()->mutable_end_time()->set_seconds(1236000);
-  (*vehicle.mutable_load_limits())["weight"].set_max_load(800);
-
-  // Add one shipment and its constraints
-  auto& shipment = *req.mutable_model()->add_shipments();
-  auto& pickup = *shipment.add_pickups();
-  auto& arrival_location = *pickup.mutable_arrival_location();
-  arrival_location.set_latitude(48.843561);
-  arrival_location.set_longitude(2.297602);
-  pickup.mutable_duration()->set_seconds(90000);
-  auto& window = *pickup.add_time_windows();
-  window.mutable_start_time()->set_seconds(912000);
-  window.mutable_end_time()->set_seconds(967000);
-  (*shipment.mutable_load_demands())["weight"].set_amount(40);
-
-  return req;
 }
 ```
 <!-- inject-quickstart-end -->
