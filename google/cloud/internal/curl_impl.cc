@@ -188,18 +188,19 @@ void CurlImpl::CleanupHandles() {
     GCP_LOG(FATAL) << "handles are inconsistent, multi_=" << multi_.get()
                    << ", handle_.handle_=" << handle_.handle_.get();
   }
-  if (curl_closed_ || !multi_) return;
-
-  if (paused_) {
-    paused_ = false;
-    (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
-    TRACE_STATE() << "\n";
-  }
 
   // Now remove the handle from the CURLM* interface and wait for the response.
   if (in_multi_) {
     (void)curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
     in_multi_ = false;
+    TRACE_STATE() << "\n";
+  }
+
+  if (curl_closed_ || !multi_) return;
+
+  if (paused_) {
+    paused_ = false;
+    (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
     TRACE_STATE() << "\n";
   }
 }
@@ -374,9 +375,15 @@ void CurlImpl::SetUrl(
   char const* query_parameter_separator = InitialQueryParameterSeparator(url_);
   auto append_params = [&](RestRequest::HttpParameters const& parameters) {
     for (auto const& param : parameters) {
-      absl::StrAppend(&url_, query_parameter_separator,
-                      handle_.MakeEscapedString(param.first).get(), "=",
-                      handle_.MakeEscapedString(param.second).get());
+      if (param.first == "userIp" && param.second.empty()) {
+        absl::StrAppend(&url_, query_parameter_separator,
+                        handle_.MakeEscapedString(param.first).get(), "=",
+                        handle_.MakeEscapedString(LastClientIpAddress()).get());
+      } else {
+        absl::StrAppend(&url_, query_parameter_separator,
+                        handle_.MakeEscapedString(param.first).get(), "=",
+                        handle_.MakeEscapedString(param.second).get());
+      }
       query_parameter_separator = "&";
     }
   };
