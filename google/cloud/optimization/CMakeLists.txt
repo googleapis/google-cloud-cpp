@@ -116,7 +116,7 @@ if (BUILD_TESTING)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:optimization_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET)
+            GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME)
     set_tests_properties(optimization_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
