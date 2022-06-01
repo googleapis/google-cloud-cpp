@@ -109,6 +109,19 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
 
 ## v1.42.0 - TBD
 
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+<details>
+<summary> Expand to see the full list of new GA libraries...</summary>
+<br>
+
+* [Dataplex](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dataplex/README.md)
+* [DialogFlow CX](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dialogflow_cx/README.md)
+* [DialogFlow ES](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dialogflow_es/README.md)
+
+</details>
+
 ## v1.41.0 - 2022-06
 
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)

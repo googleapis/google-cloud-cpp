@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Dialogflow API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Dialogflow API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "dialogflow_cx_internal"
                             "dialogflow_cx_testing" "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -67,13 +67,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_dialogflow_cx)
 set_target_properties(
     google_cloud_cpp_dialogflow_cx
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-dialogflow_cx
+    PROPERTIES EXPORT_NAME google-cloud-cpp::dialogflow_cx
                VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_dialogflow_cx
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-dialogflow_cx ALIAS
+add_library(google-cloud-cpp::dialogflow_cx ALIAS
             google_cloud_cpp_dialogflow_cx)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -93,11 +93,11 @@ add_library(google_cloud_cpp_dialogflow_cx_mocks INTERFACE)
 target_sources(google_cloud_cpp_dialogflow_cx_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_dialogflow_cx_mocks
-    INTERFACE google-cloud-cpp::experimental-dialogflow_cx GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::dialogflow_cx GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_dialogflow_cx_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-dialogflow_cx_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::dialogflow_cx_mocks)
 target_include_directories(
     google_cloud_cpp_dialogflow_cx_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -110,7 +110,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(dialogflow_cx_quickstart "quickstart/quickstart.cc")
     target_link_libraries(dialogflow_cx_quickstart
-                          PRIVATE google-cloud-cpp::experimental-dialogflow_cx)
+                          PRIVATE google-cloud-cpp::dialogflow_cx)
     google_cloud_cpp_add_common_options(dialogflow_cx_quickstart)
     add_test(
         NAME dialogflow_cx_quickstart
