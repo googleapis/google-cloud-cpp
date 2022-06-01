@@ -162,7 +162,7 @@ google_cloud_cpp_install_headers("google_cloud_cpp_optimization_mocks"
                                  "include/google/cloud/optimization")
 
 google_cloud_cpp_add_pkgconfig(
-    composer
+    optimization
     "The Cloud Optimization API C++ Client Library"
     "Provides C++ APIs to use the Cloud Optimization API."
     "google_cloud_cpp_grpc_utils"
