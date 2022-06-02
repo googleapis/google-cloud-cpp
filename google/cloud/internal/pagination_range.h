@@ -147,7 +147,7 @@ class PagedStreamReader {
    * For better or worse some versions of GCC called that ambiguous, even though
    * only one would work under SFINAE.
    */
-  static std::string ExtractPageToken(Response& u) {
+  static std::string ExtractPageToken(Response& r) {
     static_assert(
         HasMutableNextPageToken<Response>::value ||
             HasNextPageToken<Response>::value,
@@ -155,32 +155,35 @@ class PagedStreamReader {
     // This may seem expensive, but the value is known at compile type, the
     // optimizer should know what to do.
     if (HasMutableNextPageToken<Response>::value) {
-      return UsingMutableNextPageToken<Response>(u);
+      return UsingMutableNextPageToken<Response>(
+          HasMutableNextPageToken<Response>{}, r);
     }
-    return UsingNextPageToken<Response>(u);
+    return UsingNextPageToken<Response>(HasMutableNextPageToken<Response>{},
+                                        HasNextPageToken<Response>{}, r);
   }
 
   template <typename U>
-  static auto constexpr UsingMutableNextPageToken(U& u)
+  static auto constexpr UsingMutableNextPageToken(std::true_type, U& u)
       -> decltype(std::move(*u.mutable_next_page_token())) {
     return std::move(*u.mutable_next_page_token());
   }
   // This overload is unused, it is here just to compile when
   // HasMutableNextPageToken<Response>::value is `false`
-  template <typename U, typename... V>
-  static std::string UsingMutableNextPageToken(V&...) {
+  template <typename U>
+  static std::string UsingMutableNextPageToken(std::false_type, U&) {
     return {};
   }
 
   template <typename U>
-  static auto constexpr UsingNextPageToken(U& u)
+  static auto constexpr UsingNextPageToken(std::false_type, std::true_type,
+                                           U& u)
       -> decltype(std::move(u.next_page_token)) {
     return std::move(u.next_page_token);
   }
   // This overload is unused, it is here just to compile when
   // HasNextPageToken<Response>::value is `false`
-  template <typename... V>
-  static std::string UsingNextPageToken(V&...) {
+  template <typename U, typename D>
+  static std::string UsingNextPageToken(std::true_type, D, U&) {
     return {};
   }
 
