@@ -51,6 +51,7 @@ struct ProtoResponse {
   std::vector<Item> testonly_items;
   std::string testonly_page_token;
   std::string* mutable_next_page_token() { return &testonly_page_token; }
+  std::string const& next_page_token() const { return testonly_page_token; }
 
   // Used for setting the token in tests, but it's not used in the real code.
   void testonly_set_page_token(std::string s) {
