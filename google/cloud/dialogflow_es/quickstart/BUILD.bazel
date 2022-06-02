@@ -20,6 +20,6 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//:experimental-dialogflow_es",
+        "@com_github_googleapis_google_cloud_cpp//:dialogflow_es",
     ],
 )
