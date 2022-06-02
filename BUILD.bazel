@@ -24,15 +24,15 @@ EXPERIMENTAL_LIBRARIES = [
     # Introduced in 2022-05
     "baremetalsolution",
     "optimization",
-    # Introduced in 2022-04
-    "dataplex",
-    "dialogflow_cx",
-    "dialogflow_es",
     # This is WIP, it needs a number of hand-crafted APIs.
     "pubsublite",
 ]
 
 TRANSITION_LIBRARIES = [
+    # Declared GA on 2022-06-01
+    "dataplex",
+    "dialogflow_cx",
+    "dialogflow_es",
     # 2022-04-11
     "logging",
     "osconfig",
