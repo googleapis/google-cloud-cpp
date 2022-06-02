@@ -118,6 +118,14 @@ class WriteVector {
     return offset;
   }
 
+  std::size_t size() const {
+    std::size_t total_size = 0;
+    for (auto const& s : writev_) {
+      total_size += s.size();
+    }
+    return total_size;
+  }
+
  private:
   std::vector<absl::Span<char const>> writev_;
 };
@@ -707,19 +715,23 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
   if (method == HttpMethod::kDelete || payload.empty())
     return MakeRequestImpl();
 
-  // TODO(#7955): add support for multi-Span POST
   if (method == HttpMethod::kPost) {
-    if (payload.size() == 1) {
-      status = handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload[0].size());
-      if (!status.ok()) return OnTransferError(std::move(status));
-      status = handle_.SetOption(CURLOPT_POSTFIELDS, payload[0].data());
-      if (!status.ok()) return OnTransferError(std::move(status));
-      return MakeRequestImpl();
-    }
-    return Status{
-        StatusCode::kInvalidArgument,
-        absl::StrCat(method, " with more than one Span not supported"),
-        {}};
+    WriteVector writev{std::move(payload)};
+    status = handle_.SetOption(CURLOPT_POSTFIELDSIZE, nullptr);
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status = handle_.SetOption(CURLOPT_POSTFIELDS, nullptr);
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status = handle_.SetOption(CURLOPT_POST, 1L);
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status = handle_.SetOption(CURLOPT_POSTFIELDSIZE_LARGE, writev.size());
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status =
+        handle_.SetOption(CURLOPT_READFUNCTION, &RestCurlRequestOnReadData);
+    if (!status.ok()) return OnTransferError(std::move(status));
+    status = handle_.SetOption(CURLOPT_READDATA, &writev);
+    if (!status.ok()) return OnTransferError(std::move(status));
+    SetHeader("Expect:");
+    return MakeRequestImpl();
   }
 
   if (method == HttpMethod::kPut || method == HttpMethod::kPatch) {
