@@ -28,6 +28,7 @@
 #include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/getenv.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/match.h"
@@ -41,6 +42,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 namespace rest = google::cloud::rest_internal;
+
+std::string UrlEscapeString(std::string const& value) {
+  CurlHandle handle;
+  return std::string(handle.MakeEscapedString(value).get());
+}
 
 template <typename ReturnType>
 StatusOr<ReturnType> ParseFromRestResponse(
@@ -294,7 +300,14 @@ StatusOr<ObjectMetadata> RestClient::CopyObject(
 
 StatusOr<ObjectMetadata> RestClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
-  return curl_client_->GetObjectMetadata(request);
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return CheckedFromString<ObjectMetadataParser>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
@@ -304,32 +317,96 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
 
 StatusOr<ListObjectsResponse> RestClient::ListObjects(
     ListObjectsRequest const& request) {
-  return curl_client_->ListObjects(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/o"));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddQueryParameter("pageToken", request.page_token());
+  return ParseFromRestResponse<ListObjectsResponse>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteObject(
     DeleteObjectRequest const& request) {
-  return curl_client_->DeleteObject(request);
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ReturnEmptyResponse(
+      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectMetadata> RestClient::UpdateObject(
     UpdateObjectRequest const& request) {
-  return curl_client_->UpdateObject(request);
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = request.json_payload();
+  return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Put(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ObjectMetadata> RestClient::PatchObject(
     PatchObjectRequest const& request) {
-  return curl_client_->PatchObject(request);
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = request.payload();
+  return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Patch(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ObjectMetadata> RestClient::ComposeObject(
     ComposeObjectRequest const& request) {
-  return curl_client_->ComposeObject(request);
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/o/",
+                   UrlEscapeString(request.object_name()), "/compose"));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = request.JsonPayload();
+  return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Post(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<RewriteObjectResponse> RestClient::RewriteObject(
     RewriteObjectRequest const& request) {
-  return curl_client_->RewriteObject(request);
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      request.source_bucket(), "/o/", UrlEscapeString(request.source_object()),
+      "/rewriteTo/b/", request.destination_bucket(), "/o/",
+      UrlEscapeString(request.destination_object())));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  if (!request.rewrite_token().empty()) {
+    builder.AddQueryParameter("rewriteToken", request.rewrite_token());
+  }
+  builder.AddHeader("Content-Type", "application/json");
+  std::string json_payload("{}");
+  if (request.HasOption<WithObjectMetadata>()) {
+    json_payload = ObjectMetadataJsonForRewrite(
+                       request.GetOption<WithObjectMetadata>().value())
+                       .dump();
+  }
+
+  return ParseFromRestResponse<RewriteObjectResponse>(
+      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(json_payload)}));
 }
 
 StatusOr<CreateResumableUploadResponse> RestClient::CreateResumableUpload(
