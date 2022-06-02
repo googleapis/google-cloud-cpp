@@ -338,8 +338,8 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
   builder.AddQueryParameter("uploadType", "multipart");
   builder.AddQueryParameter("name", request.object_name());
 
-  // 3. Perform a streaming upload because computing the size upfront is more
-  //    complicated than it is worth.
+  // 3. Use a std::ostringstream to compute the full payload because computing
+  // the size upfront is more complicated than it is worth.
   std::ostringstream writer;
 
   nlohmann::json metadata = nlohmann::json::object();
