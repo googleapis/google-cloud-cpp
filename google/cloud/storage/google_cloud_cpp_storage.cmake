@@ -266,6 +266,14 @@ if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" AND ${CMAKE_CXX_COMPILER_VERSION}
         PROPERTY COMPILE_FLAGS "-Wno-maybe-uninitialized")
 endif ()
 
+if (MSVC)
+    set_property(
+        SOURCE internal/policy_document_request.cc
+        APPEND_STRING
+        PROPERTY COMPILE_FLAGS
+                 "-D_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING")
+endif ()
+
 set_target_properties(
     google_cloud_cpp_storage
     PROPERTIES EXPORT_NAME "google-cloud-cpp::storage"
