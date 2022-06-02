@@ -56,14 +56,14 @@ First run the following command -- which will *NOT* make any changes to the
 repo -- and verify that the output and *version numbers* look correct.
 
 ```bash
-$ release/release.sh googleapis/google-cloud-cpp
+release/release.sh googleapis/google-cloud-cpp
 ```
 
 If the output from the previous command looks OK, rerun the command with the
 `-f` flag, which will make the changes and push them to the remote repo.
 
 ```bash
-$ release/release.sh -f googleapis/google-cloud-cpp
+release/release.sh -f googleapis/google-cloud-cpp
 ```
 
 **NOTE:** This script can be run from any directory. It operates only on the

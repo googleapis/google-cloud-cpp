@@ -116,5 +116,7 @@ quickstart guide to reference the rules and targets without an `experimental-`
 prefix.  In the following release you can remove these rules and targets.
 
 ```shell
-for d in "${ga[@]}"; do sed -i 's/experimental-//' google/cloud/$d/quickstart/BUILD.bazel; done
+for d in "${ga[@]}"; do sed -i 's/experimental-//' \
+    google/cloud/$d/quickstart/CMakeLists.txt      \
+    google/cloud/$d/quickstart/BUILD.bazel; done
 ```
