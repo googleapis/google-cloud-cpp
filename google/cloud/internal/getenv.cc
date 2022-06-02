@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/getenv.h"
-#ifdef _MSC_VER
+#if defined(_MSC_VER)
 // We need _dupenv_s()
 #include <stdlib.h>
 #else
@@ -38,7 +38,7 @@ absl::optional<std::string> GetEnv(char const* variable) {
   std::unique_ptr<char, decltype(&free)> release(buffer, &free);
 #else
   char* buffer = std::getenv(variable);
-#endif  // _MSVC_VER)
+#endif  // _MSC_VER
   if (buffer == nullptr) return absl::nullopt;
   return std::string{buffer};
 }
