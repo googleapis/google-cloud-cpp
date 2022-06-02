@@ -385,7 +385,7 @@ class Client {
    * @param project_id the project to query.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `MaxResults`, `Prefix`,
-   *     `UserProject`, and `Projection`.
+   *     `Projection`, and `UserProject`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -419,7 +419,7 @@ class Client {
    *
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `MaxResults`, `Prefix`,
-   *     `UserProject`, and `Projection`.
+   *     `Projection`, and `UserProject`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -614,7 +614,8 @@ class Client {
    * @param updated the updated value for the bucket metadata.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
+   *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
@@ -657,7 +658,8 @@ class Client {
    * @param builder the set of updates to perform in the Bucket.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
+   *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
@@ -1009,10 +1011,9 @@ class Client {
    *
    * @param bucket_name the name of the bucket to list.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include
-   *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
-   *     `Projection`, `Prefix`, `Delimiter`, `IncludeTrailingDelimiter`,
-   *     `StartOffset`, `EndOffset`, and `Versions`.
+   *     Valid types for this operation include `MaxResults`, `Prefix`,
+   *     `Delimiter`, `IncludeTrailingDelimiter`, `StartOffset`, `EndOffset`,
+   *     `Projection`, `UserProject`, and `Versions`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -1090,8 +1091,8 @@ class Client {
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `DisableCrc32cChecksum`,
-   *     `DisableMD5Hash`, `IfGenerationMatch`, `EncryptionKey`, `Generation`,
-   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `DisableMD5Hash`, `EncryptionKey`, `Generation`, `IfGenerationMatch`,
+   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, `ReadLast`,
    *     `UserProject`, and `AcceptEncoding`.
    *
@@ -1335,10 +1336,10 @@ class Client {
    *     ignored. In particular, note that `bucket` and `name` are ignored in
    *     favor of @p bucket_name and @p object_name.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `Generation`,
+   *     Valid types for this operation include `Generation`, `EncryptionKey`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
-   *     `Projection`, and `UserProject`.
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`, `Projection`, and
+   *     `UserProject`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
@@ -1372,7 +1373,7 @@ class Client {
    * @param original the initial value of the object metadata.
    * @param updated the updated value for the object metadata.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `Generation`,
+   *     Valid types for this operation include `Generation`, `EncryptionKey`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
@@ -1408,7 +1409,7 @@ class Client {
    * @param object_name the object to be updated.
    * @param builder the set of updates to perform in the Object metadata.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `Generation`,
+   *     Valid types for this operation include `Generation`, `EncryptionKey`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`, `EncryptionKey`,
    *     `Projection`, and `UserProject`.
