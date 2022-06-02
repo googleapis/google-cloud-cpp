@@ -345,6 +345,7 @@ if (BUILD_TESTING)
         internal/logging_data_client_test.cc
         internal/prefix_range_end_test.cc
         internal/wait_for_consistency_test.cc
+        legacy_table_test.cc
         metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc
         mutation_batcher_test.cc

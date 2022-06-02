@@ -57,13 +57,13 @@ Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "fail");
 }
 
-bigtable::SingleRowMutation IdempotentMutation() {
+bigtable::SingleRowMutation IdempotentMutation(std::string const& row_key) {
   return bigtable::SingleRowMutation(
-      "row", {bigtable::SetCell("fam", "col", ms(0), "val")});
+      row_key, {bigtable::SetCell("fam", "col", ms(0), "val")});
 }
 
-bigtable::SingleRowMutation NonIdempotentMutation() {
-  return bigtable::SingleRowMutation("row",
+bigtable::SingleRowMutation NonIdempotentMutation(std::string const& row_key) {
+  return bigtable::SingleRowMutation(row_key,
                                      {bigtable::SetCell("fam", "col", "val")});
 }
 
@@ -82,30 +82,30 @@ Matcher<v2::ReadRowsRequest const&> HasTestFilter() {
       Property(&v2::RowFilter::cells_per_column_limit_filter, Eq(5)));
 }
 
-class DataConnectionTest : public ::testing::Test {
- protected:
-  std::shared_ptr<DataConnectionImpl> TestConnection() {
-    auto options =
-        Options{}
-            .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-            .set<DataRetryPolicyOption>(retry_.clone())
-            .set<DataBackoffPolicyOption>(backoff_.clone());
-    auto background = internal::MakeBackgroundThreadsFactory(options)();
-    return std::make_shared<DataConnectionImpl>(std::move(background),
-                                                mock_stub_, std::move(options));
-  }
+DataLimitedErrorCountRetryPolicy TestRetryPolicy() {
+  return DataLimitedErrorCountRetryPolicy(kNumRetries);
+}
 
-  DataLimitedErrorCountRetryPolicy retry_ =
-      DataLimitedErrorCountRetryPolicy(kNumRetries);
-  ExponentialBackoffPolicy backoff_ =
-      ExponentialBackoffPolicy(ms(0), ms(0), 2.0);
-  std::shared_ptr<MockBigtableStub> mock_stub_ =
-      std::make_shared<MockBigtableStub>();
-};
+ExponentialBackoffPolicy TestBackoffPolicy() {
+  return ExponentialBackoffPolicy(ms(0), ms(0), 2.0);
+}
 
-TEST_F(DataConnectionTest, Options) {
-  auto connection = TestConnection();
-  auto options = connection->options();
+std::shared_ptr<DataConnectionImpl> TestConnection(
+    std::shared_ptr<BigtableStub> mock) {
+  auto options =
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<DataRetryPolicyOption>(TestRetryPolicy().clone())
+          .set<DataBackoffPolicyOption>(TestBackoffPolicy().clone());
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
+  return std::make_shared<DataConnectionImpl>(
+      std::move(background), std::move(mock), std::move(options));
+}
+
+TEST(DataConnectionTest, Options) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto conn = TestConnection(std::move(mock));
+  auto options = conn->options();
   EXPECT_TRUE(options.has<GrpcCredentialOption>());
   ASSERT_TRUE(options.has<EndpointOption>());
 }
@@ -118,8 +118,9 @@ TEST_F(DataConnectionTest, Options) {
  * This is testing the private `retry_policy()`, `backoff_policy()`,
  * `idempotency_policy()` member functions.
  */
-TEST_F(DataConnectionTest, CallOptionsOverrideConnectionOptions) {
-  EXPECT_CALL(*mock_stub_, MutateRow).WillOnce(Return(PermanentError()));
+TEST(DataConnectionTest, CallOptionsOverrideConnectionOptions) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRow).WillOnce(Return(PermanentError()));
 
   auto call_r = std::make_shared<MockDataRetryPolicy>();
   auto call_b = std::make_shared<MockBackoffPolicy>();
@@ -129,8 +130,10 @@ TEST_F(DataConnectionTest, CallOptionsOverrideConnectionOptions) {
                        .set<DataBackoffPolicyOption>(call_b)
                        .set<IdempotentMutationPolicyOption>(call_i);
 
-  EXPECT_CALL(*call_r, clone).WillOnce(Return(ByMove(retry_.clone())));
-  EXPECT_CALL(*call_b, clone).WillOnce(Return(ByMove(backoff_.clone())));
+  EXPECT_CALL(*call_r, clone)
+      .WillOnce(Return(ByMove(TestRetryPolicy().clone())));
+  EXPECT_CALL(*call_b, clone)
+      .WillOnce(Return(ByMove(TestBackoffPolicy().clone())));
   EXPECT_CALL(*call_i, clone)
       .WillOnce(Return(ByMove(bigtable::DefaultIdempotentMutationPolicy())));
 
@@ -146,10 +149,10 @@ TEST_F(DataConnectionTest, CallOptionsOverrideConnectionOptions) {
   EXPECT_CALL(*conn_b, clone).Times(0);
   EXPECT_CALL(*conn_i, clone).Times(0);
 
-  auto connection = std::make_shared<DataConnectionImpl>(nullptr, mock_stub_,
-                                                         std::move(conn_opts));
+  auto conn =
+      std::make_shared<DataConnectionImpl>(nullptr, mock, std::move(conn_opts));
   internal::OptionsSpan span(call_opts);
-  (void)connection->Apply(kAppProfile, kTableName, IdempotentMutation());
+  (void)conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
 }
 
 /**
@@ -160,8 +163,9 @@ TEST_F(DataConnectionTest, CallOptionsOverrideConnectionOptions) {
  * This is testing the private `retry_policy()`, `backoff_policy()`,
  * `idempotency_policy()` member functions.
  */
-TEST_F(DataConnectionTest, UseConnectionOptionsIfNoCallOptions) {
-  EXPECT_CALL(*mock_stub_, MutateRow).WillOnce(Return(PermanentError()));
+TEST(DataConnectionTest, UseConnectionOptionsIfNoCallOptions) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRow).WillOnce(Return(PermanentError()));
 
   auto conn_r = std::make_shared<MockDataRetryPolicy>();
   auto conn_b = std::make_shared<MockBackoffPolicy>();
@@ -171,18 +175,21 @@ TEST_F(DataConnectionTest, UseConnectionOptionsIfNoCallOptions) {
                        .set<DataBackoffPolicyOption>(conn_b)
                        .set<IdempotentMutationPolicyOption>(conn_i);
 
-  EXPECT_CALL(*conn_r, clone).WillOnce(Return(ByMove(retry_.clone())));
-  EXPECT_CALL(*conn_b, clone).WillOnce(Return(ByMove(backoff_.clone())));
+  EXPECT_CALL(*conn_r, clone)
+      .WillOnce(Return(ByMove(TestRetryPolicy().clone())));
+  EXPECT_CALL(*conn_b, clone)
+      .WillOnce(Return(ByMove(TestBackoffPolicy().clone())));
   EXPECT_CALL(*conn_i, clone)
       .WillOnce(Return(ByMove(bigtable::DefaultIdempotentMutationPolicy())));
 
-  auto connection = std::make_shared<DataConnectionImpl>(nullptr, mock_stub_,
-                                                         std::move(conn_opts));
-  (void)connection->Apply(kAppProfile, kTableName, IdempotentMutation());
+  auto conn =
+      std::make_shared<DataConnectionImpl>(nullptr, mock, std::move(conn_opts));
+  (void)conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
 }
 
-TEST_F(DataConnectionTest, ApplySuccess) {
-  EXPECT_CALL(*mock_stub_, MutateRow)
+TEST(DataConnectionTest, ApplySuccess) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -190,14 +197,14 @@ TEST_F(DataConnectionTest, ApplySuccess) {
         return v2::MutateRowResponse{};
       });
 
-  auto connection = TestConnection();
-  auto status =
-      connection->Apply(kAppProfile, kTableName, IdempotentMutation());
+  auto conn = TestConnection(std::move(mock));
+  auto status = conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(DataConnectionTest, ApplyPermanentFailure) {
-  EXPECT_CALL(*mock_stub_, MutateRow)
+TEST(DataConnectionTest, ApplyPermanentFailure) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -205,14 +212,14 @@ TEST_F(DataConnectionTest, ApplyPermanentFailure) {
         return PermanentError();
       });
 
-  auto connection = TestConnection();
-  auto status =
-      connection->Apply(kAppProfile, kTableName, IdempotentMutation());
+  auto conn = TestConnection(std::move(mock));
+  auto status = conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST_F(DataConnectionTest, ApplyRetryThenSuccess) {
-  EXPECT_CALL(*mock_stub_, MutateRow)
+TEST(DataConnectionTest, ApplyRetryThenSuccess) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -226,14 +233,14 @@ TEST_F(DataConnectionTest, ApplyRetryThenSuccess) {
         return v2::MutateRowResponse{};
       });
 
-  auto connection = TestConnection();
-  auto status =
-      connection->Apply(kAppProfile, kTableName, IdempotentMutation());
+  auto conn = TestConnection(std::move(mock));
+  auto status = conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(DataConnectionTest, ApplyRetryExhausted) {
-  EXPECT_CALL(*mock_stub_, MutateRow)
+TEST(DataConnectionTest, ApplyRetryExhausted) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRow)
       .Times(kNumRetries + 1)
       .WillRepeatedly(
           [](grpc::ClientContext&, v2::MutateRowRequest const& request) {
@@ -243,14 +250,14 @@ TEST_F(DataConnectionTest, ApplyRetryExhausted) {
             return TransientError();
           });
 
-  auto connection = TestConnection();
-  auto status =
-      connection->Apply(kAppProfile, kTableName, IdempotentMutation());
+  auto conn = TestConnection(std::move(mock));
+  auto status = conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST_F(DataConnectionTest, ApplyRetryIdempotentOnly) {
-  EXPECT_CALL(*mock_stub_, MutateRow)
+TEST(DataConnectionTest, ApplyRetryIdempotentOnly) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -258,16 +265,17 @@ TEST_F(DataConnectionTest, ApplyRetryIdempotentOnly) {
         return TransientError();
       });
 
-  auto connection = TestConnection();
+  auto conn = TestConnection(std::move(mock));
   auto status =
-      connection->Apply(kAppProfile, kTableName, NonIdempotentMutation());
+      conn->Apply(kAppProfile, kTableName, NonIdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
 // The DefaultRowReader is tested extensively in `default_row_reader_test.cc`.
 // In this test, we just verify that the configuration is passed along.
-TEST_F(DataConnectionTest, ReadRows) {
-  EXPECT_CALL(*mock_stub_, ReadRows)
+TEST(DataConnectionTest, ReadRows) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](std::unique_ptr<grpc::ClientContext>,
                    google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_THAT(kAppProfile, request.app_profile_id());
@@ -281,9 +289,9 @@ TEST_F(DataConnectionTest, ReadRows) {
         return stream;
       });
 
-  auto connection = TestConnection();
-  auto reader = connection->ReadRows(kAppProfile, kTableName, TestRowSet(), 42,
-                                     TestFilter());
+  auto conn = TestConnection(std::move(mock));
+  auto reader =
+      conn->ReadRows(kAppProfile, kTableName, TestRowSet(), 42, TestFilter());
   EXPECT_EQ(reader.begin(), reader.end());
 }
 
