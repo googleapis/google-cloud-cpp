@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/internal/getenv.h"
-#ifdef _WIN32
+#ifdef _MSC_VER
 // We need _dupenv_s()
 #include <stdlib.h>
 #else
-// On Unix-like systems we need setenv()/unsetenv(), which are defined here:
+// With other compilers we need setenv()/unsetenv(), which are defined here:
 #include <cstdlib>
-#endif  // _WIN32
+#endif  // _MSC_VER
 #include <memory>
 
 namespace google {
@@ -28,9 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 absl::optional<std::string> GetEnv(char const* variable) {
-#if _WIN32
-  // On Windows, std::getenv() is not thread-safe. It returns a pointer that
-  // can be invalidated by _putenv_s(). We must use the thread-safe alternative,
+#if defined(_MSC_VER)
+  // With MSVC, std::getenv() is not thread-safe. It returns a pointer that can
+  // be invalidated by _putenv_s(). We must use the thread-safe alternative,
   // which unfortunately allocates the buffer using malloc():
   char* buffer;
   std::size_t size;
@@ -38,11 +38,9 @@ absl::optional<std::string> GetEnv(char const* variable) {
   std::unique_ptr<char, decltype(&free)> release(buffer, &free);
 #else
   char* buffer = std::getenv(variable);
-#endif  // _WIN32
-  if (buffer == nullptr) {
-    return absl::optional<std::string>();
-  }
-  return absl::optional<std::string>(std::string{buffer});
+#endif  // _MSVC_VER)
+  if (buffer == nullptr) return absl::nullopt;
+  return std::string{buffer};
 }
 
 }  // namespace internal
