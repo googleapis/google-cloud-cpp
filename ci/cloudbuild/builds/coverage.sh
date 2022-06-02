@@ -47,6 +47,11 @@ GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
 mapfile -t integration_args < <(integration::bazel_args)
 integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
 
+io::log_h2 "Running Storage integration tests (with emulator and RestClient)"
+"google/cloud/storage/ci/run_integration_tests_emulator_bazel.sh" \
+    bazel coverage "${args[@]}" "${integration_args[@]}" \
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT=yes"
+
 # Where does this token come from? For triggered ci/pr builds GCB will securely
 # inject this into the environment. See the "secretEnv" setting in the
 # cloudbuild.yaml file. The value is stored in Secret Manager. You can store
