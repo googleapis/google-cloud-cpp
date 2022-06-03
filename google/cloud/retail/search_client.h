@@ -25,6 +25,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 
 namespace google {
@@ -98,12 +99,12 @@ class SearchServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::SearchResponse::SearchResult,google/cloud/retail/v2/search_service.proto#L626}
+  /// @googleapis_link{google::cloud::retail::v2::SearchResponse::SearchResult,google/cloud/retail/v2/search_service.proto#L692}
   ///
   /// [google.cloud.retail.v2.SearchRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L60}
   /// [google.cloud.retail.v2.SearchResponse.SearchResult]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L626}
+  /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L692}
   ///
   StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
       google::cloud::retail::v2::SearchRequest request, Options opts = {});

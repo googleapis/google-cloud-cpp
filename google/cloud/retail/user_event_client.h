@@ -140,12 +140,12 @@ class UserEventServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::PurgeUserEventsResponse,google/cloud/retail/v2/purge_config.proto#L76}
+  /// @googleapis_link{google::cloud::retail::v2::PurgeUserEventsResponse,google/cloud/retail/v2/purge_config.proto#L79}
   ///
   /// [google.cloud.retail.v2.PurgeUserEventsRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L36}
   /// [google.cloud.retail.v2.PurgeUserEventsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L76}
+  /// @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L79}
   ///
   future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
   PurgeUserEvents(
@@ -162,16 +162,16 @@ class UserEventServiceClient {
   /// Operation.metadata is of type ImportMetadata.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsRequest,google/cloud/retail/v2/import_config.proto#L230}
+  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsRequest,google/cloud/retail/v2/import_config.proto#L237}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsResponse,google/cloud/retail/v2/import_config.proto#L364}
+  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsResponse,google/cloud/retail/v2/import_config.proto#L371}
   ///
   /// [google.cloud.retail.v2.ImportUserEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L230}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L237}
   /// [google.cloud.retail.v2.ImportUserEventsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L364}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L371}
   ///
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
   ImportUserEvents(
