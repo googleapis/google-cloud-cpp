@@ -43,6 +43,8 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/async_streaming_read_rpc_auth.h",
     "internal/async_streaming_read_rpc_impl.h",
     "internal/async_streaming_read_rpc_logging.h",
+    "internal/async_streaming_write_rpc.h",
+    "internal/async_streaming_write_rpc_impl.h",
     "internal/background_threads_impl.h",
     "internal/completion_queue_impl.h",
     "internal/default_completion_queue_impl.h",
