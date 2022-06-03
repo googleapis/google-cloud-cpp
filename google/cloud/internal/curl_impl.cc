@@ -717,13 +717,12 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
 
   if (method == HttpMethod::kPost) {
     WriteVector writev{std::move(payload)};
-    status = handle_.SetOption(CURLOPT_POSTFIELDSIZE, nullptr);
-    if (!status.ok()) return OnTransferError(std::move(status));
     status = handle_.SetOption(CURLOPT_POSTFIELDS, nullptr);
     if (!status.ok()) return OnTransferError(std::move(status));
     status = handle_.SetOption(CURLOPT_POST, 1L);
     if (!status.ok()) return OnTransferError(std::move(status));
-    status = handle_.SetOption(CURLOPT_POSTFIELDSIZE_LARGE, writev.size());
+    status = handle_.SetOption(CURLOPT_POSTFIELDSIZE_LARGE,
+                               static_cast<curl_off_t>(writev.size()));
     if (!status.ok()) return OnTransferError(std::move(status));
     status =
         handle_.SetOption(CURLOPT_READFUNCTION, &RestCurlRequestOnReadData);
