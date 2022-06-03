@@ -378,13 +378,16 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
   } else {
     writer << "content-type: application/octet-stream" << crlf;
   }
-  writer << crlf << request.contents() << crlf << marker << "--" << crlf;
+
+  writer << crlf;
+  auto header = std::move(writer).str();
+  auto trailer = crlf + marker + "--" + crlf;
 
   // 6. Return the results as usual.
-  auto contents = std::move(writer).str();
-
   return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Post(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(contents)}));
+      std::move(builder).BuildRequest(),
+      {absl::MakeConstSpan(header), absl::MakeConstSpan(request.contents()),
+       absl::MakeConstSpan(trailer)}));
 }
 
 StatusOr<ObjectMetadata> RestClient::InsertObjectMediaXml(
