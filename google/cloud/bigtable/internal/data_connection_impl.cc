@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/background_threads.h"
@@ -69,6 +70,24 @@ bigtable::RowReader DataConnectionImpl::ReadRows(
       stub_, app_profile_id, table_name, std::move(row_set), rows_limit,
       std::move(filter), retry_policy(), backoff_policy());
   return MakeRowReader(std::move(impl));
+}
+
+std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
+    std::string const& app_profile_id, std::string const& table_name,
+    bigtable::BulkMutation mut) {
+  if (mut.empty()) return {};
+  bigtable::internal::BulkMutator mutator(
+      app_profile_id, table_name, *idempotency_policy(), std::move(mut));
+  auto retry = retry_policy();
+  auto backoff = backoff_policy();
+  do {
+    auto status = mutator.MakeOneRequest(*stub_);
+    if (status.ok()) continue;
+    if (!retry->OnFailure(status)) break;
+    auto delay = backoff->OnCompletion();
+    std::this_thread::sleep_for(delay);
+  } while (mutator.HasPendingMutations());
+  return std::move(mutator).OnRetryDone();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
