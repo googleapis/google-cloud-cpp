@@ -86,6 +86,12 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
 
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>>
+  AsyncWriteObject(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<GoldenKitchenSinkStub> child_;
