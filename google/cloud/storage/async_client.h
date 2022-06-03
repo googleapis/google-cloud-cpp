@@ -47,9 +47,6 @@ class AsyncClient {
    * This operation is only idempotent if:
    * - restricted by pre-conditions, in this case, `IfGenerationMatch`
    * - or, if it applies to only one object version via `Generation`.
-   *
-   * @par Example
-   * @snippet storage_object_samples.cc delete object
    */
   template <typename... RequestOptions>
   future<Status> DeleteObject(std::string const& bucket_name,
@@ -71,6 +68,8 @@ class AsyncClient {
   std::shared_ptr<storage_internal::AsyncConnection> connection_;
 };
 
+// TODO(#7142) - expose a factory function / constructor consuming
+//     std::shared_ptr<AsyncConnection> when we have a plan for mocking
 /// Creates a new GCS client exposing asynchronous APIs.
 AsyncClient MakeAsyncClient(Options opts = {});
 
