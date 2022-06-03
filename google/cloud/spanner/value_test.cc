@@ -1096,7 +1096,6 @@ TEST(Value, OutputStream) {
   };
 
   auto const inf = std::numeric_limits<double>::infinity();
-  auto const nan = std::nan("NaN");
 
   struct TestCase {
     Value value;
@@ -1115,7 +1114,6 @@ TEST(Value, OutputStream) {
       {Value(42.0), "42.00", float4},
       {Value(inf), "inf", normal},
       {Value(-inf), "-inf", normal},
-      {Value(nan), "nan", normal},
       {Value(""), "", normal},
       {Value("foo"), "foo", normal},
       {Value("NULL"), "NULL", normal},
@@ -1228,6 +1226,12 @@ TEST(Value, OutputStream) {
     tc.manip(ss) << tc.value;
     EXPECT_EQ(ss.str(), tc.expected);
   }
+
+  // `double std::nan("")` is a special case because the output conversion
+  // is implementation defined. So, we just look for a "nan" substring.
+  std::stringstream ss;
+  ss << Value(std::nan(""));
+  EXPECT_THAT(ss.str(), HasSubstr("nan"));
 }
 
 // Ensures that the following expressions produce the same output.
