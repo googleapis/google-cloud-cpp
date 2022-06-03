@@ -15,6 +15,7 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_auth_decorator.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/async_streaming_write_rpc_impl.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -211,6 +212,32 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncTailLogEntries) {
 
   auto auth_success = under_test.AsyncTailLogEntries(
       cq, absl::make_unique<grpc::ClientContext>(), request);
+  start = auth_success->Start().get();
+  EXPECT_FALSE(start);
+  finish = auth_success->Finish().get();
+  EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
+}
+
+TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncWriteObject) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
+  using ErrorStream = ::google::cloud::internal::AsyncStreamingWriteRpcError<
+      WriteObjectRequest, WriteObjectResponse>;
+  EXPECT_CALL(*mock, AsyncWriteObject)
+      .WillOnce(Return(ByMove(absl::make_unique<ErrorStream>(
+          Status(StatusCode::kAborted, "uh-oh")))));
+
+  google::cloud::CompletionQueue cq;
+  auto under_test = GoldenKitchenSinkAuth(MakeTypicalAsyncMockAuth(), mock);
+
+  auto auth_failure =
+      under_test.AsyncWriteObject(cq, absl::make_unique<grpc::ClientContext>());
+  auto start = auth_failure->Start().get();
+  EXPECT_FALSE(start);
+  auto finish = auth_failure->Finish().get();
+  EXPECT_THAT(finish, StatusIs(StatusCode::kInvalidArgument));
+
+  auto auth_success =
+      under_test.AsyncWriteObject(cq, absl::make_unique<grpc::ClientContext>());
   start = auth_success->Start().get();
   EXPECT_FALSE(start);
   finish = auth_success->Finish().get();

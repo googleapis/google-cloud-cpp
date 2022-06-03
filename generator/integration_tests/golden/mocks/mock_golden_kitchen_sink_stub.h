@@ -97,6 +97,15 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
      std::unique_ptr<grpc::ClientContext> context,
      ::google::test::admin::database::v1::TailLogEntriesRequest const&),
     (override));
+
+  MOCK_METHOD(
+    (std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+         ::google::test::admin::database::v1::WriteObjectRequest,
+         ::google::test::admin::database::v1::WriteObjectResponse>>),
+    AsyncWriteObject,
+    (google::cloud::CompletionQueue const& cq,
+     std::unique_ptr<grpc::ClientContext> context),
+    (override));
 };
 
 class MockTailLogEntriesStreamingReadRpc
@@ -124,6 +133,16 @@ class MockTailLogEntriesAsyncStreamingReadRpc
   MOCK_METHOD(future<bool>, Start, (), (override));
   MOCK_METHOD(future<absl::optional<::google::test::admin::database::v1::TailLogEntriesResponse>>, Read, (), (override));
   MOCK_METHOD(future<Status>, Finish, (), (override));
+};
+
+class MockWriteObjectAsyncStreamingWriteRpc
+    : public internal::AsyncStreamingWriteRpc<::google::test::admin::database::v1::WriteObjectRequest, ::google::test::admin::database::v1::WriteObjectResponse> {
+public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<bool>, Write, (::google::test::admin::database::v1::WriteObjectRequest const&, grpc::WriteOptions), (override));
+  MOCK_METHOD(future<bool>, WritesDone, (), (override));
+  MOCK_METHOD(future<StatusOr<::google::test::admin::database::v1::WriteObjectResponse>>, Finish, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
