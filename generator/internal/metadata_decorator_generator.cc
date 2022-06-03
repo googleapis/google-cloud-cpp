@@ -133,6 +133,17 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
       HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
       continue;
     }
+    if (IsStreamingWrite(method)) {
+      auto constexpr kDeclaration = R"""(
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      $request_type$, $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -302,6 +313,14 @@ $metadata_class_name$::Async$method_name$(
   }
 
   for (auto const& method : async_methods()) {
+    auto const* set_metadata_stanza = R"""(
+  SetMetadata(*context);)""";
+    if (HasRoutingHeader(method)) {
+      set_metadata_stanza = R"""(
+  SetMetadata(
+      *context,
+      "$method_request_param_key$=" + request.$method_request_param_value$);)""";
+    }
     if (IsStreamingRead(method)) {
       auto const definition = absl::StrCat(
           R"""(
@@ -310,13 +329,26 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    $request_type$ const& request) {
-)""",  // clang-format off
-      HasRoutingHeader(method) ?
-"  SetMetadata(*context, \"$method_request_param_key$=\" + request.$method_request_param_value$);" :
-"  SetMetadata(*context);", // clang-format-on
+    $request_type$ const& request) {)""",
+          set_metadata_stanza,
           R"""(
   return child_->Async$method_name$(cq, std::move(context), request);
+}
+)""");
+      CcPrintMethod(method, __FILE__, __LINE__, definition);
+      continue;
+    }
+    if (IsStreamingWrite(method)) {
+      auto const definition = absl::StrCat(
+          R"""(
+std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+    $request_type$, $response_type$>>
+$metadata_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {)""",
+          set_metadata_stanza,
+          R"""(
+  return child_->Async$method_name$(cq, std::move(context));
 }
 )""");
       CcPrintMethod(method, __FILE__, __LINE__, definition);

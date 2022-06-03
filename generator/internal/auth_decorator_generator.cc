@@ -134,6 +134,17 @@ class $auth_class_name$ : public $stub_class_name$ {
       HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
       continue;
     }
+    if (IsStreamingWrite(method)) {
+      auto constexpr kDeclaration = R"""(
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      $request_type$, $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -198,6 +209,9 @@ Status AuthDecoratorGenerator::GenerateCc() {
           : "",
       HasAsynchronousStreamingReadMethod()
           ? "google/cloud/internal/async_streaming_read_rpc_auth.h"
+          : "",
+      HasAsynchronousStreamingWriteMethod()
+          ? "google/cloud/internal/async_streaming_write_rpc_auth.h"
           : "",
   });
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
@@ -320,6 +334,27 @@ $auth_class_name$::Async$method_name$(
   auto child = child_;
   auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->Async$method_name$(cq, std::move(ctx), request);
+  };
+  return absl::make_unique<StreamAuth>(
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+)""";
+      CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
+      continue;
+    }
+    if (IsStreamingWrite(method)) {
+      auto constexpr kDefinition = R"""(
+std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+    $request_type$, $response_type$>>
+$auth_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingWriteRpcAuth<
+    $request_type$, $response_type$>;
+
+  auto child = child_;
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->Async$method_name$(cq, std::move(ctx));
   };
   return absl::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
