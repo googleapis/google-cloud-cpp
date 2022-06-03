@@ -26,6 +26,8 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 else ()
     add_library(
         google_cloud_cpp_storage_grpc
+        async_client.cc
+        async_client.h
         grpc_plugin.cc
         grpc_plugin.h
         internal/async_connection.h
