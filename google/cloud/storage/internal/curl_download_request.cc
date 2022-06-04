@@ -208,7 +208,6 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     return MakeReadResult(bytes_read, std::move(response));
   }
   TRACE_STATE() << ", code=100";
-  received_headers_.emplace(":curl-peer", handle_.GetPeer());
   return MakeReadResult(bytes_read, HttpResponse{HttpStatusCode::kContinue,
                                                  {},
                                                  std::move(received_headers_)});
