@@ -35,7 +35,6 @@ using ::testing::_;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::IsSupersetOf;
-using ::testing::Not;
 using ::testing::Pair;
 
 class ObjectReadHeadersIntegrationTest
