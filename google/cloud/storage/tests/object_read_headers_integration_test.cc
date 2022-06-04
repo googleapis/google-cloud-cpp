@@ -199,9 +199,7 @@ TEST_F(ObjectReadHeadersIntegrationTest, NoDuplicatePeers) {
 
   auto const headers = is.headers();
   EXPECT_THAT(headers, AnyOf(ContainsOnce(Pair(":curl-peer", _)),
-                             Not(Contains(Pair(":curl-peer", _)))));
-  EXPECT_THAT(headers, AnyOf(ContainsOnce(Pair(":grpc-context-peer", _)),
-                             Not(Contains(Pair(":grpc-context-peer", _)))));
+                             ContainsOnce(Pair(":grpc-context-peer", _))));
 }
 
 }  // namespace
