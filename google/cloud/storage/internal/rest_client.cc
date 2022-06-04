@@ -43,6 +43,8 @@ namespace internal {
 
 namespace rest = google::cloud::rest_internal;
 
+namespace {
+
 bool XmlEnabled() {
   auto const config =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG")
@@ -116,6 +118,8 @@ Status AddAuthorizationHeader(Options const& options,
                                          *auth_header, "Authorization: ")));
   return {};
 }
+
+}  // namespace
 
 std::shared_ptr<RestClient> RestClient::Create(Options options) {
   auto storage_client = rest::MakePooledRestClient(
@@ -538,7 +542,24 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMedia(
 
 StatusOr<ObjectMetadata> RestClient::CopyObject(
     CopyObjectRequest const& request) {
-  return curl_client_->CopyObject(request);
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      request.source_bucket(), "/o/", UrlEscapeString(request.source_object()),
+      "/copyTo/b/", request.destination_bucket(), "/o/",
+      UrlEscapeString(request.destination_object())));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  std::string json_payload("{}");
+  if (request.HasOption<WithObjectMetadata>()) {
+    json_payload = ObjectMetadataJsonForCopy(
+                       request.GetOption<WithObjectMetadata>().value())
+                       .dump();
+  }
+
+  return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Post(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(json_payload)}));
 }
 
 StatusOr<ObjectMetadata> RestClient::GetObjectMetadata(
