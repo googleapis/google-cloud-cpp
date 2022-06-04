@@ -15,6 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -28,9 +29,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
+using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::IsOk;
+using ::testing::_;
+using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::IsSupersetOf;
+using ::testing::Not;
+using ::testing::Pair;
 
 class ObjectReadHeadersIntegrationTest
     : public ::google::cloud::storage::testing::StorageIntegrationTest {
@@ -150,15 +156,52 @@ TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
                    [](HeadersMap::value_type const& p) { return p.first; });
     return keys;
   };
+  auto const header_keys = keys(is.headers());
   if (UsingGrpc()) {
-    EXPECT_THAT(keys(is.headers()), Contains(":grpc-context-peer"));
+    EXPECT_THAT(header_keys, Contains(":grpc-context-peer"));
   } else if (UsingEmulator()) {
-    EXPECT_THAT(keys(is.headers()), Contains("x-goog-hash"));
+    EXPECT_THAT(header_keys, Contains("x-goog-hash"));
   } else {
-    EXPECT_THAT(keys(is.headers()),
+    EXPECT_THAT(header_keys,
                 IsSupersetOf({"x-guploader-uploadid", "x-goog-hash",
                               "x-goog-generation", ":curl-peer"}));
   }
+}
+
+TEST_F(ObjectReadHeadersIntegrationTest, NoDuplicatePeers) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto const object_name = MakeRandomObjectName();
+  auto const block = MakeRandomData(1024 * 1024L);
+  auto constexpr kBlockCount = 128;
+  // Read in small increments to maximize the errors.
+  auto constexpr kBufferSize = 16 * 1024L;
+
+  auto writer =
+      client->WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
+  for (int i = 0; i != kBlockCount; ++i) {
+    writer.write(block.data(), block.size());
+  }
+  writer.Close();
+  auto object = writer.metadata();
+  ASSERT_THAT(object, IsOk());
+  ScheduleForDelete(*object);
+
+  auto is = client->ReadObject(bucket_name(), object_name,
+                               Generation(object->generation()));
+  std::vector<char> buffer(kBufferSize);
+  while (is) {
+    is.read(buffer.data(), buffer.size());
+  }
+  is.Close();
+  EXPECT_THAT(is.status(), IsOk());
+
+  auto const headers = is.headers();
+  EXPECT_THAT(headers, AnyOf(ContainsOnce(Pair(":curl-peer", _)),
+                             Not(Contains(Pair(":curl-peer", _)))));
+  EXPECT_THAT(headers, AnyOf(ContainsOnce(Pair(":grpc-context-peer", _)),
+                             Not(Contains(Pair(":grpc-context-peer", _)))));
 }
 
 }  // namespace
