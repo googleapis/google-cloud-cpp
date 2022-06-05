@@ -47,6 +47,10 @@ class DataConnectionImpl : public DataConnection {
                                std::int64_t rows_limit,
                                bigtable::Filter filter) override;
 
+  std::vector<bigtable::FailedMutation> BulkApply(
+      std::string const& app_profile_id, std::string const& table_name,
+      bigtable::BulkMutation mut) override;
+
  private:
   std::unique_ptr<DataRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
