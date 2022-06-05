@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/mocks/mock_data_connection.h"
 #include "google/cloud/bigtable/mocks/mock_row_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -24,9 +25,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace v2 = ::google::bigtable::v2;
+using ms = std::chrono::milliseconds;
 using ::google::cloud::bigtable_mocks::internal::MockDataConnection;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
+using ::testing::ElementsAreArray;
 using ::testing::Eq;
 using ::testing::Matcher;
 using ::testing::Property;
@@ -40,6 +43,35 @@ auto const* const kTableName =
 
 Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "fail");
+}
+
+bigtable::SingleRowMutation IdempotentMutation() {
+  return bigtable::SingleRowMutation(
+      "row", {bigtable::SetCell("fam", "col", ms(0), "val")});
+}
+
+bigtable::SingleRowMutation NonIdempotentMutation() {
+  return bigtable::SingleRowMutation("row",
+                                     {bigtable::SetCell("fam", "col", "val")});
+}
+
+void CheckFailedMutations(std::vector<FailedMutation> const& actual,
+                          std::vector<FailedMutation> const& expected) {
+  struct Unroll {
+    explicit Unroll(std::vector<FailedMutation> const& failed) {
+      for (auto const& f : failed) {
+        statuses.push_back(f.status());
+        indices.push_back(f.original_index());
+      }
+    }
+    std::vector<Status> statuses;
+    std::vector<int> indices;
+  };
+
+  auto a = Unroll(actual);
+  auto e = Unroll(expected);
+  EXPECT_THAT(a.statuses, ElementsAreArray(e.statuses));
+  EXPECT_THAT(a.indices, ElementsAreArray(e.indices));
 }
 
 RowSet TestRowSet() { return RowSet("r1", "r2"); }
@@ -66,6 +98,27 @@ TEST(TableTest, ConnectionConstructor) {
   EXPECT_EQ(kInstanceId, table.instance_id());
   EXPECT_EQ(kTableId, table.table_id());
   EXPECT_EQ(kTableName, table.table_name());
+}
+
+TEST(TableTest, BulkApply) {
+  std::vector<FailedMutation> expected = {{PermanentError(), 1}};
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, BulkApply)
+      .WillOnce([&expected](std::string const& app_profile_id,
+                            std::string const& table_name,
+                            bigtable::BulkMutation const& mut) {
+        EXPECT_EQ(kAppProfileId, app_profile_id);
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ(mut.size(), 2);
+        return expected;
+      });
+
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  auto actual = table.BulkApply(
+      BulkMutation(IdempotentMutation(), NonIdempotentMutation()));
+  CheckFailedMutations(actual, expected);
 }
 
 TEST(TableTest, ReadRows) {

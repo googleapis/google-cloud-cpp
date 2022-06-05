@@ -151,6 +151,10 @@ future<Status> Table::AsyncApply(SingleRowMutation mut) {
 }
 
 std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
+  if (connection_) {
+    return connection_->BulkApply(app_profile_id_, table_name_, std::move(mut));
+  }
+
   if (mut.empty()) return {};
   grpc::Status status;
 
