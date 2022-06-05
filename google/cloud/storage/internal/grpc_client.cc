@@ -79,6 +79,15 @@ StatusOr<ObjectAccessControl> FindObjectAccessControl(
                                            "> in object id " + response->id());
 }
 
+std::chrono::milliseconds DefaultTransferStallTimeout(
+    std::chrono::milliseconds value) {
+  if (value != std::chrono::milliseconds(0)) return value;
+  // We need a large value for `wait_for()`, but not so large that it can easily
+  // overflow.  Fortunately, uploads automatically cancel (server side) after
+  // 7 days, so waiting for 14 days will not create spurious timeouts.
+  return std::chrono::milliseconds(std::chrono::hours(24) * 14);
+}
+
 }  // namespace
 
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
@@ -158,15 +167,6 @@ GrpcClient::GrpcClient(std::shared_ptr<storage_internal::StorageStub> stub,
           MakeBackwardsCompatibleClientOptions(options_)),
       background_(MakeBackgroundThreadsFactory(options_)()),
       stub_(std::move(stub)) {}
-
-std::unique_ptr<GrpcClient::WriteObjectStream> GrpcClient::CreateUploadWriter(
-    std::unique_ptr<grpc::ClientContext> context) {
-  auto const timeout = options_.get<TransferStallTimeoutOption>();
-  if (timeout.count() != 0) {
-    context->set_deadline(std::chrono::system_clock::now() + timeout);
-  }
-  return stub_->WriteObject(std::move(context));
-}
 
 ClientOptions const& GrpcClient::client_options() const {
   return backwards_compatibility_options_;
@@ -292,13 +292,39 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   if (!r) return std::move(r).status();
   auto proto_request = *r;
 
+  struct WaitForFinish {
+    std::unique_ptr<WriteObjectStream> stream;
+    void operator()(
+        future<StatusOr<google::storage::v2::WriteObjectResponse>>) {}
+  };
+  struct WaitForIdle {
+    std::unique_ptr<WriteObjectStream> stream;
+    void operator()(future<bool>) {
+      stream->Finish().then(WaitForFinish{std::move(stream)});
+    }
+  };
+
+  auto const timeout =
+      DefaultTransferStallTimeout(google::cloud::internal::CurrentOptions()
+                                      .get<TransferStallTimeoutOption>());
+
   auto context = absl::make_unique<grpc::ClientContext>();
   // The REST response is just the object metadata (aka the "resource"). In the
   // gRPC response the object metadata is in a "resource" field. Passing an
   // extra prefix to ApplyQueryParameters sends the right filtering instructions
   // to the gRPC API.
   ApplyQueryParameters(*context, request, "resource");
-  auto stream = stub_->WriteObject(std::move(context));
+  auto stream = stub_->AsyncWriteObject(background_->cq(), std::move(context));
+
+  auto pending_start = stream->Start();
+  if (pending_start.wait_for(timeout) == std::future_status::timeout) {
+    stream->Cancel();
+    pending_start.then(WaitForIdle{std::move(stream)});
+    return Status(StatusCode::kDeadlineExceeded,
+                  "timeout [" +
+                      absl::FormatDuration(absl::FromChrono(timeout)) +
+                      "] while waiting for Start()");
+  }
 
   auto const& contents = request.contents();
   auto const contents_size = static_cast<std::int64_t>(contents.size());
@@ -317,19 +343,39 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
                         static_cast<std::string::size_type>(n)));
     data.set_crc32c(crc32c::Crc32c(data.content()));
 
+    auto write_options = grpc::WriteOptions{};
     if (offset + n >= contents_size) {
       proto_request.set_finish_write(true);
-      stream->Write(proto_request, grpc::WriteOptions{}.set_last_message());
-      break;
+      write_options.set_last_message();
     }
-    if (!stream->Write(proto_request, grpc::WriteOptions{})) break;
+    auto pending = stream->Write(proto_request, write_options);
+    if (pending.wait_for(timeout) == std::future_status::timeout) {
+      stream->Cancel();
+      pending.then(WaitForIdle{std::move(stream)});
+      return Status(StatusCode::kDeadlineExceeded,
+                    "timeout [" +
+                        absl::FormatDuration(absl::FromChrono(timeout)) +
+                        "] while waiting for Write()");
+    }
+
+    if (!pending.get() || proto_request.finish_write()) break;
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
     proto_request.clear_write_object_spec();
     proto_request.clear_object_checksums();
   }
 
-  auto response = stream->Close();
+  auto pending = stream->Finish();
+  if (pending.wait_for(timeout) == std::future_status::timeout) {
+    stream->Cancel();
+    pending.then(WaitForFinish{std::move(stream)});
+    return Status(StatusCode::kDeadlineExceeded,
+                  "timeout [" +
+                      absl::FormatDuration(absl::FromChrono(timeout)) +
+                      "] while waiting for Finish()");
+  }
+
+  auto response = pending.get();
   if (!response) return std::move(response).status();
   if (response->has_resource()) {
     return GrpcObjectMetadataParser::FromProto(response->resource(), options());
@@ -504,9 +550,37 @@ StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
 
 StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
     UploadChunkRequest const& request) {
+  struct WaitForFinish {
+    std::unique_ptr<WriteObjectStream> stream;
+    void operator()(
+        future<StatusOr<google::storage::v2::WriteObjectResponse>>) {}
+  };
+  struct WaitForIdle {
+    std::unique_ptr<WriteObjectStream> stream;
+    void operator()(future<bool>) {
+      stream->Finish().then(WaitForFinish{std::move(stream)});
+    }
+  };
+
+  OptionsSpan span(options_);
+  auto const timeout =
+      DefaultTransferStallTimeout(google::cloud::internal::CurrentOptions()
+                                      .get<TransferStallTimeoutOption>());
+
   auto context = absl::make_unique<grpc::ClientContext>();
   ApplyQueryParameters(*context, request, "resource");
-  auto writer = CreateUploadWriter(std::move(context));
+  auto writer = stub_->AsyncWriteObject(background_->cq(), std::move(context));
+
+  auto timeout_status =
+      Status(StatusCode::kDeadlineExceeded,
+             "timeout [" + absl::FormatDuration(absl::FromChrono(timeout)) +
+                 "] while waiting for Start()");
+  auto pending_start = writer->Start();
+  if (pending_start.wait_for(timeout) == std::future_status::timeout) {
+    writer->Cancel();
+    pending_start.then(WaitForIdle{std::move(writer)});
+    return timeout_status;
+  }
 
   std::size_t const maximum_chunk_size =
       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
@@ -514,6 +588,11 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
   chunk.reserve(maximum_chunk_size);
   auto offset = static_cast<google::protobuf::int64>(request.offset());
 
+  timeout_status =
+      Status(StatusCode::kDeadlineExceeded,
+             "timeout [" + absl::FormatDuration(absl::FromChrono(timeout)) +
+                 "] while waiting for Write()");
+  bool sent_last_message = false;
   auto flush_chunk = [&](bool has_more) {
     if (chunk.size() < maximum_chunk_size && has_more) return true;
     if (chunk.empty() && !request.last_chunk()) return true;
@@ -551,7 +630,15 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
       options.set_last_message();
     }
 
-    if (!writer->Write(write_request, options)) return false;
+    auto pending = writer->Write(write_request, options);
+    if (pending.wait_for(timeout) == std::future_status::timeout) {
+      writer->Cancel();
+      pending.then(WaitForIdle{std::move(writer)});
+      return false;
+    }
+
+    sent_last_message = options.is_last_message();
+    if (!pending.get()) return false;
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
     write_request.clear_write_object_spec();
@@ -562,10 +649,32 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
   };
 
   auto close_writer = [&]() -> StatusOr<QueryResumableUploadResponse> {
-    auto result = writer->Close();
-    writer.reset();
-    if (!result) return std::move(result).status();
-    return GrpcObjectRequestParser::FromProto(*std::move(result), options());
+    if (!writer) return timeout_status;
+    if (!sent_last_message) {
+      auto pending = writer->WritesDone();
+      if (pending.wait_for(timeout) == std::future_status::timeout) {
+        writer->Cancel();
+        pending.then(WaitForIdle{std::move(writer)});
+        timeout_status = Status(
+            StatusCode::kDeadlineExceeded,
+            "timeout [" + absl::FormatDuration(absl::FromChrono(timeout)) +
+                "] while waiting for WritesDone()");
+        return timeout_status;
+      }
+    }
+    auto pending = writer->Finish();
+    if (pending.wait_for(timeout) == std::future_status::timeout) {
+      writer->Cancel();
+      pending.then(WaitForFinish{std::move(writer)});
+      timeout_status =
+          Status(StatusCode::kDeadlineExceeded,
+                 "timeout [" + absl::FormatDuration(absl::FromChrono(timeout)) +
+                     "] while waiting for Finish()");
+      return timeout_status;
+    }
+    auto response = pending.get();
+    if (!response) return std::move(response).status();
+    return GrpcObjectRequestParser::FromProto(*std::move(response), options());
   };
 
   auto buffers = request.payload();

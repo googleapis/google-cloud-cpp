@@ -136,18 +136,21 @@ TEST_F(StorageStubFactory, WriteObject) {
   EXPECT_CALL(factory, Call)
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockStorageStub>();
-        EXPECT_CALL(*mock, WriteObject)
-            .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
+        EXPECT_CALL(*mock, AsyncWriteObject)
+            .WillOnce([this](google::cloud::CompletionQueue const&,
+                             std::unique_ptr<grpc::ClientContext> context) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context->credentials(), NotNull());
               // Verify the Metadata decorator is present
               EXPECT_STATUS_OK(IsContextMDValid(
                   *context, "google.storage.v2.Storage.WriteObject"));
               auto stream = absl::make_unique<MockInsertStream>();
-              EXPECT_CALL(*stream, Close)
-                  .WillOnce(
-                      Return(StatusOr<google::storage::v2::WriteObjectResponse>(
-                          Status(StatusCode::kUnavailable, "nothing here"))));
+              EXPECT_CALL(*stream, Start)
+                  .WillOnce(Return(ByMove(make_ready_future(true))));
+              EXPECT_CALL(*stream, Finish)
+                  .WillOnce(Return(ByMove(make_ready_future(
+                      StatusOr<google::storage::v2::WriteObjectResponse>(
+                          Status(StatusCode::kUnavailable, "nothing here"))))));
               return stream;
             });
         return mock;
@@ -161,8 +164,10 @@ TEST_F(StorageStubFactory, WriteObject) {
   ScopedLog log;
   CompletionQueue cq;
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto stream = stub->WriteObject(absl::make_unique<grpc::ClientContext>());
-  auto close = stream->Close();
+  auto stream =
+      stub->AsyncWriteObject(cq, absl::make_unique<grpc::ClientContext>());
+  EXPECT_TRUE(stream->Start().get());
+  auto close = stream->Finish().get();
   EXPECT_THAT(close, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("WriteObject")));
 }

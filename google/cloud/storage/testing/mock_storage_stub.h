@@ -152,17 +152,21 @@ class MockStorageStub : public storage_internal::StorageStub {
               (override));
 };
 
-class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<
+class MockInsertStream : public google::cloud::internal::AsyncStreamingWriteRpc<
                              google::storage::v2::WriteObjectRequest,
                              google::storage::v2::WriteObjectResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(bool, Write,
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<bool>, Write,
               (google::storage::v2::WriteObjectRequest const&,
                grpc::WriteOptions),
               (override));
-  MOCK_METHOD(StatusOr<google::storage::v2::WriteObjectResponse>, Close, (),
-              (override));
+  MOCK_METHOD(future<bool>, WritesDone, (), (override));
+  MOCK_METHOD(future<StatusOr<google::storage::v2::WriteObjectResponse>>,
+              Finish, (), (override));
+  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
+              (), (const, override));
 };
 
 class MockObjectMediaStream

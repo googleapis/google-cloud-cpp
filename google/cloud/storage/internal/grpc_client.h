@@ -18,7 +18,7 @@
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/background_threads.h"
-#include "google/cloud/internal/streaming_write_rpc.h"
+#include "google/cloud/internal/async_streaming_write_rpc.h"
 #include <google/storage/v2/storage.pb.h>
 #include <functional>
 #include <memory>
@@ -56,19 +56,9 @@ class GrpcClient : public RawClient,
 
   ~GrpcClient() override = default;
 
-  //@{
-  /// @name Implement the ResumableSession operations.
-  // Note that these member functions are not inherited from RawClient, they are
-  // called only by `GrpcResumableUploadSession`, because the retry loop for
-  // them is very different from the standard retry loop. Also note that some of
-  // these member functions are virtual, but only because we need to override
-  // them in the *library* unit tests.
-  using WriteObjectStream = ::google::cloud::internal::StreamingWriteRpc<
+  using WriteObjectStream = ::google::cloud::internal::AsyncStreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
-  virtual std::unique_ptr<WriteObjectStream> CreateUploadWriter(
-      std::unique_ptr<grpc::ClientContext> context);
-  //@}
 
   ClientOptions const& client_options() const override;
   Options options() const override;
