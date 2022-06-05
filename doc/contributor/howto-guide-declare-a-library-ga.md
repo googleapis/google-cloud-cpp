@@ -109,12 +109,29 @@ for lib in "${ga[@]}"; do
 done
 ```
 
-## Remove the `experimental-` rules and targets
+## Reference the GA targets in the quickstarts
 
-Once a release is created *and* the release is included in `vcpkg`, change the
-quickstart guide to reference the rules and targets without an `experimental-`
-prefix.  In the following release you can remove these rules and targets.
+For Bazel, we can drop the `experimental-` prefix as soon as renovate bot
+updates our builds to use a release with the GA version of the library.
 
 ```shell
-for d in "${ga[@]}"; do sed -i 's/experimental-//' google/cloud/$d/quickstart/BUILD.bazel; done
+for lib in "${ga[@]}"; do sed -i 's/experimental-//' google/cloud/${lib}/quickstart/BUILD.bazel; done
+```
+
+For CMake, we can drop the `experimental-` prefix as soon as a release with the
+GA version of the library is included in `vcpkg`.
+
+```shell
+for lib in "${ga[@]}"; do sed -i 's/experimental-//' google/cloud/${lib}/quickstart/CMakeLists.txt; done
+```
+
+## (Eventually) Remove the `experimental-` rules and targets
+
+In the following release, move the libraries from `TRANSITION_LIBRARIES` to
+`GA_LIBRARIES`, in the top-level `BUILD.bazel`.
+
+Then remove the CMake aliases.
+
+```shell
+for lib in "${ga[@]}"; do sed -i '1,/-targets.cmake")/!d' google/cloud/${lib}/config.cmake.in; done
 ```
