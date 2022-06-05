@@ -78,12 +78,16 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
   if (mut.empty()) return {};
   bigtable::internal::BulkMutator mutator(
       app_profile_id, table_name, *idempotency_policy(), std::move(mut));
-  auto retry = retry_policy();
-  auto backoff = backoff_policy();
+  // We wait to allocate the policies until they are needed as a
+  // micro-optimization.
+  std::unique_ptr<DataRetryPolicy> retry;
+  std::unique_ptr<BackoffPolicy> backoff;
   do {
     auto status = mutator.MakeOneRequest(*stub_);
     if (status.ok()) continue;
+    if (!retry) retry = retry_policy();
     if (!retry->OnFailure(status)) break;
+    if (!backoff) backoff = backoff_policy();
     auto delay = backoff->OnCompletion();
     std::this_thread::sleep_for(delay);
   } while (mutator.HasPendingMutations());

@@ -437,6 +437,15 @@ TEST(DataConnectionTest, BulkApplyStreamRetryExhausted) {
             return stream;
           });
 
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
+    return clone;
+  });
+
+  internal::OptionsSpan span(
+      Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto conn = TestConnection(std::move(mock));
   auto actual = conn->BulkApply(kAppProfile, kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
@@ -482,11 +491,7 @@ TEST(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
       });
 
   auto mock_b = absl::make_unique<MockBackoffPolicy>();
-  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
-    EXPECT_CALL(*clone, OnCompletion).Times(0);
-    return clone;
-  });
+  EXPECT_CALL(*mock_b, clone).Times(0);
 
   internal::OptionsSpan span(
       Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
