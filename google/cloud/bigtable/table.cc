@@ -70,6 +70,10 @@ static_assert(std::is_copy_assignable<bigtable::Table>::value,
               "bigtable::Table must be CopyAssignable");
 
 Status Table::Apply(SingleRowMutation mut) {
+  if (connection_) {
+    return connection_->Apply(app_profile_id_, table_name_, std::move(mut));
+  }
+
   // Copy the policies in effect for this operation.  Many policy classes change
   // their state as the operation makes progress (or fails to make progress), so
   // we need fresh instances.

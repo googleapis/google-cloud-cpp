@@ -84,8 +84,8 @@ std::string const kFamily2 = "family2";
 std::string const kFamily3 = "family3";
 std::string const kFamily4 = "family4";
 
-TEST_F(DataIntegrationTestClientOnly, TableApply) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableApply) {
+  auto table = GetTable(GetParam());
 
   std::string const row_key = "row-key-1";
   std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
@@ -123,9 +123,9 @@ TEST_F(DataIntegrationTestClientOnly, TableBulkApply) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableSingleRow) {
+TEST_P(DataIntegrationTest, TableSingleRow) {
   std::string const row_key = "row-key-1";
-  auto table = GetTable();
+  auto table = GetTable(GetParam());
 
   auto mutation =
       SingleRowMutation(row_key, SetCell(kFamily4, "c1", 1_ms, "V1000"),
@@ -515,7 +515,7 @@ TEST_F(DataIntegrationTestClientOnly, TableReadMultipleCellsBigValue) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableApplyWithLogging) {
+TEST_P(DataIntegrationTest, TableApplyWithLogging) {
   // In our ci builds, we set GOOGLE_CLOUD_CPP_ENABLE_TRACING to log our tests,
   // by default. We should unset this variable and create a fresh client in
   // order to have a conclusive test.
@@ -524,27 +524,31 @@ TEST_F(DataIntegrationTestClientOnly, TableApplyWithLogging) {
   testing_util::ScopedLog log;
   auto const table_id = testing::TableTestEnvironment::table_id();
 
-  std::shared_ptr<bigtable::DataClient> data_client =
-      bigtable::MakeDataClient(project_id(), instance_id(),
-                               Options{}.set<TracingComponentsOption>({"rpc"}));
-
-  Table table(data_client, table_id);
+  // Make a `Table` with an implementation that depends on the test's value
+  // parameter.
+  auto make_table = [&](Options const& options) {
+    if (GetParam() == "with-data-connection") {
+      auto conn = bigtable_internal::MakeDataConnection(options);
+      return MakeTable(std::move(conn), project_id(), instance_id(), "",
+                       table_id);
+    }
+    auto data_client = MakeDataClient(project_id(), instance_id(), options);
+    return Table(std::move(data_client), table_id);
+  };
 
   std::string const row_key = "row-key-1";
   std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
                             {row_key, kFamily4, "c1", 2000, "v2000"}};
-  Apply(table, row_key, created);
-  std::vector<Cell> expected{{row_key, kFamily4, "c0", 1000, "v1000"},
-                             {row_key, kFamily4, "c1", 2000, "v2000"}};
 
-  auto actual = ReadRows(table, Filter::PassAllFilter());
-  CheckEqualUnordered(expected, actual);
+  // Verify that a logging client logs.
+  auto logging_table =
+      make_table(Options{}.set<TracingComponentsOption>({"rpc"}));
+  Apply(logging_table, row_key, created);
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("MutateRow")));
 
   // Verify that a normal client does not log.
-  auto no_logging_client =
-      Table(MakeDataClient(project_id(), instance_id()), table_id);
-  Apply(no_logging_client, row_key, created);
+  auto no_logging_table = make_table(Options{});
+  Apply(no_logging_table, row_key, created);
   EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("MutateRow"))));
 }
 

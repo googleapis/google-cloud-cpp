@@ -100,6 +100,24 @@ TEST(TableTest, ConnectionConstructor) {
   EXPECT_EQ(kTableName, table.table_name());
 }
 
+TEST(TableTest, Apply) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, Apply)
+      .WillOnce([](std::string const& app_profile_id,
+                   std::string const& table_name,
+                   bigtable::SingleRowMutation const& mut) {
+        EXPECT_EQ(kAppProfileId, app_profile_id);
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ(mut.row_key(), "row");
+        return PermanentError();
+      });
+
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  auto status = table.Apply(IdempotentMutation());
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+}
+
 TEST(TableTest, BulkApply) {
   std::vector<FailedMutation> expected = {{PermanentError(), 1}};
 
