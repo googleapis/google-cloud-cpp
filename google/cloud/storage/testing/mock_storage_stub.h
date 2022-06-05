@@ -142,6 +142,14 @@ class MockStorageStub : public storage_internal::StorageStub {
                std::unique_ptr<grpc::ClientContext>,
                google::storage::v2::ReadObjectRequest const&),
               (override));
+  using AsyncWriteObjectReturnType =
+      std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+          google::storage::v2::WriteObjectRequest,
+          google::storage::v2::WriteObjectResponse>>;
+  MOCK_METHOD(AsyncWriteObjectReturnType, AsyncWriteObject,
+              (google::cloud::CompletionQueue const&,
+               std::unique_ptr<grpc::ClientContext>),
+              (override));
 };
 
 class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<

@@ -197,6 +197,15 @@ StorageRoundRobin::AsyncReadObject(
   return Child()->AsyncReadObject(cq, std::move(context), request);
 }
 
+std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
+StorageRoundRobin::AsyncWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  return Child()->AsyncWriteObject(cq, std::move(context));
+}
+
 std::shared_ptr<StorageStub> StorageRoundRobin::Child() {
   std::lock_guard<std::mutex> lk(mu_);
   auto child = children_[current_];
