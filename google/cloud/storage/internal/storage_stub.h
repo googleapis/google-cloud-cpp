@@ -22,6 +22,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_streaming_read_rpc.h"
+#include "google/cloud/internal/async_streaming_write_rpc.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/status_or.h"
@@ -153,6 +154,12 @@ class StorageStub {
   AsyncReadObject(google::cloud::CompletionQueue const& cq,
                   std::unique_ptr<grpc::ClientContext> context,
                   google::storage::v2::ReadObjectRequest const& request) = 0;
+
+  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>>
+  AsyncWriteObject(google::cloud::CompletionQueue const& cq,
+                   std::unique_ptr<grpc::ClientContext> context) = 0;
 };
 
 class DefaultStorageStub : public StorageStub {
@@ -276,6 +283,12 @@ class DefaultStorageStub : public StorageStub {
       google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::storage::v2::ReadObjectRequest const& request) override;
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>>
+  AsyncWriteObject(google::cloud::CompletionQueue const& cq,
+                   std::unique_ptr<grpc::ClientContext> context) override;
 
  private:
   std::unique_ptr<google::storage::v2::Storage::StubInterface> grpc_stub_;
