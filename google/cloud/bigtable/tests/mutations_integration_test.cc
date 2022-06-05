@@ -28,6 +28,7 @@ using ::testing::Not;
 
 using MutationIntegrationTest =
     ::google::cloud::bigtable::testing::TableIntegrationTest;
+
 /**
  * This function creates Cell by ignoring the timestamp.
  * In this case Cloud Bigtable will insert the default server
@@ -61,7 +62,7 @@ std::string const kColumnFamily3 = "family3";
  * Cloud Bigtable
  */
 TEST_F(MutationIntegrationTest, SetCellTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
 
   // Create a vector of cells which will be inserted into bigtable
   std::string const row_key = "SetCellRowKey";
@@ -85,7 +86,7 @@ TEST_F(MutationIntegrationTest, SetCellTest) {
  * correctly inserted into Cloud Bigtable
  */
 TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
 
   // Create a vector of cells which will be inserted into bigtable
   std::string const row_key = "SetCellNumRowKey";
@@ -128,7 +129,7 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueErrorTest) {
  * correctly inserted into Cloud Bigtable.
  */
 TEST_F(MutationIntegrationTest, SetCellIgnoreTimestampTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
 
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "SetCellRowKey";

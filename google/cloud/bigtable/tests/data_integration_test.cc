@@ -27,6 +27,7 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::bigtable::testing::TableIntegrationTest;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
@@ -34,10 +35,9 @@ using ::std::chrono::milliseconds;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
-using DataIntegrationTestClientOnly =
-    ::google::cloud::bigtable::testing::TableIntegrationTest;
+using DataIntegrationTestClientOnly = TableIntegrationTest;
 
-class DataIntegrationTest : public DataIntegrationTestClientOnly,
+class DataIntegrationTest : public TableIntegrationTest,
                             public ::testing::WithParamInterface<std::string> {
 };
 
@@ -98,8 +98,8 @@ TEST_F(DataIntegrationTestClientOnly, TableApply) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableBulkApply) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableBulkApply) {
+  auto table = GetTable(GetParam());
 
   std::vector<Cell> created{{"row-key-1", kFamily4, "c0", 1000, "v1000"},
                             {"row-key-1", kFamily4, "c1", 2000, "v2000"},
@@ -170,8 +170,8 @@ TEST_F(DataIntegrationTestClientOnly, TableReadRowNotExistTest) {
   EXPECT_FALSE(row_cell->first);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableReadRowsAllRows) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadRowsAllRows) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const row_key3(1024, '3');    // a long key
@@ -202,8 +202,8 @@ TEST_F(DataIntegrationTestClientOnly, TableReadRowsAllRows) {
   CheckEqualUnordered(created, MoveCellsFromReader(read4));
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableReadRowsPartialRows) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadRowsPartialRows) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const row_key3 = "row-key-3";
@@ -244,8 +244,8 @@ TEST_F(DataIntegrationTestClientOnly, TableReadRowsPartialRows) {
   }
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableReadRowsNoRows) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadRowsNoRows) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const row_key3 = "row-key-3";
