@@ -187,6 +187,25 @@ TEST(TableTest, ReadRowsWithRowLimit) {
   EXPECT_EQ(++it, reader.end());
 }
 
+TEST(TableTest, ReadRow) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRow)
+      .WillOnce([](std::string const& app_profile_id,
+                   std::string const& table_name, std::string const& row_key,
+                   bigtable::Filter const& filter) {
+        EXPECT_EQ(kAppProfileId, app_profile_id);
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ("row", row_key);
+        EXPECT_THAT(filter, IsTestFilter());
+        return PermanentError();
+      });
+
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  auto resp = table.ReadRow("row", TestFilter());
+  EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

@@ -506,9 +506,9 @@ TEST(DataConnectionTest, ReadRows) {
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](std::unique_ptr<grpc::ClientContext>,
                    google::bigtable::v2::ReadRowsRequest const& request) {
-        EXPECT_THAT(kAppProfile, request.app_profile_id());
-        EXPECT_THAT(kTableName, request.table_name());
-        EXPECT_THAT(42, request.rows_limit());
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(42, request.rows_limit());
         EXPECT_THAT(request, HasTestRowSet());
         EXPECT_THAT(request, HasTestFilter());
 
@@ -521,6 +521,82 @@ TEST(DataConnectionTest, ReadRows) {
   auto reader =
       conn->ReadRows(kAppProfile, kTableName, TestRowSet(), 42, TestFilter());
   EXPECT_EQ(reader.begin(), reader.end());
+}
+
+TEST(DataConnectionTest, ReadRowEmpty) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>,
+                   google::bigtable::v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(1, request.rows_limit());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
+        EXPECT_THAT(request, HasTestFilter());
+
+        auto stream = absl::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto resp = conn->ReadRow(kAppProfile, kTableName, "row", TestFilter());
+  ASSERT_STATUS_OK(resp);
+  EXPECT_FALSE(resp->first);
+}
+
+TEST(DataConnectionTest, ReadRowSuccess) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>,
+                   google::bigtable::v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(1, request.rows_limit());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
+        EXPECT_THAT(request, HasTestFilter());
+
+        auto stream = absl::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([]() {
+              v2::ReadRowsResponse r;
+              auto& chunk = *r.add_chunks();
+              *chunk.mutable_row_key() = "row";
+              chunk.mutable_family_name()->set_value("cf");
+              chunk.mutable_qualifier()->set_value("cq");
+              chunk.set_commit_row(true);
+              return r;
+            })
+            .WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto resp = conn->ReadRow(kAppProfile, kTableName, "row", TestFilter());
+  ASSERT_STATUS_OK(resp);
+  EXPECT_TRUE(resp->first);
+  EXPECT_EQ("row", resp->second.row_key());
+}
+
+TEST(DataConnectionTest, ReadRowFailure) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>,
+                   google::bigtable::v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(1, request.rows_limit());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
+        EXPECT_THAT(request, HasTestFilter());
+
+        auto stream = absl::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentError()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto resp = conn->ReadRow(kAppProfile, kTableName, "row", TestFilter());
+  EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace

@@ -94,6 +94,25 @@ bigtable::RowReader DataConnectionImpl::ReadRows(
   return MakeRowReader(std::move(impl));
 }
 
+StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
+    std::string const& app_profile_id, std::string const& table_name,
+    std::string row_key, bigtable::Filter filter) {
+  bigtable::RowSet row_set(std::move(row_key));
+  std::int64_t const rows_limit = 1;
+  auto reader = ReadRows(app_profile_id, table_name, std::move(row_set),
+                         rows_limit, std::move(filter));
+
+  auto it = reader.begin();
+  if (it == reader.end()) return std::make_pair(false, bigtable::Row("", {}));
+  if (!*it) return it->status();
+  auto result = std::make_pair(true, std::move(**it));
+  if (++it != reader.end()) {
+    return Status(StatusCode::kInternal,
+                  "internal error - RowReader returned 2 rows in ReadRow()");
+  }
+  return result;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

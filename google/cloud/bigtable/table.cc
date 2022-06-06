@@ -219,6 +219,11 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
 
 StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
                                               Filter filter) {
+  if (connection_) {
+    return connection_->ReadRow(app_profile_id_, table_name_,
+                                std::move(row_key), std::move(filter));
+  }
+
   RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
   RowReader reader =
