@@ -13,6 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/rest_object_read_source.h"
+#include "google/cloud/storage/internal/hash_values.h"
+#include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/storage/internal/object_read_source.h"
+#include "google/cloud/internal/http_payload.h"
+#include "google/cloud/internal/rest_response.h"
+#include "google/cloud/status_or.h"
+#include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -35,7 +43,6 @@ std::string RestExtractHashValue(std::string const& hash_header,
 
 ReadSourceResult MakeRestReadResult(std::size_t bytes_received,
                                     HttpResponse response) {
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto r = ReadSourceResult{bytes_received, std::move(response)};
   auto const end = r.response.headers.end();
   auto f = r.response.headers.find("x-goog-generation");
@@ -84,7 +91,7 @@ StatusOr<HttpResponse> RestObjectReadSource::Close() {
     return Status(StatusCode::kFailedPrecondition, "Connection not open.");
   }
   payload_.reset();
-  return HttpResponse{status_code_, {}, headers_};
+  return HttpResponse{status_code_, {}, {}};
 }
 
 StatusOr<ReadSourceResult> RestObjectReadSource::Read(char* buf,
@@ -106,7 +113,7 @@ StatusOr<ReadSourceResult> RestObjectReadSource::Read(char* buf,
   } else {
     h.status_code = status_code_;
   }
-  h.headers = headers_;
+  h.headers = std::move(headers_);
   return MakeRestReadResult(*read, std::move(h));
 }
 

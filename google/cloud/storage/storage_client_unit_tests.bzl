@@ -76,6 +76,7 @@ storage_client_unit_tests = [
     "internal/patch_builder_test.cc",
     "internal/policy_document_request_test.cc",
     "internal/rest_client_test.cc",
+    "internal/rest_object_read_source_test.cc",
     "internal/rest_request_builder_test.cc",
     "internal/retry_client_test.cc",
     "internal/retry_object_read_source_test.cc",
