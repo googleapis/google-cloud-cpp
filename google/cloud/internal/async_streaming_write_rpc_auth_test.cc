@@ -61,7 +61,10 @@ TEST(AsyncStreamingWriteRpcAuth, Start) {
                                                grpc::ClientContext>) {
     auto mock = absl::make_unique<StrictMock<MockStream>>();
     EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
-    EXPECT_CALL(*mock, Write).WillOnce([] { return make_ready_future(false); });
+    EXPECT_CALL(*mock, Write).WillOnce([] { return make_ready_future(true); });
+    EXPECT_CALL(*mock, WritesDone).WillOnce([] {
+      return make_ready_future(true);
+    });
     EXPECT_CALL(*mock, Finish).WillOnce([] {
       return make_ready_future(make_status_or(FakeResponse{"key0", "value0"}));
     });
@@ -78,7 +81,8 @@ TEST(AsyncStreamingWriteRpcAuth, Start) {
   auto uut = absl::make_unique<AuthStream>(
       absl::make_unique<grpc::ClientContext>(), strategy, factory);
   EXPECT_TRUE(uut->Start().get());
-  ASSERT_FALSE(uut->Write(FakeRequest{}, grpc::WriteOptions()).get());
+  ASSERT_TRUE(uut->Write(FakeRequest{}, grpc::WriteOptions()).get());
+  ASSERT_TRUE(uut->WritesDone().get());
 
   auto response = uut->Finish().get();
   ASSERT_THAT(response, IsOk());
