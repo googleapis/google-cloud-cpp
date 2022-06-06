@@ -26,6 +26,26 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+bigtable::Row TransformReadModifyWriteRowResponse(
+    google::bigtable::v2::ReadModifyWriteRowResponse response) {
+  std::vector<bigtable::Cell> cells;
+  auto& row = *response.mutable_row();
+  for (auto& family : *row.mutable_families()) {
+    for (auto& column : *family.mutable_columns()) {
+      for (auto& cell : *column.mutable_cells()) {
+        std::vector<std::string> labels;
+        std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
+                  std::back_inserter(labels));
+        cells.emplace_back(row.key(), family.name(), column.qualifier(),
+                           cell.timestamp_micros(),
+                           std::move(*cell.mutable_value()), std::move(labels));
+      }
+    }
+  }
+
+  return bigtable::Row(std::move(*row.mutable_key()), std::move(cells));
+}
+
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::shared_ptr<BigtableStub> stub, Options options)

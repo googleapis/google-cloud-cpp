@@ -19,6 +19,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/client_context.h>
 #include <chrono>
@@ -120,6 +121,16 @@ Matcher<v2::ReadRowsRequest const&> HasTestFilter() {
       Property(&v2::RowFilter::cells_per_column_limit_filter, Eq(5)));
 }
 
+Matcher<bigtable::Cell const&> MatchCell(bigtable::Cell const& c) {
+  return AllOf(
+      Property(&bigtable::Cell::row_key, c.row_key()),
+      Property(&bigtable::Cell::family_name, c.family_name()),
+      Property(&bigtable::Cell::column_qualifier, c.column_qualifier()),
+      Property(&bigtable::Cell::timestamp, c.timestamp()),
+      Property(&bigtable::Cell::value, c.value()),
+      Property(&bigtable::Cell::labels, ElementsAreArray(c.labels())));
+}
+
 DataLimitedErrorCountRetryPolicy TestRetryPolicy() {
   return DataLimitedErrorCountRetryPolicy(kNumRetries);
 }
@@ -138,6 +149,44 @@ std::shared_ptr<DataConnectionImpl> TestConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<DataConnectionImpl>(
       std::move(background), std::move(mock), std::move(options));
+}
+
+TEST(TransformReadModifyWriteRowResponse, Basic) {
+  v2::ReadModifyWriteRowResponse response;
+  auto constexpr kText = R"pb(
+    row {
+      key: "row"
+      families {
+        name: "cf1"
+        columns {
+          qualifier: "cq1"
+          cells { value: "100" }
+          cells { value: "200" }
+        }
+      }
+      families {
+        name: "cf2"
+        columns {
+          qualifier: "cq2"
+          cells { value: "with-timestamp" timestamp_micros: 10 }
+        }
+        columns {
+          qualifier: "cq3"
+          cells { value: "with-labels" labels: "l1" labels: "l2" }
+        }
+      }
+    })pb";
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &response));
+
+  auto row = TransformReadModifyWriteRowResponse(std::move(response));
+  EXPECT_EQ("row", row.row_key());
+
+  auto c1 = bigtable::Cell("row", "cf1", "cq1", 0, "100");
+  auto c2 = bigtable::Cell("row", "cf1", "cq1", 0, "200");
+  auto c3 = bigtable::Cell("row", "cf2", "cq2", 10, "with-timestamp");
+  auto c4 = bigtable::Cell("row", "cf2", "cq3", 0, "with-labels", {"l1", "l2"});
+  EXPECT_THAT(row.cells(), ElementsAre(MatchCell(c1), MatchCell(c2),
+                                       MatchCell(c3), MatchCell(c4)));
 }
 
 TEST(DataConnectionTest, Options) {

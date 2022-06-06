@@ -29,6 +29,9 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+bigtable::Row TransformReadModifyWriteRowResponse(
+    google::bigtable::v2::ReadModifyWriteRowResponse response);
+
 class DataConnectionImpl : public DataConnection {
  public:
   ~DataConnectionImpl() override = default;

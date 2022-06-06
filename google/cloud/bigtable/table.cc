@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
+#include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/internal/legacy_row_reader.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
@@ -38,30 +39,6 @@ void SetCommonTableOperationRequest(Request& request,
   request.set_app_profile_id(app_profile_id);
   request.set_table_name(table_name);
 }
-
-template <typename Response>
-Row TransformReadModifyWriteRowResponse(Response& response) {
-  std::vector<bigtable::Cell> cells;
-  auto& row = *response.mutable_row();
-  for (auto& family : *row.mutable_families()) {
-    for (auto& column : *family.mutable_columns()) {
-      for (auto& cell : *column.mutable_cells()) {
-        std::vector<std::string> labels;
-        std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
-                  std::back_inserter(labels));
-        bigtable::Cell new_cell(row.key(), family.name(), column.qualifier(),
-                                cell.timestamp_micros(),
-                                std::move(*cell.mutable_value()),
-                                std::move(labels));
-
-        cells.emplace_back(std::move(new_cell));
-      }
-    }
-  }
-
-  return Row(std::move(*row.mutable_key()), std::move(cells));
-}
-
 }  // namespace
 
 using ClientUtils = bigtable::internal::UnaryClientUtils<DataClient>;
@@ -380,8 +357,8 @@ StatusOr<Row> Table::ReadModifyWriteRowImpl(
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
   }
-  return TransformReadModifyWriteRowResponse<
-      btproto::ReadModifyWriteRowResponse>(response);
+  return bigtable_internal::TransformReadModifyWriteRowResponse(
+      std::move(response));
 }
 
 future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
@@ -407,11 +384,9 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
       .then([](future<StatusOr<btproto::ReadModifyWriteRowResponse>> fut)
                 -> StatusOr<Row> {
         auto result = fut.get();
-        if (!result) {
-          return result.status();
-        }
-        return TransformReadModifyWriteRowResponse<
-            btproto::ReadModifyWriteRowResponse>(*result);
+        if (!result) return std::move(result).status();
+        return bigtable_internal::TransformReadModifyWriteRowResponse(
+            *std::move(result));
       });
 }
 
