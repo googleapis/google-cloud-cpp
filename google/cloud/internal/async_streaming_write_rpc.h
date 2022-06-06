@@ -47,20 +47,21 @@ class AsyncStreamingWriteRpc {
   /**
    * Sends a best-effort request to cancel the RPC.
    *
-   * The library code should still wait for the current operation (any
-   * pending `Start()`, or `Write()`) to complete. After they complete, the
-   * library code should use `Finish()` to determine the status of the RPC.
+   * The caller code must still wait for the current operation (any pending
+   * `Start()`, `Write()`, or `WritesDone()`) to complete. After the pending
+   * operation completes, the caller code must use `Finish()` to determine the
+   * result of the RPC.
    */
   virtual void Cancel() = 0;
 
   /**
    * Start the streaming RPC.
    *
-   * The library code should invoke `Start()`, and wait for its result, before
-   * calling `Write()`. If `Start()` completes with `false` the stream has
-   * completed with an error.  The library code should not invoke `Write()` in
-   * this case. On errors, the library code must call `Finish()` to determine
-   * the status of the streaming RPC.
+   * The caller code must invoke `Start()`, and wait for the resulting future
+   * to complete, before calling `Write()`. If `Start()` completes with `false`
+   * the stream has completed with an error.  The library code should not invoke
+   * `Write()` in this case. On errors, the library code must call `Finish()` to
+   * determine the status of the streaming RPC.
    */
   virtual future<bool> Start() = 0;
 
@@ -85,14 +86,14 @@ class AsyncStreamingWriteRpc {
    * Sends an indication to the service that no more requests will be issued by
    * the client.
    *
-   * @note The caller should not invoke `WritesDone()` while a `Write()`
-   *     operation is pending.  The caller should invoke `WritesDone()` at most
+   * @note The caller must not invoke `WritesDone()` while a `Write()`
+   *     operation is pending.  The caller can invoke `WritesDone()` at most
    *     once. The caller can avoid invoking `WritesDone()` by setting the
    *     `.set_last_message()` flag in the last `grpc::WriteOptions` parameter.
    *
    * If `WritesDone()` completes with `true` then the message half-closing the
    * streaming RPC was successfully sent. This is not a confirmation that it was
-   * received correctly.  If `WritesDone()` computes with `false` the streaming
+   * received correctly.  If `WritesDone()` completes with `false` the streaming
    * RPC has some kind of error.
    *
    * Regardless of the completion value for `WritesDone()`, the caller must
