@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
+#include "google/cloud/spanner/testing/status_utils.h"
 #include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -61,6 +62,8 @@ namespace {
 #endif
 
 using ::google::cloud::spanner_testing::HasSessionAndTransaction;
+using ::google::cloud::spanner_testing::SessionNotFoundError;
+using ::google::cloud::spanner_testing::SessionNotFoundRpcError;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -2144,7 +2147,7 @@ TEST(ConnectionImplTest, CommitBeginTransactionSessionNotFound) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, BeginTransaction)
-      .WillOnce(Return(Status(StatusCode::kNotFound, "Session not found")));
+      .WillOnce(Return(SessionNotFoundError("test-session-name")));
   auto txn = spanner::MakeReadWriteTransaction();
   auto commit = conn->Commit({txn});
   EXPECT_THAT(commit, Not(IsOk()));
@@ -2864,7 +2867,7 @@ TEST(ConnectionImplTest, ReadSessionNotFound) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  grpc::Status finish_status(grpc::StatusCode::NOT_FOUND, "Session not found");
+  auto finish_status = SessionNotFoundRpcError("test-session-name");
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
@@ -2885,7 +2888,7 @@ TEST(ConnectionImplTest, PartitionReadSessionNotFound) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, PartitionRead)
-      .WillOnce(Return(Status(StatusCode::kNotFound, "Session not found")));
+      .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();
@@ -2903,7 +2906,7 @@ TEST(ConnectionImplTest, ExecuteQuerySessionNotFound) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  grpc::Status finish_status(grpc::StatusCode::NOT_FOUND, "Session not found");
+  auto finish_status = SessionNotFoundRpcError("test-session-name");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
@@ -2922,7 +2925,7 @@ TEST(ConnectionImplTest, ProfileQuerySessionNotFound) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  grpc::Status finish_status(grpc::StatusCode::NOT_FOUND, "Session not found");
+  auto finish_status = SessionNotFoundRpcError("test-session-name");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
@@ -2942,7 +2945,7 @@ TEST(ConnectionImplTest, ExecuteDmlSessionNotFound) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, ExecuteSql)
-      .WillOnce(Return(Status(StatusCode::kNotFound, "Session not found")));
+      .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();
@@ -2960,7 +2963,7 @@ TEST(ConnectionImplTest, ProfileDmlSessionNotFound) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, ExecuteSql)
-      .WillOnce(Return(Status(StatusCode::kNotFound, "Session not found")));
+      .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();
@@ -2978,7 +2981,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSessionNotFound) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, ExecuteSql)
-      .WillOnce(Return(Status(StatusCode::kNotFound, "Session not found")));
+      .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();
@@ -2996,7 +2999,7 @@ TEST(ConnectionImplTest, PartitionQuerySessionNotFound) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, PartitionQuery)
-      .WillOnce(Return(Status(StatusCode::kNotFound, "Session not found")));
+      .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();
@@ -3014,7 +3017,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSessionNotFound) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, ExecuteBatchDml)
-      .WillOnce(Return(Status(StatusCode::kNotFound, "Session not found")));
+      .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();
@@ -3039,7 +3042,7 @@ TEST(ConnectionImplTest, CommitSessionNotFound) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, Commit)
-      .WillOnce(Return(Status(StatusCode::kNotFound, "Session not found")));
+      .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();
@@ -3057,7 +3060,7 @@ TEST(ConnectionImplTest, RollbackSessionNotFound) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, Rollback)
-      .WillOnce(Return(Status(StatusCode::kNotFound, "Session not found")));
+      .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();

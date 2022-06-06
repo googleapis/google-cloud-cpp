@@ -13,30 +13,35 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/status_utils.h"
+#include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/testing/status_utils.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 TEST(StatusUtils, SessionNotFound) {
-  google::cloud::Status const session_not_found(StatusCode::kNotFound,
-                                                "Session not found");
-  EXPECT_TRUE(spanner_internal::IsSessionNotFound(session_not_found));
+  Status const session_not_found(StatusCode::kNotFound, "Session not found");
+  EXPECT_TRUE(IsSessionNotFound(session_not_found));
 
-  google::cloud::Status const other_not_found(StatusCode::kNotFound,
-                                              "Other not found");
-  EXPECT_FALSE(spanner_internal::IsSessionNotFound(other_not_found));
+  Status const other_not_found(StatusCode::kNotFound, "Other not found");
+  EXPECT_FALSE(IsSessionNotFound(other_not_found));
 
-  google::cloud::Status const not_not_found(StatusCode::kUnavailable,
-                                            "Session not found");
-  EXPECT_FALSE(spanner_internal::IsSessionNotFound(not_not_found));
+  Status const not_not_found(StatusCode::kUnavailable, "Session not found");
+  EXPECT_FALSE(IsSessionNotFound(not_not_found));
+}
+
+TEST(StatusUtils, SessionNotFoundResourceInfo) {
+  auto db = spanner::Database("project", "instance", "database");
+  auto name = db.FullName() + "/sessions/session";
+  EXPECT_TRUE(IsSessionNotFound(spanner_testing::SessionNotFoundError(name)));
 }
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

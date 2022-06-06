@@ -287,7 +287,9 @@ function (spanner_client_define_tests)
         testing/random_database_name.cc
         testing/random_database_name.h
         testing/random_instance_name.cc
-        testing/random_instance_name.h)
+        testing/random_instance_name.h
+        testing/status_utils.cc
+        testing/status_utils.h)
     target_link_libraries(
         spanner_client_testing
         PUBLIC google_cloud_cpp_testing google-cloud-cpp::spanner_mocks

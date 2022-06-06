@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/mocks/row.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/results.h"
+#include "google/cloud/spanner/testing/status_utils.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -42,6 +43,7 @@ namespace {
 
 using ::google::cloud::spanner_mocks::MockConnection;
 using ::google::cloud::spanner_mocks::MockResultSetSource;
+using ::google::cloud::spanner_testing::SessionNotFoundError;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
@@ -913,8 +915,9 @@ TEST(ClientTest, CommitMutatorSessionNotFound) {
   int n = 0;
   auto mutator = [&n](Transaction const& txn) -> StatusOr<Mutations> {
     EXPECT_THAT(txn, DoesNotHaveSession());
-    SetSessionName(txn, "session-" + std::to_string(++n));
-    if (n < 3) return Status(StatusCode::kNotFound, "Session not found");
+    auto session_name = "session-" + std::to_string(++n);
+    SetSessionName(txn, session_name);
+    if (n < 3) return SessionNotFoundError(std::move(session_name));
     return Mutations{};
   };
 
@@ -933,7 +936,7 @@ TEST(ClientTest, CommitSessionNotFound) {
   EXPECT_CALL(*conn, Commit)
       .WillOnce([](Connection::CommitParams const& cp) {
         EXPECT_THAT(cp.transaction, HasSession("session-1"));
-        return Status(StatusCode::kNotFound, "Session not found");
+        return SessionNotFoundError("session-1");
       })
       .WillOnce([&timestamp](Connection::CommitParams const& cp) {
         EXPECT_THAT(cp.transaction, HasSession("session-2"));
