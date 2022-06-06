@@ -18,6 +18,9 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
+#include <array>
+#include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
