@@ -107,8 +107,9 @@ StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
   if (!*it) return it->status();
   auto result = std::make_pair(true, std::move(**it));
   if (++it != reader.end()) {
-    return Status(StatusCode::kInternal,
-                  "internal error - RowReader returned 2 rows in ReadRow()");
+    return Status(
+        StatusCode::kInternal,
+        "internal error - RowReader returned more than one row in ReadRow()");
   }
   return result;
 }
