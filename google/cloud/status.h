@@ -94,7 +94,7 @@ class ErrorInfo {
 
 /**
  * Represents success or an error with info about the error.
-
+ *
  * This class is typically used to indicate whether or not a function or other
  * operation completed successfully. Success is indicated by an "OK" status. OK
  * statuses will have `.code() == StatusCode::kOk` and `.ok() == true`, with
