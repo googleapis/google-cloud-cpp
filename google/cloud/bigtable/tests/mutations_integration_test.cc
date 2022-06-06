@@ -167,7 +167,8 @@ TEST_F(MutationIntegrationTest, SetCellIgnoreTimestampTest) {
  * Bigtable.
  */
 TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
+
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteColumn-Key";
   std::vector<Cell> created_cells{
@@ -211,7 +212,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
  * We expect the server (and not the client library) to reject invalid ranges.
  */
 TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
+
   // Create a vector of cell which will be inserted into bigtable
   std::string const key = "row";
   std::vector<Cell> created_cells{
@@ -243,7 +245,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
  * We expect the server (and not the client library) to reject invalid ranges.
  */
 TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
+
   // Create a vector of cell which will be inserted into bigtable
   std::string const key = "row";
   std::vector<Cell> created_cells{
@@ -267,7 +270,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
  * is deleting all records only for that column_identifier.
  */
 TEST_F(MutationIntegrationTest, DeleteFromColumnForAllTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
+
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteColumnForAll-Key";
   std::vector<Cell> created_cells{
@@ -300,7 +304,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForAllTest) {
  * timestamp only.
  */
 TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
+
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteColumnStartingFrom-Key";
   std::vector<Cell> created_cells{
@@ -336,7 +341,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
  * timestamp only. end_timestamp is not inclusive.
  */
 TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
+
   // Create a vector of cell which will be inserted into bigtable cloud
   std::string const row_key = "DeleteColumnEndingAt-Key";
   std::vector<Cell> created_cells{
@@ -373,7 +379,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
  * records for that family only
  */
 TEST_F(MutationIntegrationTest, DeleteFromFamilyTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
 
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteFamily-Key";
@@ -405,7 +411,7 @@ TEST_F(MutationIntegrationTest, DeleteFromFamilyTest) {
  * records for that row only
  */
 TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
 
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1 = "DeleteRowKey1";
