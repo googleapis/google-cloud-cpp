@@ -140,8 +140,8 @@ TEST_P(DataIntegrationTest, TableSingleRow) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableReadRowTest) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadRowTest) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
@@ -157,8 +157,8 @@ TEST_F(DataIntegrationTestClientOnly, TableReadRowTest) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableReadRowNotExistTest) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadRowNotExistTest) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
@@ -463,8 +463,8 @@ TEST_F(DataIntegrationTestClientOnly, TableCellValueInt64Test) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableReadMultipleCellsBigValue) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadMultipleCellsBigValue) {
+  auto table = GetTable(GetParam());
 
   std::string const row_key = "row-key-1";
   // cell vector contains 4 cells of 32 MiB each, or 128 MiB (without
