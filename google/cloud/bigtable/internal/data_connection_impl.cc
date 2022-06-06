@@ -36,12 +36,9 @@ bigtable::Row TransformReadModifyWriteRowResponse(
         std::vector<std::string> labels;
         std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
                   std::back_inserter(labels));
-        bigtable::Cell new_cell(row.key(), family.name(), column.qualifier(),
-                                cell.timestamp_micros(),
-                                std::move(*cell.mutable_value()),
-                                std::move(labels));
-
-        cells.emplace_back(std::move(new_cell));
+        cells.emplace_back(row.key(), family.name(), column.qualifier(),
+                           cell.timestamp_micros(),
+                           std::move(*cell.mutable_value()), std::move(labels));
       }
     }
   }
