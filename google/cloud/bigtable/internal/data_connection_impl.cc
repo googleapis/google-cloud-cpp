@@ -62,16 +62,6 @@ Status DataConnectionImpl::Apply(std::string const& app_profile_id,
   return Status{};
 }
 
-bigtable::RowReader DataConnectionImpl::ReadRows(
-    std::string const& app_profile_id, std::string const& table_name,
-    bigtable::RowSet row_set, std::int64_t rows_limit,
-    bigtable::Filter filter) {
-  auto impl = std::make_shared<DefaultRowReader>(
-      stub_, app_profile_id, table_name, std::move(row_set), rows_limit,
-      std::move(filter), retry_policy(), backoff_policy());
-  return MakeRowReader(std::move(impl));
-}
-
 std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     std::string const& app_profile_id, std::string const& table_name,
     bigtable::BulkMutation mut) {
@@ -92,6 +82,16 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     std::this_thread::sleep_for(delay);
   } while (mutator.HasPendingMutations());
   return std::move(mutator).OnRetryDone();
+}
+
+bigtable::RowReader DataConnectionImpl::ReadRows(
+    std::string const& app_profile_id, std::string const& table_name,
+    bigtable::RowSet row_set, std::int64_t rows_limit,
+    bigtable::Filter filter) {
+  auto impl = std::make_shared<DefaultRowReader>(
+      stub_, app_profile_id, table_name, std::move(row_set), rows_limit,
+      std::move(filter), retry_policy(), backoff_policy());
+  return MakeRowReader(std::move(impl));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
