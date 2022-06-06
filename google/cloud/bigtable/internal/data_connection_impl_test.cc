@@ -648,6 +648,96 @@ TEST(DataConnectionTest, ReadRowFailure) {
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST(DataConnectionTest, ReadModifyWriteRowSuccess) {
+  v2::ReadModifyWriteRowResponse response;
+  auto constexpr kText = R"pb(
+    row {
+      key: "row"
+      families {
+        name: "cf"
+        columns {
+          qualifier: "cq"
+          cells { value: "value" }
+        }
+      }
+    })pb";
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &response));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadModifyWriteRow)
+      .WillOnce([&response](grpc::ClientContext&,
+                            v2::ReadModifyWriteRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        return response;
+      });
+
+  v2::ReadModifyWriteRowRequest req;
+  req.set_app_profile_id(kAppProfile);
+  req.set_table_name(kTableName);
+  req.set_row_key("row");
+
+  auto conn = TestConnection(std::move(mock));
+  auto row = conn->ReadModifyWriteRow(req);
+  ASSERT_STATUS_OK(row);
+  EXPECT_EQ("row", row->row_key());
+
+  auto c = bigtable::Cell("row", "cf", "cq", 0, "value");
+  EXPECT_THAT(row->cells(), ElementsAre(MatchCell(c)));
+}
+
+TEST(DataConnectionTest, ReadModifyWriteRowPermanentError) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadModifyWriteRow)
+      .WillOnce([](grpc::ClientContext&,
+                   v2::ReadModifyWriteRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        return PermanentError();
+      });
+
+  v2::ReadModifyWriteRowRequest req;
+  req.set_app_profile_id(kAppProfile);
+  req.set_table_name(kTableName);
+  req.set_row_key("row");
+
+  auto conn = TestConnection(std::move(mock));
+  auto row = conn->ReadModifyWriteRow(req);
+  EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadModifyWriteRow)
+      .WillOnce([](grpc::ClientContext&,
+                   v2::ReadModifyWriteRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        return TransientError();
+      });
+
+  v2::ReadModifyWriteRowRequest req;
+  req.set_app_profile_id(kAppProfile);
+  req.set_table_name(kTableName);
+  req.set_row_key("row");
+
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(0);
+    return clone;
+  });
+
+  internal::OptionsSpan span(
+      Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
+  auto conn = TestConnection(std::move(mock));
+  auto row = conn->ReadModifyWriteRow(req);
+  EXPECT_THAT(row, StatusIs(StatusCode::kUnavailable));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

@@ -134,6 +134,19 @@ StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
   return result;
 }
 
+StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
+    google::bigtable::v2::ReadModifyWriteRowRequest request) {
+  auto sor = google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(), Idempotency::kNonIdempotent,
+      [this](grpc::ClientContext& context,
+             google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+        return stub_->ReadModifyWriteRow(context, request);
+      },
+      request, __func__);
+  if (!sor) return std::move(sor).status();
+  return TransformReadModifyWriteRowResponse(*std::move(sor));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

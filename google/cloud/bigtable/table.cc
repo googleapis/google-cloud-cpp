@@ -354,6 +354,9 @@ StatusOr<Row> Table::ReadModifyWriteRowImpl(
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
       request, app_profile_id_, table_name_);
+  if (connection_) {
+    return connection_->ReadModifyWriteRow(std::move(request));
+  }
 
   grpc::Status status;
   auto response = ClientUtils::MakeNonIdempotentCall(

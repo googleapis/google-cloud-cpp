@@ -98,10 +98,10 @@ class DataConnection {
       std::string const& app_profile_id, std::string const& table_name);
 
   virtual StatusOr<bigtable::Row> ReadModifyWriteRow(
-      google::bigtable::v2::MutateRowRequest request);
+      google::bigtable::v2::ReadModifyWriteRowRequest request);
 
   virtual future<StatusOr<bigtable::Row>> AsyncReadModifyWriteRow(
-      google::bigtable::v2::MutateRowRequest request);
+      google::bigtable::v2::ReadModifyWriteRowRequest request);
 
   virtual void AsyncReadRows(std::string const& app_profile_id,
                              std::string const& table_name,

@@ -320,8 +320,8 @@ TEST_F(DataIntegrationTestClientOnly, TableCheckAndMutateRowFail) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableReadModifyWriteAppendValueTest) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const add_suffix1 = "-suffix";
@@ -356,9 +356,8 @@ TEST_F(DataIntegrationTestClientOnly, TableReadModifyWriteAppendValueTest) {
                       actual_cells_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTestClientOnly,
-       TableReadModifyWriteRowIncrementAmountTest) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
+  auto table = GetTable(GetParam());
   std::string const key = "row-key";
 
   // An initial; big-endian int64 number with value 0.
@@ -384,8 +383,8 @@ TEST_F(DataIntegrationTestClientOnly,
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableReadModifyWriteRowMultipleTest) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
+  auto table = GetTable(GetParam());
   std::string const key = "row-key";
 
   std::string v1("\x00\x00\x00\x00\x00\x00\x00\x00", 8);
@@ -428,8 +427,8 @@ TEST_F(DataIntegrationTestClientOnly, TableReadModifyWriteRowMultipleTest) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableCellValueInt64Test) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableCellValueInt64Test) {
+  auto table = GetTable(GetParam());
   std::string const key = "row-key";
 
   std::vector<Cell> created{{key, kFamily1, "c1", 0, 42},

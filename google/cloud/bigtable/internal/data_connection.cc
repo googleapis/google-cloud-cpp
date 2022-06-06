@@ -114,13 +114,13 @@ DataConnection::AsyncSampleRows(std::string const&, std::string const&) {
 
 StatusOr<bigtable::Row> DataConnection::ReadModifyWriteRow(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    google::bigtable::v2::MutateRowRequest) {
+    google::bigtable::v2::ReadModifyWriteRowRequest) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<bigtable::Row>> DataConnection::AsyncReadModifyWriteRow(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    google::bigtable::v2::MutateRowRequest) {
+    google::bigtable::v2::ReadModifyWriteRowRequest) {
   return make_ready_future<StatusOr<bigtable::Row>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }

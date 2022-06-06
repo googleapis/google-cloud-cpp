@@ -89,6 +89,26 @@ Matcher<Filter const&> IsTestFilter() {
       Property(&v2::RowFilter::cells_per_column_limit_filter, Eq(5)));
 }
 
+ReadModifyWriteRule TestAppendRule() {
+  return ReadModifyWriteRule::AppendValue("cf1", "cq1", "append");
+}
+
+ReadModifyWriteRule TestIncrementRule() {
+  return ReadModifyWriteRule::IncrementAmount("cf2", "cq2", 42);
+}
+
+Matcher<v2::ReadModifyWriteRule const> MatchRule(
+    ReadModifyWriteRule const& rule) {
+  auto const& r = rule.as_proto();
+  return AllOf(
+      Property(&v2::ReadModifyWriteRule::family_name, r.family_name()),
+      Property(&v2::ReadModifyWriteRule::column_qualifier,
+               r.column_qualifier()),
+      Property(&v2::ReadModifyWriteRule::append_value, r.append_value()),
+      Property(&v2::ReadModifyWriteRule::increment_amount,
+               r.increment_amount()));
+}
+
 TEST(TableTest, ConnectionConstructor) {
   auto conn = std::make_shared<MockDataConnection>();
   auto table = bigtable_internal::MakeTable(conn, kProjectId, kInstanceId,
@@ -204,6 +224,25 @@ TEST(TableTest, ReadRow) {
                                             kAppProfileId, kTableId);
   auto resp = table.ReadRow("row", TestFilter());
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, ReadModifyWriteRow) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadModifyWriteRow)
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        EXPECT_EQ(kAppProfileId, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_THAT(request.rules(),
+                    ElementsAre(MatchRule(TestAppendRule()),
+                                MatchRule(TestIncrementRule())));
+        return PermanentError();
+      });
+
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  auto row =
+      table.ReadModifyWriteRow("row", TestAppendRule(), TestIncrementRule());
+  EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace
