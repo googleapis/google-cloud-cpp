@@ -71,12 +71,12 @@ class AsyncStreamingWriteRpcImpl
   }
 
   future<bool> Write(Request const& request,
-                     grpc::WriteOptions options) override {
+                     grpc::WriteOptions write_options) override {
     struct OnWrite : public AsyncGrpcOperation {
       promise<bool> p;
-      Options options_ = CurrentOptions();
+      Options options = CurrentOptions();
       bool Notify(bool ok) override {
-        OptionsSpan span(options_);
+        OptionsSpan span(options);
         p.set_value(ok);
         return true;
       }
@@ -84,7 +84,7 @@ class AsyncStreamingWriteRpcImpl
     };
     auto op = std::make_shared<OnWrite>();
     cq_->StartOperation(op, [&](void* tag) {
-      stream_->Write(request, std::move(options), tag);
+      stream_->Write(request, std::move(write_options), tag);
     });
     return op->p.get_future();
   }
@@ -92,9 +92,9 @@ class AsyncStreamingWriteRpcImpl
   future<bool> WritesDone() override {
     struct OnWritesDone : public AsyncGrpcOperation {
       promise<bool> p;
-      Options options_ = CurrentOptions();
+      Options options = CurrentOptions();
       bool Notify(bool ok) override {
-        OptionsSpan span(options_);
+        OptionsSpan span(options);
         p.set_value(ok);
         return true;
       }
@@ -146,7 +146,7 @@ using PrepareAsyncWriteRpc = absl::FunctionRef<
         grpc::ClientContext*, Response*, grpc::CompletionQueue*)>;
 
 /**
- * Make an asynchronous streaming read RPC using `CompletionQueue`.
+ * Make an asynchronous streaming write RPC using `CompletionQueue`.
  *
  * @note In the past we would have made this a member function of the
  *     `CompletionQueue` class. We want to avoid this as (a) we are not certain
