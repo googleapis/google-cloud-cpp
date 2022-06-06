@@ -14,8 +14,11 @@
 
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/status_payload_keys.h"
 #include <google/protobuf/text_format.h>
+#include <google/rpc/error_details.pb.h>
 #include <atomic>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -34,6 +37,66 @@ std::string DebugString(google::protobuf::Message const& m,
   p.PrintToString(m, &str);
   return absl::StrCat(m.GetTypeName(), " {",
                       (options.single_line_mode() ? " " : "\n"), str, "}");
+}
+
+template <typename T>
+std::string DebugString(google::protobuf::Any const& any,
+                        TracingOptions const& options) {
+  T details;
+  if (!any.UnpackTo(&details)) return {};
+  return DebugString(details, options);
+}
+
+std::string DebugString(Status const& status, TracingOptions const& options) {
+  std::ostringstream os;
+  os << status;
+  auto payload =
+      internal::GetPayload(status, internal::kStatusPayloadGrpcProto);
+  google::rpc::Status proto;
+  if (payload && proto.ParseFromString(*payload)) {
+    // See https://cloud.google.com/apis/design/errors#error_payloads
+    for (google::protobuf::Any const& any : proto.details()) {
+      std::string details;
+      switch (status.code()) {
+        case StatusCode::kInvalidArgument:
+          details = DebugString<google::rpc::BadRequest>(any, options);
+          break;
+        case StatusCode::kFailedPrecondition:
+          details = DebugString<google::rpc::PreconditionFailure>(any, options);
+          break;
+        case StatusCode::kOutOfRange:
+          details = DebugString<google::rpc::BadRequest>(any, options);
+          break;
+        case StatusCode::kNotFound:
+        case StatusCode::kAlreadyExists:
+          details = DebugString<google::rpc::ResourceInfo>(any, options);
+          break;
+        case StatusCode::kResourceExhausted:
+          details = DebugString<google::rpc::QuotaFailure>(any, options);
+          break;
+        case StatusCode::kDataLoss:
+        case StatusCode::kUnknown:
+        case StatusCode::kInternal:
+        case StatusCode::kUnavailable:
+        case StatusCode::kDeadlineExceeded:
+          details = DebugString<google::rpc::DebugInfo>(any, options);
+          break;
+        case StatusCode::kUnauthenticated:  // NOLINT(bugprone-branch-clone)
+        case StatusCode::kPermissionDenied:
+        case StatusCode::kAborted:
+          // `Status` supports `google.rpc.ErrorInfo` directly.
+          break;
+        default:
+          // Unexpected error details for the status code.
+          break;
+      }
+      if (!details.empty()) {
+        os << " + " << details;
+        break;
+      }
+    }
+  }
+  return std::move(os).str();
 }
 
 std::string RequestIdForLogging() {

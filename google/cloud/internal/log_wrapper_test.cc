@@ -13,10 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/protobuf/text_format.h>
+#include <google/rpc/error_details.pb.h>
+#include <google/rpc/status.pb.h>
 #include <google/spanner/v1/mutation.pb.h>
 #include <gmock/gmock.h>
 
@@ -76,7 +79,7 @@ TEST(LogWrapper, DefaultOptions) {
       R"pb(} )pb"
       R"pb(})pb";
   // clang-format on
-  EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
+  EXPECT_EQ(text, DebugString(MakeMutation(), tracing_options));
 }
 
 TEST(LogWrapper, MultiLine) {
@@ -114,7 +117,7 @@ TEST(LogWrapper, MultiLine) {
   }
 })pb";
   // clang-format on
-  EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
+  EXPECT_EQ(text, DebugString(MakeMutation(), tracing_options));
 }
 
 TEST(LogWrapper, Truncate) {
@@ -138,7 +141,7 @@ TEST(LogWrapper, Truncate) {
             R"pb(} )pb"
             R"pb(})pb";
   // clang-format on
-  EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
+  EXPECT_EQ(text, DebugString(MakeMutation(), tracing_options));
 }
 
 TEST(LogWrapper, FutureStatus) {
@@ -153,6 +156,27 @@ TEST(LogWrapper, FutureStatus) {
   for (auto const& c : cases) {
     EXPECT_EQ(c.expected, DebugFutureStatus(c.actual));
   }
+}
+
+TEST(LogWrapper, StatusDetails) {
+  google::rpc::ResourceInfo resource_info;
+  resource_info.set_resource_type(
+      "type.googleapis.com/google.cloud.service.v1.Resource");
+  resource_info.set_resource_name("projects/project/resources/resource");
+  resource_info.set_description("Resource does not exist.");
+
+  google::rpc::Status proto;
+  proto.set_code(grpc::StatusCode::NOT_FOUND);
+  proto.set_message("Resource not found");
+  proto.add_details()->PackFrom(resource_info);
+
+  TracingOptions tracing_options;
+  auto s = DebugString(MakeStatusFromRpcError(proto), tracing_options);
+  EXPECT_THAT(s, HasSubstr("NOT_FOUND: Resource not found"));
+  EXPECT_THAT(s, HasSubstr(" + google.rpc.ResourceInfo {"));
+  EXPECT_THAT(s, HasSubstr(resource_info.resource_type()));
+  EXPECT_THAT(s, HasSubstr(resource_info.resource_name()));
+  EXPECT_THAT(s, HasSubstr(resource_info.description()));
 }
 
 /// @test the overload for functions returning FutureStatusOr

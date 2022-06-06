@@ -35,6 +35,8 @@ namespace internal {
 std::string DebugString(google::protobuf::Message const& m,
                         TracingOptions const& options);
 
+std::string DebugString(Status const& status, TracingOptions const& options);
+
 char const* DebugFutureStatus(std::future_status s);
 
 // Create a unique ID that can be used to match asynchronous requests/response
@@ -86,7 +88,8 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
   auto response = functor(context, request);
   if (!response) {
-    GCP_LOG(DEBUG) << where << "() >> status=" << response.status();
+    GCP_LOG(DEBUG) << where << "() >> status="
+                   << DebugString(response.status(), options);
   } else {
     GCP_LOG(DEBUG) << where
                    << "() >> response=" << DebugString(*response, options);
@@ -158,7 +161,8 @@ Result LogWrapper(Functor&& functor, Request request, char const* where,
   return response.then([prefix, options](decltype(response) f) {
     auto response = f.get();
     if (!response) {
-      GCP_LOG(DEBUG) << prefix << " >> status=" << response.status();
+      GCP_LOG(DEBUG) << prefix << " >> status="
+                     << DebugString(response.status(), options);
     } else {
       GCP_LOG(DEBUG) << prefix
                      << " >> response=" << DebugString(*response, options);
@@ -191,7 +195,8 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
   return response.then([prefix, options](decltype(response) f) {
     auto response = f.get();
     if (!response) {
-      GCP_LOG(DEBUG) << prefix << " >> status=" << response.status();
+      GCP_LOG(DEBUG) << prefix << " >> status="
+                     << DebugString(response.status(), options);
     } else {
       GCP_LOG(DEBUG) << prefix
                      << " >> response=" << DebugString(*response, options);
