@@ -118,7 +118,7 @@ std::string CreateServiceAccountRefreshPayload(
  * can be obtained by calling the AuthorizationHeader() method; if the current
  * access token is invalid or nearing expiration, this will class will first
  * obtain a new access token before returning the Authorization header string.
-
+ *
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  * for an overview of using service accounts with Google's OAuth 2.0 system.
  *
