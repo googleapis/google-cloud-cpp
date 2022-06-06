@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PAGINATION_RANGE_H
 
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/type_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -107,22 +108,83 @@ class PagedStreamReader {
   }
 
  private:
+  template <typename U, typename AlwaysVoid = void>
+  struct HasMutableNextPageToken : public std::false_type {};
+  template <typename U>
+  struct HasMutableNextPageToken<
+      U,
+      void_t<decltype(std::move(*std::declval<U>().mutable_next_page_token()))>>
+      : public std::true_type {};
+
+  template <typename U, typename AlwaysVoid = void>
+  struct HasNextPageToken : public std::false_type {};
+  template <typename U>
+  struct HasNextPageToken<
+      U, void_t<decltype(std::move(std::declval<U>().next_page_token))>>
+      : public std::true_type {};
+
   /**
    * ExtractPageToken() extracts (i.e., "moves") the page token out of the
-   * given response object. This function is overloaded based on whether the
-   * response object has a `.mutable_next_page_token()` member function (e.g.,
-   * a protobuf), or a `.next_page_token` field (e.g., a regular struct such as
-   * is used in GCS).
+   * given response object. This function dispatches to the right function
+   * to extract the value using either a `.mutable_next_page_token()` member
+   * function (e.g., a protobuf), or a `.next_page_token` field (e.g., a regular
+   * struct such as is used in GCS).
+   *
+   * The code is more complicated than we would wish. It used to be (this
+   * comment uses C++17 for exposition purposes, we used the C++11 equivalent):
+   *
+   * @code
+   * template <typename U>
+   * static auto constexpr E(U& u) {
+   *   return std::move(*u.mutable_next_page_token());
+   * }
+   * template <typename U>
+   * static auto constexpr E(U& u) {
+   *   return std::move(u.next_page_token);
+   * }
+   * @endcode
+   *
+   * For better or worse some versions of GCC called that ambiguous, even though
+   * only one would work under SFINAE.
    */
+  static std::string ExtractPageToken(Response& r) {
+    static_assert(
+        HasMutableNextPageToken<Response>::value ||
+            HasNextPageToken<Response>::value,
+        "The Response type does not meet the requirements for PaginationRange");
+    // This may seem expensive, but the value is known at compile type, the
+    // optimizer should know what to do.
+    if (HasMutableNextPageToken<Response>::value) {
+      return UsingMutableNextPageToken<Response>(
+          HasMutableNextPageToken<Response>{}, r);
+    }
+    return UsingNextPageToken<Response>(HasMutableNextPageToken<Response>{},
+                                        HasNextPageToken<Response>{}, r);
+  }
+
   template <typename U>
-  static constexpr auto ExtractPageToken(U& u)
+  static auto constexpr UsingMutableNextPageToken(std::true_type, U& u)
       -> decltype(std::move(*u.mutable_next_page_token())) {
     return std::move(*u.mutable_next_page_token());
   }
+  // This overload is unused, it is here just to compile when
+  // HasMutableNextPageToken<Response>::value is `false`
   template <typename U>
-  static constexpr auto ExtractPageToken(U& u)
+  static std::string UsingMutableNextPageToken(std::false_type, U&) {
+    return {};
+  }
+
+  template <typename U>
+  static auto constexpr UsingNextPageToken(std::false_type, std::true_type,
+                                           U& u)
       -> decltype(std::move(u.next_page_token)) {
     return std::move(u.next_page_token);
+  }
+  // This overload is unused, it is here just to compile when
+  // HasNextPageToken<Response>::value is `false`
+  template <typename U, typename D>
+  static std::string UsingNextPageToken(std::true_type, D, U&) {
+    return {};
   }
 
   Request request_;
