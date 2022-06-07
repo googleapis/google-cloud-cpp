@@ -83,7 +83,8 @@ class AsyncStreamingWriteRpcLogging
       if (response.ok()) {
         GCP_LOG(DEBUG) << prefix << " >> " << DebugString(*response, opt);
       } else {
-        GCP_LOG(DEBUG) << prefix << " >> status=" << response.status();
+        GCP_LOG(DEBUG) << prefix
+                       << " >> status=" << DebugString(response.status(), opt);
       }
       return response;
     });
