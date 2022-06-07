@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/async_streaming_write_rpc_impl.h"
 #include "google/cloud/status_or.h"
 #include "absl/memory/memory.h"
 #include <google/storage/v2/storage.grpc.pb.h>
@@ -354,6 +355,23 @@ DefaultStorageStub::AsyncReadObject(
              google::storage::v2::ReadObjectRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncReadObject(context, request, cq);
+      });
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
+DefaultStorageStub::AsyncWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  return google::cloud::internal::MakeStreamingWriteRpc<
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>(
+      cq, std::move(context),
+      [this](grpc::ClientContext* context,
+             google::storage::v2::WriteObjectResponse* response,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncWriteObject(context, response, cq);
       });
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/storage/internal/storage_auth_decorator.h"
 #include "google/cloud/internal/async_streaming_read_rpc_auth.h"
+#include "google/cloud/internal/async_streaming_write_rpc_auth.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <memory>
 
@@ -268,6 +269,23 @@ StorageAuth::AsyncReadObject(
   auto child = child_;
   auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncReadObject(cq, std::move(ctx), request);
+  };
+  return absl::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
+StorageAuth::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
+                              std::unique_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingWriteRpcAuth<
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>;
+
+  auto child = child_;
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncWriteObject(cq, std::move(ctx));
   };
   return absl::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));

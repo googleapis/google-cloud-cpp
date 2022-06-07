@@ -1199,7 +1199,8 @@ service {
   omit_stub_factory: true
   gen_async_rpcs: [
     "DeleteObject",
-    "ReadObject"
+    "ReadObject",
+    "WriteObject"
   ]
   omitted_rpcs: [
     "DeleteNotification",

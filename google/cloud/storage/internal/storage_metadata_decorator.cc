@@ -236,6 +236,16 @@ StorageMetadata::AsyncReadObject(
   return child_->AsyncReadObject(cq, std::move(context), request);
 }
 
+std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
+StorageMetadata::AsyncWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context);
+  return child_->AsyncWriteObject(cq, std::move(context));
+}
+
 void StorageMetadata::SetMetadata(grpc::ClientContext& context,
                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
