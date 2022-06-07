@@ -194,30 +194,36 @@ bool ReadObjectRangeRequest::RequiresRangeHeader() const {
   return RequiresNoCache();
 }
 
-std::string ReadObjectRangeRequest::RangeHeader() const {
+std::string ReadObjectRangeRequest::RangeHeaderValue() const {
   if (HasOption<ReadRange>() && HasOption<ReadFromOffset>()) {
     auto range = GetOption<ReadRange>().value();
     auto offset = GetOption<ReadFromOffset>().value();
     auto begin = (std::max)(range.begin, offset);
-    return "Range: bytes=" + std::to_string(begin) + "-" +
+    return "bytes=" + std::to_string(begin) + "-" +
            std::to_string(range.end - 1);
   }
   if (HasOption<ReadRange>()) {
     auto range = GetOption<ReadRange>().value();
-    return "Range: bytes=" + std::to_string(range.begin) + "-" +
+    return "bytes=" + std::to_string(range.begin) + "-" +
            std::to_string(range.end - 1);
   }
   if (HasOption<ReadFromOffset>()) {
     auto offset = GetOption<ReadFromOffset>().value();
     if (offset != 0) {
-      return "Range: bytes=" + std::to_string(offset) + "-";
+      return "bytes=" + std::to_string(offset) + "-";
     }
   }
   if (HasOption<ReadLast>()) {
     auto last = GetOption<ReadLast>().value();
-    return "Range: bytes=-" + std::to_string(last);
+    return "bytes=-" + std::to_string(last);
   }
   return "";
+}
+
+std::string ReadObjectRangeRequest::RangeHeader() const {
+  auto value = RangeHeaderValue();
+  if (value.empty()) return "";
+  return "Range: " + value;
 }
 
 std::int64_t ReadObjectRangeRequest::StartingByte() const {

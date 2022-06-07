@@ -176,6 +176,7 @@ class ReadObjectRangeRequest
   bool RequiresNoCache() const;
   bool RequiresRangeHeader() const;
   std::string RangeHeader() const;
+  std::string RangeHeaderValue() const;
   std::int64_t StartingByte() const;
 };
 

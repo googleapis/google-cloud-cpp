@@ -351,6 +351,11 @@ std::size_t CurlImpl::HeaderCallback(char* contents, std::size_t size,
 }
 
 void CurlImpl::SetHeader(std::string const& header) {
+  // TODO(9200): Figure out where this empty authorization header is being
+  // added and fix it.
+  if (header == "authorization: ") {
+    return;
+  }
   if (header.empty()) return;
   auto* new_headers = curl_slist_append(request_headers_.get(), header.c_str());
   (void)request_headers_.release();
@@ -625,6 +630,7 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
     return bytes_read;
   }
   TRACE_STATE() << ", http code=" << http_code_ << "\n";
+  received_headers_.emplace(":curl-peer", handle_.GetPeer());
   return bytes_read;
 }
 

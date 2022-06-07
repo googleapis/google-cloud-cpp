@@ -609,6 +609,13 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
   if (!UsingEmulator()) GTEST_SKIP();
+  // TODO(9201): RestClient does not encounter the CURL error [28] Timeout
+  // that CurlClient does. Instead, RestClient is able to successfully read
+  // bytes sent from the emulator.
+  if (google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT")
+          .has_value())
+    GTEST_SKIP();
 
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
