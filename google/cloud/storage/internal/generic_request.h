@@ -27,6 +27,10 @@
 
 namespace google {
 namespace cloud {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+// Forward declare google::cloud::Options, a dynamic container of options.
+class Options;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
@@ -246,6 +250,19 @@ class GenericRequest
   template <typename H, typename... T>
   Derived& set_multiple_options(H&& h, T&&... tail) {
     Super::set_option(std::forward<H>(h));
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+
+  template <typename... T>
+  Derived& set_multiple_options(google::cloud::Options const&, T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  Derived& set_multiple_options(google::cloud::Options&&, T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  Derived& set_multiple_options(google::cloud::Options&, T&&... tail) {
     return set_multiple_options(std::forward<T>(tail)...);
   }
 

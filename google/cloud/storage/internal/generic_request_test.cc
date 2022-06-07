@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/generic_request.h"
+#include "google/cloud/options.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -51,6 +52,27 @@ TEST(GenericRequestTest, SetOptionLValueLastBase) {
   CustomHeader arg("header1", "val1");
   req.set_option(arg);
   EXPECT_TRUE(req.HasOption<CustomHeader>());
+  EXPECT_EQ("header1", req.GetOption<CustomHeader>().custom_header_name());
+}
+
+TEST(GenericRequestTest, IgnoreOptionsBundle) {
+  Placeholder req;
+  req.set_multiple_options(Options{}, CustomHeader{"header1", "val1"});
+  req.set_multiple_options(CustomHeader{"header1", "val1"}, Options{});
+  req.set_multiple_options(CustomHeader{"header1", "val1"}, Options{},
+                           CustomHeader{"header1", "val2"});
+  Options bundle;
+  auto const& cref = bundle;
+  req.set_multiple_options(cref, CustomHeader{"header1", "val1"});
+  req.set_multiple_options(CustomHeader{"header1", "val1"}, cref);
+  req.set_multiple_options(CustomHeader{"header1", "val1"}, cref,
+                           CustomHeader{"header1", "val2"});
+  auto& ref = bundle;
+  req.set_multiple_options(ref, CustomHeader{"header1", "val1"});
+  req.set_multiple_options(CustomHeader{"header1", "val1"}, ref);
+  req.set_multiple_options(CustomHeader{"header1", "val1"}, ref,
+                           CustomHeader{"header1", "val2"});
+  ASSERT_TRUE(req.HasOption<CustomHeader>());
   EXPECT_EQ("header1", req.GetOption<CustomHeader>().custom_header_name());
 }
 
