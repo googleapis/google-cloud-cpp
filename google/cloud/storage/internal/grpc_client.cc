@@ -300,7 +300,8 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   struct WaitForIdle {
     std::unique_ptr<WriteObjectStream> stream;
     void operator()(future<bool>) {
-      stream->Finish().then(WaitForFinish{std::move(stream)});
+      auto finish = stream->Finish();
+      (void)finish.then(WaitForFinish{std::move(stream)});
     }
   };
 
@@ -558,7 +559,8 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
   struct WaitForIdle {
     std::unique_ptr<WriteObjectStream> stream;
     void operator()(future<bool>) {
-      stream->Finish().then(WaitForFinish{std::move(stream)});
+      auto finish = stream->Finish();
+      (void)finish.then(WaitForFinish{std::move(stream)});
     }
   };
 
