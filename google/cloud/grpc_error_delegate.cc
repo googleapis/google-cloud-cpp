@@ -72,11 +72,9 @@ absl::optional<google::rpc::ErrorInfo> GetErrorInfoProto(
   // While in theory there _could_ be multiple ErrorInfo protos in this
   // repeated field, we're told that there will be at most one, and our
   // user-facing APIs should only expose one. So if we find one, we're done.
+  google::rpc::ErrorInfo error_info;
   for (google::protobuf::Any const& any : proto.details()) {
-    if (any.Is<google::rpc::ErrorInfo>()) {
-      google::rpc::ErrorInfo error_info;
-      if (any.UnpackTo(&error_info)) return error_info;
-    }
+    if (any.UnpackTo(&error_info)) return error_info;
   }
   return absl::nullopt;
 }

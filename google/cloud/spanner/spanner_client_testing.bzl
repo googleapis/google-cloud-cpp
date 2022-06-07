@@ -32,6 +32,7 @@ spanner_client_testing_hdrs = [
     "testing/random_backup_name.h",
     "testing/random_database_name.h",
     "testing/random_instance_name.h",
+    "testing/status_utils.h",
 ]
 
 spanner_client_testing_srcs = [
@@ -44,4 +45,5 @@ spanner_client_testing_srcs = [
     "testing/random_backup_name.cc",
     "testing/random_database_name.cc",
     "testing/random_instance_name.cc",
+    "testing/status_utils.cc",
 ]

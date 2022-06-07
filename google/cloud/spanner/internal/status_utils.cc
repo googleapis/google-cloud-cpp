@@ -13,7 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/status_utils.h"
-#include <string>
+#include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/status_payload_keys.h"
+#include <google/rpc/error_details.pb.h>
+#include <google/rpc/status.pb.h>
+#include <google/spanner/v1/spanner.pb.h>
 
 namespace google {
 namespace cloud {
@@ -21,9 +25,27 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 bool IsSessionNotFound(google::cloud::Status const& status) {
-  // "Session not found" in the status message is an API guarantee.
-  return status.code() == StatusCode::kNotFound &&
-         status.message().find("Session not found") != std::string::npos;
+  if (status.code() != StatusCode::kNotFound) return false;
+
+  // In the case of `kNotFound` errors, we can extract the resource
+  // type from the `ResourceInfo` details in the original gRPC proto.
+  google::rpc::Status proto;
+  auto payload =
+      internal::GetPayload(status, internal::kStatusPayloadGrpcProto);
+  if (payload && proto.ParseFromString(*payload)) {
+    google::rpc::ResourceInfo resource_info;
+    for (google::protobuf::Any const& any : proto.details()) {
+      if (any.UnpackTo(&resource_info)) {
+        google::spanner::v1::Session session;
+        auto session_url = "type.googleapis.com/" + session.GetTypeName();
+        return resource_info.resource_type() == session_url;
+      }
+    }
+  }
+
+  // Without an attached `ResourceInfo` (which should never happen outside
+  // of tests), we fallback to looking at the `Status` message.
+  return status.message().find("Session not found") != std::string::npos;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
