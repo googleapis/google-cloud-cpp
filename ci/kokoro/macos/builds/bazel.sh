@@ -23,7 +23,7 @@ source module ci/lib/io.sh
 # NOTE: In this file use the command `bazelisk` rather than bazel, because
 # Kokoro has both installed and we want to make sure to use the former.
 io::log_h2 "Using bazel version"
-: "${USE_BAZEL_VERSION:="5.1.1"}"
+: "${USE_BAZEL_VERSION:="5.2.0"}"
 export USE_BAZEL_VERSION
 bazelisk version || rm -fr "$HOME"/Library/Caches/bazelisk || bazelisk version
 
