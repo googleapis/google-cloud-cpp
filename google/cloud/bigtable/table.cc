@@ -225,6 +225,12 @@ StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
 StatusOr<MutationBranch> Table::CheckAndMutateRow(
     std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
     std::vector<Mutation> false_mutations) {
+  if (connection_) {
+    return connection_->CheckAndMutateRow(
+        app_profile_id_, table_name_, std::move(row_key), std::move(filter),
+        std::move(true_mutations), std::move(false_mutations));
+  }
+
   grpc::Status status;
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));

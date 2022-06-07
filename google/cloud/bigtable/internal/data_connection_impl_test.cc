@@ -38,6 +38,7 @@ using ::google::cloud::bigtable::testing::MockMutateRowsStream;
 using ::google::cloud::bigtable::testing::MockReadRowsStream;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::An;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
@@ -115,10 +116,21 @@ Matcher<v2::ReadRowsRequest const&> HasTestRowSet() {
 
 bigtable::Filter TestFilter() { return bigtable::Filter::Latest(5); }
 
-Matcher<v2::ReadRowsRequest const&> HasTestFilter() {
+Matcher<v2::RowFilter const&> IsTestFilter() {
+  return Property(&v2::RowFilter::cells_per_column_limit_filter, Eq(5));
+}
+
+Matcher<v2::Mutation const&> MatchMutation(bigtable::Mutation const& m) {
+  // For simplicity, we only use SetCell mutations in these tests.
+  auto const& s = m.op.set_cell();
   return Property(
-      &v2::ReadRowsRequest::filter,
-      Property(&v2::RowFilter::cells_per_column_limit_filter, Eq(5)));
+      &v2::Mutation::set_cell,
+      AllOf(Property(&v2::Mutation::SetCell::family_name, s.family_name()),
+            Property(&v2::Mutation::SetCell::column_qualifier,
+                     s.column_qualifier()),
+            Property(&v2::Mutation::SetCell::timestamp_micros,
+                     s.timestamp_micros()),
+            Property(&v2::Mutation::SetCell::value, s.value())));
 }
 
 Matcher<bigtable::Cell const&> MatchCell(bigtable::Cell const& c) {
@@ -559,7 +571,7 @@ TEST(DataConnectionTest, ReadRows) {
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ(42, request.rows_limit());
         EXPECT_THAT(request, HasTestRowSet());
-        EXPECT_THAT(request, HasTestFilter());
+        EXPECT_THAT(request.filter(), IsTestFilter());
 
         auto stream = absl::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
@@ -581,7 +593,7 @@ TEST(DataConnectionTest, ReadRowEmpty) {
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ(1, request.rows_limit());
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
-        EXPECT_THAT(request, HasTestFilter());
+        EXPECT_THAT(request.filter(), IsTestFilter());
 
         auto stream = absl::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
@@ -603,7 +615,7 @@ TEST(DataConnectionTest, ReadRowSuccess) {
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ(1, request.rows_limit());
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
-        EXPECT_THAT(request, HasTestFilter());
+        EXPECT_THAT(request.filter(), IsTestFilter());
 
         auto stream = absl::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
@@ -636,7 +648,7 @@ TEST(DataConnectionTest, ReadRowFailure) {
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ(1, request.rows_limit());
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
-        EXPECT_THAT(request, HasTestFilter());
+        EXPECT_THAT(request.filter(), IsTestFilter());
 
         auto stream = absl::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentError()));
@@ -646,6 +658,162 @@ TEST(DataConnectionTest, ReadRowFailure) {
   auto conn = TestConnection(std::move(mock));
   auto resp = conn->ReadRow(kAppProfile, kTableName, "row", TestFilter());
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(DataConnectionTest, CheckAndMutateRowSuccess) {
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, CheckAndMutateRow)
+      .WillOnce([&](grpc::ClientContext&,
+                    v2::CheckAndMutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.predicate_filter(), IsTestFilter());
+        EXPECT_THAT(request.true_mutations(),
+                    ElementsAre(MatchMutation(t1), MatchMutation(t2)));
+        EXPECT_THAT(request.false_mutations(),
+                    ElementsAre(MatchMutation(f1), MatchMutation(f2)));
+
+        v2::CheckAndMutateRowResponse resp;
+        resp.set_predicate_matched(true);
+        return resp;
+      })
+      .WillOnce([&](grpc::ClientContext&,
+                    v2::CheckAndMutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.predicate_filter(), IsTestFilter());
+        EXPECT_THAT(request.true_mutations(),
+                    ElementsAre(MatchMutation(t1), MatchMutation(t2)));
+        EXPECT_THAT(request.false_mutations(),
+                    ElementsAre(MatchMutation(f1), MatchMutation(f2)));
+
+        v2::CheckAndMutateRowResponse resp;
+        resp.set_predicate_matched(false);
+        return resp;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto predicate = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
+                                           TestFilter(), {t1, t2}, {f1, f2});
+  ASSERT_STATUS_OK(predicate);
+  EXPECT_EQ(*predicate, bigtable::MutationBranch::kPredicateMatched);
+
+  predicate = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
+                                      TestFilter(), {t1, t2}, {f1, f2});
+  ASSERT_STATUS_OK(predicate);
+  EXPECT_EQ(*predicate, bigtable::MutationBranch::kPredicateNotMatched);
+}
+
+TEST(DataConnectionTest, CheckAndMutateRowIdempotency) {
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, CheckAndMutateRow)
+      .WillOnce([&](grpc::ClientContext&,
+                    v2::CheckAndMutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.predicate_filter(), IsTestFilter());
+        EXPECT_THAT(request.true_mutations(),
+                    ElementsAre(MatchMutation(t1), MatchMutation(t2)));
+        EXPECT_THAT(request.false_mutations(),
+                    ElementsAre(MatchMutation(f1), MatchMutation(f2)));
+        return TransientError();
+      });
+
+  auto mock_i = absl::make_unique<MockIdempotentMutationPolicy>();
+  EXPECT_CALL(*mock_i, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockIdempotentMutationPolicy>();
+    EXPECT_CALL(*clone,
+                is_idempotent(An<v2::CheckAndMutateRowRequest const&>()))
+        .WillOnce(Return(false));
+    return clone;
+  });
+
+  internal::OptionsSpan span(
+      Options{}.set<IdempotentMutationPolicyOption>(std::move(mock_i)));
+  auto conn = TestConnection(std::move(mock));
+  auto status = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
+                                        TestFilter(), {t1, t2}, {f1, f2});
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST(DataConnectionTest, CheckAndMutateRowPermanentError) {
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, CheckAndMutateRow)
+      .WillOnce([&](grpc::ClientContext&,
+                    v2::CheckAndMutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.predicate_filter(), IsTestFilter());
+        EXPECT_THAT(request.true_mutations(),
+                    ElementsAre(MatchMutation(t1), MatchMutation(t2)));
+        EXPECT_THAT(request.false_mutations(),
+                    ElementsAre(MatchMutation(f1), MatchMutation(f2)));
+        return PermanentError();
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto status = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
+                                        TestFilter(), {t1, t2}, {f1, f2});
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, CheckAndMutateRow)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::CheckAndMutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.predicate_filter(), IsTestFilter());
+        EXPECT_THAT(request.true_mutations(),
+                    ElementsAre(MatchMutation(t1), MatchMutation(t2)));
+        EXPECT_THAT(request.false_mutations(),
+                    ElementsAre(MatchMutation(f1), MatchMutation(f2)));
+        return TransientError();
+      });
+
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
+    return clone;
+  });
+
+  internal::OptionsSpan span(
+      Options{}
+          .set<DataBackoffPolicyOption>(std::move(mock_b))
+          .set<IdempotentMutationPolicyOption>(
+              bigtable::AlwaysRetryMutationPolicy().clone()));
+  auto conn = TestConnection(std::move(mock));
+  auto status = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
+                                        TestFilter(), {t1, t2}, {f1, f2});
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(DataConnectionTest, ReadModifyWriteRowSuccess) {

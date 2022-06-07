@@ -58,6 +58,12 @@ class DataConnectionImpl : public DataConnection {
       std::string const& app_profile_id, std::string const& table_name,
       std::string row_key, bigtable::Filter filter) override;
 
+  StatusOr<bigtable::MutationBranch> CheckAndMutateRow(
+      std::string const& app_profile_id, std::string const& table_name,
+      std::string row_key, bigtable::Filter filter,
+      std::vector<bigtable::Mutation> true_mutations,
+      std::vector<bigtable::Mutation> false_mutations) override;
+
   StatusOr<bigtable::Row> ReadModifyWriteRow(
       google::bigtable::v2::ReadModifyWriteRowRequest request) override;
 

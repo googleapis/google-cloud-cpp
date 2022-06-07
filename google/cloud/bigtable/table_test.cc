@@ -226,6 +226,34 @@ TEST(TableTest, ReadRow) {
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST(TableTest, CheckAndMutateRow) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, CheckAndMutateRow)
+      .WillOnce([](std::string const& app_profile_id,
+                   std::string const& table_name, std::string const& row_key,
+                   Filter const& filter,
+                   std::vector<Mutation> const& true_mutations,
+                   std::vector<Mutation> const& false_mutations) {
+        EXPECT_EQ(kAppProfileId, app_profile_id);
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ("row", row_key);
+        EXPECT_THAT(filter, IsTestFilter());
+        // We could check individual elements, but verifying the size is good
+        // enough for me.
+        EXPECT_EQ(1, true_mutations.size());
+        EXPECT_EQ(2, false_mutations.size());
+        return PermanentError();
+      });
+
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  auto row = table.CheckAndMutateRow("row", TestFilter(), {t1}, {f1, f2});
+  EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
+}
+
 TEST(TableTest, ReadModifyWriteRow) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, ReadModifyWriteRow)
