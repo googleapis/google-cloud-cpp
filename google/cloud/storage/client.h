@@ -2910,6 +2910,7 @@ class Client {
   template <typename... Options>
   StatusOr<PolicyDocumentResult> CreateSignedPolicyDocument(
       PolicyDocument document, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::PolicyDocumentRequest request(std::move(document));
     request.set_multiple_options(std::forward<Options>(options)...);
     return SignPolicyDocument(request);
@@ -2951,6 +2952,7 @@ class Client {
   template <typename... Options>
   StatusOr<PolicyDocumentV4Result> GenerateSignedPostPolicyV4(
       PolicyDocumentV4 document, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::PolicyDocumentV4Request request(std::move(document));
     request.set_multiple_options(std::forward<Options>(options)...);
     return SignPolicyDocumentV4(std::move(request));
