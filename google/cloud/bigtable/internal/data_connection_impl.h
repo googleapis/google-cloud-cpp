@@ -58,6 +58,9 @@ class DataConnectionImpl : public DataConnection {
       std::string const& app_profile_id, std::string const& table_name,
       std::string row_key, bigtable::Filter filter) override;
 
+  StatusOr<bigtable::Row> ReadModifyWriteRow(
+      google::bigtable::v2::ReadModifyWriteRowRequest request) override;
+
  private:
   std::unique_ptr<DataRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

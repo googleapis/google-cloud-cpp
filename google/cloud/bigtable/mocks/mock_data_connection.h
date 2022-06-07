@@ -96,10 +96,12 @@ class MockDataConnection : public bigtable_internal::DataConnection {
               (override));
 
   MOCK_METHOD(StatusOr<bigtable::Row>, ReadModifyWriteRow,
-              (google::bigtable::v2::MutateRowRequest request), (override));
+              (google::bigtable::v2::ReadModifyWriteRowRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<bigtable::Row>>, AsyncReadModifyWriteRow,
-              (google::bigtable::v2::MutateRowRequest request), (override));
+              (google::bigtable::v2::ReadModifyWriteRowRequest request),
+              (override));
 
   MOCK_METHOD(void, AsyncReadRows,
               (std::string const& app_profile_id, std::string const& table_name,
