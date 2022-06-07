@@ -99,13 +99,14 @@ class AsyncAccessTokenGeneratorLogging : public MinimalIamCredentialsStub {
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       GenerateAccessTokenRequest const& request) override {
     auto prefix = std::string(__func__) + "(" + RequestIdForLogging() + ")";
-    GCP_LOG(DEBUG) << prefix << " << "
-                   << DebugString(request, tracing_options_);
+    auto opts = tracing_options_;
+    GCP_LOG(DEBUG) << prefix << " << " << DebugString(request, opts);
     return child_->AsyncGenerateAccessToken(cq, std::move(context), request)
-        .then([prefix](future<StatusOr<GenerateAccessTokenResponse>> f) {
+        .then([prefix, opts](future<StatusOr<GenerateAccessTokenResponse>> f) {
           auto response = f.get();
           if (!response) {
-            GCP_LOG(DEBUG) << prefix << " >> status=" << response.status();
+            GCP_LOG(DEBUG) << prefix << " >> status="
+                           << DebugString(response.status(), opts);
           } else {
             // We do not want to log the access token
             GCP_LOG(DEBUG) << prefix

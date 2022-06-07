@@ -69,10 +69,11 @@ class AsyncStreamingReadRpcLogging : public AsyncStreamingReadRpc<Response> {
 
   future<Status> Finish() override {
     auto prefix = std::string(__func__) + "(" + request_id_ + ")";
+    auto opt = tracing_options_;
     GCP_LOG(DEBUG) << prefix << " <<";
-    return child_->Finish().then([prefix](future<Status> f) {
+    return child_->Finish().then([prefix, opt](future<Status> f) {
       auto status = f.get();
-      GCP_LOG(DEBUG) << prefix << " >> " << status;
+      GCP_LOG(DEBUG) << prefix << " >> " << DebugString(status, opt);
       return status;
     });
   }

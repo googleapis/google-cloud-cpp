@@ -44,7 +44,8 @@ absl::optional<PartialResultSet> LoggingResultSetReader::Read() {
 Status LoggingResultSetReader::Finish() {
   GCP_LOG(DEBUG) << __func__ << "() << (void)";
   auto status = impl_->Finish();
-  GCP_LOG(DEBUG) << __func__ << "() >> " << status;
+  GCP_LOG(DEBUG) << __func__ << "() >> "
+                 << DebugString(status, tracing_options_);
   return status;
 }
 

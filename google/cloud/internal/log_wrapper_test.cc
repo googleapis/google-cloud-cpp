@@ -342,8 +342,8 @@ TEST(LogWrapper, StatusValueError) {
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("),
-                             HasSubstr(" >> status=" + status_as_string))));
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="),
+                             HasSubstr(status_as_string))));
 }
 
 /// @test the overload for functions returning ClientReaderInterface

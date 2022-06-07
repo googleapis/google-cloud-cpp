@@ -274,10 +274,11 @@ future<bool> LoggingAsyncPullStream::WritesDone() {
 
 future<Status> LoggingAsyncPullStream::Finish() {
   auto prefix = std::string(__func__) + "(" + request_id_ + ")";
+  auto opts = tracing_options_;
   GCP_LOG(DEBUG) << prefix << " <<";
-  return child_->Finish().then([prefix](future<Status> f) {
+  return child_->Finish().then([prefix, opts](future<Status> f) {
     auto r = f.get();
-    GCP_LOG(DEBUG) << prefix << " >> status=" << r;
+    GCP_LOG(DEBUG) << prefix << " >> status=" << DebugString(r, opts);
     return r;
   });
 }
