@@ -42,8 +42,9 @@ TEST(MakeOptionSpanTest, JustDefaults) {
 TEST(MakeOptionSpanTest, Overrides) {
   auto const span =
       MakeOptionsSpan(SimulateRawClientOptions(),
-                      Options{}.set<EndpointOption>("test-endpoint"),
-                      Options{}.set<AuthorityOption>("a-override-1"),
+                      Options{}
+                          .set<EndpointOption>("test-endpoint")
+                          .set<AuthorityOption>("a-override-1"),
                       Options{}.set<AuthorityOption>("a-override-2"));
   auto const& current = CurrentOptions();
   EXPECT_EQ("u-p-default", current.get<UserProjectOption>());

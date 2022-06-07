@@ -30,6 +30,10 @@ namespace internal {
  * The `GroupOptions()` overload set groups all the `google::cloud::Options`
  * present in a parameter pack into a single `google::cloud::Options`.
  *
+ * If the parameter pack contains multiple `google::cloud::Options` the latter
+ * values are preferred (i.e. they override previous values) as defined by
+ * `google::cloud::internal::MergeOptions()`.
+ *
  * @note This does not support `volative`-qualified references.
  */
 inline google::cloud::Options GroupOptions() {
@@ -67,7 +71,7 @@ static Options GroupOptions(Head&&, Tail&&... t) {
 ///@}
 
 /**
- * Create an option span for a `google::cloud::storage::Client` operation.
+ * Create an `OptionsSpan` for a `google::cloud::storage::Client` operation.
  *
  * All operations in `google::cloud::storage::Client` should create an option
  * span combining the options in the `RawClient` with any
