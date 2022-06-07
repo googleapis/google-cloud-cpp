@@ -254,6 +254,10 @@ class GenericRequest
   }
 
   template <typename... T>
+  Derived& set_multiple_options(google::cloud::Options const&&, T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
   Derived& set_multiple_options(google::cloud::Options const&, T&&... tail) {
     return set_multiple_options(std::forward<T>(tail)...);
   }
