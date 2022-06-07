@@ -38,7 +38,7 @@ if (-not (Test-Path $bazel_root)) {
 $common_flags = @("--output_user_root=${bazel_root}")
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
-$Env:USE_BAZEL_VERSION="5.1.1"
+$Env:USE_BAZEL_VERSION="5.2.0"
 bazelisk $common_flags version
 
 # Shutdown the Bazel server to release any locks
