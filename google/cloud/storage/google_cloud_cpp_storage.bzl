@@ -67,6 +67,7 @@ google_cloud_cpp_storage_hdrs = [
     "internal/lifecycle_rule_parser.h",
     "internal/logging_client.h",
     "internal/make_jwt_assertion.h",
+    "internal/make_options_span.h",
     "internal/metadata_parser.h",
     "internal/minimal_iam_credentials_rest.h",
     "internal/notification_metadata_parser.h",

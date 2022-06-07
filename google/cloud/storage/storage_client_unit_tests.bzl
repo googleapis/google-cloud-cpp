@@ -65,6 +65,7 @@ storage_client_unit_tests = [
     "internal/impersonate_service_account_credentials_test.cc",
     "internal/logging_client_test.cc",
     "internal/make_jwt_assertion_test.cc",
+    "internal/make_options_span_test.cc",
     "internal/metadata_parser_test.cc",
     "internal/notification_requests_test.cc",
     "internal/object_acl_requests_test.cc",
