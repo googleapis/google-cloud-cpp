@@ -33,6 +33,8 @@ ClientOptions const& HybridClient::client_options() const {
   return curl_->client_options();
 }
 
+Options HybridClient::options() const { return curl_->options(); }
+
 StatusOr<ListBucketsResponse> HybridClient::ListBuckets(
     ListBucketsRequest const& request) {
   return curl_->ListBuckets(request);

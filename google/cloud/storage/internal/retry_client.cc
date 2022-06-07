@@ -111,6 +111,8 @@ ClientOptions const& RetryClient::client_options() const {
   return client_->client_options();
 }
 
+Options RetryClient::options() const { return client_->options(); }
+
 StatusOr<ListBucketsResponse> RetryClient::ListBuckets(
     ListBucketsRequest const& request) {
   auto retry_policy = retry_policy_prototype_->clone();

@@ -66,6 +66,7 @@ class CurlClient : public RawClient,
   ClientOptions const& client_options() const override {
     return backwards_compatibility_options_;
   }
+  Options options() const override;
 
   StatusOr<ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) override;

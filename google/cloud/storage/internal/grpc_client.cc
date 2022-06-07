@@ -172,6 +172,8 @@ ClientOptions const& GrpcClient::client_options() const {
   return backwards_compatibility_options_;
 }
 
+Options GrpcClient::options() const { return options_; }
+
 StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
     ListBucketsRequest const& request) {
   OptionsSpan span(options_);

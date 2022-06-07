@@ -83,6 +83,8 @@ ClientOptions const& LoggingClient::client_options() const {
   return client_->client_options();
 }
 
+Options LoggingClient::options() const { return client_->options(); }
+
 StatusOr<ListBucketsResponse> LoggingClient::ListBuckets(
     ListBucketsRequest const& request) {
   return MakeCall(*client_, &RawClient::ListBuckets, request, __func__);
