@@ -36,6 +36,7 @@
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/meta/type_traits.h"
@@ -160,28 +161,28 @@ struct ClientImplDetails;
  * In addition, the @ref index "main page" contains examples using `StatusOr<T>`
  * to handle errors.
  *
- * @par Optional Parameters
- * Most of the member functions in this class can receive optional parameters
- * to modify their behavior. For example, the default when reading multi-version
- * objects is to retrieve the latest version:
+ * @par Optional Request Options
+ * Most of the member functions in this class can receive optional request
+ * options. For example, the default when reading multi-version objects is to
+ * retrieve the latest version:
  *
  * @code
  * auto stream = gcs.ReadObject("my-bucket", "my-object");
  * @endcode
  *
- * Some applications may want to retrieve specific versions, in this case
- * just provide the `Generation` option:
+ * Some applications may want to retrieve specific versions. In this case
+ * just provide the `Generation` request option:
  *
  * @code
  * auto stream = gcs.ReadObject(
  *     "my-bucket", "my-object", gcs::Generation(generation));
  * @endcode
  *
- * Each function documents the types accepted as optional parameters. These
- * options can be specified in any order. Specifying an option that is not
- * applicable to a member function results in a compile-time error.
+ * Each function documents the types accepted as optional request options. These
+ * parameters can be specified in any order. Specifying a request option that is
+ * not applicable to a member function results in a compile-time error.
  *
- * All operations support the following common options:
+ * All operations support the following common request options:
  *
  * - `Fields`: return a [partial response], which includes only the desired
  *   fields.
@@ -195,24 +196,32 @@ struct ClientImplDetails;
  * - `IfMatchEtag`: a pre-condition, the operation succeeds only if the resource
  *   ETag matches. Typically used in OCC loops ("change X only if its Etag is
  *   still Y"). Note that GCS sometimes ignores this header, we recommend you
- *   use the GCS specific pre-conditions (`IfGenerationMatch`,
+ *   use the GCS specific pre-conditions (e.g., `IfGenerationMatch`,
  *   `IfMetagenerationMatch` and their `*NotMatch` counterparts) instead.
  * - `IfNoneMatchEtag`: a pre-condition, abort the operation if the resource
  *   ETag has not changed. Typically used in caching ("return the contents of X
  *   only if the Etag is different from the last value I got, which was Y").
  *   Note that GCS sometimes ignores this header, we recommend you use the GCS
- *   specific pre-conditions (`IfGenerationMatch`, `IfMetagenerationMatch` and
- *   their `*NotMatch` counterparts) instead.
+ *   specific pre-conditions (e.g., `IfGenerationMatch`, `IfMetagenerationMatch`
+ *   and their `*NotMatch` counterparts) instead.
  * - `UserIp`: attribute the request to this specific IP address for quota
  *   purpose. Not recommended, prefer `QuotaUser` instead.
  *
  * [partial response]:
  * https://cloud.google.com/storage/docs/json_api#partial-response
  *
+ * @par Per-operation Overrides
+ *
+ * In addition to the request options, which are passed on to the service to
+ * modify the request, you can specify options that override the local behavior
+ * of the library.  For example, you can override the local retry policy:
+ *
+ * @snippet storage_client_per_operation_samples.cc change-retry-policy
+ *
  * @par Retry, Backoff, and Idempotency Policies
  *
  * The library automatically retries requests that fail with transient errors,
- * and follows the
+ * follows the
  * [recommended
  * practice](https://cloud.google.com/storage/docs/exponential-backoff) to
  * backoff between retries.
@@ -2681,9 +2690,6 @@ class Client {
   /**
    * Create a new HMAC key.
    *
-   * @warning This GCS feature is not GA, it is subject to change without
-   *     notice.
-   *
    * @param service_account the service account email where you want to create
    *     the new HMAC key.
    * @param options a list of optional query parameters and/or request headers.
@@ -2731,9 +2737,6 @@ class Client {
   /**
    * Delete a HMAC key in a given project.
    *
-   * @warning This GCS feature is not GA, it is subject to change without
-   *     notice.
-   *
    * @param access_id the HMAC key `access_id()` that you want to delete.  Each
    *     HMAC key is assigned an `access_id()` attribute at creation time.
    * @param options a list of optional query parameters and/or request headers.
@@ -2769,9 +2772,6 @@ class Client {
   /**
    * Get an existing HMAC key in a given project.
    *
-   * @warning This GCS feature is not GA, it is subject to change without
-   *     notice.
-   *
    * @param access_id the HMAC key `access_id()` that you want to delete.  Each
    *     HMAC key is assigned an `access_id()` attribute at creation time.
    * @param options a list of optional query parameters and/or request headers.
@@ -2806,9 +2806,6 @@ class Client {
 
   /**
    * Update an existing HMAC key in a given project.
-   *
-   * @warning This GCS feature is not GA, it is subject to change without
-   *     notice.
    *
    * @param access_id the HMAC key `access_id()` that you want to delete.  Each
    *     HMAC key is assigned an `access_id()` attribute at creation time.
@@ -3407,8 +3404,8 @@ struct ClientImplDetails {
       internal::ResumableUploadRequest const& request) {
     return client.UploadStreamResumable(source, request);
   }
-  template <typename... Policies>
 
+  template <typename... Policies>
   static Client CreateClient(std::shared_ptr<internal::RawClient> c,
                              Policies&&... p) {
     auto opts =
