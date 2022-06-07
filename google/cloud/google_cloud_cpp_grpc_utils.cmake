@@ -52,6 +52,7 @@ add_library(
     internal/async_streaming_write_rpc.h
     internal/async_streaming_write_rpc_auth.h
     internal/async_streaming_write_rpc_impl.h
+    internal/async_streaming_write_rpc_logging.h
     internal/background_threads_impl.cc
     internal/background_threads_impl.h
     internal/completion_queue_impl.h
@@ -232,6 +233,7 @@ if (BUILD_TESTING)
         internal/async_streaming_read_rpc_logging_test.cc
         internal/async_streaming_write_rpc_auth_test.cc
         internal/async_streaming_write_rpc_impl_test.cc
+        internal/async_streaming_write_rpc_logging_test.cc
         internal/background_threads_impl_test.cc
         internal/extract_long_running_result_test.cc
         internal/grpc_access_token_authentication_test.cc

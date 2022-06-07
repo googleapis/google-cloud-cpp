@@ -34,6 +34,7 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "internal/async_streaming_read_rpc_logging_test.cc",
     "internal/async_streaming_write_rpc_auth_test.cc",
     "internal/async_streaming_write_rpc_impl_test.cc",
+    "internal/async_streaming_write_rpc_logging_test.cc",
     "internal/background_threads_impl_test.cc",
     "internal/extract_long_running_result_test.cc",
     "internal/grpc_access_token_authentication_test.cc",
