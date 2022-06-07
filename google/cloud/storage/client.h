@@ -1675,6 +1675,7 @@ class Client {
   template <typename... Options>
   StatusOr<std::vector<BucketAccessControl>> ListBucketAcl(
       std::string const& bucket_name, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ListBucketAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto items = raw_client_->ListBucketAcl(request);
@@ -1710,6 +1711,7 @@ class Client {
                                                 std::string const& entity,
                                                 std::string const& role,
                                                 Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::CreateBucketAclRequest request(bucket_name, entity, role);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->CreateBucketAcl(request);
@@ -1736,6 +1738,7 @@ class Client {
   template <typename... Options>
   Status DeleteBucketAcl(std::string const& bucket_name,
                          std::string const& entity, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::DeleteBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteBucketAcl(request).status();
@@ -1762,6 +1765,7 @@ class Client {
   StatusOr<BucketAccessControl> GetBucketAcl(std::string const& bucket_name,
                                              std::string const& entity,
                                              Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::GetBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetBucketAcl(request);
@@ -1801,6 +1805,7 @@ class Client {
   StatusOr<BucketAccessControl> UpdateBucketAcl(std::string const& bucket_name,
                                                 BucketAccessControl const& acl,
                                                 Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::UpdateBucketAclRequest request(bucket_name, acl.entity(),
                                              acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -1847,6 +1852,7 @@ class Client {
       std::string const& bucket_name, std::string const& entity,
       BucketAccessControl const& original_acl,
       BucketAccessControl const& new_acl, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::PatchBucketAclRequest request(bucket_name, entity, original_acl,
                                             new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -1890,6 +1896,7 @@ class Client {
   StatusOr<BucketAccessControl> PatchBucketAcl(
       std::string const& bucket_name, std::string const& entity,
       BucketAccessControlPatchBuilder const& builder, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::PatchBucketAclRequest request(bucket_name, entity, builder);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchBucketAcl(request);
