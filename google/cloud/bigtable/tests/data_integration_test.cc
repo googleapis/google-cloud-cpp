@@ -35,8 +35,6 @@ using ::std::chrono::milliseconds;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
-using DataIntegrationTestClientOnly = TableIntegrationTest;
-
 class DataIntegrationTest : public TableIntegrationTest,
                             public ::testing::WithParamInterface<std::string> {
 };
@@ -284,8 +282,8 @@ TEST_P(DataIntegrationTest, TableReadRowsWrongTable) {
   EXPECT_EQ(read1.end(), it);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableCheckAndMutateRowPass) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableCheckAndMutateRowPass) {
+  auto table = GetTable(GetParam());
   std::string const key = "row-key";
 
   std::vector<Cell> created{{key, kFamily4, "c1", 0, "v1000"}};
@@ -302,8 +300,8 @@ TEST_F(DataIntegrationTestClientOnly, TableCheckAndMutateRowPass) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableCheckAndMutateRowFail) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableCheckAndMutateRowFail) {
+  auto table = GetTable(GetParam());
   std::string const key = "row-key";
 
   std::vector<Cell> created{{key, kFamily4, "c1", 0, "v1000"}};
