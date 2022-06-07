@@ -38,6 +38,7 @@ class RetryClient : public RawClient,
   ~RetryClient() override = default;
 
   ClientOptions const& client_options() const override;
+  Options options() const override;
 
   StatusOr<ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) override;

@@ -33,6 +33,7 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <string>
@@ -52,6 +53,8 @@ class RawClient {
   virtual ~RawClient() = default;
 
   virtual ClientOptions const& client_options() const = 0;
+
+  virtual google::cloud::Options options() const { return {}; }
 
   //@{
   /// @name Bucket resource operations

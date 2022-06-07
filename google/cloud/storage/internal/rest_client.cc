@@ -169,6 +169,8 @@ RestClient::RestClient(
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       options_(std::move(options)) {}
 
+Options RestClient::options() const { return curl_client_->options(); }
+
 StatusOr<ListBucketsResponse> RestClient::ListBuckets(
     ListBucketsRequest const& request) {
   RestRequestBuilder builder(

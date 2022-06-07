@@ -54,6 +54,7 @@ class RestClient : public RawClient,
   ClientOptions const& client_options() const override {
     return curl_client_->client_options();
   }
+  Options options() const override;
 
   StatusOr<ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) override;

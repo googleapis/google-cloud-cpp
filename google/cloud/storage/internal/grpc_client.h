@@ -70,9 +70,8 @@ class GrpcClient : public RawClient,
       std::unique_ptr<grpc::ClientContext> context);
   //@}
 
-  Options const& options() const { return options_; }
-
   ClientOptions const& client_options() const override;
+  Options options() const override;
 
   StatusOr<ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) override;

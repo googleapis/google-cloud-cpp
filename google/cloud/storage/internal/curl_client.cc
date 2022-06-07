@@ -179,6 +179,8 @@ CurlClient::CurlClient(google::cloud::Options options)
   CurlInitializeOnce(opts_);
 }
 
+Options CurlClient::options() const { return opts_; }
+
 StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
     ListBucketsRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b", storage_factory_);
