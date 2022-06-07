@@ -83,6 +83,12 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
 
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>>
+  AsyncWriteObject(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

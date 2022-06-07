@@ -33,6 +33,8 @@ using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::test::admin::database::v1::TailLogEntriesRequest;
 using ::google::test::admin::database::v1::TailLogEntriesResponse;
+using ::google::test::admin::database::v1::WriteObjectRequest;
+using ::google::test::admin::database::v1::WriteObjectResponse;
 using ::testing::_;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -490,6 +492,80 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncTailLogEntries) {
   auto finish = stream->Finish();
   notify_next_op(true);
   EXPECT_THAT(finish.get(), IsOk());
+}
+
+class MockAsyncWriteObjectResponse
+    : public grpc::ClientAsyncWriterInterface<WriteObjectRequest> {
+ public:
+  MOCK_METHOD(void, StartCall, (void*), (override));
+  MOCK_METHOD(void, Write,
+              (WriteObjectRequest const&, grpc::WriteOptions, void*),
+              (override));
+  MOCK_METHOD(void, Write, (WriteObjectRequest const&, void*), (override));
+  MOCK_METHOD(void, WritesDone, (void*), (override));
+  MOCK_METHOD(void, Finish, (grpc::Status*, void*), (override));
+  MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
+};
+
+TEST_F(GoldenKitchenSinkStubTest, AsyncWriteObject) {
+  grpc::Status status;
+  EXPECT_CALL(*grpc_stub_, PrepareAsyncWriteObjectRaw)
+      .WillOnce([](grpc::ClientContext*, WriteObjectResponse* response,
+                   grpc::CompletionQueue*) {
+        auto stream = absl::make_unique<MockAsyncWriteObjectResponse>();
+        EXPECT_CALL(*stream, StartCall).Times(1);
+        using ::testing::_;
+        EXPECT_CALL(*stream, Write(_, _, _)).Times(1);
+        EXPECT_CALL(*stream, WritesDone).Times(1);
+        EXPECT_CALL(*stream, Finish)
+            .WillOnce([response](grpc::Status* status, void*) {
+              response->set_response("Finish()");
+              *status = grpc::Status::OK;
+            });
+        return stream.release();  // gRPC assumes ownership of `stream`.
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  grpc::CompletionQueue grpc_cq;
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(ReturnRef(grpc_cq));
+
+  std::deque<std::shared_ptr<AsyncGrpcOperation>> operations;
+  auto notify_next_op = [&](bool ok) {
+    auto op = std::move(operations.front());
+    operations.pop_front();
+    op->Notify(ok);
+  };
+
+  EXPECT_CALL(*mock_cq, StartOperation)
+      .WillRepeatedly([&operations](std::shared_ptr<AsyncGrpcOperation> op,
+                                    absl::FunctionRef<void(void*)> call) {
+        void* tag = op.get();
+        operations.push_back(std::move(op));
+        call(tag);
+      });
+  google::cloud::CompletionQueue cq(mock_cq);
+
+  DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
+
+  auto stream =
+      stub.AsyncWriteObject(cq, absl::make_unique<grpc::ClientContext>());
+  auto start = stream->Start();
+  notify_next_op(true);
+  EXPECT_TRUE(start.get());
+
+  auto write = stream->Write(WriteObjectRequest{}, grpc::WriteOptions());
+  notify_next_op(true);
+  EXPECT_TRUE(write.get());
+
+  auto writes_done = stream->WritesDone();
+  notify_next_op(false);
+  EXPECT_FALSE(writes_done.get());
+
+  auto pending_response = stream->Finish();
+  notify_next_op(true);
+  auto response = pending_response.get();
+  ASSERT_THAT(response, IsOk());
+  EXPECT_EQ(response->response(), "Finish()");
 }
 
 }  // namespace

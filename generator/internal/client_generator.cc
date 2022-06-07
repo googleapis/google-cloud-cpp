@@ -264,6 +264,7 @@ Status ClientGenerator::GenerateHeader() {
 
   for (google::protobuf::MethodDescriptor const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
+    if (IsStreamingWrite(method)) continue;
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
@@ -560,6 +561,7 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
 
   for (google::protobuf::MethodDescriptor const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
+    if (IsStreamingWrite(method)) continue;
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {

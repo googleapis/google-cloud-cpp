@@ -138,6 +138,17 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
       HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
       continue;
     }
+    if (IsStreamingWrite(method)) {
+      auto constexpr kDeclaration = R"""(
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      $request_type$, $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -207,6 +218,9 @@ Status LoggingDecoratorGenerator::GenerateCc() {
            : "",
        HasAsynchronousStreamingReadMethod()
            ? "google/cloud/internal/async_streaming_read_rpc_logging.h"
+           : "",
+       HasAsynchronousStreamingWriteMethod()
+           ? "google/cloud/internal/async_streaming_write_rpc_logging.h"
            : "",
        "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
@@ -360,6 +374,29 @@ $logging_class_name$::Async$method_name$(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->Async$method_name$(cq, std::move(context), request);
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+)""";
+      CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
+      continue;
+    }
+    if (IsStreamingWrite(method)) {
+      auto constexpr kDefinition = R"""(
+std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+    $request_type$, $response_type$>>
+$logging_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using LoggingStream = ::google::cloud::internal::AsyncStreamingWriteRpcLogging<
+      $request_type$, $response_type$>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->Async$method_name$(cq, std::move(context));
   if (components_.count("rpc-streams") > 0) {
     stream = absl::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));

@@ -15,6 +15,7 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.h"
 #include "google/cloud/log.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/async_streaming_write_rpc_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -304,6 +305,30 @@ TEST_F(LoggingDecoratorTest, AsyncTailLogEntries) {
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncTailLogEntries")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Start(")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Finish(")));
+}
+
+TEST_F(LoggingDecoratorTest, AsyncWriteObject) {
+  using ErrorStream = ::google::cloud::internal::AsyncStreamingWriteRpcError<
+      WriteObjectRequest, WriteObjectResponse>;
+  EXPECT_CALL(*mock_, AsyncWriteObject)
+      .WillOnce(Return(ByMove(absl::make_unique<ErrorStream>(
+          Status(StatusCode::kAborted, "uh-oh")))));
+
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
+
+  google::cloud::CompletionQueue cq;
+  auto stream =
+      stub.AsyncWriteObject(cq, absl::make_unique<grpc::ClientContext>());
+
+  auto start = stream->Start().get();
+  EXPECT_FALSE(start);
+  auto finish = stream->Finish().get();
+  EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncWriteObject")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Start(")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Finish(")));
 }

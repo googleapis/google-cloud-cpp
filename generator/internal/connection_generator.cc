@@ -182,6 +182,7 @@ class $connection_class_name$ {
 
   for (auto const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
+    if (IsStreamingWrite(method)) continue;
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -366,6 +367,7 @@ $connection_class_name$::Async$method_name$(ExperimentalTag) {
 
   for (auto const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
+    if (IsStreamingWrite(method)) continue;
     CcPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty, R"""(

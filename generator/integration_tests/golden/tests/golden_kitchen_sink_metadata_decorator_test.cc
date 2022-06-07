@@ -16,6 +16,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/async_streaming_write_rpc_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
@@ -277,6 +278,31 @@ TEST_F(MetadataDecoratorTest, AsyncTailLogEntries) {
   TailLogEntriesRequest request;
   auto stream = stub.AsyncTailLogEntries(
       cq, absl::make_unique<grpc::ClientContext>(), request);
+
+  auto start = stream->Start().get();
+  EXPECT_FALSE(start);
+  auto finish = stream->Finish().get();
+  EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
+}
+
+TEST_F(MetadataDecoratorTest, AsyncWriteObject) {
+  EXPECT_CALL(*mock_, AsyncWriteObject)
+      .WillOnce([this](google::cloud::CompletionQueue const&,
+                       std::unique_ptr<grpc::ClientContext> context) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            *context,
+            "google.test.admin.database.v1.GoldenKitchenSink.TailLogEntries"));
+        using ErrorStream =
+            ::google::cloud::internal::AsyncStreamingWriteRpcError<
+                WriteObjectRequest, WriteObjectResponse>;
+        return absl::make_unique<ErrorStream>(
+            Status(StatusCode::kAborted, "uh-oh"));
+      });
+  GoldenKitchenSinkMetadata stub(mock_);
+
+  google::cloud::CompletionQueue cq;
+  auto stream =
+      stub.AsyncWriteObject(cq, absl::make_unique<grpc::ClientContext>());
 
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
