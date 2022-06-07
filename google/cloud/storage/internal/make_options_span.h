@@ -34,7 +34,7 @@ namespace internal {
  * values are preferred (i.e. they override previous values) as defined by
  * `google::cloud::internal::MergeOptions()`.
  *
- * @note This does not support `volative`-qualified references.
+ * @note This does not support `volatile`-qualified references.
  */
 inline google::cloud::Options GroupOptions() {
   return google::cloud::Options{};
