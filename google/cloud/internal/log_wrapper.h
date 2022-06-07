@@ -17,6 +17,7 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
@@ -74,7 +75,7 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
                   TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
   auto response = functor(context, request);
-  GCP_LOG(DEBUG) << where << "() >> status=" << response;
+  GCP_LOG(DEBUG) << where << "() >> status=" << DebugString(response, options);
   return response;
 }
 
@@ -225,9 +226,10 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
   GCP_LOG(DEBUG) << prefix << " >> future_status="
                  << DebugFutureStatus(
                         response.wait_for(std::chrono::microseconds(0)));
-  return response.then([prefix](future<Status> f) {
+  return response.then([prefix, options](future<Status> f) {
     auto response = f.get();
-    GCP_LOG(DEBUG) << prefix << " >> response=" << response;
+    GCP_LOG(DEBUG) << prefix
+                   << " >> response=" << DebugString(response, options);
     return response;
   });
 }
@@ -243,7 +245,8 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
   auto status = functor(context, request, response);
   if (!status.ok()) {
-    GCP_LOG(DEBUG) << where << "() >> status=" << status.error_message();
+    GCP_LOG(DEBUG) << where << "() >> status="
+                   << DebugString(MakeStatusFromRpcError(status), options);
   } else {
     GCP_LOG(DEBUG) << where << "() << " << DebugString(*response, options);
   }
