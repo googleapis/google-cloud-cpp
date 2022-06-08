@@ -975,6 +975,7 @@ class Client {
                                       std::string destination_bucket_name,
                                       std::string destination_object_name,
                                       Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::CopyObjectRequest request(
         std::move(source_bucket_name), std::move(source_object_name),
         std::move(destination_bucket_name), std::move(destination_object_name));
@@ -1459,6 +1460,7 @@ class Client {
   StatusOr<ObjectMetadata> ComposeObject(
       std::string bucket_name, std::vector<ComposeSourceObject> source_objects,
       std::string destination_object_name, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ComposeObjectRequest request(std::move(bucket_name),
                                            std::move(source_objects),
                                            std::move(destination_object_name));
@@ -1563,6 +1565,7 @@ class Client {
                                      std::string destination_object_name,
                                      std::string rewrite_token,
                                      Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::RewriteObjectRequest request(
         std::move(source_bucket_name), std::move(source_object_name),
         std::move(destination_bucket_name), std::move(destination_object_name),
