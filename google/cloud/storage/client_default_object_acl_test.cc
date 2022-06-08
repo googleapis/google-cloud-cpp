@@ -28,6 +28,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
@@ -58,6 +59,8 @@ TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAcl) {
       .WillOnce(Return(
           StatusOr<internal::ListDefaultObjectAclResponse>(TransientError())))
       .WillOnce([&expected](internal::ListDefaultObjectAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
 
         return make_status_or(internal::ListDefaultObjectAclResponse{expected});
@@ -65,7 +68,8 @@ TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAcl) {
 
   auto client = ClientForMock();
   StatusOr<std::vector<ObjectAccessControl>> actual =
-      client.ListDefaultObjectAcl("test-bucket");
+      client.ListDefaultObjectAcl("test-bucket",
+                                  Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -100,6 +104,8 @@ TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAcl) {
   EXPECT_CALL(*mock_, CreateDefaultObjectAcl)
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce([&expected](internal::CreateDefaultObjectAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         EXPECT_EQ("READER", r.role());
@@ -108,7 +114,8 @@ TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAcl) {
       });
   auto client = ClientForMock();
   StatusOr<ObjectAccessControl> actual = client.CreateDefaultObjectAcl(
-      "test-bucket", "user-test-user-1", ObjectAccessControl::ROLE_READER());
+      "test-bucket", "user-test-user-1", ObjectAccessControl::ROLE_READER(),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
@@ -153,13 +160,17 @@ TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAcl) {
   EXPECT_CALL(*mock_, DeleteDefaultObjectAcl)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteDefaultObjectAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user", r.entity());
 
         return make_status_or(internal::EmptyResponse{});
       });
   auto client = ClientForMock();
-  auto status = client.DeleteDefaultObjectAcl("test-bucket", "user-test-user");
+  auto status = client.DeleteDefaultObjectAcl(
+      "test-bucket", "user-test-user",
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(status);
 }
 
@@ -201,6 +212,8 @@ TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAcl) {
   EXPECT_CALL(*mock_, GetDefaultObjectAcl)
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce([&expected](internal::GetDefaultObjectAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
 
@@ -208,7 +221,8 @@ TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAcl) {
       });
   auto client = ClientForMock();
   StatusOr<ObjectAccessControl> actual =
-      client.GetDefaultObjectAcl("test-bucket", "user-test-user-1");
+      client.GetDefaultObjectAcl("test-bucket", "user-test-user-1",
+                                 Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -247,6 +261,8 @@ TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAcl) {
   EXPECT_CALL(*mock_, UpdateDefaultObjectAcl)
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce([&expected](internal::UpdateDefaultObjectAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         EXPECT_EQ("READER", r.role());
@@ -255,9 +271,11 @@ TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAcl) {
       });
   auto client = ClientForMock();
   StatusOr<ObjectAccessControl> actual = client.UpdateDefaultObjectAcl(
-      "test-bucket", ObjectAccessControl()
-                         .set_entity("user-test-user-1")
-                         .set_role(ObjectAccessControl::ROLE_READER()));
+      "test-bucket",
+      ObjectAccessControl()
+          .set_entity("user-test-user-1")
+          .set_role(ObjectAccessControl::ROLE_READER()),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
@@ -307,6 +325,8 @@ TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAcl) {
   EXPECT_CALL(*mock_, PatchDefaultObjectAcl)
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce([result](internal::PatchDefaultObjectAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         nlohmann::json expected{{"role", "OWNER"}};
@@ -318,7 +338,8 @@ TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAcl) {
   auto client = ClientForMock();
   auto actual = client.PatchDefaultObjectAcl(
       "test-bucket", "user-test-user-1",
-      ObjectAccessControlPatchBuilder().set_role("OWNER"));
+      ObjectAccessControlPatchBuilder().set_role("OWNER"),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(result, *actual);
 }
