@@ -82,8 +82,9 @@ Options BasicTestPolicies() {
 /// @test No failures scenario.
 TEST(RetryObjectReadSourceTest, NoFailures) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
@@ -100,8 +101,9 @@ TEST(RetryObjectReadSourceTest, NoFailures) {
 /// @test Permanent failure when creating the raw source
 TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) { return PermanentError(); });
@@ -114,8 +116,9 @@ TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
 /// @test Transient failures exhaust retry policy when creating the raw source
 TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .Times(4)
@@ -130,8 +133,9 @@ TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
 /// @test Recovery from a transient failures when creating the raw source
 TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
@@ -151,8 +155,9 @@ TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
 TEST(RetryObjectReadSourceTest, PermanentReadFailure) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto* raw_source = new MockObjectReadSource;
-  auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([raw_source](ReadObjectRangeRequest const&) {
@@ -180,9 +185,10 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
     return std::chrono::milliseconds(0);
   });
   auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client),
-                          BasicTestPolicies().set<BackoffPolicyOption>(
-                              backoff_policy_mock.clone()));
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<BackoffPolicyOption>(
+          backoff_policy_mock.clone()));
 
   EXPECT_EQ(0, num_backoff_policy_called);
 
@@ -210,10 +216,12 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
 
+  // We really do not care how many times the policy is closed before we make
+  // the first `Read()` call.  We only care about how it increases.
+  auto const initial_clone_count = backoff_policy_mock.NumClones();
   auto source = client->ReadObject(ReadObjectRangeRequest{});
   ASSERT_STATUS_OK(source);
-  // The policy was cloned by the options, the ctor, and once by the RetryClient
-  EXPECT_EQ(3, backoff_policy_mock.NumClones());
+  EXPECT_EQ(initial_clone_count + 1, backoff_policy_mock.NumClones());
   EXPECT_EQ(0, num_backoff_policy_called);
 
   // raw_source1 and raw_source2 fail, then a success
@@ -221,7 +229,7 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   // Two retries, so the backoff policy was called twice.
   EXPECT_EQ(2, num_backoff_policy_called);
   // The backoff should have been cloned during the read.
-  EXPECT_EQ(4, backoff_policy_mock.NumClones());
+  EXPECT_EQ(initial_clone_count + 2, backoff_policy_mock.NumClones());
   // The backoff policy was used twice in the first retry.
   EXPECT_EQ(2, backoff_policy_mock.NumCallsFromLastClone());
 
@@ -230,7 +238,7 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   // This read caused a third retry.
   EXPECT_EQ(3, num_backoff_policy_called);
   // The backoff should have been cloned during the read.
-  EXPECT_EQ(5, backoff_policy_mock.NumClones());
+  EXPECT_EQ(initial_clone_count + 3, backoff_policy_mock.NumClones());
   // The backoff policy was only once in the second retry.
   EXPECT_EQ(1, backoff_policy_mock.NumCallsFromLastClone());
 }
@@ -238,8 +246,9 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
 /// @test Check that retry policy is shared between reads and resetting session
 TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
@@ -267,8 +276,9 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
 /// @test `ReadLast` behaviour after a transient failure
 TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const& req) {
@@ -299,8 +309,9 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
 /// @test The generation is captured such that we resume from the same version
 TEST(RetryObjectReadSourceTest, TransientFailureWithGeneration) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const& req) {
@@ -334,10 +345,10 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithGeneration) {
 /// @test Downloads with decompressive transcoding require discarding data.
 TEST(RetryObjectReadSourceTest, DiscardDataForDecompressiveTranscoding) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<RetryPolicyOption>(
-                              LimitedErrorCountRetryPolicy(10).clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<RetryPolicyOption>(
+          LimitedErrorCountRetryPolicy(10).clone()));
 
   EXPECT_CALL(*mock, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {

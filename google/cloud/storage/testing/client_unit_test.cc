@@ -28,16 +28,20 @@ ClientUnitTest::ClientUnitTest()
   EXPECT_CALL(*mock_, client_options())
       .WillRepeatedly(ReturnRef(client_options_));
   EXPECT_CALL(*mock_, options)
-      .WillRepeatedly(Return(Options{}
-                                 .set<AuthorityOption>("a-default")
-                                 .set<UserProjectOption>("u-p-default")));
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}
+              .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+              .set<AuthorityOption>("a-default")
+              .set<UserProjectOption>("u-p-default")
+              .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone())
+              .set<BackoffPolicyOption>(
+                  ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                           std::chrono::milliseconds(1), 2.0)
+                      .clone()))));
 }
 
 Client ClientUnitTest::ClientForMock() {
-  return ::google::cloud::storage::testing::ClientFromMock(
-      mock_, LimitedErrorCountRetryPolicy(2),
-      ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                               std::chrono::milliseconds(1), 2.0));
+  return ::google::cloud::storage::testing::ClientFromMock(mock_);
 }
 
 }  // namespace testing

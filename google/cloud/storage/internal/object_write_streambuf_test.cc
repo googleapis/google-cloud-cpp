@@ -437,8 +437,8 @@ TEST(ObjectWriteStreambufTest, Regression8868) {
           Return(QueryResumableUploadResponse{quantum, ObjectMetadata()}));
 
   using us = std::chrono::microseconds;
-  auto retry = RetryClient::Create(
-      std::move(mock),
+  auto retry = RetryClient::Create(std::move(mock));
+  google::cloud::internal::OptionsSpan const span(
       Options{}
           .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone())

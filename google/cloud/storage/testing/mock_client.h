@@ -32,6 +32,11 @@ class MockClient : public google::cloud::storage::internal::RawClient {
             google::cloud::storage::oauth2::CreateAnonymousCredentials()) {
     EXPECT_CALL(*this, client_options())
         .WillRepeatedly(::testing::ReturnRef(client_options_));
+    EXPECT_CALL(*this, options)
+        .WillRepeatedly(
+            ::testing::Return(storage::internal::DefaultOptionsWithCredentials(
+                Options{}.set<UnifiedCredentialsOption>(
+                    MakeInsecureCredentials()))));
   }
 
   MOCK_METHOD(ClientOptions const&, client_options, (), (const, override));
@@ -184,8 +189,10 @@ class MockStreambuf : public internal::ObjectWriteStreambuf {
 template <typename... Policies>
 Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
                       Policies&&... p) {
-  return internal::ClientImplDetails::CreateClient(
-      mock, std::forward<Policies>(p)...);
+  auto opts =
+      internal::ApplyPolicies(mock->options(), std::forward<Policies>(p)...);
+  EXPECT_CALL(*mock, options).WillRepeatedly(::testing::Return(opts));
+  return internal::ClientImplDetails::CreateClient(mock);
 }
 
 }  // namespace testing
