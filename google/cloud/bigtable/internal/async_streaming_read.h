@@ -38,7 +38,7 @@ class AsyncStreamingReadImpl
       "OnReadHandler must return a future<bool>");
   static_assert(
       google::cloud::internal::is_invocable<OnFinishHandler, Status>::value,
-      "OnReadHandler must be invocable with Status");
+      "OnFinishHandler must be invocable with Status");
 
  public:
   explicit AsyncStreamingReadImpl(
