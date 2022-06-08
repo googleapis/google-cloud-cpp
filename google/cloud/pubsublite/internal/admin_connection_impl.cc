@@ -407,7 +407,7 @@ StreamRange<std::string> AdminServiceConnectionImpl::ListReservationTopics(
 future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
 AdminServiceConnectionImpl::AsyncGetTopicPartitions(
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
-  auto& stub = stub_;
+  auto stub = stub_;
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetTopicPartitions(request), background_->cq(),

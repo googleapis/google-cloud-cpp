@@ -454,7 +454,7 @@ future<Status>)"""
 future<StatusOr<$response_type$>>)""",
                       R"""(
 $connection_class_name$Impl::Async$method_name$($request_type$ const& request) {
-  auto& stub = stub_;
+  auto stub = stub_;
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->$method_name$(request),

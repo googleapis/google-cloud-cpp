@@ -337,7 +337,7 @@ BigtableTableAdminConnectionImpl::TestIamPermissions(
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminConnectionImpl::AsyncCheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-  auto& stub = stub_;
+  auto stub = stub_;
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CheckConsistency(request), background_->cq(),

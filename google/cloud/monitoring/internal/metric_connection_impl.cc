@@ -225,7 +225,7 @@ Status MetricServiceConnectionImpl::CreateServiceTimeSeries(
 
 future<Status> MetricServiceConnectionImpl::AsyncCreateTimeSeries(
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  auto& stub = stub_;
+  auto stub = stub_;
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateTimeSeries(request), background_->cq(),

@@ -394,7 +394,7 @@ GoldenThingAdminConnectionImpl::LongRunningWithoutRouting(google::test::admin::d
 
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnectionImpl::AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  auto& stub = stub_;
+  auto stub = stub_;
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetDatabase(request),
@@ -409,7 +409,7 @@ GoldenThingAdminConnectionImpl::AsyncGetDatabase(google::test::admin::database::
 
 future<Status>
 GoldenThingAdminConnectionImpl::AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) {
-  auto& stub = stub_;
+  auto stub = stub_;
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DropDatabase(request),
