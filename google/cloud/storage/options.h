@@ -102,6 +102,8 @@ struct ProjectIdOption {
  * value may result in very few connections if your application does not need
  * them.
  *
+ * @note Setting this value to 0 results disables connection pooling.
+ *
  * @warning The library may create more connections than this option configures,
  * for example if your application requests many simultaneous downloads.
  */
