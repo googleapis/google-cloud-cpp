@@ -103,10 +103,9 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
         call(tag);
       });
 
-  auto set_span = [](std::string const& value) {
-    return OptionsSpan(Options{}.set<UserProjectOption>(value));
+  auto user_project = [](std::string const& value) {
+    return Options{}.set<UserProjectOption>(value);
   };
-  auto clear_span = []() { return OptionsSpan(Options{}); };
   auto check_write_span = [](std::string const& expected) {
     return [expected](future<bool> f) {
       EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), expected);
@@ -116,7 +115,7 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
 
   google::cloud::CompletionQueue cq(mock_cq);
 
-  auto span = set_span("create");
+  OptionsSpan span(user_project("create"));
   auto stream = MakeStreamingWriteRpc<FakeRequest, FakeResponse>(
       cq, absl::make_unique<grpc::ClientContext>(),
       [&mock](grpc::ClientContext* context, FakeResponse* response,
@@ -124,46 +123,46 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
         return mock.FakeRpc(context, response, cq);
       });
 
-  auto start_span = set_span("start");
+  OptionsSpan start_span(user_project("start"));
   auto start = stream->Start().then([](future<bool> f) {
     EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "start");
     return f.get();
   });
   ASSERT_EQ(1, operations.size());
-  auto start_clear = clear_span();
+  OptionsSpan start_clear(Options{});
   notify_next_op();
   EXPECT_TRUE(start.get());
 
-  auto write0_span = set_span("write0");
+  OptionsSpan write0_span(user_project("write0"));
   auto write0 = stream->Write(FakeRequest{}, grpc::WriteOptions())
                     .then(check_write_span("write0"));
   ASSERT_EQ(1, operations.size());
-  auto write0_clear = clear_span();
+  OptionsSpan write0_clear(Options{});
   notify_next_op();
   ASSERT_TRUE(write0.get());
 
-  auto write1_span = set_span("write1");
+  OptionsSpan write1_span(user_project("write1"));
   auto write1 = stream->Write(FakeRequest{}, grpc::WriteOptions())
                     .then(check_write_span("write1"));
   ASSERT_EQ(1, operations.size());
-  auto write1_clear = clear_span();
+  OptionsSpan write1_clear(Options{});
   notify_next_op(false);
   EXPECT_FALSE(write1.get());
 
-  auto writes_done_span = set_span("writes_done");
+  OptionsSpan writes_done_span(user_project("writes_done"));
   auto writes_done = stream->WritesDone().then(check_write_span("writes_done"));
   ASSERT_EQ(1, operations.size());
-  auto writes_done_clear = clear_span();
+  OptionsSpan writes_done_clear(Options{});
   notify_next_op(false);
   EXPECT_FALSE(writes_done.get());
 
-  auto finish_span = set_span("finish");
+  OptionsSpan finish_span(user_project("finish"));
   auto finish = stream->Finish().then([](future<StatusOr<FakeResponse>> f) {
     EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "finish");
     return f.get();
   });
   ASSERT_EQ(1, operations.size());
-  auto finish_clear = clear_span();
+  OptionsSpan finish_clear(Options{});
   notify_next_op();
   auto response = finish.get();
   ASSERT_THAT(response, IsOk());
