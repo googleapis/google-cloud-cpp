@@ -935,6 +935,7 @@ class Client {
                                         std::string const& object_name,
                                         std::string contents,
                                         Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                std::move(contents));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -1015,6 +1016,7 @@ class Client {
   StatusOr<ObjectMetadata> GetObjectMetadata(std::string const& bucket_name,
                                              std::string const& object_name,
                                              Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::GetObjectMetadataRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetObjectMetadata(request);
@@ -1038,6 +1040,7 @@ class Client {
   template <typename... Options>
   ListObjectsReader ListObjects(std::string const& bucket_name,
                                 Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto client = raw_client_;
@@ -1068,6 +1071,7 @@ class Client {
   template <typename... Options>
   ListObjectsAndPrefixesReader ListObjectsAndPrefixes(
       std::string const& bucket_name, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto client = raw_client_;
@@ -1145,6 +1149,7 @@ class Client {
                   "Cannot set ReadLast option with either ReadFromOffset or "
                   "ReadRange.");
 
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return ReadObjectImpl(request);
@@ -1215,6 +1220,7 @@ class Client {
   ObjectWriteStream WriteObject(std::string const& bucket_name,
                                 std::string const& object_name,
                                 Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return WriteObjectImpl(request);
@@ -1281,6 +1287,7 @@ class Client {
   template <typename... Options>
   Status DeleteResumableUpload(std::string const& upload_session_url,
                                Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::DeleteResumableUploadRequest request(upload_session_url);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteResumableUpload(request).status();
@@ -1309,6 +1316,7 @@ class Client {
   Status DownloadToFile(std::string const& bucket_name,
                         std::string const& object_name,
                         std::string const& file_name, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return DownloadFileImpl(request, file_name);
@@ -1335,6 +1343,7 @@ class Client {
   template <typename... Options>
   Status DeleteObject(std::string const& bucket_name,
                       std::string const& object_name, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::DeleteObjectRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteObject(request).status();
@@ -1367,6 +1376,7 @@ class Client {
                                         std::string object_name,
                                         ObjectMetadata metadata,
                                         Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::UpdateObjectRequest request(
         std::move(bucket_name), std::move(object_name), std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -1405,6 +1415,7 @@ class Client {
                                        ObjectMetadata const& original,
                                        ObjectMetadata const& updated,
                                        Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::PatchObjectRequest request(
         std::move(bucket_name), std::move(object_name), original, updated);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -1439,6 +1450,7 @@ class Client {
   StatusOr<ObjectMetadata> PatchObject(
       std::string bucket_name, std::string object_name,
       ObjectMetadataPatchBuilder const& builder, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::PatchObjectRequest request(std::move(bucket_name),
                                          std::move(object_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -3231,6 +3243,7 @@ class Client {
                                           std::string const& object_name,
                                           std::true_type,
                                           Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return UploadFileResumable(file_name, std::move(request));
@@ -3245,6 +3258,7 @@ class Client {
                                           std::string const& object_name,
                                           std::false_type,
                                           Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     std::size_t file_size = 0;
     if (UseSimpleUpload(file_name, file_size)) {
       internal::InsertObjectMediaRequest request(bucket_name, object_name,
