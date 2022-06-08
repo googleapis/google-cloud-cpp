@@ -315,15 +315,15 @@ std::unique_ptr<MockGrpcReader> MakeReader(
                     std::move(status));
 }
 
-TEST(ConnectionImplTest, ReadGetSessionFailure) {
+TEST(ConnectionImplTest, ReadCreateSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(
-          Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in BatchCreateSessions")));
 
   auto rows = conn->Read(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
@@ -332,7 +332,7 @@ TEST(ConnectionImplTest, ReadGetSessionFailure) {
        {"column1"}});
   for (auto& row : rows) {
     EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied,
-                              HasSubstr("uh-oh in GetSession")));
+                              HasSubstr("uh-oh in BatchCreateSessions")));
   }
 }
 
@@ -700,21 +700,21 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
   }
 }
 
-TEST(ConnectionImplTest, ExecuteQueryGetSessionFailure) {
+TEST(ConnectionImplTest, ExecuteQueryCreateSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(
-          Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in BatchCreateSessions")));
 
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
   for (auto& row : rows) {
     EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied,
-                              HasSubstr("uh-oh in GetSession")));
+                              HasSubstr("uh-oh in BatchCreateSessions")));
   }
 }
 
@@ -1204,14 +1204,14 @@ TEST(ConnectionImplTest, QueryOptions) {
   }
 }
 
-TEST(ConnectionImplTest, ExecuteDmlGetSessionFailure) {
+TEST(ConnectionImplTest, ExecuteDmlCreateSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(
-          Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in BatchCreateSessions")));
 
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
@@ -1219,7 +1219,7 @@ TEST(ConnectionImplTest, ExecuteDmlGetSessionFailure) {
       conn->ExecuteDml({txn, spanner::SqlStatement("DELETE * FROM Table")});
 
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
-                               HasSubstr("uh-oh in GetSession")));
+                               HasSubstr("uh-oh in BatchCreateSessions")));
 }
 
 TEST(ConnectionImplTest, ExecuteDmlDeleteSuccess) {
@@ -1434,21 +1434,21 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
   EXPECT_THAT(*execution_stats, UnorderedPointwise(Eq(), expected_stats));
 }
 
-TEST(ConnectionImplTest, ProfileQueryGetSessionFailure) {
+TEST(ConnectionImplTest, ProfileQueryCreateSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(
-          Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in BatchCreateSessions")));
 
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
   for (auto& row : result) {
     EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied,
-                              HasSubstr("uh-oh in GetSession")));
+                              HasSubstr("uh-oh in BatchCreateSessions")));
   }
 }
 
@@ -1474,21 +1474,21 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
   }
 }
 
-TEST(ConnectionImplTest, ProfileDmlGetSessionFailure) {
+TEST(ConnectionImplTest, ProfileDmlCreateSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(
-          Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in BatchCreateSessions")));
 
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
       conn->ProfileDml({txn, spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
-                               HasSubstr("uh-oh in GetSession")));
+                               HasSubstr("uh-oh in BatchCreateSessions")));
 }
 
 TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
@@ -1631,21 +1631,21 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
   EXPECT_THAT(*result, IsProtoEqual(expected_plan));
 }
 
-TEST(ConnectionImplTest, AnalyzeSqlGetSessionFailure) {
+TEST(ConnectionImplTest, AnalyzeSqlCreateSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(
-          Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in BatchCreateSessions")));
 
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
       conn->AnalyzeSql({txn, spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
-                               HasSubstr("uh-oh in GetSession")));
+                               HasSubstr("uh-oh in BatchCreateSessions")));
 }
 
 TEST(ConnectionImplTest, AnalyzeSqlDeletePermanentFailure) {
@@ -1919,19 +1919,19 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
   EXPECT_EQ(result->row_count_lower_bound, 42);
 }
 
-TEST(ConnectionImplTest, ExecutePartitionedDmlGetSessionFailure) {
+TEST(ConnectionImplTest, ExecutePartitionedDmlCreateSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(
-          Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in BatchCreateSessions")));
 
   auto result = conn->ExecutePartitionedDml(
       {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
-                               HasSubstr("uh-oh in GetSession")));
+                               HasSubstr("uh-oh in BatchCreateSessions")));
 }
 
 TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
@@ -2063,22 +2063,22 @@ TEST(ConnectionImplTest,
                        HasSubstr("try-again in ExecutePartitionedDml")));
 }
 
-TEST(ConnectionImplTest, CommitGetSessionPermanentFailure) {
+TEST(ConnectionImplTest, CommitCreateSessionPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeLimitedRetryConnection(db, mock);
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(
-          Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in BatchCreateSessions")));
 
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction()});
   EXPECT_THAT(commit, StatusIs(StatusCode::kPermissionDenied,
-                               HasSubstr("uh-oh in GetSession")));
+                               HasSubstr("uh-oh in BatchCreateSessions")));
 }
 
-TEST(ConnectionImplTest, CommitGetSessionTooManyTransientFailures) {
+TEST(ConnectionImplTest, CommitCreateSessionTooManyTransientFailures) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
@@ -2086,15 +2086,15 @@ TEST(ConnectionImplTest, CommitGetSessionTooManyTransientFailures) {
   auto conn = MakeLimitedRetryConnection(db, mock);
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .Times(AtLeast(2))
-      .WillRepeatedly(
-          Return(Status(StatusCode::kUnavailable, "try-again in GetSession")));
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable,
+                                    "try-again in BatchCreateSessions")));
 
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction()});
   EXPECT_THAT(commit, StatusIs(StatusCode::kUnavailable,
-                               HasSubstr("try-again in GetSession")));
+                               HasSubstr("try-again in BatchCreateSessions")));
 }
 
-TEST(ConnectionImplTest, CommitGetSessionRetry) {
+TEST(ConnectionImplTest, CommitCreateSessionRetry) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   google::spanner::v1::Transaction txn = MakeTestTransaction();
@@ -2102,8 +2102,8 @@ TEST(ConnectionImplTest, CommitGetSessionRetry) {
                               "placeholder_database_id");
   auto conn = MakeLimitedRetryConnection(db, mock);
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(
-          Return(Status(StatusCode::kUnavailable, "try-again in GetSession")))
+      .WillOnce(Return(
+          Status(StatusCode::kUnavailable, "try-again in BatchCreateSessions")))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, BeginTransaction).WillOnce(Return(txn));
   EXPECT_CALL(*mock, Commit(_, AllOf(HasSession("test-session-name"),
@@ -2316,13 +2316,13 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
   EXPECT_EQ(42, commit->commit_stats->mutation_count);
 }
 
-TEST(ConnectionImplTest, RollbackGetSessionFailure) {
+TEST(ConnectionImplTest, RollbackCreateSessionFailure) {
   auto db = spanner::Database("project", "instance", "database");
 
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(
-          Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in BatchCreateSessions")));
   EXPECT_CALL(*mock, Rollback).Times(0);
 
   auto conn = MakeConnectionImpl(db, {mock});
@@ -2330,7 +2330,7 @@ TEST(ConnectionImplTest, RollbackGetSessionFailure) {
   SetTransactionId(txn, "test-txn-id");
   auto rollback = conn->Rollback({txn});
   EXPECT_THAT(rollback, StatusIs(StatusCode::kPermissionDenied,
-                                 HasSubstr("uh-oh in GetSession")));
+                                 HasSubstr("uh-oh in BatchCreateSessions")));
 }
 
 TEST(ConnectionImplTest, RollbackBeginTransaction) {
