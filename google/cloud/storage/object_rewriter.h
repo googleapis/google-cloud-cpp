@@ -134,7 +134,9 @@ class ObjectRewriter {
   RewriteProgress progress_;
   ObjectMetadata result_;
   Status last_error_;
+  Options span_;
 };
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
