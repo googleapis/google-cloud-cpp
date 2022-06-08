@@ -58,8 +58,10 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutStart) {
                 make_status_or(google::storage::v2::WriteObjectResponse{})))));
         return stream;
       });
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
+
+  auto client = GrpcClient::CreateMock(mock);
+  google::cloud::internal::OptionsSpan const span(
+      Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
   auto const payload = std::string(UploadChunkRequest::kChunkSizeQuantum, 'A');
   auto response = client->UploadChunk(UploadChunkRequest(
       "test-only-upload-id", /*offset=*/0, {ConstBuffer{payload}}));
@@ -92,8 +94,10 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWrite) {
                 make_status_or(google::storage::v2::WriteObjectResponse{})))));
         return stream;
       });
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
+
+  auto client = GrpcClient::CreateMock(mock);
+  google::cloud::internal::OptionsSpan const span(
+      Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
   auto const payload = std::string(UploadChunkRequest::kChunkSizeQuantum, 'A');
   auto response = client->UploadChunk(UploadChunkRequest(
       "test-only-upload-id", /*offset=*/0, {ConstBuffer{payload}}));
@@ -128,8 +132,10 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWritesDone) {
                 make_status_or(google::storage::v2::WriteObjectResponse{})))));
         return stream;
       });
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
+
+  auto client = GrpcClient::CreateMock(mock);
+  google::cloud::internal::OptionsSpan const span(
+      Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
   auto const payload = std::string(UploadChunkRequest::kChunkSizeQuantum, 'A');
   auto response = client->UploadChunk(UploadChunkRequest(
       "test-only-upload-id", /*offset=*/0, {ConstBuffer{payload}}));
@@ -164,8 +170,10 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutFinish) {
         });
         return stream;
       });
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
+
+  auto client = GrpcClient::CreateMock(mock);
+  google::cloud::internal::OptionsSpan const span(
+      Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
   auto const payload = std::string(UploadChunkRequest::kChunkSizeQuantum, 'A');
   auto response = client->UploadChunk(UploadChunkRequest(
       "test-only-upload-id", /*offset=*/0, {ConstBuffer{payload}}));

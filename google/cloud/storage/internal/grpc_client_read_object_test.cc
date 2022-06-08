@@ -60,6 +60,9 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
       });
 
   auto client = GrpcClient::CreateMock(mock);
+  // Normally the span is created by `storage::Client`, but we bypass that code
+  // in this test.
+  google::cloud::internal::OptionsSpan const span(client->options());
   auto stream =
       client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);
@@ -93,6 +96,9 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
 
   auto client = GrpcClient::CreateMock(
       mock, Options{}.set<TransferStallTimeoutOption>(configured_timeout));
+  // Normally the span is created by `storage::Client`, but we bypass that code
+  // in this test.
+  google::cloud::internal::OptionsSpan const span(client->options());
   auto stream =
       client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);
