@@ -48,8 +48,11 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
 
   SignBlobRequest request(service_account_, encoded, {});
 
-  StatusOr<SignBlobResponse> response =
-      internal::ClientImplDetails::GetRawClient(*client)->SignBlob(request);
+  // This is normally done by `storage::Client`, but we are bypassing it as part
+  // of this test.
+  auto raw_client = internal::ClientImplDetails::GetRawClient(*client);
+  google::cloud::internal::OptionsSpan const span(raw_client->options());
+  StatusOr<SignBlobResponse> response = raw_client->SignBlob(request);
   ASSERT_STATUS_OK(response);
 
   EXPECT_FALSE(response->key_id.empty());

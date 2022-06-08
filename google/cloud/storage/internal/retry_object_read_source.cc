@@ -23,6 +23,9 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+using ::google::cloud::internal::CurrentOptions;
+using ::google::cloud::internal::OptionsSpan;
+
 std::uint64_t InitialOffset(OffsetDirection const& offset_direction,
                             ReadObjectRangeRequest const& request) {
   if (offset_direction == kFromEnd) {
@@ -43,7 +46,8 @@ RetryObjectReadSource::RetryObjectReadSource(
       backoff_policy_prototype_(std::move(backoff_policy)),
       offset_direction_(request_.HasOption<ReadLast>() ? kFromEnd
                                                        : kFromBeginning),
-      current_offset_(InitialOffset(offset_direction_, request_)) {}
+      current_offset_(InitialOffset(offset_direction_, request_)),
+      span_options_(CurrentOptions()) {}
 
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
                                                        std::size_t n) {
@@ -139,6 +143,7 @@ Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
     return Status{};
   };
 
+  OptionsSpan const span(span_options_);
   auto child =
       client_->ReadObjectNotWrapped(request_, retry_policy, backoff_policy);
   if (!child) return std::move(child).status();

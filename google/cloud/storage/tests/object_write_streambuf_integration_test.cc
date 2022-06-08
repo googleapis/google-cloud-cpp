@@ -47,6 +47,9 @@ class ObjectWriteStreambufIntegrationTest
     request.set_multiple_options(IfGenerationMatch(0));
 
     auto raw_client = internal::ClientImplDetails::GetRawClient(*client);
+    // Normally this is done by `storage::Client`, but here we are intentionally
+    // bypassing it.
+    google::cloud::internal::OptionsSpan const span(raw_client->options());
     auto create = raw_client->CreateResumableUpload(request);
     ASSERT_STATUS_OK(create);
 

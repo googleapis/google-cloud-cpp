@@ -24,9 +24,13 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+using ::google::cloud::internal::CurrentOptions;
+using ::google::cloud::internal::OptionsSpan;
+
 ObjectWriteStreambuf::ObjectWriteStreambuf(Status status)
     : last_status_(std::move(status)),
-      max_buffer_size_(UploadChunkRequest::kChunkSizeQuantum) {
+      max_buffer_size_(UploadChunkRequest::kChunkSizeQuantum),
+      span_options_(CurrentOptions()) {
   current_ios_buffer_.resize(max_buffer_size_);
   auto* pbeg = current_ios_buffer_.data();
   auto* pend = pbeg + current_ios_buffer_.size();
@@ -49,7 +53,8 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
       hash_function_(std::move(hash_function)),
       known_hashes_(std::move(known_hashes)),
       hash_validator_(std::move(hash_validator)),
-      auto_finalize_(auto_finalize) {
+      auto_finalize_(auto_finalize),
+      span_options_(CurrentOptions()) {
   current_ios_buffer_.resize(max_buffer_size_);
   auto* pbeg = current_ios_buffer_.data();
   auto* pend = pbeg + current_ios_buffer_.size();
@@ -147,6 +152,7 @@ void ObjectWriteStreambuf::FlushFinal() {
                                            {ConstBuffer(pbase(), actual_size)},
                                            Merge(known_hashes_, hash_values_));
   request_.ForEachOption(internal::CopyCommonOptions(upload_request));
+  OptionsSpan const span(span_options_);
   auto response = client_->UploadChunk(upload_request);
   if (!response) {
     last_status_ = std::move(response).status();
@@ -197,6 +203,7 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   auto upload_request =
       UploadChunkRequest(upload_id_, committed_size_, payload);
   request_.ForEachOption(internal::CopyCommonOptions(upload_request));
+  OptionsSpan const span(span_options_);
   auto response = client_->UploadChunk(upload_request);
   if (!response) {
     // Upload failures are irrecoverable because the internal buffer is opaque

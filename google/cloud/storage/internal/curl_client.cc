@@ -36,6 +36,9 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+using ::google::cloud::internal::CurrentOptions;
+
 namespace {
 
 std::shared_ptr<CurlHandleFactory> CreateHandleFactory(Options const& options) {
@@ -123,15 +126,14 @@ std::string HostHeader(Options const& options, char const* service) {
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
                                       char const* method, char const* service) {
+  auto const& current = CurrentOptions();
   auto auth_header =
-      opts_.get<Oauth2CredentialsOption>()->AuthorizationHeader();
-  if (!auth_header.ok()) {
-    return std::move(auth_header).status();
-  }
+      current.get<Oauth2CredentialsOption>()->AuthorizationHeader();
+  if (!auth_header.ok()) return std::move(auth_header).status();
   builder.SetMethod(method)
-      .ApplyClientOptions(opts_)
+      .ApplyClientOptions(current)
       .AddHeader(auth_header.value())
-      .AddHeader(HostHeader(opts_, service))
+      .AddHeader(HostHeader(current, service))
       .AddHeader(x_goog_api_client_header_);
   return Status();
 }
