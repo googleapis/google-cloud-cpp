@@ -3002,6 +3002,7 @@ class Client {
   template <typename... Options>
   StatusOr<std::vector<NotificationMetadata>> ListNotifications(
       std::string const& bucket_name, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->ListNotifications(request);
@@ -3044,6 +3045,7 @@ class Client {
   StatusOr<NotificationMetadata> CreateNotification(
       std::string const& bucket_name, std::string const& topic_name,
       NotificationMetadata metadata, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     return CreateNotification(bucket_name, topic_name,
                               payload_format::JsonApiV1(), std::move(metadata),
                               std::forward<Options>(options)...);
@@ -3087,6 +3089,7 @@ class Client {
       std::string const& bucket_name, std::string const& topic_name,
       std::string const& payload_format, NotificationMetadata metadata,
       Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     metadata.set_topic(topic_name).set_payload_format(payload_format);
     internal::CreateNotificationRequest request(bucket_name, metadata);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -3122,6 +3125,7 @@ class Client {
   StatusOr<NotificationMetadata> GetNotification(
       std::string const& bucket_name, std::string const& notification_id,
       Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::GetNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetNotification(request);
@@ -3158,6 +3162,7 @@ class Client {
   Status DeleteNotification(std::string const& bucket_name,
                             std::string const& notification_id,
                             Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::DeleteNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     return std::move(raw_client_->DeleteNotification(request)).status();
