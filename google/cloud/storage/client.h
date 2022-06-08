@@ -1945,6 +1945,7 @@ class Client {
   StatusOr<std::vector<ObjectAccessControl>> ListObjectAcl(
       std::string const& bucket_name, std::string const& object_name,
       Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ListObjectAclRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->ListObjectAcl(request);
@@ -1982,6 +1983,7 @@ class Client {
                                                 std::string const& entity,
                                                 std::string const& role,
                                                 Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::CreateObjectAclRequest request(bucket_name, object_name, entity,
                                              role);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2012,6 +2014,7 @@ class Client {
   Status DeleteObjectAcl(std::string const& bucket_name,
                          std::string const& object_name,
                          std::string const& entity, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::DeleteObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteObjectAcl(request).status();
@@ -2040,6 +2043,7 @@ class Client {
                                              std::string const& object_name,
                                              std::string const& entity,
                                              Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::GetObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetObjectAcl(request);
@@ -2079,6 +2083,7 @@ class Client {
                                                 std::string const& object_name,
                                                 ObjectAccessControl const& acl,
                                                 Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::UpdateObjectAclRequest request(bucket_name, object_name,
                                              acl.entity(), acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2126,6 +2131,7 @@ class Client {
       std::string const& bucket_name, std::string const& object_name,
       std::string const& entity, ObjectAccessControl const& original_acl,
       ObjectAccessControl const& new_acl, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
                                             original_acl, new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2171,6 +2177,7 @@ class Client {
       std::string const& bucket_name, std::string const& object_name,
       std::string const& entity, ObjectAccessControlPatchBuilder const& builder,
       Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
                                             builder);
     request.set_multiple_options(std::forward<Options>(options)...);
