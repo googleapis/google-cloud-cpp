@@ -183,6 +183,8 @@ class RestClient : public RawClient,
       InsertObjectMediaRequest const& request);
 
   std::string PickBoundary(std::string const& text_to_avoid);
+  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectXml(
+      ReadObjectRangeRequest const& request);
 
   std::shared_ptr<google::cloud::rest_internal::RestClient>
       storage_rest_client_;

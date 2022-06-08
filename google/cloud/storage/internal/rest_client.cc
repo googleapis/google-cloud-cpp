@@ -24,6 +24,7 @@
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/internal/object_write_streambuf.h"
+#include "google/cloud/storage/internal/rest_object_read_source.h"
 #include "google/cloud/storage/internal/rest_request_builder.h"
 #include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/version.h"
@@ -576,9 +577,77 @@ StatusOr<ObjectMetadata> RestClient::GetObjectMetadata(
       storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
+StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObjectXml(
+    ReadObjectRangeRequest const& request) {
+  RestRequestBuilder builder(absl::StrCat(
+      request.bucket_name(), "/", UrlEscapeString(request.object_name())));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  //
+  // Apply the options from ReadObjectMediaRequest that are set, translating
+  // to the XML format for them.
+  //
+  builder.AddOption(request.GetOption<EncryptionKey>());
+  builder.AddOption(request.GetOption<Generation>());
+  // None of the IfGeneration*Match nor IfMetageneration*Match can be set. This
+  // is checked by the caller (in this class).
+  builder.AddOption(request.GetOption<UserProject>());
+  builder.AddOption(request.GetOption<AcceptEncoding>());
+
+  //
+  // Apply the options from GenericRequestBase<> that are set, translating
+  // to the XML format for them.
+  //
+  builder.AddOption(request.GetOption<CustomHeader>());
+  builder.AddOption(request.GetOption<IfMatchEtag>());
+  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
+  // QuotaUser cannot be set, checked by the caller.
+  // UserIp cannot be set, checked by the caller.
+
+  if (request.RequiresRangeHeader()) {
+    builder.AddHeader("Range", request.RangeHeaderValue());
+  }
+  if (request.RequiresNoCache()) {
+    builder.AddHeader("Cache-Control", "no-transform");
+  }
+
+  auto response = storage_rest_client_->Get(std::move(builder).BuildRequest());
+  if (!response.ok()) return std::move(response.status());
+
+  return std::unique_ptr<ObjectReadSource>(
+      new RestObjectReadSource(*std::move(response)));
+}
+
 StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
     ReadObjectRangeRequest const& request) {
-  return curl_client_->ReadObject(request);
+  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
+      !request.HasOption<IfGenerationNotMatch>() &&
+      !request.HasOption<IfMetagenerationMatch>() &&
+      !request.HasOption<IfGenerationMatch>() &&
+      !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>()) {
+    return ReadObjectXml(request);
+  }
+
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
+  auto auth = AddAuthorizationHeader(options_, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+
+  builder.AddQueryParameter("alt", "media");
+  if (request.RequiresRangeHeader()) {
+    builder.AddHeader("Range", request.RangeHeaderValue());
+  }
+  if (request.RequiresNoCache()) {
+    builder.AddHeader("Cache-Control", "no-transform");
+  }
+
+  auto response = storage_rest_client_->Get(std::move(builder).BuildRequest());
+  if (!response.ok()) return response.status();
+
+  return std::unique_ptr<ObjectReadSource>(
+      new RestObjectReadSource(*std::move(response)));
 }
 
 StatusOr<ListObjectsResponse> RestClient::ListObjects(

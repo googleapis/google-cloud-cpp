@@ -609,7 +609,6 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
   if (!UsingEmulator()) GTEST_SKIP();
-
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
 

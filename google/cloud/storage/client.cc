@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/rest_client.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
@@ -55,11 +56,49 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
     Options const& opts) {
+  namespace rest = ::google::cloud::rest_internal;
   if (google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT")
           .has_value()) {
+    Options rest_opts = opts;
+    if (opts.has<DownloadStallTimeoutOption>()) {
+      rest_opts.set<rest::DownloadStallTimeoutOption>(
+          opts.get<DownloadStallTimeoutOption>());
+    }
+    if (opts.has<TransferStallTimeoutOption>()) {
+      rest_opts.set<rest::TransferStallTimeoutOption>(
+          opts.get<TransferStallTimeoutOption>());
+    }
+    if (opts.has<MaximumCurlSocketRecvSizeOption>()) {
+      rest_opts.set<rest::MaximumCurlSocketRecvSizeOption>(
+          opts.get<MaximumCurlSocketRecvSizeOption>());
+    }
+    if (opts.has<MaximumCurlSocketSendSizeOption>()) {
+      rest_opts.set<rest::MaximumCurlSocketSendSizeOption>(
+          opts.get<MaximumCurlSocketSendSizeOption>());
+    }
+    if (opts.has<storage_experimental::HttpVersionOption>()) {
+      rest_opts.set<rest::HttpVersionOption>(
+          opts.get<storage_experimental::HttpVersionOption>());
+    }
+    if (opts.has<internal::CAPathOption>()) {
+      rest_opts.set<rest::CAPathOption>(opts.get<internal::CAPathOption>());
+    }
+    if (opts.has<ConnectionPoolSizeOption>()) {
+      rest_opts.set<rest::ConnectionPoolSizeOption>(
+          opts.get<ConnectionPoolSizeOption>());
+    }
+    if (opts.has<EnableCurlSslLockingOption>()) {
+      rest_opts.set<rest::EnableCurlSslLockingOption>(
+          opts.get<EnableCurlSslLockingOption>());
+    }
+    if (opts.has<EnableCurlSigpipeHandlerOption>()) {
+      rest_opts.set<rest::EnableCurlSigpipeHandlerOption>(
+          opts.get<EnableCurlSigpipeHandlerOption>());
+    }
+
     return CreateDefaultInternalClient(opts,
-                                       internal::RestClient::Create(opts));
+                                       internal::RestClient::Create(rest_opts));
   }
   return CreateDefaultInternalClient(opts, internal::CurlClient::Create(opts));
 }
