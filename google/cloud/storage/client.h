@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/logging_client.h"
+#include "google/cloud/storage/internal/make_options_span.h"
 #include "google/cloud/storage/internal/parameter_pack_validation.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/retry_client.h"
@@ -2493,6 +2494,7 @@ class Client {
   template <typename... Options>
   StatusOr<ServiceAccount> GetServiceAccountForProject(
       std::string const& project_id, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::GetProjectServiceAccountRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetServiceAccount(request);
@@ -2527,6 +2529,7 @@ class Client {
    */
   template <typename... Options>
   StatusOr<ServiceAccount> GetServiceAccount(Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     auto const& project_id = raw_client_->client_options().project_id();
     return GetServiceAccountForProject(project_id,
                                        std::forward<Options>(options)...);
@@ -2563,6 +2566,7 @@ class Client {
    */
   template <typename... Options>
   ListHmacKeysReader ListHmacKeys(Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     auto const& project_id = raw_client_->client_options().project_id();
     internal::ListHmacKeysRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2611,6 +2615,7 @@ class Client {
   template <typename... Options>
   StatusOr<std::pair<HmacKeyMetadata, std::string>> CreateHmacKey(
       std::string service_account, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     auto const& project_id = raw_client_->client_options().project_id();
     internal::CreateHmacKeyRequest request(project_id,
                                            std::move(service_account));
@@ -2653,6 +2658,7 @@ class Client {
    */
   template <typename... Options>
   Status DeleteHmacKey(std::string access_id, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     auto const& project_id = raw_client_->client_options().project_id();
     internal::DeleteHmacKeyRequest request(project_id, std::move(access_id));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2689,6 +2695,7 @@ class Client {
   template <typename... Options>
   StatusOr<HmacKeyMetadata> GetHmacKey(std::string access_id,
                                        Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     auto const& project_id = raw_client_->client_options().project_id();
     internal::GetHmacKeyRequest request(project_id, std::move(access_id));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2730,6 +2737,7 @@ class Client {
   StatusOr<HmacKeyMetadata> UpdateHmacKey(std::string access_id,
                                           HmacKeyMetadata resource,
                                           Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     auto const& project_id = raw_client_->client_options().project_id();
     internal::UpdateHmacKeyRequest request(project_id, std::move(access_id),
                                            std::move(resource));
@@ -3163,6 +3171,12 @@ class Client {
 
   ObjectWriteStream WriteObjectImpl(
       internal::ResumableUploadRequest const& request);
+
+  template <typename... RequestOptions>
+  google::cloud::internal::OptionsSpan MakeSpan(RequestOptions&&... o) const {
+    return internal::MakeOptionsSpan(raw_client_->options(),
+                                     std::forward<RequestOptions>(o)...);
+  }
 
   // The version of UploadFile() where UseResumableUploadSession is one of the
   // options. Note how this does not use InsertObjectMedia at all.

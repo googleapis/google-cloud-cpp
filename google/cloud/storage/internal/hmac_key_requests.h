@@ -54,6 +54,22 @@ class GenericHmacKeyRequest
   }
 
   Derived& set_multiple_options() { return *static_cast<Derived*>(this); }
+  template <typename... T>
+  Derived& set_multiple_options(google::cloud::Options const&&, T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  Derived& set_multiple_options(google::cloud::Options const&, T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  Derived& set_multiple_options(google::cloud::Options&&, T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  Derived& set_multiple_options(google::cloud::Options&, T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
 
   using GenericRequest<Derived, UserProject, Options...>::set_option;
   void set_option(OverrideDefaultProject const& o) {
