@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/make_options_span.h"
+#include "google/cloud/storage/internal/group_options.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/common_options.h"
 #include <gmock/gmock.h>
@@ -24,8 +24,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::internal::CurrentOptions;
-
 google::cloud::Options SimulateRawClientOptions() {
   return Options{}
       .set<UserProjectOption>("u-p-default")
@@ -33,36 +31,33 @@ google::cloud::Options SimulateRawClientOptions() {
 }
 
 TEST(MakeOptionSpanTest, JustDefaults) {
-  auto const span = MakeOptionsSpan(SimulateRawClientOptions());
-  auto const& current = CurrentOptions();
-  EXPECT_EQ("u-p-default", current.get<UserProjectOption>());
-  EXPECT_EQ("a-default", current.get<AuthorityOption>());
+  auto const group = GroupOptions(SimulateRawClientOptions());
+  EXPECT_EQ("u-p-default", group.get<UserProjectOption>());
+  EXPECT_EQ("a-default", group.get<AuthorityOption>());
 }
 
 TEST(MakeOptionSpanTest, Overrides) {
-  auto const span =
-      MakeOptionsSpan(SimulateRawClientOptions(),
-                      Options{}
-                          .set<EndpointOption>("test-endpoint")
-                          .set<AuthorityOption>("a-override-1"),
-                      Options{}.set<AuthorityOption>("a-override-2"));
-  auto const& current = CurrentOptions();
-  EXPECT_EQ("u-p-default", current.get<UserProjectOption>());
-  EXPECT_EQ("a-override-2", current.get<AuthorityOption>());
-  EXPECT_EQ("test-endpoint", current.get<EndpointOption>());
+  auto const group =
+      GroupOptions(SimulateRawClientOptions(),
+                   Options{}
+                       .set<EndpointOption>("test-endpoint")
+                       .set<AuthorityOption>("a-override-1"),
+                   Options{}.set<AuthorityOption>("a-override-2"));
+  EXPECT_EQ("u-p-default", group.get<UserProjectOption>());
+  EXPECT_EQ("a-override-2", group.get<AuthorityOption>());
+  EXPECT_EQ("test-endpoint", group.get<EndpointOption>());
 }
 
 TEST(MakeOptionSpanTest, OverridesMixedWithRequestOptions) {
-  auto const span = MakeOptionsSpan(
+  auto const group = GroupOptions(
       SimulateRawClientOptions(), IfGenerationMatch(0),
       Options{}.set<EndpointOption>("test-endpoint"), IfGenerationNotMatch(0),
       Options{}.set<AuthorityOption>("a-override-1"), IfMetagenerationMatch(0),
       Options{}.set<AuthorityOption>("a-override-2"),
       IfMetagenerationNotMatch(0), Generation(7), IfGenerationMatch(0));
-  auto const& current = CurrentOptions();
-  EXPECT_EQ("u-p-default", current.get<UserProjectOption>());
-  EXPECT_EQ("a-override-2", current.get<AuthorityOption>());
-  EXPECT_EQ("test-endpoint", current.get<EndpointOption>());
+  EXPECT_EQ("u-p-default", group.get<UserProjectOption>());
+  EXPECT_EQ("a-override-2", group.get<AuthorityOption>());
+  EXPECT_EQ("test-endpoint", group.get<EndpointOption>());
 }
 
 }  // namespace

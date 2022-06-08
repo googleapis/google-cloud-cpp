@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 
 #include "google/cloud/storage/hmac_key_metadata.h"
+#include "google/cloud/storage/internal/group_options.h"
 #include "google/cloud/storage/internal/logging_client.h"
-#include "google/cloud/storage/internal/make_options_span.h"
 #include "google/cloud/storage/internal/parameter_pack_validation.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/retry_client.h"
@@ -397,7 +397,8 @@ class Client {
   template <typename... Options>
   ListBucketsReader ListBucketsForProject(std::string const& project_id,
                                           Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ListBucketsRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto client = raw_client_;
@@ -431,7 +432,8 @@ class Client {
    */
   template <typename... Options>
   ListBucketsReader ListBuckets(Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     auto const& project_id = raw_client_->client_options().project_id();
     return ListBucketsForProject(project_id, std::forward<Options>(options)...);
   }
@@ -504,7 +506,8 @@ class Client {
                                                   std::string project_id,
                                                   BucketMetadata metadata,
                                                   Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     metadata.set_name(std::move(bucket_name));
     internal::CreateBucketRequest request(std::move(project_id),
                                           std::move(metadata));
@@ -529,7 +532,8 @@ class Client {
   template <typename... Options>
   StatusOr<BucketMetadata> GetBucketMetadata(std::string const& bucket_name,
                                              Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::GetBucketMetadataRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetBucketMetadata(request);
@@ -552,7 +556,8 @@ class Client {
    */
   template <typename... Options>
   Status DeleteBucket(std::string const& bucket_name, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::DeleteBucketRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteBucket(request).status();
@@ -595,7 +600,8 @@ class Client {
   StatusOr<BucketMetadata> UpdateBucket(std::string bucket_name,
                                         BucketMetadata metadata,
                                         Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     metadata.set_name(std::move(bucket_name));
     internal::UpdateBucketRequest request(std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -645,7 +651,8 @@ class Client {
                                        BucketMetadata const& original,
                                        BucketMetadata const& updated,
                                        Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PatchBucketRequest request(std::move(bucket_name), original,
                                          updated);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -689,7 +696,8 @@ class Client {
   StatusOr<BucketMetadata> PatchBucket(
       std::string bucket_name, BucketMetadataPatchBuilder const& builder,
       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PatchBucketRequest request(std::move(bucket_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchBucket(request);
@@ -731,7 +739,8 @@ class Client {
   template <typename... Options>
   StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
       std::string const& bucket_name, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::GetBucketIamPolicyRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetNativeBucketIamPolicy(request);
@@ -787,7 +796,8 @@ class Client {
   StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
       std::string const& bucket_name, NativeIamPolicy const& iam_policy,
       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::SetNativeBucketIamPolicyRequest request(bucket_name, iam_policy);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->SetNativeBucketIamPolicy(request);
@@ -824,7 +834,8 @@ class Client {
   StatusOr<std::vector<std::string>> TestBucketIamPermissions(
       std::string bucket_name, std::vector<std::string> permissions,
       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::TestBucketIamPermissionsRequest request(std::move(bucket_name),
                                                       std::move(permissions));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -885,7 +896,8 @@ class Client {
   StatusOr<BucketMetadata> LockBucketRetentionPolicy(
       std::string const& bucket_name, std::uint64_t metageneration,
       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::LockBucketRetentionPolicyRequest request(bucket_name,
                                                        metageneration);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -935,7 +947,8 @@ class Client {
                                         std::string const& object_name,
                                         std::string contents,
                                         Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                std::move(contents));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -988,7 +1001,8 @@ class Client {
                                       std::string destination_bucket_name,
                                       std::string destination_object_name,
                                       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::CopyObjectRequest request(
         std::move(source_bucket_name), std::move(source_object_name),
         std::move(destination_bucket_name), std::move(destination_object_name));
@@ -1016,7 +1030,8 @@ class Client {
   StatusOr<ObjectMetadata> GetObjectMetadata(std::string const& bucket_name,
                                              std::string const& object_name,
                                              Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::GetObjectMetadataRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetObjectMetadata(request);
@@ -1040,7 +1055,8 @@ class Client {
   template <typename... Options>
   ListObjectsReader ListObjects(std::string const& bucket_name,
                                 Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto client = raw_client_;
@@ -1071,7 +1087,8 @@ class Client {
   template <typename... Options>
   ListObjectsAndPrefixesReader ListObjectsAndPrefixes(
       std::string const& bucket_name, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto client = raw_client_;
@@ -1149,7 +1166,8 @@ class Client {
                   "Cannot set ReadLast option with either ReadFromOffset or "
                   "ReadRange.");
 
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return ReadObjectImpl(request);
@@ -1220,7 +1238,8 @@ class Client {
   ObjectWriteStream WriteObject(std::string const& bucket_name,
                                 std::string const& object_name,
                                 Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return WriteObjectImpl(request);
@@ -1287,7 +1306,8 @@ class Client {
   template <typename... Options>
   Status DeleteResumableUpload(std::string const& upload_session_url,
                                Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::DeleteResumableUploadRequest request(upload_session_url);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteResumableUpload(request).status();
@@ -1316,7 +1336,8 @@ class Client {
   Status DownloadToFile(std::string const& bucket_name,
                         std::string const& object_name,
                         std::string const& file_name, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return DownloadFileImpl(request, file_name);
@@ -1343,7 +1364,8 @@ class Client {
   template <typename... Options>
   Status DeleteObject(std::string const& bucket_name,
                       std::string const& object_name, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::DeleteObjectRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteObject(request).status();
@@ -1376,7 +1398,8 @@ class Client {
                                         std::string object_name,
                                         ObjectMetadata metadata,
                                         Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::UpdateObjectRequest request(
         std::move(bucket_name), std::move(object_name), std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -1415,7 +1438,8 @@ class Client {
                                        ObjectMetadata const& original,
                                        ObjectMetadata const& updated,
                                        Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PatchObjectRequest request(
         std::move(bucket_name), std::move(object_name), original, updated);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -1450,7 +1474,8 @@ class Client {
   StatusOr<ObjectMetadata> PatchObject(
       std::string bucket_name, std::string object_name,
       ObjectMetadataPatchBuilder const& builder, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PatchObjectRequest request(std::move(bucket_name),
                                          std::move(object_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -1484,7 +1509,8 @@ class Client {
   StatusOr<ObjectMetadata> ComposeObject(
       std::string bucket_name, std::vector<ComposeSourceObject> source_objects,
       std::string destination_object_name, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ComposeObjectRequest request(std::move(bucket_name),
                                            std::move(source_objects),
                                            std::move(destination_object_name));
@@ -1589,7 +1615,8 @@ class Client {
                                      std::string destination_object_name,
                                      std::string rewrite_token,
                                      Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::RewriteObjectRequest request(
         std::move(source_bucket_name), std::move(source_object_name),
         std::move(destination_bucket_name), std::move(destination_object_name),
@@ -1702,7 +1729,8 @@ class Client {
   template <typename... Options>
   StatusOr<std::vector<BucketAccessControl>> ListBucketAcl(
       std::string const& bucket_name, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ListBucketAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto items = raw_client_->ListBucketAcl(request);
@@ -1738,7 +1766,8 @@ class Client {
                                                 std::string const& entity,
                                                 std::string const& role,
                                                 Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::CreateBucketAclRequest request(bucket_name, entity, role);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->CreateBucketAcl(request);
@@ -1765,7 +1794,8 @@ class Client {
   template <typename... Options>
   Status DeleteBucketAcl(std::string const& bucket_name,
                          std::string const& entity, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::DeleteBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteBucketAcl(request).status();
@@ -1792,7 +1822,8 @@ class Client {
   StatusOr<BucketAccessControl> GetBucketAcl(std::string const& bucket_name,
                                              std::string const& entity,
                                              Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::GetBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetBucketAcl(request);
@@ -1832,7 +1863,8 @@ class Client {
   StatusOr<BucketAccessControl> UpdateBucketAcl(std::string const& bucket_name,
                                                 BucketAccessControl const& acl,
                                                 Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::UpdateBucketAclRequest request(bucket_name, acl.entity(),
                                              acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -1879,7 +1911,8 @@ class Client {
       std::string const& bucket_name, std::string const& entity,
       BucketAccessControl const& original_acl,
       BucketAccessControl const& new_acl, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PatchBucketAclRequest request(bucket_name, entity, original_acl,
                                             new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -1923,7 +1956,8 @@ class Client {
   StatusOr<BucketAccessControl> PatchBucketAcl(
       std::string const& bucket_name, std::string const& entity,
       BucketAccessControlPatchBuilder const& builder, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PatchBucketAclRequest request(bucket_name, entity, builder);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchBucketAcl(request);
@@ -1972,7 +2006,8 @@ class Client {
   StatusOr<std::vector<ObjectAccessControl>> ListObjectAcl(
       std::string const& bucket_name, std::string const& object_name,
       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ListObjectAclRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->ListObjectAcl(request);
@@ -2010,7 +2045,8 @@ class Client {
                                                 std::string const& entity,
                                                 std::string const& role,
                                                 Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::CreateObjectAclRequest request(bucket_name, object_name, entity,
                                              role);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2041,7 +2077,8 @@ class Client {
   Status DeleteObjectAcl(std::string const& bucket_name,
                          std::string const& object_name,
                          std::string const& entity, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::DeleteObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteObjectAcl(request).status();
@@ -2070,7 +2107,8 @@ class Client {
                                              std::string const& object_name,
                                              std::string const& entity,
                                              Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::GetObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetObjectAcl(request);
@@ -2110,7 +2148,8 @@ class Client {
                                                 std::string const& object_name,
                                                 ObjectAccessControl const& acl,
                                                 Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::UpdateObjectAclRequest request(bucket_name, object_name,
                                              acl.entity(), acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2158,7 +2197,8 @@ class Client {
       std::string const& bucket_name, std::string const& object_name,
       std::string const& entity, ObjectAccessControl const& original_acl,
       ObjectAccessControl const& new_acl, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
                                             original_acl, new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2204,7 +2244,8 @@ class Client {
       std::string const& bucket_name, std::string const& object_name,
       std::string const& entity, ObjectAccessControlPatchBuilder const& builder,
       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
                                             builder);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2252,7 +2293,8 @@ class Client {
   template <typename... Options>
   StatusOr<std::vector<ObjectAccessControl>> ListDefaultObjectAcl(
       std::string const& bucket_name, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ListDefaultObjectAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto response = raw_client_->ListDefaultObjectAcl(request);
@@ -2292,7 +2334,8 @@ class Client {
   StatusOr<ObjectAccessControl> CreateDefaultObjectAcl(
       std::string const& bucket_name, std::string const& entity,
       std::string const& role, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::CreateDefaultObjectAclRequest request(bucket_name, entity, role);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->CreateDefaultObjectAcl(request);
@@ -2325,7 +2368,8 @@ class Client {
   Status DeleteDefaultObjectAcl(std::string const& bucket_name,
                                 std::string const& entity,
                                 Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::DeleteDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteDefaultObjectAcl(request).status();
@@ -2357,7 +2401,8 @@ class Client {
   StatusOr<ObjectAccessControl> GetDefaultObjectAcl(
       std::string const& bucket_name, std::string const& entity,
       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::GetDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetDefaultObjectAcl(request);
@@ -2400,7 +2445,8 @@ class Client {
   StatusOr<ObjectAccessControl> UpdateDefaultObjectAcl(
       std::string const& bucket_name, ObjectAccessControl const& acl,
       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::UpdateDefaultObjectAclRequest request(bucket_name, acl.entity(),
                                                     acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2450,7 +2496,8 @@ class Client {
       std::string const& bucket_name, std::string const& entity,
       ObjectAccessControl const& original_acl,
       ObjectAccessControl const& new_acl, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PatchDefaultObjectAclRequest request(bucket_name, entity,
                                                    original_acl, new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2498,7 +2545,8 @@ class Client {
   StatusOr<ObjectAccessControl> PatchDefaultObjectAcl(
       std::string const& bucket_name, std::string const& entity,
       ObjectAccessControlPatchBuilder const& builder, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PatchDefaultObjectAclRequest request(bucket_name, entity,
                                                    builder);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2542,7 +2590,8 @@ class Client {
   template <typename... Options>
   StatusOr<ServiceAccount> GetServiceAccountForProject(
       std::string const& project_id, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::GetProjectServiceAccountRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetServiceAccount(request);
@@ -2577,7 +2626,8 @@ class Client {
    */
   template <typename... Options>
   StatusOr<ServiceAccount> GetServiceAccount(Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     auto const& project_id = raw_client_->client_options().project_id();
     return GetServiceAccountForProject(project_id,
                                        std::forward<Options>(options)...);
@@ -2614,7 +2664,8 @@ class Client {
    */
   template <typename... Options>
   ListHmacKeysReader ListHmacKeys(Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     auto const& project_id = raw_client_->client_options().project_id();
     internal::ListHmacKeysRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2663,7 +2714,8 @@ class Client {
   template <typename... Options>
   StatusOr<std::pair<HmacKeyMetadata, std::string>> CreateHmacKey(
       std::string service_account, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     auto const& project_id = raw_client_->client_options().project_id();
     internal::CreateHmacKeyRequest request(project_id,
                                            std::move(service_account));
@@ -2706,7 +2758,8 @@ class Client {
    */
   template <typename... Options>
   Status DeleteHmacKey(std::string access_id, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     auto const& project_id = raw_client_->client_options().project_id();
     internal::DeleteHmacKeyRequest request(project_id, std::move(access_id));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2743,7 +2796,8 @@ class Client {
   template <typename... Options>
   StatusOr<HmacKeyMetadata> GetHmacKey(std::string access_id,
                                        Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     auto const& project_id = raw_client_->client_options().project_id();
     internal::GetHmacKeyRequest request(project_id, std::move(access_id));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2785,7 +2839,8 @@ class Client {
   StatusOr<HmacKeyMetadata> UpdateHmacKey(std::string access_id,
                                           HmacKeyMetadata resource,
                                           Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     auto const& project_id = raw_client_->client_options().project_id();
     internal::UpdateHmacKeyRequest request(project_id, std::move(access_id),
                                            std::move(resource));
@@ -2853,7 +2908,8 @@ class Client {
                                           std::string bucket_name,
                                           std::string object_name,
                                           Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::V2SignUrlRequest request(std::move(verb), std::move(bucket_name),
                                        std::move(object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2917,7 +2973,8 @@ class Client {
                                           std::string bucket_name,
                                           std::string object_name,
                                           Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::V4SignUrlRequest request(std::move(verb), std::move(bucket_name),
                                        std::move(object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2960,7 +3017,8 @@ class Client {
   template <typename... Options>
   StatusOr<PolicyDocumentResult> CreateSignedPolicyDocument(
       PolicyDocument document, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PolicyDocumentRequest request(std::move(document));
     request.set_multiple_options(std::forward<Options>(options)...);
     return SignPolicyDocument(request);
@@ -3002,7 +3060,8 @@ class Client {
   template <typename... Options>
   StatusOr<PolicyDocumentV4Result> GenerateSignedPostPolicyV4(
       PolicyDocumentV4 document, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::PolicyDocumentV4Request request(std::move(document));
     request.set_multiple_options(std::forward<Options>(options)...);
     return SignPolicyDocumentV4(std::move(request));
@@ -3038,7 +3097,8 @@ class Client {
   template <typename... Options>
   StatusOr<std::vector<NotificationMetadata>> ListNotifications(
       std::string const& bucket_name, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->ListNotifications(request);
@@ -3081,7 +3141,8 @@ class Client {
   StatusOr<NotificationMetadata> CreateNotification(
       std::string const& bucket_name, std::string const& topic_name,
       NotificationMetadata metadata, Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     return CreateNotification(bucket_name, topic_name,
                               payload_format::JsonApiV1(), std::move(metadata),
                               std::forward<Options>(options)...);
@@ -3125,7 +3186,8 @@ class Client {
       std::string const& bucket_name, std::string const& topic_name,
       std::string const& payload_format, NotificationMetadata metadata,
       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     metadata.set_topic(topic_name).set_payload_format(payload_format);
     internal::CreateNotificationRequest request(bucket_name, metadata);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -3161,7 +3223,8 @@ class Client {
   StatusOr<NotificationMetadata> GetNotification(
       std::string const& bucket_name, std::string const& notification_id,
       Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::GetNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetNotification(request);
@@ -3198,7 +3261,8 @@ class Client {
   Status DeleteNotification(std::string const& bucket_name,
                             std::string const& notification_id,
                             Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::DeleteNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     return std::move(raw_client_->DeleteNotification(request)).status();
@@ -3230,9 +3294,9 @@ class Client {
       internal::ResumableUploadRequest const& request);
 
   template <typename... RequestOptions>
-  google::cloud::internal::OptionsSpan MakeSpan(RequestOptions&&... o) const {
-    return internal::MakeOptionsSpan(raw_client_->options(),
-                                     std::forward<RequestOptions>(o)...);
+  google::cloud::Options SpanOptions(RequestOptions&&... o) const {
+    return internal::GroupOptions(raw_client_->options(),
+                                  std::forward<RequestOptions>(o)...);
   }
 
   // The version of UploadFile() where UseResumableUploadSession is one of the
@@ -3243,7 +3307,8 @@ class Client {
                                           std::string const& object_name,
                                           std::true_type,
                                           Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return UploadFileResumable(file_name, std::move(request));
@@ -3258,7 +3323,8 @@ class Client {
                                           std::string const& object_name,
                                           std::false_type,
                                           Options&&... options) {
-    auto const span = MakeSpan(std::forward<Options>(options)...);
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
     std::size_t file_size = 0;
     if (UseSimpleUpload(file_name, file_size)) {
       internal::InsertObjectMediaRequest request(bucket_name, object_name,
