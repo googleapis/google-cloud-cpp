@@ -479,8 +479,9 @@ TEST_F(GrpcClientTest, TestBucketIamPermissions) {
 
 TEST_F(GrpcClientTest, InsertObjectMedia) {
   auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, WriteObject)
-      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
+  EXPECT_CALL(*mock, AsyncWriteObject)
+      .WillOnce([this](google::cloud::CompletionQueue const&,
+                       std::unique_ptr<grpc::ClientContext> context) {
         EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata,
@@ -488,15 +489,19 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
                         Pair("x-goog-quota-user", "test-quota-user"),
                         // Map JSON names to the `resource` subobject
                         Pair("x-goog-fieldmask", "resource(field1,field2)")));
+        ::testing::InSequence sequence;
         auto stream = absl::make_unique<testing::MockInsertStream>();
+        EXPECT_CALL(*stream, Start)
+            .WillOnce(Return(ByMove(make_ready_future(true))));
         EXPECT_CALL(*stream, Write)
             .WillOnce([](v2::WriteObjectRequest const&, grpc::WriteOptions) {
-              return false;
+              return make_ready_future(false);
             });
-        EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
-        return std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
-            google::storage::v2::WriteObjectRequest,
-            google::storage::v2::WriteObjectResponse>>(std::move(stream));
+        EXPECT_CALL(*stream, Finish)
+            .WillOnce(Return(ByMove(make_ready_future(
+                StatusOr<google::storage::v2::WriteObjectResponse>(
+                    PermanentError())))));
+        return stream;
       });
   auto client = CreateTestClient(mock);
   auto response = client->InsertObjectMedia(
