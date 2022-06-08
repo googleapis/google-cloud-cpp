@@ -78,7 +78,7 @@ SubscriberAuth::AsyncStreamingPull(
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq,
                request](std::unique_ptr<grpc::ClientContext> ctx) mutable {
     return child->AsyncStreamingPull(cq, std::move(ctx), request);
@@ -91,7 +91,7 @@ future<Status> SubscriberAuth::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::pubsub::v1::AcknowledgeRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -106,7 +106,7 @@ future<Status> SubscriberAuth::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

@@ -53,7 +53,7 @@ class AsyncStreamingReadWriteRpcLogging
 
   future<absl::optional<Response>> Read() override {
     auto prefix = std::string(__func__) + "(" + request_id_ + ")";
-    auto opt = tracing_options_;
+    auto const& opt = tracing_options_;
     GCP_LOG(DEBUG) << prefix << " <<";
     return child_->Read().then(
         [prefix, opt](future<absl::optional<Response>> f) {
@@ -92,7 +92,7 @@ class AsyncStreamingReadWriteRpcLogging
 
   future<Status> Finish() override {
     auto prefix = std::string(__func__) + "(" + request_id_ + ")";
-    auto opt = tracing_options_;
+    auto const& opt = tracing_options_;
     GCP_LOG(DEBUG) << prefix << " <<";
     return child_->Finish().then([prefix, opt](future<Status> f) {
       auto status = f.get();

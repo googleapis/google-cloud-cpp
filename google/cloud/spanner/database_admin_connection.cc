@@ -156,7 +156,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     for (auto& s : p.extra_statements) {
       *request.add_extra_statements() = std::move(s);
     }
-    auto stub = stub_;
+    auto& stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<
         gsad::v1::Database>(
         background_threads_->cq(), std::move(request),
@@ -218,7 +218,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     for (auto& s : p.statements) {
       *request.add_statements() = std::move(s);
     }
-    auto stub = stub_;
+    auto& stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<
         gsad::v1::UpdateDatabaseDdlMetadata>(
         background_threads_->cq(), std::move(request),
@@ -261,7 +261,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     gsad::v1::ListDatabasesRequest request;
     request.set_parent(p.instance.FullName());
     request.clear_page_token();
-    auto stub = stub_;
+    auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
     auto retry =
@@ -317,7 +317,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       gsad::v1::RestoreDatabaseRequest& request_;
     };
     absl::visit(EncryptionVisitor(request), p.encryption_config);
-    auto stub = stub_;
+    auto& stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<
         gsad::v1::Database>(
         background_threads_->cq(), std::move(request),
@@ -427,7 +427,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       gsad::v1::CreateBackupRequest& request_;
     };
     absl::visit(EncryptionVisitor(request), p.encryption_config);
-    auto stub = stub_;
+    auto& stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<gsad::v1::Backup>(
         background_threads_->cq(), std::move(request),
         [stub](google::cloud::CompletionQueue& cq,
@@ -483,7 +483,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     gsad::v1::ListBackupsRequest request;
     request.set_parent(p.instance.FullName());
     request.set_filter(std::move(p.filter));
-    auto stub = stub_;
+    auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
     auto retry =
@@ -529,7 +529,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     gsad::v1::ListBackupOperationsRequest request;
     request.set_parent(p.instance.FullName());
     request.set_filter(std::move(p.filter));
-    auto stub = stub_;
+    auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
     auto retry =
@@ -565,7 +565,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     gsad::v1::ListDatabaseOperationsRequest request;
     request.set_parent(p.instance.FullName());
     request.set_filter(std::move(p.filter));
-    auto stub = stub_;
+    auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
     auto retry =

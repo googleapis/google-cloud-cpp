@@ -401,7 +401,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListBucketsRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto client = raw_client_;
+    auto& client = raw_client_;
     return google::cloud::internal::MakePaginationRange<ListBucketsReader>(
         request,
         [client](internal::ListBucketsRequest const& r) {
@@ -1059,7 +1059,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto client = raw_client_;
+    auto& client = raw_client_;
     return google::cloud::internal::MakePaginationRange<ListObjectsReader>(
         request,
         [client](internal::ListObjectsRequest const& r) {
@@ -1091,7 +1091,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto client = raw_client_;
+    auto& client = raw_client_;
     return google::cloud::internal::MakePaginationRange<
         ListObjectsAndPrefixesReader>(
         request,
@@ -2669,7 +2669,7 @@ class Client {
     auto const& project_id = raw_client_->client_options().project_id();
     internal::ListHmacKeysRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto client = raw_client_;
+    auto& client = raw_client_;
     return google::cloud::internal::MakePaginationRange<ListHmacKeysReader>(
         request,
         [client](internal::ListHmacKeysRequest const& r) {

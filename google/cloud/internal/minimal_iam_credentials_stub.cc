@@ -43,7 +43,7 @@ class MinimalIamCredentialsImpl : public MinimalIamCredentialsStub {
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       GenerateAccessTokenRequest const& request) override {
     using ResultType = StatusOr<GenerateAccessTokenResponse>;
-    auto impl = impl_;
+    auto& impl = impl_;
     auto async_call = [impl](grpc::ClientContext* context,
                              GenerateAccessTokenRequest const& request,
                              grpc::CompletionQueue* cq) {
@@ -99,7 +99,7 @@ class AsyncAccessTokenGeneratorLogging : public MinimalIamCredentialsStub {
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       GenerateAccessTokenRequest const& request) override {
     auto prefix = std::string(__func__) + "(" + RequestIdForLogging() + ")";
-    auto opts = tracing_options_;
+    auto const& opts = tracing_options_;
     GCP_LOG(DEBUG) << prefix << " << " << DebugString(request, opts);
     return child_->AsyncGenerateAccessToken(cq, std::move(context), request)
         .then([prefix, opts](future<StatusOr<GenerateAccessTokenResponse>> f) {

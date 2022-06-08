@@ -118,7 +118,7 @@ future<Status> Table::AsyncApply(SingleRowMutation mut) {
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent;
 
   auto cq = background_threads_->cq();
-  auto client = client_;
+  auto& client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -282,7 +282,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
                                : Idempotency::kNonIdempotent;
 
   auto cq = background_threads_->cq();
-  auto client = client_;
+  auto& client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -388,7 +388,7 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
       request, app_profile_id_, table_name_);
 
   auto cq = background_threads_->cq();
-  auto client = client_;
+  auto& client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),

@@ -228,7 +228,7 @@ future<absl::optional<google::pubsub::v1::StreamingPullResponse>>
 LoggingAsyncPullStream::Read() {
   auto prefix = std::string(__func__) + "(" + request_id_ + ")";
   GCP_LOG(DEBUG) << prefix << " <<";
-  auto& options = tracing_options_;
+  auto const& options = tracing_options_;
   return child_->Read().then(
       [prefix, options](
           future<absl::optional<google::pubsub::v1::StreamingPullResponse>> f) {
@@ -274,7 +274,7 @@ future<bool> LoggingAsyncPullStream::WritesDone() {
 
 future<Status> LoggingAsyncPullStream::Finish() {
   auto prefix = std::string(__func__) + "(" + request_id_ + ")";
-  auto opts = tracing_options_;
+  auto const& opts = tracing_options_;
   GCP_LOG(DEBUG) << prefix << " <<";
   return child_->Finish().then([prefix, opts](future<Status> f) {
     auto r = f.get();

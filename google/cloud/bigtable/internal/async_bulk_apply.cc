@@ -58,7 +58,7 @@ void AsyncRetryBulkApply::StartIteration(CompletionQueue cq) {
   rpc_retry_policy_->Setup(*context);
   rpc_backoff_policy_->Setup(*context);
   metadata_update_policy_.Setup(*context);
-  auto client = client_;
+  auto& client = client_;
   auto self = shared_from_this();
   cq.MakeStreamingReadRpc(
       [client](grpc::ClientContext* context,

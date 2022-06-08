@@ -97,7 +97,7 @@ std::int64_t constexpr RowReader::NO_ROWS_LIMIT;
 // The name must be all lowercase to work with range-for loops.
 RowReader::iterator RowReader::begin() {
   google::cloud::internal::OptionsSpan span(options_);
-  auto impl = impl_;
+  auto& impl = impl_;
   stream_ = google::cloud::internal::MakeStreamRange<Row>(
       [impl] { return impl->Advance(); });
   return stream_.begin();
