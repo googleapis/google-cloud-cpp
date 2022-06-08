@@ -40,6 +40,7 @@ bigtable_client_unit_tests = [
     "internal/async_bulk_apply_test.cc",
     "internal/async_row_reader_test.cc",
     "internal/async_row_sampler_test.cc",
+    "internal/async_streaming_read_test.cc",
     "internal/bigtable_channel_refresh_test.cc",
     "internal/bigtable_round_robin_test.cc",
     "internal/bigtable_stub_factory_test.cc",
