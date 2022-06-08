@@ -76,6 +76,8 @@ ParallelUploadStateImpl::~ParallelUploadStateImpl() {
 StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
     std::shared_ptr<RawClient> raw_client,
     ResumableUploadRequest const& request) {
+  // Normally this is done by `storage::Client`, but here we are bypassing it:
+  google::cloud::internal::OptionsSpan const span(raw_client->options());
   auto create = internal::CreateOrResume(*raw_client, request);
 
   std::unique_lock<std::mutex> lk(mu_);

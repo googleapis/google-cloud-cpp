@@ -124,6 +124,9 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   HashValidator::Result hash_validator_result_;
   std::string computed_hash_;
   std::string received_hash_;
+  // Capture the options in effect when the stream was created, to reuse as
+  // new requests are generated.
+  google::cloud::Options span_options_;
 };
 
 }  // namespace internal

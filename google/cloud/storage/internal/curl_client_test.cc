@@ -32,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::internal::OptionsSpan;
 using ::google::cloud::storage::oauth2::Credentials;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
@@ -142,7 +143,8 @@ TEST(CurlClientStandaloneFunctions, HostHeader) {
 }
 
 TEST_P(CurlClientTest, UploadChunk) {
-  // Use an invalid port (0) to force a libcurl failure
+  // Use http://localhost:1 to force a libcurl failure
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->UploadChunk(UploadChunkRequest(
                         "http://localhost:1/invalid-session-id", 0,
@@ -153,6 +155,7 @@ TEST_P(CurlClientTest, UploadChunk) {
 
 TEST_P(CurlClientTest, QueryResumableUpload) {
   // Use http://localhost:1 to force a libcurl failure
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->QueryResumableUpload(QueryResumableUploadRequest(
                         "http://localhost:9/invalid-session-id"))
@@ -161,11 +164,13 @@ TEST_P(CurlClientTest, QueryResumableUpload) {
 }
 
 TEST_P(CurlClientTest, ListBuckets) {
+  OptionsSpan const span(client_->options());
   auto actual = client_->ListBuckets(ListBucketsRequest{"project_id"}).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateBucket) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->CreateBucket(CreateBucketRequest(
                         "bkt", BucketMetadata().set_name("bkt")))
@@ -174,17 +179,20 @@ TEST_P(CurlClientTest, CreateBucket) {
 }
 
 TEST_P(CurlClientTest, GetBucketMetadata) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->GetBucketMetadata(GetBucketMetadataRequest("bkt")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteBucket) {
+  OptionsSpan const span(client_->options());
   auto actual = client_->DeleteBucket(DeleteBucketRequest("bkt")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateBucket) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_
           ->UpdateBucket(UpdateBucketRequest(BucketMetadata().set_name("bkt")))
@@ -193,6 +201,7 @@ TEST_P(CurlClientTest, UpdateBucket) {
 }
 
 TEST_P(CurlClientTest, PatchBucket) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->PatchBucket(PatchBucketRequest(
                         "bkt", BucketMetadata().set_name("bkt"),
@@ -202,6 +211,7 @@ TEST_P(CurlClientTest, PatchBucket) {
 }
 
 TEST_P(CurlClientTest, GetNativeBucketIamPolicy) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->GetNativeBucketIamPolicy(GetBucketIamPolicyRequest("bkt"))
           .status();
@@ -209,6 +219,7 @@ TEST_P(CurlClientTest, GetNativeBucketIamPolicy) {
 }
 
 TEST_P(CurlClientTest, SetNativeBucketIamPolicy) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_
           ->SetNativeBucketIamPolicy(SetNativeBucketIamPolicyRequest(
@@ -218,6 +229,7 @@ TEST_P(CurlClientTest, SetNativeBucketIamPolicy) {
 }
 
 TEST_P(CurlClientTest, TestBucketIamPermissions) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_
           ->TestBucketIamPermissions(TestBucketIamPermissionsRequest("bkt", {}))
@@ -226,6 +238,7 @@ TEST_P(CurlClientTest, TestBucketIamPermissions) {
 }
 
 TEST_P(CurlClientTest, LockBucketRetentionPolicy) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->LockBucketRetentionPolicy(
                         LockBucketRetentionPolicyRequest("bkt", 0))
@@ -234,6 +247,7 @@ TEST_P(CurlClientTest, LockBucketRetentionPolicy) {
 }
 
 TEST_P(CurlClientTest, InsertObjectMediaSimple) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->InsertObjectMedia(
                         InsertObjectMediaRequest("bkt", "obj", "contents")
@@ -244,6 +258,7 @@ TEST_P(CurlClientTest, InsertObjectMediaSimple) {
 }
 
 TEST_P(CurlClientTest, InsertObjectMediaMultipart) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->InsertObjectMedia(
                         InsertObjectMediaRequest("bkt", "obj", "contents"))
@@ -252,6 +267,7 @@ TEST_P(CurlClientTest, InsertObjectMediaMultipart) {
 }
 
 TEST_P(CurlClientTest, InsertObjectMediaXml) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_
           ->InsertObjectMedia(InsertObjectMediaRequest("bkt", "obj", "contents")
@@ -261,6 +277,7 @@ TEST_P(CurlClientTest, InsertObjectMediaXml) {
 }
 
 TEST_P(CurlClientTest, GetObjectMetadata) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->GetObjectMetadata(GetObjectMetadataRequest("bkt", "obj"))
           .status();
@@ -268,18 +285,16 @@ TEST_P(CurlClientTest, GetObjectMetadata) {
 }
 
 TEST_P(CurlClientTest, ReadObjectXml) {
-  if (GetParam() == "libcurl-failure") {
-    return;
-  }
+  OptionsSpan const span(client_->options());
+  if (GetParam() == "libcurl-failure") GTEST_SKIP();
   auto actual =
       client_->ReadObject(ReadObjectRangeRequest("bkt", "obj")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ReadObjectJson) {
-  if (GetParam() == "libcurl-failure") {
-    return;
-  }
+  OptionsSpan const span(client_->options());
+  if (GetParam() == "libcurl-failure") GTEST_SKIP();
   auto actual =
       client_
           ->ReadObject(ReadObjectRangeRequest("bkt", "obj")
@@ -289,17 +304,20 @@ TEST_P(CurlClientTest, ReadObjectJson) {
 }
 
 TEST_P(CurlClientTest, ListObjects) {
+  OptionsSpan const span(client_->options());
   auto actual = client_->ListObjects(ListObjectsRequest("bkt")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteObject) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->DeleteObject(DeleteObjectRequest("bkt", "obj")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateObject) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->UpdateObject(UpdateObjectRequest("bkt", "obj", ObjectMetadata()))
           .status();
@@ -307,6 +325,7 @@ TEST_P(CurlClientTest, UpdateObject) {
 }
 
 TEST_P(CurlClientTest, PatchObject) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->PatchObject(PatchObjectRequest(
                         "bkt", "obj", ObjectMetadata(), ObjectMetadata()))
@@ -315,17 +334,20 @@ TEST_P(CurlClientTest, PatchObject) {
 }
 
 TEST_P(CurlClientTest, ComposeObject) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->ComposeObject(ComposeObjectRequest("bkt", {}, "obj")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListBucketAcl) {
+  OptionsSpan const span(client_->options());
   auto actual = client_->ListBucketAcl(ListBucketAclRequest("bkt")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CopyObject) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->CopyObject(CopyObjectRequest("bkt", "obj1", "bkt", "obj2"))
           .status();
@@ -333,6 +355,7 @@ TEST_P(CurlClientTest, CopyObject) {
 }
 
 TEST_P(CurlClientTest, CreateBucketAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->CreateBucketAcl(CreateBucketAclRequest("bkt", "entity", "role"))
           .status();
@@ -340,12 +363,14 @@ TEST_P(CurlClientTest, CreateBucketAcl) {
 }
 
 TEST_P(CurlClientTest, GetBucketAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->GetBucketAcl(GetBucketAclRequest("bkt", "entity")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteBucketAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->DeleteBucketAcl(DeleteBucketAclRequest("bkt", "entity"))
           .status();
@@ -353,6 +378,7 @@ TEST_P(CurlClientTest, DeleteBucketAcl) {
 }
 
 TEST_P(CurlClientTest, UpdateBucketAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->UpdateBucketAcl(UpdateBucketAclRequest("bkt", "entity", "role"))
           .status();
@@ -360,6 +386,7 @@ TEST_P(CurlClientTest, UpdateBucketAcl) {
 }
 
 TEST_P(CurlClientTest, PatchBucketAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_
           ->PatchBucketAcl(PatchBucketAclRequest(
@@ -369,12 +396,14 @@ TEST_P(CurlClientTest, PatchBucketAcl) {
 }
 
 TEST_P(CurlClientTest, ListObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->ListObjectAcl(ListObjectAclRequest("bkt", "obj")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->CreateObjectAcl(
                         CreateObjectAclRequest("bkt", "obj", "entity", "role"))
@@ -383,6 +412,7 @@ TEST_P(CurlClientTest, CreateObjectAcl) {
 }
 
 TEST_P(CurlClientTest, DeleteObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->DeleteObjectAcl(DeleteObjectAclRequest("bkt", "obj", "entity"))
           .status();
@@ -390,6 +420,7 @@ TEST_P(CurlClientTest, DeleteObjectAcl) {
 }
 
 TEST_P(CurlClientTest, GetObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->GetObjectAcl(GetObjectAclRequest("bkt", "obj", "entity"))
           .status();
@@ -397,6 +428,7 @@ TEST_P(CurlClientTest, GetObjectAcl) {
 }
 
 TEST_P(CurlClientTest, UpdateObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->UpdateObjectAcl(
                         UpdateObjectAclRequest("bkt", "obj", "entity", "role"))
@@ -405,6 +437,7 @@ TEST_P(CurlClientTest, UpdateObjectAcl) {
 }
 
 TEST_P(CurlClientTest, PatchObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->PatchObjectAcl(PatchObjectAclRequest(
                         "bkt", "obj", "entity", ObjectAccessControl(),
@@ -414,6 +447,7 @@ TEST_P(CurlClientTest, PatchObjectAcl) {
 }
 
 TEST_P(CurlClientTest, RewriteObject) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->RewriteObject(RewriteObjectRequest("bkt", "obj", "bkt2",
                                                          "obj2", "token"))
@@ -422,6 +456,7 @@ TEST_P(CurlClientTest, RewriteObject) {
 }
 
 TEST_P(CurlClientTest, CreateResumableUpload) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->CreateResumableUpload(
                         ResumableUploadRequest("test-bucket", "test-object"))
@@ -430,6 +465,7 @@ TEST_P(CurlClientTest, CreateResumableUpload) {
 }
 
 TEST_P(CurlClientTest, DeleteResumableUpload) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->DeleteResumableUpload(
                         DeleteResumableUploadRequest("test-upload-session-url"))
@@ -438,6 +474,7 @@ TEST_P(CurlClientTest, DeleteResumableUpload) {
 }
 
 TEST_P(CurlClientTest, ListDefaultObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->ListDefaultObjectAcl(ListDefaultObjectAclRequest("bkt"))
           .status();
@@ -445,6 +482,7 @@ TEST_P(CurlClientTest, ListDefaultObjectAcl) {
 }
 
 TEST_P(CurlClientTest, CreateDefaultObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->CreateDefaultObjectAcl(
                         CreateDefaultObjectAclRequest("bkt", "entity", "role"))
@@ -453,6 +491,7 @@ TEST_P(CurlClientTest, CreateDefaultObjectAcl) {
 }
 
 TEST_P(CurlClientTest, DeleteDefaultObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->DeleteDefaultObjectAcl(
                         DeleteDefaultObjectAclRequest("bkt", "entity"))
@@ -461,6 +500,7 @@ TEST_P(CurlClientTest, DeleteDefaultObjectAcl) {
 }
 
 TEST_P(CurlClientTest, GetDefaultObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->GetDefaultObjectAcl(GetDefaultObjectAclRequest("bkt", "entity"))
           .status();
@@ -468,6 +508,7 @@ TEST_P(CurlClientTest, GetDefaultObjectAcl) {
 }
 
 TEST_P(CurlClientTest, UpdateDefaultObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->UpdateDefaultObjectAcl(
                         UpdateDefaultObjectAclRequest("bkt", "entity", "role"))
@@ -476,6 +517,7 @@ TEST_P(CurlClientTest, UpdateDefaultObjectAcl) {
 }
 
 TEST_P(CurlClientTest, PatchDefaultObjectAcl) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_
           ->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest(
@@ -485,6 +527,7 @@ TEST_P(CurlClientTest, PatchDefaultObjectAcl) {
 }
 
 TEST_P(CurlClientTest, GetServiceAccount) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->GetServiceAccount(GetProjectServiceAccountRequest("project_id"))
           .status();
@@ -492,12 +535,14 @@ TEST_P(CurlClientTest, GetServiceAccount) {
 }
 
 TEST_P(CurlClientTest, ListHmacKeyRequest) {
+  OptionsSpan const span(client_->options());
   auto status =
       client_->ListHmacKeys(ListHmacKeysRequest("project_id")).status();
   CheckStatus(status);
 }
 
 TEST_P(CurlClientTest, CreateHmacKeyRequest) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_
           ->CreateHmacKey(CreateHmacKeyRequest("project_id", "service-account"))
@@ -506,6 +551,7 @@ TEST_P(CurlClientTest, CreateHmacKeyRequest) {
 }
 
 TEST_P(CurlClientTest, SignBlob) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_
           ->SignBlob(SignBlobRequest("test-service-account", "test-blob", {}))
@@ -514,12 +560,14 @@ TEST_P(CurlClientTest, SignBlob) {
 }
 
 TEST_P(CurlClientTest, ListNotifications) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->ListNotifications(ListNotificationsRequest("bkt")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateNotification) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->CreateNotification(CreateNotificationRequest(
                         "bkt", NotificationMetadata()))
@@ -528,6 +576,7 @@ TEST_P(CurlClientTest, CreateNotification) {
 }
 
 TEST_P(CurlClientTest, GetNotification) {
+  OptionsSpan const span(client_->options());
   auto actual =
       client_->GetNotification(GetNotificationRequest("bkt", "notification_id"))
           .status();
@@ -535,6 +584,7 @@ TEST_P(CurlClientTest, GetNotification) {
 }
 
 TEST_P(CurlClientTest, DeleteNotification) {
+  OptionsSpan const span(client_->options());
   auto actual = client_
                     ->DeleteNotification(
                         DeleteNotificationRequest("bkt", "notification_id"))

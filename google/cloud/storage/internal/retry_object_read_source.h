@@ -63,6 +63,9 @@ class RetryObjectReadSource : public ObjectReadSource {
   OffsetDirection offset_direction_;
   std::int64_t current_offset_ = 0;
   bool is_gunzipped_ = false;
+  // Capture the options in effect when the stream was created, to reuse as
+  // new requests are generated.
+  google::cloud::Options span_options_;
 };
 
 }  // namespace internal
