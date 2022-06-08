@@ -16,65 +16,56 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_ROW_SAMPLER_H
 
 #include "google/cloud/bigtable/completion_queue.h"
-#include "google/cloud/bigtable/data_client.h"
-#include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/row_key_sample.h"
-#include "google/cloud/bigtable/rpc_backoff_policy.h"
-#include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/future_generic.h"
-#include "google/cloud/status.h"
-#include "google/cloud/status_or.h"
-#include <google/bigtable/v2/bigtable.pb.h>
 #include <memory>
 #include <string>
 #include <vector>
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
+
 /**
  * Objects of this class represent the state of receiving row keys via
  * AsyncSampleRows.
  */
 class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
  public:
-  static future<StatusOr<std::vector<RowKeySample>>> Create(
-      CompletionQueue cq, std::shared_ptr<DataClient> client,
-      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
-      std::string table_name);
+  static future<StatusOr<std::vector<bigtable::RowKeySample>>> Create(
+      CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+      std::unique_ptr<DataRetryPolicy> retry_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy,
+      std::string const& app_profile_id, std::string const& table_name);
 
  private:
-  AsyncRowSampler(CompletionQueue cq, std::shared_ptr<DataClient> client,
-                  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-                  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-                  MetadataUpdatePolicy metadata_update_policy,
-                  std::string app_profile_id, std::string table_name);
+  AsyncRowSampler(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+                  std::unique_ptr<DataRetryPolicy> retry_policy,
+                  std::unique_ptr<BackoffPolicy> backoff_policy,
+                  std::string const& app_profile_id,
+                  std::string const& table_name);
 
   void StartIteration();
   future<bool> OnRead(google::bigtable::v2::SampleRowKeysResponse response);
-  void OnFinish(Status const& status);
+  void OnFinish(Status status);
 
   CompletionQueue cq_;
-  std::shared_ptr<DataClient> client_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
+  std::shared_ptr<BigtableStub> stub_;
+  std::unique_ptr<DataRetryPolicy> retry_policy_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_;
   std::string app_profile_id_;
   std::string table_name_;
 
   bool stream_cancelled_ = false;
-  std::vector<RowKeySample> samples_;
-  promise<StatusOr<std::vector<RowKeySample>>> promise_;
+  std::vector<bigtable::RowKeySample> samples_;
+  promise<StatusOr<std::vector<bigtable::RowKeySample>>> promise_;
 };
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

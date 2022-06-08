@@ -13,48 +13,38 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
-#include "google/cloud/bigtable/testing/mock_policies.h"
-#include "google/cloud/bigtable/testing/mock_response_reader.h"
-#include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/testing_util/mock_backoff_policy.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/bigtable/v2/bigtable.pb.h>
 #include <gmock/gmock.h>
-#include <iterator>
-#include <memory>
-#include <string>
-#include <vector>
+#include <chrono>
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace btproto = ::google::bigtable::v2;
-
-using ::google::cloud::bigtable::testing::MockBackoffPolicy;
-using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
-using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+namespace v2 = ::google::bigtable::v2;
+using ms = std::chrono::milliseconds;
+using ::google::cloud::bigtable::testing::MockAsyncSampleRowKeysStream;
+using ::google::cloud::bigtable::testing::MockBigtableStub;
+using ::google::cloud::testing_util::MockBackoffPolicy;
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::MockFunction;
 
-class AsyncSampleRowKeysTest : public bigtable::testing::TableTestFixture {
- protected:
-  AsyncSampleRowKeysTest()
-      : TableTestFixture(
-            CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
-        rpc_retry_policy_(
-            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
-        metadata_update_policy_("my_table", MetadataParamTypes::NAME) {}
-
-  std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
-};
+auto constexpr kNumRetries = 2;
+auto const* const kTableName =
+    "projects/the-project/instances/the-instance/tables/the-table";
+auto const* const kAppProfile = "the-profile";
 
 struct RowKeySampleVectors {
-  explicit RowKeySampleVectors(std::vector<RowKeySample> samples) {
+  explicit RowKeySampleVectors(std::vector<bigtable::RowKeySample> samples) {
     row_keys.reserve(samples.size());
     offset_bytes.reserve(samples.size());
     for (auto& sample : samples) {
@@ -67,388 +57,338 @@ struct RowKeySampleVectors {
   std::vector<std::int64_t> offset_bytes;
 };
 
-TEST_F(AsyncSampleRowKeysTest, Simple) {
-  EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
-                   grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
-            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
-        EXPECT_CALL(*reader, StartCall);
-        EXPECT_CALL(*reader, Read)
-            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
-              {
-                r->set_row_key("test1");
-                r->set_offset_bytes(11);
-              }
-            })
-            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
-              {
-                r->set_row_key("test2");
-                r->set_offset_bytes(22);
-              }
-            })
-            .WillOnce([](btproto::SampleRowKeysResponse*, void*) {});
+absl::optional<v2::SampleRowKeysResponse> MakeResponse(
+    bigtable::RowKeySample sample) {
+  v2::SampleRowKeysResponse r;
+  r.set_row_key(std::move(sample.row_key));
+  r.set_offset_bytes(sample.offset_bytes);
+  return absl::make_optional(r);
+};
 
-        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
-          *status = grpc::Status::OK;
+TEST(AsyncSampleRowKeysTest, Simple) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncSampleRowKeys)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
         });
-        return reader;
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({"test1", 11}));
+            })
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({"test2", 22}));
+            })
+            .WillOnce([] {
+              return make_ready_future(
+                  absl::optional<v2::SampleRowKeysResponse>{});
+            });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
       });
 
-  auto samples_future = table_.AsyncSampleRows();
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  CompletionQueue cq(mock_cq);
 
-  // Start()
-  cq_impl_->SimulateCompletion(true);
-  // Return response 1
-  cq_impl_->SimulateCompletion(true);
-  // Return response 2
-  cq_impl_->SimulateCompletion(true);
-  // End stream
-  cq_impl_->SimulateCompletion(false);
-  // Finish()
-  cq_impl_->SimulateCompletion(true);
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  auto status = samples_future.get();
-  ASSERT_STATUS_OK(status);
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  auto samples = RowKeySampleVectors(status.value());
+  auto sor = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), kAppProfile, kTableName)
+                 .get();
+
+  ASSERT_STATUS_OK(sor);
+  auto samples = RowKeySampleVectors(*sor);
   EXPECT_THAT(samples.row_keys, ElementsAre("test1", "test2"));
   EXPECT_THAT(samples.offset_bytes, ElementsAre(11, 22));
 }
 
-TEST_F(AsyncSampleRowKeysTest, Retry) {
-  EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
-                   grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
-            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
-        EXPECT_CALL(*reader, StartCall);
-        EXPECT_CALL(*reader, Read)
-            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
-              {
-                r->set_row_key("test1");
-                r->set_offset_bytes(11);
-              }
-            })
-            .WillOnce([](btproto::SampleRowKeysResponse*, void*) {});
-
-        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
-          *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
+TEST(AsyncSampleRowKeysTest, RetryResetsSamples) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncSampleRowKeys)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
         });
-        return reader;
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({"forgotten", 11}));
+            })
+            .WillOnce([] {
+              return make_ready_future(
+                  absl::optional<v2::SampleRowKeysResponse>{});
+            });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(
+              Status(StatusCode::kUnavailable, "try again"));
+        });
+        return stream;
       })
-      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
-                   grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
-            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
-        EXPECT_CALL(*reader, StartCall);
-        EXPECT_CALL(*reader, Read)
-            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
-              {
-                r->set_row_key("test2");
-                r->set_offset_bytes(22);
-              }
-            })
-            .WillOnce([](btproto::SampleRowKeysResponse*, void*) {});
-        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
-          *status = grpc::Status::OK;
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
         });
-        return reader;
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({"returned", 22}));
+            })
+            .WillOnce([] {
+              return make_ready_future(
+                  absl::optional<v2::SampleRowKeysResponse>{});
+            });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
       });
 
-  auto samples_future = table_.AsyncSampleRows();
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillOnce([] {
+    return make_ready_future(make_status_or(std::chrono::system_clock::now()));
+  });
+  CompletionQueue cq(mock_cq);
 
-  // Start()
-  cq_impl_->SimulateCompletion(true);
-  // Return response
-  cq_impl_->SimulateCompletion(true);
-  // End stream
-  cq_impl_->SimulateCompletion(false);
-  // Finish()
-  cq_impl_->SimulateCompletion(true);
-  // Simulate the backoff timer
-  cq_impl_->SimulateCompletion(true);
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(1);
 
-  ASSERT_EQ(1U, cq_impl_->size());
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(2);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  // Start()
-  cq_impl_->SimulateCompletion(true);
-  // Return response
-  cq_impl_->SimulateCompletion(true);
-  // End stream
-  cq_impl_->SimulateCompletion(false);
-  // Finish()
-  cq_impl_->SimulateCompletion(true);
+  auto sor = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), kAppProfile, kTableName)
+                 .get();
 
-  ASSERT_EQ(0U, cq_impl_->size());
-
-  auto status = samples_future.get();
-  ASSERT_STATUS_OK(status);
-
-  auto samples = RowKeySampleVectors(status.value());
-  EXPECT_THAT(samples.row_keys, ElementsAre("test2"));
+  ASSERT_STATUS_OK(sor);
+  auto samples = RowKeySampleVectors(*sor);
+  EXPECT_THAT(samples.row_keys, ElementsAre("returned"));
   EXPECT_THAT(samples.offset_bytes, ElementsAre(22));
 }
 
-TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
-  // We give up on the 3rd error.
-  auto constexpr kErrorCount = 2;
-  Table custom_table(client_, "foo_table",
-                     LimitedErrorCountRetryPolicy(kErrorCount));
-
-  EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-      .Times(kErrorCount + 1)
-      .WillRepeatedly([](grpc::ClientContext*,
-                         btproto::SampleRowKeysRequest const&,
-                         grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
-            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
-        EXPECT_CALL(*reader, StartCall);
-        EXPECT_CALL(*reader, Read).Times(2);
-        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
-          *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
+TEST(AsyncSampleRowKeysTest, TooManyFailures) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncSampleRowKeys)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([](CompletionQueue const&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(false);
         });
-        return reader;
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(
+              Status(StatusCode::kUnavailable, "try again"));
+        });
+        return stream;
       });
 
-  auto samples_future = custom_table.AsyncSampleRows();
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .Times(kNumRetries)
+      .WillRepeatedly([] {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
 
-  for (int retry = 0; retry < kErrorCount; ++retry) {
-    // Start()
-    cq_impl_->SimulateCompletion(true);
-    // Return response
-    cq_impl_->SimulateCompletion(true);
-    // End stream
-    cq_impl_->SimulateCompletion(false);
-    // Finish()
-    cq_impl_->SimulateCompletion(true);
-    // Simulate the backoff timer
-    cq_impl_->SimulateCompletion(true);
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
 
-    ASSERT_EQ(1U, cq_impl_->size());
-  }
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(kNumRetries + 1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  // Start()
-  cq_impl_->SimulateCompletion(true);
-  // Return response
-  cq_impl_->SimulateCompletion(true);
-  // End stream
-  cq_impl_->SimulateCompletion(false);
-  // Finish()
-  cq_impl_->SimulateCompletion(true);
+  auto sor = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), kAppProfile, kTableName)
+                 .get();
 
-  auto status = samples_future.get();
-  ASSERT_THAT(status,
-              StatusIs(StatusCode::kUnavailable, HasSubstr("try again")));
-
-  ASSERT_EQ(0U, cq_impl_->size());
+  EXPECT_THAT(sor, StatusIs(StatusCode::kUnavailable, HasSubstr("try again")));
 }
 
-TEST_F(AsyncSampleRowKeysTest, UsesBackoff) {
-  auto grpc_error = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
-  auto error = MakeStatusFromRpcError(grpc_error);
-
-  std::unique_ptr<MockBackoffPolicy> mock(new MockBackoffPolicy);
-  EXPECT_CALL(*mock, Setup).Times(2);
-  EXPECT_CALL(*mock, OnCompletion(error));
-
-  EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-      .WillOnce([grpc_error](grpc::ClientContext*,
-                             btproto::SampleRowKeysRequest const&,
-                             grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
-            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
-        EXPECT_CALL(*reader, StartCall);
-        EXPECT_CALL(*reader, Read).Times(2);
-        EXPECT_CALL(*reader, Finish)
-            .WillOnce([grpc_error](grpc::Status* status, void*) {
-              *status = grpc_error;
-            });
-        return reader;
-      })
-      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
-                   grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
-            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
-        EXPECT_CALL(*reader, StartCall);
-        EXPECT_CALL(*reader, Read).Times(2);
-        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
-          *status = grpc::Status::OK;
+TEST(AsyncSampleRowKeysTest, TimerError) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncSampleRowKeys)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(false);
         });
-        return reader;
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(
+              Status(StatusCode::kUnavailable, "try again"));
+        });
+        return stream;
       });
 
-  auto samples_future = internal::AsyncRowSampler::Create(
-      cq_, client_, rpc_retry_policy_->clone(), std::move(mock),
-      metadata_update_policy_, "my-app-profile", "my-table");
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillOnce([] {
+    return make_ready_future<StatusOr<std::chrono::system_clock::time_point>>(
+        Status(StatusCode::kDeadlineExceeded, "timer error"));
+  });
+  CompletionQueue cq(mock_cq);
 
-  // Start()
-  cq_impl_->SimulateCompletion(true);
-  // Return response
-  cq_impl_->SimulateCompletion(true);
-  // End stream
-  cq_impl_->SimulateCompletion(false);
-  // Finish()
-  cq_impl_->SimulateCompletion(true);
-  // Simulate the backoff timer
-  cq_impl_->SimulateCompletion(true);
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(1);
 
-  ASSERT_EQ(1U, cq_impl_->size());
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  // Start()
-  cq_impl_->SimulateCompletion(true);
-  // Return response
-  cq_impl_->SimulateCompletion(true);
-  // End stream
-  cq_impl_->SimulateCompletion(false);
-  // Finish()
-  cq_impl_->SimulateCompletion(true);
-
-  ASSERT_EQ(0U, cq_impl_->size());
-}
-
-TEST_F(AsyncSampleRowKeysTest, CancelDuringBackoff) {
-  auto grpc_error = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
-  auto error = MakeStatusFromRpcError(grpc_error);
-
-  std::unique_ptr<MockBackoffPolicy> mock(new MockBackoffPolicy);
-  EXPECT_CALL(*mock, Setup);
-  EXPECT_CALL(*mock, OnCompletion(error));
-
-  EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-      .WillOnce([grpc_error](grpc::ClientContext*,
-                             btproto::SampleRowKeysRequest const&,
-                             grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
-            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
-        EXPECT_CALL(*reader, StartCall);
-        EXPECT_CALL(*reader, Read).Times(2);
-        EXPECT_CALL(*reader, Finish)
-            .WillOnce([grpc_error](grpc::Status* status, void*) {
-              *status = grpc_error;
-            });
-        return reader;
-      });
-
-  auto samples_future = internal::AsyncRowSampler::Create(
-      cq_, client_, rpc_retry_policy_->clone(), std::move(mock),
-      metadata_update_policy_, "my-app-profile", "my-table");
-
-  // Start()
-  cq_impl_->SimulateCompletion(true);
-  // Return response
-  cq_impl_->SimulateCompletion(true);
-  // End stream
-  cq_impl_->SimulateCompletion(false);
-  // Finish()
-  cq_impl_->SimulateCompletion(true);
-
-  ASSERT_EQ(1U, cq_impl_->size());
-
-  // Cancel the pending operation.
-  samples_future.cancel();
-  // Simulate the backoff timer
-  cq_impl_->SimulateCompletion(false);
-
-  ASSERT_EQ(0U, cq_impl_->size());
-
-  auto status = samples_future.get();
-  ASSERT_THAT(status,
+  auto sor = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), kAppProfile, kTableName)
+                 .get();
+  // If the TimerFuture returns a bad status, it is almost always because the
+  // call has been cancelled. So it is more informative for the sampler to
+  // return "call cancelled" than to pass along the exact error.
+  EXPECT_THAT(sor,
               StatusIs(StatusCode::kCancelled, HasSubstr("call cancelled")));
 }
 
-TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
-  EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
-                   grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
-            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
-        EXPECT_CALL(*reader, StartCall);
-        EXPECT_CALL(*reader, Read)
-            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
-              {
-                r->set_row_key("test1");
-                r->set_offset_bytes(11);
-              }
-            })
-            .WillOnce([](btproto::SampleRowKeysResponse*, void*) {});
+TEST(AsyncSampleRowKeysTest, CancelAfterSuccess) {
+  promise<absl::optional<v2::SampleRowKeysResponse>> p;
 
-        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
-          *status = grpc::Status::OK;
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncSampleRowKeys)
+      .WillOnce([&p](CompletionQueue const&,
+                     std::unique_ptr<grpc::ClientContext>,
+                     v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
         });
-        return reader;
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({"test1", 11}));
+            })
+            // We block here so the caller can cancel the request. The value
+            // returned will be empty, meaning the stream is complete.
+            .WillOnce([&p] { return p.get_future(); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
       });
 
-  auto samples_future = table_.AsyncSampleRows();
-  // samples_future.cancel();
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  CompletionQueue cq(mock_cq);
 
-  // Start()
-  cq_impl_->SimulateCompletion(true);
-  // Return response
-  cq_impl_->SimulateCompletion(true);
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  // Cancel the pending operation
-  samples_future.cancel();
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  // End stream
-  cq_impl_->SimulateCompletion(false);
-  // Finish()
-  cq_impl_->SimulateCompletion(true);
-
-  auto status = samples_future.get();
-  ASSERT_STATUS_OK(status);
-
-  auto samples = RowKeySampleVectors(status.value());
+  auto fut = AsyncRowSampler::Create(
+      cq, mock, std::move(retry), std::move(mock_b), kAppProfile, kTableName);
+  // Cancel the call after performing the one and only read of this test stream.
+  fut.cancel();
+  // Proceed with the rest of the stream. In this test, there are no more
+  // responses to be read. The client call should succeed.
+  p.set_value(absl::optional<v2::SampleRowKeysResponse>{});
+  auto sor = fut.get();
+  ASSERT_STATUS_OK(sor);
+  auto samples = RowKeySampleVectors(*sor);
   EXPECT_THAT(samples.row_keys, ElementsAre("test1"));
   EXPECT_THAT(samples.offset_bytes, ElementsAre(11));
 }
 
-TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
-  EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
-                   grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
-            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
-        EXPECT_CALL(*reader, StartCall);
-        EXPECT_CALL(*reader, Read)
-            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
-              {
-                r->set_row_key("test1");
-                r->set_offset_bytes(11);
-              }
-            })
-            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
-              {
-                r->set_row_key("test2");
-                r->set_offset_bytes(22);
-              }
-            });
-        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
-          *status = grpc::Status(grpc::StatusCode::CANCELLED, "User cancelled");
+TEST(AsyncSampleRowKeysTest, CancelMidStream) {
+  promise<absl::optional<v2::SampleRowKeysResponse>> p;
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncSampleRowKeys)
+      .WillOnce([&p](CompletionQueue const&,
+                     std::unique_ptr<grpc::ClientContext>,
+                     v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncSampleRowKeysStream>();
+        ::testing::InSequence s;
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
         });
-        return reader;
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({"forgotten", 11}));
+            })
+            // We block here so the caller can cancel the request. The value
+            // returned will be a response, meaning the stream is still active
+            // and needs to be drained.
+            .WillOnce([&p] { return p.get_future(); });
+        EXPECT_CALL(*stream, Cancel);
+        EXPECT_CALL(*stream, Read).WillOnce([] {
+          return make_ready_future(absl::optional<v2::SampleRowKeysResponse>{});
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(
+              Status(StatusCode::kCancelled, "User cancelled"));
+        });
+        return stream;
       });
 
-  auto samples_future = table_.AsyncSampleRows();
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  CompletionQueue cq(mock_cq);
 
-  // Start()
-  cq_impl_->SimulateCompletion(true);
-  // Return response 1
-  cq_impl_->SimulateCompletion(true);
-  // Cancel the pending operation
-  samples_future.cancel();
-  // Return response 2
-  cq_impl_->SimulateCompletion(false);
-  // Finish()
-  cq_impl_->SimulateCompletion(true);
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  auto status = samples_future.get();
-  EXPECT_THAT(status,
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+
+  auto fut = AsyncRowSampler::Create(
+      cq, mock, std::move(retry), std::move(mock_b), kAppProfile, kTableName);
+  // Cancel the call after performing one read of this test stream.
+  fut.cancel();
+  // Proceed with the rest of the stream. In this test, there are more responses
+  // to be read, which we must drain. The client call should fail.
+  p.set_value(MakeResponse({"discarded2", 22}));
+  auto sor = fut.get();
+  EXPECT_THAT(sor,
               StatusIs(StatusCode::kCancelled, HasSubstr("User cancelled")));
 }
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
