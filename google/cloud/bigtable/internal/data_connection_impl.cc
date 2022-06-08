@@ -98,7 +98,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& app_profile_id,
         return idempotent_policy->is_idempotent(m);
       });
 
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncRetryLoop(
              retry_policy(), backoff_policy(),
              is_idempotent ? Idempotency::kIdempotent

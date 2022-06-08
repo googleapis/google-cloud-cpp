@@ -91,7 +91,7 @@ PublisherAuth::AsyncPublish(google::cloud::CompletionQueue& cq,
                             std::unique_ptr<grpc::ClientContext> context,
                             google::pubsub::v1::PublishRequest const& request) {
   using ReturnType = StatusOr<google::pubsub::v1::PublishResponse>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

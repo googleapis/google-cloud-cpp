@@ -66,7 +66,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
 
   future<StatusOr<gsai::v1::Instance>> CreateInstance(
       CreateInstanceParams p) override {
-    auto stub = stub_;
+    auto& stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<
         gsai::v1::Instance>(
         background_threads_->cq(), std::move(p.request),
@@ -94,7 +94,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
 
   future<StatusOr<gsai::v1::Instance>> UpdateInstance(
       UpdateInstanceParams p) override {
-    auto stub = stub_;
+    auto& stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<
         gsai::v1::Instance>(
         background_threads_->cq(), std::move(p.request),
@@ -151,7 +151,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     gsai::v1::ListInstanceConfigsRequest request;
     request.set_parent("projects/" + params.project_id);
     request.clear_page_token();
-    auto stub = stub_;
+    auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
     auto retry = std::shared_ptr<RetryPolicy>(retry_policy_prototype_->clone());
@@ -186,7 +186,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     request.set_parent("projects/" + params.project_id);
     request.set_filter(std::move(params.filter));
     request.clear_page_token();
-    auto stub = stub_;
+    auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
     auto retry = std::shared_ptr<RetryPolicy>(retry_policy_prototype_->clone());
