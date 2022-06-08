@@ -64,10 +64,10 @@ class StreamingWriteRpcLogging
     GCP_LOG(DEBUG) << prefix << "() << (void)";
     auto result = stream_->Close();
     if (result) {
-      GCP_LOG(DEBUG) << prefix << "() << "
+      GCP_LOG(DEBUG) << prefix << "() >> "
                      << DebugString(*result, tracing_options_);
     } else {
-      GCP_LOG(DEBUG) << prefix << "() << "
+      GCP_LOG(DEBUG) << prefix << "() >> "
                      << DebugString(result.status(), tracing_options_);
     }
     return result;

@@ -248,7 +248,8 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
     GCP_LOG(DEBUG) << where << "() >> status="
                    << DebugString(MakeStatusFromRpcError(status), options);
   } else {
-    GCP_LOG(DEBUG) << where << "() << " << DebugString(*response, options);
+    GCP_LOG(DEBUG) << where
+                   << "() >> response=" << DebugString(*response, options);
   }
   return status;
 }
