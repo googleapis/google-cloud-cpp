@@ -100,7 +100,7 @@ TranslationServiceConnectionImpl::TranslateDocument(
 future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
 TranslationServiceConnectionImpl::BatchTranslateText(
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::translation::v3::BatchTranslateResponse>(
       background_->cq(), request,
@@ -131,7 +131,7 @@ future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceConnectionImpl::BatchTranslateDocument(
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::translation::v3::BatchTranslateDocumentResponse>(
       background_->cq(), request,
@@ -163,7 +163,7 @@ TranslationServiceConnectionImpl::BatchTranslateDocument(
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceConnectionImpl::CreateGlossary(
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::translation::v3::Glossary>(
       background_->cq(), request,
@@ -194,7 +194,7 @@ StreamRange<google::cloud::translation::v3::Glossary>
 TranslationServiceConnectionImpl::ListGlossaries(
     google::cloud::translation::v3::ListGlossariesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<translate::TranslationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -240,7 +240,7 @@ TranslationServiceConnectionImpl::GetGlossary(
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceConnectionImpl::DeleteGlossary(
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::translation::v3::DeleteGlossaryResponse>(
       background_->cq(), request,

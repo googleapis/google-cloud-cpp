@@ -44,7 +44,7 @@ GoldenThingAdminAuth::AsyncCreateDatabase(
       std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
       [cq, child, request](
           future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
@@ -70,7 +70,7 @@ GoldenThingAdminAuth::AsyncUpdateDatabaseDdl(
       std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
       [cq, child, request](
           future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
@@ -128,7 +128,7 @@ GoldenThingAdminAuth::AsyncCreateBackup(
       std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::CreateBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
       [cq, child, request](
           future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
@@ -178,7 +178,7 @@ GoldenThingAdminAuth::AsyncRestoreDatabase(
       std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
       [cq, child, request](
           future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
@@ -212,7 +212,7 @@ GoldenThingAdminAuth::AsyncLongRunningWithoutRouting(
       std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
       [cq, child, request](
           future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
@@ -229,7 +229,7 @@ future<StatusOr<google::test::admin::database::v1::Database>> GoldenThingAdminAu
       std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::GetDatabaseRequest const& request) {
   using ReturnType = StatusOr<google::test::admin::database::v1::Database>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
       [cq, child, request](
           future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
@@ -245,7 +245,7 @@ future<Status> GoldenThingAdminAuth::AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::DropDatabaseRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
       [cq, child, request](
           future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
@@ -261,7 +261,7 @@ GoldenThingAdminAuth::AsyncGetOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
       [cq, child, request](
           future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
@@ -277,7 +277,7 @@ future<Status> GoldenThingAdminAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
       [cq, child, request](
           future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {

@@ -45,7 +45,7 @@ StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesConnectionImpl::ListTestCases(
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_cx::TestCasesRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -127,7 +127,7 @@ TestCasesConnectionImpl::UpdateTestCase(
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
 TestCasesConnectionImpl::RunTestCase(
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::RunTestCaseResponse>(
       background_->cq(), request,
@@ -157,7 +157,7 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
 TestCasesConnectionImpl::BatchRunTestCases(
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>(
       background_->cq(), request,
@@ -202,7 +202,7 @@ TestCasesConnectionImpl::CalculateCoverage(
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
 TestCasesConnectionImpl::ImportTestCases(
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>(
       background_->cq(), request,
@@ -232,7 +232,7 @@ TestCasesConnectionImpl::ImportTestCases(
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
 TestCasesConnectionImpl::ExportTestCases(
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>(
       background_->cq(), request,
@@ -263,7 +263,7 @@ StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
 TestCasesConnectionImpl::ListTestCaseResults(
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_cx::TestCasesRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

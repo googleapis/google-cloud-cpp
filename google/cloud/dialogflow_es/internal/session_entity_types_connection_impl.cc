@@ -45,7 +45,7 @@ StreamRange<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesConnectionImpl::ListSessionEntityTypes(
     google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_es::SessionEntityTypesRetryPolicy const>(
           retry_policy());

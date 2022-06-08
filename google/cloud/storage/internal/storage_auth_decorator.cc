@@ -246,7 +246,7 @@ future<Status> StorageAuth::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::storage::v2::DeleteObjectRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -266,7 +266,7 @@ StorageAuth::AsyncReadObject(
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
       google::storage::v2::ReadObjectResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncReadObject(cq, std::move(ctx), request);
   };
@@ -283,7 +283,7 @@ StorageAuth::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncWriteObject(cq, std::move(ctx));
   };

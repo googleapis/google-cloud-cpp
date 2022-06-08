@@ -41,7 +41,7 @@ PublisherServiceAuth::AsyncPublish(
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncPublish(cq, std::move(ctx));
   };

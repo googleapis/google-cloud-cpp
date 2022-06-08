@@ -74,7 +74,7 @@ future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceConnectionImpl::InstantiateWorkflowTemplate(
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::WorkflowMetadata>(
       background_->cq(), request,
@@ -107,7 +107,7 @@ future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceConnectionImpl::InstantiateInlineWorkflowTemplate(
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::WorkflowMetadata>(
       background_->cq(), request,
@@ -153,7 +153,7 @@ StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceConnectionImpl::ListWorkflowTemplates(
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dataproc::WorkflowTemplateServiceRetryPolicy const>(
           retry_policy());

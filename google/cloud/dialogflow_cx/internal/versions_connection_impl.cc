@@ -44,7 +44,7 @@ StreamRange<google::cloud::dialogflow::cx::v3::Version>
 VersionsConnectionImpl::ListVersions(
     google::cloud::dialogflow::cx::v3::ListVersionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_cx::VersionsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -90,7 +90,7 @@ VersionsConnectionImpl::GetVersion(
 future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
 VersionsConnectionImpl::CreateVersion(
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::Version>(
       background_->cq(), request,
@@ -141,7 +141,7 @@ Status VersionsConnectionImpl::DeleteVersion(
 
 future<StatusOr<google::protobuf::Struct>> VersionsConnectionImpl::LoadVersion(
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,

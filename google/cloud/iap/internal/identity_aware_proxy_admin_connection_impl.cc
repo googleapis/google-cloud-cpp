@@ -111,7 +111,7 @@ StreamRange<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceConnectionImpl::ListTunnelDestGroups(
     google::cloud::iap::v1::ListTunnelDestGroupsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<iap::IdentityAwareProxyAdminServiceRetryPolicy const>(
           retry_policy());

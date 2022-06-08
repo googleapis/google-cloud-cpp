@@ -312,7 +312,7 @@ std::string ConnectionImplGenerator::MethodDefinition(
     return R"""(
 StreamRange<$response_type$>
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<$product_namespace$::$retry_policy_name$ const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
 
@@ -341,7 +341,7 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
 StreamRange<$range_output_type$>
 $connection_class_name$Impl::$method_name$($request_type$ request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<$product_namespace$::$retry_policy_name$ const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->$method_name$(request);
@@ -382,7 +382,7 @@ future<StatusOr<$longrunning_deduced_response_type$>>)""",
         // `google::cloud::internal`.
         R"""(
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<$longrunning_deduced_response_type$>(
     background_->cq(), request,
     [stub](google::cloud::CompletionQueue& cq,

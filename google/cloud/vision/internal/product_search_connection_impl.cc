@@ -58,7 +58,7 @@ StreamRange<google::cloud::vision::v1::ProductSet>
 ProductSearchConnectionImpl::ListProductSets(
     google::cloud::vision::v1::ListProductSetsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<vision::ProductSearchRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -144,7 +144,7 @@ StreamRange<google::cloud::vision::v1::Product>
 ProductSearchConnectionImpl::ListProducts(
     google::cloud::vision::v1::ListProductsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<vision::ProductSearchRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -242,7 +242,7 @@ StreamRange<google::cloud::vision::v1::ReferenceImage>
 ProductSearchConnectionImpl::ListReferenceImages(
     google::cloud::vision::v1::ListReferenceImagesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<vision::ProductSearchRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -317,7 +317,7 @@ StreamRange<google::cloud::vision::v1::Product>
 ProductSearchConnectionImpl::ListProductsInProductSet(
     google::cloud::vision::v1::ListProductsInProductSetRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<vision::ProductSearchRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -349,7 +349,7 @@ ProductSearchConnectionImpl::ListProductsInProductSet(
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
 ProductSearchConnectionImpl::ImportProductSets(
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vision::v1::ImportProductSetsResponse>(
       background_->cq(), request,
@@ -379,7 +379,7 @@ ProductSearchConnectionImpl::ImportProductSets(
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
 ProductSearchConnectionImpl::PurgeProducts(
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vision::v1::BatchOperationMetadata>(
       background_->cq(), request,

@@ -46,7 +46,7 @@ TransitionRouteGroupsConnectionImpl::ListTransitionRouteGroups(
     google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy const>(
           retry_policy());

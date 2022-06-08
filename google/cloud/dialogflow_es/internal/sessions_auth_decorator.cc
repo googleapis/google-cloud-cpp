@@ -50,7 +50,7 @@ SessionsAuth::AsyncStreamingDetectIntent(
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingDetectIntent(cq, std::move(ctx));
   };

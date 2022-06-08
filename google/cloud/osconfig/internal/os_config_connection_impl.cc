@@ -85,7 +85,7 @@ StreamRange<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceConnectionImpl::ListPatchJobs(
     google::cloud::osconfig::v1::ListPatchJobsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<osconfig::OsConfigServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -118,7 +118,7 @@ StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
 OsConfigServiceConnectionImpl::ListPatchJobInstanceDetails(
     google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<osconfig::OsConfigServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -180,7 +180,7 @@ StreamRange<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceConnectionImpl::ListPatchDeployments(
     google::cloud::osconfig::v1::ListPatchDeploymentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<osconfig::OsConfigServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

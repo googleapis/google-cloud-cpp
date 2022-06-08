@@ -44,7 +44,7 @@ StreamRange<google::cloud::memcache::v1::Instance>
 CloudMemcacheConnectionImpl::ListInstances(
     google::cloud::memcache::v1::ListInstancesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<memcache::CloudMemcacheRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -89,7 +89,7 @@ CloudMemcacheConnectionImpl::GetInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::CreateInstance(
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
       background_->cq(), request,
@@ -119,7 +119,7 @@ CloudMemcacheConnectionImpl::CreateInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::UpdateInstance(
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
       background_->cq(), request,
@@ -149,7 +149,7 @@ CloudMemcacheConnectionImpl::UpdateInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::UpdateParameters(
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
       background_->cq(), request,
@@ -179,7 +179,7 @@ CloudMemcacheConnectionImpl::UpdateParameters(
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
 CloudMemcacheConnectionImpl::DeleteInstance(
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::OperationMetadata>(
       background_->cq(), request,
@@ -209,7 +209,7 @@ CloudMemcacheConnectionImpl::DeleteInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::ApplyParameters(
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
       background_->cq(), request,

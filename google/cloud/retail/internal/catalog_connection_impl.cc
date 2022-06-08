@@ -43,7 +43,7 @@ StreamRange<google::cloud::retail::v2::Catalog>
 CatalogServiceConnectionImpl::ListCatalogs(
     google::cloud::retail::v2::ListCatalogsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<retail::CatalogServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

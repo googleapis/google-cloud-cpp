@@ -77,7 +77,7 @@ StreamRange<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceConnectionImpl::ListCertificates(
     google::cloud::security::privateca::v1::ListCertificatesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>(
           retry_policy());
@@ -142,7 +142,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
       background_->cq(), request,
@@ -174,7 +174,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
       background_->cq(), request,
@@ -206,7 +206,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
       background_->cq(), request,
@@ -238,7 +238,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
       background_->cq(), request,
@@ -302,7 +302,7 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateAuthorities(
     google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>(
           retry_policy());
@@ -339,7 +339,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
       background_->cq(), request,
@@ -371,7 +371,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
       background_->cq(), request,
@@ -403,7 +403,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
       background_->cq(), request,
@@ -435,7 +435,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceConnectionImpl::CreateCaPool(
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CaPool>(
       background_->cq(), request,
@@ -465,7 +465,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CaPool>(
       background_->cq(), request,
@@ -507,7 +507,7 @@ StreamRange<google::cloud::security::privateca::v1::CaPool>
 CertificateAuthorityServiceConnectionImpl::ListCaPools(
     google::cloud::security::privateca::v1::ListCaPoolsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>(
           retry_policy());
@@ -541,7 +541,7 @@ future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::OperationMetadata>(
       background_->cq(), request,
@@ -600,7 +600,7 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateRevocationLists(
     google::cloud::security::privateca::v1::
         ListCertificateRevocationListsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>(
           retry_policy());
@@ -639,7 +639,7 @@ future<
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateRevocationList>(
       background_->cq(), request,
@@ -671,7 +671,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateTemplate>(
       background_->cq(), request,
@@ -703,7 +703,7 @@ future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::OperationMetadata>(
       background_->cq(), request,
@@ -751,7 +751,7 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateTemplates(
     google::cloud::security::privateca::v1::ListCertificateTemplatesRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>(
           retry_policy());
@@ -787,7 +787,7 @@ future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateTemplate>(
       background_->cq(), request,

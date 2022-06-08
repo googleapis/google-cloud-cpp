@@ -43,7 +43,7 @@ AssetServiceConnectionImpl::AssetServiceConnectionImpl(
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
 AssetServiceConnectionImpl::ExportAssets(
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::asset::v1::ExportAssetsResponse>(
       background_->cq(), request,
@@ -72,7 +72,7 @@ StreamRange<google::cloud::asset::v1::Asset>
 AssetServiceConnectionImpl::ListAssets(
     google::cloud::asset::v1::ListAssetsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -177,7 +177,7 @@ StreamRange<google::cloud::asset::v1::ResourceSearchResult>
 AssetServiceConnectionImpl::SearchAllResources(
     google::cloud::asset::v1::SearchAllResourcesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -210,7 +210,7 @@ StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
 AssetServiceConnectionImpl::SearchAllIamPolicies(
     google::cloud::asset::v1::SearchAllIamPoliciesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -256,7 +256,7 @@ future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
 AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>(
       background_->cq(), request,
@@ -327,7 +327,7 @@ StreamRange<google::cloud::asset::v1::SavedQuery>
 AssetServiceConnectionImpl::ListSavedQueries(
     google::cloud::asset::v1::ListSavedQueriesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

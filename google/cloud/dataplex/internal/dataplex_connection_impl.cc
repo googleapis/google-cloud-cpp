@@ -44,7 +44,7 @@ DataplexServiceConnectionImpl::DataplexServiceConnectionImpl(
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
 DataplexServiceConnectionImpl::CreateLake(
     google::cloud::dataplex::v1::CreateLakeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::Lake>(
       background_->cq(), request,
@@ -72,7 +72,7 @@ DataplexServiceConnectionImpl::CreateLake(
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
 DataplexServiceConnectionImpl::UpdateLake(
     google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::Lake>(
       background_->cq(), request,
@@ -100,7 +100,7 @@ DataplexServiceConnectionImpl::UpdateLake(
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteLake(
     google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::OperationMetadata>(
       background_->cq(), request,
@@ -129,7 +129,7 @@ StreamRange<google::cloud::dataplex::v1::Lake>
 DataplexServiceConnectionImpl::ListLakes(
     google::cloud::dataplex::v1::ListLakesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -173,7 +173,7 @@ StreamRange<google::cloud::dataplex::v1::Action>
 DataplexServiceConnectionImpl::ListLakeActions(
     google::cloud::dataplex::v1::ListLakeActionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -205,7 +205,7 @@ DataplexServiceConnectionImpl::ListLakeActions(
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
 DataplexServiceConnectionImpl::CreateZone(
     google::cloud::dataplex::v1::CreateZoneRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::Zone>(
       background_->cq(), request,
@@ -233,7 +233,7 @@ DataplexServiceConnectionImpl::CreateZone(
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
 DataplexServiceConnectionImpl::UpdateZone(
     google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::Zone>(
       background_->cq(), request,
@@ -261,7 +261,7 @@ DataplexServiceConnectionImpl::UpdateZone(
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteZone(
     google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::OperationMetadata>(
       background_->cq(), request,
@@ -290,7 +290,7 @@ StreamRange<google::cloud::dataplex::v1::Zone>
 DataplexServiceConnectionImpl::ListZones(
     google::cloud::dataplex::v1::ListZonesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -334,7 +334,7 @@ StreamRange<google::cloud::dataplex::v1::Action>
 DataplexServiceConnectionImpl::ListZoneActions(
     google::cloud::dataplex::v1::ListZoneActionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -366,7 +366,7 @@ DataplexServiceConnectionImpl::ListZoneActions(
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
 DataplexServiceConnectionImpl::CreateAsset(
     google::cloud::dataplex::v1::CreateAssetRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::Asset>(
       background_->cq(), request,
@@ -394,7 +394,7 @@ DataplexServiceConnectionImpl::CreateAsset(
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
 DataplexServiceConnectionImpl::UpdateAsset(
     google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::Asset>(
       background_->cq(), request,
@@ -422,7 +422,7 @@ DataplexServiceConnectionImpl::UpdateAsset(
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteAsset(
     google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::OperationMetadata>(
       background_->cq(), request,
@@ -451,7 +451,7 @@ StreamRange<google::cloud::dataplex::v1::Asset>
 DataplexServiceConnectionImpl::ListAssets(
     google::cloud::dataplex::v1::ListAssetsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -496,7 +496,7 @@ StreamRange<google::cloud::dataplex::v1::Action>
 DataplexServiceConnectionImpl::ListAssetActions(
     google::cloud::dataplex::v1::ListAssetActionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -528,7 +528,7 @@ DataplexServiceConnectionImpl::ListAssetActions(
 future<StatusOr<google::cloud::dataplex::v1::Task>>
 DataplexServiceConnectionImpl::CreateTask(
     google::cloud::dataplex::v1::CreateTaskRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::Task>(
       background_->cq(), request,
@@ -556,7 +556,7 @@ DataplexServiceConnectionImpl::CreateTask(
 future<StatusOr<google::cloud::dataplex::v1::Task>>
 DataplexServiceConnectionImpl::UpdateTask(
     google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::Task>(
       background_->cq(), request,
@@ -584,7 +584,7 @@ DataplexServiceConnectionImpl::UpdateTask(
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteTask(
     google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::OperationMetadata>(
       background_->cq(), request,
@@ -613,7 +613,7 @@ StreamRange<google::cloud::dataplex::v1::Task>
 DataplexServiceConnectionImpl::ListTasks(
     google::cloud::dataplex::v1::ListTasksRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -657,7 +657,7 @@ StreamRange<google::cloud::dataplex::v1::Job>
 DataplexServiceConnectionImpl::ListJobs(
     google::cloud::dataplex::v1::ListJobsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -712,7 +712,7 @@ Status DataplexServiceConnectionImpl::CancelJob(
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
 DataplexServiceConnectionImpl::CreateEnvironment(
     google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::Environment>(
       background_->cq(), request,
@@ -742,7 +742,7 @@ DataplexServiceConnectionImpl::CreateEnvironment(
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
 DataplexServiceConnectionImpl::UpdateEnvironment(
     google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::Environment>(
       background_->cq(), request,
@@ -772,7 +772,7 @@ DataplexServiceConnectionImpl::UpdateEnvironment(
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteEnvironment(
     google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataplex::v1::OperationMetadata>(
       background_->cq(), request,
@@ -803,7 +803,7 @@ StreamRange<google::cloud::dataplex::v1::Environment>
 DataplexServiceConnectionImpl::ListEnvironments(
     google::cloud::dataplex::v1::ListEnvironmentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -850,7 +850,7 @@ StreamRange<google::cloud::dataplex::v1::Session>
 DataplexServiceConnectionImpl::ListSessions(
     google::cloud::dataplex::v1::ListSessionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

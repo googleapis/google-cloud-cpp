@@ -41,7 +41,7 @@ PartitionAssignmentServiceAuth::AsyncAssignPartitions(
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
       google::cloud::pubsublite::v1::PartitionAssignment>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncAssignPartitions(cq, std::move(ctx));
   };

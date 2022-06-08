@@ -70,7 +70,7 @@ ImageAnnotatorConnectionImpl::BatchAnnotateFiles(
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>(
       background_->cq(), request,
@@ -101,7 +101,7 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>(
       background_->cq(), request,

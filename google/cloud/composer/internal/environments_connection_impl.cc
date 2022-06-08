@@ -45,7 +45,7 @@ future<
 EnvironmentsConnectionImpl::CreateEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::Environment>(
       background_->cq(), request,
@@ -92,7 +92,7 @@ EnvironmentsConnectionImpl::ListEnvironments(
     google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<composer::EnvironmentsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -129,7 +129,7 @@ future<
 EnvironmentsConnectionImpl::UpdateEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::Environment>(
       background_->cq(), request,
@@ -161,7 +161,7 @@ future<StatusOr<
 EnvironmentsConnectionImpl::DeleteEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>(
       background_->cq(), request,

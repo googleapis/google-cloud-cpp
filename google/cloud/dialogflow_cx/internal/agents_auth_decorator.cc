@@ -76,7 +76,7 @@ future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncExportAgent(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -94,7 +94,7 @@ future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncRestoreAgent(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -131,7 +131,7 @@ future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncGetOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -148,7 +148,7 @@ future<Status> AgentsAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

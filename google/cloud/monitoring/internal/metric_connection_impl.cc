@@ -45,7 +45,7 @@ StreamRange<google::api::MonitoredResourceDescriptor>
 MetricServiceConnectionImpl::ListMonitoredResourceDescriptors(
     google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::MetricServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -96,7 +96,7 @@ StreamRange<google::api::MetricDescriptor>
 MetricServiceConnectionImpl::ListMetricDescriptors(
     google::monitoring::v3::ListMetricDescriptorsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::MetricServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -170,7 +170,7 @@ StreamRange<google::monitoring::v3::TimeSeries>
 MetricServiceConnectionImpl::ListTimeSeries(
     google::monitoring::v3::ListTimeSeriesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::MetricServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

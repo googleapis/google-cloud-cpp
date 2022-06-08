@@ -78,7 +78,7 @@ StreamRange<google::cloud::dialogflow::v2::Agent>
 AgentsConnectionImpl::SearchAgents(
     google::cloud::dialogflow::v2::SearchAgentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_es::AgentsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -109,7 +109,7 @@ AgentsConnectionImpl::SearchAgents(
 
 future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::TrainAgent(
     google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,
@@ -137,7 +137,7 @@ future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::TrainAgent(
 future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
 AgentsConnectionImpl::ExportAgent(
     google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ExportAgentResponse>(
       background_->cq(), request,
@@ -164,7 +164,7 @@ AgentsConnectionImpl::ExportAgent(
 
 future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::ImportAgent(
     google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,
@@ -191,7 +191,7 @@ future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::ImportAgent(
 
 future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::RestoreAgent(
     google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,

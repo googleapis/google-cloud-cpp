@@ -43,7 +43,7 @@ StreamRange<google::appengine::v1::FirewallRule>
 FirewallConnectionImpl::ListIngressRules(
     google::appengine::v1::ListIngressRulesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<appengine::FirewallRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

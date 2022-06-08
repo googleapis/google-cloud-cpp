@@ -44,7 +44,7 @@ StreamRange<google::cloud::dialogflow::cx::v3::Agent>
 AgentsConnectionImpl::ListAgents(
     google::cloud::dialogflow::cx::v3::ListAgentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_cx::AgentsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -122,7 +122,7 @@ Status AgentsConnectionImpl::DeleteAgent(
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
 AgentsConnectionImpl::ExportAgent(
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::ExportAgentResponse>(
       background_->cq(), request,
@@ -150,7 +150,7 @@ AgentsConnectionImpl::ExportAgent(
 
 future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::RestoreAgent(
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,

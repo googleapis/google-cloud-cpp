@@ -46,7 +46,7 @@ AssuredWorkloadsServiceConnectionImpl::AssuredWorkloadsServiceConnectionImpl(
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::assuredworkloads::v1::Workload>(
       background_->cq(), request,
@@ -112,7 +112,7 @@ StreamRange<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceConnectionImpl::ListWorkloads(
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       assuredworkloads::AssuredWorkloadsServiceRetryPolicy const>(
       retry_policy());

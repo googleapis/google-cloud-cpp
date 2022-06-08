@@ -46,7 +46,7 @@ StreamRange<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerConnectionImpl::ListServices(
     google::api::servicemanagement::v1::ListServicesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<servicemanagement::ServiceManagerRetryPolicy const>(
           retry_policy());
@@ -90,7 +90,7 @@ ServiceManagerConnectionImpl::GetService(
 future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
 ServiceManagerConnectionImpl::CreateService(
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::servicemanagement::v1::ManagedService>(
       background_->cq(), request,
@@ -119,7 +119,7 @@ ServiceManagerConnectionImpl::CreateService(
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
 ServiceManagerConnectionImpl::DeleteService(
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::servicemanagement::v1::OperationMetadata>(
       background_->cq(), request,
@@ -148,7 +148,7 @@ ServiceManagerConnectionImpl::DeleteService(
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
 ServiceManagerConnectionImpl::UndeleteService(
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::servicemanagement::v1::UndeleteServiceResponse>(
       background_->cq(), request,
@@ -179,7 +179,7 @@ StreamRange<google::api::Service>
 ServiceManagerConnectionImpl::ListServiceConfigs(
     google::api::servicemanagement::v1::ListServiceConfigsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<servicemanagement::ServiceManagerRetryPolicy const>(
           retry_policy());
@@ -239,7 +239,7 @@ future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
 ServiceManagerConnectionImpl::SubmitConfigSource(
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::servicemanagement::v1::SubmitConfigSourceResponse>(
       background_->cq(), request,
@@ -271,7 +271,7 @@ StreamRange<google::api::servicemanagement::v1::Rollout>
 ServiceManagerConnectionImpl::ListServiceRollouts(
     google::api::servicemanagement::v1::ListServiceRolloutsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<servicemanagement::ServiceManagerRetryPolicy const>(
           retry_policy());
@@ -321,7 +321,7 @@ future<StatusOr<google::api::servicemanagement::v1::Rollout>>
 ServiceManagerConnectionImpl::CreateServiceRollout(
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::servicemanagement::v1::Rollout>(
       background_->cq(), request,

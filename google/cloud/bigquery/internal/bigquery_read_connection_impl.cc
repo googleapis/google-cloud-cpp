@@ -57,7 +57,7 @@ BigQueryReadConnectionImpl::CreateReadSession(
 StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
 BigQueryReadConnectionImpl::ReadRows(
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<bigquery::BigQueryReadRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

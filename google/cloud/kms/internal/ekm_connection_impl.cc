@@ -43,7 +43,7 @@ StreamRange<google::cloud::kms::v1::EkmConnection>
 EkmServiceConnectionImpl::ListEkmConnections(
     google::cloud::kms::v1::ListEkmConnectionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<kms::EkmServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

@@ -114,7 +114,7 @@ StreamRange<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1ConnectionImpl::ListAttestors(
     google::cloud::binaryauthorization::v1::ListAttestorsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       binaryauthorization::BinauthzManagementServiceV1RetryPolicy const>(
       retry_policy());

@@ -100,7 +100,7 @@ StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
 IdentityAwareProxyOAuthServiceConnectionImpl::ListIdentityAwareProxyClients(
     google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<iap::IdentityAwareProxyOAuthServiceRetryPolicy const>(
           retry_policy());

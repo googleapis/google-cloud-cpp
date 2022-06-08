@@ -43,7 +43,7 @@ StreamRange<google::cloud::orgpolicy::v2::Constraint>
 OrgPolicyConnectionImpl::ListConstraints(
     google::cloud::orgpolicy::v2::ListConstraintsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<orgpolicy::OrgPolicyRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -76,7 +76,7 @@ StreamRange<google::cloud::orgpolicy::v2::Policy>
 OrgPolicyConnectionImpl::ListPolicies(
     google::cloud::orgpolicy::v2::ListPoliciesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<orgpolicy::OrgPolicyRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

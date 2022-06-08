@@ -45,7 +45,7 @@ StreamRange<google::cloud::vmmigration::v1::Source>
 VmMigrationConnectionImpl::ListSources(
     google::cloud::vmmigration::v1::ListSourcesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -88,7 +88,7 @@ VmMigrationConnectionImpl::GetSource(
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
 VmMigrationConnectionImpl::CreateSource(
     google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::Source>(
       background_->cq(), request,
@@ -117,7 +117,7 @@ VmMigrationConnectionImpl::CreateSource(
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
 VmMigrationConnectionImpl::UpdateSource(
     google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::Source>(
       background_->cq(), request,
@@ -146,7 +146,7 @@ VmMigrationConnectionImpl::UpdateSource(
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteSource(
     google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
@@ -188,7 +188,7 @@ StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationConnectionImpl::ListUtilizationReports(
     google::cloud::vmmigration::v1::ListUtilizationReportsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -237,7 +237,7 @@ future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
 VmMigrationConnectionImpl::CreateUtilizationReport(
     google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::UtilizationReport>(
       background_->cq(), request,
@@ -270,7 +270,7 @@ future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteUtilizationReport(
     google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
@@ -303,7 +303,7 @@ StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
 VmMigrationConnectionImpl::ListDatacenterConnectors(
     google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -353,7 +353,7 @@ future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
 VmMigrationConnectionImpl::CreateDatacenterConnector(
     google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::DatacenterConnector>(
       background_->cq(), request,
@@ -385,7 +385,7 @@ future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteDatacenterConnector(
     google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
@@ -416,7 +416,7 @@ VmMigrationConnectionImpl::DeleteDatacenterConnector(
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnectionImpl::CreateMigratingVm(
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::MigratingVm>(
       background_->cq(), request,
@@ -447,7 +447,7 @@ StreamRange<google::cloud::vmmigration::v1::MigratingVm>
 VmMigrationConnectionImpl::ListMigratingVms(
     google::cloud::vmmigration::v1::ListMigratingVmsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -492,7 +492,7 @@ VmMigrationConnectionImpl::GetMigratingVm(
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnectionImpl::UpdateMigratingVm(
     google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::MigratingVm>(
       background_->cq(), request,
@@ -522,7 +522,7 @@ VmMigrationConnectionImpl::UpdateMigratingVm(
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteMigratingVm(
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
@@ -552,7 +552,7 @@ VmMigrationConnectionImpl::DeleteMigratingVm(
 future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
 VmMigrationConnectionImpl::StartMigration(
     google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::StartMigrationResponse>(
       background_->cq(), request,
@@ -582,7 +582,7 @@ VmMigrationConnectionImpl::StartMigration(
 future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
 VmMigrationConnectionImpl::ResumeMigration(
     google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::ResumeMigrationResponse>(
       background_->cq(), request,
@@ -612,7 +612,7 @@ VmMigrationConnectionImpl::ResumeMigration(
 future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
 VmMigrationConnectionImpl::PauseMigration(
     google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::PauseMigrationResponse>(
       background_->cq(), request,
@@ -642,7 +642,7 @@ VmMigrationConnectionImpl::PauseMigration(
 future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
 VmMigrationConnectionImpl::FinalizeMigration(
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::FinalizeMigrationResponse>(
       background_->cq(), request,
@@ -672,7 +672,7 @@ VmMigrationConnectionImpl::FinalizeMigration(
 future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
 VmMigrationConnectionImpl::CreateCloneJob(
     google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::CloneJob>(
       background_->cq(), request,
@@ -702,7 +702,7 @@ VmMigrationConnectionImpl::CreateCloneJob(
 future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
 VmMigrationConnectionImpl::CancelCloneJob(
     google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::CancelCloneJobResponse>(
       background_->cq(), request,
@@ -733,7 +733,7 @@ StreamRange<google::cloud::vmmigration::v1::CloneJob>
 VmMigrationConnectionImpl::ListCloneJobs(
     google::cloud::vmmigration::v1::ListCloneJobsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -779,7 +779,7 @@ VmMigrationConnectionImpl::GetCloneJob(
 future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
 VmMigrationConnectionImpl::CreateCutoverJob(
     google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::CutoverJob>(
       background_->cq(), request,
@@ -809,7 +809,7 @@ VmMigrationConnectionImpl::CreateCutoverJob(
 future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
 VmMigrationConnectionImpl::CancelCutoverJob(
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::CancelCutoverJobResponse>(
       background_->cq(), request,
@@ -840,7 +840,7 @@ StreamRange<google::cloud::vmmigration::v1::CutoverJob>
 VmMigrationConnectionImpl::ListCutoverJobs(
     google::cloud::vmmigration::v1::ListCutoverJobsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -887,7 +887,7 @@ StreamRange<google::cloud::vmmigration::v1::Group>
 VmMigrationConnectionImpl::ListGroups(
     google::cloud::vmmigration::v1::ListGroupsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -929,7 +929,7 @@ VmMigrationConnectionImpl::GetGroup(
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
 VmMigrationConnectionImpl::CreateGroup(
     google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::Group>(
       background_->cq(), request,
@@ -958,7 +958,7 @@ VmMigrationConnectionImpl::CreateGroup(
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
 VmMigrationConnectionImpl::UpdateGroup(
     google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::Group>(
       background_->cq(), request,
@@ -987,7 +987,7 @@ VmMigrationConnectionImpl::UpdateGroup(
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteGroup(
     google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
@@ -1016,7 +1016,7 @@ VmMigrationConnectionImpl::DeleteGroup(
 future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
 VmMigrationConnectionImpl::AddGroupMigration(
     google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::AddGroupMigrationResponse>(
       background_->cq(), request,
@@ -1047,7 +1047,7 @@ future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
 VmMigrationConnectionImpl::RemoveGroupMigration(
     google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>(
       background_->cq(), request,
@@ -1078,7 +1078,7 @@ StreamRange<google::cloud::vmmigration::v1::TargetProject>
 VmMigrationConnectionImpl::ListTargetProjects(
     google::cloud::vmmigration::v1::ListTargetProjectsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -1123,7 +1123,7 @@ VmMigrationConnectionImpl::GetTargetProject(
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationConnectionImpl::CreateTargetProject(
     google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::TargetProject>(
       background_->cq(), request,
@@ -1153,7 +1153,7 @@ VmMigrationConnectionImpl::CreateTargetProject(
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationConnectionImpl::UpdateTargetProject(
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::TargetProject>(
       background_->cq(), request,
@@ -1183,7 +1183,7 @@ VmMigrationConnectionImpl::UpdateTargetProject(
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteTargetProject(
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,

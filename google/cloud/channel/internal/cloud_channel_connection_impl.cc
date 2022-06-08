@@ -46,7 +46,7 @@ StreamRange<google::cloud::channel::v1::Customer>
 CloudChannelServiceConnectionImpl::ListCustomers(
     google::cloud::channel::v1::ListCustomersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -157,7 +157,7 @@ CloudChannelServiceConnectionImpl::ImportCustomer(
 future<StatusOr<google::cloud::channel::v1::Customer>>
 CloudChannelServiceConnectionImpl::ProvisionCloudIdentity(
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Customer>(
       background_->cq(), request,
@@ -189,7 +189,7 @@ StreamRange<google::cloud::channel::v1::Entitlement>
 CloudChannelServiceConnectionImpl::ListEntitlements(
     google::cloud::channel::v1::ListEntitlementsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -222,7 +222,7 @@ StreamRange<google::cloud::channel::v1::TransferableSku>
 CloudChannelServiceConnectionImpl::ListTransferableSkus(
     google::cloud::channel::v1::ListTransferableSkusRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -256,7 +256,7 @@ StreamRange<google::cloud::channel::v1::TransferableOffer>
 CloudChannelServiceConnectionImpl::ListTransferableOffers(
     google::cloud::channel::v1::ListTransferableOffersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -302,7 +302,7 @@ CloudChannelServiceConnectionImpl::GetEntitlement(
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::CreateEntitlement(
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
       background_->cq(), request,
@@ -332,7 +332,7 @@ CloudChannelServiceConnectionImpl::CreateEntitlement(
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeParameters(
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
       background_->cq(), request,
@@ -362,7 +362,7 @@ CloudChannelServiceConnectionImpl::ChangeParameters(
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeRenewalSettings(
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
       background_->cq(), request,
@@ -393,7 +393,7 @@ CloudChannelServiceConnectionImpl::ChangeRenewalSettings(
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeOffer(
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
       background_->cq(), request,
@@ -421,7 +421,7 @@ CloudChannelServiceConnectionImpl::ChangeOffer(
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::StartPaidService(
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
       background_->cq(), request,
@@ -451,7 +451,7 @@ CloudChannelServiceConnectionImpl::StartPaidService(
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::SuspendEntitlement(
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
       background_->cq(), request,
@@ -481,7 +481,7 @@ CloudChannelServiceConnectionImpl::SuspendEntitlement(
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
 CloudChannelServiceConnectionImpl::CancelEntitlement(
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::OperationMetadata>(
       background_->cq(), request,
@@ -511,7 +511,7 @@ CloudChannelServiceConnectionImpl::CancelEntitlement(
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ActivateEntitlement(
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
       background_->cq(), request,
@@ -541,7 +541,7 @@ CloudChannelServiceConnectionImpl::ActivateEntitlement(
 future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
 CloudChannelServiceConnectionImpl::TransferEntitlements(
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::TransferEntitlementsResponse>(
       background_->cq(), request,
@@ -572,7 +572,7 @@ future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
 CloudChannelServiceConnectionImpl::TransferEntitlementsToGoogle(
     google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::OperationMetadata>(
       background_->cq(), request,
@@ -605,7 +605,7 @@ StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceConnectionImpl::ListChannelPartnerLinks(
     google::cloud::channel::v1::ListChannelPartnerLinksRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -698,7 +698,7 @@ StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceConnectionImpl::ListCustomerRepricingConfigs(
     google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -793,7 +793,7 @@ CloudChannelServiceConnectionImpl::ListChannelPartnerRepricingConfigs(
     google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -887,7 +887,7 @@ StreamRange<google::cloud::channel::v1::Product>
 CloudChannelServiceConnectionImpl::ListProducts(
     google::cloud::channel::v1::ListProductsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -920,7 +920,7 @@ StreamRange<google::cloud::channel::v1::Sku>
 CloudChannelServiceConnectionImpl::ListSkus(
     google::cloud::channel::v1::ListSkusRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -951,7 +951,7 @@ StreamRange<google::cloud::channel::v1::Offer>
 CloudChannelServiceConnectionImpl::ListOffers(
     google::cloud::channel::v1::ListOffersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -984,7 +984,7 @@ StreamRange<google::cloud::channel::v1::PurchasableSku>
 CloudChannelServiceConnectionImpl::ListPurchasableSkus(
     google::cloud::channel::v1::ListPurchasableSkusRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -1017,7 +1017,7 @@ StreamRange<google::cloud::channel::v1::PurchasableOffer>
 CloudChannelServiceConnectionImpl::ListPurchasableOffers(
     google::cloud::channel::v1::ListPurchasableOffersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -1078,7 +1078,7 @@ CloudChannelServiceConnectionImpl::UnregisterSubscriber(
 StreamRange<std::string> CloudChannelServiceConnectionImpl::ListSubscribers(
     google::cloud::channel::v1::ListSubscribersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

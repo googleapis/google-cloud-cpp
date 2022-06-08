@@ -60,7 +60,7 @@ StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceConnectionImpl::ListReservations(
     google::cloud::bigquery::reservation::v1::ListReservationsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -153,7 +153,7 @@ ReservationServiceConnectionImpl::ListCapacityCommitments(
     google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -279,7 +279,7 @@ StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceConnectionImpl::ListAssignments(
     google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -328,7 +328,7 @@ ReservationServiceConnectionImpl::SearchAssignments(
     google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -364,7 +364,7 @@ ReservationServiceConnectionImpl::SearchAllAssignments(
     google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

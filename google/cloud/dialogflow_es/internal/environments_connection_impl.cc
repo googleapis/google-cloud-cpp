@@ -45,7 +45,7 @@ StreamRange<google::cloud::dialogflow::v2::Environment>
 EnvironmentsConnectionImpl::ListEnvironments(
     google::cloud::dialogflow::v2::ListEnvironmentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_es::EnvironmentsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -133,7 +133,7 @@ StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>
 EnvironmentsConnectionImpl::GetEnvironmentHistory(
     google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_es::EnvironmentsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

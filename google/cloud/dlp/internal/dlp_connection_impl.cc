@@ -152,7 +152,7 @@ StreamRange<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceConnectionImpl::ListInspectTemplates(
     google::privacy::dlp::v2::ListInspectTemplatesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dlp::DlpServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -240,7 +240,7 @@ StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceConnectionImpl::ListDeidentifyTemplates(
     google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dlp::DlpServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -340,7 +340,7 @@ StreamRange<google::privacy::dlp::v2::JobTrigger>
 DlpServiceConnectionImpl::ListJobTriggers(
     google::privacy::dlp::v2::ListJobTriggersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dlp::DlpServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -412,7 +412,7 @@ StreamRange<google::privacy::dlp::v2::DlpJob>
 DlpServiceConnectionImpl::ListDlpJobs(
     google::privacy::dlp::v2::ListDlpJobsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dlp::DlpServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -522,7 +522,7 @@ StreamRange<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceConnectionImpl::ListStoredInfoTypes(
     google::privacy::dlp::v2::ListStoredInfoTypesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dlp::DlpServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

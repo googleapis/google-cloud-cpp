@@ -59,7 +59,7 @@ StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
 DataTransferServiceConnectionImpl::ListDataSources(
     google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::DataTransferServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -153,7 +153,7 @@ DataTransferServiceConnectionImpl::ListTransferConfigs(
     google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::DataTransferServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -250,7 +250,7 @@ DataTransferServiceConnectionImpl::ListTransferRuns(
     google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::DataTransferServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -286,7 +286,7 @@ DataTransferServiceConnectionImpl::ListTransferLogs(
     google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::DataTransferServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

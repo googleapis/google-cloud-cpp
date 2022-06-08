@@ -59,7 +59,7 @@ StreamRange<google::cloud::resourcemanager::v3::Folder>
 FoldersConnectionImpl::ListFolders(
     google::cloud::resourcemanager::v3::ListFoldersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<resourcemanager::FoldersRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -90,7 +90,7 @@ StreamRange<google::cloud::resourcemanager::v3::Folder>
 FoldersConnectionImpl::SearchFolders(
     google::cloud::resourcemanager::v3::SearchFoldersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<resourcemanager::FoldersRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -121,7 +121,7 @@ FoldersConnectionImpl::SearchFolders(
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::CreateFolder(
     google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Folder>(
       background_->cq(), request,
@@ -150,7 +150,7 @@ FoldersConnectionImpl::CreateFolder(
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::UpdateFolder(
     google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Folder>(
       background_->cq(), request,
@@ -179,7 +179,7 @@ FoldersConnectionImpl::UpdateFolder(
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::MoveFolder(
     google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Folder>(
       background_->cq(), request,
@@ -208,7 +208,7 @@ FoldersConnectionImpl::MoveFolder(
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::DeleteFolder(
     google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Folder>(
       background_->cq(), request,
@@ -237,7 +237,7 @@ FoldersConnectionImpl::DeleteFolder(
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::UndeleteFolder(
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Folder>(
       background_->cq(), request,

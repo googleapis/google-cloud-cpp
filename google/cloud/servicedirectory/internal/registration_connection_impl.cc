@@ -58,7 +58,7 @@ StreamRange<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceConnectionImpl::ListNamespaces(
     google::cloud::servicedirectory::v1::ListNamespacesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<servicedirectory::RegistrationServiceRetryPolicy const>(
           retry_policy());
@@ -141,7 +141,7 @@ StreamRange<google::cloud::servicedirectory::v1::Service>
 RegistrationServiceConnectionImpl::ListServices(
     google::cloud::servicedirectory::v1::ListServicesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<servicedirectory::RegistrationServiceRetryPolicy const>(
           retry_policy());
@@ -221,7 +221,7 @@ StreamRange<google::cloud::servicedirectory::v1::Endpoint>
 RegistrationServiceConnectionImpl::ListEndpoints(
     google::cloud::servicedirectory::v1::ListEndpointsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<servicedirectory::RegistrationServiceRetryPolicy const>(
           retry_policy());

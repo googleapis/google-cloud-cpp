@@ -85,7 +85,7 @@ LoggingServiceV2Auth::AsyncTailLogEntries(
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncTailLogEntries(cq, std::move(ctx));
   };

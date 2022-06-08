@@ -47,7 +47,7 @@ StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
 NotificationChannelServiceConnectionImpl::ListNotificationChannelDescriptors(
     google::monitoring::v3::ListNotificationChannelDescriptorsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<monitoring::NotificationChannelServiceRetryPolicy const>(
           retry_policy());
@@ -100,7 +100,7 @@ StreamRange<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceConnectionImpl::ListNotificationChannels(
     google::monitoring::v3::ListNotificationChannelsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<monitoring::NotificationChannelServiceRetryPolicy const>(
           retry_policy());

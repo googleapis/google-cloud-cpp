@@ -93,7 +93,7 @@ ContactCenterInsightsConnectionImpl::ListConversations(
     google::cloud::contactcenterinsights::v1::ListConversationsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       contactcenterinsights::ContactCenterInsightsRetryPolicy const>(
       retry_policy());
@@ -143,7 +143,7 @@ future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
 ContactCenterInsightsConnectionImpl::CreateAnalysis(
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::Analysis>(
       background_->cq(), request,
@@ -188,7 +188,7 @@ StreamRange<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsConnectionImpl::ListAnalyses(
     google::cloud::contactcenterinsights::v1::ListAnalysesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       contactcenterinsights::ContactCenterInsightsRetryPolicy const>(
       retry_policy());
@@ -237,7 +237,7 @@ future<StatusOr<
 ContactCenterInsightsConnectionImpl::ExportInsightsData(
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>(
       background_->cq(), request,
@@ -268,7 +268,7 @@ future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
 ContactCenterInsightsConnectionImpl::CreateIssueModel(
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::IssueModel>(
       background_->cq(), request,
@@ -344,7 +344,7 @@ future<StatusOr<
 ContactCenterInsightsConnectionImpl::DeleteIssueModel(
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>(
       background_->cq(), request,
@@ -376,7 +376,7 @@ future<StatusOr<
 ContactCenterInsightsConnectionImpl::DeployIssueModel(
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>(
       background_->cq(), request,
@@ -408,7 +408,7 @@ future<StatusOr<
 ContactCenterInsightsConnectionImpl::UndeployIssueModel(
     google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>(
       background_->cq(), request,
@@ -523,7 +523,7 @@ ContactCenterInsightsConnectionImpl::ListPhraseMatchers(
     google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       contactcenterinsights::ContactCenterInsightsRetryPolicy const>(
       retry_policy());
@@ -653,7 +653,7 @@ StreamRange<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsConnectionImpl::ListViews(
     google::cloud::contactcenterinsights::v1::ListViewsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       contactcenterinsights::ContactCenterInsightsRetryPolicy const>(
       retry_policy());

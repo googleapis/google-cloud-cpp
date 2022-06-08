@@ -44,7 +44,7 @@ StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
 DataCatalogConnectionImpl::SearchCatalog(
     google::cloud::datacatalog::v1::SearchCatalogRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -126,7 +126,7 @@ StreamRange<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogConnectionImpl::ListEntryGroups(
     google::cloud::datacatalog::v1::ListEntryGroupsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -226,7 +226,7 @@ StreamRange<google::cloud::datacatalog::v1::Entry>
 DataCatalogConnectionImpl::ListEntries(
     google::cloud::datacatalog::v1::ListEntriesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -454,7 +454,7 @@ StreamRange<google::cloud::datacatalog::v1::Tag>
 DataCatalogConnectionImpl::ListTags(
     google::cloud::datacatalog::v1::ListTagsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

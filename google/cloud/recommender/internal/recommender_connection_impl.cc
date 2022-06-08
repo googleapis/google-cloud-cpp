@@ -44,7 +44,7 @@ StreamRange<google::cloud::recommender::v1::Insight>
 RecommenderConnectionImpl::ListInsights(
     google::cloud::recommender::v1::ListInsightsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<recommender::RecommenderRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -104,7 +104,7 @@ StreamRange<google::cloud::recommender::v1::Recommendation>
 RecommenderConnectionImpl::ListRecommendations(
     google::cloud::recommender::v1::ListRecommendationsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<recommender::RecommenderRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

@@ -57,7 +57,7 @@ StreamRange<google::cloud::eventarc::v1::Trigger>
 EventarcConnectionImpl::ListTriggers(
     google::cloud::eventarc::v1::ListTriggersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<eventarc::EventarcRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -89,7 +89,7 @@ EventarcConnectionImpl::ListTriggers(
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcConnectionImpl::CreateTrigger(
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Trigger>(
       background_->cq(), request,
@@ -117,7 +117,7 @@ EventarcConnectionImpl::CreateTrigger(
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcConnectionImpl::UpdateTrigger(
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Trigger>(
       background_->cq(), request,
@@ -145,7 +145,7 @@ EventarcConnectionImpl::UpdateTrigger(
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcConnectionImpl::DeleteTrigger(
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Trigger>(
       background_->cq(), request,
@@ -187,7 +187,7 @@ StreamRange<google::cloud::eventarc::v1::Channel>
 EventarcConnectionImpl::ListChannels(
     google::cloud::eventarc::v1::ListChannelsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<eventarc::EventarcRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -219,7 +219,7 @@ EventarcConnectionImpl::ListChannels(
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcConnectionImpl::CreateChannel(
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Channel>(
       background_->cq(), request,
@@ -247,7 +247,7 @@ EventarcConnectionImpl::CreateChannel(
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcConnectionImpl::UpdateChannel(
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Channel>(
       background_->cq(), request,
@@ -275,7 +275,7 @@ EventarcConnectionImpl::UpdateChannel(
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcConnectionImpl::DeleteChannel(
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Channel>(
       background_->cq(), request,
@@ -317,7 +317,7 @@ StreamRange<google::cloud::eventarc::v1::Provider>
 EventarcConnectionImpl::ListProviders(
     google::cloud::eventarc::v1::ListProvidersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<eventarc::EventarcRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -364,7 +364,7 @@ StreamRange<google::cloud::eventarc::v1::ChannelConnection>
 EventarcConnectionImpl::ListChannelConnections(
     google::cloud::eventarc::v1::ListChannelConnectionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<eventarc::EventarcRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -397,7 +397,7 @@ future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcConnectionImpl::CreateChannelConnection(
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::ChannelConnection>(
       background_->cq(), request,
@@ -429,7 +429,7 @@ future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcConnectionImpl::DeleteChannelConnection(
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::ChannelConnection>(
       background_->cq(), request,

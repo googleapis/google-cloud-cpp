@@ -46,7 +46,7 @@ StreamRange<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceConnectionImpl::ListSettings(
     google::cloud::resourcesettings::v1::ListSettingsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       resourcesettings::ResourceSettingsServiceRetryPolicy const>(
       retry_policy());

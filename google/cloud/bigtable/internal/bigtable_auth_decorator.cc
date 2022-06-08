@@ -109,7 +109,7 @@ BigtableAuth::AsyncReadRows(
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
       google::bigtable::v2::ReadRowsResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncReadRows(cq, std::move(ctx), request);
   };
@@ -126,7 +126,7 @@ BigtableAuth::AsyncSampleRowKeys(
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
       google::bigtable::v2::SampleRowKeysResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncSampleRowKeys(cq, std::move(ctx), request);
   };
@@ -140,7 +140,7 @@ BigtableAuth::AsyncMutateRow(
     std::unique_ptr<grpc::ClientContext> context,
     google::bigtable::v2::MutateRowRequest const& request) {
   using ReturnType = StatusOr<google::bigtable::v2::MutateRowResponse>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -162,7 +162,7 @@ BigtableAuth::AsyncMutateRows(
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
       google::bigtable::v2::MutateRowsResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncMutateRows(cq, std::move(ctx), request);
   };
@@ -176,7 +176,7 @@ BigtableAuth::AsyncCheckAndMutateRow(
     std::unique_ptr<grpc::ClientContext> context,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
   using ReturnType = StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -195,7 +195,7 @@ BigtableAuth::AsyncReadModifyWriteRow(
     std::unique_ptr<grpc::ClientContext> context,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   using ReturnType = StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

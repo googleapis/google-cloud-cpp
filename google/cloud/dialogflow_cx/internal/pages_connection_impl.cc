@@ -43,7 +43,7 @@ StreamRange<google::cloud::dialogflow::cx::v3::Page>
 PagesConnectionImpl::ListPages(
     google::cloud::dialogflow::cx::v3::ListPagesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_cx::PagesRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

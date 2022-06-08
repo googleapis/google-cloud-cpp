@@ -45,7 +45,7 @@ StreamRange<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceConnectionImpl::ListSecrets(
     google::cloud::secretmanager::v1::ListSecretsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<secretmanager::SecretManagerServiceRetryPolicy const>(
           retry_policy());
@@ -138,7 +138,7 @@ StreamRange<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceConnectionImpl::ListSecretVersions(
     google::cloud::secretmanager::v1::ListSecretVersionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<secretmanager::SecretManagerServiceRetryPolicy const>(
           retry_policy());

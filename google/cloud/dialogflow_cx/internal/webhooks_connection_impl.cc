@@ -43,7 +43,7 @@ StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksConnectionImpl::ListWebhooks(
     google::cloud::dialogflow::cx::v3::ListWebhooksRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_cx::WebhooksRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

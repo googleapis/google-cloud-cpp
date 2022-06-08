@@ -73,7 +73,7 @@ StreamRange<google::cloud::dialogflow::v2::Participant>
 ParticipantsConnectionImpl::ListParticipants(
     google::cloud::dialogflow::v2::ListParticipantsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_es::ParticipantsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

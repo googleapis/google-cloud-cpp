@@ -45,7 +45,7 @@ StreamRange<google::cloud::dialogflow::v2::EntityType>
 EntityTypesConnectionImpl::ListEntityTypes(
     google::cloud::dialogflow::v2::ListEntityTypesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_es::EntityTypesRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -127,7 +127,7 @@ future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
 EntityTypesConnectionImpl::BatchUpdateEntityTypes(
     google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>(
       background_->cq(), request,
@@ -159,7 +159,7 @@ future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchDeleteEntityTypes(
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,
@@ -190,7 +190,7 @@ EntityTypesConnectionImpl::BatchDeleteEntityTypes(
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchCreateEntities(
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,
@@ -220,7 +220,7 @@ EntityTypesConnectionImpl::BatchCreateEntities(
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchUpdateEntities(
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,
@@ -250,7 +250,7 @@ EntityTypesConnectionImpl::BatchUpdateEntities(
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchDeleteEntities(
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,

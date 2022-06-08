@@ -46,7 +46,7 @@ StreamRange<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionConnectionImpl::ListInstances(
     google::cloud::baremetalsolution::v2::ListInstancesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
           retry_policy());
@@ -91,7 +91,7 @@ BareMetalSolutionConnectionImpl::GetInstance(
 future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
 BareMetalSolutionConnectionImpl::ResetInstance(
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::ResetInstanceResponse>(
       background_->cq(), request,
@@ -121,7 +121,7 @@ StreamRange<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionConnectionImpl::ListVolumes(
     google::cloud::baremetalsolution::v2::ListVolumesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
           retry_policy());
@@ -165,7 +165,7 @@ BareMetalSolutionConnectionImpl::GetVolume(
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionConnectionImpl::UpdateVolume(
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::Volume>(
       background_->cq(), request,
@@ -195,7 +195,7 @@ StreamRange<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionConnectionImpl::ListNetworks(
     google::cloud::baremetalsolution::v2::ListNetworksRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
           retry_policy());
@@ -241,7 +241,7 @@ BareMetalSolutionConnectionImpl::ListSnapshotSchedulePolicies(
     google::cloud::baremetalsolution::v2::ListSnapshotSchedulePoliciesRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
           retry_policy());
@@ -353,7 +353,7 @@ future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
 BareMetalSolutionConnectionImpl::RestoreVolumeSnapshot(
     google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::VolumeSnapshot>(
       background_->cq(), request,
@@ -413,7 +413,7 @@ StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionConnectionImpl::ListVolumeSnapshots(
     google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
           retry_policy());
@@ -461,7 +461,7 @@ StreamRange<google::cloud::baremetalsolution::v2::Lun>
 BareMetalSolutionConnectionImpl::ListLuns(
     google::cloud::baremetalsolution::v2::ListLunsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
           retry_policy());

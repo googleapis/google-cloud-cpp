@@ -41,7 +41,7 @@ CursorServiceAuth::AsyncStreamingCommitCursor(
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingCommitCursor(cq, std::move(ctx));
   };

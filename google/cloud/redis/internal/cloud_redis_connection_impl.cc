@@ -44,7 +44,7 @@ StreamRange<google::cloud::redis::v1::Instance>
 CloudRedisConnectionImpl::ListInstances(
     google::cloud::redis::v1::ListInstancesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<redis::CloudRedisRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -103,7 +103,7 @@ CloudRedisConnectionImpl::GetInstanceAuthString(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::CreateInstance(
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -132,7 +132,7 @@ CloudRedisConnectionImpl::CreateInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::UpdateInstance(
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -161,7 +161,7 @@ CloudRedisConnectionImpl::UpdateInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::UpgradeInstance(
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -190,7 +190,7 @@ CloudRedisConnectionImpl::UpgradeInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::ImportInstance(
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -219,7 +219,7 @@ CloudRedisConnectionImpl::ImportInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::ExportInstance(
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -248,7 +248,7 @@ CloudRedisConnectionImpl::ExportInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::FailoverInstance(
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -277,7 +277,7 @@ CloudRedisConnectionImpl::FailoverInstance(
 future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
 CloudRedisConnectionImpl::DeleteInstance(
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::OperationMetadata>(
       background_->cq(), request,
@@ -306,7 +306,7 @@ CloudRedisConnectionImpl::DeleteInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::RescheduleMaintenance(
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,

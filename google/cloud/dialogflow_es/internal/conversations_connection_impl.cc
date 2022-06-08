@@ -59,7 +59,7 @@ StreamRange<google::cloud::dialogflow::v2::Conversation>
 ConversationsConnectionImpl::ListConversations(
     google::cloud::dialogflow::v2::ListConversationsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_es::ConversationsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -119,7 +119,7 @@ StreamRange<google::cloud::dialogflow::v2::Message>
 ConversationsConnectionImpl::ListMessages(
     google::cloud::dialogflow::v2::ListMessagesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_es::ConversationsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

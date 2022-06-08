@@ -46,7 +46,7 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
 ConversationDatasetsConnectionImpl::CreateConversationDataset(
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ConversationDataset>(
       background_->cq(), request,
@@ -94,7 +94,7 @@ StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
 ConversationDatasetsConnectionImpl::ListConversationDatasets(
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_es::ConversationDatasetsRetryPolicy const>(
           retry_policy());
@@ -130,7 +130,7 @@ future<StatusOr<
 ConversationDatasetsConnectionImpl::DeleteConversationDataset(
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::
           DeleteConversationDatasetOperationMetadata>(
@@ -166,7 +166,7 @@ future<StatusOr<
 ConversationDatasetsConnectionImpl::ImportConversationData(
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>(
       background_->cq(), request,

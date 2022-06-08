@@ -44,7 +44,7 @@ StreamRange<google::monitoring::v3::Group>
 GroupServiceConnectionImpl::ListGroups(
     google::monitoring::v3::ListGroupsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::GroupServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -122,7 +122,7 @@ StreamRange<google::api::MonitoredResource>
 GroupServiceConnectionImpl::ListGroupMembers(
     google::monitoring::v3::ListGroupMembersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::GroupServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
