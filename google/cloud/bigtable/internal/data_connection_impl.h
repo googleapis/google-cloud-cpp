@@ -44,6 +44,10 @@ class DataConnectionImpl : public DataConnection {
   Status Apply(std::string const& app_profile_id, std::string const& table_name,
                bigtable::SingleRowMutation mut) override;
 
+  future<Status> AsyncApply(std::string const& app_profile_id,
+                            std::string const& table_name,
+                            bigtable::SingleRowMutation mut) override;
+
   std::vector<bigtable::FailedMutation> BulkApply(
       std::string const& app_profile_id, std::string const& table_name,
       bigtable::BulkMutation mut) override;

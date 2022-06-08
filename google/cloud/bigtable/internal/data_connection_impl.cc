@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/idempotency.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
@@ -80,6 +81,40 @@ Status DataConnectionImpl::Apply(std::string const& app_profile_id,
       request, __func__);
   if (!sor) return std::move(sor).status();
   return Status{};
+}
+
+future<Status> DataConnectionImpl::AsyncApply(std::string const& app_profile_id,
+                                              std::string const& table_name,
+                                              bigtable::SingleRowMutation mut) {
+  google::bigtable::v2::MutateRowRequest request;
+  request.set_app_profile_id(app_profile_id);
+  request.set_table_name(table_name);
+  mut.MoveTo(request);
+
+  auto idempotent_policy = idempotency_policy();
+  bool const is_idempotent = std::all_of(
+      request.mutations().begin(), request.mutations().end(),
+      [&idempotent_policy](google::bigtable::v2::Mutation const& m) {
+        return idempotent_policy->is_idempotent(m);
+      });
+
+  auto stub = stub_;
+  return google::cloud::internal::AsyncRetryLoop(
+             retry_policy(), backoff_policy(),
+             is_idempotent ? Idempotency::kIdempotent
+                           : Idempotency::kNonIdempotent,
+             background_->cq(),
+             [stub](CompletionQueue& cq,
+                    std::unique_ptr<grpc::ClientContext> context,
+                    google::bigtable::v2::MutateRowRequest const& request) {
+               return stub->AsyncMutateRow(cq, std::move(context), request);
+             },
+             request, __func__)
+      .then([](future<StatusOr<google::bigtable::v2::MutateRowResponse>> f) {
+        auto sor = f.get();
+        if (!sor) return std::move(sor).status();
+        return Status{};
+      });
 }
 
 std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(

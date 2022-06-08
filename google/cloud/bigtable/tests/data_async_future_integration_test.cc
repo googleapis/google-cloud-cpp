@@ -21,13 +21,24 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::google::cloud::bigtable::testing::TableIntegrationTest;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
-using DataAsyncFutureIntegrationTest = bigtable::testing::TableIntegrationTest;
+
+using DataIntegrationTestClientOnly = TableIntegrationTest;
+
+class DataAsyncIntegrationTest
+    : public TableIntegrationTest,
+      public ::testing::WithParamInterface<std::string> {};
+
+INSTANTIATE_TEST_SUITE_P(, DataAsyncIntegrationTest,
+                         ::testing::Values("with-data-connection",
+                                           "with-data-client"));
 
 std::string const kFamily = "family1";
 
-TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
-  auto table = GetTable();
+TEST_P(DataAsyncIntegrationTest, TableAsyncApply) {
+  auto table = GetTable(GetParam());
 
   std::string const row_key = "key-000010";
   std::vector<bigtable::Cell> created{{row_key, kFamily, "cc1", 1000, "v1000"},
@@ -58,7 +69,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
+TEST_F(DataIntegrationTestClientOnly, TableAsyncBulkApply) {
   auto table = GetTable();
 
   std::string const row_key1 = "key-000010";
@@ -106,7 +117,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
+TEST_F(DataIntegrationTestClientOnly, TableAsyncCheckAndMutateRowPass) {
   auto table = GetTable();
 
   std::string const key = "row-key";
@@ -133,7 +144,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
+TEST_F(DataIntegrationTestClientOnly, TableAsyncCheckAndMutateRowFail) {
   auto table = GetTable();
 
   std::string const key = "row-key";
@@ -160,7 +171,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataAsyncFutureIntegrationTest,
+TEST_F(DataIntegrationTestClientOnly,
        TableAsyncReadModifyWriteAppendValueTest) {
   auto table = GetTable();
   std::string const row_key1 = "row-key-1";
@@ -217,7 +228,7 @@ TEST_F(DataAsyncFutureIntegrationTest,
                       actual_cells_ignore_timestamp);
 }
 
-TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
+TEST_F(DataIntegrationTestClientOnly, TableAsyncReadRowsAllRows) {
   auto table = GetTable();
 
   std::string const row_key1 = "row-key-1";
@@ -256,7 +267,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
   CheckEqualUnordered(created, actual);
 }
 
-TEST_F(DataAsyncFutureIntegrationTest, TableReadRowTest) {
+TEST_F(DataIntegrationTestClientOnly, TableAsyncReadRowTest) {
   auto table = GetTable();
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";

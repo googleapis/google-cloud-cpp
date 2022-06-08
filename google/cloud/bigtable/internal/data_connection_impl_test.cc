@@ -349,12 +349,21 @@ TEST(DataConnectionTest, ApplyRetryExhausted) {
             return TransientError();
           });
 
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
+    return clone;
+  });
+
+  internal::OptionsSpan span(
+      Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto conn = TestConnection(std::move(mock));
   auto status = conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, ApplyRetryIdempotentOnly) {
+TEST(DataConnectionTest, ApplyRetryIdempotency) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
@@ -364,10 +373,115 @@ TEST(DataConnectionTest, ApplyRetryIdempotentOnly) {
         return TransientError();
       });
 
+  auto mock_i = absl::make_unique<MockIdempotentMutationPolicy>();
+  EXPECT_CALL(*mock_i, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockIdempotentMutationPolicy>();
+    EXPECT_CALL(*clone, is_idempotent(An<v2::Mutation const&>()))
+        .WillOnce(Return(false));
+    return clone;
+  });
+
+  internal::OptionsSpan span(
+      Options{}.set<IdempotentMutationPolicyOption>(std::move(mock_i)));
   auto conn = TestConnection(std::move(mock));
   auto status =
       conn->Apply(kAppProfile, kTableName, NonIdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST(DataConnectionTest, AsyncApplySuccess) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRow)
+      .WillOnce([](google::cloud::CompletionQueue&,
+                   std::unique_ptr<grpc::ClientContext>,
+                   v2::MutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        return make_ready_future(make_status_or(v2::MutateRowResponse{}));
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto status =
+      conn->AsyncApply(kAppProfile, kTableName, IdempotentMutation("row"));
+  ASSERT_STATUS_OK(status.get());
+}
+
+TEST(DataConnectionTest, AsyncApplyPermanentFailure) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRow)
+      .WillOnce([](google::cloud::CompletionQueue&,
+                   std::unique_ptr<grpc::ClientContext>,
+                   v2::MutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        return make_ready_future<StatusOr<v2::MutateRowResponse>>(
+            PermanentError());
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto status =
+      conn->AsyncApply(kAppProfile, kTableName, IdempotentMutation("row"));
+  EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(DataConnectionTest, AsyncApplyRetryExhausted) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRow)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         v2::MutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        return make_ready_future<StatusOr<v2::MutateRowResponse>>(
+            TransientError());
+      });
+
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
+    return clone;
+  });
+
+  internal::OptionsSpan span(
+      Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
+  auto conn = TestConnection(std::move(mock));
+  auto status =
+      conn->AsyncApply(kAppProfile, kTableName, IdempotentMutation("row"));
+  EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
+}
+
+TEST(DataConnectionTest, AsyncApplyRetryIdempotency) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRow)
+      .WillOnce([](google::cloud::CompletionQueue&,
+                   std::unique_ptr<grpc::ClientContext>,
+                   v2::MutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        return make_ready_future<StatusOr<v2::MutateRowResponse>>(
+            TransientError());
+      });
+
+  auto mock_i = absl::make_unique<MockIdempotentMutationPolicy>();
+  EXPECT_CALL(*mock_i, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockIdempotentMutationPolicy>();
+    EXPECT_CALL(*clone, is_idempotent(An<v2::Mutation const&>()))
+        .WillOnce(Return(false));
+    return clone;
+  });
+
+  internal::OptionsSpan span(
+      Options{}.set<IdempotentMutationPolicyOption>(std::move(mock_i)));
+  auto conn = TestConnection(std::move(mock));
+  auto status =
+      conn->AsyncApply(kAppProfile, kTableName, NonIdempotentMutation("row"));
+  EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(DataConnectionTest, BulkApplyEmpty) {

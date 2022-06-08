@@ -93,6 +93,11 @@ Status Table::Apply(SingleRowMutation mut) {
 }
 
 future<Status> Table::AsyncApply(SingleRowMutation mut) {
+  if (connection_) {
+    return connection_->AsyncApply(app_profile_id_, table_name_,
+                                   std::move(mut));
+  }
+
   google::bigtable::v2::MutateRowRequest request;
   SetCommonTableOperationRequest<google::bigtable::v2::MutateRowRequest>(
       request, app_profile_id_, table_name_);
