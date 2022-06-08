@@ -146,6 +146,25 @@ class V2SignUrlRequest {
   }
 
   V2SignUrlRequest& set_multiple_options() { return *this; }
+  template <typename... T>
+  V2SignUrlRequest& set_multiple_options(google::cloud::Options const&&,
+                                         T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  V2SignUrlRequest& set_multiple_options(google::cloud::Options const&,
+                                         T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  V2SignUrlRequest& set_multiple_options(google::cloud::Options&&,
+                                         T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  V2SignUrlRequest& set_multiple_options(google::cloud::Options&, T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
 
  private:
   static std::chrono::system_clock::time_point DefaultExpirationTime();
@@ -258,6 +277,25 @@ class V4SignUrlRequest {
   }
 
   V4SignUrlRequest& set_multiple_options() { return *this; }
+  template <typename... T>
+  V4SignUrlRequest& set_multiple_options(google::cloud::Options const&&,
+                                         T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  V4SignUrlRequest& set_multiple_options(google::cloud::Options const&,
+                                         T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  V4SignUrlRequest& set_multiple_options(google::cloud::Options&&,
+                                         T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  V4SignUrlRequest& set_multiple_options(google::cloud::Options&, T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
 
   Status Validate();
 
