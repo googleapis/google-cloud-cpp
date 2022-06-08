@@ -47,7 +47,7 @@ ReachabilityServiceConnectionImpl::ListConnectivityTests(
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<networkmanagement::ReachabilityServiceRetryPolicy const>(
           retry_policy());
@@ -98,7 +98,7 @@ future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnectionImpl::CreateConnectivityTest(
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkmanagement::v1::ConnectivityTest>(
       background_->cq(), request,
@@ -130,7 +130,7 @@ future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkmanagement::v1::ConnectivityTest>(
       background_->cq(), request,
@@ -162,7 +162,7 @@ future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnectionImpl::RerunConnectivityTest(
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkmanagement::v1::ConnectivityTest>(
       background_->cq(), request,
@@ -194,7 +194,7 @@ future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkmanagement::v1::OperationMetadata>(
       background_->cq(), request,

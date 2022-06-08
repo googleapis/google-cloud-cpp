@@ -43,7 +43,7 @@ StreamRange<google::iam::admin::v1::ServiceAccount>
 IAMConnectionImpl::ListServiceAccounts(
     google::iam::admin::v1::ListServiceAccountsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServiceAccounts(request);
@@ -275,7 +275,7 @@ StreamRange<google::iam::admin::v1::Role>
 IAMConnectionImpl::QueryGrantableRoles(
     google::iam::admin::v1::QueryGrantableRolesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->QueryGrantableRoles(request);
@@ -305,7 +305,7 @@ IAMConnectionImpl::QueryGrantableRoles(
 StreamRange<google::iam::admin::v1::Role> IAMConnectionImpl::ListRoles(
     google::iam::admin::v1::ListRolesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRoles(request);
@@ -394,7 +394,7 @@ StreamRange<google::iam::admin::v1::Permission>
 IAMConnectionImpl::QueryTestablePermissions(
     google::iam::admin::v1::QueryTestablePermissionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->QueryTestablePermissions(request);

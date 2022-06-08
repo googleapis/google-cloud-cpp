@@ -46,7 +46,7 @@ StreamRange<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryConnectionImpl::ListDockerImages(
     google::devtools::artifactregistry::v1::ListDockerImagesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
           retry_policy());
@@ -96,7 +96,7 @@ future<StatusOr<
 ArtifactRegistryConnectionImpl::ImportAptArtifacts(
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>(
       background_->cq(), request,
@@ -128,7 +128,7 @@ future<StatusOr<
 ArtifactRegistryConnectionImpl::ImportYumArtifacts(
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>(
       background_->cq(), request,
@@ -159,7 +159,7 @@ StreamRange<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryConnectionImpl::ListRepositories(
     google::devtools::artifactregistry::v1::ListRepositoriesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
           retry_policy());
@@ -207,7 +207,7 @@ future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
 ArtifactRegistryConnectionImpl::CreateRepository(
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::Repository>(
       background_->cq(), request,
@@ -253,7 +253,7 @@ future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryConnectionImpl::DeleteRepository(
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::OperationMetadata>(
       background_->cq(), request,
@@ -285,7 +285,7 @@ StreamRange<google::devtools::artifactregistry::v1::Package>
 ArtifactRegistryConnectionImpl::ListPackages(
     google::devtools::artifactregistry::v1::ListPackagesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
           retry_policy());
@@ -332,7 +332,7 @@ future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryConnectionImpl::DeletePackage(
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::OperationMetadata>(
       background_->cq(), request,
@@ -362,7 +362,7 @@ StreamRange<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryConnectionImpl::ListVersions(
     google::devtools::artifactregistry::v1::ListVersionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
           retry_policy());
@@ -409,7 +409,7 @@ future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryConnectionImpl::DeleteVersion(
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::OperationMetadata>(
       background_->cq(), request,
@@ -439,7 +439,7 @@ StreamRange<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryConnectionImpl::ListFiles(
     google::devtools::artifactregistry::v1::ListFilesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
           retry_policy());
@@ -483,7 +483,7 @@ StreamRange<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryConnectionImpl::ListTags(
     google::devtools::artifactregistry::v1::ListTagsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
           retry_policy());

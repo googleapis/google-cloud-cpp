@@ -45,7 +45,7 @@ StreamRange<google::cloud::dialogflow::v2::Document>
 DocumentsConnectionImpl::ListDocuments(
     google::cloud::dialogflow::v2::ListDocumentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_es::DocumentsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -90,7 +90,7 @@ DocumentsConnectionImpl::GetDocument(
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::CreateDocument(
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::Document>(
       background_->cq(), request,
@@ -120,7 +120,7 @@ DocumentsConnectionImpl::CreateDocument(
 future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
 DocumentsConnectionImpl::ImportDocuments(
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ImportDocumentsResponse>(
       background_->cq(), request,
@@ -150,7 +150,7 @@ DocumentsConnectionImpl::ImportDocuments(
 future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
 DocumentsConnectionImpl::DeleteDocument(
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::KnowledgeOperationMetadata>(
       background_->cq(), request,
@@ -180,7 +180,7 @@ DocumentsConnectionImpl::DeleteDocument(
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::UpdateDocument(
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::Document>(
       background_->cq(), request,
@@ -210,7 +210,7 @@ DocumentsConnectionImpl::UpdateDocument(
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::ReloadDocument(
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::Document>(
       background_->cq(), request,
@@ -240,7 +240,7 @@ DocumentsConnectionImpl::ReloadDocument(
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::ExportDocument(
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::Document>(
       background_->cq(), request,

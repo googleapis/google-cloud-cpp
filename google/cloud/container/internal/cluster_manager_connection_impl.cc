@@ -451,7 +451,7 @@ StreamRange<google::container::v1::UsableSubnetwork>
 ClusterManagerConnectionImpl::ListUsableSubnetworks(
     google::container::v1::ListUsableSubnetworksRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<container::ClusterManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

@@ -69,7 +69,7 @@ StreamRange<google::logging::v2::LogEntry>
 LoggingServiceV2ConnectionImpl::ListLogEntries(
     google::logging::v2::ListLogEntriesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<logging::LoggingServiceV2RetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -100,7 +100,7 @@ StreamRange<google::api::MonitoredResourceDescriptor>
 LoggingServiceV2ConnectionImpl::ListMonitoredResourceDescriptors(
     google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<logging::LoggingServiceV2RetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -134,7 +134,7 @@ LoggingServiceV2ConnectionImpl::ListMonitoredResourceDescriptors(
 StreamRange<std::string> LoggingServiceV2ConnectionImpl::ListLogs(
     google::logging::v2::ListLogsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<logging::LoggingServiceV2RetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

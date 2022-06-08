@@ -55,7 +55,7 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceConnectionImpl::CreateJob(
 future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
 JobServiceConnectionImpl::BatchCreateJobs(
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::talent::v4::BatchCreateJobsResponse>(
       background_->cq(), request,
@@ -107,7 +107,7 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceConnectionImpl::UpdateJob(
 future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
 JobServiceConnectionImpl::BatchUpdateJobs(
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::talent::v4::BatchUpdateJobsResponse>(
       background_->cq(), request,
@@ -148,7 +148,7 @@ Status JobServiceConnectionImpl::DeleteJob(
 future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
 JobServiceConnectionImpl::BatchDeleteJobs(
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::talent::v4::BatchDeleteJobsResponse>(
       background_->cq(), request,
@@ -177,7 +177,7 @@ JobServiceConnectionImpl::BatchDeleteJobs(
 StreamRange<google::cloud::talent::v4::Job> JobServiceConnectionImpl::ListJobs(
     google::cloud::talent::v4::ListJobsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<talent::JobServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

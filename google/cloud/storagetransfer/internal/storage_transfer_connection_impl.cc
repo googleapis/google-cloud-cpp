@@ -103,7 +103,7 @@ StreamRange<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceConnectionImpl::ListTransferJobs(
     google::storagetransfer::v1::ListTransferJobsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<storagetransfer::StorageTransferServiceRetryPolicy const>(
           retry_policy());
@@ -163,7 +163,7 @@ Status StorageTransferServiceConnectionImpl::ResumeTransferOperation(
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceConnectionImpl::RunTransferJob(
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::storagetransfer::v1::TransferOperation>(
       background_->cq(), request,
@@ -235,7 +235,7 @@ StreamRange<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceConnectionImpl::ListAgentPools(
     google::storagetransfer::v1::ListAgentPoolsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<storagetransfer::StorageTransferServiceRetryPolicy const>(
           retry_policy());

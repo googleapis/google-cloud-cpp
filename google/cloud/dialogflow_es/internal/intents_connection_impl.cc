@@ -44,7 +44,7 @@ StreamRange<google::cloud::dialogflow::v2::Intent>
 IntentsConnectionImpl::ListIntents(
     google::cloud::dialogflow::v2::ListIntentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_es::IntentsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -128,7 +128,7 @@ Status IntentsConnectionImpl::DeleteIntent(
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
 IntentsConnectionImpl::BatchUpdateIntents(
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>(
       background_->cq(), request,
@@ -158,7 +158,7 @@ IntentsConnectionImpl::BatchUpdateIntents(
 future<StatusOr<google::protobuf::Struct>>
 IntentsConnectionImpl::BatchDeleteIntents(
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,

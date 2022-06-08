@@ -55,7 +55,7 @@ PredictionServiceConnectionImpl::Predict(
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceConnectionImpl::BatchPredict(
     google::cloud::automl::v1::BatchPredictRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::BatchPredictResult>(
       background_->cq(), request,

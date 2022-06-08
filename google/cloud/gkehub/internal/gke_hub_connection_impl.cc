@@ -45,7 +45,7 @@ StreamRange<google::cloud::gkehub::v1::Membership>
 GkeHubConnectionImpl::ListMemberships(
     google::cloud::gkehub::v1::ListMembershipsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<gkehub::GkeHubRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListMemberships(request);
@@ -77,7 +77,7 @@ StreamRange<google::cloud::gkehub::v1::Feature>
 GkeHubConnectionImpl::ListFeatures(
     google::cloud::gkehub::v1::ListFeaturesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<gkehub::GkeHubRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListFeatures(request);
@@ -133,7 +133,7 @@ StatusOr<google::cloud::gkehub::v1::Feature> GkeHubConnectionImpl::GetFeature(
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
 GkeHubConnectionImpl::CreateMembership(
     google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::Membership>(
       background_->cq(), request,
@@ -163,7 +163,7 @@ GkeHubConnectionImpl::CreateMembership(
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubConnectionImpl::CreateFeature(
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::Feature>(
       background_->cq(), request,
@@ -191,7 +191,7 @@ GkeHubConnectionImpl::CreateFeature(
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubConnectionImpl::DeleteMembership(
     google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::OperationMetadata>(
       background_->cq(), request,
@@ -221,7 +221,7 @@ GkeHubConnectionImpl::DeleteMembership(
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubConnectionImpl::DeleteFeature(
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::OperationMetadata>(
       background_->cq(), request,
@@ -249,7 +249,7 @@ GkeHubConnectionImpl::DeleteFeature(
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
 GkeHubConnectionImpl::UpdateMembership(
     google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::Membership>(
       background_->cq(), request,
@@ -279,7 +279,7 @@ GkeHubConnectionImpl::UpdateMembership(
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubConnectionImpl::UpdateFeature(
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::Feature>(
       background_->cq(), request,

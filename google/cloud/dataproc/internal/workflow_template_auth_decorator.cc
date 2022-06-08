@@ -55,7 +55,7 @@ WorkflowTemplateServiceAuth::AsyncInstantiateWorkflowTemplate(
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -76,7 +76,7 @@ WorkflowTemplateServiceAuth::AsyncInstantiateInlineWorkflowTemplate(
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -122,7 +122,7 @@ WorkflowTemplateServiceAuth::AsyncGetOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -139,7 +139,7 @@ future<Status> WorkflowTemplateServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

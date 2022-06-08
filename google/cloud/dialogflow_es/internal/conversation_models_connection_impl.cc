@@ -46,7 +46,7 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
 ConversationModelsConnectionImpl::CreateConversationModel(
     google::cloud::dialogflow::v2::CreateConversationModelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ConversationModel>(
       background_->cq(), request,
@@ -93,7 +93,7 @@ StreamRange<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsConnectionImpl::ListConversationModels(
     google::cloud::dialogflow::v2::ListConversationModelsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_es::ConversationModelsRetryPolicy const>(
           retry_policy());
@@ -129,7 +129,7 @@ future<StatusOr<
 ConversationModelsConnectionImpl::DeleteConversationModel(
     google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>(
       background_->cq(), request,
@@ -164,7 +164,7 @@ future<StatusOr<
 ConversationModelsConnectionImpl::DeployConversationModel(
     google::cloud::dialogflow::v2::DeployConversationModelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>(
       background_->cq(), request,
@@ -199,7 +199,7 @@ future<StatusOr<
 ConversationModelsConnectionImpl::UndeployConversationModel(
     google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::
           UndeployConversationModelOperationMetadata>(
@@ -250,7 +250,7 @@ ConversationModelsConnectionImpl::ListConversationModelEvaluations(
     google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_es::ConversationModelsRetryPolicy const>(
           retry_policy());
@@ -287,7 +287,7 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
 ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
     google::cloud::dialogflow::v2::
         CreateConversationModelEvaluationRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ConversationModelEvaluation>(
       background_->cq(), request,

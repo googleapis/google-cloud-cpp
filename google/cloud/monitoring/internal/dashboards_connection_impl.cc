@@ -57,7 +57,7 @@ StreamRange<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceConnectionImpl::ListDashboards(
     google::monitoring::dashboard::v1::ListDashboardsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::DashboardsServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

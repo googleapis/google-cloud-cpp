@@ -70,7 +70,7 @@ StreamRange<google::cloud::retail::v2::Product>
 ProductServiceConnectionImpl::ListProducts(
     google::cloud::retail::v2::ListProductsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<retail::ProductServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -127,7 +127,7 @@ Status ProductServiceConnectionImpl::DeleteProduct(
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceConnectionImpl::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::ImportProductsResponse>(
       background_->cq(), request,
@@ -156,7 +156,7 @@ ProductServiceConnectionImpl::ImportProducts(
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
 ProductServiceConnectionImpl::SetInventory(
     google::cloud::retail::v2::SetInventoryRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::SetInventoryResponse>(
       background_->cq(), request,
@@ -184,7 +184,7 @@ ProductServiceConnectionImpl::SetInventory(
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceConnectionImpl::AddFulfillmentPlaces(
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::AddFulfillmentPlacesResponse>(
       background_->cq(), request,
@@ -214,7 +214,7 @@ ProductServiceConnectionImpl::AddFulfillmentPlaces(
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>(
       background_->cq(), request,
@@ -245,7 +245,7 @@ ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
 ProductServiceConnectionImpl::AddLocalInventories(
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::AddLocalInventoriesResponse>(
       background_->cq(), request,
@@ -275,7 +275,7 @@ ProductServiceConnectionImpl::AddLocalInventories(
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
 ProductServiceConnectionImpl::RemoveLocalInventories(
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::RemoveLocalInventoriesResponse>(
       background_->cq(), request,

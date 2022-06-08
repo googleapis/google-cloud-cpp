@@ -37,7 +37,7 @@ EnvironmentsAuth::AsyncCreateEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -78,7 +78,7 @@ EnvironmentsAuth::AsyncUpdateEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -98,7 +98,7 @@ EnvironmentsAuth::AsyncDeleteEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -117,7 +117,7 @@ EnvironmentsAuth::AsyncGetOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -134,7 +134,7 @@ future<Status> EnvironmentsAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

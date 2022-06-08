@@ -89,7 +89,7 @@ StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceConnectionImpl::ListAutoscalingPolicies(
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dataproc::AutoscalingPolicyServiceRetryPolicy const>(
           retry_policy());

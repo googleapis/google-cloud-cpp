@@ -43,7 +43,7 @@ StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
 SearchServiceConnectionImpl::Search(
     google::cloud::retail::v2::SearchRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<retail::SearchServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

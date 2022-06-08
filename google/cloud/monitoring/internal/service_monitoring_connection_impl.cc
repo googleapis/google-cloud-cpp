@@ -71,7 +71,7 @@ StreamRange<google::monitoring::v3::Service>
 ServiceMonitoringServiceConnectionImpl::ListServices(
     google::monitoring::v3::ListServicesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<monitoring::ServiceMonitoringServiceRetryPolicy const>(
           retry_policy());
@@ -157,7 +157,7 @@ StreamRange<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceConnectionImpl::ListServiceLevelObjectives(
     google::monitoring::v3::ListServiceLevelObjectivesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<monitoring::ServiceMonitoringServiceRetryPolicy const>(
           retry_policy());

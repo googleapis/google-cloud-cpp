@@ -86,7 +86,7 @@ ContactCenterInsightsAuth::AsyncCreateAnalysis(
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -135,7 +135,7 @@ ContactCenterInsightsAuth::AsyncExportInsightsData(
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -155,7 +155,7 @@ ContactCenterInsightsAuth::AsyncCreateIssueModel(
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -205,7 +205,7 @@ ContactCenterInsightsAuth::AsyncDeleteIssueModel(
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -225,7 +225,7 @@ ContactCenterInsightsAuth::AsyncDeployIssueModel(
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -245,7 +245,7 @@ ContactCenterInsightsAuth::AsyncUndeployIssueModel(
     google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -430,7 +430,7 @@ ContactCenterInsightsAuth::AsyncGetOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -447,7 +447,7 @@ future<Status> ContactCenterInsightsAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

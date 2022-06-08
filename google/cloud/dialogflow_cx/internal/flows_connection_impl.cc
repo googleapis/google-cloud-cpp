@@ -71,7 +71,7 @@ StreamRange<google::cloud::dialogflow::cx::v3::Flow>
 FlowsConnectionImpl::ListFlows(
     google::cloud::dialogflow::cx::v3::ListFlowsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_cx::FlowsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -125,7 +125,7 @@ FlowsConnectionImpl::UpdateFlow(
 
 future<StatusOr<google::protobuf::Struct>> FlowsConnectionImpl::TrainFlow(
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,
@@ -181,7 +181,7 @@ FlowsConnectionImpl::GetFlowValidationResult(
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
 FlowsConnectionImpl::ImportFlow(
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::ImportFlowResponse>(
       background_->cq(), request,
@@ -210,7 +210,7 @@ FlowsConnectionImpl::ImportFlow(
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
 FlowsConnectionImpl::ExportFlow(
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::ExportFlowResponse>(
       background_->cq(), request,

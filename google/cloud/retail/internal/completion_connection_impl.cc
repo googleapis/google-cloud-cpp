@@ -56,7 +56,7 @@ CompletionServiceConnectionImpl::CompleteQuery(
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
 CompletionServiceConnectionImpl::ImportCompletionData(
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::ImportCompletionDataResponse>(
       background_->cq(), request,

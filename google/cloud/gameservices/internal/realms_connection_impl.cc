@@ -46,7 +46,7 @@ StreamRange<google::cloud::gaming::v1::Realm>
 RealmsServiceConnectionImpl::ListRealms(
     google::cloud::gaming::v1::ListRealmsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<gameservices::RealmsServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -89,7 +89,7 @@ RealmsServiceConnectionImpl::GetRealm(
 future<StatusOr<google::cloud::gaming::v1::Realm>>
 RealmsServiceConnectionImpl::CreateRealm(
     google::cloud::gaming::v1::CreateRealmRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::Realm>(
       background_->cq(), request,
@@ -117,7 +117,7 @@ RealmsServiceConnectionImpl::CreateRealm(
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 RealmsServiceConnectionImpl::DeleteRealm(
     google::cloud::gaming::v1::DeleteRealmRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::OperationMetadata>(
       background_->cq(), request,
@@ -145,7 +145,7 @@ RealmsServiceConnectionImpl::DeleteRealm(
 future<StatusOr<google::cloud::gaming::v1::Realm>>
 RealmsServiceConnectionImpl::UpdateRealm(
     google::cloud::gaming::v1::UpdateRealmRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::Realm>(
       background_->cq(), request,

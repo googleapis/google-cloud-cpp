@@ -70,7 +70,7 @@ UserEventServiceConnectionImpl::CollectUserEvent(
 future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
 UserEventServiceConnectionImpl::PurgeUserEvents(
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::PurgeUserEventsResponse>(
       background_->cq(), request,
@@ -99,7 +99,7 @@ UserEventServiceConnectionImpl::PurgeUserEvents(
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
 UserEventServiceConnectionImpl::ImportUserEvents(
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::ImportUserEventsResponse>(
       background_->cq(), request,
@@ -129,7 +129,7 @@ UserEventServiceConnectionImpl::ImportUserEvents(
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
 UserEventServiceConnectionImpl::RejoinUserEvents(
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::RejoinUserEventsResponse>(
       background_->cq(), request,

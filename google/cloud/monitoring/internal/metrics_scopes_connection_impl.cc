@@ -73,7 +73,7 @@ future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
 MetricsScopesConnectionImpl::CreateMonitoredProject(
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::monitoring::metricsscope::v1::MonitoredProject>(
       background_->cq(), request,
@@ -105,7 +105,7 @@ future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesConnectionImpl::DeleteMonitoredProject(
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::monitoring::metricsscope::v1::OperationMetadata>(
       background_->cq(), request,

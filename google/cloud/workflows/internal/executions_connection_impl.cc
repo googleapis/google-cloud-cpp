@@ -43,7 +43,7 @@ StreamRange<google::cloud::workflows::executions::v1::Execution>
 ExecutionsConnectionImpl::ListExecutions(
     google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<workflows::ExecutionsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

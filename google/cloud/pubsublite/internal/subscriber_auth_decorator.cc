@@ -41,7 +41,7 @@ SubscriberServiceAuth::AsyncSubscribe(
       google::cloud::pubsublite::v1::SubscribeRequest,
       google::cloud::pubsublite::v1::SubscribeResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncSubscribe(cq, std::move(ctx));
   };

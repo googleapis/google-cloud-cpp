@@ -45,7 +45,7 @@ BigtableInstanceAdminConnectionImpl::BigtableInstanceAdminConnectionImpl(
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnectionImpl::CreateInstance(
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Instance>(
       background_->cq(), request,
@@ -114,7 +114,7 @@ BigtableInstanceAdminConnectionImpl::UpdateInstance(
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnectionImpl::PartialUpdateInstance(
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Instance>(
       background_->cq(), request,
@@ -158,7 +158,7 @@ Status BigtableInstanceAdminConnectionImpl::DeleteInstance(
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnectionImpl::CreateCluster(
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Cluster>(
       background_->cq(), request,
@@ -212,7 +212,7 @@ BigtableInstanceAdminConnectionImpl::ListClusters(
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnectionImpl::UpdateCluster(
     google::bigtable::admin::v2::Cluster const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Cluster>(
       background_->cq(), request,
@@ -240,7 +240,7 @@ BigtableInstanceAdminConnectionImpl::UpdateCluster(
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnectionImpl::PartialUpdateCluster(
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Cluster>(
       background_->cq(), request,
@@ -310,7 +310,7 @@ StreamRange<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminConnectionImpl::ListAppProfiles(
     google::bigtable::admin::v2::ListAppProfilesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy const>(
           retry_policy());
@@ -343,7 +343,7 @@ BigtableInstanceAdminConnectionImpl::ListAppProfiles(
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminConnectionImpl::UpdateAppProfile(
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::AppProfile>(
       background_->cq(), request,
@@ -426,7 +426,7 @@ StreamRange<google::bigtable::admin::v2::HotTablet>
 BigtableInstanceAdminConnectionImpl::ListHotTablets(
     google::bigtable::admin::v2::ListHotTabletsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy const>(
           retry_policy());

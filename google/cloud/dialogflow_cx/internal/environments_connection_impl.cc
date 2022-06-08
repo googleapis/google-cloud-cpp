@@ -46,7 +46,7 @@ StreamRange<google::cloud::dialogflow::cx::v3::Environment>
 EnvironmentsConnectionImpl::ListEnvironments(
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_cx::EnvironmentsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -91,7 +91,7 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsConnectionImpl::CreateEnvironment(
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::Environment>(
       background_->cq(), request,
@@ -122,7 +122,7 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsConnectionImpl::UpdateEnvironment(
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::Environment>(
       background_->cq(), request,
@@ -168,7 +168,7 @@ EnvironmentsConnectionImpl::LookupEnvironmentHistory(
     google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_cx::EnvironmentsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -203,7 +203,7 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
 EnvironmentsConnectionImpl::RunContinuousTest(
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>(
       background_->cq(), request,
@@ -235,7 +235,7 @@ EnvironmentsConnectionImpl::ListContinuousTestResults(
     google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dialogflow_cx::EnvironmentsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -269,7 +269,7 @@ EnvironmentsConnectionImpl::ListContinuousTestResults(
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
 EnvironmentsConnectionImpl::DeployFlow(
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::DeployFlowResponse>(
       background_->cq(), request,

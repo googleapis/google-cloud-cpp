@@ -45,7 +45,7 @@ StreamRange<google::cloud::apigeeconnect::v1::Connection>
 ConnectionServiceConnectionImpl::ListConnections(
     google::cloud::apigeeconnect::v1::ListConnectionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<apigeeconnect::ConnectionServiceRetryPolicy const>(
           retry_policy());

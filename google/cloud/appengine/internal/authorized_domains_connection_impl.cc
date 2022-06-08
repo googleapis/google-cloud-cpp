@@ -45,7 +45,7 @@ StreamRange<google::appengine::v1::AuthorizedDomain>
 AuthorizedDomainsConnectionImpl::ListAuthorizedDomains(
     google::appengine::v1::ListAuthorizedDomainsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<appengine::AuthorizedDomainsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

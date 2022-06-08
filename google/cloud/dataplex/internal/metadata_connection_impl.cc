@@ -95,7 +95,7 @@ StreamRange<google::cloud::dataplex::v1::Entity>
 MetadataServiceConnectionImpl::ListEntities(
     google::cloud::dataplex::v1::ListEntitiesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::MetadataServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -168,7 +168,7 @@ StreamRange<google::cloud::dataplex::v1::Partition>
 MetadataServiceConnectionImpl::ListPartitions(
     google::cloud::dataplex::v1::ListPartitionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataplex::MetadataServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

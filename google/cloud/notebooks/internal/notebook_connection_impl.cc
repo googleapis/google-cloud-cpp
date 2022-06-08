@@ -45,7 +45,7 @@ StreamRange<google::cloud::notebooks::v1::Instance>
 NotebookServiceConnectionImpl::ListInstances(
     google::cloud::notebooks::v1::ListInstancesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<notebooks::NotebookServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -90,7 +90,7 @@ NotebookServiceConnectionImpl::GetInstance(
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::CreateInstance(
     google::cloud::notebooks::v1::CreateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -120,7 +120,7 @@ NotebookServiceConnectionImpl::CreateInstance(
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::RegisterInstance(
     google::cloud::notebooks::v1::RegisterInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -151,7 +151,7 @@ future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::SetInstanceAccelerator(
     google::cloud::notebooks::v1::SetInstanceAcceleratorRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -183,7 +183,7 @@ future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::SetInstanceMachineType(
     google::cloud::notebooks::v1::SetInstanceMachineTypeRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -214,7 +214,7 @@ NotebookServiceConnectionImpl::SetInstanceMachineType(
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::UpdateInstanceConfig(
     google::cloud::notebooks::v1::UpdateInstanceConfigRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -245,7 +245,7 @@ future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::UpdateShieldedInstanceConfig(
     google::cloud::notebooks::v1::UpdateShieldedInstanceConfigRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -276,7 +276,7 @@ NotebookServiceConnectionImpl::UpdateShieldedInstanceConfig(
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::SetInstanceLabels(
     google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -321,7 +321,7 @@ NotebookServiceConnectionImpl::UpdateInstanceMetadataItems(
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceConnectionImpl::DeleteInstance(
     google::cloud::notebooks::v1::DeleteInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::OperationMetadata>(
       background_->cq(), request,
@@ -351,7 +351,7 @@ NotebookServiceConnectionImpl::DeleteInstance(
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::StartInstance(
     google::cloud::notebooks::v1::StartInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -380,7 +380,7 @@ NotebookServiceConnectionImpl::StartInstance(
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::StopInstance(
     google::cloud::notebooks::v1::StopInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -408,7 +408,7 @@ NotebookServiceConnectionImpl::StopInstance(
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::ResetInstance(
     google::cloud::notebooks::v1::ResetInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -437,7 +437,7 @@ NotebookServiceConnectionImpl::ResetInstance(
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::ReportInstanceInfo(
     google::cloud::notebooks::v1::ReportInstanceInfoRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -495,7 +495,7 @@ NotebookServiceConnectionImpl::GetInstanceHealth(
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::UpgradeInstance(
     google::cloud::notebooks::v1::UpgradeInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -525,7 +525,7 @@ NotebookServiceConnectionImpl::UpgradeInstance(
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::RollbackInstance(
     google::cloud::notebooks::v1::RollbackInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -556,7 +556,7 @@ future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::UpgradeInstanceInternal(
     google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Instance>(
       background_->cq(), request,
@@ -588,7 +588,7 @@ StreamRange<google::cloud::notebooks::v1::Environment>
 NotebookServiceConnectionImpl::ListEnvironments(
     google::cloud::notebooks::v1::ListEnvironmentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<notebooks::NotebookServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -634,7 +634,7 @@ NotebookServiceConnectionImpl::GetEnvironment(
 future<StatusOr<google::cloud::notebooks::v1::Environment>>
 NotebookServiceConnectionImpl::CreateEnvironment(
     google::cloud::notebooks::v1::CreateEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Environment>(
       background_->cq(), request,
@@ -664,7 +664,7 @@ NotebookServiceConnectionImpl::CreateEnvironment(
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceConnectionImpl::DeleteEnvironment(
     google::cloud::notebooks::v1::DeleteEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::OperationMetadata>(
       background_->cq(), request,
@@ -695,7 +695,7 @@ StreamRange<google::cloud::notebooks::v1::Schedule>
 NotebookServiceConnectionImpl::ListSchedules(
     google::cloud::notebooks::v1::ListSchedulesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<notebooks::NotebookServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -740,7 +740,7 @@ NotebookServiceConnectionImpl::GetSchedule(
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceConnectionImpl::DeleteSchedule(
     google::cloud::notebooks::v1::DeleteScheduleRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::OperationMetadata>(
       background_->cq(), request,
@@ -770,7 +770,7 @@ NotebookServiceConnectionImpl::DeleteSchedule(
 future<StatusOr<google::cloud::notebooks::v1::Schedule>>
 NotebookServiceConnectionImpl::CreateSchedule(
     google::cloud::notebooks::v1::CreateScheduleRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Schedule>(
       background_->cq(), request,
@@ -800,7 +800,7 @@ NotebookServiceConnectionImpl::CreateSchedule(
 future<StatusOr<google::cloud::notebooks::v1::Schedule>>
 NotebookServiceConnectionImpl::TriggerSchedule(
     google::cloud::notebooks::v1::TriggerScheduleRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Schedule>(
       background_->cq(), request,
@@ -831,7 +831,7 @@ StreamRange<google::cloud::notebooks::v1::Execution>
 NotebookServiceConnectionImpl::ListExecutions(
     google::cloud::notebooks::v1::ListExecutionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<notebooks::NotebookServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -876,7 +876,7 @@ NotebookServiceConnectionImpl::GetExecution(
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceConnectionImpl::DeleteExecution(
     google::cloud::notebooks::v1::DeleteExecutionRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::OperationMetadata>(
       background_->cq(), request,
@@ -906,7 +906,7 @@ NotebookServiceConnectionImpl::DeleteExecution(
 future<StatusOr<google::cloud::notebooks::v1::Execution>>
 NotebookServiceConnectionImpl::CreateExecution(
     google::cloud::notebooks::v1::CreateExecutionRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Execution>(
       background_->cq(), request,

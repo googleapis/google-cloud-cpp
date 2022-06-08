@@ -113,7 +113,7 @@ future<Status> MetricServiceAuth::AsyncCreateTimeSeries(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

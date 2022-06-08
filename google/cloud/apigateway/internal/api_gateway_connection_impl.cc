@@ -46,7 +46,7 @@ StreamRange<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceConnectionImpl::ListGateways(
     google::cloud::apigateway::v1::ListGatewaysRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<apigateway::ApiGatewayServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -91,7 +91,7 @@ ApiGatewayServiceConnectionImpl::GetGateway(
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceConnectionImpl::CreateGateway(
     google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::Gateway>(
       background_->cq(), request,
@@ -120,7 +120,7 @@ ApiGatewayServiceConnectionImpl::CreateGateway(
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceConnectionImpl::UpdateGateway(
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::Gateway>(
       background_->cq(), request,
@@ -149,7 +149,7 @@ ApiGatewayServiceConnectionImpl::UpdateGateway(
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteGateway(
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::OperationMetadata>(
       background_->cq(), request,
@@ -179,7 +179,7 @@ StreamRange<google::cloud::apigateway::v1::Api>
 ApiGatewayServiceConnectionImpl::ListApis(
     google::cloud::apigateway::v1::ListApisRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<apigateway::ApiGatewayServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -222,7 +222,7 @@ ApiGatewayServiceConnectionImpl::GetApi(
 future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceConnectionImpl::CreateApi(
     google::cloud::apigateway::v1::CreateApiRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::Api>(
       background_->cq(), request,
@@ -250,7 +250,7 @@ ApiGatewayServiceConnectionImpl::CreateApi(
 future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceConnectionImpl::UpdateApi(
     google::cloud::apigateway::v1::UpdateApiRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::Api>(
       background_->cq(), request,
@@ -278,7 +278,7 @@ ApiGatewayServiceConnectionImpl::UpdateApi(
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteApi(
     google::cloud::apigateway::v1::DeleteApiRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::OperationMetadata>(
       background_->cq(), request,
@@ -307,7 +307,7 @@ StreamRange<google::cloud::apigateway::v1::ApiConfig>
 ApiGatewayServiceConnectionImpl::ListApiConfigs(
     google::cloud::apigateway::v1::ListApiConfigsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<apigateway::ApiGatewayServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -353,7 +353,7 @@ ApiGatewayServiceConnectionImpl::GetApiConfig(
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceConnectionImpl::CreateApiConfig(
     google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::ApiConfig>(
       background_->cq(), request,
@@ -383,7 +383,7 @@ ApiGatewayServiceConnectionImpl::CreateApiConfig(
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceConnectionImpl::UpdateApiConfig(
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::ApiConfig>(
       background_->cq(), request,
@@ -413,7 +413,7 @@ ApiGatewayServiceConnectionImpl::UpdateApiConfig(
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteApiConfig(
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::OperationMetadata>(
       background_->cq(), request,

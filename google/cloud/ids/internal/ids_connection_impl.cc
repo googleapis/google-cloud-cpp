@@ -43,7 +43,7 @@ IDSConnectionImpl::IDSConnectionImpl(
 StreamRange<google::cloud::ids::v1::Endpoint> IDSConnectionImpl::ListEndpoints(
     google::cloud::ids::v1::ListEndpointsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<ids::IDSRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListEndpoints(request);
@@ -86,7 +86,7 @@ StatusOr<google::cloud::ids::v1::Endpoint> IDSConnectionImpl::GetEndpoint(
 future<StatusOr<google::cloud::ids::v1::Endpoint>>
 IDSConnectionImpl::CreateEndpoint(
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::ids::v1::Endpoint>(
       background_->cq(), request,
@@ -115,7 +115,7 @@ IDSConnectionImpl::CreateEndpoint(
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSConnectionImpl::DeleteEndpoint(
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::ids::v1::OperationMetadata>(
       background_->cq(), request,

@@ -57,7 +57,7 @@ DocumentProcessorServiceConnectionImpl::ProcessDocument(
 future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
 DocumentProcessorServiceConnectionImpl::BatchProcessDocuments(
     google::cloud::documentai::v1::BatchProcessRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::BatchProcessResponse>(
       background_->cq(), request,
@@ -88,7 +88,7 @@ DocumentProcessorServiceConnectionImpl::BatchProcessDocuments(
 future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
 DocumentProcessorServiceConnectionImpl::ReviewDocument(
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::ReviewDocumentResponse>(
       background_->cq(), request,

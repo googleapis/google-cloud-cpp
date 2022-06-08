@@ -48,7 +48,7 @@ StreamRange<google::cloud::gaming::v1::GameServerDeployment>
 GameServerDeploymentsServiceConnectionImpl::ListGameServerDeployments(
     google::cloud::gaming::v1::ListGameServerDeploymentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       gameservices::GameServerDeploymentsServiceRetryPolicy const>(
       retry_policy());
@@ -97,7 +97,7 @@ future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
 GameServerDeploymentsServiceConnectionImpl::CreateGameServerDeployment(
     google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::GameServerDeployment>(
       background_->cq(), request,
@@ -129,7 +129,7 @@ future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 GameServerDeploymentsServiceConnectionImpl::DeleteGameServerDeployment(
     google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::OperationMetadata>(
       background_->cq(), request,
@@ -161,7 +161,7 @@ future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
 GameServerDeploymentsServiceConnectionImpl::UpdateGameServerDeployment(
     google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::GameServerDeployment>(
       background_->cq(), request,
@@ -208,7 +208,7 @@ future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
 GameServerDeploymentsServiceConnectionImpl::UpdateGameServerDeploymentRollout(
     google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::GameServerDeployment>(
       background_->cq(), request,

@@ -44,7 +44,7 @@ StreamRange<google::cloud::workflows::v1::Workflow>
 WorkflowsConnectionImpl::ListWorkflows(
     google::cloud::workflows::v1::ListWorkflowsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<workflows::WorkflowsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -89,7 +89,7 @@ WorkflowsConnectionImpl::GetWorkflow(
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnectionImpl::CreateWorkflow(
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::workflows::v1::Workflow>(
       background_->cq(), request,
@@ -119,7 +119,7 @@ WorkflowsConnectionImpl::CreateWorkflow(
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsConnectionImpl::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::workflows::v1::OperationMetadata>(
       background_->cq(), request,
@@ -149,7 +149,7 @@ WorkflowsConnectionImpl::DeleteWorkflow(
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnectionImpl::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::workflows::v1::Workflow>(
       background_->cq(), request,

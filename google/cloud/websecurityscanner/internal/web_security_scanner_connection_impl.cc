@@ -85,7 +85,7 @@ StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerConnectionImpl::ListScanConfigs(
     google::cloud::websecurityscanner::v1::ListScanConfigsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<websecurityscanner::WebSecurityScannerRetryPolicy const>(
           retry_policy());
@@ -158,7 +158,7 @@ StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerConnectionImpl::ListScanRuns(
     google::cloud::websecurityscanner::v1::ListScanRunsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<websecurityscanner::WebSecurityScannerRetryPolicy const>(
           retry_policy());
@@ -204,7 +204,7 @@ StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
 WebSecurityScannerConnectionImpl::ListCrawledUrls(
     google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<websecurityscanner::WebSecurityScannerRetryPolicy const>(
           retry_policy());
@@ -251,7 +251,7 @@ StreamRange<google::cloud::websecurityscanner::v1::Finding>
 WebSecurityScannerConnectionImpl::ListFindings(
     google::cloud::websecurityscanner::v1::ListFindingsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<websecurityscanner::WebSecurityScannerRetryPolicy const>(
           retry_policy());

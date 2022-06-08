@@ -80,7 +80,7 @@ StreamRange<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerConnectionImpl::ListTaxonomies(
     google::cloud::datacatalog::v1::ListTaxonomiesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<datacatalog::PolicyTagManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -162,7 +162,7 @@ StreamRange<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerConnectionImpl::ListPolicyTags(
     google::cloud::datacatalog::v1::ListPolicyTagsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<datacatalog::PolicyTagManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

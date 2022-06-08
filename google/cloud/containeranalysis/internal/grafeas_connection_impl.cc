@@ -55,7 +55,7 @@ StatusOr<grafeas::v1::Occurrence> GrafeasConnectionImpl::GetOccurrence(
 StreamRange<grafeas::v1::Occurrence> GrafeasConnectionImpl::ListOccurrences(
     grafeas::v1::ListOccurrencesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<containeranalysis::GrafeasRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -157,7 +157,7 @@ StatusOr<grafeas::v1::Note> GrafeasConnectionImpl::GetNote(
 StreamRange<grafeas::v1::Note> GrafeasConnectionImpl::ListNotes(
     grafeas::v1::ListNotesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<containeranalysis::GrafeasRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -236,7 +236,7 @@ StatusOr<grafeas::v1::Note> GrafeasConnectionImpl::UpdateNote(
 StreamRange<grafeas::v1::Occurrence> GrafeasConnectionImpl::ListNoteOccurrences(
     grafeas::v1::ListNoteOccurrencesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<containeranalysis::GrafeasRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

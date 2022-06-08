@@ -46,7 +46,7 @@ StreamRange<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceConnectionImpl::ListRuntimes(
     google::cloud::notebooks::v1::ListRuntimesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<notebooks::ManagedNotebookServiceRetryPolicy const>(
           retry_policy());
@@ -92,7 +92,7 @@ ManagedNotebookServiceConnectionImpl::GetRuntime(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::CreateRuntime(
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
@@ -121,7 +121,7 @@ ManagedNotebookServiceConnectionImpl::CreateRuntime(
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 ManagedNotebookServiceConnectionImpl::DeleteRuntime(
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::OperationMetadata>(
       background_->cq(), request,
@@ -150,7 +150,7 @@ ManagedNotebookServiceConnectionImpl::DeleteRuntime(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::StartRuntime(
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
@@ -178,7 +178,7 @@ ManagedNotebookServiceConnectionImpl::StartRuntime(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::StopRuntime(
     google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
@@ -206,7 +206,7 @@ ManagedNotebookServiceConnectionImpl::StopRuntime(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::SwitchRuntime(
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
@@ -235,7 +235,7 @@ ManagedNotebookServiceConnectionImpl::SwitchRuntime(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::ResetRuntime(
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
@@ -263,7 +263,7 @@ ManagedNotebookServiceConnectionImpl::ResetRuntime(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::ReportRuntimeEvent(
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,

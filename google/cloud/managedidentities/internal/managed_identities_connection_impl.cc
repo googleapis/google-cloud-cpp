@@ -47,7 +47,7 @@ future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
     google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
       background_->cq(), request,
@@ -93,7 +93,7 @@ StreamRange<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceConnectionImpl::ListDomains(
     google::cloud::managedidentities::v1::ListDomainsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       managedidentities::ManagedIdentitiesServiceRetryPolicy const>(
       retry_policy());
@@ -137,7 +137,7 @@ ManagedIdentitiesServiceConnectionImpl::GetDomain(
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
       background_->cq(), request,
@@ -166,7 +166,7 @@ ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::OpMetadata>(
       background_->cq(), request,
@@ -195,7 +195,7 @@ ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::AttachTrust(
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
       background_->cq(), request,
@@ -225,7 +225,7 @@ future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
       background_->cq(), request,
@@ -256,7 +256,7 @@ ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::DetachTrust(
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
       background_->cq(), request,
@@ -285,7 +285,7 @@ ManagedIdentitiesServiceConnectionImpl::DetachTrust(
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
       background_->cq(), request,

@@ -45,7 +45,7 @@ StreamRange<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesConnectionImpl::ListAuthorizedCertificates(
     google::appengine::v1::ListAuthorizedCertificatesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<appengine::AuthorizedCertificatesRetryPolicy const>(
           retry_policy());

@@ -43,7 +43,7 @@ StreamRange<google::cloud::dialogflow::v2::Version>
 VersionsConnectionImpl::ListVersions(
     google::cloud::dialogflow::v2::ListVersionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_es::VersionsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

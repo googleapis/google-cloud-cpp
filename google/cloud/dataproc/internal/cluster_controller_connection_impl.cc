@@ -45,7 +45,7 @@ ClusterControllerConnectionImpl::ClusterControllerConnectionImpl(
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::CreateCluster(
     google::cloud::dataproc::v1::CreateClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Cluster>(
       background_->cq(), request,
@@ -73,7 +73,7 @@ ClusterControllerConnectionImpl::CreateCluster(
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::UpdateCluster(
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Cluster>(
       background_->cq(), request,
@@ -101,7 +101,7 @@ ClusterControllerConnectionImpl::UpdateCluster(
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::StopCluster(
     google::cloud::dataproc::v1::StopClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Cluster>(
       background_->cq(), request,
@@ -129,7 +129,7 @@ ClusterControllerConnectionImpl::StopCluster(
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::StartCluster(
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Cluster>(
       background_->cq(), request,
@@ -157,7 +157,7 @@ ClusterControllerConnectionImpl::StartCluster(
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerConnectionImpl::DeleteCluster(
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::ClusterOperationMetadata>(
       background_->cq(), request,
@@ -199,7 +199,7 @@ StreamRange<google::cloud::dataproc::v1::Cluster>
 ClusterControllerConnectionImpl::ListClusters(
     google::cloud::dataproc::v1::ListClustersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataproc::ClusterControllerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -231,7 +231,7 @@ ClusterControllerConnectionImpl::ListClusters(
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
 ClusterControllerConnectionImpl::DiagnoseCluster(
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::DiagnoseClusterResults>(
       background_->cq(), request,

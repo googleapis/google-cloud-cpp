@@ -47,7 +47,7 @@ StreamRange<
 AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<osconfig::AgentEndpointServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

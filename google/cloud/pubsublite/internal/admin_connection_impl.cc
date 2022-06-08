@@ -85,7 +85,7 @@ StreamRange<google::cloud::pubsublite::v1::Topic>
 AdminServiceConnectionImpl::ListTopics(
     google::cloud::pubsublite::v1::ListTopicsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -140,7 +140,7 @@ Status AdminServiceConnectionImpl::DeleteTopic(
 StreamRange<std::string> AdminServiceConnectionImpl::ListTopicSubscriptions(
     google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -198,7 +198,7 @@ StreamRange<google::cloud::pubsublite::v1::Subscription>
 AdminServiceConnectionImpl::ListSubscriptions(
     google::cloud::pubsublite::v1::ListSubscriptionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -258,7 +258,7 @@ Status AdminServiceConnectionImpl::DeleteSubscription(
 future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
 AdminServiceConnectionImpl::SeekSubscription(
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::pubsublite::v1::SeekSubscriptionResponse>(
       background_->cq(), request,
@@ -317,7 +317,7 @@ StreamRange<google::cloud::pubsublite::v1::Reservation>
 AdminServiceConnectionImpl::ListReservations(
     google::cloud::pubsublite::v1::ListReservationsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -376,7 +376,7 @@ Status AdminServiceConnectionImpl::DeleteReservation(
 StreamRange<std::string> AdminServiceConnectionImpl::ListReservationTopics(
     google::cloud::pubsublite::v1::ListReservationTopicsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

@@ -79,7 +79,7 @@ StreamRange<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceConnectionImpl::ListBudgets(
     google::cloud::billing::budgets::v1::ListBudgetsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<billing::BudgetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

@@ -45,7 +45,7 @@ StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalConnectionImpl::ListApprovalRequests(
     google::cloud::accessapproval::v1::ListApprovalRequestsMessage request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<accessapproval::AccessApprovalRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

@@ -46,7 +46,7 @@ StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminConnectionImpl::ListInstanceConfigs(
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -94,7 +94,7 @@ StreamRange<google::spanner::admin::instance::v1::Instance>
 InstanceAdminConnectionImpl::ListInstances(
     google::spanner::admin::instance::v1::ListInstancesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -139,7 +139,7 @@ future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminConnectionImpl::CreateInstance(
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::instance::v1::Instance>(
       background_->cq(), request,
@@ -170,7 +170,7 @@ future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminConnectionImpl::UpdateInstance(
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::instance::v1::Instance>(
       background_->cq(), request,

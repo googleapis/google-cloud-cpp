@@ -45,7 +45,7 @@ StreamRange<google::appengine::v1::DomainMapping>
 DomainMappingsConnectionImpl::ListDomainMappings(
     google::appengine::v1::ListDomainMappingsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<appengine::DomainMappingsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -90,7 +90,7 @@ DomainMappingsConnectionImpl::GetDomainMapping(
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnectionImpl::CreateDomainMapping(
     google::appengine::v1::CreateDomainMappingRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::DomainMapping>(
       background_->cq(), request,
@@ -119,7 +119,7 @@ DomainMappingsConnectionImpl::CreateDomainMapping(
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnectionImpl::UpdateDomainMapping(
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::DomainMapping>(
       background_->cq(), request,
@@ -148,7 +148,7 @@ DomainMappingsConnectionImpl::UpdateDomainMapping(
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 DomainMappingsConnectionImpl::DeleteDomainMapping(
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::OperationMetadataV1>(
       background_->cq(), request,

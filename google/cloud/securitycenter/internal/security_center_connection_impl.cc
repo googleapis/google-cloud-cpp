@@ -45,7 +45,7 @@ SecurityCenterConnectionImpl::SecurityCenterConnectionImpl(
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
 SecurityCenterConnectionImpl::BulkMuteFindings(
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::securitycenter::v1::BulkMuteFindingsResponse>(
       background_->cq(), request,
@@ -236,7 +236,7 @@ StreamRange<google::cloud::securitycenter::v1::GroupResult>
 SecurityCenterConnectionImpl::GroupAssets(
     google::cloud::securitycenter::v1::GroupAssetsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -267,7 +267,7 @@ StreamRange<google::cloud::securitycenter::v1::GroupResult>
 SecurityCenterConnectionImpl::GroupFindings(
     google::cloud::securitycenter::v1::GroupFindingsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -300,7 +300,7 @@ StreamRange<
 SecurityCenterConnectionImpl::ListAssets(
     google::cloud::securitycenter::v1::ListAssetsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -333,7 +333,7 @@ StreamRange<
 SecurityCenterConnectionImpl::ListFindings(
     google::cloud::securitycenter::v1::ListFindingsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -368,7 +368,7 @@ StreamRange<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterConnectionImpl::ListMuteConfigs(
     google::cloud::securitycenter::v1::ListMuteConfigsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -402,7 +402,7 @@ StreamRange<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterConnectionImpl::ListNotificationConfigs(
     google::cloud::securitycenter::v1::ListNotificationConfigsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -436,7 +436,7 @@ StreamRange<google::cloud::securitycenter::v1::Source>
 SecurityCenterConnectionImpl::ListSources(
     google::cloud::securitycenter::v1::ListSourcesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -467,7 +467,7 @@ future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
 SecurityCenterConnectionImpl::RunAssetDiscovery(
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>(
       background_->cq(), request,
@@ -690,7 +690,7 @@ StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterConnectionImpl::ListBigQueryExports(
     google::cloud::securitycenter::v1::ListBigQueryExportsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

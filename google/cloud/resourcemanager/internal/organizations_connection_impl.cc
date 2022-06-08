@@ -57,7 +57,7 @@ StreamRange<google::cloud::resourcemanager::v3::Organization>
 OrganizationsConnectionImpl::SearchOrganizations(
     google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<resourcemanager::OrganizationsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

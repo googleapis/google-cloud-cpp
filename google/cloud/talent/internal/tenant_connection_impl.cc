@@ -94,7 +94,7 @@ StreamRange<google::cloud::talent::v4::Tenant>
 TenantServiceConnectionImpl::ListTenants(
     google::cloud::talent::v4::ListTenantsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<talent::TenantServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

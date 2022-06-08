@@ -60,7 +60,7 @@ StreamRange<google::bigtable::admin::v2::Table>
 BigtableTableAdminConnectionImpl::ListTables(
     google::bigtable::admin::v2::ListTablesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy const>(
           retry_policy());
@@ -172,7 +172,7 @@ BigtableTableAdminConnectionImpl::CheckConsistency(
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminConnectionImpl::CreateBackup(
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Backup>(
       background_->cq(), request,
@@ -239,7 +239,7 @@ StreamRange<google::bigtable::admin::v2::Backup>
 BigtableTableAdminConnectionImpl::ListBackups(
     google::bigtable::admin::v2::ListBackupsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy const>(
           retry_policy());
@@ -270,7 +270,7 @@ BigtableTableAdminConnectionImpl::ListBackups(
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminConnectionImpl::RestoreTable(
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Table>(
       background_->cq(), request,

@@ -44,7 +44,7 @@ ImageVersionsConnectionImpl::ListImageVersions(
     google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<composer::ImageVersionsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

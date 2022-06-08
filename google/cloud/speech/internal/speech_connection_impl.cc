@@ -56,7 +56,7 @@ SpeechConnectionImpl::Recognize(
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
 SpeechConnectionImpl::LongRunningRecognize(
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v1::LongRunningRecognizeResponse>(
       background_->cq(), request,

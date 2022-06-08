@@ -55,7 +55,7 @@ FleetRoutingConnectionImpl::OptimizeTours(
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
 FleetRoutingConnectionImpl::BatchOptimizeTours(
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::optimization::v1::BatchOptimizeToursResponse>(
       background_->cq(), request,

@@ -43,7 +43,7 @@ TpuConnectionImpl::TpuConnectionImpl(
 StreamRange<google::cloud::tpu::v1::Node> TpuConnectionImpl::ListNodes(
     google::cloud::tpu::v1::ListNodesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<tpu::TpuRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNodes(request);
@@ -82,7 +82,7 @@ StatusOr<google::cloud::tpu::v1::Node> TpuConnectionImpl::GetNode(
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::CreateNode(
     google::cloud::tpu::v1::CreateNodeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::tpu::v1::Node>(
       background_->cq(), request,
@@ -109,7 +109,7 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::CreateNode(
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::DeleteNode(
     google::cloud::tpu::v1::DeleteNodeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::tpu::v1::Node>(
       background_->cq(), request,
@@ -136,7 +136,7 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::DeleteNode(
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::ReimageNode(
     google::cloud::tpu::v1::ReimageNodeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::tpu::v1::Node>(
       background_->cq(), request,
@@ -163,7 +163,7 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::ReimageNode(
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::StopNode(
     google::cloud::tpu::v1::StopNodeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::tpu::v1::Node>(
       background_->cq(), request,
@@ -190,7 +190,7 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::StopNode(
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::StartNode(
     google::cloud::tpu::v1::StartNodeRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::tpu::v1::Node>(
       background_->cq(), request,
@@ -219,7 +219,7 @@ StreamRange<google::cloud::tpu::v1::TensorFlowVersion>
 TpuConnectionImpl::ListTensorFlowVersions(
     google::cloud::tpu::v1::ListTensorFlowVersionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<tpu::TpuRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTensorFlowVersions(request);
@@ -265,7 +265,7 @@ StreamRange<google::cloud::tpu::v1::AcceleratorType>
 TpuConnectionImpl::ListAcceleratorTypes(
     google::cloud::tpu::v1::ListAcceleratorTypesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<tpu::TpuRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAcceleratorTypes(request);

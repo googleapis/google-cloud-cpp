@@ -46,7 +46,7 @@ StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesConnectionImpl::ListConversationProfiles(
     google::cloud::dialogflow::v2::ListConversationProfilesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dialogflow_es::ConversationProfilesRetryPolicy const>(
           retry_policy());
@@ -143,7 +143,7 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ConversationProfile>(
       background_->cq(), request,
@@ -175,7 +175,7 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ConversationProfile>(
       background_->cq(), request,
