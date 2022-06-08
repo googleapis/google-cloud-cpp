@@ -29,6 +29,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
@@ -76,6 +77,8 @@ TEST_F(BucketTest, CreateBucket) {
   EXPECT_CALL(*mock_, CreateBucket)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::CreateBucketRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket-name", r.metadata().name());
         EXPECT_EQ("US", r.metadata().location());
         EXPECT_EQ("STANDARD", r.metadata().storage_class());
@@ -85,7 +88,8 @@ TEST_F(BucketTest, CreateBucket) {
   auto client = ClientForMock();
   auto actual = client.CreateBucket(
       "test-bucket-name",
-      BucketMetadata().set_location("US").set_storage_class("STANDARD"));
+      BucketMetadata().set_location("US").set_storage_class("STANDARD"),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -135,11 +139,14 @@ TEST_F(BucketTest, GetBucketMetadata) {
   EXPECT_CALL(*mock_, GetBucketMetadata)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::GetBucketMetadataRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("foo-bar-baz", r.bucket_name());
         return make_status_or(expected);
       });
   auto client = ClientForMock();
-  auto actual = client.GetBucketMetadata("foo-bar-baz");
+  auto actual = client.GetBucketMetadata(
+      "foo-bar-baz", Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -167,11 +174,14 @@ TEST_F(BucketTest, DeleteBucket) {
   EXPECT_CALL(*mock_, DeleteBucket)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteBucketRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("foo-bar-baz", r.bucket_name());
         return make_status_or(internal::EmptyResponse{});
       });
   auto client = ClientForMock();
-  auto status = client.DeleteBucket("foo-bar-baz");
+  auto status = client.DeleteBucket(
+      "foo-bar-baz", Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(status);
 }
 
@@ -214,6 +224,8 @@ TEST_F(BucketTest, UpdateBucket) {
   EXPECT_CALL(*mock_, UpdateBucket)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::UpdateBucketRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket-name", r.metadata().name());
         EXPECT_EQ("US", r.metadata().location());
         EXPECT_EQ("STANDARD", r.metadata().storage_class());
@@ -222,7 +234,8 @@ TEST_F(BucketTest, UpdateBucket) {
   auto client = ClientForMock();
   auto actual = client.UpdateBucket(
       "test-bucket-name",
-      BucketMetadata().set_location("US").set_storage_class("STANDARD"));
+      BucketMetadata().set_location("US").set_storage_class("STANDARD"),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -273,6 +286,8 @@ TEST_F(BucketTest, PatchBucket) {
   EXPECT_CALL(*mock_, PatchBucket)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::PatchBucketRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket-name", r.bucket());
         EXPECT_THAT(r.payload(), HasSubstr("STANDARD"));
         return make_status_or(expected);
@@ -280,7 +295,8 @@ TEST_F(BucketTest, PatchBucket) {
   auto client = ClientForMock();
   auto actual = client.PatchBucket(
       "test-bucket-name",
-      BucketMetadataPatchBuilder().SetStorageClass("STANDARD"));
+      BucketMetadataPatchBuilder().SetStorageClass("STANDARD"),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -321,11 +337,14 @@ TEST_F(BucketTest, GetNativeBucketIamPolicy) {
   EXPECT_CALL(*mock_, GetNativeBucketIamPolicy)
       .WillOnce(Return(StatusOr<NativeIamPolicy>(TransientError())))
       .WillOnce([&expected](internal::GetBucketIamPolicyRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         return make_status_or(expected);
       });
   auto client = ClientForMock();
-  auto actual = client.GetNativeBucketIamPolicy("test-bucket-name");
+  auto actual = client.GetNativeBucketIamPolicy(
+      "test-bucket-name", Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(0, actual->version());
   EXPECT_EQ("XYZ=", actual->etag());
@@ -359,12 +378,16 @@ TEST_F(BucketTest, SetNativeBucketIamPolicy) {
       .WillOnce(Return(StatusOr<NativeIamPolicy>(TransientError())))
       .WillOnce(
           [&expected](internal::SetNativeBucketIamPolicyRequest const& r) {
+            EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+            EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
             EXPECT_EQ("test-bucket-name", r.bucket_name());
             EXPECT_THAT(r.json_payload(), HasSubstr("test-user"));
             return make_status_or(expected);
           });
   auto client = ClientForMock();
-  auto actual = client.SetNativeBucketIamPolicy("test-bucket-name", expected);
+  auto actual = client.SetNativeBucketIamPolicy(
+      "test-bucket-name", expected,
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(0, actual->version());
   EXPECT_EQ("XYZ=", actual->etag());
@@ -412,13 +435,16 @@ TEST_F(BucketTest, TestBucketIamPermissions) {
           TransientError())))
       .WillOnce(
           [&expected](internal::TestBucketIamPermissionsRequest const& r) {
+            EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+            EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
             EXPECT_EQ("test-bucket-name", r.bucket_name());
             EXPECT_THAT(r.permissions(), ElementsAre("storage.buckets.delete"));
             return make_status_or(expected);
           });
   auto client = ClientForMock();
-  auto actual = client.TestBucketIamPermissions("test-bucket-name",
-                                                {"storage.buckets.delete"});
+  auto actual = client.TestBucketIamPermissions(
+      "test-bucket-name", {"storage.buckets.delete"},
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, ElementsAreArray(expected.permissions));
 }
@@ -464,12 +490,15 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(
           [expected](internal::LockBucketRetentionPolicyRequest const& r) {
+            EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+            EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
             EXPECT_EQ("test-bucket-name", r.bucket_name());
             EXPECT_EQ(42, r.metageneration());
             return make_status_or(expected);
           });
   auto client = ClientForMock();
-  auto metadata = client.LockBucketRetentionPolicy("test-bucket-name", 42U);
+  auto metadata = client.LockBucketRetentionPolicy(
+      "test-bucket-name", 42U, Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(metadata);
   EXPECT_EQ(expected, *metadata);
 }
