@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Table;
 namespace internal {
 class AsyncRetryBulkApply;
-class AsyncRowSampler;
+class LegacyAsyncRowSampler;
 class BulkMutator;
 class LoggingDataClient;
 }  // namespace internal
@@ -114,7 +114,7 @@ class DataClient {
  protected:
   friend class Table;
   friend class internal::AsyncRetryBulkApply;
-  friend class internal::AsyncRowSampler;
+  friend class internal::LegacyAsyncRowSampler;
   friend class internal::BulkMutator;
   friend class bigtable_internal::LegacyRowReader;
   template <typename RowFunctor, typename FinishFunctor>

@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
-#include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/legacy_async_row_sampler.h"
 #include "google/cloud/bigtable/internal/legacy_row_reader.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
@@ -355,7 +355,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
 
 future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
   auto cq = background_threads_->cq();
-  return internal::AsyncRowSampler::Create(
+  return internal::LegacyAsyncRowSampler::Create(
       cq, client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       metadata_update_policy_, app_profile_id_, table_name_);
 }

@@ -151,8 +151,6 @@ add_library(
     internal/async_bulk_apply.h
     internal/async_retry_op.h
     internal/async_row_reader.h
-    internal/async_row_sampler.cc
-    internal/async_row_sampler.h
     internal/async_streaming_read.h
     internal/bigtable_auth_decorator.cc
     internal/bigtable_auth_decorator.h
@@ -186,6 +184,8 @@ add_library(
     internal/defaults.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
+    internal/legacy_async_row_sampler.cc
+    internal/legacy_async_row_sampler.h
     internal/legacy_row_reader.cc
     internal/legacy_row_reader.h
     internal/logging_data_client.cc
@@ -330,7 +330,6 @@ if (BUILD_TESTING)
         internal/admin_client_params_test.cc
         internal/async_bulk_apply_test.cc
         internal/async_row_reader_test.cc
-        internal/async_row_sampler_test.cc
         internal/async_streaming_read_test.cc
         internal/bigtable_channel_refresh_test.cc
         internal/bigtable_round_robin_test.cc
@@ -342,6 +341,7 @@ if (BUILD_TESTING)
         internal/default_row_reader_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
+        internal/legacy_async_row_sampler_test.cc
         internal/legacy_bulk_mutator_test.cc
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
