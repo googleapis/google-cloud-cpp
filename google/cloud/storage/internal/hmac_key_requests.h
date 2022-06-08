@@ -103,6 +103,8 @@ std::ostream& operator<<(std::ostream& os, CreateHmacKeyRequest const& r);
 struct CreateHmacKeyResponse {
   static StatusOr<CreateHmacKeyResponse> FromHttpResponse(
       std::string const& payload);
+  static StatusOr<CreateHmacKeyResponse> FromHttpResponse(
+      HttpResponse const& response);
 
   std::string kind;
   HmacKeyMetadata metadata;
@@ -135,6 +137,8 @@ std::ostream& operator<<(std::ostream& os, ListHmacKeysRequest const& r);
 struct ListHmacKeysResponse {
   static StatusOr<ListHmacKeysResponse> FromHttpResponse(
       std::string const& payload);
+  static StatusOr<ListHmacKeysResponse> FromHttpResponse(
+      HttpResponse const& response);
 
   std::string next_page_token;
   std::vector<HmacKeyMetadata> items;

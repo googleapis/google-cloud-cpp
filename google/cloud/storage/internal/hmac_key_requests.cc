@@ -49,6 +49,11 @@ StatusOr<CreateHmacKeyResponse> CreateHmacKeyResponse::FromHttpResponse(
   return result;
 }
 
+StatusOr<CreateHmacKeyResponse> CreateHmacKeyResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  return FromHttpResponse(response.payload);
+}
+
 std::ostream& operator<<(std::ostream& os, CreateHmacKeyResponse const& r) {
   return os << "CreateHmacKeyResponse={metadata=" << r.metadata
             << ", secret=[censored]"
@@ -80,6 +85,11 @@ StatusOr<ListHmacKeysResponse> ListHmacKeysResponse::FromHttpResponse(
   }
 
   return result;
+}
+
+StatusOr<ListHmacKeysResponse> ListHmacKeysResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  return FromHttpResponse(response.payload);
 }
 
 std::ostream& operator<<(std::ostream& os, ListHmacKeysResponse const& r) {

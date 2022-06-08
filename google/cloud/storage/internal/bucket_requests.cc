@@ -242,6 +242,11 @@ StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
   return result;
 }
 
+StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  return FromHttpResponse(response.payload);
+}
+
 std::ostream& operator<<(std::ostream& os, ListBucketsResponse const& r) {
   os << "ListBucketsResponse={next_page_token=" << r.next_page_token
      << ", items={";
@@ -335,6 +340,12 @@ TestBucketIamPermissionsResponse::FromHttpResponse(std::string const& payload) {
     result.permissions.emplace_back(kv.value().get<std::string>());
   }
   return result;
+}
+
+StatusOr<TestBucketIamPermissionsResponse>
+TestBucketIamPermissionsResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  return FromHttpResponse(response.payload);
 }
 
 std::ostream& operator<<(std::ostream& os,

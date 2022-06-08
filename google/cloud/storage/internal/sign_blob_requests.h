@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SIGN_BLOB_REQUESTS_H
 
 #include "google/cloud/storage/internal/generic_request.h"
+#include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
 #include <string>
@@ -72,6 +73,8 @@ std::ostream& operator<<(std::ostream& os, SignBlobRequest const& r);
 struct SignBlobResponse {
   static StatusOr<SignBlobResponse> FromHttpResponse(
       std::string const& payload);
+  static StatusOr<SignBlobResponse> FromHttpResponse(
+      HttpResponse const& response);
 
   std::string key_id;
   std::string signed_blob;

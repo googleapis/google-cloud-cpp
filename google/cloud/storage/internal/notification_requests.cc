@@ -45,6 +45,11 @@ StatusOr<ListNotificationsResponse> ListNotificationsResponse::FromHttpResponse(
   return result;
 }
 
+StatusOr<ListNotificationsResponse> ListNotificationsResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  return FromHttpResponse(response.payload);
+}
+
 std::ostream& operator<<(std::ostream& os, ListNotificationsResponse const& r) {
   os << "ListNotificationResponse={items={";
   os << absl::StrJoin(r.items, ", ", absl::StreamFormatter());

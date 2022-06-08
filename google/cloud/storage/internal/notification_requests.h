@@ -49,6 +49,8 @@ std::ostream& operator<<(std::ostream& os, ListNotificationsRequest const& r);
 struct ListNotificationsResponse {
   static StatusOr<ListNotificationsResponse> FromHttpResponse(
       std::string const& payload);
+  static StatusOr<ListNotificationsResponse> FromHttpResponse(
+      HttpResponse const& response);
 
   std::vector<NotificationMetadata> items;
 };
