@@ -66,6 +66,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "internal/async_retry_op.h",
     "internal/async_row_reader.h",
     "internal/async_row_sampler.h",
+    "internal/async_streaming_read.h",
     "internal/bigtable_auth_decorator.h",
     "internal/bigtable_channel_refresh.h",
     "internal/bigtable_logging_decorator.h",
