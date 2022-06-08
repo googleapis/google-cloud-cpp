@@ -397,6 +397,7 @@ class Client {
   template <typename... Options>
   ListBucketsReader ListBucketsForProject(std::string const& project_id,
                                           Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::ListBucketsRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto client = raw_client_;
@@ -430,6 +431,7 @@ class Client {
    */
   template <typename... Options>
   ListBucketsReader ListBuckets(Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     auto const& project_id = raw_client_->client_options().project_id();
     return ListBucketsForProject(project_id, std::forward<Options>(options)...);
   }
@@ -502,6 +504,7 @@ class Client {
                                                   std::string project_id,
                                                   BucketMetadata metadata,
                                                   Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     metadata.set_name(std::move(bucket_name));
     internal::CreateBucketRequest request(std::move(project_id),
                                           std::move(metadata));
@@ -526,6 +529,7 @@ class Client {
   template <typename... Options>
   StatusOr<BucketMetadata> GetBucketMetadata(std::string const& bucket_name,
                                              Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::GetBucketMetadataRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetBucketMetadata(request);
@@ -548,6 +552,7 @@ class Client {
    */
   template <typename... Options>
   Status DeleteBucket(std::string const& bucket_name, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::DeleteBucketRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteBucket(request).status();
@@ -590,6 +595,7 @@ class Client {
   StatusOr<BucketMetadata> UpdateBucket(std::string bucket_name,
                                         BucketMetadata metadata,
                                         Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     metadata.set_name(std::move(bucket_name));
     internal::UpdateBucketRequest request(std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -639,6 +645,7 @@ class Client {
                                        BucketMetadata const& original,
                                        BucketMetadata const& updated,
                                        Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::PatchBucketRequest request(std::move(bucket_name), original,
                                          updated);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -682,6 +689,7 @@ class Client {
   StatusOr<BucketMetadata> PatchBucket(
       std::string bucket_name, BucketMetadataPatchBuilder const& builder,
       Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::PatchBucketRequest request(std::move(bucket_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchBucket(request);
@@ -723,6 +731,7 @@ class Client {
   template <typename... Options>
   StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
       std::string const& bucket_name, Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::GetBucketIamPolicyRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetNativeBucketIamPolicy(request);
@@ -778,6 +787,7 @@ class Client {
   StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
       std::string const& bucket_name, NativeIamPolicy const& iam_policy,
       Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::SetNativeBucketIamPolicyRequest request(bucket_name, iam_policy);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->SetNativeBucketIamPolicy(request);
@@ -814,6 +824,7 @@ class Client {
   StatusOr<std::vector<std::string>> TestBucketIamPermissions(
       std::string bucket_name, std::vector<std::string> permissions,
       Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::TestBucketIamPermissionsRequest request(std::move(bucket_name),
                                                       std::move(permissions));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -874,6 +885,7 @@ class Client {
   StatusOr<BucketMetadata> LockBucketRetentionPolicy(
       std::string const& bucket_name, std::uint64_t metageneration,
       Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::LockBucketRetentionPolicyRequest request(bucket_name,
                                                        metageneration);
     request.set_multiple_options(std::forward<Options>(options)...);
