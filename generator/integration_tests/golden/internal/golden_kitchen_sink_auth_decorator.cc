@@ -101,7 +101,7 @@ GoldenKitchenSinkAuth::AsyncAppendRows(
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
     google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncAppendRows(cq, std::move(ctx));
   };
@@ -130,7 +130,7 @@ GoldenKitchenSinkAuth::AsyncTailLogEntries(
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
     google::test::admin::database::v1::TailLogEntriesResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncTailLogEntries(cq, std::move(ctx), request);
   };
@@ -146,7 +146,7 @@ GoldenKitchenSinkAuth::AsyncWriteObject(
   using StreamAuth = google::cloud::internal::AsyncStreamingWriteRpcAuth<
     google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>;
 
-  auto child = child_;
+  auto& child = child_;
   auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncWriteObject(cq, std::move(ctx));
   };

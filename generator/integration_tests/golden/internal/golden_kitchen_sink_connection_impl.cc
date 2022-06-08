@@ -81,7 +81,7 @@ GoldenKitchenSinkConnectionImpl::WriteLogEntries(google::test::admin::database::
 StreamRange<std::string>
 GoldenKitchenSinkConnectionImpl::ListLogs(google::test::admin::database::v1::ListLogsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<golden::GoldenKitchenSinkRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListLogs(request);
@@ -107,7 +107,7 @@ GoldenKitchenSinkConnectionImpl::ListLogs(google::test::admin::database::v1::Lis
 
 StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
 GoldenKitchenSinkConnectionImpl::TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<golden::GoldenKitchenSinkRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
 
