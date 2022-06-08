@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/async_row_sampler.h"
+#include "google/cloud/bigtable/internal/legacy_async_row_sampler.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
@@ -278,7 +278,7 @@ TEST_F(AsyncSampleRowKeysTest, UsesBackoff) {
         return reader;
       });
 
-  auto samples_future = internal::AsyncRowSampler::Create(
+  auto samples_future = internal::LegacyAsyncRowSampler::Create(
       cq_, client_, rpc_retry_policy_->clone(), std::move(mock),
       metadata_update_policy_, "my-app-profile", "my-table");
 
@@ -330,7 +330,7 @@ TEST_F(AsyncSampleRowKeysTest, CancelDuringBackoff) {
         return reader;
       });
 
-  auto samples_future = internal::AsyncRowSampler::Create(
+  auto samples_future = internal::LegacyAsyncRowSampler::Create(
       cq_, client_, rpc_retry_policy_->clone(), std::move(mock),
       metadata_update_policy_, "my-app-profile", "my-table");
 

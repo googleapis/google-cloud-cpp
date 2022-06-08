@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/async_row_sampler.h"
+#include "google/cloud/bigtable/internal/legacy_async_row_sampler.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "absl/memory/memory.h"
 #include <grpcpp/client_context.h>
@@ -27,13 +27,13 @@ namespace internal {
 
 namespace btproto = ::google::bigtable::v2;
 
-future<StatusOr<std::vector<RowKeySample>>> AsyncRowSampler::Create(
+future<StatusOr<std::vector<RowKeySample>>> LegacyAsyncRowSampler::Create(
     CompletionQueue cq, std::shared_ptr<DataClient> client,
     std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
     MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
     std::string table_name) {
-  std::shared_ptr<AsyncRowSampler> sampler(new AsyncRowSampler(
+  std::shared_ptr<LegacyAsyncRowSampler> sampler(new LegacyAsyncRowSampler(
       std::move(cq), std::move(client), std::move(rpc_retry_policy),
       std::move(rpc_backoff_policy), std::move(metadata_update_policy),
       std::move(app_profile_id), std::move(table_name)));
@@ -41,7 +41,7 @@ future<StatusOr<std::vector<RowKeySample>>> AsyncRowSampler::Create(
   return sampler->promise_.get_future();
 }
 
-AsyncRowSampler::AsyncRowSampler(
+LegacyAsyncRowSampler::LegacyAsyncRowSampler(
     CompletionQueue cq, std::shared_ptr<DataClient> client,
     std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
@@ -56,7 +56,7 @@ AsyncRowSampler::AsyncRowSampler(
       table_name_(std::move(table_name)),
       promise_([this] { stream_cancelled_ = true; }) {}
 
-void AsyncRowSampler::StartIteration() {
+void LegacyAsyncRowSampler::StartIteration() {
   btproto::SampleRowKeysRequest request;
   request.set_app_profile_id(app_profile_id_);
   request.set_table_name(table_name_);
@@ -81,7 +81,8 @@ void AsyncRowSampler::StartIteration() {
       [self](Status const& status) { self->OnFinish(status); });
 }
 
-future<bool> AsyncRowSampler::OnRead(btproto::SampleRowKeysResponse response) {
+future<bool> LegacyAsyncRowSampler::OnRead(
+    btproto::SampleRowKeysResponse response) {
   if (stream_cancelled_) return make_ready_future(false);
 
   RowKeySample row_sample;
@@ -91,7 +92,7 @@ future<bool> AsyncRowSampler::OnRead(btproto::SampleRowKeysResponse response) {
   return make_ready_future(true);
 }
 
-void AsyncRowSampler::OnFinish(Status const& status) {
+void LegacyAsyncRowSampler::OnFinish(Status const& status) {
   if (status.ok()) {
     promise_.set_value(std::move(samples_));
     return;
