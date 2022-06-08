@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_MAKE_OPTIONS_SPAN_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_MAKE_OPTIONS_SPAN_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GROUP_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GROUP_OPTIONS_H
 
 #include "google/cloud/storage/version.h"
 #include "google/cloud/options.h"
@@ -70,27 +70,10 @@ static Options GroupOptions(Head&&, Tail&&... t) {
 }
 ///@}
 
-/**
- * Create an `OptionsSpan` for a `google::cloud::storage::Client` operation.
- *
- * All operations in `google::cloud::storage::Client` should create an option
- * span combining the options in the `RawClient` with any
- * `google::cloud::Options` in the parameter pack.
- */
-template <typename... RequestOptions>
-google::cloud::internal::OptionsSpan MakeOptionsSpan(
-    Options defaults,  // NOLINT(performance-unnecessary-value-param)
-    RequestOptions&&... o) {
-  return google::cloud::internal::OptionsSpan(
-      google::cloud::internal::MergeOptions(
-          GroupOptions(std::forward<RequestOptions>(o)...),
-          std::move(defaults)));
-}
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_MAKE_OPTIONS_SPAN_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GROUP_OPTIONS_H
