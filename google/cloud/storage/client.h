@@ -2805,6 +2805,7 @@ class Client {
                                           std::string bucket_name,
                                           std::string object_name,
                                           Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::V2SignUrlRequest request(std::move(verb), std::move(bucket_name),
                                        std::move(object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2868,6 +2869,7 @@ class Client {
                                           std::string bucket_name,
                                           std::string object_name,
                                           Options&&... options) {
+    auto const span = MakeSpan(std::forward<Options>(options)...);
     internal::V4SignUrlRequest request(std::move(verb), std::move(bucket_name),
                                        std::move(object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
