@@ -126,15 +126,14 @@ std::string HostHeader(Options const& options, char const* service) {
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
                                       char const* method, char const* service) {
+  auto const& current = CurrentOptions();
   auto auth_header =
-      CurrentOptions().get<Oauth2CredentialsOption>()->AuthorizationHeader();
-  if (!auth_header.ok()) {
-    return std::move(auth_header).status();
-  }
+      current.get<Oauth2CredentialsOption>()->AuthorizationHeader();
+  if (!auth_header.ok()) return std::move(auth_header).status();
   builder.SetMethod(method)
-      .ApplyClientOptions(CurrentOptions())
+      .ApplyClientOptions(current)
       .AddHeader(auth_header.value())
-      .AddHeader(HostHeader(CurrentOptions(), service))
+      .AddHeader(HostHeader(current, service))
       .AddHeader(x_goog_api_client_header_);
   return Status();
 }
