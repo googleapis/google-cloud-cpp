@@ -58,6 +58,11 @@ StatusOr<ListBucketAclResponse> ListBucketAclResponse::FromHttpResponse(
   return result;
 }
 
+StatusOr<ListBucketAclResponse> ListBucketAclResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  return FromHttpResponse(response.payload);
+}
+
 std::ostream& operator<<(std::ostream& os, ListBucketAclResponse const& r) {
   os << "ListBucketAclResponse={items={";
   os << absl::StrJoin(r.items, ", ", absl::StreamFormatter());

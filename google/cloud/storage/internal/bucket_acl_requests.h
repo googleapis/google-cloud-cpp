@@ -49,6 +49,8 @@ std::ostream& operator<<(std::ostream& os, ListBucketAclRequest const& r);
 struct ListBucketAclResponse {
   static StatusOr<ListBucketAclResponse> FromHttpResponse(
       std::string const& payload);
+  static StatusOr<ListBucketAclResponse> FromHttpResponse(
+      HttpResponse const& response);
 
   std::vector<BucketAccessControl> items;
 };

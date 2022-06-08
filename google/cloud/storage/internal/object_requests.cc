@@ -138,6 +138,11 @@ StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
   return result;
 }
 
+StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  return FromHttpResponse(response.payload);
+}
+
 std::ostream& operator<<(std::ostream& os, ListObjectsResponse const& r) {
   os << "ListObjectsResponse={next_page_token=" << r.next_page_token
      << ", items={";
@@ -357,6 +362,11 @@ StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
     result.resource = std::move(*parsed);
   }
   return result;
+}
+
+StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  return FromHttpResponse(response.payload);
 }
 
 std::ostream& operator<<(std::ostream& os, RewriteObjectResponse const& r) {

@@ -46,6 +46,8 @@ std::ostream& operator<<(std::ostream& os, ListObjectAclRequest const& r);
 struct ListObjectAclResponse {
   static StatusOr<ListObjectAclResponse> FromHttpResponse(
       std::string const& payload);
+  static StatusOr<ListObjectAclResponse> FromHttpResponse(
+      HttpResponse const& response);
 
   std::vector<ObjectAccessControl> items;
 };
