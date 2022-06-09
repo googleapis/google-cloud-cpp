@@ -354,6 +354,10 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
 }
 
 future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
+  if (connection_) {
+    return connection_->AsyncSampleRows(app_profile_id_, table_name_);
+  }
+
   auto cq = background_threads_->cq();
   return internal::LegacyAsyncRowSampler::Create(
       cq, client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
