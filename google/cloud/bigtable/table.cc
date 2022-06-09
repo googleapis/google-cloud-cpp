@@ -390,6 +390,9 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
       request, app_profile_id_, table_name_);
+  if (connection_) {
+    return connection_->AsyncReadModifyWriteRow(std::move(request));
+  }
 
   auto cq = background_threads_->cq();
   auto& client = client_;

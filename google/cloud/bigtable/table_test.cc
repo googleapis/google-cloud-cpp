@@ -308,6 +308,25 @@ TEST(TableTest, ReadModifyWriteRow) {
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST(TableTest, AsyncReadModifyWriteRow) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        EXPECT_EQ(kAppProfileId, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_THAT(request.rules(),
+                    ElementsAre(MatchRule(TestAppendRule()),
+                                MatchRule(TestIncrementRule())));
+        return make_ready_future<StatusOr<Row>>(PermanentError());
+      });
+
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  auto row = table.AsyncReadModifyWriteRow("row", TestAppendRule(),
+                                           TestIncrementRule());
+  EXPECT_THAT(row.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

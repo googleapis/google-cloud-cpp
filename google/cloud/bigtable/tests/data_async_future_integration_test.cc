@@ -171,9 +171,8 @@ TEST_F(DataIntegrationTestClientOnly, TableAsyncCheckAndMutateRowFail) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTestClientOnly,
-       TableAsyncReadModifyWriteAppendValueTest) {
-  auto table = GetTable();
+TEST_P(DataAsyncIntegrationTest, TableAsyncReadModifyWriteAppendValueTest) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const add_suffix1 = "-suffix";
