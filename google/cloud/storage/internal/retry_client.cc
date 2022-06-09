@@ -94,18 +94,13 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
 }  // namespace
 
 std::shared_ptr<RetryClient> RetryClient::Create(
-    std::shared_ptr<RawClient> client, Options const& options) {
+    std::shared_ptr<RawClient> client) {
   // Cannot use `std::make_shared<>` because the constructor is private.
-  return std::shared_ptr<RetryClient>(
-      new RetryClient(std::move(client), options));
+  return std::shared_ptr<RetryClient>(new RetryClient(std::move(client)));
 }
 
-RetryClient::RetryClient(std::shared_ptr<RawClient> client,
-                         Options const& options)
-    : client_(std::move(client)),
-      retry_policy_prototype_(options.get<RetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(options.get<BackoffPolicyOption>()->clone()),
-      idempotency_policy_(options.get<IdempotencyPolicyOption>()->clone()) {}
+RetryClient::RetryClient(std::shared_ptr<RawClient> client)
+    : client_(std::move(client)) {}
 
 ClientOptions const& RetryClient::client_options() const {
   return client_->client_options();
@@ -115,9 +110,9 @@ Options RetryClient::options() const { return client_->options(); }
 
 StatusOr<ListBucketsResponse> RetryClient::ListBuckets(
     ListBucketsRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -126,9 +121,9 @@ StatusOr<ListBucketsResponse> RetryClient::ListBuckets(
 
 StatusOr<BucketMetadata> RetryClient::CreateBucket(
     CreateBucketRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -137,9 +132,9 @@ StatusOr<BucketMetadata> RetryClient::CreateBucket(
 
 StatusOr<BucketMetadata> RetryClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -148,9 +143,9 @@ StatusOr<BucketMetadata> RetryClient::GetBucketMetadata(
 
 StatusOr<EmptyResponse> RetryClient::DeleteBucket(
     DeleteBucketRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto idempotency = current_idempotency_policy().IsIdempotent(request)
                          ? Idempotency::kIdempotent
                          : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -159,9 +154,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteBucket(
 
 StatusOr<BucketMetadata> RetryClient::UpdateBucket(
     UpdateBucketRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -170,9 +165,9 @@ StatusOr<BucketMetadata> RetryClient::UpdateBucket(
 
 StatusOr<BucketMetadata> RetryClient::PatchBucket(
     PatchBucketRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -181,9 +176,9 @@ StatusOr<BucketMetadata> RetryClient::PatchBucket(
 
 StatusOr<NativeIamPolicy> RetryClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -192,9 +187,9 @@ StatusOr<NativeIamPolicy> RetryClient::GetNativeBucketIamPolicy(
 
 StatusOr<NativeIamPolicy> RetryClient::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -204,9 +199,9 @@ StatusOr<NativeIamPolicy> RetryClient::SetNativeBucketIamPolicy(
 StatusOr<TestBucketIamPermissionsResponse>
 RetryClient::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -215,9 +210,9 @@ RetryClient::TestBucketIamPermissions(
 
 StatusOr<BucketMetadata> RetryClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -226,9 +221,9 @@ StatusOr<BucketMetadata> RetryClient::LockBucketRetentionPolicy(
 
 StatusOr<ObjectMetadata> RetryClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -237,9 +232,9 @@ StatusOr<ObjectMetadata> RetryClient::InsertObjectMedia(
 
 StatusOr<ObjectMetadata> RetryClient::CopyObject(
     CopyObjectRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -248,9 +243,9 @@ StatusOr<ObjectMetadata> RetryClient::CopyObject(
 
 StatusOr<ObjectMetadata> RetryClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -260,7 +255,7 @@ StatusOr<ObjectMetadata> RetryClient::GetObjectMetadata(
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
     ReadObjectRangeRequest const& request, RetryPolicy& retry_policy,
     BackoffPolicy& backoff_policy) {
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(retry_policy, backoff_policy, idempotency, *client_,
@@ -269,8 +264,8 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObject(
     ReadObjectRangeRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
   auto child = ReadObjectNotWrapped(request, *retry_policy, *backoff_policy);
   if (!child) {
     return child;
@@ -283,9 +278,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObject(
 
 StatusOr<ListObjectsResponse> RetryClient::ListObjects(
     ListObjectsRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -294,9 +289,9 @@ StatusOr<ListObjectsResponse> RetryClient::ListObjects(
 
 StatusOr<EmptyResponse> RetryClient::DeleteObject(
     DeleteObjectRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -305,9 +300,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteObject(
 
 StatusOr<ObjectMetadata> RetryClient::UpdateObject(
     UpdateObjectRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -316,9 +311,9 @@ StatusOr<ObjectMetadata> RetryClient::UpdateObject(
 
 StatusOr<ObjectMetadata> RetryClient::PatchObject(
     PatchObjectRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -327,9 +322,9 @@ StatusOr<ObjectMetadata> RetryClient::PatchObject(
 
 StatusOr<ObjectMetadata> RetryClient::ComposeObject(
     ComposeObjectRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -338,9 +333,9 @@ StatusOr<ObjectMetadata> RetryClient::ComposeObject(
 
 StatusOr<RewriteObjectResponse> RetryClient::RewriteObject(
     RewriteObjectRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -349,9 +344,9 @@ StatusOr<RewriteObjectResponse> RetryClient::RewriteObject(
 
 StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(
     ResumableUploadRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -360,8 +355,8 @@ StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(
 
 StatusOr<QueryResumableUploadResponse> RetryClient::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
   auto const idempotency = Idempotency::kIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
                   &RawClient::QueryResumableUpload, request, __func__);
@@ -369,8 +364,8 @@ StatusOr<QueryResumableUploadResponse> RetryClient::QueryResumableUpload(
 
 StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
   return MakeCall(*retry_policy, *backoff_policy, Idempotency::kIdempotent,
                   *client_, &RawClient::DeleteResumableUpload, request,
                   __func__);
@@ -437,8 +432,8 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
   Status last_status(StatusCode::kDeadlineExceeded,
                      "Retry policy exhausted before first attempt was made.");
 
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
 
   // `operation` represents the RPC we will make. In the happy case it is just
   // calls to `upload()`, but on a transient error we switch to calling
@@ -572,9 +567,9 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
 
 StatusOr<ListBucketAclResponse> RetryClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -583,9 +578,9 @@ StatusOr<ListBucketAclResponse> RetryClient::ListBucketAcl(
 
 StatusOr<BucketAccessControl> RetryClient::GetBucketAcl(
     GetBucketAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -594,9 +589,9 @@ StatusOr<BucketAccessControl> RetryClient::GetBucketAcl(
 
 StatusOr<BucketAccessControl> RetryClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -605,9 +600,9 @@ StatusOr<BucketAccessControl> RetryClient::CreateBucketAcl(
 
 StatusOr<EmptyResponse> RetryClient::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -616,9 +611,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteBucketAcl(
 
 StatusOr<ListObjectAclResponse> RetryClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -627,9 +622,9 @@ StatusOr<ListObjectAclResponse> RetryClient::ListObjectAcl(
 
 StatusOr<BucketAccessControl> RetryClient::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -638,9 +633,9 @@ StatusOr<BucketAccessControl> RetryClient::UpdateBucketAcl(
 
 StatusOr<BucketAccessControl> RetryClient::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -649,9 +644,9 @@ StatusOr<BucketAccessControl> RetryClient::PatchBucketAcl(
 
 StatusOr<ObjectAccessControl> RetryClient::CreateObjectAcl(
     CreateObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -660,9 +655,9 @@ StatusOr<ObjectAccessControl> RetryClient::CreateObjectAcl(
 
 StatusOr<EmptyResponse> RetryClient::DeleteObjectAcl(
     DeleteObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -671,9 +666,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteObjectAcl(
 
 StatusOr<ObjectAccessControl> RetryClient::GetObjectAcl(
     GetObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -682,9 +677,9 @@ StatusOr<ObjectAccessControl> RetryClient::GetObjectAcl(
 
 StatusOr<ObjectAccessControl> RetryClient::UpdateObjectAcl(
     UpdateObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -693,9 +688,9 @@ StatusOr<ObjectAccessControl> RetryClient::UpdateObjectAcl(
 
 StatusOr<ObjectAccessControl> RetryClient::PatchObjectAcl(
     PatchObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -704,9 +699,9 @@ StatusOr<ObjectAccessControl> RetryClient::PatchObjectAcl(
 
 StatusOr<ListDefaultObjectAclResponse> RetryClient::ListDefaultObjectAcl(
     ListDefaultObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -715,9 +710,9 @@ StatusOr<ListDefaultObjectAclResponse> RetryClient::ListDefaultObjectAcl(
 
 StatusOr<ObjectAccessControl> RetryClient::CreateDefaultObjectAcl(
     CreateDefaultObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -726,9 +721,9 @@ StatusOr<ObjectAccessControl> RetryClient::CreateDefaultObjectAcl(
 
 StatusOr<EmptyResponse> RetryClient::DeleteDefaultObjectAcl(
     DeleteDefaultObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -737,9 +732,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteDefaultObjectAcl(
 
 StatusOr<ObjectAccessControl> RetryClient::GetDefaultObjectAcl(
     GetDefaultObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -748,9 +743,9 @@ StatusOr<ObjectAccessControl> RetryClient::GetDefaultObjectAcl(
 
 StatusOr<ObjectAccessControl> RetryClient::UpdateDefaultObjectAcl(
     UpdateDefaultObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -759,9 +754,9 @@ StatusOr<ObjectAccessControl> RetryClient::UpdateDefaultObjectAcl(
 
 StatusOr<ObjectAccessControl> RetryClient::PatchDefaultObjectAcl(
     PatchDefaultObjectAclRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -770,9 +765,9 @@ StatusOr<ObjectAccessControl> RetryClient::PatchDefaultObjectAcl(
 
 StatusOr<ServiceAccount> RetryClient::GetServiceAccount(
     GetProjectServiceAccountRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -781,9 +776,9 @@ StatusOr<ServiceAccount> RetryClient::GetServiceAccount(
 
 StatusOr<ListHmacKeysResponse> RetryClient::ListHmacKeys(
     ListHmacKeysRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -792,9 +787,9 @@ StatusOr<ListHmacKeysResponse> RetryClient::ListHmacKeys(
 
 StatusOr<CreateHmacKeyResponse> RetryClient::CreateHmacKey(
     CreateHmacKeyRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -803,9 +798,9 @@ StatusOr<CreateHmacKeyResponse> RetryClient::CreateHmacKey(
 
 StatusOr<EmptyResponse> RetryClient::DeleteHmacKey(
     DeleteHmacKeyRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -814,9 +809,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteHmacKey(
 
 StatusOr<HmacKeyMetadata> RetryClient::GetHmacKey(
     GetHmacKeyRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -825,9 +820,9 @@ StatusOr<HmacKeyMetadata> RetryClient::GetHmacKey(
 
 StatusOr<HmacKeyMetadata> RetryClient::UpdateHmacKey(
     UpdateHmacKeyRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -836,9 +831,9 @@ StatusOr<HmacKeyMetadata> RetryClient::UpdateHmacKey(
 
 StatusOr<SignBlobResponse> RetryClient::SignBlob(
     SignBlobRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -847,9 +842,9 @@ StatusOr<SignBlobResponse> RetryClient::SignBlob(
 
 StatusOr<ListNotificationsResponse> RetryClient::ListNotifications(
     ListNotificationsRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -858,9 +853,9 @@ StatusOr<ListNotificationsResponse> RetryClient::ListNotifications(
 
 StatusOr<NotificationMetadata> RetryClient::CreateNotification(
     CreateNotificationRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -869,9 +864,9 @@ StatusOr<NotificationMetadata> RetryClient::CreateNotification(
 
 StatusOr<NotificationMetadata> RetryClient::GetNotification(
     GetNotificationRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
@@ -880,13 +875,30 @@ StatusOr<NotificationMetadata> RetryClient::GetNotification(
 
 StatusOr<EmptyResponse> RetryClient::DeleteNotification(
     DeleteNotificationRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+  auto retry_policy = current_retry_policy();
+  auto backoff_policy = current_backoff_policy();
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
                   &RawClient::DeleteNotification, request, __func__);
+}
+
+std::unique_ptr<RetryPolicy> RetryClient::current_retry_policy() {
+  return google::cloud::internal::CurrentOptions()
+      .get<RetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> RetryClient::current_backoff_policy() {
+  return google::cloud::internal::CurrentOptions()
+      .get<BackoffPolicyOption>()
+      ->clone();
+}
+
+IdempotencyPolicy& RetryClient::current_idempotency_policy() {
+  return *google::cloud::internal::CurrentOptions()
+              .get<IdempotencyPolicyOption>();
 }
 
 }  // namespace internal

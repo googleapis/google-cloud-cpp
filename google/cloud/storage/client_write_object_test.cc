@@ -185,6 +185,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
 
   ASSERT_TRUE(stream);
   auto client = ClientForMock();
+  google::cloud::internal::OptionsSpan const span(mock_->options());
   auto res = internal::ClientImplDetails::UploadStreamResumable(
       client, stream,
       internal::ResumableUploadRequest("test-bucket-name", "test-object-name")

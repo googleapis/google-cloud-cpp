@@ -103,8 +103,7 @@ TEST_F(ClientTest, Equality) {
 }
 
 TEST_F(ClientTest, OverrideRetryPolicy) {
-  auto client = internal::ClientImplDetails::CreateClient(
-      std::shared_ptr<internal::RawClient>(mock_), ObservableRetryPolicy(3));
+  auto client = testing::ClientFromMock(mock_, ObservableRetryPolicy(3));
 
   // Reset the counters at the beginning of the test.
 
@@ -120,9 +119,8 @@ TEST_F(ClientTest, OverrideRetryPolicy) {
 
 TEST_F(ClientTest, OverrideBackoffPolicy) {
   using ms = std::chrono::milliseconds;
-  auto client = internal::ClientImplDetails::CreateClient(
-      std::shared_ptr<internal::RawClient>(mock_),
-      ObservableBackoffPolicy(ms(20), ms(100), 2.0));
+  auto client = testing::ClientFromMock(
+      mock_, ObservableBackoffPolicy(ms(20), ms(100), 2.0));
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
@@ -136,9 +134,9 @@ TEST_F(ClientTest, OverrideBackoffPolicy) {
 
 TEST_F(ClientTest, OverrideBothPolicies) {
   using ms = std::chrono::milliseconds;
-  auto client = internal::ClientImplDetails::CreateClient(
-      std::shared_ptr<internal::RawClient>(mock_),
-      ObservableBackoffPolicy(ms(20), ms(100), 2.0), ObservableRetryPolicy(3));
+  auto client = testing::ClientFromMock(
+      mock_, ObservableBackoffPolicy(ms(20), ms(100), 2.0),
+      ObservableRetryPolicy(3));
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.

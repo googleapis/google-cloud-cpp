@@ -51,10 +51,10 @@ Options BasicTestPolicies() {
 /// @test Verify that non-idempotent operations return on the first failure.
 TEST(RetryClientTest, NonIdempotentErrorHandling) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   EXPECT_CALL(*mock, DeleteObject)
       .WillOnce(Return(StatusOr<EmptyResponse>(TransientError())));
@@ -69,8 +69,8 @@ TEST(RetryClientTest, NonIdempotentErrorHandling) {
 /// @test Verify that the retry loop returns on the first permanent failure.
 TEST(RetryClientTest, PermanentErrorHandling) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                                    BasicTestPolicies());
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   // Use a read-only operation because these are always idempotent.
   EXPECT_CALL(*mock, GetObjectMetadata)
@@ -85,8 +85,8 @@ TEST(RetryClientTest, PermanentErrorHandling) {
 /// @test Verify that the retry loop returns on the first permanent failure.
 TEST(RetryClientTest, TooManyTransientsHandling) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                                    BasicTestPolicies());
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   // Use a read-only operation because these are always idempotent.
   EXPECT_CALL(*mock, GetObjectMetadata)
@@ -100,8 +100,8 @@ TEST(RetryClientTest, TooManyTransientsHandling) {
 /// @test Verify that the retry loop works with exhausted retry policy.
 TEST(RetryClientTest, ExpiredRetryPolicy) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(mock),
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<RetryPolicyOption>(
           LimitedTimeRetryPolicy{std::chrono::milliseconds(0)}.clone()));
 
@@ -117,10 +117,10 @@ TEST(RetryClientTest, ExpiredRetryPolicy) {
 /// @test Verify that `CreateResumableUpload()` handles transients.
 TEST(RetryClientTest, CreateResumableUploadHandlesTransient) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              AlwaysRetryIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          AlwaysRetryIdempotencyPolicy().clone()));
 
   EXPECT_CALL(*mock, CreateResumableUpload)
       .WillOnce(
@@ -139,10 +139,10 @@ TEST(RetryClientTest, CreateResumableUploadHandlesTransient) {
 /// @test Verify that `QueryResumableUpload()` handles transients.
 TEST(RetryClientTest, QueryResumableUploadHandlesTransient) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce(
@@ -162,10 +162,10 @@ TEST(RetryClientTest, QueryResumableUploadHandlesTransient) {
 /// @test Verify that transient failures are handled as expected.
 TEST(RetryClientTest, UploadChunkHandleTransient) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -213,10 +213,10 @@ TEST(RetryClientTest, UploadChunkHandleTransient) {
 /// @test Verify that we can restore a session and continue writing.
 TEST(RetryClientTest, UploadChunkRestoreSession) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const p0(quantum, '0');
@@ -252,10 +252,10 @@ TEST(RetryClientTest, UploadChunkRestoreSession) {
 /// @test Verify that transient failures with partial writes are handled
 TEST(RetryClientTest, UploadChunkHandleTransientPartialFailures) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   auto const payload = std::string(quantum, 'X') + std::string(quantum, 'Y') +
@@ -296,10 +296,10 @@ TEST(RetryClientTest, UploadChunkHandleTransientPartialFailures) {
 /// @test Verify that a permanent error on UploadChunk results in a failure.
 TEST(RetryClientTest, UploadChunkPermanentError) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -316,10 +316,10 @@ TEST(RetryClientTest, UploadChunkPermanentError) {
 /// failure.
 TEST(RetryClientTest, UploadChunkPermanentErrorOnQuery) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -335,10 +335,10 @@ TEST(RetryClientTest, UploadChunkPermanentErrorOnQuery) {
 /// @test Verify that unexpected results return an error.
 TEST(RetryClientTest, UploadChunkHandleRollback) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -369,10 +369,10 @@ TEST(RetryClientTest, UploadChunkHandleRollback) {
 /// @test Verify that unexpected results return an error.
 TEST(RetryClientTest, UploadChunkHandleOvercommit) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -395,10 +395,10 @@ TEST(RetryClientTest, UploadChunkHandleOvercommit) {
 /// @test Verify that retry exhaustion following a short write fails.
 TEST(RetryClientTest, UploadChunkExhausted) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(std::string(quantum * 2, 'X'));
@@ -417,8 +417,8 @@ TEST(RetryClientTest, UploadChunkExhausted) {
 
 TEST(RetryClientTest, UploadChunkUploadChunkPolicyExhaustedOnStart) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(mock),
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies()
           .set<RetryPolicyOption>(
               LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone())
@@ -436,10 +436,10 @@ TEST(RetryClientTest, UploadChunkUploadChunkPolicyExhaustedOnStart) {
 /// @test Verify that responses without a range header are handled.
 TEST(RetryClientTest, UploadChunkMissingRangeHeaderInUpload) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   auto const payload = std::string(quantum, '0');
@@ -477,10 +477,10 @@ TEST(RetryClientTest, UploadChunkMissingRangeHeaderInUpload) {
 /// @test Verify that responses without a range header are handled.
 TEST(RetryClientTest, UploadChunkMissingRangeHeaderInQueryResumableUpload) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   auto const payload = std::string(quantum, '0');
@@ -513,10 +513,10 @@ TEST(RetryClientTest, UploadChunkMissingRangeHeaderInQueryResumableUpload) {
 /// @test Verify that full but unfinalized uploads are handled correctly.
 TEST(RetryClientTest, UploadFinalChunkQueryMissingPayloadTriggersRetry) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   auto const payload = std::string(quantum, '0');
@@ -548,10 +548,10 @@ TEST(RetryClientTest, UploadFinalChunkQueryMissingPayloadTriggersRetry) {
 /// @test Verify that not returning a final payload eventually becomes an error.
 TEST(RetryClientTest, UploadFinalChunkQueryTooManyMissingPayloads) {
   auto mock = std::make_shared<testing::MockClient>();
-  auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
-                          BasicTestPolicies().set<IdempotencyPolicyOption>(
-                              StrictIdempotencyPolicy().clone()));
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   auto const payload = std::string(quantum, '0');
