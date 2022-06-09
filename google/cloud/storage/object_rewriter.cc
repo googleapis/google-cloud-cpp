@@ -26,10 +26,10 @@ ObjectRewriter::ObjectRewriter(std::shared_ptr<internal::RawClient> client,
     : client_(std::move(client)),
       request_(std::move(request)),
       progress_{0, 0, false},
-      span_(google::cloud::internal::CurrentOptions()) {}
+      options_(google::cloud::internal::CurrentOptions()) {}
 
 StatusOr<RewriteProgress> ObjectRewriter::Iterate() {
-  auto span = google::cloud::internal::OptionsSpan(span_);
+  google::cloud::internal::OptionsSpan span(options_);
   StatusOr<internal::RewriteObjectResponse> response =
       client_->RewriteObject(request_);
   if (!response.ok()) {

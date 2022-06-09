@@ -99,10 +99,9 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
         call(tag);
       });
 
-  auto set_span = [](std::string const& value) {
-    return OptionsSpan(Options{}.set<UserProjectOption>(value));
+  auto user_project = [](std::string const& value) {
+    return Options{}.set<UserProjectOption>(value);
   };
-  auto clear_span = []() { return OptionsSpan(Options{}); };
   auto check_read_span = [](std::string const& expected) {
     return [expected](future<absl::optional<FakeResponse>> f) {
       EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), expected);
@@ -112,7 +111,7 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
 
   google::cloud::CompletionQueue cq(mock_cq);
 
-  auto span = set_span("create");
+  OptionsSpan span(user_project("create"));
   auto stream = MakeStreamingReadRpc<FakeRequest, FakeResponse>(
       cq, absl::make_unique<grpc::ClientContext>(), FakeRequest{},
       [&mock](grpc::ClientContext* context, FakeRequest const& request,
@@ -120,41 +119,41 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
         return mock.FakeRpc(context, request, cq);
       });
 
-  auto start_span = set_span("start");
+  OptionsSpan start_span(user_project("start"));
   auto start = stream->Start().then([](future<bool> f) {
     EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "start");
     return f.get();
   });
   ASSERT_EQ(1, operations.size());
-  auto start_clear = clear_span();
+  OptionsSpan start_clear(Options{});
   notify_next_op();
   EXPECT_TRUE(start.get());
 
-  auto read0_span = set_span("read0");
+  OptionsSpan read0_span(user_project("read0"));
   auto read0 = stream->Read().then(check_read_span("read0"));
   ASSERT_EQ(1, operations.size());
-  auto read0_clear = clear_span();
+  OptionsSpan read0_clear(Options{});
   notify_next_op();
   auto response0 = read0.get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ("key0", response0->key);
   EXPECT_EQ("value0_0", response0->value);
 
-  auto read1_span = set_span("read1");
+  OptionsSpan read1_span(user_project("read1"));
   auto read1 = stream->Read().then(check_read_span("read1"));
   ASSERT_EQ(1, operations.size());
-  auto read1_clear = clear_span();
+  OptionsSpan read1_clear(Options{});
   notify_next_op(false);
   auto response1 = read1.get();
   EXPECT_FALSE(response1.has_value());
 
-  auto finish_span = set_span("finish");
+  OptionsSpan finish_span(user_project("finish"));
   auto finish = stream->Finish().then([](future<Status> f) {
     EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "finish");
     return f.get();
   });
   ASSERT_EQ(1, operations.size());
-  auto finish_clear = clear_span();
+  OptionsSpan finish_clear(Options{});
   notify_next_op();
   EXPECT_THAT(finish.get(), IsOk());
 }
