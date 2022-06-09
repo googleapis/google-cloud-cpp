@@ -223,6 +223,29 @@ StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
   return TransformReadModifyWriteRowResponse(*std::move(sor));
 }
 
+future<StatusOr<bigtable::Row>> DataConnectionImpl::AsyncReadModifyWriteRow(
+    google::bigtable::v2::ReadModifyWriteRowRequest request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncRetryLoop(
+             retry_policy(), backoff_policy(), Idempotency::kNonIdempotent,
+             background_->cq(),
+             [stub](CompletionQueue& cq,
+                    std::unique_ptr<grpc::ClientContext> context,
+                    google::bigtable::v2::ReadModifyWriteRowRequest const&
+                        request) {
+               return stub->AsyncReadModifyWriteRow(cq, std::move(context),
+                                                    request);
+             },
+             request, __func__)
+      .then(
+          [](future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
+                 f) -> StatusOr<bigtable::Row> {
+            auto sor = f.get();
+            if (!sor) return std::move(sor).status();
+            return TransformReadModifyWriteRowResponse(*std::move(sor));
+          });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

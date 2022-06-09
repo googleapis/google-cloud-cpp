@@ -75,6 +75,9 @@ class DataConnectionImpl : public DataConnection {
   StatusOr<bigtable::Row> ReadModifyWriteRow(
       google::bigtable::v2::ReadModifyWriteRowRequest request) override;
 
+  future<StatusOr<bigtable::Row>> AsyncReadModifyWriteRow(
+      google::bigtable::v2::ReadModifyWriteRowRequest request) override;
+
  private:
   std::unique_ptr<DataRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
