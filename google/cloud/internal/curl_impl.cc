@@ -628,11 +628,11 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
     TRACE_STATE() << ", status=" << status << ", http code=" << http_code_
                   << "\n";
 
-    if (!internal::Contains(ignored_http_error_codes_, http_code_) &&
-        !status.ok()) {
-      return status;
+    if (status.ok() ||
+        internal::Contains(ignored_http_error_codes_, http_code_)) {
+      return bytes_read;
     }
-    return bytes_read;
+    return status;
   }
   TRACE_STATE() << ", http code=" << http_code_ << "\n";
   received_headers_.emplace(":curl-peer", handle_.GetPeer());
