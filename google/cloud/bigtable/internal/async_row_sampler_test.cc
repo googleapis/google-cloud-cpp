@@ -57,11 +57,11 @@ struct RowKeySampleVectors {
   std::vector<std::int64_t> offset_bytes;
 };
 
-absl::optional<v2::SampleRowKeysResponse> MakeResponse(
-    bigtable::RowKeySample sample) {
+absl::optional<v2::SampleRowKeysResponse> MakeResponse(std::string row_key,
+                                                       std::int64_t offset) {
   v2::SampleRowKeysResponse r;
-  r.set_row_key(std::move(sample.row_key));
-  r.set_offset_bytes(sample.offset_bytes);
+  r.set_row_key(std::move(row_key));
+  r.set_offset_bytes(offset);
   return absl::make_optional(r);
 };
 
@@ -77,12 +77,10 @@ TEST(AsyncSampleRowKeysTest, Simple) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({"test1", 11}));
-            })
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({"test2", 22}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse("test1", 11)); })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse("test2", 22)); })
             .WillOnce([] {
               return make_ready_future(
                   absl::optional<v2::SampleRowKeysResponse>{});
@@ -127,9 +125,8 @@ TEST(AsyncSampleRowKeysTest, RetryResetsSamples) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({"forgotten", 11}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse("forgotten", 11)); })
             .WillOnce([] {
               return make_ready_future(
                   absl::optional<v2::SampleRowKeysResponse>{});
@@ -149,9 +146,8 @@ TEST(AsyncSampleRowKeysTest, RetryResetsSamples) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({"returned", 22}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse("returned", 22)); })
             .WillOnce([] {
               return make_ready_future(
                   absl::optional<v2::SampleRowKeysResponse>{});
@@ -291,9 +287,8 @@ TEST(AsyncSampleRowKeysTest, CancelAfterSuccess) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({"test1", 11}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse("test1", 11)); })
             // We block here so the caller can cancel the request. The value
             // returned will be empty, meaning the stream is complete.
             .WillOnce([&p] { return p.get_future(); });
@@ -345,9 +340,8 @@ TEST(AsyncSampleRowKeysTest, CancelMidStream) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({"forgotten", 11}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse("forgotten", 11)); })
             // We block here so the caller can cancel the request. The value
             // returned will be a response, meaning the stream is still active
             // and needs to be drained.
@@ -381,7 +375,7 @@ TEST(AsyncSampleRowKeysTest, CancelMidStream) {
   fut.cancel();
   // Proceed with the rest of the stream. In this test, there are more responses
   // to be read, which we must drain. The client call should fail.
-  p.set_value(MakeResponse({"discarded2", 22}));
+  p.set_value(MakeResponse("discarded2", 22));
   auto sor = fut.get();
   EXPECT_THAT(sor,
               StatusIs(StatusCode::kCancelled, HasSubstr("User cancelled")));
