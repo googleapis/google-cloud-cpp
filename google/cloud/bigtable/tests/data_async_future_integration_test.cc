@@ -117,8 +117,8 @@ TEST_F(DataIntegrationTestClientOnly, TableAsyncBulkApply) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableAsyncCheckAndMutateRowPass) {
-  auto table = GetTable();
+TEST_P(DataAsyncIntegrationTest, TableAsyncCheckAndMutateRowPass) {
+  auto table = GetTable(GetParam());
 
   std::string const key = "row-key";
 
@@ -144,8 +144,8 @@ TEST_F(DataIntegrationTestClientOnly, TableAsyncCheckAndMutateRowPass) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableAsyncCheckAndMutateRowFail) {
-  auto table = GetTable();
+TEST_P(DataAsyncIntegrationTest, TableAsyncCheckAndMutateRowFail) {
+  auto table = GetTable(GetParam());
 
   std::string const key = "row-key";
 

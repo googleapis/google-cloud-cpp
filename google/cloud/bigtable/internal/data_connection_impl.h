@@ -68,6 +68,12 @@ class DataConnectionImpl : public DataConnection {
       std::vector<bigtable::Mutation> true_mutations,
       std::vector<bigtable::Mutation> false_mutations) override;
 
+  future<StatusOr<bigtable::MutationBranch>> AsyncCheckAndMutateRow(
+      std::string const& app_profile_id, std::string const& table_name,
+      std::string row_key, bigtable::Filter filter,
+      std::vector<bigtable::Mutation> true_mutations,
+      std::vector<bigtable::Mutation> false_mutations) override;
+
   future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows(
       std::string const& app_profile_id,
       std::string const& table_name) override;

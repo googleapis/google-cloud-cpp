@@ -931,6 +931,173 @@ TEST(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
+TEST(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    v2::CheckAndMutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.predicate_filter(), IsTestFilter());
+        EXPECT_THAT(request.true_mutations(),
+                    ElementsAre(MatchMutation(t1), MatchMutation(t2)));
+        EXPECT_THAT(request.false_mutations(),
+                    ElementsAre(MatchMutation(f1), MatchMutation(f2)));
+
+        v2::CheckAndMutateRowResponse resp;
+        resp.set_predicate_matched(true);
+        return make_ready_future(make_status_or(resp));
+      })
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    v2::CheckAndMutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.predicate_filter(), IsTestFilter());
+        EXPECT_THAT(request.true_mutations(),
+                    ElementsAre(MatchMutation(t1), MatchMutation(t2)));
+        EXPECT_THAT(request.false_mutations(),
+                    ElementsAre(MatchMutation(f1), MatchMutation(f2)));
+
+        v2::CheckAndMutateRowResponse resp;
+        resp.set_predicate_matched(false);
+        return make_ready_future(make_status_or(resp));
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto predicate =
+      conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row", TestFilter(),
+                                   {t1, t2}, {f1, f2})
+          .get();
+  ASSERT_STATUS_OK(predicate);
+  EXPECT_EQ(*predicate, bigtable::MutationBranch::kPredicateMatched);
+
+  predicate = conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row",
+                                           TestFilter(), {t1, t2}, {f1, f2})
+                  .get();
+  ASSERT_STATUS_OK(predicate);
+  EXPECT_EQ(*predicate, bigtable::MutationBranch::kPredicateNotMatched);
+}
+
+TEST(DataConnectionTest, AsyncCheckAndMutateRowIdempotency) {
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    v2::CheckAndMutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.predicate_filter(), IsTestFilter());
+        EXPECT_THAT(request.true_mutations(),
+                    ElementsAre(MatchMutation(t1), MatchMutation(t2)));
+        EXPECT_THAT(request.false_mutations(),
+                    ElementsAre(MatchMutation(f1), MatchMutation(f2)));
+        return make_ready_future<StatusOr<v2::CheckAndMutateRowResponse>>(
+            TransientError());
+      });
+
+  auto mock_i = absl::make_unique<MockIdempotentMutationPolicy>();
+  EXPECT_CALL(*mock_i, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockIdempotentMutationPolicy>();
+    EXPECT_CALL(*clone,
+                is_idempotent(An<v2::CheckAndMutateRowRequest const&>()))
+        .WillOnce(Return(false));
+    return clone;
+  });
+
+  internal::OptionsSpan span(
+      Options{}.set<IdempotentMutationPolicyOption>(std::move(mock_i)));
+  auto conn = TestConnection(std::move(mock));
+  auto status = conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row",
+                                             TestFilter(), {t1, t2}, {f1, f2});
+  EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
+}
+
+TEST(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    v2::CheckAndMutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.predicate_filter(), IsTestFilter());
+        EXPECT_THAT(request.true_mutations(),
+                    ElementsAre(MatchMutation(t1), MatchMutation(t2)));
+        EXPECT_THAT(request.false_mutations(),
+                    ElementsAre(MatchMutation(f1), MatchMutation(f2)));
+        return make_ready_future<StatusOr<v2::CheckAndMutateRowResponse>>(
+            PermanentError());
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto status = conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row",
+                                             TestFilter(), {t1, t2}, {f1, f2});
+  EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          v2::CheckAndMutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.predicate_filter(), IsTestFilter());
+        EXPECT_THAT(request.true_mutations(),
+                    ElementsAre(MatchMutation(t1), MatchMutation(t2)));
+        EXPECT_THAT(request.false_mutations(),
+                    ElementsAre(MatchMutation(f1), MatchMutation(f2)));
+        return make_ready_future<StatusOr<v2::CheckAndMutateRowResponse>>(
+            TransientError());
+      });
+
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
+    return clone;
+  });
+
+  internal::OptionsSpan span(
+      Options{}
+          .set<DataBackoffPolicyOption>(std::move(mock_b))
+          .set<IdempotentMutationPolicyOption>(
+              bigtable::AlwaysRetryMutationPolicy().clone()));
+  auto conn = TestConnection(std::move(mock));
+  auto status = conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row",
+                                             TestFilter(), {t1, t2}, {f1, f2});
+  EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
+}
+
 // The `AsyncRowSampler` is tested extensively in `async_row_sampler_test.cc`.
 // In this test, we just verify that the configuration is passed along.
 TEST(DataConnectionTest, AsyncSampleRows) {
