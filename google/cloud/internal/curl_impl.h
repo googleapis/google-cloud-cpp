@@ -25,6 +25,7 @@
 #include "google/cloud/version.h"
 #include "absl/types/span.h"
 #include <array>
+#include <set>
 #include <utility>
 
 namespace google {
@@ -129,6 +130,7 @@ class CurlImpl {
   std::chrono::seconds download_stall_timeout_;
   std::string http_version_;
   std::int32_t http_code_;
+  std::set<std::int32_t> ignored_http_error_codes_;
 
   // Explicitly closing the handle happens in two steps.
   // 1. This class needs to notify libcurl that the transfer is terminated by

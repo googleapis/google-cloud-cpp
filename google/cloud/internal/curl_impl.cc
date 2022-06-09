@@ -175,6 +175,7 @@ void CurlImpl::ApplyOptions(Options const& options) {
   http_version_ = std::move(options.get<HttpVersionOption>());
   transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
+  ignored_http_error_codes_ = options.get<IgnoredHttpErrorCodes>();
 }
 
 CurlImpl::CurlImpl(CurlHandle handle,
@@ -626,8 +627,12 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
         static_cast<HttpStatusCode>(http_code_), {});
     TRACE_STATE() << ", status=" << status << ", http code=" << http_code_
                   << "\n";
-    if (!status.ok()) return status;
-    return bytes_read;
+
+    if (status.ok() ||
+        internal::Contains(ignored_http_error_codes_, http_code_)) {
+      return bytes_read;
+    }
+    return status;
   }
   TRACE_STATE() << ", http code=" << http_code_ << "\n";
   received_headers_.emplace(":curl-peer", handle_.GetPeer());
