@@ -145,6 +145,8 @@ class MockAsyncMutateRowsStream
   MOCK_METHOD(future<absl::optional<google::bigtable::v2::MutateRowsResponse>>,
               Read, (), (override));
   MOCK_METHOD(future<Status>, Finish, (), (override));
+  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
+              (), (const, override));
 };
 
 class MockAsyncReadRowsStream
@@ -156,6 +158,8 @@ class MockAsyncReadRowsStream
   MOCK_METHOD(future<absl::optional<google::bigtable::v2::ReadRowsResponse>>,
               Read, (), (override));
   MOCK_METHOD(future<Status>, Finish, (), (override));
+  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
+              (), (const, override));
 };
 
 class MockAsyncSampleRowKeysStream
@@ -168,6 +172,8 @@ class MockAsyncSampleRowKeysStream
       future<absl::optional<google::bigtable::v2::SampleRowKeysResponse>>, Read,
       (), (override));
   MOCK_METHOD(future<Status>, Finish, (), (override));
+  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
+              (), (const, override));
 };
 
 }  // namespace testing
