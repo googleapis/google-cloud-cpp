@@ -25,6 +25,9 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// A simple wrapper to represent the response from `Table::SampleRowKeys()`.
 struct RowKeySample {
+  RowKeySample() = default;
+  RowKeySample(std::string key, std::int64_t bytes)
+      : row_key(std::move(key)), offset_bytes(bytes) {}
   /**
    * A row key value strictly larger than all the rows included in this sample.
    *
