@@ -162,7 +162,6 @@ TEST_F(RestClientIntegrationTest, GetWithIgnoredErrorCode) {
   std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
   auto body = ReadAll(std::move(payload));
   EXPECT_STATUS_OK(body);
-  EXPECT_GT(body->size(), 0);
 }
 
 TEST_F(RestClientIntegrationTest, GetWithNonIgnoredErrorCode) {
