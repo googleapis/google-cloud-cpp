@@ -343,6 +343,13 @@ Options const& CurrentOptions();
 class ABSL_MUST_USE_RESULT OptionsSpan {
  public:
   explicit OptionsSpan(Options opts);
+
+  // `OptionsSpan` should only be used for block-scoped objects.
+  OptionsSpan(OptionsSpan const& rhs) = delete;
+  OptionsSpan(OptionsSpan&& rhs) = delete;
+  OptionsSpan& operator=(OptionsSpan const& rhs) = delete;
+  OptionsSpan& operator=(OptionsSpan&& rhs) = delete;
+
   ~OptionsSpan();
 
  private:
