@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
@@ -200,6 +201,13 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
   return response.predicate_matched()
              ? bigtable::MutationBranch::kPredicateMatched
              : bigtable::MutationBranch::kPredicateNotMatched;
+}
+
+future<StatusOr<std::vector<bigtable::RowKeySample>>>
+DataConnectionImpl::AsyncSampleRows(std::string const& app_profile_id,
+                                    std::string const& table_name) {
+  return AsyncRowSampler::Create(background_->cq(), stub_, retry_policy(),
+                                 backoff_policy(), app_profile_id, table_name);
 }
 
 StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(

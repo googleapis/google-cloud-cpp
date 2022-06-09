@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -928,6 +929,25 @@ TEST(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
   auto status = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
                                         TestFilter(), {t1, t2}, {f1, f2});
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
+}
+
+// The `AsyncRowSampler` is tested extensively in `async_row_sampler_test.cc`.
+// In this test, we just verify that the configuration is passed along.
+TEST(DataConnectionTest, AsyncSampleRows) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncSampleRowKeys)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        using ErrorStream =
+            internal::AsyncStreamingReadRpcError<v2::SampleRowKeysResponse>;
+        return absl::make_unique<ErrorStream>(PermanentError());
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto samples = conn->AsyncSampleRows(kAppProfile, kTableName).get();
+  EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(DataConnectionTest, ReadModifyWriteRowSuccess) {

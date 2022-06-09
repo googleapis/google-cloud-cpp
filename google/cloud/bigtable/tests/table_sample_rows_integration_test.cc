@@ -69,11 +69,11 @@ class SampleRowsIntegrationTest
   static void SetUpTestSuite() {
     // Create kBatchSize * kBatchCount rows. Use a special client with tracing
     // disabled because it simply generates too much data.
-    auto table =
-        Table(MakeDataClient(TableTestEnvironment::project_id(),
-                             TableTestEnvironment::instance_id(),
-                             Options{}.set<TracingComponentsOption>({"rpc"})),
-              TableTestEnvironment::table_id());
+    auto table = bigtable_internal::MakeTable(
+        bigtable_internal::MakeDataConnection(
+            Options{}.set<TracingComponentsOption>({"rpc"})),
+        TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
+        "", TableTestEnvironment::table_id());
 
     int constexpr kBatchCount = 10;
     int constexpr kBatchSize = 5000;
@@ -105,12 +105,21 @@ class SampleRowsIntegrationTest
   }
 };
 
-TEST_F(SampleRowsIntegrationTest, Synchronous) {
+TEST_F(SampleRowsIntegrationTest, AsyncWithDataConnection) {
+  auto table = bigtable_internal::MakeTable(
+      bigtable_internal::MakeDataConnection(),
+      TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
+      "", TableTestEnvironment::table_id());
+  auto fut = table.AsyncSampleRows();
+  VerifySamples(fut.get());
+};
+
+TEST_F(SampleRowsIntegrationTest, SyncWithDataClient) {
   auto table = GetTable();
   VerifySamples(table.SampleRows());
 };
 
-TEST_F(SampleRowsIntegrationTest, Asynchronous) {
+TEST_F(SampleRowsIntegrationTest, AsyncWithDataClient) {
   auto table = GetTable();
   auto fut = table.AsyncSampleRows();
 
