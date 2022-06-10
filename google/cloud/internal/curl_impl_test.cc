@@ -94,6 +94,22 @@ TEST_F(CurlImplTest,
                              "verb?path=param&sort=desc&query=foo"));
 }
 
+TEST_F(CurlImplTest, SetUrlPathContainsHttps) {
+  RestRequest request;
+  request.SetPath("HTTPS://endpoint.googleapis.com/resource/verb");
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  impl.SetUrl("https://endpoint.googleapis.com", request, {});
+  EXPECT_THAT(impl.url(), Eq("HTTPS://endpoint.googleapis.com/resource/verb"));
+}
+
+TEST_F(CurlImplTest, SetUrlPathContainsHttp) {
+  RestRequest request;
+  request.SetPath("HTTP://endpoint.googleapis.com/resource/verb");
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  impl.SetUrl("https://endpoint.googleapis.com", request, {});
+  EXPECT_THAT(impl.url(), Eq("HTTP://endpoint.googleapis.com/resource/verb"));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

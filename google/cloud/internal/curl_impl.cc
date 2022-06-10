@@ -21,6 +21,8 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/log.h"
+#include "absl/strings/ascii.h"
+#include "absl/strings/match.h"
 #include <numeric>
 
 // Note that TRACE-level messages are disabled by default, even in
@@ -385,7 +387,14 @@ void CurlImpl::SetUrl(
     url_ = endpoint;
     return;
   }
-  url_ = absl::StrCat(NormalizeEndpoint(endpoint), request.path());
+
+  if (absl::StartsWithIgnoreCase(request.path(), "http://") ||
+      absl::StartsWithIgnoreCase(request.path(), "https://")) {
+    url_ = request.path();
+  } else {
+    url_ = absl::StrCat(NormalizeEndpoint(endpoint), request.path());
+  }
+
   char const* query_parameter_separator = InitialQueryParameterSeparator(url_);
   auto append_params = [&](RestRequest::HttpParameters const& parameters) {
     for (auto const& param : parameters) {
