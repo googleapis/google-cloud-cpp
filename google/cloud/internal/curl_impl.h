@@ -90,8 +90,6 @@ class CurlImpl {
                                           void* userdata);
   friend std::size_t RestCurlRequestHeader(char* contents, std::size_t size,
                                            std::size_t nitems, void* userdata);
-  static std::string const kHttp_;
-  static std::string const kHttps_;
 
   // Called by libcurl to show that more data is available in the request.
   std::size_t WriteCallback(void* ptr, std::size_t size, std::size_t nmemb);

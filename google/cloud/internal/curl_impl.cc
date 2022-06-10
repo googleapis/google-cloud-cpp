@@ -22,6 +22,7 @@
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/log.h"
 #include "absl/strings/ascii.h"
+#include "absl/strings/match.h"
 #include <numeric>
 
 // Note that TRACE-level messages are disabled by default, even in
@@ -379,9 +380,6 @@ void CurlImpl::SetHeaders(RestRequest const& request) {
   }
 }
 
-std::string const CurlImpl::kHttp_ = "http://";
-std::string const CurlImpl::kHttps_ = "https://";
-
 void CurlImpl::SetUrl(
     std::string const& endpoint, RestRequest const& request,
     RestRequest::HttpParameters const& additional_parameters) {
@@ -390,9 +388,8 @@ void CurlImpl::SetUrl(
     return;
   }
 
-  if (absl::AsciiStrToLower(request.path().substr(0, kHttps_.size())) ==
-          kHttps_ ||
-      absl::AsciiStrToLower(request.path().substr(0, kHttp_.size())) == kHttp_) {
+  if (absl::StartsWithIgnoreCase(request.path(), "http://") ||
+    absl::StartsWithIgnoreCase(request.path(), "https://")) {
     url_ = request.path();
   } else {
     url_ = absl::StrCat(NormalizeEndpoint(endpoint), request.path());
