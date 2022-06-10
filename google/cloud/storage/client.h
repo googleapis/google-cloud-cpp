@@ -233,7 +233,8 @@ struct ClientImplDetails;
  * class. The documentation for the constructors show examples of this in
  * action.
  *
- * [exponential-backoff]: https://cloud.google.com/storage/docs/exponential-backoff
+ * [exponential-backoff]:
+ * https://cloud.google.com/storage/docs/exponential-backoff
  *
  * @see https://cloud.google.com/storage/ for an overview of GCS.
  *
