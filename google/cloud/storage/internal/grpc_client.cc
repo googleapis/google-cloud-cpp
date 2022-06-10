@@ -90,8 +90,8 @@ std::chrono::milliseconds DefaultTransferStallTimeout(
 
 }  // namespace
 
+using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
-using ::google::cloud::internal::OptionsSpan;
 
 int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using DirectPath the gRPC library already does load balancing across
@@ -176,7 +176,6 @@ Options GrpcClient::options() const { return options_; }
 
 StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
     ListBucketsRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcBucketRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -187,7 +186,6 @@ StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
 
 StatusOr<BucketMetadata> GrpcClient::CreateBucket(
     CreateBucketRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcBucketRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -198,7 +196,6 @@ StatusOr<BucketMetadata> GrpcClient::CreateBucket(
 
 StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcBucketRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -209,7 +206,6 @@ StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
 
 StatusOr<EmptyResponse> GrpcClient::DeleteBucket(
     DeleteBucketRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcBucketRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -220,7 +216,6 @@ StatusOr<EmptyResponse> GrpcClient::DeleteBucket(
 
 StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
     UpdateBucketRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcBucketRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -231,7 +226,6 @@ StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
 
 StatusOr<BucketMetadata> GrpcClient::PatchBucket(
     PatchBucketRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcBucketRequestParser::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
@@ -243,7 +237,6 @@ StatusOr<BucketMetadata> GrpcClient::PatchBucket(
 
 StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcBucketRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -254,7 +247,6 @@ StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
 
 StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcBucketRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -265,7 +257,6 @@ StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
 
 StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcBucketRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -276,7 +267,6 @@ StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
 
 StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcBucketRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -287,7 +277,6 @@ StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
 
 StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
-  OptionsSpan span(options_);
   auto r = GrpcObjectRequestParser::ToProto(request);
   if (!r) return std::move(r).status();
   auto proto_request = *r;
@@ -386,7 +375,6 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
 
 StatusOr<ObjectMetadata> GrpcClient::CopyObject(
     CopyObjectRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcObjectRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request, "resource");
@@ -397,23 +385,22 @@ StatusOr<ObjectMetadata> GrpcClient::CopyObject(
         StatusCode::kOutOfRange,
         "Object too large, use RewriteObject() instead of CopyObject()");
   }
-  return GrpcObjectMetadataParser::FromProto(response->resource(), options_);
+  return GrpcObjectMetadataParser::FromProto(response->resource(),
+                                             CurrentOptions());
 }
 
 StatusOr<ObjectMetadata> GrpcClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcObjectRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->GetObject(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectMetadataParser::FromProto(*response, options_);
+  return GrpcObjectMetadataParser::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
     ReadObjectRangeRequest const& request) {
-  OptionsSpan span(options_);
   // With the REST API this condition was detected by the server as an error,
   // generally we prefer the server to detect errors because its answers are
   // authoritative. In this case, the server cannot: with gRPC '0' is the same
@@ -437,23 +424,22 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   }
   return std::unique_ptr<ObjectReadSource>(
       absl::make_unique<GrpcObjectReadSource>(
-          std::move(stream), options_.get<DownloadStallTimeoutOption>()));
+          std::move(stream),
+          CurrentOptions().get<DownloadStallTimeoutOption>()));
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
     ListObjectsRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcObjectRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->ListObjects(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectRequestParser::FromProto(*response, options_);
+  return GrpcObjectRequestParser::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteObject(
     DeleteObjectRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcObjectRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -464,62 +450,56 @@ StatusOr<EmptyResponse> GrpcClient::DeleteObject(
 
 StatusOr<ObjectMetadata> GrpcClient::UpdateObject(
     UpdateObjectRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcObjectRequestParser::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->UpdateObject(context, *proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectMetadataParser::FromProto(*response, options_);
+  return GrpcObjectMetadataParser::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<ObjectMetadata> GrpcClient::PatchObject(
     PatchObjectRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcObjectRequestParser::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->UpdateObject(context, *proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectMetadataParser::FromProto(*response, options_);
+  return GrpcObjectMetadataParser::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<ObjectMetadata> GrpcClient::ComposeObject(
     ComposeObjectRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcObjectRequestParser::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->ComposeObject(context, *proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectMetadataParser::FromProto(*response, options_);
+  return GrpcObjectMetadataParser::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(
     RewriteObjectRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcObjectRequestParser::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
   ApplyQueryParameters(context, request, "resource");
   auto response = stub_->RewriteObject(context, *proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectRequestParser::FromProto(*response, options_);
+  return GrpcObjectRequestParser::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(
     ResumableUploadRequest const& request) {
-  OptionsSpan span(options_);
-
   auto proto_request = GrpcObjectRequestParser::ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
 
   grpc::ClientContext context;
   ApplyQueryParameters(context, request, "resource");
-  auto const timeout = options_.get<TransferStallTimeoutOption>();
+  auto const timeout = CurrentOptions().get<TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
     context.set_deadline(std::chrono::system_clock::now() + timeout);
   }
@@ -531,10 +511,9 @@ StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(
 
 StatusOr<QueryResumableUploadResponse> GrpcClient::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
-  OptionsSpan span(options_);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request, "resource");
-  auto const timeout = options_.get<TransferStallTimeoutOption>();
+  auto const timeout = CurrentOptions().get<TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
     context.set_deadline(std::chrono::system_clock::now() + timeout);
   }
@@ -564,7 +543,6 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
     }
   };
 
-  OptionsSpan span(options_);
   auto const timeout =
       DefaultTransferStallTimeout(google::cloud::internal::CurrentOptions()
                                       .get<TransferStallTimeoutOption>());
@@ -890,7 +868,6 @@ StatusOr<ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
 
 StatusOr<ServiceAccount> GrpcClient::GetServiceAccount(
     GetProjectServiceAccountRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcServiceAccountParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -901,7 +878,6 @@ StatusOr<ServiceAccount> GrpcClient::GetServiceAccount(
 
 StatusOr<ListHmacKeysResponse> GrpcClient::ListHmacKeys(
     ListHmacKeysRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcHmacKeyRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -912,7 +888,6 @@ StatusOr<ListHmacKeysResponse> GrpcClient::ListHmacKeys(
 
 StatusOr<CreateHmacKeyResponse> GrpcClient::CreateHmacKey(
     CreateHmacKeyRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcHmacKeyRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -923,7 +898,6 @@ StatusOr<CreateHmacKeyResponse> GrpcClient::CreateHmacKey(
 
 StatusOr<EmptyResponse> GrpcClient::DeleteHmacKey(
     DeleteHmacKeyRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcHmacKeyRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -934,7 +908,6 @@ StatusOr<EmptyResponse> GrpcClient::DeleteHmacKey(
 
 StatusOr<HmacKeyMetadata> GrpcClient::GetHmacKey(
     GetHmacKeyRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcHmacKeyRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -945,7 +918,6 @@ StatusOr<HmacKeyMetadata> GrpcClient::GetHmacKey(
 
 StatusOr<HmacKeyMetadata> GrpcClient::UpdateHmacKey(
     UpdateHmacKeyRequest const& request) {
-  OptionsSpan span(options_);
   auto proto = GrpcHmacKeyRequestParser::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);

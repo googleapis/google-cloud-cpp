@@ -86,6 +86,7 @@ TEST(GrpcClientInsertObjectMediaTest, Small) {
                 Return(ByMove(make_ready_future(make_status_or(response)))));
         return stream;
       });
+
   auto client = GrpcClient::CreateMock(mock);
   auto metadata = client->InsertObjectMedia(
       InsertObjectMediaRequest("test-bucket", "test-object",
@@ -119,8 +120,10 @@ TEST(GrpcClientInsertObjectMediaTest, StallTimeoutStart) {
                 make_status_or(google::storage::v2::WriteObjectResponse{})))));
         return stream;
       });
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
+
+  auto client = GrpcClient::CreateMock(mock);
+  google::cloud::internal::OptionsSpan const span(
+      Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
   auto metadata = client->InsertObjectMedia(
       InsertObjectMediaRequest("test-bucket", "test-object",
                                "The quick brown fox jumps over the lazy dog"));
@@ -153,8 +156,10 @@ TEST(GrpcClientInsertObjectMediaTest, StallTimeoutWrite) {
                 make_status_or(google::storage::v2::WriteObjectResponse{})))));
         return stream;
       });
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
+
+  auto client = GrpcClient::CreateMock(mock);
+  google::cloud::internal::OptionsSpan const span(
+      Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
   auto metadata = client->InsertObjectMedia(
       InsertObjectMediaRequest("test-bucket", "test-object",
                                "The quick brown fox jumps over the lazy dog"));
@@ -187,8 +192,10 @@ TEST(GrpcClientInsertObjectMediaTest, StallTimeoutFinish) {
         });
         return stream;
       });
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
+
+  auto client = GrpcClient::CreateMock(mock);
+  google::cloud::internal::OptionsSpan const span(
+      Options{}.set<TransferStallTimeoutOption>(std::chrono::seconds(1)));
   auto metadata = client->InsertObjectMedia(
       InsertObjectMediaRequest("test-bucket", "test-object",
                                "The quick brown fox jumps over the lazy dog"));

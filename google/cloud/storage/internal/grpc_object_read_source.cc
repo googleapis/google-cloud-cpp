@@ -28,8 +28,10 @@ namespace {
 std::chrono::milliseconds DefaultDownloadStallTimeout(
     std::chrono::milliseconds value) {
   if (value != std::chrono::milliseconds(0)) return value;
-  return std::chrono::seconds(
-      std::numeric_limits<std::chrono::seconds::rep>::max());
+  // We need a large value for `wait_for()`, but not so large that it can easily
+  // overflow.  Fortunately, uploads automatically cancel (server side) after
+  // a few hours, so waiting for 14 days will not create spurious timeouts.
+  return std::chrono::milliseconds(std::chrono::hours(24) * 14);
 }
 
 }  // namespace
