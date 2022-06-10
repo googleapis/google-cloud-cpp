@@ -45,6 +45,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::NotNull;
 
 class GoogleCredentialsTest : public ::testing::Test {
  public:
@@ -503,16 +504,19 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaEnvVar) {
 TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
   char const filename[] = "missing-credentials.json";
 
-  ScopedEnvironment gce_check_override_env_var(GceCheckOverrideEnvVar(), "0");
   // The method to create default credentials should see that no file exists at
   // this path, then continue trying to load the other credential types,
   // eventually finding no valid credentials and hitting a runtime error.
   ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
                                                  filename);
+  ScopedEnvironment gcloud_metadata_host_override_env_var(
+      internal::GceMetadataHostnameEnvVar(), "invalid.google.internal");
 
   auto creds = GoogleDefaultCredentials();
-  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk),
-                              HasSubstr("Could not automatically determine")));
+  ASSERT_STATUS_OK(creds);
+  ASSERT_THAT(*creds, NotNull());
+  auto header = (*creds)->AuthorizationHeader();
+  EXPECT_THAT(header, StatusIs(Not(StatusCode::kOk)));
 }
 
 TEST_F(GoogleCredentialsTest, LoadP12Credentials) {

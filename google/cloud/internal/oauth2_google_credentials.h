@@ -30,13 +30,6 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Forces credentials creation as if the program is running on a GCE instance.
- */
-struct ForceGceOption {
-  using Type = bool;
-};
-
-/**
  * Produces a Credentials type based on the runtime environment.
  *
  * If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON
