@@ -221,10 +221,8 @@ struct ClientImplDetails;
  * @par Retry, Backoff, and Idempotency Policies
  *
  * The library automatically retries requests that fail with transient errors,
- * follows the
- * [recommended
- * practice](https://cloud.google.com/storage/docs/exponential-backoff) to
- * backoff between retries.
+ * and follows the [recommended practice][exponential-backoff] to backoff
+ * between retries.
  *
  * The default policies are to continue retrying for up to 15 minutes, and to
  * use truncated (at 5 minutes) exponential backoff, doubling the maximum
@@ -234,6 +232,8 @@ struct ClientImplDetails;
  * The application can override these policies when constructing objects of this
  * class. The documentation for the constructors show examples of this in
  * action.
+ *
+ * [exponential-backoff]: https://cloud.google.com/storage/docs/exponential-backoff
  *
  * @see https://cloud.google.com/storage/ for an overview of GCS.
  *
