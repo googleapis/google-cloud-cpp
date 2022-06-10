@@ -379,19 +379,20 @@ void CurlImpl::SetHeaders(RestRequest const& request) {
   }
 }
 
+std::string const CurlImpl::kHttp_ = "http://";
+std::string const CurlImpl::kHttps_ = "https://";
+
 void CurlImpl::SetUrl(
     std::string const& endpoint, RestRequest const& request,
     RestRequest::HttpParameters const& additional_parameters) {
-  static std::string const kHttp = "http://";
-  static std::string const kHttps = "https://";
   if (request.path().empty() && additional_parameters.empty()) {
     url_ = endpoint;
     return;
   }
 
-  if (absl::AsciiStrToLower(request.path()).substr(0, kHttps.size()) ==
-          kHttps ||
-      absl::AsciiStrToLower(request.path()).substr(0, kHttp.size()) == kHttp) {
+  if (absl::AsciiStrToLower(request.path().substr(0, kHttps_.size())) ==
+          kHttps_ ||
+      absl::AsciiStrToLower(request.path().substr(0, kHttp_.size())) == kHttp_) {
     url_ = request.path();
   } else {
     url_ = absl::StrCat(NormalizeEndpoint(endpoint), request.path());
