@@ -416,18 +416,21 @@ if (BUILD_TESTING)
         auto_finalize_test.cc
         bucket_access_control_test.cc
         bucket_metadata_test.cc
-        bucket_test.cc
         client_bucket_acl_test.cc
+        client_bucket_test.cc
         client_default_object_acl_test.cc
         client_notifications_test.cc
         client_object_acl_test.cc
         client_object_copy_test.cc
+        client_object_test.cc
         client_options_test.cc
         client_service_account_test.cc
         client_sign_policy_document_test.cc
         client_sign_url_test.cc
         client_test.cc
         client_write_object_test.cc
+        compose_many_test.cc
+        delete_by_prefix_test.cc
         hashing_options_test.cc
         hmac_key_metadata_test.cc
         idempotency_policy_test.cc
@@ -498,7 +501,6 @@ if (BUILD_TESTING)
         object_access_control_test.cc
         object_metadata_test.cc
         object_stream_test.cc
-        object_test.cc
         parallel_uploads_test.cc
         policy_document_test.cc
         retry_policy_test.cc
