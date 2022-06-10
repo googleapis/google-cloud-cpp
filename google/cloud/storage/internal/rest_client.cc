@@ -43,6 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 namespace rest = google::cloud::rest_internal;
+using ::google::cloud::internal::CurrentOptions;
 
 namespace {
 
@@ -131,6 +132,7 @@ std::shared_ptr<RestClient> RestClient::Create(Options options) {
   return Create(std::move(options), std::move(storage_client),
                 std::move(iam_client), std::move(curl_client));
 }
+
 std::shared_ptr<RestClient> RestClient::Create(
     Options options,
     std::shared_ptr<google::cloud::rest_internal::RestClient>
@@ -170,13 +172,14 @@ RestClient::RestClient(
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       options_(std::move(options)) {}
 
-Options RestClient::options() const { return curl_client_->options(); }
+Options RestClient::options() const { return options_; }
 
 StatusOr<ListBucketsResponse> RestClient::ListBuckets(
     ListBucketsRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b"));
-  auto auth = AddAuthorizationHeader(options_, builder);
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b"));
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("project", request.project_id());
@@ -186,9 +189,10 @@ StatusOr<ListBucketsResponse> RestClient::ListBuckets(
 
 StatusOr<BucketMetadata> RestClient::CreateBucket(
     CreateBucketRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b"));
-  auto auth = AddAuthorizationHeader(options_, builder);
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b"));
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("project", request.project_id());
@@ -200,10 +204,11 @@ StatusOr<BucketMetadata> RestClient::CreateBucket(
 
 StatusOr<BucketMetadata> RestClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
-  RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
-                   request.bucket_name()));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat("storage/",
+                                          current.get<TargetApiVersionOption>(),
+                                          "/b/", request.bucket_name()));
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   return CheckedFromString<BucketMetadataParser>(
@@ -212,10 +217,11 @@ StatusOr<BucketMetadata> RestClient::GetBucketMetadata(
 
 StatusOr<EmptyResponse> RestClient::DeleteBucket(
     DeleteBucketRequest const& request) {
-  RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
-                   request.bucket_name()));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat("storage/",
+                                          current.get<TargetApiVersionOption>(),
+                                          "/b/", request.bucket_name()));
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   return ReturnEmptyResponse(
@@ -224,10 +230,11 @@ StatusOr<EmptyResponse> RestClient::DeleteBucket(
 
 StatusOr<BucketMetadata> RestClient::UpdateBucket(
     UpdateBucketRequest const& request) {
-  RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
-                   request.metadata().name()));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat("storage/",
+                                          current.get<TargetApiVersionOption>(),
+                                          "/b/", request.metadata().name()));
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
@@ -238,10 +245,11 @@ StatusOr<BucketMetadata> RestClient::UpdateBucket(
 
 StatusOr<BucketMetadata> RestClient::PatchBucket(
     PatchBucketRequest const& request) {
-  RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
-                   request.bucket()));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat("storage/",
+                                          current.get<TargetApiVersionOption>(),
+                                          "/b/", request.bucket()));
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
@@ -252,10 +260,11 @@ StatusOr<BucketMetadata> RestClient::PatchBucket(
 
 StatusOr<NativeIamPolicy> RestClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
                    request.bucket_name(), "/iam"));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   return CreateFromJson<NativeIamPolicy>(
@@ -264,10 +273,11 @@ StatusOr<NativeIamPolicy> RestClient::GetNativeBucketIamPolicy(
 
 StatusOr<NativeIamPolicy> RestClient::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
                    request.bucket_name(), "/iam"));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
@@ -278,10 +288,11 @@ StatusOr<NativeIamPolicy> RestClient::SetNativeBucketIamPolicy(
 
 StatusOr<TestBucketIamPermissionsResponse> RestClient::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
                    request.bucket_name(), "/iam/testPermissions"));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   for (auto const& p : request.permissions()) {
     builder.AddQueryParameter("permissions", p);
@@ -293,10 +304,11 @@ StatusOr<TestBucketIamPermissionsResponse> RestClient::TestBucketIamPermissions(
 
 StatusOr<BucketMetadata> RestClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
                    request.bucket_name(), "/lockRetentionPolicy"));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
@@ -325,10 +337,11 @@ std::string RestClient::PickBoundary(std::string const& text_to_avoid) {
 
 StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
     InsertObjectMediaRequest const& request) {
-  RestRequestBuilder builder(
-      absl::StrCat("upload/storage/", options_.get<TargetApiVersionOption>(),
-                   "/b/", request.bucket_name(), "/o"));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat("upload/storage/",
+                                          current.get<TargetApiVersionOption>(),
+                                          "/b/", request.bucket_name(), "/o"));
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
 
   AddOptionsWithSkip<RestRequestBuilder, ContentType> no_content_type{builder};
@@ -399,15 +412,16 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
 
 StatusOr<ObjectMetadata> RestClient::InsertObjectMediaXml(
     InsertObjectMediaRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
       request.bucket_name(), "/", UrlEscapeString(request.object_name())));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   // Apply the options from InsertObjectMediaRequest that are set, translating
   // to the XML format for them.
   builder.AddOption(request.GetOption<ContentEncoding>());
 
-  // Set the content type of a sensible value, the application can override this
+  // Set the content type to a sensible value. The application can override this
   // in the options for the request.
   if (!request.HasOption<ContentType>()) {
     builder.AddHeader("content-type", "application/octet-stream");
@@ -490,10 +504,11 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaXml(
 
 StatusOr<ObjectMetadata> RestClient::InsertObjectMediaSimple(
     InsertObjectMediaRequest const& request) {
-  RestRequestBuilder builder(
-      absl::StrCat("upload/storage/", options_.get<TargetApiVersionOption>(),
-                   "/b/", request.bucket_name(), "/o"));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat("upload/storage/",
+                                          current.get<TargetApiVersionOption>(),
+                                          "/b/", request.bucket_name(), "/o"));
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   if (request.HasOption<UserIp>()) {
@@ -545,12 +560,13 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMedia(
 
 StatusOr<ObjectMetadata> RestClient::CopyObject(
     CopyObjectRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
-      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
       request.source_bucket(), "/o/", UrlEscapeString(request.source_object()),
       "/copyTo/b/", request.destination_bucket(), "/o/",
       UrlEscapeString(request.destination_object())));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
@@ -567,10 +583,11 @@ StatusOr<ObjectMetadata> RestClient::CopyObject(
 
 StatusOr<ObjectMetadata> RestClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
-      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
       request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   return CheckedFromString<ObjectMetadataParser>(
@@ -579,9 +596,10 @@ StatusOr<ObjectMetadata> RestClient::GetObjectMetadata(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObjectXml(
     ReadObjectRangeRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
       request.bucket_name(), "/", UrlEscapeString(request.object_name())));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   //
   // Apply the options from ReadObjectMediaRequest that are set, translating
@@ -628,10 +646,11 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
     return ReadObjectXml(request);
   }
 
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
-      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
       request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
 
@@ -652,10 +671,11 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
 
 StatusOr<ListObjectsResponse> RestClient::ListObjects(
     ListObjectsRequest const& request) {
-  RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
-                   request.bucket_name(), "/o"));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat("storage/",
+                                          current.get<TargetApiVersionOption>(),
+                                          "/b/", request.bucket_name(), "/o"));
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("pageToken", request.page_token());
@@ -665,10 +685,11 @@ StatusOr<ListObjectsResponse> RestClient::ListObjects(
 
 StatusOr<EmptyResponse> RestClient::DeleteObject(
     DeleteObjectRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
-      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
       request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   return ReturnEmptyResponse(
@@ -677,10 +698,11 @@ StatusOr<EmptyResponse> RestClient::DeleteObject(
 
 StatusOr<ObjectMetadata> RestClient::UpdateObject(
     UpdateObjectRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
-      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
       request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
@@ -691,10 +713,11 @@ StatusOr<ObjectMetadata> RestClient::UpdateObject(
 
 StatusOr<ObjectMetadata> RestClient::PatchObject(
     PatchObjectRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
-      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
       request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
@@ -705,11 +728,12 @@ StatusOr<ObjectMetadata> RestClient::PatchObject(
 
 StatusOr<ObjectMetadata> RestClient::ComposeObject(
     ComposeObjectRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(
-      absl::StrCat("storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
                    request.bucket_name(), "/o/",
                    UrlEscapeString(request.object_name()), "/compose"));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
@@ -720,12 +744,13 @@ StatusOr<ObjectMetadata> RestClient::ComposeObject(
 
 StatusOr<RewriteObjectResponse> RestClient::RewriteObject(
     RewriteObjectRequest const& request) {
+  auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
-      "storage/", options_.get<TargetApiVersionOption>(), "/b/",
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
       request.source_bucket(), "/o/", UrlEscapeString(request.source_object()),
       "/rewriteTo/b/", request.destination_bucket(), "/o/",
       UrlEscapeString(request.destination_object())));
-  auto auth = AddAuthorizationHeader(options_, builder);
+  auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   if (!request.rewrite_token().empty()) {
