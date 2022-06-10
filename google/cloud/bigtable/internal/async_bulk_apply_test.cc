@@ -33,7 +33,6 @@ using ::google::cloud::bigtable::testing::MockAsyncMutateRowsStream;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
-using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAreArray;
 using ::testing::Matcher;
 using ::testing::MockFunction;
