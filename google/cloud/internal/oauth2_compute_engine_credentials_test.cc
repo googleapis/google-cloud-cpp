@@ -45,6 +45,7 @@ using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
+using ::testing::UnorderedElementsAreArray;
 
 class ComputeEngineCredentialsTest : public ::testing::Test {
  protected:
@@ -224,85 +225,52 @@ TEST_F(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
                            std::string{"tokentype mysupersecrettoken"}));
 }
 
-/// @test Parsing a metadata server response with missing fields results in
-/// failure.
-TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponseMissingFields) {
-  std::string email = "foo@bar.baz";
-  std::string svc_acct_info_resp = R"""({})""";
-  std::string svc_acct_info_resp2 = R"""({
-      "scopes": ["scope1","scope2"]
-  })""";
-
-  auto mock_http_payload1 = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload1, Read)
-      .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-        std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                  buffer.begin());
-        return svc_acct_info_resp.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
-
-  auto mock_http_payload2 = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload2, Read)
-      .WillOnce([svc_acct_info_resp2](absl::Span<char> buffer) {
-        std::copy(svc_acct_info_resp2.begin(), svc_acct_info_resp2.end(),
-                  buffer.begin());
-        return svc_acct_info_resp2.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
-
-  auto mock_response1 = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response1, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response1), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload1))));
-
-  auto mock_response2 = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response2, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
-  EXPECT_CALL(std::move(*mock_response2), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload2))));
-
-  auto status = ParseMetadataServerResponse(*mock_response1);
-  EXPECT_THAT(status,
-              StatusIs(Not(StatusCode::kOk),
-                       HasSubstr("Could not find all required fields")));
-
-  status = ParseMetadataServerResponse(*mock_response2);
-  EXPECT_THAT(status,
-              StatusIs(Not(StatusCode::kOk),
-                       HasSubstr("Could not find all required fields")));
-}
-
 /// @test Parsing a metadata server response yields a ServiceAccountMetadata.
 TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponse) {
-  std::string email = "foo@bar.baz";
-  std::string svc_acct_info_resp = R"""({
-      "email": ")""" + email + R"""(",
-      "scopes": ["scope1","scope2"]
-  })""";
+  struct TestCase {
+    std::string payload;
+    ServiceAccountMetadata expected;
+  } cases[] = {
+      {R"js({"email": "foo@bar.baz", "scopes": ["scope1", "scope2"]})js",
+       ServiceAccountMetadata{{"scope1", "scope2"}, "foo@bar.baz"}},
+      {R"js({"email": "foo@bar.baz", "scopes": "scope1\nscope2\n"})js",
+       ServiceAccountMetadata{{"scope1", "scope2"}, "foo@bar.baz"}},
+      // Ignore invalid formats
+      {R"js({"email": ["1", "2"], "scopes": ["scope1", "scope2"]})js",
+       ServiceAccountMetadata{{"scope1", "scope2"}, ""}},
+      {R"js({"email": "foo@bar", "scopes": {"foo": "bar"}})js",
+       ServiceAccountMetadata{{}, "foo@bar"}},
+      // Ignore missing fields
+      {R"js({"scopes": ["scope1", "scope2"]})js",
+       ServiceAccountMetadata{{"scope1", "scope2"}, ""}},
+      {R"js({"email": "foo@bar.baz"})js",
+       ServiceAccountMetadata{{}, "foo@bar.baz"}},
+      {R"js({})js", ServiceAccountMetadata{{}, ""}},
+  };
 
-  auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload, Read)
-      .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-        std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                  buffer.begin());
-        return svc_acct_info_resp.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
+  for (auto const& test : cases) {
+    SCOPED_TRACE("testing with " + test.payload);
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read)
+        .WillOnce([test](absl::Span<char> buffer) {
+          std::copy(test.payload.begin(), test.payload.end(), buffer.begin());
+          return test.payload.size();
+        })
+        .WillOnce([](absl::Span<char>) { return 0; });
 
-  auto mock_response = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload))));
+    auto mock_response = absl::make_unique<MockRestResponse>();
+    EXPECT_CALL(*mock_response, StatusCode)
+        .WillRepeatedly(Return(HttpStatusCode::kOk));
+    EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+        .WillOnce(Return(ByMove(std::move(mock_http_payload))));
 
-  auto status = ParseMetadataServerResponse(*mock_response);
-  EXPECT_STATUS_OK(status);
-  auto metadata = *status;
-  EXPECT_EQ(metadata.email, email);
-  EXPECT_TRUE(metadata.scopes.count("scope1"));
-  EXPECT_TRUE(metadata.scopes.count("scope2"));
+    auto status = ParseMetadataServerResponse(*mock_response);
+    ASSERT_STATUS_OK(status);
+    auto metadata = *status;
+    EXPECT_EQ(metadata.email, test.expected.email);
+    EXPECT_THAT(metadata.scopes,
+                UnorderedElementsAreArray(test.expected.scopes));
+  }
 }
 
 /// @test Mock a failed refresh response during RetrieveServiceAccountInfo.
@@ -310,11 +278,6 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
   std::string alias = "default";
   std::string email = "foo@bar.baz";
   std::string hostname = GceMetadataHostname();
-
-  // Missing fields.
-  std::string svc_acct_info_resp = R"""({
-      "scopes": ["scope1","scope2"]
-  })""";
 
   auto mock_response2 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response2, StatusCode)
@@ -324,21 +287,6 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
     EXPECT_CALL(*mock_http_payload, Read).WillOnce([](absl::Span<char>) {
       return 0;
     });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-  });
-
-  auto mock_response3 = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response3, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response3), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-          std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                    buffer.begin());
-          return svc_acct_info_resp.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
     return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
   });
 
@@ -360,15 +308,6 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
             Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
         return std::unique_ptr<RestResponse>(std::move(mock_response2));
-      })
-      .WillOnce([&](RestRequest const& request) {
-        EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
-        EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
-        EXPECT_THAT(
-            request.path(),
-            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
-               alias + "/"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response3));
       });
 
   ComputeEngineCredentials credentials(alias, options_,
@@ -379,11 +318,6 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
   // Response 2
   status = credentials.AuthorizationHeader();
   EXPECT_THAT(status, Not(IsOk()));
-  // Response 3
-  status = credentials.AuthorizationHeader();
-  EXPECT_THAT(status,
-              StatusIs(Not(StatusCode::kOk),
-                       HasSubstr("Could not find all required fields")));
 }
 
 /// @test Mock a failed refresh response.

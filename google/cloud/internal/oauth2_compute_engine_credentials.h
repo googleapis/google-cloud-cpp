@@ -39,6 +39,16 @@ struct ServiceAccountMetadata {
 StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     rest_internal::RestResponse& response);
 
+/**
+ * Parses a metadata server response JSON string into a ServiceAccountMetadata.
+ *
+ * This function ignores all parsing errors, the data is purely informational,
+ * it is better to just return nothing than to fail authentication because some
+ * (most likely unused) data was not available or the service returned a
+ * malformed response.
+ */
+ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload);
+
 /// Parses a refresh response JSON string into an authorization header. The
 /// header and the current time (for the expiration) form a TemporaryToken.
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>

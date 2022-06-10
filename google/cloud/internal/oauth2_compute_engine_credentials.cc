@@ -15,10 +15,10 @@
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/curl_options.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/rest_response.h"
+#include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
 #include <set>
 
@@ -31,25 +31,33 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     rest_internal::RestResponse& response) {
   auto payload = rest_internal::ReadAll(std::move(response).ExtractPayload());
   if (!payload.ok()) return payload.status();
-  auto response_body = nlohmann::json::parse(*payload, nullptr, false);
-  // Note that the "scopes" attribute will always be present and contain a
-  // JSON array. At minimum, for the request to succeed, the instance must
-  // have been granted the scope that allows it to retrieve info from the
-  // metadata server.
-  if (response_body.is_discarded() || response_body.count("email") == 0 ||
-      response_body.count("scopes") == 0) {
-    auto error_payload =
-        *payload +
-        "Could not find all required fields in response (email, scopes).";
-    return Status{StatusCode::kInvalidArgument, error_payload, {}};
-  }
-  ServiceAccountMetadata metadata;
-  // Do not update any state until all potential errors are handled.
-  metadata.email = response_body.value("email", "");
-  // We need to call the .get<>() helper because the conversion is ambiguous
-  // otherwise.
-  metadata.scopes = response_body["scopes"].get<std::set<std::string>>();
-  return metadata;
+  return ParseMetadataServerResponse(*payload);
+}
+
+ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload) {
+  auto body = nlohmann::json::parse(payload, nullptr, false);
+  // Parse the body, ignoring invalid or missing values.
+  auto scopes = [&]() -> std::set<std::string> {
+    if (!body.contains("scopes")) return {};
+    auto const& s = body["scopes"];
+    if (s.is_string()) {
+      return absl::StrSplit(s.get<std::string>(), '\n', absl::SkipWhitespace());
+    }
+    // If we cannot parse the `scopes` field as an array of strings, we return
+    // an empty set.
+    if (!s.is_array()) return {};
+    std::set<std::string> result;
+    for (auto const& i : s) {
+      if (!i.is_string()) return {};
+      result.insert(i.get<std::string>());
+    }
+    return result;
+  };
+  auto email = [&]() -> std::string {
+    if (!body.contains("email") || !body["email"].is_string()) return {};
+    return body.value("email", "");
+  };
+  return ServiceAccountMetadata{scopes(), email()};
 }
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>

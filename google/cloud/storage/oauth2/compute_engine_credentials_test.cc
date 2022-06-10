@@ -39,6 +39,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::Return;
 using ::testing::StrEq;
@@ -176,27 +177,41 @@ TEST_F(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
 /// @test Parsing a metadata server response with missing fields results in
 /// failure.
 TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponseInvalid) {
-  std::string email = "foo@bar.baz";
-  std::string svc_acct_info_resp = R"""({})""";
-  std::string svc_acct_info_resp2 = R"""({
-      "scopes": ["scope1","scope2"]
-  })""";
+  std::string svc_acct_info_resp1 = R"""({})""";
+  std::string svc_acct_info_resp2 = R"""({"scopes": ["scope1","scope2"]})""";
+  std::string svc_acct_info_resp3 = R"""({"email": "foo@bar"})""";
+  std::string svc_acct_info_resp4 =
+      R"""({"email": "foo@bar", "scopes": "scope1\nscope2\n"})""";
 
   auto status =
-      ParseMetadataServerResponse(HttpResponse{200, svc_acct_info_resp, {}});
-  EXPECT_THAT(status,
-              StatusIs(Not(StatusCode::kOk),
-                       HasSubstr("Could not find all required fields")));
+      ParseMetadataServerResponse(HttpResponse{200, svc_acct_info_resp1, {}});
+  EXPECT_THAT(status, IsOk());
+  EXPECT_THAT(status->email, IsEmpty());
+  EXPECT_THAT(status->scopes, IsEmpty());
 
   status =
       ParseMetadataServerResponse(HttpResponse{400, svc_acct_info_resp2, {}});
-  EXPECT_THAT(status,
-              StatusIs(Not(StatusCode::kOk),
-                       HasSubstr("Could not find all required fields")));
+  EXPECT_THAT(status, IsOk());
+  EXPECT_THAT(status->email, IsEmpty());
+  EXPECT_THAT(status->scopes, UnorderedElementsAre("scope1", "scope2"));
 
-  EXPECT_THAT(ParseMetadataServerResponse(HttpResponse{
-                  400, R"js("valid-json-but-not-an-object")js", {}}),
-              StatusIs(Not(StatusCode::kOk)));
+  status =
+      ParseMetadataServerResponse(HttpResponse{400, svc_acct_info_resp3, {}});
+  EXPECT_THAT(status, IsOk());
+  EXPECT_THAT(status->email, "foo@bar");
+  EXPECT_THAT(status->scopes, IsEmpty());
+
+  status =
+      ParseMetadataServerResponse(HttpResponse{400, svc_acct_info_resp4, {}});
+  EXPECT_THAT(status, IsOk());
+  EXPECT_THAT(status->email, "foo@bar");
+  EXPECT_THAT(status->scopes, UnorderedElementsAre("scope1", "scope2"));
+
+  status = ParseMetadataServerResponse(
+      HttpResponse{400, R"js("valid-json-but-not-an-object")js", {}});
+  EXPECT_THAT(status, IsOk());
+  EXPECT_THAT(status->email, IsEmpty());
+  EXPECT_THAT(status->scopes, IsEmpty());
 }
 
 /// @test Parsing a metadata server response yields a ServiceAccountMetadata.
@@ -219,26 +234,18 @@ TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponse) {
 /// @test Mock a failed refresh response during RetrieveServiceAccountInfo.
 TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
   std::string alias = "default";
-  std::string email = "foo@bar.baz";
   std::string hostname = GceMetadataHostname();
-
-  // Missing fields.
-  std::string svc_acct_info_resp = R"""({
-      "scopes": ["scope1","scope2"]
-  })""";
 
   auto first_mock_req_impl = std::make_shared<MockHttpRequest::Impl>();
   EXPECT_CALL(*first_mock_req_impl, MakeRequest)
       // Fail the first call to DoMetadataServerGetRequest immediately.
       .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")))
       // Likewise, except with a >= 300 status code.
-      .WillOnce(Return(HttpResponse{400, "", {}}))
-      // Parse with an invalid metadata response.
-      .WillOnce(Return(HttpResponse{1, svc_acct_info_resp, {}}));
+      .WillOnce(Return(HttpResponse{400, "", {}}));
 
   auto mock_req_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_req_builder, BuildRequest())
-      .Times(3)
+      .Times(2)
       .WillRepeatedly([first_mock_req_impl] {
         MockHttpRequest mock_request;
         mock_request.mock = first_mock_req_impl;
@@ -246,17 +253,17 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
       });
 
   EXPECT_CALL(*mock_req_builder, AddHeader(StrEq("metadata-flavor: Google")))
-      .Times(3);
+      .Times(2);
   EXPECT_CALL(*mock_req_builder,
               AddQueryParameter(StrEq("recursive"), StrEq("true")))
-      .Times(3);
+      .Times(2);
   EXPECT_CALL(
       *mock_req_builder,
       Constructor(
           StrEq(std::string("http://") + hostname +
                 "/computeMetadata/v1/instance/service-accounts/" + alias + "/"),
           _, _))
-      .Times(3);
+      .Times(2);
 
   ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
   // Response 1
@@ -265,11 +272,6 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
   // Response 2
   status = credentials.AuthorizationHeader();
   EXPECT_THAT(status, Not(IsOk()));
-  // Response 3
-  status = credentials.AuthorizationHeader();
-  EXPECT_THAT(status,
-              StatusIs(Not(StatusCode::kOk),
-                       HasSubstr("Could not find all required fields")));
 }
 
 /// @test Mock a failed refresh response.
