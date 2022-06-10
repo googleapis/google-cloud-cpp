@@ -34,10 +34,6 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-char constexpr kAdcLink[] =
-    "https://developers.google.com/identity/protocols/"
-    "application-default-credentials";
-
 // Parses the JSON at `path` and creates the appropriate
 // Credentials type.
 //
@@ -153,18 +149,8 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
 
   // 3) Check for implicit environment-based credentials (GCE, GAE Flexible,
   // Cloud Run or GKE Environment).
-  auto gce_creds = std::make_shared<ComputeEngineCredentials>();
-  if (options.get<oauth2_internal::ForceGceOption>() ||
-      gce_creds->AuthorizationHeader().ok()) {
-    return std::shared_ptr<Credentials>(std::move(gce_creds));
-  }
-
-  // We've exhausted all search points, thus credentials cannot be constructed.
   return StatusOr<std::shared_ptr<Credentials>>(
-      Status(StatusCode::kUnknown,
-             "Could not automatically determine credentials. For more "
-             "information, please see " +
-                 std::string(kAdcLink)));
+      std::make_shared<ComputeEngineCredentials>());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

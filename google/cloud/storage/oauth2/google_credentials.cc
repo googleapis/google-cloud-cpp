@@ -160,22 +160,10 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
     return StatusOr<std::shared_ptr<Credentials>>(std::move(*creds));
   }
 
-  // 3) Check for implicit environment-based credentials (GCE, GAE Flexible,
+  // 3) Use the implicit environment-based credentials (GCE, GAE Flexible,
   // Cloud Run or GKE Environment).
-  auto gce_creds = std::make_shared<ComputeEngineCredentials<>>();
-  auto override_val =
-      google::cloud::internal::GetEnv(internal::GceCheckOverrideEnvVar());
-  if (override_val.has_value() ? (std::string("1") == *override_val)
-                               : gce_creds->AuthorizationHeader().ok()) {
-    return StatusOr<std::shared_ptr<Credentials>>(std::move(gce_creds));
-  }
-
-  // We've exhausted all search points, thus credentials cannot be constructed.
   return StatusOr<std::shared_ptr<Credentials>>(
-      Status(StatusCode::kUnknown,
-             "Could not automatically determine credentials. For more "
-             "information, please see " +
-                 std::string(kAdcLink)));
+      std::make_shared<ComputeEngineCredentials<>>());
 }
 
 std::shared_ptr<Credentials> CreateAnonymousCredentials() {

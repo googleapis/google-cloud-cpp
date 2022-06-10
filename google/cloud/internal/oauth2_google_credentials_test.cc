@@ -37,6 +37,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::NotNull;
 
 class GoogleCredentialsTest : public ::testing::Test {
  public:
@@ -199,7 +200,7 @@ TEST_F(GoogleCredentialsTest, LoadComputeEngineCredentialsFromADCFlow) {
                                                  "");
   // If the ADC flow thinks we're on a GCE instance, it should return
   // ComputeEngineCredentials.
-  auto creds = GoogleDefaultCredentials(Options{}.set<ForceGceOption>(true));
+  auto creds = GoogleDefaultCredentials(Options{});
   ASSERT_STATUS_OK(creds);
   auto* ptr = creds->get();
   EXPECT_EQ(typeid(*ptr), typeid(ComputeEngineCredentials));
@@ -281,11 +282,13 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
   ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
                                                  filename);
   ScopedEnvironment gcloud_metadata_host_override_env_var(
-      internal::GceMetadataHostnameEnvVar(), "nowhere.com");
+      internal::GceMetadataHostnameEnvVar(), "invalid.google.internal");
 
   auto creds = GoogleDefaultCredentials();
-  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk),
-                              HasSubstr("Could not automatically determine")));
+  ASSERT_STATUS_OK(creds);
+  ASSERT_THAT(*creds, NotNull());
+  auto header = (*creds)->AuthorizationHeader();
+  EXPECT_THAT(header, StatusIs(Not(StatusCode::kOk)));
 }
 
 }  // namespace
