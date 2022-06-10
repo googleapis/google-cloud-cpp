@@ -389,7 +389,7 @@ void CurlImpl::SetUrl(
   }
 
   if (absl::StartsWithIgnoreCase(request.path(), "http://") ||
-    absl::StartsWithIgnoreCase(request.path(), "https://")) {
+      absl::StartsWithIgnoreCase(request.path(), "https://")) {
     url_ = request.path();
   } else {
     url_ = absl::StrCat(NormalizeEndpoint(endpoint), request.path());
