@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/legacy_async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/legacy_async_row_sampler.h"
 #include "google/cloud/bigtable/internal/legacy_row_reader.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
