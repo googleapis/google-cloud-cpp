@@ -427,6 +427,124 @@ TEST(AsyncBulkApplyTest, TimerError) {
   CheckFailedMutations(actual.get(), expected);
 }
 
+TEST(AsyncBulkApplyTest, CancelAfterSuccess) {
+  bigtable::BulkMutation mut(IdempotentMutation("r0"));
+  promise<absl::optional<v2::MutateRowsResponse>> p;
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRows)
+      .WillOnce([&p](CompletionQueue const&,
+                     std::unique_ptr<grpc::ClientContext>,
+                     v2::MutateRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(
+                  MakeResponse({{0, grpc::StatusCode::OK}}));
+            })
+            // We block here so the caller can cancel the request. The value
+            // returned will be empty, meaning the stream is complete.
+            .WillOnce([&p] { return p.get_future(); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  CompletionQueue cq(mock_cq);
+
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+  auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+
+  auto actual = AsyncBulkApplier::Create(
+      cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
+      kTableName, std::move(mut));
+
+  // Cancel the call after performing the one and only read of this test stream.
+  actual.cancel();
+  // Proceed with the rest of the stream. In this test, there are no more
+  // responses to be read. The client call should succeed.
+  p.set_value(absl::optional<v2::MutateRowsResponse>{});
+  CheckFailedMutations(actual.get(), {});
+}
+
+TEST(AsyncBulkApplyTest, CancelMidStream) {
+  std::vector<bigtable::FailedMutation> expected = {
+      {Status(StatusCode::kCancelled, "User cancelled"), 2}};
+  bigtable::BulkMutation mut(IdempotentMutation("r0"), IdempotentMutation("r1"),
+                             IdempotentMutation("r2"));
+  promise<absl::optional<v2::MutateRowsResponse>> p;
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRows)
+      .WillOnce([&p](CompletionQueue const&,
+                     std::unique_ptr<grpc::ClientContext>,
+                     v2::MutateRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        ::testing::InSequence s;
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(
+                  MakeResponse({{0, grpc::StatusCode::OK}}));
+            })
+            // We block here so the caller can cancel the request. The value
+            // returned will be a response, meaning the stream is still active
+            // and needs to be drained.
+            .WillOnce([&p] { return p.get_future(); });
+        EXPECT_CALL(*stream, Cancel);
+        EXPECT_CALL(*stream, Read).WillOnce([] {
+          return make_ready_future(absl::optional<v2::MutateRowsResponse>{});
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(
+              Status(StatusCode::kCancelled, "User cancelled"));
+        });
+        return stream;
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  CompletionQueue cq(mock_cq);
+
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+  auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+
+  auto actual = AsyncBulkApplier::Create(
+      cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
+      kTableName, std::move(mut));
+
+  // Cancel the call after performing one read of this test stream.
+  actual.cancel();
+  // Proceed with the rest of the stream. In this test, there are more responses
+  // to be read, which we must drain. The client call should fail.
+  p.set_value(MakeResponse({{1, grpc::StatusCode::OK}}));
+  CheckFailedMutations(actual.get(), expected);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
