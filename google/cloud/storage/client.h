@@ -278,88 +278,6 @@ class Client {
    */
   explicit Client(Options opts = {});
 
-  /**
-   * Creates the default client type given the options.
-   *
-   * @param options the client options, these are used to control credentials,
-   *   buffer sizes, etc.
-   * @param policies the client policies, these control the behavior of the
-   *   client, for example, how to backoff when an operation needs to be
-   *   retried, or what operations cannot be retried because they are not
-   *   idempotent.
-   *
-   * @deprecated use the constructor from `google::cloud::Options` instead.
-   */
-  template <typename... Policies>
-  explicit Client(ClientOptions options, Policies&&... policies)
-      : Client(InternalOnly{}, internal::ApplyPolicies(
-                                   internal::MakeOptions(std::move(options)),
-                                   std::forward<Policies>(policies)...)) {}
-
-  /**
-   * Creates the default client type given the credentials and policies.
-   *
-   * @param credentials a set of credentials to initialize the `ClientOptions`.
-   * @param policies the client policies, these control the behavior of the
-   *   client, for example, how to backoff when an operation needs to be
-   *   retried, or what operations cannot be retried because they are not
-   *   idempotent.
-   *
-   * @deprecated use the constructor from `google::cloud::Options` instead.
-   */
-  template <typename... Policies>
-  explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
-                  Policies&&... policies)
-      : Client(InternalOnly{},
-               internal::ApplyPolicies(
-                   internal::DefaultOptions(std::move(credentials), {}),
-                   std::forward<Policies>(policies)...)) {}
-
-  /**
-   * Create a Client using ClientOptions::CreateDefaultClientOptions().
-   *
-   * @deprecated use the constructor from `google::cloud::Options` instead.
-   */
-  static StatusOr<Client> CreateDefaultClient();
-
-  /// Builds a client and maybe override the retry, idempotency, and/or backoff
-  /// policies.
-  /// @deprecated This was intended only for test code, applications should not
-  /// use it.
-  template <typename... Policies>
-#if !defined(_MSC_VER) || _MSC_VER >= 1920
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please use the constructors from ClientOptions instead."
-      " For mocking, please use testing::ClientFromMock() instead."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you have a use-case not covered by these.")
-#endif  // _MSC_VER
-  // NOLINTNEXTLINE(performance-unnecessary-value-param)
-  explicit Client(std::shared_ptr<internal::RawClient> client,
-                  Policies&&... policies)
-      : Client(InternalOnlyNoDecorations{},
-               CreateDefaultInternalClient(
-                   internal::ApplyPolicies(
-                       internal::DefaultOptions(
-                           client->client_options().credentials(), {}),
-                       std::forward<Policies>(policies)...),
-                   client)) {
-  }
-
-  /// Define a tag to disable automatic decorations of the RawClient.
-  struct NoDecorations {};
-
-  /// Builds a client with a specific RawClient, without decorations.
-  /// @deprecated This was intended only for test code, applications should not
-  /// use it.
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you do.")
-  explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
-      : Client(InternalOnlyNoDecorations{}, std::move(client)) {}
-
   /// @name Equality
   ///@{
   friend bool operator==(Client const& a, Client const& b) {
@@ -367,16 +285,6 @@ class Client {
   }
   friend bool operator!=(Client const& a, Client const& b) { return !(a == b); }
   ///@}
-
-  /// Access the underlying `RawClient`.
-  /// @deprecated Only intended for implementors, do not use.
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you do.")
-  std::shared_ptr<internal::RawClient> raw_client() const {
-    return raw_client_;
-  }
 
   /**
    * @name Bucket operations.
@@ -3266,6 +3174,98 @@ class Client {
     return std::move(raw_client_->DeleteNotification(request)).status();
   }
   ///@}
+
+  /**
+   * Creates the default client type given the options.
+   *
+   * @param options the client options, these are used to control credentials,
+   *   buffer sizes, etc.
+   * @param policies the client policies, these control the behavior of the
+   *   client, for example, how to backoff when an operation needs to be
+   *   retried, or what operations cannot be retried because they are not
+   *   idempotent.
+   *
+   * @deprecated use the constructor from `google::cloud::Options` instead.
+   */
+  template <typename... Policies>
+  explicit Client(ClientOptions options, Policies&&... policies)
+      : Client(InternalOnly{}, internal::ApplyPolicies(
+                                   internal::MakeOptions(std::move(options)),
+                                   std::forward<Policies>(policies)...)) {}
+
+  /**
+   * Creates the default client type given the credentials and policies.
+   *
+   * @param credentials a set of credentials to initialize the `ClientOptions`.
+   * @param policies the client policies, these control the behavior of the
+   *   client, for example, how to backoff when an operation needs to be
+   *   retried, or what operations cannot be retried because they are not
+   *   idempotent.
+   *
+   * @deprecated use the constructor from `google::cloud::Options` instead.
+   */
+  template <typename... Policies>
+  explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
+                  Policies&&... policies)
+      : Client(InternalOnly{},
+               internal::ApplyPolicies(
+                   internal::DefaultOptions(std::move(credentials), {}),
+                   std::forward<Policies>(policies)...)) {}
+
+  /**
+   * Create a Client using ClientOptions::CreateDefaultClientOptions().
+   *
+   * @deprecated use the constructor from `google::cloud::Options` instead.
+   */
+  static StatusOr<Client> CreateDefaultClient();
+
+  /// Builds a client and maybe override the retry, idempotency, and/or backoff
+  /// policies.
+  /// @deprecated This was intended only for test code, applications should not
+  /// use it.
+  template <typename... Policies>
+#if !defined(_MSC_VER) || _MSC_VER >= 1920
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "applications should not need this."
+      " Please use the constructors from ClientOptions instead."
+      " For mocking, please use testing::ClientFromMock() instead."
+      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
+      " if you have a use-case not covered by these.")
+#endif  // _MSC_VER
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+  explicit Client(std::shared_ptr<internal::RawClient> client,
+                  Policies&&... policies)
+      : Client(InternalOnlyNoDecorations{},
+               CreateDefaultInternalClient(
+                   internal::ApplyPolicies(
+                       internal::DefaultOptions(
+                           client->client_options().credentials(), {}),
+                       std::forward<Policies>(policies)...),
+                   client)) {
+  }
+
+  /// Define a tag to disable automatic decorations of the RawClient.
+  struct NoDecorations {};
+
+  /// Builds a client with a specific RawClient, without decorations.
+  /// @deprecated This was intended only for test code, applications should not
+  /// use it.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "applications should not need this."
+      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
+      " if you do.")
+  explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
+      : Client(InternalOnlyNoDecorations{}, std::move(client)) {}
+
+  /// Access the underlying `RawClient`.
+  /// @deprecated Only intended for implementors, do not use.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "applications should not need this."
+      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
+      " if you do.")
+  std::shared_ptr<internal::RawClient> raw_client() const {
+    return raw_client_;
+  }
 
  private:
   friend class internal::NonResumableParallelUploadState;
