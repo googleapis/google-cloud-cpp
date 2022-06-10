@@ -105,6 +105,14 @@ class SampleRowsIntegrationTest
   }
 };
 
+TEST_F(SampleRowsIntegrationTest, SyncWithDataConnection) {
+  auto table = bigtable_internal::MakeTable(
+      bigtable_internal::MakeDataConnection(),
+      TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
+      "", TableTestEnvironment::table_id());
+  VerifySamples(table.SampleRows());
+};
+
 TEST_F(SampleRowsIntegrationTest, AsyncWithDataConnection) {
   auto table = bigtable_internal::MakeTable(
       bigtable_internal::MakeDataConnection(),

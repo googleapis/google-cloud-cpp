@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     https://www.apache.org/licenses/LICENSE-2.0
+//      https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,6 +37,7 @@ using ::google::cloud::bigtable::testing::MockDataRetryPolicy;
 using ::google::cloud::bigtable::testing::MockIdempotentMutationPolicy;
 using ::google::cloud::bigtable::testing::MockMutateRowsStream;
 using ::google::cloud::bigtable::testing::MockReadRowsStream;
+using ::google::cloud::bigtable::testing::MockSampleRowKeysStream;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
@@ -45,6 +46,7 @@ using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
 using ::testing::Matcher;
+using ::testing::MockFunction;
 using ::testing::Property;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
@@ -143,6 +145,28 @@ Matcher<bigtable::Cell const&> MatchCell(bigtable::Cell const& c) {
       Property(&bigtable::Cell::value, c.value()),
       Property(&bigtable::Cell::labels, ElementsAreArray(c.labels())));
 }
+
+v2::SampleRowKeysResponse MakeSampleRowsResponse(std::string row_key,
+                                                 std::int64_t offset) {
+  v2::SampleRowKeysResponse r;
+  r.set_row_key(std::move(row_key));
+  r.set_offset_bytes(offset);
+  return r;
+};
+
+struct RowKeySampleVectors {
+  explicit RowKeySampleVectors(std::vector<bigtable::RowKeySample> samples) {
+    row_keys.reserve(samples.size());
+    offset_bytes.reserve(samples.size());
+    for (auto& sample : samples) {
+      row_keys.emplace_back(std::move(sample.row_key));
+      offset_bytes.emplace_back(std::move(sample.offset_bytes));
+    }
+  }
+
+  std::vector<std::string> row_keys;
+  std::vector<std::int64_t> offset_bytes;
+};
 
 DataLimitedErrorCountRetryPolicy TestRetryPolicy() {
   return DataLimitedErrorCountRetryPolicy(kNumRetries);
@@ -1096,6 +1120,124 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
   auto status = conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row",
                                              TestFilter(), {t1, t2}, {f1, f2});
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
+}
+
+TEST(DataConnectionTest, SampleRowsSuccess) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, SampleRowKeys)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>,
+                   v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(MakeSampleRowsResponse("test1", 11)))
+            .WillOnce(Return(MakeSampleRowsResponse("test2", 22)))
+            .WillOnce(Return(Status{}));
+        return stream;
+      });
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+  auto conn = TestConnection(std::move(mock));
+  auto samples = conn->SampleRows(kAppProfile, kTableName);
+  ASSERT_STATUS_OK(samples);
+  auto actual = RowKeySampleVectors(*samples);
+  EXPECT_THAT(actual.offset_bytes, ElementsAre(11, 22));
+  EXPECT_THAT(actual.row_keys, ElementsAre("test1", "test2"));
+}
+
+TEST(DataConnectionTest, SampleRowsRetryResetsSamples) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, SampleRowKeys)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>,
+                   v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(MakeSampleRowsResponse("discarded", 11)))
+            .WillOnce(Return(TransientError()));
+        return stream;
+      })
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>,
+                   v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(MakeSampleRowsResponse("returned", 22)))
+            .WillOnce(Return(Status{}));
+        return stream;
+      });
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(2);
+
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+  auto conn = TestConnection(std::move(mock));
+  auto samples = conn->SampleRows(kAppProfile, kTableName);
+  ASSERT_STATUS_OK(samples);
+  auto actual = RowKeySampleVectors(*samples);
+  EXPECT_THAT(actual.offset_bytes, ElementsAre(22));
+  EXPECT_THAT(actual.row_keys, ElementsAre("returned"));
+}
+
+TEST(DataConnectionTest, SampleRowsRetryExhausted) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, SampleRowKeys)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([](std::unique_ptr<grpc::ClientContext>,
+                         v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(TransientError()));
+        return stream;
+      });
+
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
+    return clone;
+  });
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(kNumRetries + 1);
+
+  internal::OptionsSpan span(
+      Options{}
+          .set<DataBackoffPolicyOption>(std::move(mock_b))
+          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+  auto conn = TestConnection(std::move(mock));
+  auto samples = conn->SampleRows(kAppProfile, kTableName);
+  EXPECT_THAT(samples, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST(DataConnectionTest, SampleRowsPermanentError) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, SampleRowKeys)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>,
+                   v2::SampleRowKeysRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentError()));
+        return stream;
+      });
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+  auto conn = TestConnection(std::move(mock));
+  auto samples = conn->SampleRows(kAppProfile, kTableName);
+  EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }
 
 // The `AsyncRowSampler` is tested extensively in `async_row_sampler_test.cc`.

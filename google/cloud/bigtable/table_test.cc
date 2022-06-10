@@ -302,6 +302,22 @@ TEST(TableTest, AsyncCheckAndMutateRow) {
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST(TableTest, SampleRows) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, SampleRows)
+      .WillOnce(
+          [](std::string const& app_profile_id, std::string const& table_name) {
+            EXPECT_EQ(kAppProfileId, app_profile_id);
+            EXPECT_EQ(kTableName, table_name);
+            return PermanentError();
+          });
+
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  auto samples = table.SampleRows();
+  EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
+}
+
 TEST(TableTest, AsyncSampleRows) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncSampleRows)
