@@ -147,8 +147,6 @@ add_library(
     instance_update_config.h
     internal/admin_client_params.cc
     internal/admin_client_params.h
-    internal/async_bulk_apply.cc
-    internal/async_bulk_apply.h
     internal/async_retry_op.h
     internal/async_row_reader.h
     internal/async_row_sampler.cc
@@ -186,6 +184,8 @@ add_library(
     internal/defaults.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
+    internal/legacy_async_bulk_apply.cc
+    internal/legacy_async_bulk_apply.h
     internal/legacy_async_row_sampler.cc
     internal/legacy_async_row_sampler.h
     internal/legacy_row_reader.cc
@@ -330,7 +330,6 @@ if (BUILD_TESTING)
         instance_config_test.cc
         instance_update_config_test.cc
         internal/admin_client_params_test.cc
-        internal/async_bulk_apply_test.cc
         internal/async_row_reader_test.cc
         internal/async_row_sampler_test.cc
         internal/async_streaming_read_test.cc
@@ -344,6 +343,7 @@ if (BUILD_TESTING)
         internal/default_row_reader_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
+        internal/legacy_async_bulk_apply_test.cc
         internal/legacy_async_row_sampler_test.cc
         internal/legacy_bulk_mutator_test.cc
         internal/legacy_row_reader_test.cc
