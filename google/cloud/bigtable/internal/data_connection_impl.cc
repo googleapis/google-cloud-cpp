@@ -203,6 +203,49 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
              : bigtable::MutationBranch::kPredicateNotMatched;
 }
 
+future<StatusOr<bigtable::MutationBranch>>
+DataConnectionImpl::AsyncCheckAndMutateRow(
+    std::string const& app_profile_id, std::string const& table_name,
+    std::string row_key, bigtable::Filter filter,
+    std::vector<bigtable::Mutation> true_mutations,
+    std::vector<bigtable::Mutation> false_mutations) {
+  google::bigtable::v2::CheckAndMutateRowRequest request;
+  request.set_app_profile_id(app_profile_id);
+  request.set_table_name(table_name);
+  request.set_row_key(std::move(row_key));
+  *request.mutable_predicate_filter() = std::move(filter).as_proto();
+  for (auto& m : true_mutations) {
+    *request.add_true_mutations() = std::move(m.op);
+  }
+  for (auto& m : false_mutations) {
+    *request.add_false_mutations() = std::move(m.op);
+  }
+  auto const idempotency = idempotency_policy()->is_idempotent(request)
+                               ? Idempotency::kIdempotent
+                               : Idempotency::kNonIdempotent;
+
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncRetryLoop(
+             retry_policy(), backoff_policy(), idempotency, background_->cq(),
+             [stub](CompletionQueue& cq,
+                    std::unique_ptr<grpc::ClientContext> context,
+                    google::bigtable::v2::CheckAndMutateRowRequest const&
+                        request) {
+               return stub->AsyncCheckAndMutateRow(cq, std::move(context),
+                                                   request);
+             },
+             request, __func__)
+      .then([](future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
+                   f) -> StatusOr<bigtable::MutationBranch> {
+        auto sor = f.get();
+        if (!sor) return std::move(sor).status();
+        auto response = *std::move(sor);
+        return response.predicate_matched()
+                   ? bigtable::MutationBranch::kPredicateMatched
+                   : bigtable::MutationBranch::kPredicateNotMatched;
+      });
+}
+
 future<StatusOr<std::vector<bigtable::RowKeySample>>>
 DataConnectionImpl::AsyncSampleRows(std::string const& app_profile_id,
                                     std::string const& table_name) {
