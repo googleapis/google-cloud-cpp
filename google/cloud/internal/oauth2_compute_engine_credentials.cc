@@ -43,6 +43,8 @@ ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload) {
     if (s.is_string()) {
       return absl::StrSplit(s.get<std::string>(), '\n', absl::SkipWhitespace());
     }
+    // If we cannot parse the `scopes` field as an array of strings, we return
+    // an empty set.
     if (!s.is_array()) return {};
     std::set<std::string> result;
     for (auto const& i : s) {
