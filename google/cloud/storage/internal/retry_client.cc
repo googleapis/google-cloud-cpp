@@ -94,19 +94,22 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
 }  // namespace
 
 std::shared_ptr<RetryClient> RetryClient::Create(
-    std::shared_ptr<RawClient> client) {
+    std::shared_ptr<RawClient> client, Options policies) {
   // Cannot use `std::make_shared<>` because the constructor is private.
-  return std::shared_ptr<RetryClient>(new RetryClient(std::move(client)));
+  return std::shared_ptr<RetryClient>(
+      new RetryClient(std::move(client), std::move(policies)));
 }
 
-RetryClient::RetryClient(std::shared_ptr<RawClient> client)
-    : client_(std::move(client)) {}
+RetryClient::RetryClient(std::shared_ptr<RawClient> client, Options policies)
+    : client_(std::move(client)), policies_(std::move(policies)) {}
 
 ClientOptions const& RetryClient::client_options() const {
   return client_->client_options();
 }
 
-Options RetryClient::options() const { return client_->options(); }
+Options RetryClient::options() const {
+  return google::cloud::internal::MergeOptions(policies_, client_->options());
+}
 
 StatusOr<ListBucketsResponse> RetryClient::ListBuckets(
     ListBucketsRequest const& request) {
