@@ -257,9 +257,9 @@ TEST_F(ClientTest, DeprecatedButNotDecommissioned) {
 TEST_F(ClientTest, DeprecatedRetryPolicies) {
   auto constexpr kNumRetries = 2;
   auto mock_b = absl::make_unique<MockBackoffPolicy>();
-  EXPECT_CALL(*mock_b, clone).WillOnce([] {
+  EXPECT_CALL(*mock_b, clone).WillOnce([=] {
     auto clone_1 = absl::make_unique<MockBackoffPolicy>();
-    EXPECT_CALL(*clone_1, clone).WillOnce([] {
+    EXPECT_CALL(*clone_1, clone).WillOnce([=] {
       auto clone_2 = absl::make_unique<MockBackoffPolicy>();
       EXPECT_CALL(*clone_2, OnCompletion)
           .Times(kNumRetries)
@@ -275,7 +275,7 @@ TEST_F(ClientTest, DeprecatedRetryPolicies) {
       .WillRepeatedly(Return(TransientError()));
 
   auto client = storage::Client(mock, LimitedErrorCountRetryPolicy(kNumRetries),
-                                *std::move(mock_b));
+                                std::move(*mock_b));
   (void)client.ListBuckets();
 }
 

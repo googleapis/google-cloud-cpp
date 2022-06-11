@@ -33,7 +33,7 @@ class RetryClient : public RawClient,
                     public std::enable_shared_from_this<RetryClient> {
  public:
   static std::shared_ptr<RetryClient> Create(std::shared_ptr<RawClient> client,
-                                             Options policies = {});
+                                             Options options = {});
 
   ~RetryClient() override = default;
 
@@ -155,14 +155,14 @@ class RetryClient : public RawClient,
   std::shared_ptr<RawClient> client() const { return client_; }
 
  private:
-  explicit RetryClient(std::shared_ptr<RawClient> client, Options policies);
+  explicit RetryClient(std::shared_ptr<RawClient> client, Options options);
 
   static std::unique_ptr<RetryPolicy> current_retry_policy();
   static std::unique_ptr<BackoffPolicy> current_backoff_policy();
   static IdempotencyPolicy& current_idempotency_policy();
 
   std::shared_ptr<RawClient> client_;
-  Options policies_;
+  Options options_;
 };
 
 }  // namespace internal
