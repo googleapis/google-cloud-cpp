@@ -136,6 +136,10 @@ std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {
 }
 
 std::unique_ptr<RetryPolicy> StorageIntegrationTest::TestRetryPolicy() {
+  if (UsingGrpc() && !UsingEmulator()) {
+    return LimitedTimeRetryPolicy(/*maximum_duration=*/std::chrono::minutes(10))
+        .clone();
+  }
   return LimitedTimeRetryPolicy(/*maximum_duration=*/std::chrono::minutes(2))
       .clone();
 }
