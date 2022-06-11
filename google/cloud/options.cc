@@ -36,6 +36,7 @@ void CheckExpectedOptionsImpl(std::set<std::type_index> const& expected,
 }
 
 Options MergeOptions(Options preferred, Options alternatives) {
+  if (preferred.m_.empty()) return alternatives;
   preferred.m_.insert(std::make_move_iterator(alternatives.m_.begin()),
                       std::make_move_iterator(alternatives.m_.end()));
   return preferred;
