@@ -189,25 +189,42 @@ TEST(RetryClientTest, UploadChunkHandleTransient) {
       .WillOnce(
           Return(QueryResumableUploadResponse{2 * quantum, absl::nullopt}));
 
-  // Even simpler scenario where only the UploadChunk() calls succeeds.
+  // Repeat the failure with kAborted.  This error code is only retryable for
+  // resumable uploads.
+  EXPECT_CALL(*mock, UploadChunk)
+      .WillOnce(
+          Return(Status(StatusCode::kAborted, "conflict multiple writers")));
+  EXPECT_CALL(*mock, QueryResumableUpload)
+      .WillOnce(
+          Return(QueryResumableUploadResponse{2 * quantum, absl::nullopt}));
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
           Return(QueryResumableUploadResponse{3 * quantum, absl::nullopt}));
 
+  // Even simpler scenario where only the UploadChunk() calls succeeds.
+  EXPECT_CALL(*mock, UploadChunk)
+      .WillOnce(
+          Return(QueryResumableUploadResponse{4 * quantum, absl::nullopt}));
+
   auto response = client->UploadChunk(
       UploadChunkRequest("test-only-session-id", 0, {{payload}}));
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(quantum, response->committed_size.value_or(0));
 
   response = client->UploadChunk(
       UploadChunkRequest("test-only-session-id", quantum, {{payload}}));
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(2 * quantum, response->committed_size.value_or(0));
 
   response = client->UploadChunk(
       UploadChunkRequest("test-only-session-id", 2 * quantum, {{payload}}));
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(3 * quantum, response->committed_size.value_or(0));
+
+  response = client->UploadChunk(
+      UploadChunkRequest("test-only-session-id", 3 * quantum, {{payload}}));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(4 * quantum, response->committed_size.value_or(0));
 }
 
 /// @test Verify that we can restore a session and continue writing.

@@ -476,10 +476,21 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
   while (!retry_policy->IsExhausted()) {
     auto result = (*operation)(committed_size);
     if (!result) {
-      // On a failure we preserve the error, query if retry policy, backoff, and
-      // switch to calling QueryResumableUpload().
+      // On a failure we preserve the error, then query if retry policy allows
+      // retrying.  If so, we backoff, and switch to calling
+      // QueryResumableUpload().
       last_status = std::move(result).status();
-      if (!retry_policy->OnFailure(last_status)) {
+      // For resumable uploads over gRPC kAborted is a retryable error. We will
+      // also allow this as a retryable error in JSON, as the resumable upload
+      // protocol does not generate this error at the moment, and seems harmless
+      // to retry: QueryResumableUpload() will return the real error in this
+      // case. Since we do not have per-RPC retry policies, we hack around this
+      // by feeding `kUnavailable` to the retry policy.
+      auto const is_retryable =
+          last_status.code() == StatusCode::kAborted
+              ? retry_policy->OnFailure(Status(StatusCode::kUnavailable, ""))
+              : retry_policy->OnFailure(last_status);
+      if (!is_retryable) {
         return return_error(std::move(last_status), *retry_policy, __func__);
       }
 
