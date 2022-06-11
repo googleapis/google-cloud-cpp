@@ -3410,8 +3410,7 @@ struct ClientImplDetails {
   static Client CreateClient(std::shared_ptr<internal::RawClient> c,
                              Policies&&... p) {
     auto opts =
-        internal::ApplyPolicies(internal::MakeOptions(c->client_options()),
-                                std::forward<Policies>(p)...);
+        internal::ApplyPolicies(c->options(), std::forward<Policies>(p)...);
     return Client(Client::InternalOnlyNoDecorations{},
                   Client::CreateDefaultInternalClient(opts, std::move(c)));
   }
