@@ -51,12 +51,18 @@ TEST_F(WriteObjectTest, WriteObject) {
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
   ::testing::InSequence sequence;
+  EXPECT_CALL(*mock_, CreateResumableUpload).WillOnce(Return(TransientError()));
   EXPECT_CALL(*mock_, CreateResumableUpload)
       .WillOnce([&](internal::ResumableUploadRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
         EXPECT_EQ("test-object-name", request.object_name());
         return internal::CreateResumableUploadResponse{"test-only-upload-id"};
       });
+  EXPECT_CALL(*mock_, UploadChunk).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, QueryResumableUpload).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, QueryResumableUpload)
+      .WillOnce(Return(
+          internal::QueryResumableUploadResponse{absl::nullopt, expected}));
   EXPECT_CALL(*mock_, UploadChunk)
       .WillRepeatedly(Return(
           internal::QueryResumableUploadResponse{absl::nullopt, expected}));
@@ -67,6 +73,36 @@ TEST_F(WriteObjectTest, WriteObject) {
   stream.Close();
   ObjectMetadata actual = stream.metadata().value();
   EXPECT_EQ(expected, actual);
+}
+
+TEST_F(WriteObjectTest, WriteObjectAutoFinalize) {
+  std::string text = R"""({
+      "name": "test-bucket-name/test-object-name/1"
+})""";
+  auto expected = internal::ObjectMetadataParser::FromString(text).value();
+
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock_, CreateResumableUpload).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, CreateResumableUpload)
+      .WillOnce([&](internal::ResumableUploadRequest const& request) {
+        EXPECT_EQ("test-bucket-name", request.bucket_name());
+        EXPECT_EQ("test-object-name", request.object_name());
+        return internal::CreateResumableUploadResponse{"test-only-upload-id"};
+      });
+  EXPECT_CALL(*mock_, UploadChunk).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, QueryResumableUpload).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, QueryResumableUpload)
+      .WillOnce(Return(
+          internal::QueryResumableUploadResponse{absl::nullopt, expected}));
+  EXPECT_CALL(*mock_, UploadChunk)
+      .WillRepeatedly(Return(
+          internal::QueryResumableUploadResponse{absl::nullopt, expected}));
+
+  auto client = ClientForMock();
+  {
+    auto stream = client.WriteObject("test-bucket-name", "test-object-name");
+    stream << "Hello World!";
+  }
 }
 
 TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
