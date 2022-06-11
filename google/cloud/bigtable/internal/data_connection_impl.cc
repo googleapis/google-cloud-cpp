@@ -246,6 +246,55 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
       });
 }
 
+StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
+    std::string const& app_profile_id, std::string const& table_name) {
+  google::bigtable::v2::SampleRowKeysRequest request;
+  request.set_app_profile_id(app_profile_id);
+  request.set_table_name(table_name);
+
+  Status status;
+  std::vector<bigtable::RowKeySample> samples;
+  std::unique_ptr<DataRetryPolicy> retry;
+  std::unique_ptr<BackoffPolicy> backoff;
+  while (true) {
+    auto context = absl::make_unique<grpc::ClientContext>();
+    internal::ConfigureContext(*context, internal::CurrentOptions());
+    auto stream = stub_->SampleRowKeys(std::move(context), request);
+
+    struct UnpackVariant {
+      Status& status;
+      std::vector<bigtable::RowKeySample>& samples;
+      bool operator()(Status s) {
+        status = std::move(s);
+        return false;
+      }
+      bool operator()(google::bigtable::v2::SampleRowKeysResponse r) {
+        bigtable::RowKeySample row_sample;
+        row_sample.offset_bytes = r.offset_bytes();
+        row_sample.row_key = std::move(*r.mutable_row_key());
+        samples.emplace_back(std::move(row_sample));
+        return true;
+      }
+    };
+    while (absl::visit(UnpackVariant{status, samples}, stream->Read())) {
+    }
+    if (status.ok()) break;
+    // We wait to allocate the policies until they are needed as a
+    // micro-optimization.
+    if (!retry) retry = retry_policy();
+    if (!retry->OnFailure(status)) {
+      return Status(status.code(),
+                    "Retry policy exhausted: " + status.message());
+    }
+    // A new stream invalidates previously returned samples.
+    samples.clear();
+    if (!backoff) backoff = backoff_policy();
+    auto delay = backoff->OnCompletion();
+    std::this_thread::sleep_for(delay);
+  }
+  return samples;
+}
+
 future<StatusOr<std::vector<bigtable::RowKeySample>>>
 DataConnectionImpl::AsyncSampleRows(std::string const& app_profile_id,
                                     std::string const& table_name) {

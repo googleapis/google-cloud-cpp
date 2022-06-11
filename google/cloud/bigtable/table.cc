@@ -319,6 +319,10 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
 // policies in effect tell us to stop. Note that each retry must clear the
 // samples otherwise the result is an inconsistent set of sample row keys.
 StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
+  if (connection_) {
+    return connection_->SampleRows(app_profile_id_, table_name_);
+  }
+
   // Copy the policies in effect for this operation.
   auto backoff_policy = clone_rpc_backoff_policy();
   auto retry_policy = clone_rpc_retry_policy();
