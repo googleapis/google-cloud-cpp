@@ -28,6 +28,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::Idempotency;
+using ::google::cloud::internal::MergeOptions;
 using ::google::cloud::storage::internal::raw_client_wrapper_utils::Signature;
 
 /**
@@ -94,19 +95,21 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
 }  // namespace
 
 std::shared_ptr<RetryClient> RetryClient::Create(
-    std::shared_ptr<RawClient> client) {
+    std::shared_ptr<RawClient> client, Options options) {
   // Cannot use `std::make_shared<>` because the constructor is private.
-  return std::shared_ptr<RetryClient>(new RetryClient(std::move(client)));
+  return std::shared_ptr<RetryClient>(
+      new RetryClient(std::move(client), std::move(options)));
 }
 
-RetryClient::RetryClient(std::shared_ptr<RawClient> client)
-    : client_(std::move(client)) {}
+RetryClient::RetryClient(std::shared_ptr<RawClient> client, Options options)
+    : client_(std::move(client)),
+      options_(MergeOptions(std::move(options), client_->options())) {}
 
 ClientOptions const& RetryClient::client_options() const {
   return client_->client_options();
 }
 
-Options RetryClient::options() const { return client_->options(); }
+Options RetryClient::options() const { return options_; }
 
 StatusOr<ListBucketsResponse> RetryClient::ListBuckets(
     ListBucketsRequest const& request) {

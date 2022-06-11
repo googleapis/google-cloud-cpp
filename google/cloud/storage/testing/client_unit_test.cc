@@ -32,16 +32,14 @@ ClientUnitTest::ClientUnitTest()
           Options{}
               .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
               .set<AuthorityOption>("a-default")
-              .set<UserProjectOption>("u-p-default")
-              .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone())
-              .set<BackoffPolicyOption>(
-                  ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                           std::chrono::milliseconds(1), 2.0)
-                      .clone()))));
+              .set<UserProjectOption>("u-p-default"))));
 }
 
 Client ClientUnitTest::ClientForMock() {
-  return ::google::cloud::storage::testing::ClientFromMock(mock_);
+  return ::google::cloud::storage::testing::ClientFromMock(
+      mock_, LimitedErrorCountRetryPolicy(2),
+      ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                               std::chrono::milliseconds(1), 2.0));
 }
 
 }  // namespace testing

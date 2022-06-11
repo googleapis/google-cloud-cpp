@@ -20,8 +20,10 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -31,6 +33,7 @@ namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Return;
 
@@ -249,6 +252,31 @@ TEST_F(ClientTest, DeprecatedButNotDecommissioned) {
   auto m2 = std::make_shared<testing::MockClient>();
   auto c2 = storage::Client(m2, LimitedErrorCountRetryPolicy(3));
   EXPECT_NE(c2.raw_client().get(), m2.get());
+}
+
+TEST_F(ClientTest, DeprecatedRetryPolicies) {
+  auto constexpr kNumRetries = 2;
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([=] {
+    auto clone_1 = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone_1, clone).WillOnce([=] {
+      auto clone_2 = absl::make_unique<MockBackoffPolicy>();
+      EXPECT_CALL(*clone_2, OnCompletion)
+          .Times(kNumRetries)
+          .WillRepeatedly(Return(std::chrono::milliseconds(0)));
+      return clone_2;
+    });
+    return clone_1;
+  });
+
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, ListBuckets)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly(Return(TransientError()));
+
+  auto client = storage::Client(mock, LimitedErrorCountRetryPolicy(kNumRetries),
+                                std::move(*mock_b));
+  (void)client.ListBuckets();
 }
 
 }  // namespace

@@ -189,10 +189,8 @@ class MockStreambuf : public internal::ObjectWriteStreambuf {
 template <typename... Policies>
 Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
                       Policies&&... p) {
-  auto opts =
-      internal::ApplyPolicies(mock->options(), std::forward<Policies>(p)...);
-  EXPECT_CALL(*mock, options).WillRepeatedly(::testing::Return(opts));
-  return internal::ClientImplDetails::CreateClient(mock);
+  return internal::ClientImplDetails::CreateClient(
+      mock, std::forward<Policies>(p)...);
 }
 
 }  // namespace testing
