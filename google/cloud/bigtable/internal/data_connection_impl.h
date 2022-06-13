@@ -52,6 +52,10 @@ class DataConnectionImpl : public DataConnection {
       std::string const& app_profile_id, std::string const& table_name,
       bigtable::BulkMutation mut) override;
 
+  future<std::vector<bigtable::FailedMutation>> AsyncBulkApply(
+      std::string const& app_profile_id, std::string const& table_name,
+      bigtable::BulkMutation mut) override;
+
   bigtable::RowReader ReadRows(std::string const& app_profile_id,
                                std::string const& table_name,
                                bigtable::RowSet row_set,

@@ -699,6 +699,28 @@ TEST(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
   (void)conn->BulkApply(kAppProfile, kTableName, std::move(mut));
 }
 
+// The `AsyncBulkApplier` is tested extensively in `async_bulk_apply_test.cc`.
+// In this test, we just verify that the configuration is passed along.
+TEST(DataConnectionTest, AsyncBulkApply) {
+  std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 0}};
+  bigtable::BulkMutation mut(IdempotentMutation("row"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::MutateRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        using ErrorStream =
+            internal::AsyncStreamingReadRpcError<v2::MutateRowsResponse>;
+        return absl::make_unique<ErrorStream>(PermanentError());
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto actual = conn->AsyncBulkApply(kAppProfile, kTableName, std::move(mut));
+  CheckFailedMutations(actual.get(), expected);
+}
+
 // The DefaultRowReader is tested extensively in `default_row_reader_test.cc`.
 // In this test, we just verify that the configuration is passed along.
 TEST(DataConnectionTest, ReadRows) {
