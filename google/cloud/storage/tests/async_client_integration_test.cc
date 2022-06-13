@@ -36,23 +36,16 @@ class AsyncClientIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void SetUp() override {
-    // TODO(#5673) - enable against production.
     if (!UsingEmulator()) GTEST_SKIP();
-    project_id_ = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    ASSERT_THAT(project_id_, Not(IsEmpty()))
-        << "GOOGLE_CLOUD_PROJECT is not set";
-
     bucket_name_ =
         GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
     ASSERT_THAT(bucket_name_, Not(IsEmpty()))
         << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
   }
 
-  std::string project_id() const { return project_id_; }
-  std::string bucket_name() const { return bucket_name_; }
+  std::string const& bucket_name() const { return bucket_name_; }
 
  private:
-  std::string project_id_;
   std::string bucket_name_;
 };
 
@@ -68,6 +61,18 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
   ScheduleForDelete(*insert);
 
   auto async = MakeAsyncClient();
+  auto pending0 =
+      async.ReadObject(bucket_name(), object_name, 0, LoremIpsum().size());
+  auto pending1 =
+      async.ReadObject(bucket_name(), object_name, 0, LoremIpsum().size());
+
+  for (auto* p : {&pending1, &pending0}) {
+    auto response = p->get();
+    EXPECT_STATUS_OK(response.status);
+    auto const full = std::accumulate(response.contents.begin(),
+                                      response.contents.end(), std::string{});
+    EXPECT_EQ(full, LoremIpsum());
+  }
   auto status = async
                     .DeleteObject(bucket_name(), object_name,
                                   gcs::Generation(insert->generation()))
