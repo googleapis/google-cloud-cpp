@@ -41,7 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * auto pending = gcs.DeleteObject("my-bucket", "my-object");
  * @endcode
  *
- * Some applications may want to delete a specific versions. In this case just
+ * Some applications may want to delete a specific version. In this case just
  * provide the `Generation` request option:
  *
  * @code
