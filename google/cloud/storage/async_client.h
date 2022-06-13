@@ -41,8 +41,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * auto pending = gcs.DeleteObject("my-bucket", "my-object");
  * @endcode
  *
- * Some applications may want to delete an specific versions. In this case
- * just provide the `Generation` request option:
+ * Some applications may want to delete a specific versions. In this case just
+ * provide the `Generation` request option:
  *
  * @code
  * auto pending = gcs.DeleteObject(
@@ -96,7 +96,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * configured to retry all operations.
  *
  * The application can override these policies when constructing objects of this
- * class. The documentation for the constructors show examples of this in
+ * class. The documentation for the constructors shows examples of this in
  * action.
  *
  * [exponential-backoff]:
