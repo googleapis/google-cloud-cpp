@@ -452,6 +452,104 @@ TEST(AsyncAccumulateReadObjectTest, PermanentFailure) {
   runner.join();
 }
 
+TEST(AsyncAccumulateReadObjectTest, ToResponse) {
+  // To generate the CRC32C checksums use:
+  //    /bin/echo -n $content > foo.txt && gsutil hash foo.txt
+  // and then pipe the base64 encoded output, for example, the "How vexingly..."
+  // text yields:
+  //    echo 'StZ/gA==' | openssl base64 -d  | xxd
+  //    Output: 00000000: 4ad6 7f80
+  auto constexpr kText0 = R"pb(
+    checksummed_data {
+      content: "The quick brown fox jumps over the lazy dog"
+      crc32c: 0x22620404
+    }
+    object_checksums { crc32c: 2345 md5_hash: "test-only-invalid" }
+    content_range { start: 1024 end: 2048 complete_length: 8192 }
+    metadata { bucket: "projects/_/buckets/bucket-name" name: "object-name" }
+  )pb";
+  auto constexpr kText1 = R"pb(
+    checksummed_data {
+      content: "How vexingly quick daft zebras jump!"
+      crc32c: 0x4ad67f80
+    }
+    object_checksums { crc32c: 2345 md5_hash: "test-only-invalid" }
+    content_range { start: 1024 end: 2048 complete_length: 8192 }
+    metadata { bucket: "projects/_/buckets/bucket-name" name: "object-name" }
+  )pb";
+
+  ReadObjectResponse r0;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText0, &r0));
+  ReadObjectResponse r1;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText1, &r1));
+
+  AsyncAccumulateReadObjectResult accumulated;
+  accumulated.status = Status(StatusCode::kUnavailable, "try-again");
+  accumulated.payload.push_back(r0);
+  accumulated.payload.push_back(r1);
+  accumulated.metadata.emplace("key", "v0");
+  accumulated.metadata.emplace("key", "v1");
+
+  auto const actual =
+      ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
+                                  "https://storage.googleapis.com"));
+  EXPECT_THAT(actual.status, StatusIs(StatusCode::kUnavailable, "try-again"));
+  EXPECT_THAT(actual.contents,
+              ElementsAre("The quick brown fox jumps over the lazy dog",
+                          "How vexingly quick daft zebras jump!"));
+  EXPECT_THAT(actual.request_metadata,
+              UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1")));
+  ASSERT_TRUE(actual.object_metadata.has_value());
+  EXPECT_EQ(actual.object_metadata->bucket(), "bucket-name");
+  EXPECT_EQ(actual.object_metadata->name(), "object-name");
+}
+
+TEST(AsyncAccumulateReadObjectTest, ToResponseDataLoss) {
+  auto constexpr kText0 = R"pb(
+    checksummed_data {
+      content: "The quick brown fox jumps over the lazy dog"
+      crc32c: 0x00000000
+    }
+    object_checksums { crc32c: 2345 md5_hash: "test-only-invalid" }
+    content_range { start: 1024 end: 2048 complete_length: 8192 }
+    metadata { bucket: "projects/_/buckets/bucket-name" name: "object-name" }
+  )pb";
+
+  ReadObjectResponse r0;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText0, &r0));
+
+  AsyncAccumulateReadObjectResult accumulated;
+  accumulated.status = Status{};
+  accumulated.payload.push_back(r0);
+  accumulated.metadata.emplace("key", "v0");
+  accumulated.metadata.emplace("key", "v1");
+
+  auto const actual =
+      ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
+                                  "https://storage.googleapis.com"));
+  EXPECT_THAT(actual.status, StatusIs(StatusCode::kDataLoss));
+  EXPECT_THAT(actual.contents, IsEmpty());
+  EXPECT_FALSE(actual.object_metadata.has_value());
+  EXPECT_THAT(actual.request_metadata,
+              UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1")));
+}
+
+TEST(AsyncAccumulateReadObjectTest, ToResponseError) {
+  AsyncAccumulateReadObjectResult accumulated;
+  accumulated.status = Status(StatusCode::kNotFound, "not found");
+  accumulated.metadata.emplace("key", "v0");
+  accumulated.metadata.emplace("key", "v1");
+
+  auto const actual =
+      ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
+                                  "https://storage.googleapis.com"));
+  EXPECT_THAT(actual.status, StatusIs(StatusCode::kNotFound, "not found"));
+  EXPECT_THAT(actual.contents, IsEmpty());
+  EXPECT_FALSE(actual.object_metadata.has_value());
+  EXPECT_THAT(actual.request_metadata,
+              UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1")));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
