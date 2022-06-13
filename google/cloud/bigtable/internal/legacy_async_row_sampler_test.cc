@@ -422,6 +422,12 @@ TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
                 r->set_row_key("test2");
                 r->set_offset_bytes(22);
               }
+            })
+            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
+              {
+                r->set_row_key("test3");
+                r->set_offset_bytes(33);
+              }
             });
         EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
           *status = grpc::Status(grpc::StatusCode::CANCELLED, "User cancelled");
@@ -438,6 +444,8 @@ TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
   // Cancel the pending operation
   samples_future.cancel();
   // Return response 2
+  cq_impl_->SimulateCompletion(true);
+  // Return response 3
   cq_impl_->SimulateCompletion(false);
   // Finish()
   cq_impl_->SimulateCompletion(true);

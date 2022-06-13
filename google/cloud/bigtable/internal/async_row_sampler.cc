@@ -71,7 +71,7 @@ future<bool> AsyncRowSampler::OnRead(v2::SampleRowKeysResponse response) {
   row_sample.offset_bytes = response.offset_bytes();
   row_sample.row_key = std::move(*response.mutable_row_key());
   samples_.emplace_back(std::move(row_sample));
-  return make_ready_future(keep_reading_);
+  return make_ready_future(keep_reading_.load());
 }
 
 void AsyncRowSampler::OnFinish(Status status) {

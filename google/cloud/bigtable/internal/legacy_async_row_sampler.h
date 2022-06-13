@@ -26,6 +26,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.pb.h>
+#include <atomic>
 #include <memory>
 #include <string>
 #include <vector>
@@ -69,7 +70,7 @@ class LegacyAsyncRowSampler
   std::string app_profile_id_;
   std::string table_name_;
 
-  bool stream_cancelled_ = false;
+  std::atomic<bool> keep_reading_{true};
   std::vector<RowKeySample> samples_;
   promise<StatusOr<std::vector<RowKeySample>>> promise_;
 };
