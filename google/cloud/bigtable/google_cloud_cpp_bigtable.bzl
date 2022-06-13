@@ -154,6 +154,7 @@ google_cloud_cpp_bigtable_srcs = [
     "instance_update_config.cc",
     "internal/admin_client_params.cc",
     "internal/async_bulk_apply.cc",
+    "internal/async_row_reader.cc",
     "internal/async_row_sampler.cc",
     "internal/bigtable_auth_decorator.cc",
     "internal/bigtable_channel_refresh.cc",

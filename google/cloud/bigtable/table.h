@@ -872,9 +872,22 @@ class Table {
    * @snippet data_async_snippets.cc async read rows with limit
    */
   template <typename RowFunctor, typename FinishFunctor>
-  void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
-                     std::int64_t rows_limit, Filter filter) {
-    bigtable_internal::AsyncRowReader<RowFunctor, FinishFunctor>::Create(
+  void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish,
+                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                     RowSet row_set, std::int64_t rows_limit, Filter filter) {
+    static_assert(
+        google::cloud::internal::is_invocable<RowFunctor, bigtable::Row>::value,
+        "RowFunctor must be invocable with Row.");
+    static_assert(
+        google::cloud::internal::is_invocable<FinishFunctor, Status>::value,
+        "FinishFunctor must be invocable with Status.");
+    static_assert(
+        std::is_same<
+            google::cloud::internal::invoke_result_t<RowFunctor, bigtable::Row>,
+            future<bool>>::value,
+        "RowFunctor should return a future<bool>.");
+
+    bigtable_internal::AsyncRowReader::Create(
         background_threads_->cq(), client_, app_profile_id_, table_name_,
         std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
         std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),

@@ -150,6 +150,7 @@ add_library(
     internal/async_bulk_apply.cc
     internal/async_bulk_apply.h
     internal/async_retry_op.h
+    internal/async_row_reader.cc
     internal/async_row_reader.h
     internal/async_row_sampler.cc
     internal/async_row_sampler.h
