@@ -47,7 +47,7 @@ AsyncRowSampler::AsyncRowSampler(
       backoff_policy_(std::move(backoff_policy)),
       app_profile_id_(std::move(app_profile_id)),
       table_name_(std::move(table_name)),
-      promise_([this] { stream_cancelled_ = true; }) {}
+      promise_([this] { keep_reading_ = false; }) {}
 
 void AsyncRowSampler::StartIteration() {
   v2::SampleRowKeysRequest request;
@@ -67,13 +67,11 @@ void AsyncRowSampler::StartIteration() {
 }
 
 future<bool> AsyncRowSampler::OnRead(v2::SampleRowKeysResponse response) {
-  if (stream_cancelled_) return make_ready_future(false);
-
   bigtable::RowKeySample row_sample;
   row_sample.offset_bytes = response.offset_bytes();
   row_sample.row_key = std::move(*response.mutable_row_key());
   samples_.emplace_back(std::move(row_sample));
-  return make_ready_future(true);
+  return make_ready_future(keep_reading_);
 }
 
 void AsyncRowSampler::OnFinish(Status status) {
