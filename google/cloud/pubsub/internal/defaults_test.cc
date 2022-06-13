@@ -133,6 +133,9 @@ TEST(OptionsTest, PublisherDefaults) {
   EXPECT_FALSE(opts.get<pubsub::MessageOrderingOption>());
   EXPECT_EQ(pubsub::FullPublisherAction::kBlocks,
             opts.get<pubsub::FullPublisherActionOption>());
+  EXPECT_EQ(GRPC_COMPRESS_DEFLATE,
+            opts.get<pubsub::CompressionAlgorithmOption>());
+  EXPECT_FALSE(opts.has<pubsub::CompressionThresholdOption>());
 }
 
 TEST(OptionsTest, UserSetPublisherOptions) {

@@ -169,11 +169,34 @@ struct FullPublisherActionOption {
   using Type = FullPublisherAction;
 };
 
+/**
+ * Compression threshold.
+ *
+ * If set, the client library turns on gRPC compression for batches larger (in
+ * bytes) than the give threshold.
+ */
+struct CompressionThresholdOption {
+  using Type = std::size_t;
+};
+
+/**
+ * Compression algorithm.
+ *
+ * Select the gRPC compression algorithm when compression is enabled. As of this
+ * writing, gRPC supports `GRPC_COMPRESS_DEFLATE` and `GRPC_COMPRESS_GZIP`.
+ * Other values may be added in the future and should be settable via this
+ * feature.
+ */
+struct CompressionAlgorithmOption {
+  using Type = int;
+};
+
 /// The list of options specific to publishers.
 using PublisherOptionList =
     OptionList<MaxHoldTimeOption, MaxBatchMessagesOption, MaxBatchBytesOption,
                MaxPendingMessagesOption, MaxPendingBytesOption,
-               MessageOrderingOption, FullPublisherActionOption>;
+               MessageOrderingOption, FullPublisherActionOption,
+               CompressionThresholdOption>;
 
 /**
  * The maximum deadline for each incoming message.
