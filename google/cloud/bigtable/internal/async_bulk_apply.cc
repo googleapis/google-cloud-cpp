@@ -63,7 +63,7 @@ void AsyncBulkApplier::StartIteration() {
       stub_->AsyncMutateRows(cq_, std::move(context), state_.BeforeStart()),
       [self](google::bigtable::v2::MutateRowsResponse r) {
         self->OnRead(std::move(r));
-        return make_ready_future(self->keep_reading_);
+        return make_ready_future(self->keep_reading_.load());
       },
       [self](Status const& s) { self->OnFinish(s); });
 }

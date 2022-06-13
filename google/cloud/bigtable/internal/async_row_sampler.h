@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/bigtable/version.h"
+#include <atomic>
 #include <memory>
 #include <string>
 #include <vector>
@@ -59,7 +60,7 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
   std::string app_profile_id_;
   std::string table_name_;
 
-  bool keep_reading_ = true;
+  std::atomic<bool> keep_reading_{true};
   std::vector<bigtable::RowKeySample> samples_;
   promise<StatusOr<std::vector<bigtable::RowKeySample>>> promise_;
 };
