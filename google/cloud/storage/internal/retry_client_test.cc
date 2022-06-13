@@ -192,8 +192,8 @@ TEST(RetryClientTest, UploadChunkHandleTransient) {
   // Repeat the failure with kAborted.  This error code is only retryable for
   // resumable uploads.
   EXPECT_CALL(*mock, UploadChunk)
-      .WillOnce(
-          Return(Status(StatusCode::kAborted, "conflict multiple writers")));
+      .WillOnce(Return(
+          Status(StatusCode::kAborted, "Concurrent requests received.")));
   EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce(
           Return(QueryResumableUploadResponse{2 * quantum, absl::nullopt}));
