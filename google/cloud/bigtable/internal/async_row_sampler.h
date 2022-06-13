@@ -59,7 +59,7 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
   std::string app_profile_id_;
   std::string table_name_;
 
-  bool stream_cancelled_ = false;
+  bool keep_reading_ = true;
   std::vector<bigtable::RowKeySample> samples_;
   promise<StatusOr<std::vector<bigtable::RowKeySample>>> promise_;
 };

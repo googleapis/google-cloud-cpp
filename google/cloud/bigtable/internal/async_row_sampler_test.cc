@@ -340,16 +340,21 @@ TEST(AsyncSampleRowKeysTest, CancelMidStream) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
-            .WillOnce(
-                [] { return make_ready_future(MakeResponse("forgotten", 11)); })
+            .WillOnce([] {
+              return make_ready_future(MakeResponse("forgotten1", 11));
+            })
             // We block here so the caller can cancel the request. The value
             // returned will be a response, meaning the stream is still active
             // and needs to be drained.
             .WillOnce([&p] { return p.get_future(); });
         EXPECT_CALL(*stream, Cancel);
-        EXPECT_CALL(*stream, Read).WillOnce([] {
-          return make_ready_future(absl::optional<v2::SampleRowKeysResponse>{});
-        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse("discarded", 33)); })
+            .WillOnce([] {
+              return make_ready_future(
+                  absl::optional<v2::SampleRowKeysResponse>{});
+            });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(
               Status(StatusCode::kCancelled, "User cancelled"));
@@ -375,7 +380,7 @@ TEST(AsyncSampleRowKeysTest, CancelMidStream) {
   fut.cancel();
   // Proceed with the rest of the stream. In this test, there are more responses
   // to be read, which we must drain. The client call should fail.
-  p.set_value(MakeResponse("discarded2", 22));
+  p.set_value(MakeResponse("forgotten2", 22));
   auto sor = fut.get();
   EXPECT_THAT(sor,
               StatusIs(StatusCode::kCancelled, HasSubstr("User cancelled")));
