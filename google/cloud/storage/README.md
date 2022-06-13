@@ -1,7 +1,7 @@
 # Google Cloud Storage C++ Client Library
 
 This directory contains an idiomatic C++ client library for interacting with
-[Google Cloud Storage](https://cloud.google.com/storage}/) (GCS), which is
+[Google Cloud Storage](https://cloud.google.com/storage/) (GCS), which is
 Google's Object Storage service. It allows world-wide storage and retrieval of
 any amount of data at any time. You can use Cloud Storage for a range of
 scenarios including serving website content, storing data for archival and
