@@ -28,6 +28,7 @@ else ()
         google_cloud_cpp_storage_grpc
         async_client.cc
         async_client.h
+        async_object_responses.h
         grpc_plugin.cc
         grpc_plugin.h
         internal/async_accumulate_read_object.cc

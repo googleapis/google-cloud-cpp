@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async_accumulate_read_object.h"
+#include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
+#include <crc32c/crc32c.h>
 #include <iterator>
 #include <numeric>
 #include <sstream>
@@ -320,6 +322,34 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
       std::move(cq), std::move(stub), std::move(context_factory),
       std::move(request), options);
   return handle->Invoke();
+}
+
+storage_experimental::ReadObjectRangeResponse ToResponse(
+    AsyncAccumulateReadObjectResult accumulated, Options const& options) {
+  storage_experimental::ReadObjectRangeResponse response;
+  response.status = std::move(accumulated.status);
+  response.request_metadata = std::move(accumulated.metadata);
+  response.contents.reserve(accumulated.payload.size());
+  for (auto& r : accumulated.payload) {
+    if (!r.has_checksummed_data()) continue;
+    auto& data = *r.mutable_checksummed_data();
+    if (data.has_crc32c() && crc32c::Crc32c(data.content()) != data.crc32c()) {
+      response.status = Status(StatusCode::kDataLoss,
+                               "Mismatched CRC32C checksum in downloaded data");
+      return response;
+    }
+    response.contents.push_back(std::move(*data.mutable_content()));
+  }
+  response.object_metadata = [&] {
+    for (auto& r : accumulated.payload) {
+      if (!r.has_metadata()) continue;
+      return absl::make_optional(
+          storage::internal::GrpcObjectMetadataParser::FromProto(
+              *r.mutable_metadata(), options));
+    }
+    return absl::optional<storage::ObjectMetadata>{};
+  }();
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
