@@ -170,6 +170,11 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
 }
 
 future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
+  if (connection_) {
+    return connection_->AsyncBulkApply(app_profile_id_, table_name_,
+                                       std::move(mut));
+  }
+
   auto cq = background_threads_->cq();
   auto mutation_policy = clone_idempotent_mutation_policy();
   return internal::AsyncRetryBulkApply::Create(

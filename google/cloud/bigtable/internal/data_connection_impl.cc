@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
@@ -138,6 +139,15 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     std::this_thread::sleep_for(delay);
   } while (mutator.HasPendingMutations());
   return std::move(mutator).OnRetryDone();
+}
+
+future<std::vector<bigtable::FailedMutation>>
+DataConnectionImpl::AsyncBulkApply(std::string const& app_profile_id,
+                                   std::string const& table_name,
+                                   bigtable::BulkMutation mut) {
+  return AsyncBulkApplier::Create(background_->cq(), stub_, retry_policy(),
+                                  backoff_policy(), *idempotency_policy(),
+                                  app_profile_id, table_name, std::move(mut));
 }
 
 bigtable::RowReader DataConnectionImpl::ReadRows(
