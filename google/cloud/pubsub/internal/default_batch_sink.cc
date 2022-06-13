@@ -57,7 +57,7 @@ DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
         auto const& current = internal::CurrentOptions();
         if (current.has<CompressionThresholdOption>() &&
             current.has<CompressionAlgorithmOption>()) {
-          auto const threshold = current.has<CompressionThresholdOption>();
+          auto const threshold = current.get<CompressionThresholdOption>();
           if (RequestSize(request) >= threshold) {
             context->set_compression_algorithm(
                 static_cast<grpc_compression_algorithm>(
