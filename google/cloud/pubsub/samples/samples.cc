@@ -1554,6 +1554,40 @@ void PublisherDisableRetries(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void PublishWithCompression(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{"publish-with-compression <project-id> <topic-id>"};
+  }
+  //! [START pubsub_publish_with_compression]
+  namespace g = ::google::cloud;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](std::string project_id, std::string topic_id) {
+    auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+        std::move(topic),
+        g::Options{}
+            // Compress any batch of messages over 10 bytes. By default, no
+            // messages are compressed, set this to 0 to compress all batches,
+            // regardless of their size.
+            .set<pubsub::CompressionThresholdOption>(10)
+            // Compress using the GZIP algorithm. By default, the library uses
+            // GRPC_COMPRESS_DEFLATE.
+            .set<pubsub::CompressionAlgorithmOption>(GRPC_COMPRESS_GZIP)));
+    auto message_id = publisher.Publish(
+        pubsub::MessageBuilder{}.SetData("Hello World!").Build());
+    auto done = message_id.then([](g::future<g::StatusOr<std::string>> f) {
+      auto id = f.get();
+      if (!id) throw std::runtime_error(id.status().message());
+      std::cout << "Hello World! published with id=" << *id << "\n";
+    });
+    // Block until the message is published
+    done.get();
+  }
+  //! [END pubsub_publish_with_compression]
+  (argv.at(0), argv.at(1));
+}
+
 void CustomBatchPublisher(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 2) {
@@ -1567,9 +1601,9 @@ void CustomBatchPublisher(std::vector<std::string> const& argv) {
   using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
-    // By default the publisher will flush a batch after 10ms, after it contains
-    // more than 100 message, or after it contains more than 1MiB of data,
-    // whichever comes first. This changes those defaults.
+    // By default, the publisher will flush a batch after 10ms, after it
+    // contains more than 100 message, or after it contains more than 1MiB of
+    // data, whichever comes first. This changes those defaults.
     auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
         std::move(topic),
         Options{}
@@ -2154,6 +2188,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the PublisherDisableRetries() sample" << std::endl;
   PublisherDisableRetries({project_id, topic_id});
 
+  std::cout << "\nRunning the PublishWithCompression() sample" << std::endl;
+  PublishWithCompression({project_id, topic_id});
+
   std::cout << "\nRunning the CustomBatchPublisher() sample" << std::endl;
   CustomBatchPublisher({project_id, topic_id});
 
@@ -2362,6 +2399,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"publisher-flow-control", PublisherFlowControl},
       {"publisher-retry-settings", PublisherRetrySettings},
       {"publisher-disable-retry", PublisherDisableRetries},
+      {"publish-with-compression", PublishWithCompression},
       {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
       {"subscriber-concurrency-control", SubscriberConcurrencyControl},

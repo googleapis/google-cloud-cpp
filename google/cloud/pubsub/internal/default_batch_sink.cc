@@ -13,13 +13,31 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
+#include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include <numeric>
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+using ::google::cloud::pubsub::CompressionAlgorithmOption;
+using ::google::cloud::pubsub::CompressionThresholdOption;
+using ::google::pubsub::v1::PubsubMessage;
+
+namespace {
+
+std::size_t RequestSize(google::pubsub::v1::PublishRequest const& request) {
+  return std::accumulate(request.messages().begin(), request.messages().end(),
+                         std::size_t{0},
+                         [](std::size_t a, PubsubMessage const& m) {
+                           return a + MessageProtoSize(m);
+                         });
+}
+
+}  // namespace
 
 DefaultBatchSink::DefaultBatchSink(std::shared_ptr<PublisherStub> stub,
                                    CompletionQueue cq, Options opts)
@@ -36,6 +54,16 @@ DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
       Idempotency::kIdempotent, cq_,
       [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              google::pubsub::v1::PublishRequest const& request) {
+        auto const& current = internal::CurrentOptions();
+        if (current.has<CompressionThresholdOption>() &&
+            current.has<CompressionAlgorithmOption>()) {
+          auto const threshold = current.has<CompressionThresholdOption>();
+          if (RequestSize(request) >= threshold) {
+            context->set_compression_algorithm(
+                static_cast<grpc_compression_algorithm>(
+                    current.get<CompressionAlgorithmOption>()));
+          }
+        }
         return stub->AsyncPublish(cq, std::move(context), request);
       },
       std::move(request), __func__);

@@ -98,6 +98,9 @@ Options DefaultPublisherOptionsOnly(Options opts) {
     opts.set<pubsub::FullPublisherActionOption>(
         pubsub::FullPublisherAction::kBlocks);
   }
+  if (!opts.has<pubsub::CompressionAlgorithmOption>()) {
+    opts.set<pubsub::CompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE);
+  }
 
   return opts;
 }

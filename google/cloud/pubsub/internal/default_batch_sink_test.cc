@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
 #include "google/cloud/pubsub/internal/defaults.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic.h"
@@ -116,6 +117,29 @@ TEST(DefaultBatchSinkTest, TooManyTransients) {
   auto response = uut->AsyncPublish(MakeRequest(3)).get();
   ASSERT_THAT(response,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
+}
+
+TEST(DefaultBatchSinkTest, BasicWithCompression) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  EXPECT_CALL(*mock, AsyncPublish)
+      .WillOnce([](Unused, std::unique_ptr<grpc::ClientContext> context,
+                   google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(context->compression_algorithm(), GRPC_COMPRESS_GZIP);
+        EXPECT_THAT(request, IsProtoEqual(MakeRequest(3)));
+        return make_ready_future(make_status_or(MakeResponse(request)));
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto uut = DefaultBatchSink::Create(
+      std::move(mock), background.cq(),
+      DefaultPublisherOptions(
+          pubsub_testing::MakeTestOptions()
+              .set<pubsub::CompressionThresholdOption>(0)
+              .set<pubsub::CompressionAlgorithmOption>(GRPC_COMPRESS_GZIP)));
+
+  auto response = uut->AsyncPublish(MakeRequest(3)).get();
+  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(*response, IsProtoEqual(MakeResponse(MakeRequest(3))));
 }
 
 }  // namespace
