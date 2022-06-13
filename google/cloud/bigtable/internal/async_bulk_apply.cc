@@ -51,7 +51,8 @@ AsyncBulkApplier::AsyncBulkApplier(
       stub_(std::move(stub)),
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
-      state_(app_profile_id, table_name, idempotent_policy, std::move(mut)) {}
+      state_(app_profile_id, table_name, idempotent_policy, std::move(mut)),
+      promise_([this] { keep_reading_ = false; }) {}
 
 void AsyncBulkApplier::StartIteration() {
   auto context = absl::make_unique<grpc::ClientContext>();
@@ -62,7 +63,7 @@ void AsyncBulkApplier::StartIteration() {
       stub_->AsyncMutateRows(cq_, std::move(context), state_.BeforeStart()),
       [self](google::bigtable::v2::MutateRowsResponse r) {
         self->OnRead(std::move(r));
-        return make_ready_future(true);
+        return make_ready_future(self->keep_reading_);
       },
       [self](Status const& s) { self->OnFinish(s); });
 }
