@@ -476,10 +476,21 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
   while (!retry_policy->IsExhausted()) {
     auto result = (*operation)(committed_size);
     if (!result) {
-      // On a failure we preserve the error, query if retry policy, backoff, and
-      // switch to calling QueryResumableUpload().
+      // On a failure we preserve the error, then query if retry policy allows
+      // retrying.  If so, we backoff, and switch to calling
+      // QueryResumableUpload().
       last_status = std::move(result).status();
-      if (!retry_policy->OnFailure(last_status)) {
+      // For resumable uploads over gRPC some kAborted errors are retryable.
+      // TODO(#9273) - use ErrorInfo when it becomes available
+      auto constexpr kConcurrentMessagePrefix = "Concurrent requests received.";
+      auto const is_concurrent_write =
+          last_status.code() == StatusCode::kAborted &&
+          last_status.message().rfind(kConcurrentMessagePrefix, 0) == 0;
+      auto const is_retryable =
+          is_concurrent_write
+              ? retry_policy->OnFailure(Status(StatusCode::kUnavailable, ""))
+              : retry_policy->OnFailure(last_status);
+      if (!is_retryable) {
         return return_error(std::move(last_status), *retry_policy, __func__);
       }
 
