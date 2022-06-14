@@ -87,7 +87,7 @@ class RestRequestBuilder {
                 std::is_arithmetic<V>::value, void>::type>
   RestRequestBuilder& AddOption(WellKnownHeader<P, V> const& p) {
     if (p.has_value()) {
-      request_.AddHeader(p.header_name(), p.value());
+      request_.AddHeader(p.header_name(), std::to_string(p.value()));
     }
     return *this;
   }
