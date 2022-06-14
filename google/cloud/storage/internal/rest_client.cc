@@ -59,7 +59,7 @@ std::string UrlEscapeString(std::string const& value) {
   return std::string(handle.MakeEscapedString(value).get());
 }
 
-bool IsMinNotSuccess(rest::HttpStatusCode code) {
+bool IsHttpError(rest::HttpStatusCode code) {
   return code >= rest::kMinNotSuccess;
 }
 
@@ -67,7 +67,7 @@ template <typename ReturnType>
 StatusOr<ReturnType> ParseFromRestResponse(
     StatusOr<std::unique_ptr<rest::RestResponse>> response,
     std::function<bool(rest::HttpStatusCode)> const& failure_predicate =
-        IsMinNotSuccess) {
+        IsHttpError) {
   if (!response.ok()) return std::move(response).status();
   if (failure_predicate((*response)->StatusCode())) {
     return rest::AsStatus(std::move(**response));
@@ -99,7 +99,7 @@ auto CheckedFromString(StatusOr<std::unique_ptr<rest::RestResponse>> response)
 StatusOr<EmptyResponse> ReturnEmptyResponse(
     StatusOr<std::unique_ptr<rest::RestResponse>> response,
     std::function<bool(rest::HttpStatusCode)> const& failure_predicate =
-        IsMinNotSuccess) {
+        IsHttpError) {
   if (!response.ok()) {
     return std::move(response).status();
   }
@@ -885,7 +885,7 @@ StatusOr<QueryResumableUploadResponse> RestClient::UploadChunk(
 
   return ParseFromRestResponse<QueryResumableUploadResponse>(
       storage_rest_client_->Put(std::move(builder).BuildRequest(),
-                                {request.payload()}),
+                                request.payload()),
       failure_predicate);
 }
 
