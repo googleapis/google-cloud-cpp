@@ -434,6 +434,7 @@ class UploadChunkRequest
   bool last_chunk() const { return upload_size_.has_value(); }
   std::size_t payload_size() const { return TotalBytes(payload_); }
   std::string RangeHeader() const;
+  std::string RangeHeaderValue() const;
 
   /**
    * Returns the request to continue writing at @p new_offset.

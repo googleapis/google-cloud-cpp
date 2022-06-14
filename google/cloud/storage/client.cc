@@ -22,6 +22,7 @@
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
 #include <fstream>
@@ -96,6 +97,9 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
       rest_opts.set<rest::EnableCurlSigpipeHandlerOption>(
           opts.get<EnableCurlSigpipeHandlerOption>());
     }
+    rest_opts.set<rest::IgnoredHttpErrorCodes>(
+        {rest::HttpStatusCode::kResumeIncomplete,
+         rest::HttpStatusCode::kClientClosedRequest});
 
     return CreateDefaultInternalClient(opts,
                                        internal::RestClient::Create(rest_opts));

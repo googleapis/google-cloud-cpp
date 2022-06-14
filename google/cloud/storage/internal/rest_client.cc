@@ -59,16 +59,26 @@ std::string UrlEscapeString(std::string const& value) {
   return std::string(handle.MakeEscapedString(value).get());
 }
 
+bool IsMinNotSuccess(rest::HttpStatusCode code) {
+  return code >= rest::kMinNotSuccess;
+}
+
 template <typename ReturnType>
 StatusOr<ReturnType> ParseFromRestResponse(
-    StatusOr<std::unique_ptr<rest::RestResponse>> response) {
+    StatusOr<std::unique_ptr<rest::RestResponse>> response,
+    std::function<bool(rest::HttpStatusCode)> const& failure_predicate =
+        IsMinNotSuccess) {
   if (!response.ok()) return std::move(response).status();
-  if ((*response)->StatusCode() >= rest::kMinNotSuccess) {
+  if (failure_predicate((*response)->StatusCode())) {
     return rest::AsStatus(std::move(**response));
   }
+
+  HttpResponse http_response{
+      (*response)->StatusCode(), {}, (*response)->Headers()};
   auto payload = rest::ReadAll(std::move(**response).ExtractPayload());
   if (!payload.ok()) return std::move(payload).status();
-  return ReturnType::FromHttpResponse(*payload);
+  http_response.payload = std::move(*payload);
+  return ReturnType::FromHttpResponse(http_response);
 }
 
 template <typename Parser>
@@ -87,11 +97,13 @@ auto CheckedFromString(StatusOr<std::unique_ptr<rest::RestResponse>> response)
 }
 
 StatusOr<EmptyResponse> ReturnEmptyResponse(
-    StatusOr<std::unique_ptr<rest::RestResponse>> response) {
+    StatusOr<std::unique_ptr<rest::RestResponse>> response,
+    std::function<bool(rest::HttpStatusCode)> const& failure_predicate =
+        IsMinNotSuccess) {
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if ((*response)->StatusCode() >= rest::kMinNotSuccess) {
+  if (failure_predicate((*response)->StatusCode())) {
     return rest::AsStatus(std::move(**response));
   }
   return EmptyResponse{};
@@ -771,22 +783,110 @@ StatusOr<RewriteObjectResponse> RestClient::RewriteObject(
 
 StatusOr<CreateResumableUploadResponse> RestClient::CreateResumableUpload(
     ResumableUploadRequest const& request) {
-  return curl_client_->CreateResumableUpload(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat("upload/storage/",
+                                          current.get<TargetApiVersionOption>(),
+                                          "/b/", request.bucket_name(), "/o"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+
+  AddOptionsWithSkip<RestRequestBuilder, ContentType> no_content_type{builder};
+  request.ForEachOption(no_content_type);
+  builder.AddQueryParameter("uploadType", "resumable");
+  builder.AddHeader("Content-Type", "application/json; charset=UTF-8");
+  nlohmann::json resource;
+  if (request.HasOption<WithObjectMetadata>()) {
+    resource = ObjectMetadataJsonForInsert(
+        request.GetOption<WithObjectMetadata>().value());
+  }
+  if (request.HasOption<ContentEncoding>()) {
+    resource["contentEncoding"] = request.GetOption<ContentEncoding>().value();
+  }
+  if (request.HasOption<ContentType>()) {
+    resource["contentType"] = request.GetOption<ContentType>().value();
+  }
+  if (request.HasOption<Crc32cChecksumValue>()) {
+    resource["crc32c"] = request.GetOption<Crc32cChecksumValue>().value();
+  }
+  if (request.HasOption<MD5HashValue>()) {
+    resource["md5Hash"] = request.GetOption<MD5HashValue>().value();
+  }
+
+  if (resource.empty()) {
+    builder.AddQueryParameter("name", request.object_name());
+  } else {
+    resource["name"] = request.object_name();
+  }
+
+  std::string request_payload;
+  if (!resource.empty()) request_payload = resource.dump();
+
+  return ParseFromRestResponse<CreateResumableUploadResponse>(
+      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(request_payload)}));
 }
 
 StatusOr<QueryResumableUploadResponse> RestClient::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
-  return curl_client_->QueryResumableUpload(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(request.upload_session_url());
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Range", "bytes */*");
+  builder.AddHeader("Content-Type", "application/octet-stream");
+
+  auto failure_predicate = [](rest::HttpStatusCode code) {
+    return (code != rest::HttpStatusCode::kResumeIncomplete &&
+            code >= rest::HttpStatusCode::kMinNotSuccess);
+  };
+
+  return ParseFromRestResponse<QueryResumableUploadResponse>(
+      storage_rest_client_->Put(std::move(builder).BuildRequest(), {}),
+      failure_predicate);
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
-  return curl_client_->DeleteResumableUpload(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(request.upload_session_url());
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+
+  auto failure_predicate = [](rest::HttpStatusCode code) {
+    return (code != rest::HttpStatusCode::kClientClosedRequest &&
+            code >= rest::HttpStatusCode::kMinNotSuccess);
+  };
+
+  return ReturnEmptyResponse(
+      storage_rest_client_->Delete(std::move(builder).BuildRequest()),
+      failure_predicate);
 }
 
 StatusOr<QueryResumableUploadResponse> RestClient::UploadChunk(
     UploadChunkRequest const& request) {
-  return curl_client_->UploadChunk(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(request.upload_session_url());
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Range", request.RangeHeaderValue());
+  builder.AddHeader("Content-Type", "application/octet-stream");
+  // We need to explicitly disable chunked transfer encoding. libcurl uses is by
+  // default (at least in this case), and that wastes bandwidth as the content
+  // length is known.
+  builder.AddHeader("Transfer-Encoding", {});
+
+  auto failure_predicate = [](rest::HttpStatusCode code) {
+    return (code != rest::HttpStatusCode::kResumeIncomplete &&
+            code >= rest::HttpStatusCode::kMinNotSuccess);
+  };
+
+  auto payload = request.payload();
+  return ParseFromRestResponse<QueryResumableUploadResponse>(
+      storage_rest_client_->Put(std::move(builder).BuildRequest(), {payload}),
+      failure_predicate);
 }
 
 StatusOr<ListBucketAclResponse> RestClient::ListBucketAcl(

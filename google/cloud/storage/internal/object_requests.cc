@@ -412,9 +412,9 @@ std::ostream& operator<<(std::ostream& os,
             << "}";
 }
 
-std::string UploadChunkRequest::RangeHeader() const {
+std::string UploadChunkRequest::RangeHeaderValue() const {
   std::ostringstream os;
-  os << "Content-Range: bytes ";
+  os << "bytes ";
   auto const size = payload_size();
   if (size == 0) {
     // This typically happens when the sender realizes too late that the
@@ -432,6 +432,10 @@ std::string UploadChunkRequest::RangeHeader() const {
     os << "/" << *upload_size();
   }
   return std::move(os).str();
+}
+
+std::string UploadChunkRequest::RangeHeader() const {
+  return "Content-Range: " + RangeHeaderValue();
 }
 
 UploadChunkRequest UploadChunkRequest::RemainingChunk(

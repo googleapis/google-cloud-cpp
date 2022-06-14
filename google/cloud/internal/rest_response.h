@@ -62,6 +62,7 @@ enum HttpStatusCode : std::int32_t {
   kRequestRangeNotSatisfiable = 416,
   kTooManyRequests = 429,
 
+  kClientClosedRequest = 499,
   kInternalServerError = 500,
   kBadGateway = 502,
   kServiceUnavailable = 503,
