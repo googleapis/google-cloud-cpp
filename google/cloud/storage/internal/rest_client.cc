@@ -883,9 +883,9 @@ StatusOr<QueryResumableUploadResponse> RestClient::UploadChunk(
             code >= rest::HttpStatusCode::kMinNotSuccess);
   };
 
-  auto payload = request.payload();
   return ParseFromRestResponse<QueryResumableUploadResponse>(
-      storage_rest_client_->Put(std::move(builder).BuildRequest(), {payload}),
+      storage_rest_client_->Put(std::move(builder).BuildRequest(),
+                                {request.payload()}),
       failure_predicate);
 }
 

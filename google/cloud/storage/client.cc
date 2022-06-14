@@ -97,6 +97,9 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
       rest_opts.set<rest::EnableCurlSigpipeHandlerOption>(
           opts.get<EnableCurlSigpipeHandlerOption>());
     }
+    // This instructs the RestClient to not immediately treat these codes as
+    // errors, but allow them to propagate back to the calling code where it can
+    // determine if they are indeed errors or not.
     rest_opts.set<rest::IgnoredHttpErrorCodes>(
         {rest::HttpStatusCode::kResumeIncomplete,
          rest::HttpStatusCode::kClientClosedRequest});
