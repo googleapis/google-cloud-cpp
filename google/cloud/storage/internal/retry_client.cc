@@ -480,8 +480,7 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
       // retrying.  If so, we backoff, and switch to calling
       // QueryResumableUpload().
       last_status = std::move(result).status();
-      // For resumable uploads over gRPC some kAborted errors are retryable
-      // error.
+      // For resumable uploads over gRPC some kAborted errors are retryable.
       // TODO(#9273) - use ErrorInfo when it becomes available
       auto constexpr kConcurrentMessagePrefix = "Concurrent requests received.";
       auto const is_concurrent_write =
