@@ -280,8 +280,11 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
 #else
     (void)t;  // disable unused parameter warning
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-    return gcs::Client(
-        opts.set<gcs::RestEndpointOption>(options.rest_endpoint));
+    opts.set<gcs::RestEndpointOption>(options.rest_endpoint);
+    if (t == ExperimentTransport::kJsonV2 || t == ExperimentTransport::kXmlV2) {
+      opts.set<gcs::internal::UseRestClientOption>(true);
+    }
+    return gcs::Client(std::move(opts));
   };
 }
 
