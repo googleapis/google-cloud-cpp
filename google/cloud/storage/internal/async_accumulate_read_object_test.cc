@@ -54,6 +54,24 @@ future<absl::optional<ReadObjectResponse>> MakeClosingRead() {
   return make_ready_future(absl::optional<ReadObjectResponse>());
 }
 
+CompletionQueue MakeMockedCompletionQueue(AsyncSequencer<bool>& async) {
+  auto mock = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock, MakeRelativeTimer)
+      .WillRepeatedly([&](std::chrono::nanoseconds duration) {
+        using std::chrono::system_clock;
+        auto const d =
+            std::chrono::duration_cast<system_clock::duration>(duration);
+        auto deadline = system_clock::now() + d;
+        return async.PushBack("MakeRelativeTimer")
+            .then([deadline](future<bool> f) {
+              if (f.get()) return make_status_or(deadline);
+              return StatusOr<std::chrono::system_clock::time_point>(
+                  Status(StatusCode::kCancelled, "cancelled"));
+            });
+      });
+  return CompletionQueue(std::move(mock));
+}
+
 TEST(AsyncAccumulateReadObjectTest, Simple) {
   auto constexpr kText0 = R"pb(
     checksummed_data {
@@ -105,19 +123,7 @@ TEST(AsyncAccumulateReadObjectTest, Simple) {
 
 TEST(AsyncAccumulateReadObjectTest, StartTimeout) {
   AsyncSequencer<bool> async;
-
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  CompletionQueue cq(mock_cq);
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-      .WillRepeatedly([&](std::chrono::nanoseconds d) {
-        auto deadline = std::chrono::system_clock::now() + d;
-        return async.PushBack("MakeRelativeTimer")
-            .then([deadline](future<bool> f) {
-              if (f.get()) return make_status_or(deadline);
-              return StatusOr<std::chrono::system_clock::time_point>(
-                  Status(StatusCode::kCancelled, "cancelled"));
-            });
-      });
+  auto cq = MakeMockedCompletionQueue(async);
 
   auto mock = absl::make_unique<MockStream>();
 
@@ -167,19 +173,7 @@ TEST(AsyncAccumulateReadObjectTest, StartTimeout) {
 
 TEST(AsyncAccumulateReadObjectTest, ReadTimeout) {
   AsyncSequencer<bool> async;
-
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  CompletionQueue cq(mock_cq);
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-      .WillRepeatedly([&](std::chrono::nanoseconds d) {
-        auto deadline = std::chrono::system_clock::now() + d;
-        return async.PushBack("MakeRelativeTimer")
-            .then([deadline](future<bool> f) {
-              if (f.get()) return make_status_or(deadline);
-              return StatusOr<std::chrono::system_clock::time_point>(
-                  Status(StatusCode::kCancelled, "cancelled"));
-            });
-      });
+  auto cq = MakeMockedCompletionQueue(async);
 
   auto mock = absl::make_unique<MockStream>();
 
@@ -239,19 +233,7 @@ TEST(AsyncAccumulateReadObjectTest, ReadTimeout) {
 
 TEST(AsyncAccumulateReadObjectTest, FinishTimeout) {
   AsyncSequencer<bool> async;
-
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  CompletionQueue cq(mock_cq);
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-      .WillRepeatedly([&](std::chrono::nanoseconds d) {
-        auto deadline = std::chrono::system_clock::now() + d;
-        return async.PushBack("MakeRelativeTimer")
-            .then([deadline](future<bool> f) {
-              if (f.get()) return make_status_or(deadline);
-              return StatusOr<std::chrono::system_clock::time_point>(
-                  Status(StatusCode::kCancelled, "cancelled"));
-            });
-      });
+  auto cq = MakeMockedCompletionQueue(async);
 
   auto mock = absl::make_unique<MockStream>();
 
