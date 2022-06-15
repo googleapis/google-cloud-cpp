@@ -891,92 +891,288 @@ StatusOr<QueryResumableUploadResponse> RestClient::UploadChunk(
 
 StatusOr<ListBucketAclResponse> RestClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
-  return curl_client_->ListBucketAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/acl"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ParseFromRestResponse<ListBucketAclResponse>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketAccessControl> RestClient::GetBucketAcl(
     GetBucketAclRequest const& request) {
-  return curl_client_->GetBucketAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/acl/", UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return CheckedFromString<BucketAccessControlParser>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketAccessControl> RestClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
-  return curl_client_->CreateBucketAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/acl"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  nlohmann::json object;
+  object["entity"] = request.entity();
+  object["role"] = request.role();
+  auto payload = object.dump();
+  return CheckedFromString<BucketAccessControlParser>(
+      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
-  return curl_client_->DeleteBucketAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/acl/", UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ReturnEmptyResponse(
+      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketAccessControl> RestClient::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
-  return curl_client_->UpdateBucketAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/acl/", UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  nlohmann::json object;
+  object["entity"] = request.entity();
+  object["role"] = request.role();
+  auto payload = object.dump();
+  return CheckedFromString<BucketAccessControlParser>(storage_rest_client_->Put(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<BucketAccessControl> RestClient::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
-  return curl_client_->PatchBucketAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/acl/", UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = request.payload();
+  return CheckedFromString<BucketAccessControlParser>(
+      storage_rest_client_->Patch(std::move(builder).BuildRequest(),
+                                  {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ListObjectAclResponse> RestClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
-  return curl_client_->ListObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/o/",
+                   UrlEscapeString(request.object_name()), "/acl"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ParseFromRestResponse<ListObjectAclResponse>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::CreateObjectAcl(
     CreateObjectAclRequest const& request) {
-  return curl_client_->CreateObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/o/",
+                   UrlEscapeString(request.object_name()), "/acl"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  nlohmann::json object;
+  object["entity"] = request.entity();
+  object["role"] = request.role();
+  auto payload = object.dump();
+  return CheckedFromString<ObjectAccessControlParser>(
+      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteObjectAcl(
     DeleteObjectAclRequest const& request) {
-  return curl_client_->DeleteObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEscapeString(request.object_name()),
+      "/acl/", UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ReturnEmptyResponse(
+      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::GetObjectAcl(
     GetObjectAclRequest const& request) {
-  return curl_client_->GetObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEscapeString(request.object_name()),
+      "/acl/", UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return CheckedFromString<ObjectAccessControlParser>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::UpdateObjectAcl(
     UpdateObjectAclRequest const& request) {
-  return curl_client_->UpdateObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEscapeString(request.object_name()),
+      "/acl/", UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  nlohmann::json object;
+  object["entity"] = request.entity();
+  object["role"] = request.role();
+  auto payload = object.dump();
+  return CheckedFromString<ObjectAccessControlParser>(storage_rest_client_->Put(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ObjectAccessControl> RestClient::PatchObjectAcl(
     PatchObjectAclRequest const& request) {
-  return curl_client_->PatchObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEscapeString(request.object_name()),
+      "/acl/", UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = request.payload();
+  return CheckedFromString<ObjectAccessControlParser>(
+      storage_rest_client_->Patch(std::move(builder).BuildRequest(),
+                                  {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ListDefaultObjectAclResponse> RestClient::ListDefaultObjectAcl(
     ListDefaultObjectAclRequest const& request) {
-  return curl_client_->ListDefaultObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/defaultObjectAcl"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ParseFromRestResponse<ListDefaultObjectAclResponse>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::CreateDefaultObjectAcl(
     CreateDefaultObjectAclRequest const& request) {
-  return curl_client_->CreateDefaultObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/defaultObjectAcl"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  nlohmann::json object;
+  object["entity"] = request.entity();
+  object["role"] = request.role();
+  auto payload = object.dump();
+  return CheckedFromString<ObjectAccessControlParser>(
+      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteDefaultObjectAcl(
     DeleteDefaultObjectAclRequest const& request) {
-  return curl_client_->DeleteDefaultObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/defaultObjectAcl/",
+                   UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ReturnEmptyResponse(
+      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::GetDefaultObjectAcl(
     GetDefaultObjectAclRequest const& request) {
-  return curl_client_->GetDefaultObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/defaultObjectAcl/",
+                   UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return CheckedFromString<ObjectAccessControlParser>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::UpdateDefaultObjectAcl(
     UpdateDefaultObjectAclRequest const& request) {
-  return curl_client_->UpdateDefaultObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/defaultObjectAcl/",
+                   UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  nlohmann::json object;
+  object["entity"] = request.entity();
+  object["role"] = request.role();
+  auto payload = object.dump();
+  return CheckedFromString<ObjectAccessControlParser>(storage_rest_client_->Put(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ObjectAccessControl> RestClient::PatchDefaultObjectAcl(
     PatchDefaultObjectAclRequest const& request) {
-  return curl_client_->PatchDefaultObjectAcl(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/defaultObjectAcl/",
+                   UrlEscapeString(request.entity())));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = request.payload();
+  return CheckedFromString<ObjectAccessControlParser>(
+      storage_rest_client_->Patch(std::move(builder).BuildRequest(),
+                                  {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ServiceAccount> RestClient::GetServiceAccount(
