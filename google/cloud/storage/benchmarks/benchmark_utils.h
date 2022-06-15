@@ -87,7 +87,14 @@ StatusOr<ApiName> ParseApiName(std::string const& val);
 // Some combinations are simply not implemented and ignored when building the
 // set of experiments.
 enum class ExperimentLibrary { kRaw, kCppClient };
-enum class ExperimentTransport { kDirectPath, kGrpc, kJson, kXml };
+enum class ExperimentTransport {
+  kDirectPath,
+  kGrpc,
+  kJson,
+  kXml,
+  kJsonV2,
+  kXmlV2,
+};
 
 StatusOr<ExperimentLibrary> ParseExperimentLibrary(std::string const& val);
 StatusOr<ExperimentTransport> ParseExperimentTransport(std::string const& val);

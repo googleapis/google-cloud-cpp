@@ -375,7 +375,8 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
       continue;
     }
     for (auto t : options.transports) {
-      if (t == ExperimentTransport::kJson || t == ExperimentTransport::kXml) {
+      if (t != ExperimentTransport::kGrpc &&
+          t != ExperimentTransport::kDirectPath) {
         result.push_back(absl::make_unique<DownloadObjectLibcurl>(options, t));
       } else {
         result.push_back(

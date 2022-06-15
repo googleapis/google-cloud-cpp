@@ -47,9 +47,9 @@ struct ThroughputOptions {
       ExperimentLibrary::kCppClient,
   };
   std::vector<ExperimentTransport> transports = {
-      ExperimentTransport::kGrpc,
-      ExperimentTransport::kJson,
-      ExperimentTransport::kXml,
+      ExperimentTransport::kGrpc,  ExperimentTransport::kJson,
+      ExperimentTransport::kXml,   ExperimentTransport::kJsonV2,
+      ExperimentTransport::kXmlV2,
   };
   std::vector<bool> enabled_crc32c = {false, true};
   std::vector<bool> enabled_md5 = {false, true};
