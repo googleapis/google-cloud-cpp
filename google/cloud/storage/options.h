@@ -66,8 +66,8 @@ struct CAPathOption {
 };
 
 /// This is only intended for testing of the library. Not for public use.
-struct RestConfiguration {
-  using Type = std::string;
+struct UseRestClientOption {
+  using Type = bool;
 };
 
 }  // namespace internal

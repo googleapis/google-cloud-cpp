@@ -225,9 +225,7 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
   }
 
   auto rest = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT");
-  if (rest.has_value()) {
-    o.set<RestConfiguration>("rest");
-  }
+  if (rest.has_value()) o.set<UseRestClientOption>(true);
 
   return o;
 }
