@@ -30,6 +30,8 @@ else ()
         async_client.h
         grpc_plugin.cc
         grpc_plugin.h
+        internal/async_accumulate_read_object.cc
+        internal/async_accumulate_read_object.h
         internal/async_connection.h
         internal/async_connection_impl.cc
         internal/async_connection_impl.h
@@ -155,6 +157,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     set(storage_client_grpc_unit_tests
         # cmake-format: sort
         grpc_plugin_test.cc
+        internal/async_accumulate_read_object_test.cc
         internal/async_connection_impl_test.cc
         internal/grpc_bucket_access_control_parser_test.cc
         internal/grpc_bucket_metadata_parser_test.cc

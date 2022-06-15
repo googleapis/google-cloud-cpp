@@ -19,6 +19,7 @@
 google_cloud_cpp_storage_grpc_hdrs = [
     "async_client.h",
     "grpc_plugin.h",
+    "internal/async_accumulate_read_object.h",
     "internal/async_connection.h",
     "internal/async_connection_impl.h",
     "internal/grpc_bucket_access_control_parser.h",
@@ -47,6 +48,7 @@ google_cloud_cpp_storage_grpc_hdrs = [
 google_cloud_cpp_storage_grpc_srcs = [
     "async_client.cc",
     "grpc_plugin.cc",
+    "internal/async_accumulate_read_object.cc",
     "internal/async_connection_impl.cc",
     "internal/grpc_bucket_access_control_parser.cc",
     "internal/grpc_bucket_metadata_parser.cc",
