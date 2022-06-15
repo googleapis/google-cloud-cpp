@@ -30,6 +30,7 @@ namespace google {
 namespace cloud {
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Set the HTTP version used by the client.
  *
@@ -62,6 +63,11 @@ struct TargetApiVersionOption {
 /// This is only intended for testing. It is not for public use.
 struct CAPathOption {
   using Type = std::string;
+};
+
+/// This is only intended for testing of the library. Not for public use.
+struct UseRestClientOption {
+  using Type = bool;
 };
 
 }  // namespace internal

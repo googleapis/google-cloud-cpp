@@ -211,8 +211,7 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
                                                                 "/iamapi");
   }
 
-  auto tracing =
-      google::cloud::internal::GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
+  auto tracing = GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
   if (tracing.has_value()) {
     for (auto c : absl::StrSplit(*tracing, ',')) {
       GCP_LOG(INFO) << "Enabling logging for " << c;
@@ -220,10 +219,13 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
     }
   }
 
-  auto project_id = google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT");
+  auto project_id = GetEnv("GOOGLE_CLOUD_PROJECT");
   if (project_id.has_value()) {
     o.set<ProjectIdOption>(std::move(*project_id));
   }
+
+  auto rest = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT");
+  if (rest.has_value()) o.set<UseRestClientOption>(true);
 
   return o;
 }

@@ -58,9 +58,7 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
     Options const& opts) {
   namespace rest = ::google::cloud::rest_internal;
-  if (google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT")
-          .has_value()) {
+  if (opts.get<internal::UseRestClientOption>()) {
     Options rest_opts = opts;
     if (opts.has<DownloadStallTimeoutOption>()) {
       rest_opts.set<rest::DownloadStallTimeoutOption>(
