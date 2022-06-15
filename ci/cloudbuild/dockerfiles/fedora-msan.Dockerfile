@@ -61,6 +61,6 @@ ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 # The Cloud Pub/Sub emulator needs Java :shrug:
 RUN dnf makecache && dnf install -y java-latest-openjdk
 
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.11.0/bazelisk-linux-amd64" && \
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.12.0/bazelisk-linux-amd64" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel
