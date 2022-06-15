@@ -1177,57 +1177,167 @@ StatusOr<ObjectAccessControl> RestClient::PatchDefaultObjectAcl(
 
 StatusOr<ServiceAccount> RestClient::GetServiceAccount(
     GetProjectServiceAccountRequest const& request) {
-  return curl_client_->GetServiceAccount(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(),
+                   "/projects/", request.project_id(), "/serviceAccount"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return CheckedFromString<ServiceAccountParser>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<ListHmacKeysResponse> RestClient::ListHmacKeys(
     ListHmacKeysRequest const& request) {
-  return curl_client_->ListHmacKeys(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(),
+                   "/projects/", request.project_id(), "/hmacKeys"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ParseFromRestResponse<ListHmacKeysResponse>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<CreateHmacKeyResponse> RestClient::CreateHmacKey(
     CreateHmacKeyRequest const& request) {
-  return curl_client_->CreateHmacKey(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(),
+                   "/projects/", request.project_id(), "/hmacKeys"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddQueryParameter("serviceAccountEmail", request.service_account());
+  return ParseFromRestResponse<CreateHmacKeyResponse>(
+      storage_rest_client_->Post(
+          std::move(builder).BuildRequest(),
+          std::vector<std::pair<std::string, std::string>>{}));
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteHmacKey(
     DeleteHmacKeyRequest const& request) {
-  return curl_client_->DeleteHmacKey(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/projects/",
+      request.project_id(), "/hmacKeys/", request.access_id()));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ReturnEmptyResponse(
+      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
 }
 
 StatusOr<HmacKeyMetadata> RestClient::GetHmacKey(
     GetHmacKeyRequest const& request) {
-  return curl_client_->GetHmacKey(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/projects/",
+      request.project_id(), "/hmacKeys/", request.access_id()));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return CheckedFromString<HmacKeyMetadataParser>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<HmacKeyMetadata> RestClient::UpdateHmacKey(
     UpdateHmacKeyRequest const& request) {
-  return curl_client_->UpdateHmacKey(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", current.get<TargetApiVersionOption>(), "/projects/",
+      request.project_id(), "/hmacKeys/", request.access_id()));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  nlohmann::json json_payload;
+  if (!request.resource().state().empty()) {
+    json_payload["state"] = request.resource().state();
+  }
+  if (!request.resource().etag().empty()) {
+    json_payload["etag"] = request.resource().etag();
+  }
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = json_payload.dump();
+  return CheckedFromString<HmacKeyMetadataParser>(storage_rest_client_->Put(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<SignBlobResponse> RestClient::SignBlob(
     SignBlobRequest const& request) {
-  return curl_client_->SignBlob(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(absl::StrCat(
+      "projects/-/serviceAccounts/", request.service_account(), ":signBlob"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  nlohmann::json json_payload;
+  json_payload["payload"] = request.base64_encoded_blob();
+  if (!request.delegates().empty()) {
+    json_payload["delegates"] = request.delegates();
+  }
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = json_payload.dump();
+  return ParseFromRestResponse<SignBlobResponse>(iam_rest_client_->Post(
+      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ListNotificationsResponse> RestClient::ListNotifications(
     ListNotificationsRequest const& request) {
-  return curl_client_->ListNotifications(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/notificationConfigs"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ParseFromRestResponse<ListNotificationsResponse>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<NotificationMetadata> RestClient::CreateNotification(
     CreateNotificationRequest const& request) {
-  return curl_client_->CreateNotification(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/notificationConfigs"));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  auto payload = request.json_payload();
+  return CheckedFromString<NotificationMetadataParser>(
+      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<NotificationMetadata> RestClient::GetNotification(
     GetNotificationRequest const& request) {
-  return curl_client_->GetNotification(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/notificationConfigs/",
+                   request.notification_id()));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return CheckedFromString<NotificationMetadataParser>(
+      storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteNotification(
     DeleteNotificationRequest const& request) {
-  return curl_client_->DeleteNotification(request);
+  auto const& current = CurrentOptions();
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", current.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/notificationConfigs/",
+                   request.notification_id()));
+  auto auth = AddAuthorizationHeader(current, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  return ReturnEmptyResponse(
+      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
 }
 
 }  // namespace internal
