@@ -19,8 +19,8 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
-#include "google/cloud/bigtable/internal/async_row_reader.h"
 #include "google/cloud/bigtable/internal/data_connection.h"
+#include "google/cloud/bigtable/internal/legacy_async_row_reader.h"
 #include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
@@ -887,7 +887,7 @@ class Table {
             future<bool>>::value,
         "RowFunctor should return a future<bool>.");
 
-    bigtable_internal::AsyncRowReader::Create(
+    bigtable_internal::LegacyAsyncRowReader::Create(
         background_threads_->cq(), client_, app_profile_id_, table_name_,
         std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
         std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
