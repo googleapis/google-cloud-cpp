@@ -29,18 +29,23 @@ namespace {
 
 using ::google::cloud::internal::StreamingRpcMetadata;
 using ::google::cloud::storage::testing::MockObjectMediaStream;
+using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::google::storage::v2::ReadObjectRequest;
 using ::google::storage::v2::ReadObjectResponse;
+using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
+using ::testing::MockFunction;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
+using ::testing::Unused;
 
 future<absl::optional<ReadObjectResponse>> MakeClosingRead() {
   return make_ready_future(absl::optional<ReadObjectResponse>());
@@ -64,7 +69,25 @@ CompletionQueue MakeMockedCompletionQueue(AsyncSequencer<bool>& async) {
   return CompletionQueue(std::move(mock));
 }
 
-TEST(AsyncAccumulateReadObjectTest, Simple) {
+std::unique_ptr<
+    google::cloud::internal::AsyncStreamingReadRpc<ReadObjectResponse>>
+MakeMockStreamPartial(int id, ReadObjectResponse response,
+                      StatusCode code = StatusCode::kOk) {
+  auto stream = absl::make_unique<MockObjectMediaStream>();
+  EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*stream, Read)
+      .WillOnce(Return(
+          ByMove(make_ready_future(absl::make_optional(std::move(response))))))
+      .WillOnce(Return(ByMove(MakeClosingRead())));
+  EXPECT_CALL(*stream, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(Status(code, "")))));
+  EXPECT_CALL(*stream, GetRequestMetadata)
+      .WillOnce(
+          Return(StreamingRpcMetadata{{"key", "value-" + std::to_string(id)}}));
+  return stream;
+}
+
+TEST(AsyncAccumulateReadObjectTest, PartialSimple) {
   auto constexpr kText0 = R"pb(
     checksummed_data {
       content: "message0: the quick brown fox jumps over the lazy dog"
@@ -113,7 +136,7 @@ TEST(AsyncAccumulateReadObjectTest, Simple) {
   runner.join();
 }
 
-TEST(AsyncAccumulateReadObjectTest, StartTimeout) {
+TEST(AsyncAccumulateReadObjectTest, PartialStartTimeout) {
   AsyncSequencer<bool> async;
   auto cq = MakeMockedCompletionQueue(async);
 
@@ -163,7 +186,7 @@ TEST(AsyncAccumulateReadObjectTest, StartTimeout) {
   EXPECT_THAT(response.metadata, IsEmpty());
 }
 
-TEST(AsyncAccumulateReadObjectTest, ReadTimeout) {
+TEST(AsyncAccumulateReadObjectTest, PartialReadTimeout) {
   AsyncSequencer<bool> async;
   auto cq = MakeMockedCompletionQueue(async);
 
@@ -223,7 +246,7 @@ TEST(AsyncAccumulateReadObjectTest, ReadTimeout) {
   EXPECT_THAT(response.metadata, IsEmpty());
 }
 
-TEST(AsyncAccumulateReadObjectTest, FinishTimeout) {
+TEST(AsyncAccumulateReadObjectTest, PartialFinishTimeout) {
   AsyncSequencer<bool> async;
   auto cq = MakeMockedCompletionQueue(async);
 
@@ -292,6 +315,136 @@ TEST(AsyncAccumulateReadObjectTest, FinishTimeout) {
   EXPECT_THAT(response.payload, IsEmpty());
   EXPECT_THAT(response.metadata,
               UnorderedElementsAre(Pair("k0", "v0"), Pair("k1", "v1")));
+}
+
+TEST(AsyncAccumulateReadObjectTest, FullSimple) {
+  auto constexpr kText0 = R"pb(
+    checksummed_data {
+      content: "message0: the quick brown fox jumps over the lazy dog"
+      crc32c: 1234
+    }
+    object_checksums { crc32c: 2345 md5_hash: "test-only-invalid" }
+    content_range { start: 1024 end: 2048 complete_length: 8192 }
+    metadata {
+      bucket: "projects/_/buckets/bucket-name"
+      name: "object-name"
+      generation: 123456
+    }
+  )pb";
+  auto constexpr kText1 = R"pb(
+    checksummed_data {
+      content: "message1: the quick brown fox jumps over the lazy dog"
+      crc32c: 1235
+    }
+  )pb";
+
+  ReadObjectResponse r0;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText0, &r0));
+  ReadObjectResponse r1;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText1, &r1));
+
+  auto const r0_size = r0.checksummed_data().content().size();
+  auto constexpr kReadOffset = 1024;
+  auto constexpr kReadLimit = 2048;
+
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject)
+      .WillOnce([&](Unused, Unused, ReadObjectRequest const& request) {
+        EXPECT_EQ(request.read_offset(), kReadOffset);
+        EXPECT_EQ(request.read_limit(), kReadLimit);
+        return MakeMockStreamPartial(0, r0, StatusCode::kUnavailable);
+      })
+      .WillOnce([&](Unused, Unused, ReadObjectRequest const& request) {
+        EXPECT_EQ(request.read_offset(), kReadOffset + r0_size);
+        EXPECT_EQ(request.read_limit(), kReadLimit - r0_size);
+        EXPECT_EQ(request.generation(), 123456);
+        return MakeMockStreamPartial(1, r1);
+      });
+
+  MockFunction<std::unique_ptr<grpc::ClientContext>()> context_factory;
+  EXPECT_CALL(context_factory, Call).Times(2).WillRepeatedly([] {
+    return absl::make_unique<grpc::ClientContext>();
+  });
+
+  CompletionQueue cq;
+  auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
+  auto options = Options{}
+                     .set<storage::RetryPolicyOption>(
+                         storage::LimitedErrorCountRetryPolicy(3).clone())
+                     .set<storage::BackoffPolicyOption>(
+                         storage::ExponentialBackoffPolicy(
+                             std::chrono::microseconds(1),
+                             std::chrono::microseconds(4), 2.0)
+                             .clone());
+  ReadObjectRequest request;
+  request.set_read_offset(kReadOffset);
+  request.set_read_limit(kReadLimit);
+  auto response =
+      AsyncAccumulateReadObjectFull(cq, mock, context_factory.AsStdFunction(),
+                                    request, std::chrono::minutes(1), options)
+          .get();
+  EXPECT_STATUS_OK(response.status);
+  EXPECT_THAT(response.payload,
+              ElementsAre(IsProtoEqual(r0), IsProtoEqual(r1)));
+  EXPECT_THAT(response.metadata, UnorderedElementsAre(Pair("key", "value-0"),
+                                                      Pair("key", "value-1")));
+  cq.Shutdown();
+  runner.join();
+}
+
+TEST(AsyncAccumulateReadObjectTest, FullTooManyTransients) {
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject)
+      .Times(AtLeast(2))
+      .WillRepeatedly([](Unused, Unused, Unused) {
+        return MakeMockStreamPartial(0, ReadObjectResponse{},
+                                     StatusCode::kUnavailable);
+      });
+
+  CompletionQueue cq;
+  auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
+  auto options = Options{}
+                     .set<storage::RetryPolicyOption>(
+                         storage::LimitedErrorCountRetryPolicy(3).clone())
+                     .set<storage::BackoffPolicyOption>(
+                         storage::ExponentialBackoffPolicy(
+                             std::chrono::microseconds(1),
+                             std::chrono::microseconds(4), 2.0)
+                             .clone());
+  auto response =
+      AsyncAccumulateReadObjectFull(
+          cq, mock, []() { return absl::make_unique<grpc::ClientContext>(); },
+          ReadObjectRequest{}, std::chrono::minutes(1), options)
+          .get();
+  EXPECT_THAT(response.status, StatusIs(StatusCode::kUnavailable));
+  cq.Shutdown();
+  runner.join();
+}
+
+TEST(AsyncAccumulateReadObjectTest, PermanentFailure) {
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject)
+      .WillOnce(Return(ByMove(MakeMockStreamPartial(
+          0, ReadObjectResponse{}, StatusCode::kPermissionDenied))));
+
+  CompletionQueue cq;
+  auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
+  auto options = Options{}
+                     .set<storage::RetryPolicyOption>(
+                         storage::LimitedErrorCountRetryPolicy(3).clone())
+                     .set<storage::BackoffPolicyOption>(
+                         storage::ExponentialBackoffPolicy(
+                             std::chrono::microseconds(1),
+                             std::chrono::microseconds(4), 2.0)
+                             .clone());
+  auto response =
+      AsyncAccumulateReadObjectFull(
+          cq, mock, []() { return absl::make_unique<grpc::ClientContext>(); },
+          ReadObjectRequest{}, std::chrono::minutes(1), options)
+          .get();
+  EXPECT_THAT(response.status, StatusIs(StatusCode::kPermissionDenied));
+  cq.Shutdown();
+  runner.join();
 }
 
 }  // namespace

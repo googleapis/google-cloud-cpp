@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async_accumulate_read_object.h"
+#include <iterator>
+#include <numeric>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -75,6 +78,7 @@ class AsyncAccumulateReadObjectPartialHandle
   using Stream = ::google::cloud::internal::AsyncStreamingReadRpc<Response>;
   using StreamingRpcMetadata = ::google::cloud::internal::StreamingRpcMetadata;
   using Result = AsyncAccumulateReadObjectResult;
+  using Timer = StatusOr<std::chrono::system_clock::time_point>;
 
   AsyncAccumulateReadObjectPartialHandle(CompletionQueue cq,
                                          std::unique_ptr<Stream> stream,
@@ -190,6 +194,113 @@ class AsyncAccumulateReadObjectPartialHandle
   std::chrono::milliseconds timeout_;
 };
 
+class AsyncAccumulateReadObjectFullHandle
+    : public std::enable_shared_from_this<AsyncAccumulateReadObjectFullHandle> {
+ public:
+  AsyncAccumulateReadObjectFullHandle(
+      CompletionQueue cq, std::shared_ptr<StorageStub> stub,
+      std::function<std::unique_ptr<grpc::ClientContext>()> context_factory,
+      google::storage::v2::ReadObjectRequest request,
+      std::chrono::milliseconds timeout, Options const& options)
+      : cq_(std::move(cq)),
+        stub_(std::move(stub)),
+        context_factory_(std::move(context_factory)),
+        request_(std::move(request)),
+        timeout_(timeout),
+        retry_(options.get<storage::RetryPolicyOption>()->clone()),
+        backoff_(options.get<storage::BackoffPolicyOption>()->clone()) {
+    accumulator_.status = Status(StatusCode::kDeadlineExceeded,
+                                 "retry policy exhausted before first request");
+  }
+
+  future<AsyncAccumulateReadObjectResult> Invoke() {
+    Loop();
+    return promise_.get_future();
+  }
+
+ private:
+  void Loop() {
+    if (retry_->IsExhausted()) {
+      promise_.set_value(std::move(accumulator_));
+      return;
+    }
+    auto self = shared_from_this();
+    auto stream = stub_->AsyncReadObject(cq_, context_factory_(), request_);
+    AsyncAccumulateReadObjectPartial(cq_, std::move(stream), timeout_)
+        .then([self](future<AsyncAccumulateReadObjectResult> f) {
+          self->OnPartial(f.get());
+        });
+  }
+
+  void OnPartial(AsyncAccumulateReadObjectResult partial) {
+    auto const size = std::accumulate(
+        partial.payload.begin(), partial.payload.end(), std::int64_t{0},
+        [](std::int64_t a, google::storage::v2::ReadObjectResponse const& r) {
+          if (!r.has_checksummed_data()) return a;
+          auto const s = r.checksummed_data().content().size();
+          return a + static_cast<std::int64_t>(s);
+        });
+    accumulator_.status = std::move(partial.status);
+    accumulator_.payload.insert(
+        accumulator_.payload.end(),
+        std::make_move_iterator(partial.payload.begin()),
+        std::make_move_iterator(partial.payload.end()));
+    accumulator_.metadata.insert(
+        std::make_move_iterator(partial.metadata.begin()),
+        std::make_move_iterator(partial.metadata.end()));
+    // We need to make sure the next read is from the same object, not a new
+    // version of the object we just read.
+    auto const generation = [this] {
+      for (auto const& r : accumulator_.payload) {
+        if (!r.has_metadata()) continue;
+        return r.metadata().generation();
+      }
+      return std::int64_t{0};
+    }();
+    if (request_.read_limit() != 0 && size > request_.read_limit()) {
+      std::ostringstream os;
+      os << "too many bytes returned in ReadObject(), expected="
+         << request_.read_limit() << ", got=" << size;
+      accumulator_.status = Status(StatusCode::kInternal, os.str());
+      promise_.set_value(std::move(accumulator_));
+      return;
+    }
+    if (accumulator_.status.ok() || !retry_->OnFailure(accumulator_.status)) {
+      promise_.set_value(std::move(accumulator_));
+      return;
+    }
+    request_.set_generation(generation);
+    request_.set_read_offset(request_.read_offset() + size);
+    request_.set_read_limit(
+        request_.read_limit() == 0 ? 0 : request_.read_limit() - size);
+    auto self = shared_from_this();
+    cq_.MakeRelativeTimer(backoff_->OnCompletion())
+        .then(
+            [self](future<StatusOr<std::chrono::system_clock::time_point>> f) {
+              self->OnBackoff(f.get());
+            });
+  }
+
+  void OnBackoff(StatusOr<std::chrono::system_clock::time_point> timer) {
+    if (!timer) {
+      accumulator_.status = std::move(timer).status();
+      promise_.set_value(std::move(accumulator_));
+      return;
+    }
+    Loop();
+  }
+
+  promise<AsyncAccumulateReadObjectResult> promise_;
+  AsyncAccumulateReadObjectResult accumulator_;
+  CompletionQueue cq_;
+  std::shared_ptr<StorageStub> stub_;
+  std::function<std::unique_ptr<grpc::ClientContext>()> context_factory_;
+  google::storage::v2::ReadObjectRequest request_;
+  std::chrono::milliseconds timeout_;
+  std::unique_ptr<storage::RetryPolicy> retry_;
+  std::unique_ptr<storage::BackoffPolicy> backoff_;
+};
+
 }  // namespace
 
 future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectPartial(
@@ -200,6 +311,17 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectPartial(
     std::chrono::milliseconds timeout) {
   auto handle = std::make_shared<AsyncAccumulateReadObjectPartialHandle>(
       std::move(cq), std::move(stream), timeout);
+  return handle->Invoke();
+}
+
+future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
+    CompletionQueue cq, std::shared_ptr<StorageStub> stub,
+    std::function<std::unique_ptr<grpc::ClientContext>()> context_factory,
+    google::storage::v2::ReadObjectRequest request,
+    std::chrono::milliseconds timeout, Options const& options) {
+  auto handle = std::make_shared<AsyncAccumulateReadObjectFullHandle>(
+      std::move(cq), std::move(stub), std::move(context_factory),
+      std::move(request), timeout, options);
   return handle->Invoke();
 }
 
