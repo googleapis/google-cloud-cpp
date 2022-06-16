@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async_accumulate_read_object.h"
+#include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
@@ -27,6 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::StreamingRpcMetadata;
+using ::google::cloud::storage::testing::MockObjectMediaStream;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
@@ -39,16 +41,6 @@ using ::testing::IsEmpty;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
-
-class MockStream : public google::cloud::internal::AsyncStreamingReadRpc<
-                       ReadObjectResponse> {
- public:
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<ReadObjectResponse>>, Read, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
-};
 
 future<absl::optional<ReadObjectResponse>> MakeClosingRead() {
   return make_ready_future(absl::optional<ReadObjectResponse>());
@@ -94,7 +86,7 @@ TEST(AsyncAccumulateReadObjectTest, Simple) {
   ReadObjectResponse r1;
   ASSERT_TRUE(TextFormat::ParseFromString(kText1, &r1));
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
   ::testing::InSequence sequence;
 
   EXPECT_CALL(*mock, Start).WillOnce(Return(ByMove(make_ready_future(true))));
@@ -125,7 +117,7 @@ TEST(AsyncAccumulateReadObjectTest, StartTimeout) {
   AsyncSequencer<bool> async;
   auto cq = MakeMockedCompletionQueue(async);
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
 
   EXPECT_CALL(*mock, Start).WillRepeatedly([&] {
     return async.PushBack("Start").then([](future<bool> f) { return f.get(); });
@@ -175,7 +167,7 @@ TEST(AsyncAccumulateReadObjectTest, ReadTimeout) {
   AsyncSequencer<bool> async;
   auto cq = MakeMockedCompletionQueue(async);
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
 
   EXPECT_CALL(*mock, Start).WillRepeatedly([&] {
     return async.PushBack("Start").then([](future<bool> f) { return f.get(); });
@@ -235,7 +227,7 @@ TEST(AsyncAccumulateReadObjectTest, FinishTimeout) {
   AsyncSequencer<bool> async;
   auto cq = MakeMockedCompletionQueue(async);
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
 
   EXPECT_CALL(*mock, Start).WillRepeatedly([&] {
     return async.PushBack("Start").then([](future<bool> f) { return f.get(); });
