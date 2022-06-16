@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
+#include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
@@ -29,6 +30,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::internal::StreamingRpcMetadata;
+using ::google::cloud::storage::testing::MockObjectMediaStream;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ByMove;
 using ::testing::HasSubstr;
@@ -36,23 +38,12 @@ using ::testing::Return;
 
 namespace storage_proto = ::google::storage::v2;
 
-class MockStream : public google::cloud::internal::AsyncStreamingReadRpc<
-                       storage_proto::ReadObjectResponse> {
- public:
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<storage_proto::ReadObjectResponse>>, Read,
-              (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
-};
-
 future<absl::optional<storage_proto::ReadObjectResponse>> MakeClosingRead() {
   return make_ready_future(absl::optional<storage_proto::ReadObjectResponse>());
 }
 
 TEST(GrpcObjectReadSource, Simple) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
       .WillOnce([]() {
@@ -88,7 +79,7 @@ TEST(GrpcObjectReadSource, Simple) {
 }
 
 TEST(GrpcObjectReadSource, EmptyWithError) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read).WillOnce(Return(ByMove(MakeClosingRead())));
@@ -107,7 +98,7 @@ TEST(GrpcObjectReadSource, EmptyWithError) {
 }
 
 TEST(GrpcObjectReadSource, DataWithError) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
@@ -135,7 +126,7 @@ TEST(GrpcObjectReadSource, DataWithError) {
 }
 
 TEST(GrpcObjectReadSource, UseSpillBuffer) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
   auto const trailer_size = 1024;
   std::string const expected_1 = "0123456789";
   std::string const expected_2(trailer_size, 'A');
@@ -177,7 +168,7 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
 }
 
 TEST(GrpcObjectReadSource, UseSpillBufferMany) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
   std::string const contents = "0123456789";
 
   ::testing::InSequence sequence;
@@ -221,7 +212,7 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
 }
 
 TEST(GrpcObjectReadSource, CaptureChecksums) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
   std::string const expected_payload =
       "The quick brown fox jumps over the lazy dog";
   auto const expected_md5 = ComputeMD5Hash(expected_payload);
@@ -272,7 +263,7 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
 }
 
 TEST(GrpcObjectReadSource, CaptureGeneration) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
   std::string const expected_payload =
       "The quick brown fox jumps over the lazy dog";
   EXPECT_CALL(*mock, Read)
@@ -307,7 +298,7 @@ TEST(GrpcObjectReadSource, CaptureGeneration) {
 }
 
 TEST(GrpcObjectReadSource, HandleEmptyResponses) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
   auto make_empty_response = [] {
     return make_ready_future(
         absl::make_optional(storage_proto::ReadObjectResponse{}));
@@ -352,7 +343,7 @@ TEST(GrpcObjectReadSource, HandleEmptyResponses) {
 }
 
 TEST(GrpcObjectReadSource, HandleExtraRead) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
   EXPECT_CALL(*mock, Read)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
@@ -386,7 +377,7 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
 }
 
 TEST(GrpcObjectReadSource, StallTimeout) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = absl::make_unique<MockObjectMediaStream>();
 
   promise<void> hold_response;
 
