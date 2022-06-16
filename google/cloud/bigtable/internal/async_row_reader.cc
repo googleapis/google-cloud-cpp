@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/async_row_reader.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
@@ -70,12 +71,11 @@ void AsyncRowReader::TryGiveRowToUser() {
   // The magic value 100 is arbitrary, but back-of-the-envelope calculation
   // indicates it should cap this stack usage to below 100K. Default stack
   // size is usually 1MB.
-  struct CountFrame {
-    explicit CountFrame(int& cntr) : cntr(++cntr){};
-    ~CountFrame() { --cntr; }
+  struct CountFrames {
+    explicit CountFrames(int& cntr) : cntr(++cntr) {}
+    ~CountFrames() { --cntr; }
     int& cntr;
-  };
-  CountFrame frame(recursion_level_);
+  } counter(recursion_level_);
 
   if (ready_rows_.empty()) {
     if (whole_op_finished_) {
@@ -84,11 +84,10 @@ void AsyncRowReader::TryGiveRowToUser() {
       return;
     }
     if (!continue_reading_) {
-      // TODO(#1402): replace with GCP_ASSERT(continue_reading_);
-      Terminate(
-          "No rows are ready and we can't continue reading. This is a bug, "
-          "please report it at "
-          "https://github.com/googleapis/google-cloud-cpp/issues/new");
+      GCP_LOG(FATAL)
+          << "No rows are ready and we can't continue reading. This is a bug, "
+             "please report it at "
+             "https://github.com/googleapis/google-cloud-cpp/issues/new";
     }
     // No rows, but we can fetch some.
     auto continue_reading = std::move(continue_reading_);
