@@ -150,6 +150,8 @@ add_library(
     internal/async_bulk_apply.cc
     internal/async_bulk_apply.h
     internal/async_retry_op.h
+    internal/async_row_reader.cc
+    internal/async_row_reader.h
     internal/async_row_sampler.cc
     internal/async_row_sampler.h
     internal/async_streaming_read.h
@@ -334,6 +336,7 @@ if (BUILD_TESTING)
         instance_update_config_test.cc
         internal/admin_client_params_test.cc
         internal/async_bulk_apply_test.cc
+        internal/async_row_reader_test.cc
         internal/async_row_sampler_test.cc
         internal/async_streaming_read_test.cc
         internal/bigtable_channel_refresh_test.cc

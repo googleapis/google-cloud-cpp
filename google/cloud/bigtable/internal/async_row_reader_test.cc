@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,1147 +12,916 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/testing/mock_data_client.h"
-#include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
-#include "google/cloud/bigtable/testing/mock_response_reader.h"
-#include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/bigtable/internal/async_row_reader.h"
+#include "google/cloud/bigtable/row_reader.h"
+#include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
+#include "google/cloud/testing_util/mock_backoff_policy.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/cloud/testing_util/validate_metadata.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
-#include <thread>
+#include <chrono>
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace btproto = ::google::bigtable::v2;
-
-using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
-using ::google::cloud::testing_util::ValidateMetadataFixture;
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
-using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+namespace v2 = ::google::bigtable::v2;
+using ms = std::chrono::milliseconds;
+using ::google::cloud::bigtable::testing::MockAsyncReadRowsStream;
+using ::google::cloud::bigtable::testing::MockBigtableStub;
+using ::google::cloud::bigtable_internal::AsyncRowReader;
+using ::google::cloud::testing_util::MockBackoffPolicy;
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::MockFunction;
+using ::testing::Return;
 using ::testing::Values;
-using ::testing::WithParamInterface;
 
-template <typename T>
-bool Unsatisfied(future<T> const& fut) {
-  return std::future_status::timeout == fut.wait_for(1_ms);
+auto constexpr kNumRetries = 2;
+auto const* const kTableName =
+    "projects/the-project/instances/the-instance/tables/the-table";
+auto const* const kAppProfile = "the-profile";
+
+Status TransientError() {
+  return Status(StatusCode::kUnavailable, "try again");
 }
 
-class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
- protected:
-  TableAsyncReadRowsTest()
-      : TableTestFixture(
-            CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
-        stream_status_future_(stream_status_promise_.get_future()) {}
+// The individual pairs are: {row_key, commit_row}
+absl::optional<v2::ReadRowsResponse> MakeResponse(
+    std::vector<std::pair<std::string, bool>> rows) {
+  v2::ReadRowsResponse resp;
+  for (auto& row : rows) {
+    auto& c = *resp.add_chunks();
+    c.set_row_key(std::move(row.first));
+    c.mutable_family_name()->set_value("cf");
+    c.mutable_qualifier()->set_value("cq");
+    c.set_timestamp_micros(42000);
+    c.set_value("value");
+    c.set_commit_row(row.second);
+  }
+  return resp;
+}
 
-  MockClientAsyncReaderInterface<btproto::ReadRowsResponse>& AddReader(
-      std::function<void(btproto::ReadRowsRequest const&)> request_expectations,
-      bool expect_a_read = true) {
-    readers_.emplace_back(
-        new MockClientAsyncReaderInterface<btproto::ReadRowsResponse>);
-    reader_started_.push_back(false);
-    size_t idx = reader_started_.size() - 1;
-    auto& reader = LastReader();
-    // We can't move request_expectations into the lambda because of lack of
-    // generalized lambda capture in C++11, so let's pass it by pointer.
-    auto request_expectations_ptr =
-        std::make_shared<decltype(request_expectations)>(
-            std::move(request_expectations));
+absl::optional<v2::ReadRowsResponse> EndOfStream() { return absl::nullopt; }
 
-    EXPECT_CALL(*client_, PrepareAsyncReadRows)
-        .WillOnce([this, &reader, request_expectations_ptr](
-                      grpc::ClientContext* context,
-                      btproto::ReadRowsRequest const& r,
-                      grpc::CompletionQueue*) {
-          EXPECT_STATUS_OK(validate_metadata_fixture_.IsContextMDValid(
-              *context, "google.bigtable.v2.Bigtable.ReadRows",
-              google::cloud::internal::ApiClientHeader()));
-          (*request_expectations_ptr)(r);
-          return std::unique_ptr<
-              MockClientAsyncReaderInterface<btproto::ReadRowsResponse>>(
-              &reader);
-        })
-        .RetiresOnSaturation();
+/// @test Verify that successfully reading rows works.
+TEST(AsyncRowReaderTest, Success) {
+  CompletionQueue cq;
 
-    EXPECT_CALL(reader, StartCall).WillOnce([idx, this](void*) {
-      reader_started_[idx] = true;
-    });
-    if (expect_a_read) {
-      // The last call, to which we'll return ok==false.
-      EXPECT_CALL(reader, Read).WillOnce([](btproto::ReadRowsResponse*, void*) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(
+                  MakeResponse({{"r1", true}, {"r2", true}}));
+            })
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({{"r3", true}}));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
       });
-    }
-    return reader;
-  }
 
-  MockClientAsyncReaderInterface<btproto::ReadRowsResponse>& LastReader() {
-    return *readers_.back();
-  }
-
-  // Start Table::AsyncReadRows.
-  void ReadRows(int row_limit = RowReader::NO_ROWS_LIMIT) {
-    table_.AsyncReadRows(
-        [this](Row const& row) {
-          EXPECT_EQ(expected_rows_.front(), row.row_key());
-          expected_rows_.pop();
-          row_promises_.front().set_value(row.row_key());
-          row_promises_.pop();
-          auto ret = std::move(futures_from_user_cb_.front());
-          futures_from_user_cb_.pop();
-          return ret;
-        },
-        [this](Status const& stream_status) {
-          stream_status_promise_.set_value(stream_status);
-        },
-        RowSet(), row_limit, Filter::PassAllFilter());
-  }
-
-  /// Expect a row whose row key is equal to this function's argument.
-  template <typename T>
-  void ExpectRow(T const& row) {
-    row_promises_.emplace(promise<RowKeyType>());
-    row_futures_.emplace_back(row_promises_.back().get_future());
-    promises_from_user_cb_.emplace_back(promise<bool>());
-    futures_from_user_cb_.emplace(promises_from_user_cb_.back().get_future());
-    expected_rows_.push(RowKeyType(row));
-  }
-
-  /// A wrapper around ExpectRow to expect many rows.
-  template <typename T>
-  void ExpectRows(std::initializer_list<T> const& rows) {
-    for (auto const& row : rows) {
-      ExpectRow(row);
-    }
-  }
-
-  std::vector<MockClientAsyncReaderInterface<btproto::ReadRowsResponse>*>
-      readers_;
-  // Whether `Start()` was called on i-th retry attempt.
-  std::vector<bool> reader_started_;
-  std::queue<promise<RowKeyType>> row_promises_;
-  /**
-   * Future at idx i corresponse to i-th expected row. It will be satisfied
-   * when the relevant `on_row` callback of AsyncReadRows is called.
-   */
-  std::vector<future<RowKeyType>> row_futures_;
-  std::queue<RowKeyType> expected_rows_;
-  promise<Status> stream_status_promise_;
-  /// Future which will be satisfied with the status passed in on_finished.
-  future<Status> stream_status_future_;
-  /// I-th promise corresponds to the future returned from the ith on_row cb.
-  std::vector<promise<bool>> promises_from_user_cb_;
-  std::queue<future<bool>> futures_from_user_cb_;
-  ValidateMetadataFixture validate_metadata_fixture_;
-};
-
-/// @test Verify that successfully reading a single row works.
-TEST_F(TableAsyncReadRowsTest, SingleRow) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
-
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call)
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r1", row.row_key());
+        return make_ready_future(true);
       })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r2", row.row_key());
+        return make_ready_future(true);
+      })
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r3", row.row_key());
+        return make_ready_future(true);
+      });
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_STATUS_OK(status);
   });
 
-  ExpectRow("r1");
-  ReadRows();
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  EXPECT_TRUE(reader_started_[0]);
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-
-  EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
-  auto row = row_futures_[0].get();
-
-  // Check that we're not asking for data unless someone is waiting for it.
-  ASSERT_EQ(0U, cq_impl_->size());
-  promises_from_user_cb_[0].set_value(true);
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_STATUS_OK(stream_status);
-  ASSERT_EQ(0U, cq_impl_->size());
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
 }
 
-/// @test Like SingleRow, but the future returned from the cb is satisfied.
-TEST_F(TableAsyncReadRowsTest, SingleRowInstantFinish) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
+/// @test Verify that reading works when the futures are not immediately
+/// satisfied.
+TEST(AsyncRowReaderTest, SuccessDelayedFuture) {
+  CompletionQueue cq;
 
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(
+                  MakeResponse({{"r1", true}, {"r2", true}}));
+            })
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({{"r3", true}}));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
+
+  promise<bool> p1;
+  promise<bool> p2;
+  promise<bool> p3;
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call)
+      .WillOnce([&p1](bigtable::Row const& row) {
+        EXPECT_EQ("r1", row.row_key());
+        return make_ready_future(p1.get_future());
       })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
+      .WillOnce([&p2](bigtable::Row const& row) {
+        EXPECT_EQ("r2", row.row_key());
+        return make_ready_future(p2.get_future());
+      })
+      .WillOnce([&p3](bigtable::Row const& row) {
+        EXPECT_EQ("r3", row.row_key());
+        return make_ready_future(p3.get_future());
+      });
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_STATUS_OK(status);
   });
 
-  ExpectRow("r1");
-  promises_from_user_cb_[0].set_value(true);
-  ReadRows();
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  EXPECT_TRUE(reader_started_[0]);
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
 
-  EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
-  auto row = row_futures_[0].get();
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_STATUS_OK(stream_status);
-  ASSERT_EQ(0U, cq_impl_->size());
-}
-
-/// @test Verify that reading 2 rows delivered in 2 responses works.
-TEST_F(TableAsyncReadRowsTest, MultipleChunks) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
-
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
-      })
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r2"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
-      })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
-  });
-
-  ExpectRow("r1");
-  ExpectRow("r2");
-  promises_from_user_cb_[1].set_value(true);
-  ReadRows();
-
-  EXPECT_TRUE(reader_started_[0]);
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-
-  EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
-  row_futures_[0].get();
-
-  // Check that we're not asking for data unless someone is waiting for it.
-  ASSERT_EQ(0U, cq_impl_->size());
-  promises_from_user_cb_[0].set_value(true);
-
-  EXPECT_TRUE(Unsatisfied(row_futures_[1]));
-  cq_impl_->SimulateCompletion(true);  // Return data
-  row_futures_[1].get();
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_STATUS_OK(stream_status);
-  ASSERT_EQ(0U, cq_impl_->size());
-}
-
-/// @test Like MultipleChunks but the future returned from on_row is satisfied.
-TEST_F(TableAsyncReadRowsTest, MultipleChunksImmediatelySatisfied) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
-
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
-      })
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r2"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
-      })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
-  });
-
-  ExpectRow("r1");
-  ExpectRow("r2");
-  promises_from_user_cb_[0].set_value(true);
-  promises_from_user_cb_[1].set_value(true);
-  ReadRows();
-
-  EXPECT_TRUE(reader_started_[0]);
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-
-  EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
-  row_futures_[0].get();
-
-  EXPECT_TRUE(Unsatisfied(row_futures_[1]));
-  cq_impl_->SimulateCompletion(true);  // Return data
-  row_futures_[1].get();
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_STATUS_OK(stream_status);
-  ASSERT_EQ(0U, cq_impl_->size());
+  // Satisfy the futures
+  p1.set_value(true);
+  p2.set_value(true);
+  p3.set_value(true);
 }
 
 /// @test Verify that a single row can span multiple responses.
-TEST_F(TableAsyncReadRowsTest, ResponseInMultipleChunks) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
+TEST(AsyncRowReaderTest, ResponseInMultipleChunks) {
+  CompletionQueue cq;
 
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: false
-                })");
-      })
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col2" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
-      })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({{"r1", false}}));
+            })
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({{"r1", true}}));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).WillOnce([](bigtable::Row const& row) {
+    EXPECT_EQ("r1", row.row_key());
+    return make_ready_future(true);
   });
 
-  ExpectRow("r1");
-  promises_from_user_cb_[0].set_value(true);
-  ReadRows();
-  EXPECT_TRUE(reader_started_[0]);
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_STATUS_OK(status);
+  });
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
-  EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  row_futures_[0].get();
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_STATUS_OK(stream_status);
-  ASSERT_EQ(0U, cq_impl_->size());
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
 }
 
 /// @test Verify that parser fails if the stream finishes prematurely.
-TEST_F(TableAsyncReadRowsTest, ParserEofFailsOnUnfinishedRow) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
+TEST(AsyncRowReaderTest, ParserEofFailsOnUnfinishedRow) {
+  CompletionQueue cq;
 
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            // missing final commit
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: false
-                })");
-      })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({{"r1", false}}));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).Times(0);
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kInternal));
   });
 
-  ReadRows();
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  EXPECT_TRUE(reader_started_[0]);
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  ASSERT_FALSE(stream_status_future_.get().ok());
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
 }
 
 /// @test Check that we ignore HandleEndOfStream errors if enough rows were read
-TEST_F(TableAsyncReadRowsTest, ParserEofDoesntFailsOnUnfinishedRowIfRowLimit) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
+TEST(AsyncRowReaderTest, ParserEofDoesntFailsOnUnfinishedRowIfRowLimit) {
+  CompletionQueue cq;
 
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            // missing final commit
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                }
-                chunks {
-                  row_key: "r2"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: false
-                })");
-      })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(
+                  MakeResponse({{"r1", true}, {"r2", false}}));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).WillOnce([](bigtable::Row const& row) {
+    EXPECT_EQ("r1", row.row_key());
+    return make_ready_future(true);
   });
 
-  ExpectRow("r1");
-  promises_from_user_cb_[0].set_value(true);
-  ReadRows(1);
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    ASSERT_STATUS_OK(status);
+  });
 
-  EXPECT_TRUE(reader_started_[0]);
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-  cq_impl_->SimulateCompletion(true);  // Return data
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  row_futures_[0].get();
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_STATUS_OK(stream_status);
-  ASSERT_EQ(0U, cq_impl_->size());
+  AsyncRowReader::Create(
+      cq, mock, kAppProfile, kTableName, on_row.AsStdFunction(),
+      on_finish.AsStdFunction(), bigtable::RowSet(), 1,
+      bigtable::Filter::PassAllFilter(), std::move(retry), std::move(mock_b));
 }
 
 /// @test Verify that permanent errors are not retried and properly passed.
-TEST_F(TableAsyncReadRowsTest, PermanentFailure) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
+TEST(AsyncRowReaderTest, PermanentFailure) {
+  CompletionQueue cq;
 
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "noooo");
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(false);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(
+              Status(StatusCode::kPermissionDenied, "fail"));
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).Times(0);
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
   });
 
-  ReadRows();
-  EXPECT_TRUE(reader_started_[0]);
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_EQ(StatusCode::kPermissionDenied, stream_status.code());
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
 }
 
-/// @test Verify that transient errors are retried.
-TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
-  auto& stream2 = AddReader([](btproto::ReadRowsRequest const& req) {
-    // Verify that we're not asking for the same rows again.
-    EXPECT_TRUE(req.has_rows());
-    auto const& rows = req.rows();
-    EXPECT_EQ(1, rows.row_ranges_size());
-    auto const& range = rows.row_ranges(0);
-    EXPECT_EQ("r1", range.start_key_open());
-  });
-  auto& stream1 = AddReader([](btproto::ReadRowsRequest const&) {});
+TEST(AsyncRowReaderTest, RetryPolicyExhausted) {
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .Times(kNumRetries)
+      .WillRepeatedly([] {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
 
-  // Make it a bit trickier by delivering the error while parsing second row.
-  EXPECT_CALL(stream1, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                }
-                chunks {
-                  row_key: "r2"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: false
-                })");
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([](CompletionQueue const&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(false);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(TransientError());
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).Times(0);
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
+  });
+
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion)
+      .Times(kNumRetries)
+      .WillRepeatedly(Return(ms(0)));
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(kNumRetries + 1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
+}
+
+/// @test Verify that retries do not ask for rows we have already read.
+TEST(AsyncRowReaderTest, RetrySkipsReadRows) {
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillOnce([] {
+    return make_ready_future(make_status_or(std::chrono::system_clock::now()));
+  });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2"));
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({{"r1", true}}));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(TransientError());
+        });
+        return stream;
       })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream1, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "oh no");
-  });
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r2"));
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({{"r2", true}}));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(TransientError());
+        });
+        return stream;
+      });
 
-  EXPECT_CALL(stream2, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r2"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call)
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r1", row.row_key());
+        return make_ready_future(true);
       })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream2, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r2", row.row_key());
+        return make_ready_future(true);
+      });
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    ASSERT_STATUS_OK(status);
   });
 
-  ExpectRows({"r1", "r2"});
-  promises_from_user_cb_[0].set_value(true);
-  promises_from_user_cb_[1].set_value(true);
-  ReadRows();
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).WillOnce(Return(ms(0)));
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(2);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  row_futures_[0].get();
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream with failure
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish timer
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(row_futures_[1]));
-  cq_impl_->SimulateCompletion(true);  // Return data
-
-  row_futures_[1].get();
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_STATUS_OK(stream_status);
-  ASSERT_EQ(0U, cq_impl_->size());
+  AsyncRowReader::Create(
+      cq, mock, kAppProfile, kTableName, on_row.AsStdFunction(),
+      on_finish.AsStdFunction(), bigtable::RowSet("r1", "r2"),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      std::move(retry), std::move(mock_b));
 }
 
 /// @test Verify that the last scanned row is respected.
-TEST_F(TableAsyncReadRowsTest, LastScannedRowKeyIsRespected) {
-  auto& stream2 = AddReader([](btproto::ReadRowsRequest const& req) {
-    // The server has told that "r2" has been scanned. Our second request
-    // should use the range ("r2", ""]. This is what is under test.
-    EXPECT_TRUE(req.has_rows());
-    auto const& rows = req.rows();
-    EXPECT_EQ(1, rows.row_ranges_size());
-    auto const& range = rows.row_ranges(0);
-    EXPECT_EQ("r2", range.start_key_open());
+TEST(AsyncRowReaderTest, LastScannedRowKeyIsRespected) {
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillOnce([] {
+    return make_ready_future(make_status_or(std::chrono::system_clock::now()));
   });
-  auto& stream1 = AddReader([](btproto::ReadRowsRequest const&) {});
+  CompletionQueue cq(mock_cq);
 
-  EXPECT_CALL(stream1, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2", "r3"));
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({{"r1", true}}));
+            })
+            .WillOnce([] {
+              v2::ReadRowsResponse r;
+              r.set_last_scanned_row_key("r2");
+              return make_ready_future(absl::make_optional(r));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(TransientError());
+        });
+        return stream;
       })
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        std::cout << "Second Read for stream1 " << std::endl;
-        btproto::ReadRowsResponse resp;
-        resp.set_last_scanned_row_key("r2");
-        *r = resp;
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r3"));
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({{"r3", true}}));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(TransientError());
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call)
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r1", row.row_key());
+        return make_ready_future(true);
       })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream1, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "retry");
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r3", row.row_key());
+        return make_ready_future(true);
+      });
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    ASSERT_STATUS_OK(status);
   });
 
-  EXPECT_CALL(stream2, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
-  });
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).WillOnce(Return(ms(0)));
 
-  ExpectRows({"r1", "r2", "r3"});
-  promises_from_user_cb_[0].set_value(true);
-  ReadRows();
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(2);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return "r1"
-
-  row_futures_[0].get();
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return last_scanned_row_key = "r2"
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream1 with failure
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish timer
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_STATUS_OK(stream_status);
-  ASSERT_EQ(0U, cq_impl_->size());
+  AsyncRowReader::Create(
+      cq, mock, kAppProfile, kTableName, on_row.AsStdFunction(),
+      on_finish.AsStdFunction(), bigtable::RowSet("r1", "r2", "r3"),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      std::move(retry), std::move(mock_b));
 }
 
 /// @test Verify proper handling of bogus responses from the service.
-TEST_F(TableAsyncReadRowsTest, ParserFailure) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
+TEST(AsyncRowReaderTest, ParserFailsOnOutOfOrderRowKeys) {
+  CompletionQueue cq;
 
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            // Row not in increasing order.
-            R"(
-                chunks {
-                  row_key: "r2"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                }
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
-      })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        ::testing::InSequence s;
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read).WillOnce([] {
+          // The rows are returned out of order.
+          return make_ready_future(MakeResponse({{"r2", true}, {"r1", true}}));
+        });
+        EXPECT_CALL(*stream, Cancel);
+        EXPECT_CALL(*stream, Read).WillOnce([] {
+          return make_ready_future(EndOfStream());
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).WillOnce([](bigtable::Row const& row) {
+    EXPECT_EQ("r2", row.row_key());
+    return make_ready_future(true);
   });
 
-  ExpectRow("r2");
-  promises_from_user_cb_[0].set_value(true);
-  ReadRows();
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kInternal));
+  });
 
-  EXPECT_TRUE(reader_started_[0]);
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish placeholder Read()
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  row_futures_[0].get();
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_EQ(StatusCode::kInternal, stream_status.code());
-  ASSERT_EQ(0U, cq_impl_->size());
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
 }
 
-enum class CancelMode {
-  kFalseValue,
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  kStdExcept,
-  kOtherExcept,
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-};
-
 /// @test Verify canceling the stream by satisfying the futures with false
-class TableAsyncReadRowsCancelMidStreamTest
-    : public TableAsyncReadRowsTest,
-      public WithParamInterface<CancelMode> {};
+class AsyncRowReaderExceptionTest
+    : public ::testing::Test,
+      public ::testing::WithParamInterface<std::string> {};
 
-TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
+TEST_P(AsyncRowReaderExceptionTest, CancelMidStream) {
+  CompletionQueue cq;
 
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                }
-                chunks {
-                  row_key: "r2"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
-      })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
-  });
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        ::testing::InSequence s;
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read).WillOnce([] {
+          return make_ready_future(MakeResponse({{"r1", true}, {"r2", false}}));
+        });
+        EXPECT_CALL(*stream, Cancel);
+        EXPECT_CALL(*stream, Read).WillOnce([] {
+          return make_ready_future(EndOfStream());
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
 
-  ExpectRow("r1");
-  ReadRows();
-
-  EXPECT_TRUE(reader_started_[0]);
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-
-  EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
-  row_futures_[0].get();
-
-  // Check that we're not asking for data unless someone is waiting for it.
-  ASSERT_EQ(0U, cq_impl_->size());
-
-  switch (GetParam()) {
-    case CancelMode::kFalseValue:
-      promises_from_user_cb_[0].set_value(false);
-      break;
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).WillOnce([](bigtable::Row const& row) {
+    EXPECT_EQ("r1", row.row_key());
+    promise<bool> p;
+    auto param = GetParam();
+    if (param == "false-value") {
+      p.set_value(false);
+    }
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    case CancelMode::kStdExcept:
+    if (param == "std-exception") {
       try {
         throw std::runtime_error("user threw std::exception");
       } catch (...) {
-        promises_from_user_cb_[0].set_exception(std::current_exception());
+        p.set_exception(std::current_exception());
       }
-      break;
-    case CancelMode::kOtherExcept:
+    } else if (param == "other-exception") {
       try {
         throw 5;
       } catch (...) {
-        promises_from_user_cb_[0].set_exception(std::current_exception());
+        p.set_exception(std::current_exception());
       }
-      break;
+    }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  }
+    return p.get_future();
+  });
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_EQ(StatusCode::kCancelled, stream_status.code());
-  switch (GetParam()) {
-    case CancelMode::kFalseValue:
-      ASSERT_THAT(stream_status.message(), HasSubstr("User cancelled"));
-      break;
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    std::string message;
+    auto param = GetParam();
+    if (param == "false-value") {
+      message = "User cancelled";
+    }
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    case CancelMode::kStdExcept:
-      ASSERT_THAT(stream_status.message(),
-                  HasSubstr("user threw std::exception"));
-      break;
-    case CancelMode::kOtherExcept:
-      ASSERT_THAT(stream_status.message(), HasSubstr("unknown exception"));
-      break;
+    if (param == "std-exception") {
+      message = "user threw std::exception";
+    } else if (param == "other-exception") {
+      message = "unknown exception";
+    }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  }
+    EXPECT_THAT(status, StatusIs(StatusCode::kCancelled, HasSubstr(message)));
+  });
 
-  ASSERT_EQ(0U, cq_impl_->size());
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
 }
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-INSTANTIATE_TEST_SUITE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
-                         Values(CancelMode::kFalseValue, CancelMode::kStdExcept,
-                                CancelMode::kOtherExcept));
+INSTANTIATE_TEST_SUITE_P(, AsyncRowReaderExceptionTest,
+                         Values("false-value", "std-exception",
+                                "other-exception"));
 #else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-INSTANTIATE_TEST_SUITE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
-                         Values(CancelMode::kFalseValue));
+INSTANTIATE_TEST_SUITE_P(, AsyncRowReaderExceptionTest, Values("false-value"));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Like CancelMidStream but after the underlying stream has finished.
-TEST_F(TableAsyncReadRowsTest, CancelAfterStreamFinish) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
+TEST(AsyncRowReaderTest, CancelAfterStreamFinish) {
+  CompletionQueue cq;
 
   // First two rows are going to be processed, but third will cause the parser
   // to fail (row order violation). This will result in finishing the stream
   // while still keeping the two processed rows for the user.
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-                chunks {
-                  row_key: "r1"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                }
-                chunks {
-                  row_key: "r2"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                }
-                chunks {
-                  row_key: "r0"
-                  family_name { value: "fam" }
-                  qualifier { value: "col" }
-                  timestamp_micros: 42000
-                  value: "value"
-                  commit_row: true
-                })");
-      })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        ::testing::InSequence s;
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read).WillOnce([] {
+          return make_ready_future(
+              MakeResponse({{"r1", true}, {"r2", true}, {"r0", true}}));
+        });
+        EXPECT_CALL(*stream, Cancel);
+        EXPECT_CALL(*stream, Read).WillOnce([] {
+          return make_ready_future(EndOfStream());
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).WillOnce([](bigtable::Row const& row) {
+    EXPECT_EQ("r1", row.row_key());
+    // Do not ask for any more rows.
+    return make_ready_future(false);
   });
 
-  ExpectRow("r1");
-  ReadRows();
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kCancelled));
+  });
 
-  EXPECT_TRUE(reader_started_[0]);
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-  ASSERT_EQ(0U, cq_impl_->size());
-
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  auto row = row_futures_[0].get();
-
-  // Check that we're not asking for data unless someone is waiting for it.
-  ASSERT_EQ(0U, cq_impl_->size());
-  promises_from_user_cb_[0].set_value(false);
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_FALSE(stream_status.ok());
-  ASSERT_EQ(StatusCode::kCancelled, stream_status.code());
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
 }
 
 /// @test Verify that the recursion described in TryGiveRowToUser is bounded.
-TEST_F(TableAsyncReadRowsTest, DeepStack) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
-
-  auto large_response = bigtable::testing::ReadRowsResponseFromString(
-      R"(
-          chunks {
-            row_key: "000"
-            family_name { value: "fam" }
-            qualifier { value: "col" }
-            timestamp_micros: 42000
-            value: "value"
-            commit_row: true
-          })");
-  ExpectRow("000");
-  for (int i = 1; i < 101; ++i) {
-    auto chunk = large_response.chunks(0);
-    std::stringstream s_idx;
-    s_idx << std::setfill('0') << std::setw(3) << i;
-    chunk.set_row_key(s_idx.str());
-    ExpectRow(chunk.row_key());
-    *large_response.add_chunks() = std::move(chunk);
-  }
-
-  EXPECT_CALL(stream, Read)
-      .WillOnce([large_response](btproto::ReadRowsResponse* r, void*) {
-        *r = large_response;
+TEST(AsyncRowReaderTest, DeepStack) {
+  // This test will return rows: "000", "001", ..., "100" in a single response.
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  // We can have many rows ready at once, and we return them recursively to the
+  // caller. The stack can grow, so we impose a limit of 100 rows to return in
+  // the same thread for this asynchronous call. When we hit the limit, we call
+  // `CQ::RunAsync` to move the work onto a different thread.
+  EXPECT_CALL(*mock_cq, RunAsync)
+      .WillOnce([](std::unique_ptr<internal::RunAsyncBase> f) {
+        // Do the work (which is to give row "099" to the caller).
+        f->exec();
       })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
+      .WillOnce([](std::unique_ptr<internal::RunAsyncBase> f) {
+        // Do the work (which is to give row "100" to the caller).
+        f->exec();
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              int i = 0;
+              std::vector<std::pair<std::string, bool>> v(101);
+              std::generate_n(v.begin(), 101, [&i] {
+                std::stringstream s_idx;
+                s_idx << std::setfill('0') << std::setw(3) << i++;
+                return std::make_pair(s_idx.str(), true);
+              });
+              return make_ready_future(MakeResponse(std::move(v)));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
+
+  int row_index = 0;
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call)
+      .Times(101)
+      .WillRepeatedly([&row_index](bigtable::Row const& row) {
+        EXPECT_EQ(row_index++, std::stoi(row.row_key()));
+        return make_ready_future(true);
+      });
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    ASSERT_STATUS_OK(status);
   });
 
-  for (int i = 0; i < 101; ++i) {
-    promises_from_user_cb_[i].set_value(true);
-  }
-  ReadRows();
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  EXPECT_TRUE(reader_started_[0]);
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-
-  EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
-
-  for (int i = 0; i < 100; ++i) {
-    row_futures_[i].get();
-  }
-  ASSERT_TRUE(Unsatisfied(row_futures_[100]));
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // RunAsync
-  row_futures_[100].get();
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto stream_status = stream_status_future_.get();
-  ASSERT_STATUS_OK(stream_status);
-  ASSERT_EQ(0U, cq_impl_->size());
-}
-
-TEST_F(TableAsyncReadRowsTest, ReadRowSuccess) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
-
-  EXPECT_CALL(stream, Read)
-      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
-            R"(
-              chunks {
-                row_key: "000"
-                family_name { value: "fam" }
-                qualifier { value: "col" }
-                timestamp_micros: 42000
-                value: "value"
-                commit_row: true
-              })");
-      })
-      .RetiresOnSaturation();
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
-  });
-
-  auto row_future = table_.AsyncReadRow("000", Filter::PassAllFilter());
-
-  EXPECT_TRUE(reader_started_[0]);
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-
-  EXPECT_TRUE(Unsatisfied(row_future));
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Return data
-
-  // We return data only after the whole stream is finished.
-  ASSERT_TRUE(Unsatisfied(row_future));
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto row = row_future.get();
-  ASSERT_STATUS_OK(row);
-  ASSERT_TRUE(row->first);
-  ASSERT_EQ("000", row->second.row_key());
-
-  ASSERT_EQ(0U, cq_impl_->size());
-}
-
-TEST_F(TableAsyncReadRowsTest, ReadRowNotFound) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
-
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
-  });
-
-  auto row_future = table_.AsyncReadRow("000", Filter::PassAllFilter());
-
-  EXPECT_TRUE(reader_started_[0]);
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(row_future));
-
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto row = row_future.get();
-  ASSERT_STATUS_OK(row);
-  ASSERT_FALSE(row->first);
-}
-
-TEST_F(TableAsyncReadRowsTest, ReadRowError) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
-
-  EXPECT_CALL(stream, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "");
-  });
-
-  auto row_future = table_.AsyncReadRow("000", Filter::PassAllFilter());
-
-  EXPECT_TRUE(reader_started_[0]);
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);  // Finish Start()
-
-  ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish stream
-  ASSERT_EQ(1U, cq_impl_->size());
-  EXPECT_TRUE(Unsatisfied(row_future));
-
-  cq_impl_->SimulateCompletion(true);  // Finish Finish()
-
-  auto row = row_future.get();
-  ASSERT_FALSE(row);
-  ASSERT_EQ(StatusCode::kPermissionDenied, row.status().code());
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
 }
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
