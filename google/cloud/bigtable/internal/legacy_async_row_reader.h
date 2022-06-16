@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_ROW_READER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_ROW_READER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ASYNC_ROW_READER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ASYNC_ROW_READER_H
 
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Objects of this class represent the state of reading rows via AsyncReadRows.
  */
-class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
+class LegacyAsyncRowReader
+    : public std::enable_shared_from_this<LegacyAsyncRowReader> {
   using RowFunctor = std::function<future<bool>(bigtable::Row)>;
   using FinishFunctor = std::function<void(Status)>;
 
@@ -51,10 +52,10 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   // NOLINTNEXTLINE(readability-identifier-naming)
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
   // Callbacks keep pointers to these objects.
-  AsyncRowReader(AsyncRowReader&&) = delete;
-  AsyncRowReader(AsyncRowReader const&) = delete;
+  LegacyAsyncRowReader(LegacyAsyncRowReader&&) = delete;
+  LegacyAsyncRowReader(LegacyAsyncRowReader const&) = delete;
 
-  static std::shared_ptr<AsyncRowReader> Create(
+  static std::shared_ptr<LegacyAsyncRowReader> Create(
       CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
       std::string app_profile_id, std::string table_name, RowFunctor on_row,
       FinishFunctor on_finish, bigtable::RowSet row_set,
@@ -64,7 +65,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
       bigtable::MetadataUpdatePolicy metadata_update_policy,
       std::unique_ptr<bigtable::internal::ReadRowsParserFactory>
           parser_factory) {
-    std::shared_ptr<AsyncRowReader> res(new AsyncRowReader(
+    std::shared_ptr<LegacyAsyncRowReader> res(new LegacyAsyncRowReader(
         std::move(cq), std::move(client), std::move(app_profile_id),
         std::move(table_name), std::move(on_row), std::move(on_finish),
         std::move(row_set), rows_limit, std::move(filter),
@@ -75,7 +76,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   }
 
  private:
-  AsyncRowReader(
+  LegacyAsyncRowReader(
       CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
       std::string app_profile_id, std::string table_name, RowFunctor on_row,
       FinishFunctor on_finish, bigtable::RowSet row_set,
@@ -179,4 +180,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_ROW_READER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LEGACY_ASYNC_ROW_READER_H

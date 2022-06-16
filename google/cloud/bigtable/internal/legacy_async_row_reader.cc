@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/async_row_reader.h"
+#include "google/cloud/bigtable/internal/legacy_async_row_reader.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/log.h"
 
@@ -21,7 +21,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void AsyncRowReader::MakeRequest() {
+void LegacyAsyncRowReader::MakeRequest() {
   status_ = Status();
   google::bigtable::v2::ReadRowsRequest request;
 
@@ -58,7 +58,7 @@ void AsyncRowReader::MakeRequest() {
       [self](Status s) { self->OnStreamFinished(std::move(s)); });
 }
 
-void AsyncRowReader::TryGiveRowToUser() {
+void LegacyAsyncRowReader::TryGiveRowToUser() {
   // The user is likely to ask for more rows immediately after receiving a
   // row, which means that this function will be called recursively. The depth
   // of the recursion can be as deep as the size of ready_rows_, which might
@@ -134,7 +134,7 @@ void AsyncRowReader::TryGiveRowToUser() {
   });
 }
 
-future<bool> AsyncRowReader::OnDataReceived(
+future<bool> LegacyAsyncRowReader::OnDataReceived(
     google::bigtable::v2::ReadRowsResponse response) {
   // assert(!whole_op_finished_);
   // assert(!continue_reading_);
@@ -164,7 +164,7 @@ future<bool> AsyncRowReader::OnDataReceived(
   return make_ready_future<bool>(false);
 }
 
-void AsyncRowReader::OnStreamFinished(Status status) {
+void LegacyAsyncRowReader::OnStreamFinished(Status status) {
   // assert(!continue_reading_);
   if (status_.ok()) {
     status_ = std::move(status);
@@ -224,7 +224,7 @@ void AsyncRowReader::OnStreamFinished(Status status) {
           });
 }
 
-void AsyncRowReader::Cancel(std::string const& reason) {
+void LegacyAsyncRowReader::Cancel(std::string const& reason) {
   ready_rows_ = std::queue<bigtable::Row>();
   auto continue_reading = std::move(continue_reading_);
   continue_reading_.reset();
@@ -242,7 +242,7 @@ void AsyncRowReader::Cancel(std::string const& reason) {
   continue_reading->set_value(false);
 }
 
-Status AsyncRowReader::DrainParser() {
+Status LegacyAsyncRowReader::DrainParser() {
   grpc::Status status;
   while (parser_->HasNext()) {
     bigtable::Row parsed_row = parser_->Next(status);
@@ -256,7 +256,7 @@ Status AsyncRowReader::DrainParser() {
   return Status();
 }
 
-Status AsyncRowReader::ConsumeResponse(
+Status LegacyAsyncRowReader::ConsumeResponse(
     google::bigtable::v2::ReadRowsResponse response) {
   for (auto& chunk : *response.mutable_chunks()) {
     grpc::Status status;
