@@ -45,6 +45,6 @@ RUN pip3 install --upgrade pip
 RUN pip3 install cmake_format==0.6.13
 RUN pip3 install black==22.3.0
 
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.11.0/bazelisk-linux-amd64" && \
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.12.0/bazelisk-linux-amd64" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel
