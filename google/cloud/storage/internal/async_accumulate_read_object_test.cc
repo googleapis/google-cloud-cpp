@@ -102,8 +102,8 @@ TEST(AsyncAccumulateReadObjectTest, Simple) {
 
   CompletionQueue cq;
   auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
-  auto response = storage_internal::AsyncAccumulateReadObject::Start(
-                      cq, std::move(mock), std::chrono::minutes(1))
+  auto response = AsyncAccumulateReadObjectPartial(cq, std::move(mock),
+                                                   std::chrono::minutes(1))
                       .get();
   EXPECT_THAT(response.status, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(response.payload,
@@ -138,7 +138,7 @@ TEST(AsyncAccumulateReadObjectTest, StartTimeout) {
   int cancel_count = 0;
   EXPECT_CALL(*mock, Cancel).WillOnce([&] { ++cancel_count; });
 
-  auto pending = storage_internal::AsyncAccumulateReadObject::Start(
+  auto pending = AsyncAccumulateReadObjectPartial(
       cq, std::move(mock), std::chrono::milliseconds(1000));
   // We expect that just starting the "coroutine" will set up a timeout and
   // invoke `Start()`. We will have the timeout complete successfully, which
@@ -188,7 +188,7 @@ TEST(AsyncAccumulateReadObjectTest, ReadTimeout) {
   int cancel_count = 0;
   EXPECT_CALL(*mock, Cancel).WillOnce([&] { ++cancel_count; });
 
-  auto pending = storage_internal::AsyncAccumulateReadObject::Start(
+  auto pending = AsyncAccumulateReadObjectPartial(
       cq, std::move(mock), std::chrono::milliseconds(1000));
   // We expect that just starting the "coroutine" will set up a timeout and
   // invoke `Start()`. We will have the `Start()` complete successfully, and the
@@ -250,7 +250,7 @@ TEST(AsyncAccumulateReadObjectTest, FinishTimeout) {
   int cancel_count = 0;
   EXPECT_CALL(*mock, Cancel).WillOnce([&] { ++cancel_count; });
 
-  auto pending = storage_internal::AsyncAccumulateReadObject::Start(
+  auto pending = AsyncAccumulateReadObjectPartial(
       cq, std::move(mock), std::chrono::milliseconds(1000));
   // We expect that just starting the "coroutine" will set up a timeout and
   // invoke `Start()`. We will have the `Start()` complete successfully, and the
