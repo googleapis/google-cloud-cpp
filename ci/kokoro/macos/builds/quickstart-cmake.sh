@@ -33,6 +33,10 @@ vcpkg_dir="${HOME}/vcpkg-quickstart"
 mkdir -p "${vcpkg_dir}"
 io::log "Downloading vcpkg into ${vcpkg_dir}..."
 VCPKG_COMMIT="$(<ci/etc/vcpkg-commit.txt)"
+readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
+readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/vcpkg/macos"
+export VCPKG_BINARY_SOURCES="x-gcs,gs://${CACHE_BUCKET}/${CACHE_FOLDER},readwrite"
+
 ci/retry-command.sh 3 120 curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 (
@@ -42,10 +46,6 @@ ci/retry-command.sh 3 120 curl -sSL "https://github.com/microsoft/vcpkg/archive/
   ./vcpkg remove --outdated --recurse
   ./vcpkg install google-cloud-cpp
 )
-
-readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
-readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/macos"
-export VCPKG_BINARY_SOURCES="x-gcs,gs://${CACHE_BUCKET}/${CACHE_FOLDER}/vcpkg,readwrite"
 
 export NINJA_STATUS="T+%es [%f/%t] "
 cmake_flags=(
