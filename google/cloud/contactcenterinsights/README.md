@@ -4,8 +4,6 @@ This directory contains an idiomatic C++ client library for the
 [Contact Center AI Insights API][cloud-service-docs], a service that helps users
 detect and visualize patterns in their contact center data.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 

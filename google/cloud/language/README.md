@@ -5,8 +5,6 @@ This directory contains an idiomatic C++ client library for the
 natural language understanding technologies, such as sentiment analysis, entity
 recognition, entity sentiment analysis, and other text annotations.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 

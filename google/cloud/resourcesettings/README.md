@@ -5,8 +5,6 @@ This directory contains an idiomatic C++ client library for the
 users to control and modify the behavior of their GCP resources (e.g., VM,
 firewall, Project, etc.) across the Cloud Resource Hierarchy.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 

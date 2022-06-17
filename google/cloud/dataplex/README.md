@@ -5,8 +5,6 @@ This directory contains an idiomatic C++ client library for the
 you unify distributed data and automate data management and governance across
 that data to power analytics at scale.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 

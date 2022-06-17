@@ -7,8 +7,6 @@ processing, querying, streaming, and machine learning. This library allows you
 to *manage* Cloud Dataproc resources, but it does not provide APIs to run C++
 applications in Cloud Dataproc.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
