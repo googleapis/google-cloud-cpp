@@ -1466,6 +1466,37 @@ TEST(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
   EXPECT_THAT(row, StatusIs(StatusCode::kUnavailable));
 }
 
+// The `AsyncRowReader` is tested extensively in `async_row_reader_test.cc`.
+// In this test, we just verify that the configuration is passed along.
+TEST(DataConnectionTest, AsyncReadRows) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(42, request.rows_limit());
+        EXPECT_THAT(request, HasTestRowSet());
+        EXPECT_THAT(request.filter(), IsTestFilter());
+        using ErrorStream =
+            internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
+        return absl::make_unique<ErrorStream>(PermanentError());
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).Times(0);
+
+  MockFunction<void(Status)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+  });
+
+  auto conn = TestConnection(std::move(mock));
+  conn->AsyncReadRows(kAppProfile, kTableName, on_row.AsStdFunction(),
+                      on_finish.AsStdFunction(), TestRowSet(), 42,
+                      TestFilter());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

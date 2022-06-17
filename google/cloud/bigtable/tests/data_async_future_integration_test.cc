@@ -227,8 +227,8 @@ TEST_P(DataAsyncIntegrationTest, TableAsyncReadModifyWriteAppendValueTest) {
                       actual_cells_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableAsyncReadRowsAllRows) {
-  auto table = GetTable();
+TEST_P(DataAsyncIntegrationTest, TableAsyncReadRowsAllRows) {
+  auto table = GetTable(GetParam());
 
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";

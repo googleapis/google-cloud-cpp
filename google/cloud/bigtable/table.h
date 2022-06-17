@@ -887,6 +887,13 @@ class Table {
             future<bool>>::value,
         "RowFunctor should return a future<bool>.");
 
+    if (connection_) {
+      connection_->AsyncReadRows(
+          app_profile_id_, table_name_, std::move(on_row), std::move(on_finish),
+          std::move(row_set), rows_limit, std::move(filter));
+      return;
+    }
+
     bigtable_internal::LegacyAsyncRowReader::Create(
         background_threads_->cq(), client_, app_profile_id_, table_name_,
         std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
