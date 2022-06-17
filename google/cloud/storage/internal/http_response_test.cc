@@ -117,9 +117,10 @@ TEST(HttpResponseTest, ErrorInfo) {
     }
   )";
 
-  ErrorInfo error_info{"API_KEY_INVALID",
-                       "googleapis.com",
-                       {{"service", "translate.googleapis.com"}}};
+  ErrorInfo error_info{
+      "API_KEY_INVALID",
+      "googleapis.com",
+      {{"service", "translate.googleapis.com"}, {"http_status_code", "400"}}};
   std::string message = "API key not valid. Please pass a valid API key.";
   Status expected{StatusCode::kInvalidArgument, message, error_info};
   EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);

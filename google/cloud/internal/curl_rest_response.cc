@@ -16,8 +16,8 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/curl_http_payload.h"
 #include "google/cloud/internal/curl_impl.h"
+#include "google/cloud/internal/rest_parse_json_error.h"
 #include "google/cloud/log.h"
-#include <nlohmann/json.hpp>
 #include <iostream>
 
 namespace google {
@@ -135,37 +135,6 @@ StatusCode MapHttpCodeToStatus(long code) {  // NOLINT(google-runtime-int)
   return StatusCode::kUnknown;
 }
 
-// Makes an `ErrorInfo` from an `"error"` JSON object that looks like
-//   [
-//     {
-//       "@type": "type.googleapis.com/google.rpc.ErrorInfo",
-//       "reason": "..."
-//       "domain": "..."
-//       "metadata": {
-//         "key1": "value1"
-//         ...
-//       }
-//     }
-//   ]
-// See also https://cloud.google.com/apis/design/errors#http_mapping
-ErrorInfo MakeErrorInfo(nlohmann::json const& details) {
-  static auto constexpr kErrorInfoType =
-      "type.googleapis.com/google.rpc.ErrorInfo";
-  for (auto const& e : details.items()) {
-    auto const& v = e.value();
-    if (v.value("@type", "") != kErrorInfoType) continue;
-    auto reason = v.value("reason", "");
-    auto domain = v.value("domain", "");
-    auto metadata_json = v.value("metadata", nlohmann::json::object());
-    auto metadata = std::unordered_map<std::string, std::string>{};
-    for (auto const& m : metadata_json.items()) {
-      metadata[m.key()] = m.value();
-    }
-    return ErrorInfo{std::move(reason), std::move(domain), std::move(metadata)};
-  }
-  return ErrorInfo{};
-}
-
 }  // namespace
 
 Status AsStatus(HttpStatusCode http_status_code, std::string payload) {
@@ -174,44 +143,13 @@ Status AsStatus(HttpStatusCode http_status_code, std::string payload) {
   if (payload.empty()) {
     // If there's no payload, create one to make sure the original http status
     // code received is available.
-    payload = absl::StrCat(
-        R"""({"error": {"message": "Received HTTP status code: )""",
-        std::to_string(http_status_code), R"""("}})""");
-  }
-  // We try to parse the payload as JSON, which may allow us to provide a more
-  // structured and useful error Status. If the payload fails to parse as a JSON
-  // object (e.g. it parses as a JSON string, or a JSON array, or does not parse
-  // as JSON at all), we simply attach the full error payload as the Status's
-  // message string.
-  auto json = nlohmann::json::parse(payload, nullptr, false);
-  if (!json.is_object()) return Status(status_code, std::move(payload));
-
-  // We expect JSON that looks like the following:
-  //   {
-  //     "error": {
-  //       "message": "..."
-  //       ...
-  //       "details": [
-  //         ...
-  //       ]
-  //     }
-  //   }
-  // See  https://cloud.google.com/apis/design/errors#http_mapping
-  auto error = json.value("error", nlohmann::json::object());
-  auto message = error.value("message", std::move(payload));
-  auto details = error.value("details", nlohmann::json::object());
-
-  if (!details.empty()) {
-    // Add the original http_status_code to the error.details.metadata so
-    // that it shows up in Status.ErrorInfo.
-    auto& mutable_error = json.at("error");
-    auto& metadata = mutable_error.at("details").at(0)["metadata"];
-    metadata["http_status_code"] = std::to_string(http_status_code);
-    details = mutable_error.value("details", nlohmann::json::object());
+    return Status(status_code, "Received HTTP status code: " +
+                                   std::to_string(http_status_code));
   }
 
-  auto error_info = MakeErrorInfo(details);
-  return Status(status_code, std::move(message), std::move(error_info));
+  auto p =
+      ParseJsonError(static_cast<int>(http_status_code), std::move(payload));
+  return Status(status_code, std::move(p.first), std::move(p.second));
 }
 
 CurlRestResponse::CurlRestResponse(Options options,
