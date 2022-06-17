@@ -20,6 +20,8 @@ source "$(dirname "$0")/../../../lib/init.sh"
 source module ci/lib/io.sh
 source module ci/etc/integration-tests-config.sh
 source module ci/etc/quickstart-config.sh
+source module ci/kokoro/lib/gcloud.sh
+source module ci/kokoro/lib/cache.sh
 
 io::log_h2 "Using CMake version"
 cmake --version
@@ -33,9 +35,15 @@ vcpkg_dir="${HOME}/vcpkg-quickstart"
 mkdir -p "${vcpkg_dir}"
 io::log "Downloading vcpkg into ${vcpkg_dir}..."
 VCPKG_COMMIT="$(<ci/etc/vcpkg-commit.txt)"
-readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
-readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/vcpkg/macos"
-export VCPKG_BINARY_SOURCES="x-gcs,gs://${CACHE_BUCKET}/${CACHE_FOLDER},readwrite"
+
+if cache_download_enabled; then
+  readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
+  readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/vcpkg/macos"
+  export VCPKG_BINARY_SOURCES="x-gcs,gs://${CACHE_BUCKET}/${CACHE_FOLDER},readwrite"
+
+  create_gcloud_config
+  activate_service_account_keyfile "${CACHE_KEYFILE}"
+fi
 
 ci/retry-command.sh 3 120 curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
@@ -46,6 +54,12 @@ ci/retry-command.sh 3 120 curl -sSL "https://github.com/microsoft/vcpkg/archive/
   ./vcpkg remove --outdated --recurse
   ./vcpkg install google-cloud-cpp
 )
+
+if cache_download_enabled; then
+  revoke_service_account_keyfile "${CACHE_KEYFILE}" || true
+  delete_gcloud_config || true
+  unset VCPKG_BINARY_SOURCES
+fi
 
 export NINJA_STATUS="T+%es [%f/%t] "
 cmake_flags=(
