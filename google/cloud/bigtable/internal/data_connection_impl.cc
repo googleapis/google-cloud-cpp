@@ -360,6 +360,64 @@ void DataConnectionImpl::AsyncReadRows(
       retry_policy(), backoff_policy());
 }
 
+future<StatusOr<std::pair<bool, bigtable::Row>>>
+DataConnectionImpl::AsyncReadRow(std::string const& app_profile_id,
+                                 std::string const& table_name,
+                                 std::string row_key, bigtable::Filter filter) {
+  class AsyncReadRowHandler {
+   public:
+    AsyncReadRowHandler() : row_("", {}) {}
+
+    future<StatusOr<std::pair<bool, bigtable::Row>>> GetFuture() {
+      return row_promise_.get_future();
+    }
+
+    future<bool> OnRow(bigtable::Row row) {
+      // assert(!row_received_);
+      row_ = std::move(row);
+      row_received_ = true;
+      // Don't satisfy the promise before `OnStreamFinished`.
+      //
+      // The `CompletionQueue`, which this object holds a reference to, should
+      // not be shut down before `OnStreamFinished` is called. In order to make
+      // sure of that, satisying the `promise<>` is deferred until then - the
+      // user shouldn't shutdown the `CompletionQueue` before this whole
+      // operation is done.
+      return make_ready_future(false);
+    }
+
+    void OnStreamFinished(Status status) {
+      if (row_received_) {
+        // If we got a row we don't need to care about the stream status.
+        row_promise_.set_value(std::make_pair(true, std::move(row_)));
+        return;
+      }
+      if (status.ok()) {
+        row_promise_.set_value(std::make_pair(false, bigtable::Row("", {})));
+      } else {
+        row_promise_.set_value(std::move(status));
+      }
+    }
+
+   private:
+    bigtable::Row row_;
+    bool row_received_{};
+    promise<StatusOr<std::pair<bool, bigtable::Row>>> row_promise_;
+  };
+
+  bigtable::RowSet row_set(std::move(row_key));
+  std::int64_t const rows_limit = 1;
+  auto handler = std::make_shared<AsyncReadRowHandler>();
+  AsyncReadRows(
+      app_profile_id, table_name,
+      [handler](bigtable::Row row) { return handler->OnRow(std::move(row)); },
+      [handler](Status status) {
+        handler->OnStreamFinished(std::move(status));
+      },
+      std::move(row_set), rows_limit, std::move(filter));
+  return handler->GetFuture();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

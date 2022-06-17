@@ -434,6 +434,11 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
 
 future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(std::string row_key,
                                                            Filter filter) {
+  if (connection_) {
+    return connection_->AsyncReadRow(app_profile_id_, table_name_,
+                                     std::move(row_key), std::move(filter));
+  }
+
   class AsyncReadRowHandler {
    public:
     AsyncReadRowHandler() : row_("", {}) {}

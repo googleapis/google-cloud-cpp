@@ -32,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace v2 = ::google::bigtable::v2;
+using ::google::cloud::bigtable::testing::MockAsyncReadRowsStream;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::bigtable::testing::MockDataRetryPolicy;
 using ::google::cloud::bigtable::testing::MockIdempotentMutationPolicy;
@@ -1495,6 +1496,102 @@ TEST(DataConnectionTest, AsyncReadRows) {
   conn->AsyncReadRows(kAppProfile, kTableName, on_row.AsStdFunction(),
                       on_finish.AsStdFunction(), TestRowSet(), 42,
                       TestFilter());
+}
+
+TEST(DataConnectionTest, AsyncReadRowEmpty) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(1, request.rows_limit());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
+        EXPECT_THAT(request.filter(), IsTestFilter());
+
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read).WillOnce([] {
+          return make_ready_future<absl::optional<v2::ReadRowsResponse>>({});
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto resp =
+      conn->AsyncReadRow(kAppProfile, kTableName, "row", TestFilter()).get();
+  ASSERT_STATUS_OK(resp);
+  EXPECT_FALSE(resp->first);
+}
+
+TEST(DataConnectionTest, AsyncReadRowSuccess) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(1, request.rows_limit());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
+        EXPECT_THAT(request.filter(), IsTestFilter());
+
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              v2::ReadRowsResponse r;
+              auto& c = *r.add_chunks();
+              c.set_row_key("row");
+              c.mutable_family_name()->set_value("cf");
+              c.mutable_qualifier()->set_value("cq");
+              c.set_commit_row(true);
+              return make_ready_future(absl::make_optional(r));
+            })
+            .WillOnce([] {
+              return make_ready_future<absl::optional<v2::ReadRowsResponse>>(
+                  {});
+            });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status{});
+        });
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto resp =
+      conn->AsyncReadRow(kAppProfile, kTableName, "row", TestFilter()).get();
+  ASSERT_STATUS_OK(resp);
+  EXPECT_TRUE(resp->first);
+  EXPECT_EQ("row", resp->second.row_key());
+}
+
+TEST(DataConnectionTest, AsyncReadRowFailure) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(1, request.rows_limit());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
+        EXPECT_THAT(request.filter(), IsTestFilter());
+
+        using ErrorStream =
+            internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
+        return absl::make_unique<ErrorStream>(PermanentError());
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  auto resp =
+      conn->AsyncReadRow(kAppProfile, kTableName, "row", TestFilter()).get();
+  EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace
