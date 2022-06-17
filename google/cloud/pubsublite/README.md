@@ -7,6 +7,8 @@ This directory contains an idiomatic C++ client library for
 messaging service built for very low cost of operation by offering zonal storage
 and pre-provisioned capacity.
 
+This library is **experimental**. Its APIs are subject to change without notice.
+
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
