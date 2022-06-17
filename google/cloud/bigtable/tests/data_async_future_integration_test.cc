@@ -25,8 +25,6 @@ namespace {
 using ::google::cloud::bigtable::testing::TableIntegrationTest;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 
-using DataIntegrationTestClientOnly = TableIntegrationTest;
-
 class DataAsyncIntegrationTest
     : public TableIntegrationTest,
       public ::testing::WithParamInterface<std::string> {};
@@ -266,8 +264,8 @@ TEST_P(DataAsyncIntegrationTest, TableAsyncReadRowsAllRows) {
   CheckEqualUnordered(created, actual);
 }
 
-TEST_F(DataIntegrationTestClientOnly, TableAsyncReadRowTest) {
-  auto table = GetTable();
+TEST_P(DataAsyncIntegrationTest, TableAsyncReadRowTest) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
