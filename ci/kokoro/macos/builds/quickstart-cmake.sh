@@ -43,6 +43,8 @@ ci/retry-command.sh 3 120 curl -sSL "https://github.com/microsoft/vcpkg/archive/
   ./vcpkg install google-cloud-cpp
 )
 
+export VCPKG_BINARY_SOURCES="x-gcs,gs://${CACHE_BUCKET}/${CACHE_FOLDER}/vcpkg,readwrite"
+
 export NINJA_STATUS="T+%es [%f/%t] "
 cmake_flags=(
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
