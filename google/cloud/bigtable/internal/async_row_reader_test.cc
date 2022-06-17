@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::MockFunction;
 using ::testing::Return;
+using ::testing::Unused;
 using ::testing::Values;
 
 auto constexpr kNumRetries = 2;
@@ -51,6 +52,9 @@ Status TransientError() {
 }
 
 // The individual pairs are: {row_key, commit_row}
+//
+// We use `commit_row == true` to return a full row, and `commit_row == false`
+// to return a partial row.
 absl::optional<v2::ReadRowsResponse> MakeResponse(
     std::vector<std::pair<std::string, bool>> rows) {
   v2::ReadRowsResponse resp;
@@ -74,8 +78,7 @@ TEST(AsyncRowReaderTest, Success) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
@@ -97,6 +100,10 @@ TEST(AsyncRowReaderTest, Success) {
         return stream;
       });
 
+  // We verify that the on_row callback supplied to the `AsyncRowReader` is
+  // invoked for each row we expect to receive. We also use it to simulate the
+  // input received from the caller, a `future<bool>` that tells us whether to
+  // keep reading or not.
   MockFunction<future<bool>(bigtable::Row const&)> on_row;
   EXPECT_CALL(on_row, Call)
       .WillOnce([](bigtable::Row const& row) {
@@ -112,20 +119,28 @@ TEST(AsyncRowReaderTest, Success) {
         return make_ready_future(true);
       });
 
+  // We verify that the on_finish callback supplied to the `AsyncRowReader` is
+  // invoked with the correct final status for the operation.
   MockFunction<void(Status const&)> on_finish;
   EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
     EXPECT_STATUS_OK(status);
   });
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  // The backoff policy method will be invoked once for every retry.
   auto mock_b = absl::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
+  // In order to verify that the current options are used to configure the
+  // `grpc::ClientContext` on every stream attempt, we instantiate an
+  // OptionsSpan with the `GrpcSetupOption` set.
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(1);
   internal::OptionsSpan span(
       Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
+  // Perform the asynchronous streaming read retry loop with the given
+  // configuration.
   AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
@@ -140,8 +155,7 @@ TEST(AsyncRowReaderTest, SuccessDelayedFuture) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
@@ -213,8 +227,7 @@ TEST(AsyncRowReaderTest, ResponseInMultipleChunks) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
@@ -267,8 +280,7 @@ TEST(AsyncRowReaderTest, ParserEofFailsOnUnfinishedRow) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
@@ -276,6 +288,9 @@ TEST(AsyncRowReaderTest, ParserEofFailsOnUnfinishedRow) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
+            // The service returns an unfinished row, then ends the stream. This
+            // should yield a kInternal error, which (by default) is not
+            // retryable.
             .WillOnce([] {
               return make_ready_future(MakeResponse({{"r1", false}}));
             })
@@ -311,21 +326,25 @@ TEST(AsyncRowReaderTest, ParserEofFailsOnUnfinishedRow) {
 }
 
 /// @test Check that we ignore HandleEndOfStream errors if enough rows were read
-TEST(AsyncRowReaderTest, ParserEofDoesntFailsOnUnfinishedRowIfRowLimit) {
+TEST(AsyncRowReaderTest, ParserEofDoesntFailOnUnfinishedRowIfRowLimit) {
   CompletionQueue cq;
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(1, request.rows_limit());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
             .WillOnce([] {
+              // In this test, the service returns a full row, and an unfinished
+              // row. Normally this would cause an error in the parser, but
+              // because the caller has only asked for 1 row total, the call
+              // succeeds.
               return make_ready_future(
                   MakeResponse({{"r1", true}, {"r2", false}}));
             })
@@ -368,8 +387,7 @@ TEST(AsyncRowReaderTest, PermanentFailure) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
@@ -420,9 +438,7 @@ TEST(AsyncRowReaderTest, RetryPolicyExhausted) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([](CompletionQueue const&,
-                         std::unique_ptr<grpc::ClientContext>,
-                         v2::ReadRowsRequest const& request) {
+      .WillRepeatedly([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
@@ -471,16 +487,17 @@ TEST(AsyncRowReaderTest, RetrySkipsReadRows) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
+        // The initial row set contains two rows: "r1" and "r2".
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2"));
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
+            // The service returns "r1", then fails with a retryable error.
             .WillOnce([] {
               return make_ready_future(MakeResponse({{"r1", true}}));
             })
@@ -490,10 +507,11 @@ TEST(AsyncRowReaderTest, RetrySkipsReadRows) {
         });
         return stream;
       })
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
+        // Because we have already received "r1", we should not ask for it
+        // again. The row set for this call should only contain: "r2".
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("r2"));
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
@@ -542,6 +560,62 @@ TEST(AsyncRowReaderTest, RetrySkipsReadRows) {
       std::move(retry), std::move(mock_b));
 }
 
+/// @test Verify that we do not retry at all if the rowset will be empty.
+TEST(AsyncRowReaderTest, NoRetryIfRowSetIsEmpty) {
+  CompletionQueue cq;
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        // The initial row set contains one row: "r1".
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1"));
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            // The service returns "r1", then fails with a retryable error. We
+            // do not need to retry, because the row set is now empty. The
+            // overall stream should succeed.
+            .WillOnce([] {
+              return make_ready_future(MakeResponse({{"r1", true}}));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(TransientError());
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).WillOnce([](bigtable::Row const& row) {
+    EXPECT_EQ("r1", row.row_key());
+    return make_ready_future(true);
+  });
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    ASSERT_STATUS_OK(status);
+  });
+
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+
+  AsyncRowReader::Create(
+      cq, mock, kAppProfile, kTableName, on_row.AsStdFunction(),
+      on_finish.AsStdFunction(), bigtable::RowSet("r1"),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      std::move(retry), std::move(mock_b));
+}
+
 /// @test Verify that the last scanned row is respected.
 TEST(AsyncRowReaderTest, LastScannedRowKeyIsRespected) {
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
@@ -552,16 +626,18 @@ TEST(AsyncRowReaderTest, LastScannedRowKeyIsRespected) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
+        // The initial row set contains three rows: "r1", "r2", and "r3".
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2", "r3"));
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
+            // The service will return "r1". But it will also tell us that "r2"
+            // has been scanned, before failing with a transient error.
             .WillOnce([] {
               return make_ready_future(MakeResponse({{"r1", true}}));
             })
@@ -576,10 +652,11 @@ TEST(AsyncRowReaderTest, LastScannedRowKeyIsRespected) {
         });
         return stream;
       })
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
+        // Because the service has scanned up to "r2", we should not ask for
+        // "r2" again. The row set for this call should only contain: "r3".
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("r3"));
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
@@ -634,8 +711,7 @@ TEST(AsyncRowReaderTest, ParserFailsOnOutOfOrderRowKeys) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
@@ -694,8 +770,7 @@ TEST_P(AsyncRowReaderExceptionTest, CancelMidStream) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
@@ -703,9 +778,13 @@ TEST_P(AsyncRowReaderExceptionTest, CancelMidStream) {
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
+        // "r1" will be returned to the caller.
         EXPECT_CALL(*stream, Read).WillOnce([] {
           return make_ready_future(MakeResponse({{"r1", true}, {"r2", false}}));
         });
+        // At this point, the caller cancels the async streaming read loop by
+        // either returning `false` in the on_row callback, or by setting an
+        // exception on the promise (depending on the value of `GetParam()`).
         EXPECT_CALL(*stream, Cancel);
         EXPECT_CALL(*stream, Read).WillOnce([] {
           return make_ready_future(EndOfStream());
@@ -792,8 +871,7 @@ TEST(AsyncRowReaderTest, CancelAfterStreamFinish) {
   // while still keeping the two processed rows for the user.
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
@@ -864,8 +942,7 @@ TEST(AsyncRowReaderTest, DeepStack) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
-                   v2::ReadRowsRequest const& request) {
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = absl::make_unique<MockAsyncReadRowsStream>();
@@ -907,6 +984,64 @@ TEST(AsyncRowReaderTest, DeepStack) {
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
   auto mock_b = absl::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
+}
+
+TEST(AsyncRowReaderTest, TimerErrorEndsLoop) {
+  // Simulate a timer error (likely due to the CQ being shutdown). We should not
+  // retry in this case.
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillOnce([] {
+    return make_ready_future<StatusOr<std::chrono::system_clock::time_point>>(
+        Status(StatusCode::kCancelled, "timer cancelled"));
+  });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(
+                  MakeResponse({{"r1", true}, {"r2", false}}));
+            })
+            .WillOnce([] { return make_ready_future(EndOfStream()); });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(TransientError());
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).WillOnce([](bigtable::Row const& row) {
+    EXPECT_EQ("r1", row.row_key());
+    return make_ready_future(true);
+  });
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
+  });
+
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(1);
 
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(1);
