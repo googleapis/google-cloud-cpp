@@ -40,6 +40,7 @@ if cache_download_enabled; then
   readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
   readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/vcpkg/macos"
   export VCPKG_BINARY_SOURCES="x-gcs,gs://${CACHE_BUCKET}/${CACHE_FOLDER},readwrite"
+  export CLOUDSDK_ACTIVE_CONFIG_NAME="${GCLOUD_CONFIG}"
 
   create_gcloud_config
   activate_service_account_keyfile "${CACHE_KEYFILE}"
