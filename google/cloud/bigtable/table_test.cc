@@ -32,6 +32,7 @@ using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
 using ::testing::Matcher;
+using ::testing::MockFunction;
 using ::testing::Property;
 
 auto const* const kProjectId = "test-project";
@@ -392,6 +393,92 @@ TEST(TableTest, AsyncReadModifyWriteRow) {
   auto row = table.AsyncReadModifyWriteRow("row", TestAppendRule(),
                                            TestIncrementRule());
   EXPECT_THAT(row.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, AsyncReadRows) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](std::string const& app_profile_id,
+                   std::string const& table_name,
+                   std::function<future<bool>(bigtable::Row)> const& on_row,
+                   std::function<void(Status)> const& on_finish,
+                   bigtable::RowSet const& row_set, std::int64_t rows_limit,
+                   bigtable::Filter const& filter) {
+        EXPECT_EQ(kAppProfileId, app_profile_id);
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_THAT(row_set, IsTestRowSet());
+        EXPECT_EQ(RowReader::NO_ROWS_LIMIT, rows_limit);
+        EXPECT_THAT(filter, IsTestFilter());
+
+        // Invoke the callbacks.
+        EXPECT_TRUE(on_row(bigtable::Row("r1", {})).get());
+        EXPECT_FALSE(on_row(bigtable::Row("r2", {})).get());
+        on_finish(PermanentError());
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call)
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r1", row.row_key());
+        return make_ready_future(true);
+      })
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r2", row.row_key());
+        return make_ready_future(false);
+      });
+
+  MockFunction<void(Status)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+  });
+
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  table.AsyncReadRows(on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                      TestRowSet(), TestFilter());
+}
+
+TEST(TableTest, AsyncReadRowsWithRowLimit) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](std::string const& app_profile_id,
+                   std::string const& table_name,
+                   std::function<future<bool>(bigtable::Row)> const& on_row,
+                   std::function<void(Status)> const& on_finish,
+                   bigtable::RowSet const& row_set, std::int64_t rows_limit,
+                   bigtable::Filter const& filter) {
+        EXPECT_EQ(kAppProfileId, app_profile_id);
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_THAT(row_set, IsTestRowSet());
+        EXPECT_EQ(42, rows_limit);
+        EXPECT_THAT(filter, IsTestFilter());
+
+        // Invoke the callbacks.
+        EXPECT_TRUE(on_row(bigtable::Row("r1", {})).get());
+        EXPECT_FALSE(on_row(bigtable::Row("r2", {})).get());
+        on_finish(PermanentError());
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call)
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r1", row.row_key());
+        return make_ready_future(true);
+      })
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r2", row.row_key());
+        return make_ready_future(false);
+      });
+
+  MockFunction<void(Status)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+  });
+
+  auto table = bigtable_internal::MakeTable(mock, kProjectId, kInstanceId,
+                                            kAppProfileId, kTableId);
+  table.AsyncReadRows(on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                      TestRowSet(), 42, TestFilter());
 }
 
 }  // namespace

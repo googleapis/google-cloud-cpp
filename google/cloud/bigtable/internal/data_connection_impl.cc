@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
+#include "google/cloud/bigtable/internal/async_row_reader.h"
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
@@ -346,6 +347,17 @@ future<StatusOr<bigtable::Row>> DataConnectionImpl::AsyncReadModifyWriteRow(
             if (!sor) return std::move(sor).status();
             return TransformReadModifyWriteRowResponse(*std::move(sor));
           });
+}
+
+void DataConnectionImpl::AsyncReadRows(
+    std::string const& app_profile_id, std::string const& table_name,
+    std::function<future<bool>(bigtable::Row)> on_row,
+    std::function<void(Status)> on_finish, bigtable::RowSet row_set,
+    std::int64_t rows_limit, bigtable::Filter filter) {
+  bigtable_internal::AsyncRowReader::Create(
+      background_->cq(), stub_, app_profile_id, table_name, std::move(on_row),
+      std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),
+      retry_policy(), backoff_policy());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

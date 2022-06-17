@@ -92,6 +92,13 @@ class DataConnectionImpl : public DataConnection {
   future<StatusOr<bigtable::Row>> AsyncReadModifyWriteRow(
       google::bigtable::v2::ReadModifyWriteRowRequest request) override;
 
+  void AsyncReadRows(std::string const& app_profile_id,
+                     std::string const& table_name,
+                     std::function<future<bool>(bigtable::Row)> on_row,
+                     std::function<void(Status)> on_finish,
+                     bigtable::RowSet row_set, std::int64_t rows_limit,
+                     bigtable::Filter filter) override;
+
  private:
   std::unique_ptr<DataRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
