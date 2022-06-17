@@ -4,8 +4,6 @@ This directory contains an idiomatic C++ client library for the
 [Google Cloud Data Catalog API][cloud-service-docs], a fully managed and highly
 scalable data discovery and metadata management service.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 

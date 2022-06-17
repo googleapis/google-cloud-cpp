@@ -5,8 +5,6 @@ This directory contains an idiomatic C++ client library for the
 a service to manage highly available, hardened Microsoft Active Directory
 domains hosted by Google Cloud.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 

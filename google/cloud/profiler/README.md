@@ -11,8 +11,6 @@ documentation.
 
 [profiling]: https://cloud.google.com/profiler/docs/concepts-profiling#types_of_profiling_available
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 

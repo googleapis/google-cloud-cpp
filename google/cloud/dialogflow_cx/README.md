@@ -7,8 +7,6 @@ There are [two editions] of Dialogflow, this library supports the CX edition.
 
 [two editions]: https://cloud.google.com/dialogflow/docs/editions
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
