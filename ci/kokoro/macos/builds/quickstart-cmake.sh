@@ -43,6 +43,8 @@ ci/retry-command.sh 3 120 curl -sSL "https://github.com/microsoft/vcpkg/archive/
   ./vcpkg install google-cloud-cpp
 )
 
+readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
+readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/macos"
 export VCPKG_BINARY_SOURCES="x-gcs,gs://${CACHE_BUCKET}/${CACHE_FOLDER}/vcpkg,readwrite"
 
 export NINJA_STATUS="T+%es [%f/%t] "
