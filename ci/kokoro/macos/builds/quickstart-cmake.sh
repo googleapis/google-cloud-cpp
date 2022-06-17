@@ -83,6 +83,12 @@ build_quickstart() {
   "${cmake}" --build "${binary_dir}"
 }
 
+io::log_h2 "Fetch vcpkg tools"
+env VCPKG_ROOT="${vcpkg_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
+  "${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" fetch cmake
+env VCPKG_ROOT="${vcpkg_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
+  "${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" fetch ninja
+
 errors=""
 for library in $(quickstart::libraries); do
   io::log_h2 "Building ${library}'s quickstart"
