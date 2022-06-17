@@ -161,17 +161,13 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectPartial(
  * @param context_factory a functor to create a `grpc::ClientContext` and maybe
  *     initialize some attributes.
  * @param request what object and range within the object to read.
- * @param timeout how long to wait for each asynchronous function in the
- *     streaming RPC. We use sub-second values for unit tests, while the public
- *     API uses seconds, as sub-second timeouts are too short.
  * @param options any per-call configuration. At this time, only the retry and
  *     backoff policies are used by this function.
  */
 future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub,
     std::function<std::unique_ptr<grpc::ClientContext>()> context_factory,
-    google::storage::v2::ReadObjectRequest request,
-    std::chrono::milliseconds timeout, Options const& options);
+    google::storage::v2::ReadObjectRequest request, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

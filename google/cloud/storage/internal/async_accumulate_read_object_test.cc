@@ -37,7 +37,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::google::storage::v2::ReadObjectRequest;
 using ::google::storage::v2::ReadObjectResponse;
-using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
@@ -368,20 +367,22 @@ TEST(AsyncAccumulateReadObjectTest, FullSimple) {
 
   CompletionQueue cq;
   auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
-  auto options = Options{}
-                     .set<storage::RetryPolicyOption>(
-                         storage::LimitedErrorCountRetryPolicy(3).clone())
-                     .set<storage::BackoffPolicyOption>(
-                         storage::ExponentialBackoffPolicy(
-                             std::chrono::microseconds(1),
-                             std::chrono::microseconds(4), 2.0)
-                             .clone());
+  auto options =
+      Options{}
+          .set<storage::RetryPolicyOption>(
+              storage::LimitedErrorCountRetryPolicy(3).clone())
+          .set<storage::BackoffPolicyOption>(
+              storage::ExponentialBackoffPolicy(std::chrono::microseconds(1),
+                                                std::chrono::microseconds(4),
+                                                2.0)
+                  .clone())
+          .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1));
   ReadObjectRequest request;
   request.set_read_offset(kReadOffset);
   request.set_read_limit(kReadLimit);
   auto response =
       AsyncAccumulateReadObjectFull(cq, mock, context_factory.AsStdFunction(),
-                                    request, std::chrono::minutes(1), options)
+                                    request, options)
           .get();
   EXPECT_STATUS_OK(response.status);
   EXPECT_THAT(response.payload,
@@ -395,7 +396,7 @@ TEST(AsyncAccumulateReadObjectTest, FullSimple) {
 TEST(AsyncAccumulateReadObjectTest, FullTooManyTransients) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, AsyncReadObject)
-      .Times(AtLeast(2))
+      .Times(4)
       .WillRepeatedly([](Unused, Unused, Unused) {
         return MakeMockStreamPartial(0, ReadObjectResponse{},
                                      StatusCode::kUnavailable);
@@ -403,18 +404,20 @@ TEST(AsyncAccumulateReadObjectTest, FullTooManyTransients) {
 
   CompletionQueue cq;
   auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
-  auto options = Options{}
-                     .set<storage::RetryPolicyOption>(
-                         storage::LimitedErrorCountRetryPolicy(3).clone())
-                     .set<storage::BackoffPolicyOption>(
-                         storage::ExponentialBackoffPolicy(
-                             std::chrono::microseconds(1),
-                             std::chrono::microseconds(4), 2.0)
-                             .clone());
+  auto options =
+      Options{}
+          .set<storage::RetryPolicyOption>(
+              storage::LimitedErrorCountRetryPolicy(3).clone())
+          .set<storage::BackoffPolicyOption>(
+              storage::ExponentialBackoffPolicy(std::chrono::microseconds(1),
+                                                std::chrono::microseconds(4),
+                                                2.0)
+                  .clone())
+          .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1));
   auto response =
       AsyncAccumulateReadObjectFull(
           cq, mock, []() { return absl::make_unique<grpc::ClientContext>(); },
-          ReadObjectRequest{}, std::chrono::minutes(1), options)
+          ReadObjectRequest{}, options)
           .get();
   EXPECT_THAT(response.status, StatusIs(StatusCode::kUnavailable));
   cq.Shutdown();
@@ -429,18 +432,20 @@ TEST(AsyncAccumulateReadObjectTest, PermanentFailure) {
 
   CompletionQueue cq;
   auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
-  auto options = Options{}
-                     .set<storage::RetryPolicyOption>(
-                         storage::LimitedErrorCountRetryPolicy(3).clone())
-                     .set<storage::BackoffPolicyOption>(
-                         storage::ExponentialBackoffPolicy(
-                             std::chrono::microseconds(1),
-                             std::chrono::microseconds(4), 2.0)
-                             .clone());
+  auto options =
+      Options{}
+          .set<storage::RetryPolicyOption>(
+              storage::LimitedErrorCountRetryPolicy(3).clone())
+          .set<storage::BackoffPolicyOption>(
+              storage::ExponentialBackoffPolicy(std::chrono::microseconds(1),
+                                                std::chrono::microseconds(4),
+                                                2.0)
+                  .clone())
+          .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1));
   auto response =
       AsyncAccumulateReadObjectFull(
           cq, mock, []() { return absl::make_unique<grpc::ClientContext>(); },
-          ReadObjectRequest{}, std::chrono::minutes(1), options)
+          ReadObjectRequest{}, options)
           .get();
   EXPECT_THAT(response.status, StatusIs(StatusCode::kPermissionDenied));
   cq.Shutdown();

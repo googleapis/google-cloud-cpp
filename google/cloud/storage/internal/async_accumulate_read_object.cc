@@ -78,7 +78,6 @@ class AsyncAccumulateReadObjectPartialHandle
   using Stream = ::google::cloud::internal::AsyncStreamingReadRpc<Response>;
   using StreamingRpcMetadata = ::google::cloud::internal::StreamingRpcMetadata;
   using Result = AsyncAccumulateReadObjectResult;
-  using Timer = StatusOr<std::chrono::system_clock::time_point>;
 
   AsyncAccumulateReadObjectPartialHandle(CompletionQueue cq,
                                          std::unique_ptr<Stream> stream,
@@ -200,13 +199,12 @@ class AsyncAccumulateReadObjectFullHandle
   AsyncAccumulateReadObjectFullHandle(
       CompletionQueue cq, std::shared_ptr<StorageStub> stub,
       std::function<std::unique_ptr<grpc::ClientContext>()> context_factory,
-      google::storage::v2::ReadObjectRequest request,
-      std::chrono::milliseconds timeout, Options const& options)
+      google::storage::v2::ReadObjectRequest request, Options const& options)
       : cq_(std::move(cq)),
         stub_(std::move(stub)),
         context_factory_(std::move(context_factory)),
         request_(std::move(request)),
-        timeout_(timeout),
+        timeout_(options.get<storage::DownloadStallTimeoutOption>()),
         retry_(options.get<storage::RetryPolicyOption>()->clone()),
         backoff_(options.get<storage::BackoffPolicyOption>()->clone()) {
     accumulator_.status = Status(StatusCode::kDeadlineExceeded,
@@ -317,11 +315,10 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectPartial(
 future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub,
     std::function<std::unique_ptr<grpc::ClientContext>()> context_factory,
-    google::storage::v2::ReadObjectRequest request,
-    std::chrono::milliseconds timeout, Options const& options) {
+    google::storage::v2::ReadObjectRequest request, Options const& options) {
   auto handle = std::make_shared<AsyncAccumulateReadObjectFullHandle>(
       std::move(cq), std::move(stub), std::move(context_factory),
-      std::move(request), timeout, options);
+      std::move(request), options);
   return handle->Invoke();
 }
 
