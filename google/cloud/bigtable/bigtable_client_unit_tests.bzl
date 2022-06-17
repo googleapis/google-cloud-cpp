@@ -38,6 +38,7 @@ bigtable_client_unit_tests = [
     "instance_update_config_test.cc",
     "internal/admin_client_params_test.cc",
     "internal/async_bulk_apply_test.cc",
+    "internal/async_row_reader_test.cc",
     "internal/async_row_sampler_test.cc",
     "internal/async_streaming_read_test.cc",
     "internal/bigtable_channel_refresh_test.cc",

@@ -21,9 +21,11 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+namespace v2 = ::google::bigtable::v2;
+
 void AsyncRowReader::MakeRequest() {
   status_ = Status();
-  google::bigtable::v2::ReadRowsRequest request;
+  v2::ReadRowsRequest request;
 
   request.set_app_profile_id(app_profile_id_);
   request.set_table_name(table_name_);
@@ -36,23 +38,15 @@ void AsyncRowReader::MakeRequest() {
   if (rows_limit_ != NO_ROWS_LIMIT) {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
-  parser_ = parser_factory_->Create();
+  parser_ = bigtable::internal::ReadRowsParserFactory().Create();
 
   auto context = absl::make_unique<grpc::ClientContext>();
-  rpc_retry_policy_->Setup(*context);
-  rpc_backoff_policy_->Setup(*context);
-  metadata_update_policy_.Setup(*context);
+  internal::ConfigureContext(*context, internal::CurrentOptions());
 
-  auto& client = client_;
   auto self = this->shared_from_this();
-  cq_.MakeStreamingReadRpc(
-      [client](grpc::ClientContext* context,
-               google::bigtable::v2::ReadRowsRequest const& request,
-               grpc::CompletionQueue* cq) {
-        return client->PrepareAsyncReadRows(context, request, cq);
-      },
-      request, std::move(context),
-      [self](google::bigtable::v2::ReadRowsResponse r) {
+  PerformAsyncStreamingRead(
+      stub_->AsyncReadRows(cq_, std::move(context), request),
+      [self](v2::ReadRowsResponse r) {
         return self->OnDataReceived(std::move(r));
       },
       [self](Status s) { self->OnStreamFinished(std::move(s)); });
@@ -204,14 +198,14 @@ void AsyncRowReader::OnStreamFinished(Status status) {
     return;
   }
 
-  if (!rpc_retry_policy_->OnFailure(status_)) {
+  if (!retry_policy_->OnFailure(status_)) {
     // Can't retry.
     whole_op_finished_ = true;
     TryGiveRowToUser();
     return;
   }
   auto self = this->shared_from_this();
-  cq_.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status_))
+  cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
       .then(
           [self](
               future<StatusOr<std::chrono::system_clock::time_point>> result) {
