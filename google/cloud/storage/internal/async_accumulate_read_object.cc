@@ -93,10 +93,17 @@ class AsyncAccumulateReadObjectPartialHandle
   }
 
  private:
-  void OnStart(future<bool> tm, bool ok) {
+  void OnStart(future<bool> tm, bool read_ok) {
     tm.cancel();
-    if (tm.get()) return OnTimeout("Start()");
-    if (!ok) return Finish();
+    auto self = shared_from_this();
+    tm.then([self, read_ok](future<bool> f) {
+      self->OnStartTimer(f.get(), read_ok);
+    });
+  }
+
+  void OnStartTimer(bool timer_ok, bool read_ok) {
+    if (timer_ok) return OnTimeout("Start()");
+    if (!read_ok) return Finish();
     Read();
   }
 
@@ -114,7 +121,18 @@ class AsyncAccumulateReadObjectPartialHandle
 
   void OnRead(future<bool> tm, absl::optional<Response> response) {
     tm.cancel();
-    if (tm.get()) return OnTimeout("Read()");
+    struct ByMove {
+      std::shared_ptr<AsyncAccumulateReadObjectPartialHandle> self;
+      absl::optional<Response> response;
+      void operator()(future<bool> f) {
+        self->OnReadTimer(f.get(), std::move(response));
+      }
+    };
+    tm.then(ByMove{shared_from_this(), std::move(response)});
+  }
+
+  void OnReadTimer(bool timer_ok, absl::optional<Response> response) {
+    if (timer_ok) return OnTimeout("Read()");
     if (!response.has_value()) return Finish();
     accumulator_.push_back(*std::move(response));
     Read();
@@ -148,6 +166,7 @@ class AsyncAccumulateReadObjectPartialHandle
           return true;
         });
   }
+
   void OnTimeout(char const* where) {
     auto finish = stream_->Finish();
     finish.then(WaitForFinish{std::move(stream_)});
