@@ -128,7 +128,6 @@ class AsyncAccumulateReadObjectPartialHandle
         self->OnReadTimer(f.get(), std::move(response));
       }
     };
-    auto self = shared_from_this();
     tm.then(ByMove{shared_from_this(), std::move(response)});
   }
 
