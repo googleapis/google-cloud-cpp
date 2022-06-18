@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_ACCUMULATE_READ_OBJECT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_ACCUMULATE_READ_OBJECT_H
 
+#include "google/cloud/storage/async_object_responses.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/completion_queue.h"
@@ -168,6 +169,10 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub,
     std::function<std::unique_ptr<grpc::ClientContext>()> context_factory,
     google::storage::v2::ReadObjectRequest request, Options const& options);
+
+/// Convert the proto into a representation more familiar to our customers.
+storage_experimental::AsyncReadObjectRangeResponse ToResponse(
+    AsyncAccumulateReadObjectResult accumulated, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
