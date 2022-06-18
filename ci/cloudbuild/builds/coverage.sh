@@ -26,15 +26,15 @@ export CXX=g++
 # Explicitly list the patterns that match hand-crafted code. Excluding the
 # generated code results in a longer list and more maintenance.
 instrumented_patterns=(
+  "/examples[/:]"
+  "/generator[/:]"
   "/google/cloud:"
   "/google/cloud/testing_util:"
   "/google/cloud/bigtable[/:]"
-  "/google/cloud/examples[/:]"
   "/google/cloud/pubsub[/:]"
   "/google/cloud/pubsublite[/:]"
   "/google/cloud/spanner[/:]"
   "/google/cloud/storage[/:]"
-  "/generator[/:]"
 )
 instrumentation_filter="$(printf ",%s" "${instrumented_patterns[@]}")"
 instrumentation_filter="${instrumentation_filter:1}"

@@ -216,7 +216,7 @@ function integration::bazel_with_emulators() {
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=${hello_world_http}" \
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
-    //google/cloud/examples/...
+    //examples/...
 
   local bazel_output_base
   if echo "${args[@]}" | grep -w -q -- "--config=msan"; then

@@ -362,7 +362,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
     AND iam IN_LIST GOOGLE_CLOUD_CPP_ENABLE
     AND spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE
     AND storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    add_subdirectory(google/cloud/examples)
+    add_subdirectory(examples)
 endif ()
 
 # Obsolete / retired flags and options. Removing them just cleans up a bit of
