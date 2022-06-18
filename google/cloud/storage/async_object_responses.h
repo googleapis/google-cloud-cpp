@@ -29,7 +29,7 @@ namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Represents the response from reading a subset of an object.
-struct ReadObjectRangeResponse {
+struct AsyncReadObjectRangeResponse {
   /**
    * The final status of the download.
    *
@@ -52,7 +52,7 @@ struct ReadObjectRangeResponse {
    * you need to consolidate the contents use something like:
    *
    * @code
-   * ReadObjectRangeResponse response = ...;
+   * AsyncReadObjectRangeResponse response = ...;
    * auto all = std::accumulate(
    *     response.contents.begin(), response.contents.end(), std::string{},
    *     [](auto a, auto b) { a += b; return a; });
@@ -63,7 +63,7 @@ struct ReadObjectRangeResponse {
   /**
    * Per-request metadata and annotations.
    *
-   * These are intended as debugging tools, they are subject to change without
+   * These are intended as debugging tools. They are subject to change without
    * notice.
    */
   std::multimap<std::string, std::string> request_metadata;

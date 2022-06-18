@@ -324,9 +324,9 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
   return handle->Invoke();
 }
 
-storage_experimental::ReadObjectRangeResponse ToResponse(
+storage_experimental::AsyncReadObjectRangeResponse ToResponse(
     AsyncAccumulateReadObjectResult accumulated, Options const& options) {
-  storage_experimental::ReadObjectRangeResponse response;
+  storage_experimental::AsyncReadObjectRangeResponse response;
   response.status = std::move(accumulated.status);
   response.request_metadata = std::move(accumulated.metadata);
   response.contents.reserve(accumulated.payload.size());
