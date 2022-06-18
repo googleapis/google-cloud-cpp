@@ -15,10 +15,7 @@
 # ~~~
 
 cmake_minimum_required(VERSION 3.6)
-project(verify-exported-targets CXX C)
-
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+project(verify-exported-targets CXX)
 
 # We list the common libraries first because we want to load their packages
 # early.
