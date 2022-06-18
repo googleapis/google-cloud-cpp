@@ -81,7 +81,7 @@ cc_test(
     timeout = "long",
     srcs = ["grpc_credential_types.cc"],
     copts = [
-        "-I$(GENDIR)/google/cloud/examples",
+        "-I$(GENDIR)/examples",
     ],
     tags = [
         "integration-test",

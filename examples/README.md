@@ -20,8 +20,8 @@ We use Docker to create an image with our "Greeter" service:
 
 ```shell
 docker build -t "gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc:latest" \
-    -f google/cloud/examples/hello_world_grpc/Dockerfile \
-    google/cloud/examples/hello_world_grpc
+    -f examples/hello_world_grpc/Dockerfile \
+    examples/hello_world_grpc
 ```
 
 ### Push the Docker image to GCR
@@ -95,7 +95,7 @@ and use it from Cloud Run.
 pack build  --builder gcr.io/buildpacks/builder:latest \
      --env "GOOGLE_FUNCTION_SIGNATURE_TYPE=http" \
      --env "GOOGLE_FUNCTION_TARGET=HelloWorldHttp" \
-     --path "google/cloud/examples/hello_world_http/" \
+     --path "examples/hello_world_http/" \
      "gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-http"
 ```
 

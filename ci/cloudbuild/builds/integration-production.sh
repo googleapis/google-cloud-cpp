@@ -29,10 +29,10 @@ mapfile -t args < <(bazel::common_args)
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
 excluded_rules=(
+  "-//examples:grpc_credential_types"
   "-//google/cloud/bigtable/examples:bigtable_grpc_credentials"
   "-//google/cloud/storage/examples:storage_service_account_samples"
   "-//google/cloud/storage/tests:service_account_integration_test"
-  "-//google/cloud/examples:grpc_credential_types"
   "-//google/cloud/storage/tests:grpc_integration_test"
 )
 
