@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/data_connection.h"
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/legacy_async_row_reader.h"
 #include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
@@ -52,7 +53,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // public.
 bigtable::Table MakeTable(std::shared_ptr<DataConnection> conn,
                           std::string project_id, std::string instance_id,
-                          std::string app_profile_id, std::string table_id);
+                          std::string app_profile_id, std::string table_id,
+                          Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
@@ -888,6 +890,7 @@ class Table {
         "RowFunctor should return a future<bool>.");
 
     if (connection_) {
+      google::cloud::internal::OptionsSpan span(options_);
       connection_->AsyncReadRows(
           app_profile_id_, table_name_, std::move(on_row), std::move(on_finish),
           std::move(row_set), rows_limit, std::move(filter));
@@ -937,10 +940,11 @@ class Table {
  private:
   friend Table bigtable_internal::MakeTable(
       std::shared_ptr<bigtable_internal::DataConnection>, std::string,
-      std::string, std::string, std::string);
+      std::string, std::string, std::string, Options);
   explicit Table(std::shared_ptr<bigtable_internal::DataConnection> conn,
                  std::string project_id, std::string instance_id,
-                 std::string app_profile_id, std::string table_id)
+                 std::string app_profile_id, std::string table_id,
+                 Options options = {})
       : app_profile_id_(std::move(app_profile_id)),
         project_id_(std::move(project_id)),
         instance_id_(std::move(instance_id)),
@@ -948,7 +952,10 @@ class Table {
         table_id_(std::move(table_id)),
         metadata_update_policy_(
             MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
-        connection_(std::move(conn)) {}
+        connection_(std::move(conn)),
+        options_(google::cloud::internal::MergeOptions(
+            std::move(options),
+            internal::DefaultDataOptions(connection_->options()))) {}
 
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
@@ -1021,6 +1028,7 @@ class Table {
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   std::shared_ptr<BackgroundThreads> background_threads_;
   std::shared_ptr<bigtable_internal::DataConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -1032,10 +1040,10 @@ inline bigtable::Table MakeTable(std::shared_ptr<DataConnection> conn,
                                  std::string project_id,
                                  std::string instance_id,
                                  std::string app_profile_id,
-                                 std::string table_id) {
+                                 std::string table_id, Options options) {
   return bigtable::Table(std::move(conn), std::move(project_id),
                          std::move(instance_id), std::move(app_profile_id),
-                         std::move(table_id));
+                         std::move(table_id), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
