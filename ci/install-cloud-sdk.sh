@@ -16,11 +16,11 @@
 
 set -euo pipefail
 
-readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="367.0.0"
-readonly GOOGLE_CLOUD_CPP_SDK_SHA256="94328b9c6559a1b7ec2eeaab9ef0e4702215e16e8327c5b99718750526ae1efe"
+readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="390.0.0"
+readonly GOOGLE_CLOUD_CPP_SDK_SHA256="5ce31b85013599dd842ca8a08539aaa6047aee63bb216d5b3988fb2666b06c07"
 
 readonly SITE="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
-readonly TARBALL="google-cloud-sdk-${GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION}-linux-x86_64.tar.gz"
+readonly TARBALL="google-cloud-cli-${GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION}-linux-x86_64.tar.gz"
 curl -L "${SITE}/${TARBALL}" -o "${TARBALL}"
 
 echo "${GOOGLE_CLOUD_CPP_SDK_SHA256} ${TARBALL}" | sha256sum --check -
