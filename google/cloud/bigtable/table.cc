@@ -48,6 +48,7 @@ static_assert(std::is_copy_assignable<bigtable::Table>::value,
 
 Status Table::Apply(SingleRowMutation mut) {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->Apply(app_profile_id_, table_name_, std::move(mut));
   }
 
@@ -94,6 +95,7 @@ Status Table::Apply(SingleRowMutation mut) {
 
 future<Status> Table::AsyncApply(SingleRowMutation mut) {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->AsyncApply(app_profile_id_, table_name_,
                                    std::move(mut));
   }
@@ -138,6 +140,7 @@ future<Status> Table::AsyncApply(SingleRowMutation mut) {
 
 std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->BulkApply(app_profile_id_, table_name_, std::move(mut));
   }
 
@@ -171,6 +174,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
 
 future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->AsyncBulkApply(app_profile_id_, table_name_,
                                        std::move(mut));
   }
@@ -191,6 +195,7 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter) {
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->ReadRows(app_profile_id_, table_name_,
                                  std::move(row_set), rows_limit,
                                  std::move(filter));
@@ -207,6 +212,7 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
 StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
                                               Filter filter) {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->ReadRow(app_profile_id_, table_name_,
                                 std::move(row_key), std::move(filter));
   }
@@ -236,6 +242,7 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
     std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
     std::vector<Mutation> false_mutations) {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->CheckAndMutateRow(
         app_profile_id_, table_name_, std::move(row_key), std::move(filter),
         std::move(true_mutations), std::move(false_mutations));
@@ -272,6 +279,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
     std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
     std::vector<Mutation> false_mutations) {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->AsyncCheckAndMutateRow(
         app_profile_id_, table_name_, std::move(row_key), std::move(filter),
         std::move(true_mutations), std::move(false_mutations));
@@ -325,6 +333,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
 // samples otherwise the result is an inconsistent set of sample row keys.
 StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->SampleRows(app_profile_id_, table_name_);
   }
 
@@ -370,6 +379,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
 
 future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->AsyncSampleRows(app_profile_id_, table_name_);
   }
 
@@ -385,6 +395,7 @@ StatusOr<Row> Table::ReadModifyWriteRowImpl(
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
       request, app_profile_id_, table_name_);
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->ReadModifyWriteRow(std::move(request));
   }
 
@@ -406,6 +417,7 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
       request, app_profile_id_, table_name_);
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->AsyncReadModifyWriteRow(std::move(request));
   }
 
@@ -435,6 +447,7 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
 future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(std::string row_key,
                                                            Filter filter) {
   if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
     return connection_->AsyncReadRow(app_profile_id_, table_name_,
                                      std::move(row_key), std::move(filter));
   }
