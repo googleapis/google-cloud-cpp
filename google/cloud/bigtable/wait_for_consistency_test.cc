@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/wait_for_consistency.h"
+#include "google/cloud/bigtable/wait_for_consistency.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/mocks/mock_bigtable_table_admin_connection.h"
@@ -68,6 +68,7 @@ TEST(AsyncWaitForConsistency, Simple) {
 
   CompletionQueue cq;
   auto mock = std::make_shared<MockConnection>();
+  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -76,9 +77,7 @@ TEST(AsyncWaitForConsistency, Simple) {
         return make_ready_future(MakeResponse(true));
       });
 
-  auto status = bigtable_admin_internal::AsyncWaitForConsistency(
-                    cq, mock, table_name, token)
-                    .get();
+  auto status = AsyncWaitForConsistency(cq, client, table_name, token).get();
   EXPECT_STATUS_OK(status);
 }
 
@@ -89,6 +88,7 @@ TEST(AsyncWaitForConsistency, NotConsistentThenSuccess) {
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<MockConnection>();
+  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -102,8 +102,8 @@ TEST(AsyncWaitForConsistency, NotConsistentThenSuccess) {
         return make_ready_future(MakeResponse(true));
       });
 
-  auto status = bigtable_admin_internal::AsyncWaitForConsistency(
-                    background.cq(), mock, table_name, token, TestOptions())
+  auto status = AsyncWaitForConsistency(background.cq(), client, table_name,
+                                        token, TestOptions())
                     .get();
   EXPECT_STATUS_OK(status);
 }
@@ -115,6 +115,7 @@ TEST(AsyncWaitForConsistency, PermanentFailure) {
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<MockConnection>();
+  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -124,8 +125,8 @@ TEST(AsyncWaitForConsistency, PermanentFailure) {
             Status(StatusCode::kPermissionDenied, "fail"));
       });
 
-  auto status = bigtable_admin_internal::AsyncWaitForConsistency(
-                    background.cq(), mock, table_name, token, TestOptions())
+  auto status = AsyncWaitForConsistency(background.cq(), client, table_name,
+                                        token, TestOptions())
                     .get();
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied, "fail"));
 }
@@ -137,6 +138,7 @@ TEST(AsyncWaitForConsistency, TooManyTransientFailures) {
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<MockConnection>();
+  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .Times(kLimitedErrorCount + 1)
@@ -147,8 +149,8 @@ TEST(AsyncWaitForConsistency, TooManyTransientFailures) {
             Status(StatusCode::kUnavailable, "try again"));
       });
 
-  auto status = bigtable_admin_internal::AsyncWaitForConsistency(
-                    background.cq(), mock, table_name, token, TestOptions())
+  auto status = AsyncWaitForConsistency(background.cq(), client, table_name,
+                                        token, TestOptions())
                     .get();
   EXPECT_THAT(status,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try again")));
@@ -161,6 +163,7 @@ TEST(AsyncWaitForConsistency, NeverConsistent) {
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<MockConnection>();
+  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .Times(kLimitedErrorCount + 1)
@@ -170,8 +173,8 @@ TEST(AsyncWaitForConsistency, NeverConsistent) {
         return make_ready_future(MakeResponse(false));
       });
 
-  auto status = bigtable_admin_internal::AsyncWaitForConsistency(
-                    background.cq(), mock, table_name, token, TestOptions())
+  auto status = AsyncWaitForConsistency(background.cq(), client, table_name,
+                                        token, TestOptions())
                     .get();
   EXPECT_THAT(status, StatusIs(StatusCode::kDeadlineExceeded,
                                HasSubstr("Polling loop terminated")));
@@ -188,6 +191,7 @@ TEST(AsyncWaitForConsistency, PassesOptionsToConnection) {
 
   CompletionQueue cq;
   auto mock = std::make_shared<MockConnection>();
+  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -198,10 +202,9 @@ TEST(AsyncWaitForConsistency, PassesOptionsToConnection) {
       });
 
   EXPECT_FALSE(internal::CurrentOptions().has<TestOption>());
-  auto status =
-      bigtable_admin_internal::AsyncWaitForConsistency(
-          cq, mock, table_name, token, Options{}.set<TestOption>("value"))
-          .get();
+  auto status = AsyncWaitForConsistency(cq, client, table_name, token,
+                                        Options{}.set<TestOption>("value"))
+                    .get();
   EXPECT_STATUS_OK(status);
 }
 
@@ -264,6 +267,7 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelAndSuccess) {
   auto mock_cq = MakeMockCompletionQueue();
   CompletionQueue cq(mock_cq);
   auto mock = std::make_shared<MockConnection>();
+  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .Times(2)
@@ -273,8 +277,8 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelAndSuccess) {
         return SimulateRequest();
       });
 
-  auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
-      cq, mock, table_name, token, TestOptions());
+  auto actual =
+      AsyncWaitForConsistency(cq, client, table_name, token, TestOptions());
 
   // First simulate a regular request that results in a transient failure.
   auto p = WaitForRequest();
@@ -303,6 +307,7 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelWithFailure) {
   auto mock_cq = MakeMockCompletionQueue();
   CompletionQueue cq(mock_cq);
   auto mock = std::make_shared<MockConnection>();
+  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .Times(2)
@@ -312,8 +317,8 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelWithFailure) {
         return SimulateRequest();
       });
 
-  auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
-      cq, mock, table_name, token, TestOptions());
+  auto actual =
+      AsyncWaitForConsistency(cq, client, table_name, token, TestOptions());
 
   // First simulate a regular request.
   auto p = WaitForRequest();
@@ -343,6 +348,7 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelDuringTimer) {
   auto mock_cq = MakeMockCompletionQueue();
   CompletionQueue cq(mock_cq);
   auto mock = std::make_shared<MockConnection>();
+  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -351,8 +357,8 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelDuringTimer) {
         return SimulateRequest();
       });
 
-  auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
-      cq, mock, table_name, token, TestOptions());
+  auto actual =
+      AsyncWaitForConsistency(cq, client, table_name, token, TestOptions());
 
   // First simulate a regular request.
   auto p = WaitForRequest();
@@ -384,6 +390,7 @@ TEST_F(AsyncWaitForConsistencyCancelTest, ShutdownDuringTimer) {
   auto mock_cq = MakeMockCompletionQueue();
   CompletionQueue cq(mock_cq);
   auto mock = std::make_shared<MockConnection>();
+  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -392,8 +399,8 @@ TEST_F(AsyncWaitForConsistencyCancelTest, ShutdownDuringTimer) {
         return SimulateRequest();
       });
 
-  auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
-      cq, mock, table_name, token, TestOptions());
+  auto actual =
+      AsyncWaitForConsistency(cq, client, table_name, token, TestOptions());
 
   // First simulate a regular request.
   auto p = WaitForRequest();

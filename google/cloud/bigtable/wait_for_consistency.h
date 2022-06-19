@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_WAIT_FOR_CONSISTENCY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_WAIT_FOR_CONSISTENCY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_WAIT_FOR_CONSISTENCY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_WAIT_FOR_CONSISTENCY_H
 
-#include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin_internal {
+namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Checks consistency of a table with multiple calls using background threads
+ * Polls until a table is consistent, or until the polling policy has expired.
  *
  * @param cq the completion queue that will execute the asynchronous
  *    calls. The application must ensure that one or more threads are
@@ -34,19 +34,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @param consistency_token the consistency token of the table.
  * @param options (optional) configuration options. Users who wish to modify the
  *     default polling behavior can supply a custom polling policy with
- *     `BigtableTableAdminPollingPolicyOption`.
+ *     `BigtableTableAdminPollingPolicyOption`. Note that the client's polling
+ *     policy is not used for this operation.
  * @return the consistency status for the table. The status is OK if and only if
  *     the table is consistent.
  */
-future<Status> AsyncWaitForConsistency(
-    CompletionQueue cq,
-    std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection,
-    std::string table_name, std::string consistency_token,
-    Options options = {});
+future<Status> AsyncWaitForConsistency(CompletionQueue cq,
+                                       BigtableTableAdminClient client,
+                                       std::string table_name,
+                                       std::string consistency_token,
+                                       Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin_internal
+}  // namespace bigtable_admin
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_WAIT_FOR_CONSISTENCY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_WAIT_FOR_CONSISTENCY_H

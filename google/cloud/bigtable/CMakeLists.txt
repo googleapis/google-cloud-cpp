@@ -205,8 +205,6 @@ add_library(
     internal/rpc_policy_parameters.h
     internal/rpc_policy_parameters.inc
     internal/unary_client_utils.h
-    internal/wait_for_consistency.cc
-    internal/wait_for_consistency.h
     metadata_update_policy.cc
     metadata_update_policy.h
     mutation_batcher.cc
@@ -241,7 +239,9 @@ add_library(
     table_config.h
     version.cc
     version.h
-    version_info.h)
+    version_info.h
+    wait_for_consistency.cc
+    wait_for_consistency.h)
 target_link_libraries(
     google_cloud_cpp_bigtable
     PUBLIC absl::memory
@@ -356,7 +356,6 @@ if (BUILD_TESTING)
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
         internal/prefix_range_end_test.cc
-        internal/wait_for_consistency_test.cc
         legacy_table_test.cc
         metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc
@@ -381,7 +380,8 @@ if (BUILD_TESTING)
         table_sample_row_keys_test.cc
         table_test.cc
         testing/cleanup_stale_resources_test.cc
-        testing/random_names_test.cc)
+        testing/random_names_test.cc
+        wait_for_consistency_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("bigtable_client_unit_tests.bzl"
