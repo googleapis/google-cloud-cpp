@@ -39,6 +39,10 @@ class AsyncConnectionImpl : public AsyncConnection {
 
   Options options() const override { return options_; }
 
+  future<storage_experimental::AsyncReadObjectRangeResponse>
+  AsyncReadObjectRange(
+      storage::internal::ReadObjectRangeRequest const& request) override;
+
   future<Status> AsyncDeleteObject(
       storage::internal::DeleteObjectRequest const& request) override;
 

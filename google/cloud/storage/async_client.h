@@ -107,6 +107,64 @@ class AsyncClient {
   ~AsyncClient() = default;
 
   /**
+   * Reads the contents of an object.
+   *
+   * When satisfied, the returned future has the contents of the given object
+   * between @p offset and @p offset + @p limit (exclusive).
+   *
+   * Be aware that this will accumulate all the bytes in memory, you need to
+   * consider whether @p limit is too large for your deployment environment.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param offset where to begin reading from the object, results in an error
+   *     if the offset is larger than the object
+   * @param limit how much data to read starting at @p offset
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DisableCrc32cChecksum`,
+   *     `DisableMD5Hash`, `EncryptionKey`, `Generation`, `IfGenerationMatch`,
+   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `UserProject`, and `AcceptEncoding`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   */
+  template <typename... RequestOptions>
+  future<AsyncReadObjectRangeResponse> ReadObject(
+      std::string const& bucket_name, std::string const& object_name,
+      std::int64_t offset, std::int64_t limit, RequestOptions&&... options) {
+    struct HasReadRange
+        : public absl::disjunction<
+              std::is_same<storage::ReadRange, RequestOptions>...> {};
+    struct HasReadFromOffset
+        : public absl::disjunction<
+              std::is_same<storage::ReadFromOffset, RequestOptions>...> {};
+    struct HasReadLast
+        : public absl::disjunction<
+              std::is_same<storage::ReadLast, RequestOptions>...> {};
+
+    static_assert(!HasReadRange::value,
+                  "Cannot use `ReadRange()` as a request option in "
+                  "`AsyncClient::ReadObject()`, use the `offset` and `limit` "
+                  "parameters instead.");
+    static_assert(!HasReadFromOffset::value,
+                  "Cannot use `ReadFromOffset()` as a request option in "
+                  "`AsyncClient::ReadObject()`, use the `offset` and `limit` "
+                  "parameters instead.");
+    static_assert(!HasReadLast::value,
+                  "Cannot use `ReadLast()` as a request option in "
+                  "`AsyncClient::ReadObject()`, use the `offset` and `limit` "
+                  "parameters instead.");
+
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
+    storage::internal::ReadObjectRangeRequest request(bucket_name, object_name);
+    request.set_multiple_options(std::forward<Options>(options)...,
+                                 storage::ReadRange(offset, offset + limit));
+    return connection_->AsyncReadObjectRange(request);
+  }
+
+  /**
    * Deletes an object.
    *
    * @param bucket_name the name of the bucket that contains the object.

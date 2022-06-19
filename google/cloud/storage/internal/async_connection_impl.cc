@@ -13,10 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async_connection_impl.h"
+#include "google/cloud/storage/internal/async_accumulate_read_object.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/grpc_configure_client_context.h"
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 
 namespace google {
@@ -30,6 +32,30 @@ AsyncConnectionImpl::AsyncConnectionImpl(CompletionQueue cq,
     : cq_(std::move(cq)),
       stub_(std::move(stub)),
       options_(std::move(options)) {}
+
+future<storage_experimental::AsyncReadObjectRangeResponse>
+AsyncConnectionImpl::AsyncReadObjectRange(
+    storage::internal::ReadObjectRangeRequest const& request) {
+  auto proto = storage::internal::GrpcObjectRequestParser::ToProto(request);
+  if (!proto) {
+    auto response = storage_experimental::AsyncReadObjectRangeResponse{};
+    response.status = std::move(proto).status();
+    return make_ready_future(std::move(response));
+  }
+
+  auto context_factory = [request]() {
+    auto context = absl::make_unique<grpc::ClientContext>();
+    ApplyQueryParameters(*context, request);
+    return context;
+  };
+  auto const& current = internal::CurrentOptions();
+  return storage_internal::AsyncAccumulateReadObjectFull(
+             cq_, stub_, std::move(context_factory), *std::move(proto), current)
+      .then([current](
+                future<storage_internal::AsyncAccumulateReadObjectResult> f) {
+        return ToResponse(f.get(), current);
+      });
+}
 
 future<Status> AsyncConnectionImpl::AsyncDeleteObject(
     storage::internal::DeleteObjectRequest const& request) {

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_H
 
+#include "google/cloud/storage/async_object_responses.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -45,6 +46,10 @@ class AsyncConnection {
   virtual ~AsyncConnection() = default;
 
   virtual Options options() const = 0;
+
+  virtual future<storage_experimental::AsyncReadObjectRangeResponse>
+  AsyncReadObjectRange(
+      storage::internal::ReadObjectRangeRequest const& request) = 0;
 
   virtual future<Status> AsyncDeleteObject(
       storage::internal::DeleteObjectRequest const& request) = 0;
