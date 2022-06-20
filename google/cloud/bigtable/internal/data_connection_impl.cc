@@ -349,11 +349,13 @@ future<StatusOr<bigtable::Row>> DataConnectionImpl::AsyncReadModifyWriteRow(
           });
 }
 
-void DataConnectionImpl::AsyncReadRows(
-    std::string const& app_profile_id, std::string const& table_name,
-    std::function<future<bool>(bigtable::Row)> on_row,
-    std::function<void(Status)> on_finish, bigtable::RowSet row_set,
-    std::int64_t rows_limit, bigtable::Filter filter) {
+void DataConnectionImpl::AsyncReadRows(std::string const& app_profile_id,
+                                       std::string const& table_name,
+                                       bigtable::RowFunctor on_row,
+                                       bigtable::FinishFunctor on_finish,
+                                       bigtable::RowSet row_set,
+                                       std::int64_t rows_limit,
+                                       bigtable::Filter filter) {
   bigtable_internal::AsyncRowReader::Create(
       background_->cq(), stub_, app_profile_id, table_name, std::move(on_row),
       std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),

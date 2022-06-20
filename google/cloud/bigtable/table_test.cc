@@ -416,9 +416,8 @@ TEST(TableTest, AsyncReadRows) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name,
-                   std::function<future<bool>(bigtable::Row)> const& on_row,
-                   std::function<void(Status)> const& on_finish,
+                   std::string const& table_name, RowFunctor const& on_row,
+                   FinishFunctor const& on_finish,
                    bigtable::RowSet const& row_set, std::int64_t rows_limit,
                    bigtable::Filter const& filter) {
         CheckCurrentOptions();
@@ -459,9 +458,8 @@ TEST(TableTest, AsyncReadRowsWithRowLimit) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name,
-                   std::function<future<bool>(bigtable::Row)> const& on_row,
-                   std::function<void(Status)> const& on_finish,
+                   std::string const& table_name, RowFunctor const& on_row,
+                   FinishFunctor const& on_finish,
                    bigtable::RowSet const& row_set, std::int64_t rows_limit,
                    bigtable::Filter const& filter) {
         CheckCurrentOptions();

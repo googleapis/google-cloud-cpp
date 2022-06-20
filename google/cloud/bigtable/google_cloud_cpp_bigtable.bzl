@@ -43,6 +43,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "admin/internal/bigtable_table_admin_stub_factory.h",
     "admin_client.h",
     "app_profile_config.h",
+    "async_read_rows_callbacks.h",
     "async_row_reader.h",
     "cell.h",
     "client_options.h",

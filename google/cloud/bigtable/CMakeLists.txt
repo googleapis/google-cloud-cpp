@@ -116,6 +116,7 @@ add_library(
     admin_client.h
     app_profile_config.cc
     app_profile_config.h
+    async_read_rows_callbacks.h
     async_row_reader.h
     cell.h
     client_options.cc

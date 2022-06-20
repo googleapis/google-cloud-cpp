@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_ROW_READER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_ROW_READER_H
 
+#include "google/cloud/bigtable/async_read_rows_callbacks.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
@@ -41,9 +42,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Objects of this class represent the state of reading rows via AsyncReadRows.
  */
 class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
-  using RowFunctor = std::function<future<bool>(bigtable::Row)>;
-  using FinishFunctor = std::function<void(Status)>;
-
  public:
   /// Special value to be used as rows_limit indicating no limit.
   // NOLINTNEXTLINE(readability-identifier-naming)
@@ -54,7 +52,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
 
   static void Create(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
                      std::string app_profile_id, std::string table_name,
-                     RowFunctor on_row, FinishFunctor on_finish,
+                     bigtable::RowFunctor on_row,
+                     bigtable::FinishFunctor on_finish,
                      bigtable::RowSet row_set, std::int64_t rows_limit,
                      bigtable::Filter filter,
                      std::unique_ptr<DataRetryPolicy> retry_policy,
@@ -70,7 +69,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
  private:
   AsyncRowReader(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
                  std::string app_profile_id, std::string table_name,
-                 RowFunctor on_row, FinishFunctor on_finish,
+                 bigtable::RowFunctor on_row, bigtable::FinishFunctor on_finish,
                  bigtable::RowSet row_set, std::int64_t rows_limit,
                  bigtable::Filter filter,
                  std::unique_ptr<DataRetryPolicy> retry_policy,
@@ -123,8 +122,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   std::shared_ptr<BigtableStub> stub_;
   std::string app_profile_id_;
   std::string table_name_;
-  RowFunctor on_row_;
-  FinishFunctor on_finish_;
+  bigtable::RowFunctor on_row_;
+  bigtable::FinishFunctor on_finish_;
   bigtable::RowSet row_set_;
   std::int64_t rows_limit_;
   bigtable::Filter filter_;

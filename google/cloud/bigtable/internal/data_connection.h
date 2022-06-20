@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_H
 
+#include "google/cloud/bigtable/async_read_rows_callbacks.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/mutation_branch.h"
@@ -105,8 +106,8 @@ class DataConnection {
 
   virtual void AsyncReadRows(std::string const& app_profile_id,
                              std::string const& table_name,
-                             std::function<future<bool>(bigtable::Row)> on_row,
-                             std::function<void(Status)> on_finish,
+                             bigtable::RowFunctor on_row,
+                             bigtable::FinishFunctor on_finish,
                              bigtable::RowSet row_set, std::int64_t rows_limit,
                              bigtable::Filter filter);
 

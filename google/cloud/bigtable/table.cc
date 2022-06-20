@@ -444,6 +444,31 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
       });
 }
 
+void Table::AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish,
+                          RowSet row_set, Filter filter) {
+  AsyncReadRows(std::move(on_row), std::move(on_finish), std::move(row_set),
+                RowReader::NO_ROWS_LIMIT, std::move(filter));
+}
+
+void Table::AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish,
+                          RowSet row_set, std::int64_t rows_limit,
+                          Filter filter) {
+  if (connection_) {
+    google::cloud::internal::OptionsSpan span(options_);
+    connection_->AsyncReadRows(app_profile_id_, table_name_, std::move(on_row),
+                               std::move(on_finish), std::move(row_set),
+                               rows_limit, std::move(filter));
+    return;
+  }
+
+  bigtable_internal::LegacyAsyncRowReader::Create(
+      background_threads_->cq(), client_, app_profile_id_, table_name_,
+      std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
+      std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      metadata_update_policy_,
+      absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+}
+
 future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(std::string row_key,
                                                            Filter filter) {
   if (connection_) {

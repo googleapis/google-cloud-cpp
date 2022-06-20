@@ -128,11 +128,9 @@ future<StatusOr<bigtable::Row>> DataConnection::AsyncReadModifyWriteRow(
 void DataConnection::AsyncReadRows(
     std::string const&, std::string const&,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::function<future<bool>(bigtable::Row)>,
+    bigtable::RowFunctor, bigtable::FinishFunctor on_finish, bigtable::RowSet,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::function<void(Status)> on_finish, bigtable::RowSet, std::int64_t,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    bigtable::Filter) {
+    std::int64_t, bigtable::Filter) {
   on_finish(Status(StatusCode::kUnimplemented, "not implemented"));
 }
 

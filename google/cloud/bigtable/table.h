@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H
 
+#include "google/cloud/bigtable/async_read_rows_callbacks.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
@@ -820,9 +821,6 @@ class Table {
    * @param row_set the rows to read from.
    * @param filter is applied on the server-side to data in the rows.
    *
-   * @tparam RowFunctor the type of the @p on_row callback.
-   * @tparam FinishFunctor the type of the @p on_finish callback.
-   *
    * @par Thread-safety
    * Two threads concurrently calling this member function on the same instance
    * of this class are **not** guaranteed to work. Consider copying the object
@@ -831,12 +829,8 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc async read rows
    */
-  template <typename RowFunctor, typename FinishFunctor>
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
-                     Filter filter) {
-    AsyncReadRows(std::move(on_row), std::move(on_finish), std::move(row_set),
-                  RowReader::NO_ROWS_LIMIT, std::move(filter));
-  }
+                     Filter filter);
 
   /**
    * Asynchronously reads a set of rows from the table.
@@ -860,9 +854,6 @@ class Table {
    *     read all matching rows.
    * @param filter is applied on the server-side to data in the rows.
    *
-   * @tparam RowFunctor the type of the @p on_row callback.
-   * @tparam FinishFunctor the type of the @p on_finish callback.
-   *
    * @par Thread-safety
    * Two threads concurrently calling this member function on the same instance
    * of this class are **not** guaranteed to work. Consider copying the object
@@ -873,37 +864,8 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc async read rows with limit
    */
-  template <typename RowFunctor, typename FinishFunctor>
-  void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish,
-                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                     RowSet row_set, std::int64_t rows_limit, Filter filter) {
-    static_assert(
-        google::cloud::internal::is_invocable<RowFunctor, bigtable::Row>::value,
-        "RowFunctor must be invocable with Row.");
-    static_assert(
-        google::cloud::internal::is_invocable<FinishFunctor, Status>::value,
-        "FinishFunctor must be invocable with Status.");
-    static_assert(
-        std::is_same<
-            google::cloud::internal::invoke_result_t<RowFunctor, bigtable::Row>,
-            future<bool>>::value,
-        "RowFunctor should return a future<bool>.");
-
-    if (connection_) {
-      google::cloud::internal::OptionsSpan span(options_);
-      connection_->AsyncReadRows(
-          app_profile_id_, table_name_, std::move(on_row), std::move(on_finish),
-          std::move(row_set), rows_limit, std::move(filter));
-      return;
-    }
-
-    bigtable_internal::LegacyAsyncRowReader::Create(
-        background_threads_->cq(), client_, app_profile_id_, table_name_,
-        std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
-        std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        metadata_update_policy_,
-        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
-  }
+  void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
+                     std::int64_t rows_limit, Filter filter);
 
   /**
    * Asynchronously read and return a single row from the table.
