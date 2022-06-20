@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table_admin.h"
-#include "google/cloud/bigtable/internal/wait_for_consistency.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/wait_for_consistency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/internal/time_utils.h"
 #include <google/protobuf/duration.pb.h>
@@ -226,9 +227,16 @@ Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
 
 future<StatusOr<Consistency>> TableAdmin::WaitForConsistency(
     std::string const& table_id, std::string const& consistency_token) {
-  return bigtable_admin_internal::AsyncWaitForConsistency(
-             cq_, connection_, TableName(table_id), consistency_token,
-             policies_)
+  // We avoid lifetime issues due to ownership cycles, by holding the
+  // `BackgroundThreads` which run the `CompletionQueue` outside of the
+  // operation, in this class. If the `BackgroundThreads` running the
+  // `CompletionQueue` were instead owned by the Connection, we would have an
+  // ownership cycle. We have made this mistake before. See #7740 for more
+  // details.
+  auto client = bigtable_admin::BigtableTableAdminClient(connection_);
+  return bigtable_admin::AsyncWaitForConsistency(cq_, std::move(client),
+                                                 TableName(table_id),
+                                                 consistency_token, policies_)
       .then([](future<Status> f) -> StatusOr<Consistency> {
         auto s = f.get();
         if (!s.ok()) return s;

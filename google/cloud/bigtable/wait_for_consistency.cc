@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/wait_for_consistency.h"
+#include "google/cloud/bigtable/wait_for_consistency.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
 #include <chrono>
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin_internal {
+namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -27,16 +27,15 @@ namespace {
 class AsyncWaitForConsistencyImpl
     : public std::enable_shared_from_this<AsyncWaitForConsistencyImpl> {
  public:
-  AsyncWaitForConsistencyImpl(
-      CompletionQueue cq,
-      std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection,
-      std::string table_name, std::string consistency_token, Options options)
+  AsyncWaitForConsistencyImpl(CompletionQueue cq,
+                              BigtableTableAdminClient client,
+                              std::string table_name,
+                              std::string consistency_token, Options options)
       : cq_(std::move(cq)),
-        connection_(std::move(connection)),
-        options_(BigtableTableAdminDefaultOptions(std::move(options))),
-        polling_policy_(
-            options_
-                .get<bigtable_admin::BigtableTableAdminPollingPolicyOption>()) {
+        client_(std::move(client)),
+        options_(bigtable_admin_internal::BigtableTableAdminDefaultOptions(
+            std::move(options))),
+        polling_policy_(options_.get<BigtableTableAdminPollingPolicyOption>()) {
     request_.set_name(std::move(table_name));
     request_.set_consistency_token(std::move(consistency_token));
   }
@@ -73,13 +72,13 @@ class AsyncWaitForConsistencyImpl
   }
 
   void StartAttempt() {
-    internal::OptionsSpan span(options_);
     auto self = this->shared_from_this();
     auto state = StartOperation();
     if (state.cancelled) return;
-    SetPending(state.operation,
-               connection_->AsyncCheckConsistency(request_).then(
-                   [self](future<RespType> f) { self->OnAttempt(f.get()); }));
+    SetPending(
+        state.operation,
+        client_.AsyncCheckConsistency(request_, options_)
+            .then([self](future<RespType> f) { self->OnAttempt(f.get()); }));
   }
 
   void StartBackoff() {
@@ -152,7 +151,7 @@ class AsyncWaitForConsistencyImpl
 
   CompletionQueue cq_;
   bigtable::admin::v2::CheckConsistencyRequest request_;
-  std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection_;
+  BigtableTableAdminClient client_;
   Options options_;
   std::shared_ptr<PollingPolicy> polling_policy_;
   promise<Status> result_;
@@ -169,17 +168,18 @@ class AsyncWaitForConsistencyImpl
 
 }  // namespace
 
-future<Status> AsyncWaitForConsistency(
-    CompletionQueue cq,
-    std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection,
-    std::string table_name, std::string consistency_token, Options options) {
+future<Status> AsyncWaitForConsistency(CompletionQueue cq,
+                                       BigtableTableAdminClient client,
+                                       std::string table_name,
+                                       std::string consistency_token,
+                                       Options options) {
   auto loop = std::make_shared<AsyncWaitForConsistencyImpl>(
-      std::move(cq), std::move(connection), std::move(table_name),
+      std::move(cq), std::move(client), std::move(table_name),
       std::move(consistency_token), std::move(options));
   return loop->Start();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin_internal
+}  // namespace bigtable_admin
 }  // namespace cloud
 }  // namespace google

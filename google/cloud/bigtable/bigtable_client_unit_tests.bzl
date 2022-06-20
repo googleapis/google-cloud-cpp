@@ -58,7 +58,6 @@ bigtable_client_unit_tests = [
     "internal/legacy_row_reader_test.cc",
     "internal/logging_data_client_test.cc",
     "internal/prefix_range_end_test.cc",
-    "internal/wait_for_consistency_test.cc",
     "legacy_table_test.cc",
     "metadata_update_policy_test.cc",
     "mocks/mock_row_reader_test.cc",
@@ -84,4 +83,5 @@ bigtable_client_unit_tests = [
     "table_test.cc",
     "testing/cleanup_stale_resources_test.cc",
     "testing/random_names_test.cc",
+    "wait_for_consistency_test.cc",
 ]

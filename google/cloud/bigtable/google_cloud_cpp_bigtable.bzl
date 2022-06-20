@@ -95,7 +95,6 @@ google_cloud_cpp_bigtable_hdrs = [
     "internal/rpc_policy_parameters.h",
     "internal/rpc_policy_parameters.inc",
     "internal/unary_client_utils.h",
-    "internal/wait_for_consistency.h",
     "metadata_update_policy.h",
     "mutation_batcher.h",
     "mutation_branch.h",
@@ -117,6 +116,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "table_config.h",
     "version.h",
     "version_info.h",
+    "wait_for_consistency.h",
 ]
 
 google_cloud_cpp_bigtable_srcs = [
@@ -179,7 +179,6 @@ google_cloud_cpp_bigtable_srcs = [
     "internal/logging_data_client.cc",
     "internal/prefix_range_end.cc",
     "internal/readrowsparser.cc",
-    "internal/wait_for_consistency.cc",
     "metadata_update_policy.cc",
     "mutation_batcher.cc",
     "mutations.cc",
@@ -194,4 +193,5 @@ google_cloud_cpp_bigtable_srcs = [
     "table_admin.cc",
     "table_config.cc",
     "version.cc",
+    "wait_for_consistency.cc",
 ]
