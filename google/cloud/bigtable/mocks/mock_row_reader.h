@@ -22,8 +22,6 @@ namespace google {
 namespace cloud {
 namespace bigtable_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-// TODO(#8860) - Remove internal namespace.
-namespace internal {
 
 /**
  * Returns a `RowReader` with a fixed output stream.
@@ -49,7 +47,7 @@ namespace internal {
  *
  *   auto mock = std::shared_ptr<cbtm::MockDataConnection>();
  *   EXPECT_CALL(*mock, ReadRows)
- *       .WillOnce(Return(cbtm::MakeTestRowReader(rows)));
+ *       .WillOnce(Return(cbtm::MakeRowReader(rows)));
  *
  *   auto table = cbt::Table(mock);
  *   auto reader = table.ReadRows(...);
@@ -58,10 +56,9 @@ namespace internal {
  * }
  * @endcode
  */
-bigtable::RowReader MakeTestRowReader(std::vector<bigtable::Row> rows,
-                                      Status final_status = {});
+bigtable::RowReader MakeRowReader(std::vector<bigtable::Row> rows,
+                                  Status final_status = {});
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_mocks
 }  // namespace cloud

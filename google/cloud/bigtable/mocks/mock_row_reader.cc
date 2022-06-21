@@ -19,11 +19,9 @@ namespace google {
 namespace cloud {
 namespace bigtable_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-// TODO(#8860) - Remove internal namespace.
-namespace internal {
 
-bigtable::RowReader MakeTestRowReader(std::vector<bigtable::Row> rows,
-                                      Status final_status) {
+bigtable::RowReader MakeRowReader(std::vector<bigtable::Row> rows,
+                                  Status final_status) {
   class ConvenientRowReader : public bigtable_internal::RowReaderImpl {
    public:
     explicit ConvenientRowReader(std::vector<bigtable::Row> rows,
@@ -53,7 +51,6 @@ bigtable::RowReader MakeTestRowReader(std::vector<bigtable::Row> rows,
   return bigtable_internal::MakeRowReader(std::move(impl));
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_mocks
 }  // namespace cloud

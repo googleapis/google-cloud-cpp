@@ -22,7 +22,6 @@ namespace google {
 namespace cloud {
 namespace bigtable_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::cloud::bigtable::Row;
@@ -49,11 +48,11 @@ struct Result {
   Status final_status;
 };
 
-TEST(MakeTestRowReader, Empty) {
+TEST(MakeRowReaderTest, Empty) {
   std::vector<Row> rows;
   Status final_status;
 
-  auto reader = MakeTestRowReader(rows);
+  auto reader = MakeRowReader(rows);
 
   auto actual = Result(std::move(reader));
   auto expected = Result(rows, final_status);
@@ -61,11 +60,11 @@ TEST(MakeTestRowReader, Empty) {
   EXPECT_EQ(actual.final_status, expected.final_status);
 }
 
-TEST(MakeTestRowReader, Rows) {
+TEST(MakeRowReaderTest, Rows) {
   std::vector<Row> rows = {Row("r1", {}), Row("r2", {})};
   Status final_status;
 
-  auto reader = MakeTestRowReader(rows);
+  auto reader = MakeRowReader(rows);
 
   auto actual = Result(std::move(reader));
   auto expected = Result(rows, final_status);
@@ -73,11 +72,11 @@ TEST(MakeTestRowReader, Rows) {
   EXPECT_EQ(actual.final_status, expected.final_status);
 }
 
-TEST(MakeTestRowReader, StatusOnly) {
+TEST(MakeRowReaderTest, StatusOnly) {
   std::vector<Row> rows;
   auto final_status = Status(StatusCode::kPermissionDenied, "fail");
 
-  auto reader = MakeTestRowReader(rows, final_status);
+  auto reader = MakeRowReader(rows, final_status);
 
   auto actual = Result(std::move(reader));
   auto expected = Result(rows, final_status);
@@ -85,11 +84,11 @@ TEST(MakeTestRowReader, StatusOnly) {
   EXPECT_EQ(actual.final_status, expected.final_status);
 }
 
-TEST(MakeTestRowReader, RowsThenStatus) {
+TEST(MakeRowReaderTest, RowsThenStatus) {
   std::vector<Row> rows = {Row("r1", {}), Row("r2", {})};
   auto final_status = Status(StatusCode::kPermissionDenied, "fail");
 
-  auto reader = MakeTestRowReader(rows, final_status);
+  auto reader = MakeRowReader(rows, final_status);
 
   auto actual = Result(std::move(reader));
   auto expected = Result(rows, final_status);
@@ -97,11 +96,11 @@ TEST(MakeTestRowReader, RowsThenStatus) {
   EXPECT_EQ(actual.final_status, expected.final_status);
 }
 
-TEST(MakeTestRowReader, CancelEndsGoodStream) {
+TEST(MakeRowReaderTest, CancelEndsGoodStream) {
   std::vector<Row> rows = {Row("r1", {}), Row("r2", {})};
   Status final_status;
 
-  auto reader = MakeTestRowReader(rows);
+  auto reader = MakeRowReader(rows);
 
   auto it = reader.begin();
   ASSERT_STATUS_OK(*it);
@@ -117,11 +116,11 @@ TEST(MakeTestRowReader, CancelEndsGoodStream) {
   EXPECT_EQ(reader.begin(), reader.end());
 }
 
-TEST(MakeTestRowReader, CancelEndsBadStream) {
+TEST(MakeRowReaderTest, CancelEndsBadStream) {
   std::vector<Row> rows = {Row("r1", {}), Row("r2", {})};
   auto final_status = Status(StatusCode::kCancelled, "cancelled");
 
-  auto reader = MakeTestRowReader(rows, final_status);
+  auto reader = MakeRowReader(rows, final_status);
 
   auto it = reader.begin();
   ASSERT_STATUS_OK(*it);
@@ -141,7 +140,6 @@ TEST(MakeTestRowReader, CancelEndsBadStream) {
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_mocks
 }  // namespace cloud
