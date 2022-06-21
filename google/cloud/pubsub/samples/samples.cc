@@ -1559,7 +1559,7 @@ void PublishWithCompression(std::vector<std::string> const& argv) {
   if (argv.size() != 2) {
     throw examples::Usage{"publish-with-compression <project-id> <topic-id>"};
   }
-  //! [START pubsub_publish_with_compression]
+  //! [START pubsub_publisher_with_compression]
   namespace g = ::google::cloud;
   namespace pubsub = ::google::cloud::pubsub;
   [](std::string project_id, std::string topic_id) {
@@ -1584,7 +1584,7 @@ void PublishWithCompression(std::vector<std::string> const& argv) {
     // Block until the message is published
     done.get();
   }
-  //! [END pubsub_publish_with_compression]
+  //! [END pubsub_publisher_with_compression]
   (argv.at(0), argv.at(1));
 }
 
