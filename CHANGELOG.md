@@ -163,15 +163,10 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
 
-* doc: broken link in GCS README file ([#9264](https://github.com/googleapis/google-cloud-cpp/pull/9264))
-* fix: handle transient failures in the GCE credentials ([#9252](https://github.com/googleapis/google-cloud-cpp/pull/9252))
-* fix: relax parsing for GCE informational fields ([#9251](https://github.com/googleapis/google-cloud-cpp/pull/9251))
 * feat(common): include status error payloads in the RPC log ([#9186](https://github.com/googleapis/google-cloud-cpp/pull/9186))
-* feat(common): include status error payloads in the RPC log ([#9169](https://github.com/googleapis/google-cloud-cpp/pull/9169))
+  ([#9169](https://github.com/googleapis/google-cloud-cpp/pull/9169))
 * fix(common): workaround GCC "ambiguous" overload errors ([#9144](https://github.com/googleapis/google-cloud-cpp/pull/9144))
 * fix(common): compile with GCC (MinGW-w64) under Windows ([#9140](https://github.com/googleapis/google-cloud-cpp/pull/9140))
-* fix(rest): userIp population and multi removal ([#9126](https://github.com/googleapis/google-cloud-cpp/pull/9126))
-* feat(rest): add HasUnreadData method ([#9118](https://github.com/googleapis/google-cloud-cpp/pull/9118))
 
 ## v1.41.0 - 2022-06
 
