@@ -3881,15 +3881,13 @@ void RunAllSlowInstanceTests(
   SampleBanner("delete-instance");
   DeleteInstance(instance_admin_client, project_id, crud_instance_id);
 
-  if (!emulator) {
-    SampleBanner("spanner_create_instance_with_processing_units");
-    CreateInstanceWithProcessingUnits(instance_admin_client, project_id,
-                                      crud_instance_id,
-                                      "Test Low-Cost Instance", config_id);
+  SampleBanner("spanner_create_instance_with_processing_units");
+  CreateInstanceWithProcessingUnits(instance_admin_client, project_id,
+                                    crud_instance_id, "Test Low-Cost Instance",
+                                    config_id);
 
-    SampleBanner("delete-instance");
-    DeleteInstance(instance_admin_client, project_id, crud_instance_id);
-  }
+  SampleBanner("delete-instance");
+  DeleteInstance(instance_admin_client, project_id, crud_instance_id);
 }
 
 void RunAll(bool emulator) {
@@ -4142,10 +4140,8 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_set_request_tag");
   SetRequestTag(client);
 
-  if (!emulator) {
-    SampleBanner("spanner_batch_client");
-    UsePartitionQuery(client);
-  }
+  SampleBanner("spanner_batch_client");
+  UsePartitionQuery(client);
 
   SampleBanner("spanner_read_data_with_index");
   ReadDataWithIndex(client);
@@ -4189,10 +4185,8 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_dml_write_then_read");
   DmlWriteThenRead(client);
 
-  if (!emulator) {
-    SampleBanner("spanner_dml_batch_update");
-    DmlBatchUpdate(client);
-  }
+  SampleBanner("spanner_dml_batch_update");
+  DmlBatchUpdate(client);
 
   SampleBanner("spanner_write_data_for_struct_queries");
   WriteDataForStructQueries(client);
@@ -4255,13 +4249,11 @@ void RunAll(bool emulator) {
   RunOneCommand(
       {"", "custom-database-admin-policies", project_id, instance_id});
 
-  if (!emulator) {
-    SampleBanner("spanner_dml_partitioned_update");
-    DmlPartitionedUpdate(client);
+  SampleBanner("spanner_dml_partitioned_update");
+  DmlPartitionedUpdate(client);
 
-    SampleBanner("spanner_dml_partitioned_delete");
-    DmlPartitionedDelete(client);
-  }
+  SampleBanner("spanner_dml_partitioned_delete");
+  DmlPartitionedDelete(client);
 
   SampleBanner("spanner_dml_structs");
   DmlStructs(client);
