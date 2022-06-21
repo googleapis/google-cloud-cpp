@@ -140,8 +140,13 @@ Options DefaultSubscriberOptionsOnly(Options opts) {
   }
 
   // Enforce constraints
-  auto& extension = opts.lookup<pubsub::MaxDeadlineExtensionOption>();
-  extension = (std::max)((std::min)(extension, seconds(600)), seconds(10));
+  auto& max = opts.lookup<pubsub::MaxDeadlineExtensionOption>();
+  max = (std::max)((std::min)(max, seconds(600)), seconds(10));
+
+  if (opts.has<pubsub::MinDeadlineExtensionOption>()) {
+    auto& min = opts.lookup<pubsub::MinDeadlineExtensionOption>();
+    min = (std::max)((std::min)(min, max), seconds(10));
+  }
 
   auto& messages = opts.lookup<pubsub::MaxOutstandingMessagesOption>();
   messages = std::max<std::int64_t>(0, messages);
