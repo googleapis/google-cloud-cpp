@@ -54,9 +54,32 @@ class DefaultBareMetalSolutionConnectionIdempotencyPolicy
     return Idempotency::kIdempotent;
   }
 
+  Idempotency UpdateInstance(
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency ResetInstance(
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const&)
       override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency StartInstance(
+      google::cloud::baremetalsolution::v2::StartInstanceRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency StopInstance(
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DetachLun(
+      google::cloud::baremetalsolution::v2::DetachLunRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
@@ -76,8 +99,20 @@ class DefaultBareMetalSolutionConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency ResizeVolume(
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency ListNetworks(
       google::cloud::baremetalsolution::v2::ListNetworksRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListNetworkUsage(
+      google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&)
+      override {
     return Idempotency::kIdempotent;
   }
 
@@ -86,64 +121,10 @@ class DefaultBareMetalSolutionConnectionIdempotencyPolicy
     return Idempotency::kIdempotent;
   }
 
-  Idempotency ListSnapshotSchedulePolicies(
-      google::cloud::baremetalsolution::v2::ListSnapshotSchedulePoliciesRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency GetSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          GetSnapshotSchedulePolicyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency CreateSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          CreateSnapshotSchedulePolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency UpdateSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          UpdateSnapshotSchedulePolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          DeleteSnapshotSchedulePolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency CreateVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&)
+  Idempotency UpdateNetwork(
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&)
       override {
     return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency RestoreVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency GetVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency ListVolumeSnapshots(
-      google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest)
-      override {
-    return Idempotency::kIdempotent;
   }
 
   Idempotency GetLun(
@@ -154,6 +135,23 @@ class DefaultBareMetalSolutionConnectionIdempotencyPolicy
   Idempotency ListLuns(
       google::cloud::baremetalsolution::v2::ListLunsRequest) override {
     return Idempotency::kIdempotent;
+  }
+
+  Idempotency GetNfsShare(
+      google::cloud::baremetalsolution::v2::GetNfsShareRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListNfsShares(
+      google::cloud::baremetalsolution::v2::ListNfsSharesRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency UpdateNfsShare(
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
   }
 };
 }  // namespace

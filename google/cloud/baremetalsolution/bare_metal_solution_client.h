@@ -101,12 +101,12 @@ class BareMetalSolutionClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L618}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
   /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L680}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L136}
   /// [google.cloud.baremetalsolution.v2.Instance]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L618}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
   StreamRange<google::cloud::baremetalsolution::v2::Instance> ListInstances(
       std::string const& parent, Options opts = {});
@@ -115,16 +115,16 @@ class BareMetalSolutionClient {
   /// List servers in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListInstancesRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L680}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListInstancesRequest,google/cloud/baremetalsolution/v2/instance.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L618}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
   /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L680}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L136}
   /// [google.cloud.baremetalsolution.v2.Instance]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L618}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
   StreamRange<google::cloud::baremetalsolution::v2::Instance> ListInstances(
       google::cloud::baremetalsolution::v2::ListInstancesRequest request,
@@ -137,12 +137,12 @@ class BareMetalSolutionClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L618}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
   /// [google.cloud.baremetalsolution.v2.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L710}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L125}
   /// [google.cloud.baremetalsolution.v2.Instance]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L618}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
   StatusOr<google::cloud::baremetalsolution::v2::Instance> GetInstance(
       std::string const& name, Options opts = {});
@@ -151,19 +151,66 @@ class BareMetalSolutionClient {
   /// Get details about a single server.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetInstanceRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L710}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetInstanceRequest,google/cloud/baremetalsolution/v2/instance.proto#L125}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L618}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
   /// [google.cloud.baremetalsolution.v2.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L710}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L125}
   /// [google.cloud.baremetalsolution.v2.Instance]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L618}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
   StatusOr<google::cloud::baremetalsolution::v2::Instance> GetInstance(
       google::cloud::baremetalsolution::v2::GetInstanceRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Update details of a single server.
+  ///
+  /// @param instance  Required. The server to update.
+  ///  The `name` field is used to identify the instance to update.
+  ///  Format: projects/{project}/locations/{location}/instances/{instance}
+  /// @param update_mask  The list of fields to update.
+  ///  The currently supported fields are:
+  ///    `labels`
+  ///    `hyperthreading_enabled`
+  ///    `os_image`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
+  ///
+  /// [google.cloud.baremetalsolution.v2.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L169}
+  /// [google.cloud.baremetalsolution.v2.Instance]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+  UpdateInstance(google::cloud::baremetalsolution::v2::Instance const& instance,
+                 google::protobuf::FieldMask const& update_mask,
+                 Options opts = {});
+
+  ///
+  /// Update details of a single server.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::UpdateInstanceRequest,google/cloud/baremetalsolution/v2/instance.proto#L169}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
+  ///
+  /// [google.cloud.baremetalsolution.v2.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L169}
+  /// [google.cloud.baremetalsolution.v2.Instance]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+  UpdateInstance(
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+          request,
       Options opts = {});
 
   ///
@@ -174,12 +221,12 @@ class BareMetalSolutionClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::ResetInstanceResponse,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L732}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ResetInstanceResponse,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L288}
   ///
   /// [google.cloud.baremetalsolution.v2.ResetInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L721}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L185}
   /// [google.cloud.baremetalsolution.v2.ResetInstanceResponse]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L732}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L288}
   ///
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
   ResetInstance(std::string const& name, Options opts = {});
@@ -189,20 +236,131 @@ class BareMetalSolutionClient {
   /// power off and then turning it back on.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::ResetInstanceRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L721}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ResetInstanceRequest,google/cloud/baremetalsolution/v2/instance.proto#L185}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::ResetInstanceResponse,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L732}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ResetInstanceResponse,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L288}
   ///
   /// [google.cloud.baremetalsolution.v2.ResetInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L721}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L185}
   /// [google.cloud.baremetalsolution.v2.ResetInstanceResponse]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L732}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L288}
   ///
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
   ResetInstance(
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Starts a server that was shutdown.
+  ///
+  /// @param name  Required. Name of the resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::StartInstanceResponse,google/cloud/baremetalsolution/v2/instance.proto#L285}
+  ///
+  /// [google.cloud.baremetalsolution.v2.StartInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L196}
+  /// [google.cloud.baremetalsolution.v2.StartInstanceResponse]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L285}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
+  StartInstance(std::string const& name, Options opts = {});
+
+  ///
+  /// Starts a server that was shutdown.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::StartInstanceRequest,google/cloud/baremetalsolution/v2/instance.proto#L196}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::StartInstanceResponse,google/cloud/baremetalsolution/v2/instance.proto#L285}
+  ///
+  /// [google.cloud.baremetalsolution.v2.StartInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L196}
+  /// [google.cloud.baremetalsolution.v2.StartInstanceResponse]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L285}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
+  StartInstance(
+      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Stop a running server.
+  ///
+  /// @param name  Required. Name of the resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::StopInstanceResponse,google/cloud/baremetalsolution/v2/instance.proto#L288}
+  ///
+  /// [google.cloud.baremetalsolution.v2.StopInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L207}
+  /// [google.cloud.baremetalsolution.v2.StopInstanceResponse]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L288}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
+  StopInstance(std::string const& name, Options opts = {});
+
+  ///
+  /// Stop a running server.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::StopInstanceRequest,google/cloud/baremetalsolution/v2/instance.proto#L207}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::StopInstanceResponse,google/cloud/baremetalsolution/v2/instance.proto#L288}
+  ///
+  /// [google.cloud.baremetalsolution.v2.StopInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L207}
+  /// [google.cloud.baremetalsolution.v2.StopInstanceResponse]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L288}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
+  StopInstance(
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Detach LUN from Instance.
+  ///
+  /// @param instance  Required. Name of the instance.
+  /// @param lun  Required. Name of the Lun to detach.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
+  ///
+  /// [google.cloud.baremetalsolution.v2.DetachLunRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L218}
+  /// [google.cloud.baremetalsolution.v2.Instance]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
+      std::string const& instance, std::string const& lun, Options opts = {});
+
+  ///
+  /// Detach LUN from Instance.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::DetachLunRequest,google/cloud/baremetalsolution/v2/instance.proto#L218}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
+  ///
+  /// [google.cloud.baremetalsolution.v2.DetachLunRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L218}
+  /// [google.cloud.baremetalsolution.v2.Instance]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
+      google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
       Options opts = {});
 
   ///
@@ -212,12 +370,12 @@ class BareMetalSolutionClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   /// [google.cloud.baremetalsolution.v2.ListVolumesRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L337}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L169}
   /// [google.cloud.baremetalsolution.v2.Volume]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   StreamRange<google::cloud::baremetalsolution::v2::Volume> ListVolumes(
       std::string const& parent, Options opts = {});
@@ -226,16 +384,16 @@ class BareMetalSolutionClient {
   /// List storage volumes in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListVolumesRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L337}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListVolumesRequest,google/cloud/baremetalsolution/v2/volume.proto#L169}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   /// [google.cloud.baremetalsolution.v2.ListVolumesRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L337}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L169}
   /// [google.cloud.baremetalsolution.v2.Volume]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   StreamRange<google::cloud::baremetalsolution::v2::Volume> ListVolumes(
       google::cloud::baremetalsolution::v2::ListVolumesRequest request,
@@ -248,12 +406,12 @@ class BareMetalSolutionClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   /// [google.cloud.baremetalsolution.v2.GetVolumeRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L367}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L158}
   /// [google.cloud.baremetalsolution.v2.Volume]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   StatusOr<google::cloud::baremetalsolution::v2::Volume> GetVolume(
       std::string const& name, Options opts = {});
@@ -262,16 +420,16 @@ class BareMetalSolutionClient {
   /// Get details of a single storage volume.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetVolumeRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L367}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetVolumeRequest,google/cloud/baremetalsolution/v2/volume.proto#L158}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   /// [google.cloud.baremetalsolution.v2.GetVolumeRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L367}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L158}
   /// [google.cloud.baremetalsolution.v2.Volume]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   StatusOr<google::cloud::baremetalsolution::v2::Volume> GetVolume(
       google::cloud::baremetalsolution::v2::GetVolumeRequest const& request,
@@ -287,15 +445,18 @@ class BareMetalSolutionClient {
   ///  The only currently supported fields are:
   ///    `snapshot_auto_delete_behavior`
   ///    `snapshot_schedule_policy_name`
+  ///    'labels'
+  ///    'snapshot_enabled'
+  ///    'snapshot_reservation_detail.reserved_space_percent'
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   /// [google.cloud.baremetalsolution.v2.UpdateVolumeRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L942}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L202}
   /// [google.cloud.baremetalsolution.v2.Volume]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
       google::cloud::baremetalsolution::v2::Volume const& volume,
@@ -305,19 +466,56 @@ class BareMetalSolutionClient {
   /// Update details of a single storage volume.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::UpdateVolumeRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L942}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::UpdateVolumeRequest,google/cloud/baremetalsolution/v2/volume.proto#L202}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   /// [google.cloud.baremetalsolution.v2.UpdateVolumeRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L942}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L202}
   /// [google.cloud.baremetalsolution.v2.Volume]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L229}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
   ///
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Emergency Volume resize.
+  ///
+  /// @param volume  Required. Volume to resize.
+  /// @param size_gib  New Volume size, in GiB.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/volume.proto#L32}
+  ///
+  /// [google.cloud.baremetalsolution.v2.ResizeVolumeRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L220}
+  /// [google.cloud.baremetalsolution.v2.Volume]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
+      std::string const& volume, std::int64_t size_gib, Options opts = {});
+
+  ///
+  /// Emergency Volume resize.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ResizeVolumeRequest,google/cloud/baremetalsolution/v2/volume.proto#L220}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Volume,google/cloud/baremetalsolution/v2/volume.proto#L32}
+  ///
+  /// [google.cloud.baremetalsolution.v2.ResizeVolumeRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L220}
+  /// [google.cloud.baremetalsolution.v2.Volume]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
       Options opts = {});
 
   ///
@@ -327,12 +525,12 @@ class BareMetalSolutionClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L455}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
   /// [google.cloud.baremetalsolution.v2.ListNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L566}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L214}
   /// [google.cloud.baremetalsolution.v2.Network]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L455}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
   StreamRange<google::cloud::baremetalsolution::v2::Network> ListNetworks(
       std::string const& parent, Options opts = {});
@@ -341,19 +539,59 @@ class BareMetalSolutionClient {
   /// List network in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListNetworksRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L566}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListNetworksRequest,google/cloud/baremetalsolution/v2/network.proto#L214}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L455}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
   /// [google.cloud.baremetalsolution.v2.ListNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L566}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L214}
   /// [google.cloud.baremetalsolution.v2.Network]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L455}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
   StreamRange<google::cloud::baremetalsolution::v2::Network> ListNetworks(
       google::cloud::baremetalsolution::v2::ListNetworksRequest request,
+      Options opts = {});
+
+  ///
+  /// List all Networks (and used IPs for each Network) in the vendor account
+  /// associated with the specified project.
+  ///
+  /// @param location  Required. Parent value (project and location).
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListNetworkUsageResponse,google/cloud/baremetalsolution/v2/network.proto#L281}
+  ///
+  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L270}
+  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageResponse]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L281}
+  ///
+  StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
+  ListNetworkUsage(std::string const& location, Options opts = {});
+
+  ///
+  /// List all Networks (and used IPs for each Network) in the vendor account
+  /// associated with the specified project.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListNetworkUsageRequest,google/cloud/baremetalsolution/v2/network.proto#L270}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListNetworkUsageResponse,google/cloud/baremetalsolution/v2/network.proto#L281}
+  ///
+  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L270}
+  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageResponse]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L281}
+  ///
+  StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
+  ListNetworkUsage(
+      google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
+          request,
       Options opts = {});
 
   ///
@@ -363,12 +601,12 @@ class BareMetalSolutionClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L455}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
   /// [google.cloud.baremetalsolution.v2.GetNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L596}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L203}
   /// [google.cloud.baremetalsolution.v2.Network]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L455}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
   StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
       std::string const& name, Options opts = {});
@@ -377,401 +615,61 @@ class BareMetalSolutionClient {
   /// Get details of a single network.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetNetworkRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L596}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetNetworkRequest,google/cloud/baremetalsolution/v2/network.proto#L203}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L455}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
   /// [google.cloud.baremetalsolution.v2.GetNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L596}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L203}
   /// [google.cloud.baremetalsolution.v2.Network]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L455}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
   StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
       google::cloud::baremetalsolution::v2::GetNetworkRequest const& request,
       Options opts = {});
 
   ///
-  /// List snapshot schedule policies in a given project and location.
+  /// Update details of a single network.
   ///
-  /// @param parent  Required. The parent project containing the Snapshot
-  /// Schedule Policies.
+  /// @param network  Required. The network to update.
+  ///  The `name` field is used to identify the instance to update.
+  ///  Format: projects/{project}/locations/{location}/networks/{network}
+  /// @param update_mask  The list of fields to update.
+  ///  The only currently supported fields are:
+  ///    `labels`, `reservations`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
-  /// [google.cloud.baremetalsolution.v2.ListSnapshotSchedulePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L874}
-  /// [google.cloud.baremetalsolution.v2.SnapshotSchedulePolicy]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
+  /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L247}
+  /// [google.cloud.baremetalsolution.v2.Network]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
-  StreamRange<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  ListSnapshotSchedulePolicies(std::string const& parent, Options opts = {});
-
-  ///
-  /// List snapshot schedule policies in a given project and location.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListSnapshotSchedulePoliciesRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L874}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  /// [google.cloud.baremetalsolution.v2.ListSnapshotSchedulePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L874}
-  /// [google.cloud.baremetalsolution.v2.SnapshotSchedulePolicy]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  StreamRange<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  ListSnapshotSchedulePolicies(
-      google::cloud::baremetalsolution::v2::ListSnapshotSchedulePoliciesRequest
-          request,
-      Options opts = {});
-
-  ///
-  /// Get details of a single snapshot schedule policy.
-  ///
-  /// @param name  Required. Name of the resource.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  /// [google.cloud.baremetalsolution.v2.GetSnapshotSchedulePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L607}
-  /// [google.cloud.baremetalsolution.v2.SnapshotSchedulePolicy]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  GetSnapshotSchedulePolicy(std::string const& name, Options opts = {});
-
-  ///
-  /// Get details of a single snapshot schedule policy.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetSnapshotSchedulePolicyRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L607}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  /// [google.cloud.baremetalsolution.v2.GetSnapshotSchedulePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L607}
-  /// [google.cloud.baremetalsolution.v2.SnapshotSchedulePolicy]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  GetSnapshotSchedulePolicy(google::cloud::baremetalsolution::v2::
-                                GetSnapshotSchedulePolicyRequest const& request,
-                            Options opts = {});
-
-  ///
-  /// Create a snapshot schedule policy in the specified project.
-  ///
-  /// @param parent  Required. The parent project and location containing the
-  /// SnapshotSchedulePolicy.
-  /// @param snapshot_schedule_policy  Required. The SnapshotSchedulePolicy to
-  /// create.
-  /// @param snapshot_schedule_policy_id  Required. Snapshot policy ID
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  /// [google.cloud.baremetalsolution.v2.CreateSnapshotSchedulePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L901}
-  /// [google.cloud.baremetalsolution.v2.SnapshotSchedulePolicy]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  CreateSnapshotSchedulePolicy(
-      std::string const& parent,
-      google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy const&
-          snapshot_schedule_policy,
-      std::string const& snapshot_schedule_policy_id, Options opts = {});
-
-  ///
-  /// Create a snapshot schedule policy in the specified project.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::CreateSnapshotSchedulePolicyRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L901}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  /// [google.cloud.baremetalsolution.v2.CreateSnapshotSchedulePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L901}
-  /// [google.cloud.baremetalsolution.v2.SnapshotSchedulePolicy]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  CreateSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          CreateSnapshotSchedulePolicyRequest const& request,
-      Options opts = {});
-
-  ///
-  /// Update a snapshot schedule policy in the specified project.
-  ///
-  /// @param snapshot_schedule_policy  Required. The snapshot schedule policy to
-  /// update.
-  ///  The `name` field is used to identify the snapshot schedule policy to
-  ///  update. Format:
-  ///  projects/{project}/locations/global/snapshotSchedulePolicies/{policy}
-  /// @param update_mask  Required. The list of fields to update.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  /// [google.cloud.baremetalsolution.v2.UpdateSnapshotSchedulePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L918}
-  /// [google.cloud.baremetalsolution.v2.SnapshotSchedulePolicy]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
-  ///
-  StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  UpdateSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy const&
-          snapshot_schedule_policy,
+  future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
+      google::cloud::baremetalsolution::v2::Network const& network,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
-  /// Update a snapshot schedule policy in the specified project.
+  /// Update details of a single network.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::UpdateSnapshotSchedulePolicyRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L918}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::UpdateNetworkRequest,google/cloud/baremetalsolution/v2/network.proto#L247}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
-  /// [google.cloud.baremetalsolution.v2.UpdateSnapshotSchedulePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L918}
-  /// [google.cloud.baremetalsolution.v2.SnapshotSchedulePolicy]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L843}
+  /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L247}
+  /// [google.cloud.baremetalsolution.v2.Network]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
-  StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  UpdateSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          UpdateSnapshotSchedulePolicyRequest const& request,
-      Options opts = {});
-
-  ///
-  /// Delete a named snapshot schedule policy.
-  ///
-  /// @param name  Required. The name of the snapshot schedule policy to delete.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  ///
-  /// [google.cloud.baremetalsolution.v2.DeleteSnapshotSchedulePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L931}
-  ///
-  Status DeleteSnapshotSchedulePolicy(std::string const& name,
-                                      Options opts = {});
-
-  ///
-  /// Delete a named snapshot schedule policy.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::DeleteSnapshotSchedulePolicyRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L931}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  ///
-  /// [google.cloud.baremetalsolution.v2.DeleteSnapshotSchedulePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L931}
-  ///
-  Status DeleteSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          DeleteSnapshotSchedulePolicyRequest const& request,
-      Options opts = {});
-
-  ///
-  /// Create a storage volume snapshot in a containing volume.
-  ///
-  /// @param parent  Required. The volume to snapshot.
-  /// @param volume_snapshot  Required. The volume snapshot to create. Only the
-  /// description field may be specified.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::VolumeSnapshot,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  /// [google.cloud.baremetalsolution.v2.CreateVolumeSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L998}
-  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  CreateVolumeSnapshot(
-      std::string const& parent,
-      google::cloud::baremetalsolution::v2::VolumeSnapshot const&
-          volume_snapshot,
-      Options opts = {});
-
-  ///
-  /// Create a storage volume snapshot in a containing volume.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L998}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::VolumeSnapshot,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  /// [google.cloud.baremetalsolution.v2.CreateVolumeSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L998}
-  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  CreateVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
-          request,
-      Options opts = {});
-
-  ///
-  /// Restore a storage volume snapshot to its containing volume.
-  ///
-  /// @param volume_snapshot  Required. Name of the resource.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::VolumeSnapshot,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  /// [google.cloud.baremetalsolution.v2.RestoreVolumeSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L1012}
-  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
-  RestoreVolumeSnapshot(std::string const& volume_snapshot, Options opts = {});
-
-  ///
-  /// Restore a storage volume snapshot to its containing volume.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L1012}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::VolumeSnapshot,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  /// [google.cloud.baremetalsolution.v2.RestoreVolumeSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L1012}
-  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
-  RestoreVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
-          request,
-      Options opts = {});
-
-  ///
-  /// Deletes a storage volume snapshot for a given volume.
-  ///
-  /// @param name  Required. The name of the snapshot to delete.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  ///
-  /// [google.cloud.baremetalsolution.v2.DeleteVolumeSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L778}
-  ///
-  Status DeleteVolumeSnapshot(std::string const& name, Options opts = {});
-
-  ///
-  /// Deletes a storage volume snapshot for a given volume.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L778}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  ///
-  /// [google.cloud.baremetalsolution.v2.DeleteVolumeSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L778}
-  ///
-  Status DeleteVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
-          request,
-      Options opts = {});
-
-  ///
-  /// Get details of a single storage volume snapshot.
-  ///
-  /// @param name  Required. Name of the resource.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::VolumeSnapshot,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  /// [google.cloud.baremetalsolution.v2.GetVolumeSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L737}
-  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  GetVolumeSnapshot(std::string const& name, Options opts = {});
-
-  ///
-  /// Get details of a single storage volume snapshot.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L737}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::VolumeSnapshot,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  /// [google.cloud.baremetalsolution.v2.GetVolumeSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L737}
-  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  GetVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
-          request,
-      Options opts = {});
-
-  ///
-  /// List storage volume snapshots for given storage volume.
-  ///
-  /// @param parent  Required. Parent value for ListVolumesRequest.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::VolumeSnapshot,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  /// [google.cloud.baremetalsolution.v2.ListVolumeSnapshotsRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L748}
-  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  ListVolumeSnapshots(std::string const& parent, Options opts = {});
-
-  ///
-  /// List storage volume snapshots for given storage volume.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L748}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::VolumeSnapshot,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  /// [google.cloud.baremetalsolution.v2.ListVolumeSnapshotsRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L748}
-  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L818}
-  ///
-  StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  ListVolumeSnapshots(
-      google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request,
+  future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
       Options opts = {});
 
   ///
@@ -781,12 +679,12 @@ class BareMetalSolutionClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Lun,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L378}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Lun,google/cloud/baremetalsolution/v2/lun.proto#L31}
   ///
   /// [google.cloud.baremetalsolution.v2.GetLunRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L957}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L111}
   /// [google.cloud.baremetalsolution.v2.Lun]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L378}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L31}
   ///
   StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
       std::string const& name, Options opts = {});
@@ -795,16 +693,16 @@ class BareMetalSolutionClient {
   /// Get details of a single storage logical unit number(LUN).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetLunRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L957}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetLunRequest,google/cloud/baremetalsolution/v2/lun.proto#L111}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Lun,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L378}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Lun,google/cloud/baremetalsolution/v2/lun.proto#L31}
   ///
   /// [google.cloud.baremetalsolution.v2.GetLunRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L957}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L111}
   /// [google.cloud.baremetalsolution.v2.Lun]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L378}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L31}
   ///
   StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
       google::cloud::baremetalsolution::v2::GetLunRequest const& request,
@@ -817,12 +715,12 @@ class BareMetalSolutionClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Lun,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L378}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Lun,google/cloud/baremetalsolution/v2/lun.proto#L31}
   ///
   /// [google.cloud.baremetalsolution.v2.ListLunsRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L968}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L122}
   /// [google.cloud.baremetalsolution.v2.Lun]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L378}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L31}
   ///
   StreamRange<google::cloud::baremetalsolution::v2::Lun> ListLuns(
       std::string const& parent, Options opts = {});
@@ -831,19 +729,136 @@ class BareMetalSolutionClient {
   /// List storage volume luns for given storage volume.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListLunsRequest,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L968}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListLunsRequest,google/cloud/baremetalsolution/v2/lun.proto#L122}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::baremetalsolution::v2::Lun,google/cloud/baremetalsolution/v2/baremetalsolution.proto#L378}
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::Lun,google/cloud/baremetalsolution/v2/lun.proto#L31}
   ///
   /// [google.cloud.baremetalsolution.v2.ListLunsRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L968}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L122}
   /// [google.cloud.baremetalsolution.v2.Lun]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L378}
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L31}
   ///
   StreamRange<google::cloud::baremetalsolution::v2::Lun> ListLuns(
       google::cloud::baremetalsolution::v2::ListLunsRequest request,
+      Options opts = {});
+
+  ///
+  /// Get details of a single NFS share.
+  ///
+  /// @param name  Required. Name of the resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::NfsShare,google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  /// [google.cloud.baremetalsolution.v2.GetNfsShareRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L109}
+  /// [google.cloud.baremetalsolution.v2.NfsShare]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Get details of a single NFS share.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::GetNfsShareRequest,google/cloud/baremetalsolution/v2/nfs_share.proto#L109}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::NfsShare,google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  /// [google.cloud.baremetalsolution.v2.GetNfsShareRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L109}
+  /// [google.cloud.baremetalsolution.v2.NfsShare]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
+      google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request,
+      Options opts = {});
+
+  ///
+  /// List NFS shares.
+  ///
+  /// @param parent  Required. Parent value for ListNfsSharesRequest.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::NfsShare,google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  /// [google.cloud.baremetalsolution.v2.ListNfsSharesRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L120}
+  /// [google.cloud.baremetalsolution.v2.NfsShare]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  StreamRange<google::cloud::baremetalsolution::v2::NfsShare> ListNfsShares(
+      std::string const& parent, Options opts = {});
+
+  ///
+  /// List NFS shares.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::ListNfsSharesRequest,google/cloud/baremetalsolution/v2/nfs_share.proto#L120}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::NfsShare,google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  /// [google.cloud.baremetalsolution.v2.ListNfsSharesRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L120}
+  /// [google.cloud.baremetalsolution.v2.NfsShare]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  StreamRange<google::cloud::baremetalsolution::v2::NfsShare> ListNfsShares(
+      google::cloud::baremetalsolution::v2::ListNfsSharesRequest request,
+      Options opts = {});
+
+  ///
+  /// Update details of a single NFS share.
+  ///
+  /// @param nfs_share  Required. The NFS share to update.
+  ///  The `name` field is used to identify the NFS share to update.
+  ///  Format: projects/{project}/locations/{location}/nfsShares/{nfs_share}
+  /// @param update_mask  The list of fields to update.
+  ///  The only currently supported fields are:
+  ///    `labels`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::NfsShare,google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  /// [google.cloud.baremetalsolution.v2.UpdateNfsShareRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L153}
+  /// [google.cloud.baremetalsolution.v2.NfsShare]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+  UpdateNfsShare(
+      google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  ///
+  /// Update details of a single NFS share.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::UpdateNfsShareRequest,google/cloud/baremetalsolution/v2/nfs_share.proto#L153}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::baremetalsolution::v2::NfsShare,google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  /// [google.cloud.baremetalsolution.v2.UpdateNfsShareRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L153}
+  /// [google.cloud.baremetalsolution.v2.NfsShare]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+  UpdateNfsShare(
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+          request,
       Options opts = {});
 
  private:

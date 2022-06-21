@@ -47,10 +47,34 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::GetInstanceRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncResetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncStartInstance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncStopInstance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDetachLun(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::DetachLunRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
@@ -69,74 +93,33 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncResizeVolume(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request)
+      override;
+
   StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
   ListNetworks(grpc::ClientContext& context,
                google::cloud::baremetalsolution::v2::ListNetworksRequest const&
                    request) override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
+  ListNetworkUsage(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
+          request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
       grpc::ClientContext& context,
       google::cloud::baremetalsolution::v2::GetNetworkRequest const& request)
       override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::
-               ListSnapshotSchedulePoliciesResponse>
-  ListSnapshotSchedulePolicies(
-      grpc::ClientContext& context,
-      google::cloud::baremetalsolution::v2::
-          ListSnapshotSchedulePoliciesRequest const& request) override;
-
-  StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  GetSnapshotSchedulePolicy(
-      grpc::ClientContext& context,
-      google::cloud::baremetalsolution::v2::
-          GetSnapshotSchedulePolicyRequest const& request) override;
-
-  StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  CreateSnapshotSchedulePolicy(
-      grpc::ClientContext& context,
-      google::cloud::baremetalsolution::v2::
-          CreateSnapshotSchedulePolicyRequest const& request) override;
-
-  StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-  UpdateSnapshotSchedulePolicy(
-      grpc::ClientContext& context,
-      google::cloud::baremetalsolution::v2::
-          UpdateSnapshotSchedulePolicyRequest const& request) override;
-
-  Status DeleteSnapshotSchedulePolicy(
-      grpc::ClientContext& context,
-      google::cloud::baremetalsolution::v2::
-          DeleteSnapshotSchedulePolicyRequest const& request) override;
-
-  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  CreateVolumeSnapshot(
-      grpc::ClientContext& context,
-      google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
-          request) override;
-
-  future<StatusOr<google::longrunning::Operation>> AsyncRestoreVolumeSnapshot(
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
-          request) override;
-
-  Status DeleteVolumeSnapshot(
-      grpc::ClientContext& context,
-      google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
-          request) override;
-
-  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  GetVolumeSnapshot(
-      grpc::ClientContext& context,
-      google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
-          request) override;
-
-  StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
-  ListVolumeSnapshots(
-      grpc::ClientContext& context,
-      google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
-          request) override;
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request)
+      override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
       grpc::ClientContext& context,
@@ -147,6 +130,23 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
       grpc::ClientContext& context,
       google::cloud::baremetalsolution::v2::ListLunsRequest const& request)
       override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request)
+      override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
+  ListNfsShares(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateNfsShare(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

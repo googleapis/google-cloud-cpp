@@ -45,8 +45,24 @@ class BareMetalSolutionConnectionIdempotencyPolicy {
       google::cloud::baremetalsolution::v2::GetInstanceRequest const&
           request) = 0;
 
+  virtual google::cloud::Idempotency UpdateInstance(
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency ResetInstance(
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency StartInstance(
+      google::cloud::baremetalsolution::v2::StartInstanceRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency StopInstance(
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency DetachLun(
+      google::cloud::baremetalsolution::v2::DetachLunRequest const&
           request) = 0;
 
   virtual google::cloud::Idempotency ListVolumes(
@@ -60,51 +76,23 @@ class BareMetalSolutionConnectionIdempotencyPolicy {
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
           request) = 0;
 
+  virtual google::cloud::Idempotency ResizeVolume(
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency ListNetworks(
       google::cloud::baremetalsolution::v2::ListNetworksRequest request) = 0;
+
+  virtual google::cloud::Idempotency ListNetworkUsage(
+      google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
+          request) = 0;
 
   virtual google::cloud::Idempotency GetNetwork(
       google::cloud::baremetalsolution::v2::GetNetworkRequest const&
           request) = 0;
 
-  virtual google::cloud::Idempotency ListSnapshotSchedulePolicies(
-      google::cloud::baremetalsolution::v2::ListSnapshotSchedulePoliciesRequest
-          request) = 0;
-
-  virtual google::cloud::Idempotency GetSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          GetSnapshotSchedulePolicyRequest const& request) = 0;
-
-  virtual google::cloud::Idempotency CreateSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          CreateSnapshotSchedulePolicyRequest const& request) = 0;
-
-  virtual google::cloud::Idempotency UpdateSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          UpdateSnapshotSchedulePolicyRequest const& request) = 0;
-
-  virtual google::cloud::Idempotency DeleteSnapshotSchedulePolicy(
-      google::cloud::baremetalsolution::v2::
-          DeleteSnapshotSchedulePolicyRequest const& request) = 0;
-
-  virtual google::cloud::Idempotency CreateVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
-          request) = 0;
-
-  virtual google::cloud::Idempotency RestoreVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
-          request) = 0;
-
-  virtual google::cloud::Idempotency DeleteVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
-          request) = 0;
-
-  virtual google::cloud::Idempotency GetVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
-          request) = 0;
-
-  virtual google::cloud::Idempotency ListVolumeSnapshots(
-      google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest
+  virtual google::cloud::Idempotency UpdateNetwork(
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
           request) = 0;
 
   virtual google::cloud::Idempotency GetLun(
@@ -112,6 +100,17 @@ class BareMetalSolutionConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListLuns(
       google::cloud::baremetalsolution::v2::ListLunsRequest request) = 0;
+
+  virtual google::cloud::Idempotency GetNfsShare(
+      google::cloud::baremetalsolution::v2::GetNfsShareRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListNfsShares(
+      google::cloud::baremetalsolution::v2::ListNfsSharesRequest request) = 0;
+
+  virtual google::cloud::Idempotency UpdateNfsShare(
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy>
