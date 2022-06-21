@@ -35,6 +35,7 @@ using ::testing::Matcher;
 using ::testing::MockFunction;
 using ::testing::Property;
 using ::testing::Return;
+using ::testing::Unused;
 
 auto const* const kProjectId = "test-project";
 auto const* const kInstanceId = "test-instance";
@@ -496,6 +497,40 @@ TEST(TableTest, AsyncReadRowsWithRowLimit) {
   auto table = TestTable(std::move(mock));
   table.AsyncReadRows(on_row.AsStdFunction(), on_finish.AsStdFunction(),
                       TestRowSet(), 42, TestFilter());
+}
+
+TEST(TableTest, AsyncReadRowsAcceptsMoveOnlyTypes) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](Unused, Unused,
+                   std::function<future<bool>(bigtable::Row)> const& on_row,
+                   std::function<void(Status)> const& on_finish, Unused, Unused,
+                   Unused) {
+        // Invoke the callbacks.
+        EXPECT_TRUE(on_row(bigtable::Row("row", {})).get());
+        on_finish(PermanentError());
+      });
+
+  class MoveOnly {
+   public:
+    MoveOnly() = default;
+    MoveOnly(MoveOnly&&) = default;
+    MoveOnly& operator=(MoveOnly&&) = default;
+    MoveOnly(const MoveOnly&) = delete;
+    MoveOnly& operator=(const MoveOnly&) = delete;
+
+    future<bool> operator()(Row const& row) {
+      EXPECT_EQ("row", row.row_key());
+      return make_ready_future(true);
+    }
+
+    void operator()(Status const& status) {
+      EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+    }
+  };
+
+  auto table = TestTable(std::move(mock));
+  table.AsyncReadRows(MoveOnly{}, MoveOnly{}, TestRowSet(), TestFilter());
 }
 
 TEST(TableTest, AsyncReadRow) {
