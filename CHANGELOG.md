@@ -107,7 +107,9 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
   details.
 </details>
 
-## v1.42.0 - TBD
+## v1.43.0 (or maybe v2.43.0) - TBD
+
+## v1.42.0 - 2022-06
 
 We are happy to announce the following GA libraries.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
@@ -121,6 +123,55 @@ the APIs in these libraries are stable, and are ready for production use.
 * [DialogFlow ES](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dialogflow_es/README.md)
 
 </details>
+
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+* feat(bigtable): add `AsyncWaitForConsistency()` helper for Table Admin ([#9310](https://github.com/googleapis/google-cloud-cpp/pull/9310))
+* doc: broken link in Bigtable README ([#9265](https://github.com/googleapis/google-cloud-cpp/pull/9265))
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* feat(pubsub): implement per-batch compression ([#9270](https://github.com/googleapis/google-cloud-cpp/pull/9270))
+* feat(common): include status error payloads in the RPC log ([#9186](https://github.com/googleapis/google-cloud-cpp/pull/9186))
+
+### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
+
+* feat(common): include status error payloads in the RPC log ([#9186](https://github.com/googleapis/google-cloud-cpp/pull/9186))
+
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+* doc: broken link in GCS README file ([#9264](https://github.com/googleapis/google-cloud-cpp/pull/9264))
+* fix(storage): respect policies in deprecated constructor ([#9255](https://github.com/googleapis/google-cloud-cpp/pull/9255))
+* fix: handle transient failures in the GCE credentials ([#9252](https://github.com/googleapis/google-cloud-cpp/pull/9252))
+* fix: relax parsing for GCE informational fields ([#9251](https://github.com/googleapis/google-cloud-cpp/pull/9251))
+* feat(storage): per-operation options for `Client`
+  ([#9220](https://github.com/googleapis/google-cloud-cpp/pull/9220))
+  ([#9214](https://github.com/googleapis/google-cloud-cpp/pull/9214))
+  ([#9209](https://github.com/googleapis/google-cloud-cpp/pull/9209))
+  ([#9208](https://github.com/googleapis/google-cloud-cpp/pull/9208))
+  ([#9207](https://github.com/googleapis/google-cloud-cpp/pull/9207))
+  ([#9206](https://github.com/googleapis/google-cloud-cpp/pull/9206))
+  ([#9205](https://github.com/googleapis/google-cloud-cpp/pull/9205))
+  ([#9204](https://github.com/googleapis/google-cloud-cpp/pull/9204))
+  ([#9203](https://github.com/googleapis/google-cloud-cpp/pull/9203))
+  ([#9202](https://github.com/googleapis/google-cloud-cpp/pull/9202))
+  ([#9199](https://github.com/googleapis/google-cloud-cpp/pull/9199))
+  ([#9247](https://github.com/googleapis/google-cloud-cpp/pull/9247))
+* fix(storage): do not duplicate debugging headers ([#9162](https://github.com/googleapis/google-cloud-cpp/pull/9162))
+* fix(storage): disable MSVC C++17 deprecation warnings ([#9143](https://github.com/googleapis/google-cloud-cpp/pull/9143))
+* doc(storage): missing options for several functions ([#9146](https://github.com/googleapis/google-cloud-cpp/pull/9146))
+
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+* doc: broken link in GCS README file ([#9264](https://github.com/googleapis/google-cloud-cpp/pull/9264))
+* fix: handle transient failures in the GCE credentials ([#9252](https://github.com/googleapis/google-cloud-cpp/pull/9252))
+* fix: relax parsing for GCE informational fields ([#9251](https://github.com/googleapis/google-cloud-cpp/pull/9251))
+* feat(common): include status error payloads in the RPC log ([#9186](https://github.com/googleapis/google-cloud-cpp/pull/9186))
+* feat(common): include status error payloads in the RPC log ([#9169](https://github.com/googleapis/google-cloud-cpp/pull/9169))
+* fix(common): workaround GCC "ambiguous" overload errors ([#9144](https://github.com/googleapis/google-cloud-cpp/pull/9144))
+* fix(common): compile with GCC (MinGW-w64) under Windows ([#9140](https://github.com/googleapis/google-cloud-cpp/pull/9140))
+* fix(rest): userIp population and multi removal ([#9126](https://github.com/googleapis/google-cloud-cpp/pull/9126))
+* feat(rest): add HasUnreadData method ([#9118](https://github.com/googleapis/google-cloud-cpp/pull/9118))
 
 ## v1.41.0 - 2022-06
 
