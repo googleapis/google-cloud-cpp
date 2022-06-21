@@ -130,8 +130,8 @@ class DataConnection {
  *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
  *     options will be logged.
  *
- * @param opts (optional) Configure the `DataConnection` created by this
- * function.
+ * @param options (optional) Configure the `DataConnection` created by this
+ *     function.
  */
 std::shared_ptr<DataConnection> MakeDataConnection(Options options = {});
 
