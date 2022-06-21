@@ -124,6 +124,67 @@ class PushConfigBuilder {
 };
 
 /**
+ * A helper class to build `google::pubsub::v1::BigQueryConfig` protos.
+ *
+ * Makes it easier to build admin requests to
+ */
+class BigQueryConfigBuilder {
+ public:
+  BigQueryConfigBuilder() = default;
+
+  BigQueryConfigBuilder& set_table(std::string full_path) & {
+    *proto_.mutable_table() = std::move(full_path);
+    paths_.insert("table");
+    return *this;
+  }
+  BigQueryConfigBuilder&& set_table(std::string full_path) && {
+    return std::move(set_table(std::move(full_path)));
+  }
+  BigQueryConfigBuilder& set_table(std::string const& project_id,
+                                   std::string const& data_set_id,
+                                   std::string const& table_id) & {
+    return set_table(project_id + ':' + data_set_id + '.' + table_id);
+  }
+  BigQueryConfigBuilder&& set_table(std::string const& project_id,
+                                    std::string const& data_set_id,
+                                    std::string const& table_id) && {
+    return std::move(set_table(project_id, data_set_id, table_id));
+  }
+
+  BigQueryConfigBuilder& set_use_topic_schema(bool v) & {
+    proto_.set_use_topic_schema(v);
+    paths_.insert("use_topic_schema");
+    return *this;
+  }
+  BigQueryConfigBuilder&& set_use_topic_schema(bool v) && {
+    return std::move(set_use_topic_schema(v));
+  }
+
+  BigQueryConfigBuilder& set_write_metadata(bool v) & {
+    proto_.set_write_metadata(v);
+    paths_.insert("write_metadata");
+    return *this;
+  }
+  BigQueryConfigBuilder&& set_write_metadata(bool v) && {
+    return std::move(set_write_metadata(v));
+  }
+
+  BigQueryConfigBuilder& set_drop_unknown_fields(bool v) & {
+    proto_.set_drop_unknown_fields(v);
+    paths_.insert("drop_unknown_fields");
+    return *this;
+  }
+  BigQueryConfigBuilder&& set_drop_unknown_fields(bool v) && {
+    return std::move(set_drop_unknown_fields(v));
+  }
+
+ private:
+  friend class SubscriptionBuilder;
+  google::pubsub::v1::BigQueryConfig proto_;
+  std::set<std::string> paths_;
+};
+
+/**
  * Create a Cloud Pub/Sub subscription configuration.
  */
 class SubscriptionBuilder {
@@ -139,6 +200,11 @@ class SubscriptionBuilder {
   SubscriptionBuilder& set_push_config(PushConfigBuilder v) &;
   SubscriptionBuilder&& set_push_config(PushConfigBuilder v) && {
     return std::move(set_push_config(std::move(v)));
+  }
+
+  SubscriptionBuilder& set_bigquery_config(BigQueryConfigBuilder v) &;
+  SubscriptionBuilder&& set_bigquery_config(BigQueryConfigBuilder v) && {
+    return std::move(set_bigquery_config(std::move(v)));
   }
 
   SubscriptionBuilder& set_ack_deadline(std::chrono::seconds v) & {
@@ -256,6 +322,33 @@ class SubscriptionBuilder {
     return std::move(clear_dead_letter_policy());
   }
 
+  SubscriptionBuilder& set_retry_policy(google::pubsub::v1::RetryPolicy v) & {
+    *proto_.mutable_retry_policy() = std::move(v);
+    paths_.insert("retry_policy");
+    return *this;
+  }
+  SubscriptionBuilder&& set_retry_policy(google::pubsub::v1::RetryPolicy v) && {
+    return std::move(set_retry_policy(std::move(v)));
+  }
+
+  SubscriptionBuilder& clear_retry_policy() & {
+    proto_.clear_retry_policy();
+    paths_.insert("retry_policy");
+    return *this;
+  }
+  SubscriptionBuilder&& clear_retry_policy() && {
+    return std::move(clear_retry_policy());
+  }
+
+  SubscriptionBuilder& enable_exactly_once_delivery(bool v) & {
+    proto_.set_enable_exactly_once_delivery(v);
+    paths_.insert("enable_exactly_once_delivery");
+    return *this;
+  }
+  SubscriptionBuilder&& enable_exactly_once_delivery(bool v) && {
+    return std::move(enable_exactly_once_delivery(v));
+  }
+
   template <typename Rep, typename Period>
   static google::pubsub::v1::ExpirationPolicy MakeExpirationPolicy(
       std::chrono::duration<Rep, Period> d) {
@@ -270,6 +363,18 @@ class SubscriptionBuilder {
     google::pubsub::v1::DeadLetterPolicy result;
     result.set_dead_letter_topic(dead_letter_topic.FullName());
     result.set_max_delivery_attempts(max_delivery_attempts);
+    return result;
+  }
+
+  template <typename Rep1, typename Period1, typename Rep2, typename Period2>
+  static google::pubsub::v1::RetryPolicy MakeRetryPolicy(
+      std::chrono::duration<Rep1, Period1> minimum_backoff,
+      std::chrono::duration<Rep2, Period2> maximum_backoff) {
+    google::pubsub::v1::RetryPolicy result;
+    *result.mutable_minimum_backoff() =
+        google::cloud::internal::ToDurationProto(minimum_backoff);
+    *result.mutable_maximum_backoff() =
+        google::cloud::internal::ToDurationProto(maximum_backoff);
     return result;
   }
 
