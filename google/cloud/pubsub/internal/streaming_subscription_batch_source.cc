@@ -38,8 +38,8 @@ StreamingSubscriptionBatchSource::StreamingSubscriptionBatchSource(
       max_outstanding_messages_(
           options_.get<pubsub::MaxOutstandingMessagesOption>()),
       max_outstanding_bytes_(options_.get<pubsub::MaxOutstandingBytesOption>()),
-      // TODO(#9327) - allow applications to configure this value
-      min_deadline_time_(std::chrono::seconds(60)),
+      min_deadline_time_(options_.lookup<pubsub::MinDeadlineExtensionOption>(
+          std::chrono::seconds(60))),
       max_deadline_time_(options_.get<pubsub::MaxDeadlineTimeOption>()) {}
 
 void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
