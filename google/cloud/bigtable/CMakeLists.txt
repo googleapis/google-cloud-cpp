@@ -127,6 +127,8 @@ add_library(
     completion_queue.h
     data_client.cc
     data_client.h
+    data_connection.cc
+    data_connection.h
     expr.cc
     expr.h
     filters.h
@@ -177,8 +179,6 @@ add_library(
     internal/connection_refresh_state.h
     internal/convert_policies.cc
     internal/convert_policies.h
-    internal/data_connection.cc
-    internal/data_connection.h
     internal/data_connection_impl.cc
     internal/data_connection_impl.h
     internal/default_row_reader.cc

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CONNECTION_H
 
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
@@ -32,8 +32,7 @@
 
 namespace google {
 namespace cloud {
-// TODO(#8860) - Make this class public, when it is ready.
-namespace bigtable_internal {
+namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -54,65 +53,60 @@ class DataConnection {
   virtual Options options() { return Options{}; }
 
   virtual Status Apply(std::string const& app_profile_id,
-                       std::string const& table_name,
-                       bigtable::SingleRowMutation mut);
+                       std::string const& table_name, SingleRowMutation mut);
 
   virtual future<Status> AsyncApply(std::string const& app_profile_id,
                                     std::string const& table_name,
-                                    bigtable::SingleRowMutation mut);
+                                    SingleRowMutation mut);
 
-  virtual std::vector<bigtable::FailedMutation> BulkApply(
+  virtual std::vector<FailedMutation> BulkApply(
       std::string const& app_profile_id, std::string const& table_name,
-      bigtable::BulkMutation mut);
+      BulkMutation mut);
 
-  virtual future<std::vector<bigtable::FailedMutation>> AsyncBulkApply(
+  virtual future<std::vector<FailedMutation>> AsyncBulkApply(
       std::string const& app_profile_id, std::string const& table_name,
-      bigtable::BulkMutation mut);
+      BulkMutation mut);
 
-  virtual bigtable::RowReader ReadRows(std::string const& app_profile_id,
-                                       std::string const& table_name,
-                                       bigtable::RowSet row_set,
-                                       std::int64_t rows_limit,
-                                       bigtable::Filter filter);
+  virtual RowReader ReadRows(std::string const& app_profile_id,
+                             std::string const& table_name, RowSet row_set,
+                             std::int64_t rows_limit, Filter filter);
 
-  virtual StatusOr<std::pair<bool, bigtable::Row>> ReadRow(
+  virtual StatusOr<std::pair<bool, Row>> ReadRow(
       std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, bigtable::Filter filter);
+      std::string row_key, Filter filter);
 
-  virtual StatusOr<bigtable::MutationBranch> CheckAndMutateRow(
+  virtual StatusOr<MutationBranch> CheckAndMutateRow(
       std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, bigtable::Filter filter,
-      std::vector<bigtable::Mutation> true_mutations,
-      std::vector<bigtable::Mutation> false_mutations);
+      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+      std::vector<Mutation> false_mutations);
 
-  virtual future<StatusOr<bigtable::MutationBranch>> AsyncCheckAndMutateRow(
+  virtual future<StatusOr<MutationBranch>> AsyncCheckAndMutateRow(
       std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, bigtable::Filter filter,
-      std::vector<bigtable::Mutation> true_mutations,
-      std::vector<bigtable::Mutation> false_mutations);
+      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+      std::vector<Mutation> false_mutations);
 
-  virtual StatusOr<std::vector<bigtable::RowKeySample>> SampleRows(
+  virtual StatusOr<std::vector<RowKeySample>> SampleRows(
       std::string const& app_profile_id, std::string const& table_name);
 
-  virtual future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows(
+  virtual future<StatusOr<std::vector<RowKeySample>>> AsyncSampleRows(
       std::string const& app_profile_id, std::string const& table_name);
 
-  virtual StatusOr<bigtable::Row> ReadModifyWriteRow(
+  virtual StatusOr<Row> ReadModifyWriteRow(
       google::bigtable::v2::ReadModifyWriteRowRequest request);
 
-  virtual future<StatusOr<bigtable::Row>> AsyncReadModifyWriteRow(
+  virtual future<StatusOr<Row>> AsyncReadModifyWriteRow(
       google::bigtable::v2::ReadModifyWriteRowRequest request);
 
   virtual void AsyncReadRows(std::string const& app_profile_id,
                              std::string const& table_name,
-                             std::function<future<bool>(bigtable::Row)> on_row,
+                             std::function<future<bool>(Row)> on_row,
                              std::function<void(Status)> on_finish,
-                             bigtable::RowSet row_set, std::int64_t rows_limit,
-                             bigtable::Filter filter);
+                             RowSet row_set, std::int64_t rows_limit,
+                             Filter filter);
 
-  virtual future<StatusOr<std::pair<bool, bigtable::Row>>> AsyncReadRow(
+  virtual future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(
       std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, bigtable::Filter filter);
+      std::string row_key, Filter filter);
 };
 
 /**
@@ -142,7 +136,7 @@ class DataConnection {
 std::shared_ptr<DataConnection> MakeDataConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_internal
+}  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
 
@@ -151,7 +145,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DataConnection> MakeDataConnection(
+std::shared_ptr<bigtable::DataConnection> MakeDataConnection(
     std::shared_ptr<BigtableStub> stub, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -159,4 +153,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CONNECTION_H

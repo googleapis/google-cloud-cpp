@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_IMPL_H
 
+#include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
-#include "google/cloud/bigtable/internal/data_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 bigtable::Row TransformReadModifyWriteRowResponse(
     google::bigtable::v2::ReadModifyWriteRowResponse response);
 
-class DataConnectionImpl : public DataConnection {
+class DataConnectionImpl : public bigtable::DataConnection {
  public:
   ~DataConnectionImpl() override = default;
 

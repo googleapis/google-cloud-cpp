@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/data_connection.h"
+#include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/internal/defaults.h"
@@ -25,16 +25,15 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_internal {
+namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::vector<bigtable::FailedMutation> MakeUnimplementedFailedMutations(
-    std::size_t n) {
-  std::vector<bigtable::FailedMutation> mutations;
+std::vector<FailedMutation> MakeUnimplementedFailedMutations(std::size_t n) {
+  std::vector<FailedMutation> mutations;
   mutations.reserve(n);
   for (int i = 0; i != static_cast<int>(n); ++i) {
-    mutations.emplace_back(bigtable::FailedMutation(
+    mutations.emplace_back(FailedMutation(
         Status(StatusCode::kUnimplemented, "not implemented"), i));
   }
   return mutations;
@@ -46,116 +45,111 @@ DataConnection::~DataConnection() = default;
 
 Status DataConnection::Apply(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, bigtable::SingleRowMutation) {
+    std::string const&, std::string const&, SingleRowMutation) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<Status> DataConnection::AsyncApply(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, bigtable::SingleRowMutation) {
+    std::string const&, std::string const&, SingleRowMutation) {
   return make_ready_future(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::vector<bigtable::FailedMutation> DataConnection::BulkApply(
+std::vector<FailedMutation> DataConnection::BulkApply(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, bigtable::BulkMutation mut) {
+    std::string const&, std::string const&, BulkMutation mut) {
   return MakeUnimplementedFailedMutations(mut.size());
 }
 
-future<std::vector<bigtable::FailedMutation>> DataConnection::AsyncBulkApply(
+future<std::vector<FailedMutation>> DataConnection::AsyncBulkApply(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, bigtable::BulkMutation mut) {
+    std::string const&, std::string const&, BulkMutation mut) {
   return make_ready_future(MakeUnimplementedFailedMutations(mut.size()));
 }
 
-bigtable::RowReader DataConnection::ReadRows(
-    std::string const&, std::string const&,
+RowReader DataConnection::ReadRows(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    bigtable::RowSet, std::int64_t, bigtable::Filter) {
-  return MakeRowReader(std::make_shared<StatusOnlyRowReader>(
+    std::string const&, std::string const&, RowSet, std::int64_t, Filter) {
+  return MakeRowReader(std::make_shared<bigtable_internal::StatusOnlyRowReader>(
       Status(StatusCode::kUnimplemented, "not implemented")));
 }
 
-StatusOr<std::pair<bool, bigtable::Row>> DataConnection::ReadRow(
+StatusOr<std::pair<bool, Row>> DataConnection::ReadRow(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, std::string, bigtable::Filter) {
+    std::string const&, std::string const&, std::string, Filter) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<bigtable::MutationBranch> DataConnection::CheckAndMutateRow(
+StatusOr<MutationBranch> DataConnection::CheckAndMutateRow(
+    std::string const&, std::string const&,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, std::string, bigtable::Filter,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::vector<bigtable::Mutation>, std::vector<bigtable::Mutation>) {
+    std::string, Filter, std::vector<Mutation>, std::vector<Mutation>) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<bigtable::MutationBranch>>
-DataConnection::AsyncCheckAndMutateRow(
+future<StatusOr<MutationBranch>> DataConnection::AsyncCheckAndMutateRow(
+    std::string const&, std::string const&,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, std::string, bigtable::Filter,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::vector<bigtable::Mutation>, std::vector<bigtable::Mutation>) {
-  return make_ready_future<StatusOr<bigtable::MutationBranch>>(
+    std::string, Filter, std::vector<Mutation>, std::vector<Mutation>) {
+  return make_ready_future<StatusOr<MutationBranch>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<std::vector<bigtable::RowKeySample>> DataConnection::SampleRows(
+StatusOr<std::vector<RowKeySample>> DataConnection::SampleRows(
     std::string const&, std::string const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<std::vector<bigtable::RowKeySample>>>
-DataConnection::AsyncSampleRows(std::string const&, std::string const&) {
-  return make_ready_future<StatusOr<std::vector<bigtable::RowKeySample>>>(
+future<StatusOr<std::vector<RowKeySample>>> DataConnection::AsyncSampleRows(
+    std::string const&, std::string const&) {
+  return make_ready_future<StatusOr<std::vector<RowKeySample>>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<bigtable::Row> DataConnection::ReadModifyWriteRow(
+StatusOr<Row> DataConnection::ReadModifyWriteRow(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::bigtable::v2::ReadModifyWriteRowRequest) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<bigtable::Row>> DataConnection::AsyncReadModifyWriteRow(
+future<StatusOr<Row>> DataConnection::AsyncReadModifyWriteRow(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::bigtable::v2::ReadModifyWriteRowRequest) {
-  return make_ready_future<StatusOr<bigtable::Row>>(
+  return make_ready_future<StatusOr<Row>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 void DataConnection::AsyncReadRows(
     std::string const&, std::string const&,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::function<future<bool>(bigtable::Row)>,
+    std::function<future<bool>(Row)>, std::function<void(Status)> on_finish,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::function<void(Status)> on_finish, bigtable::RowSet, std::int64_t,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    bigtable::Filter) {
+    RowSet, std::int64_t, Filter) {
   on_finish(Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<std::pair<bool, bigtable::Row>>> DataConnection::AsyncReadRow(
+future<StatusOr<std::pair<bool, Row>>> DataConnection::AsyncReadRow(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, std::string, bigtable::Filter) {
-  return make_ready_future<StatusOr<std::pair<bool, bigtable::Row>>>(
+    std::string const&, std::string const&, std::string, Filter) {
+  return make_ready_future<StatusOr<std::pair<bool, Row>>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   google::cloud::internal::CheckExpectedOptions<
-      CommonOptionList, GrpcOptionList, bigtable::DataPolicyOptionList>(
-      options, __func__);
+      CommonOptionList, GrpcOptionList, DataPolicyOptionList>(options,
+                                                              __func__);
   options = bigtable::internal::DefaultDataOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto background =
+      google::cloud::internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigtable_internal::CreateBigtableStub(background->cq(), options);
   return std::make_shared<bigtable_internal::DataConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_internal
+}  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
 
@@ -164,7 +158,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DataConnection> MakeDataConnection(
+std::shared_ptr<bigtable::DataConnection> MakeDataConnection(
     std::shared_ptr<BigtableStub> stub, Options options) {
   options = bigtable::internal::DefaultDataOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
