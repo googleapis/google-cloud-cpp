@@ -51,12 +51,49 @@ BareMetalSolutionMetadata::GetInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionMetadata::AsyncUpdateInstance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+        request) {
+  SetMetadata(*context, "instance.name=" + request.instance().name());
+  return child_->AsyncUpdateInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncResetInstance(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncResetInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionMetadata::AsyncStartInstance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncStartInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionMetadata::AsyncStopInstance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncStopInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionMetadata::AsyncDetachLun(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
+  SetMetadata(*context, "instance=" + request.instance());
+  return child_->AsyncDetachLun(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
@@ -84,12 +121,30 @@ BareMetalSolutionMetadata::AsyncUpdateVolume(
   return child_->AsyncUpdateVolume(cq, std::move(context), request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionMetadata::AsyncResizeVolume(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
+  SetMetadata(*context, "volume=" + request.volume());
+  return child_->AsyncResizeVolume(cq, std::move(context), request);
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
 BareMetalSolutionMetadata::ListNetworks(
     grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListNetworksRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListNetworks(context, request);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
+BareMetalSolutionMetadata::ListNetworkUsage(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
+        request) {
+  SetMetadata(context, "location=" + request.location());
+  return child_->ListNetworkUsage(context, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
@@ -100,95 +155,13 @@ BareMetalSolutionMetadata::GetNetwork(
   return child_->GetNetwork(context, request);
 }
 
-StatusOr<
-    google::cloud::baremetalsolution::v2::ListSnapshotSchedulePoliciesResponse>
-BareMetalSolutionMetadata::ListSnapshotSchedulePolicies(
-    grpc::ClientContext& context,
-    google::cloud::baremetalsolution::v2::
-        ListSnapshotSchedulePoliciesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->ListSnapshotSchedulePolicies(context, request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionMetadata::GetSnapshotSchedulePolicy(
-    grpc::ClientContext& context,
-    google::cloud::baremetalsolution::v2::
-        GetSnapshotSchedulePolicyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->GetSnapshotSchedulePolicy(context, request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionMetadata::CreateSnapshotSchedulePolicy(
-    grpc::ClientContext& context,
-    google::cloud::baremetalsolution::v2::
-        CreateSnapshotSchedulePolicyRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->CreateSnapshotSchedulePolicy(context, request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionMetadata::UpdateSnapshotSchedulePolicy(
-    grpc::ClientContext& context,
-    google::cloud::baremetalsolution::v2::
-        UpdateSnapshotSchedulePolicyRequest const& request) {
-  SetMetadata(context, "snapshot_schedule_policy.name=" +
-                           request.snapshot_schedule_policy().name());
-  return child_->UpdateSnapshotSchedulePolicy(context, request);
-}
-
-Status BareMetalSolutionMetadata::DeleteSnapshotSchedulePolicy(
-    grpc::ClientContext& context,
-    google::cloud::baremetalsolution::v2::
-        DeleteSnapshotSchedulePolicyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->DeleteSnapshotSchedulePolicy(context, request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-BareMetalSolutionMetadata::CreateVolumeSnapshot(
-    grpc::ClientContext& context,
-    google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
-        request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->CreateVolumeSnapshot(context, request);
-}
-
 future<StatusOr<google::longrunning::Operation>>
-BareMetalSolutionMetadata::AsyncRestoreVolumeSnapshot(
+BareMetalSolutionMetadata::AsyncUpdateNetwork(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
-        request) {
-  SetMetadata(*context, "volume_snapshot=" + request.volume_snapshot());
-  return child_->AsyncRestoreVolumeSnapshot(cq, std::move(context), request);
-}
-
-Status BareMetalSolutionMetadata::DeleteVolumeSnapshot(
-    grpc::ClientContext& context,
-    google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
-        request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->DeleteVolumeSnapshot(context, request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-BareMetalSolutionMetadata::GetVolumeSnapshot(
-    grpc::ClientContext& context,
-    google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
-        request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->GetVolumeSnapshot(context, request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
-BareMetalSolutionMetadata::ListVolumeSnapshots(
-    grpc::ClientContext& context,
-    google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
-        request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->ListVolumeSnapshots(context, request);
+    google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
+  SetMetadata(*context, "network.name=" + request.network().name());
+  return child_->AsyncUpdateNetwork(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Lun>
@@ -205,6 +178,32 @@ BareMetalSolutionMetadata::ListLuns(
     google::cloud::baremetalsolution::v2::ListLunsRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListLuns(context, request);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
+BareMetalSolutionMetadata::GetNfsShare(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetNfsShare(context, request);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
+BareMetalSolutionMetadata::ListNfsShares(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListNfsShares(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionMetadata::AsyncUpdateNfsShare(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+        request) {
+  SetMetadata(*context, "nfs_share.name=" + request.nfs_share().name());
+  return child_->AsyncUpdateNfsShare(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

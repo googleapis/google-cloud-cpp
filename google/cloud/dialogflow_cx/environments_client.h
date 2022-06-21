@@ -97,12 +97,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L237}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L250}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Environment> ListEnvironments(
       std::string const& parent, Options opts = {});
@@ -112,16 +112,16 @@ class EnvironmentsClient {
   /// [Agent][google.cloud.dialogflow.cx.v3.Agent].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest,google/cloud/dialogflow/cx/v3/environment.proto#L237}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest,google/cloud/dialogflow/cx/v3/environment.proto#L250}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L237}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L250}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Environment> ListEnvironments(
       google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request,
@@ -138,12 +138,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L269}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L282}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Environment> GetEnvironment(
       std::string const& name, Options opts = {});
@@ -153,16 +153,16 @@ class EnvironmentsClient {
   /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetEnvironmentRequest,google/cloud/dialogflow/cx/v3/environment.proto#L269}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetEnvironmentRequest,google/cloud/dialogflow/cx/v3/environment.proto#L282}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L269}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L282}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Environment> GetEnvironment(
       google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request,
@@ -188,12 +188,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L282}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L295}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   CreateEnvironment(
@@ -214,16 +214,16 @@ class EnvironmentsClient {
   /// - `response`: [Environment][google.cloud.dialogflow.cx.v3.Environment]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest,google/cloud/dialogflow/cx/v3/environment.proto#L282}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest,google/cloud/dialogflow/cx/v3/environment.proto#L295}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L282}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L295}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   CreateEnvironment(
@@ -249,12 +249,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L297}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L310}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   UpdateEnvironment(
@@ -274,16 +274,16 @@ class EnvironmentsClient {
   /// - `response`: [Environment][google.cloud.dialogflow.cx.v3.Environment]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest,google/cloud/dialogflow/cx/v3/environment.proto#L297}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest,google/cloud/dialogflow/cx/v3/environment.proto#L310}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L297}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L310}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   UpdateEnvironment(
@@ -303,7 +303,7 @@ class EnvironmentsClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L306}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L319}
   ///
   Status DeleteEnvironment(std::string const& name, Options opts = {});
 
@@ -312,12 +312,12 @@ class EnvironmentsClient {
   /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest,google/cloud/dialogflow/cx/v3/environment.proto#L306}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest,google/cloud/dialogflow/cx/v3/environment.proto#L319}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L306}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L319}
   ///
   Status DeleteEnvironment(
       google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
@@ -335,12 +335,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   /// [google.cloud.dialogflow.cx.v3.LookupEnvironmentHistoryRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L319}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L332}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Environment>
   LookupEnvironmentHistory(std::string const& name, Options opts = {});
@@ -350,16 +350,16 @@ class EnvironmentsClient {
   /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest,google/cloud/dialogflow/cx/v3/environment.proto#L319}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest,google/cloud/dialogflow/cx/v3/environment.proto#L332}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   /// [google.cloud.dialogflow.cx.v3.LookupEnvironmentHistoryRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L319}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L332}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L174}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L175}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Environment>
   LookupEnvironmentHistory(
@@ -381,16 +381,16 @@ class EnvironmentsClient {
   /// [RunContinuousTestResponse][google.cloud.dialogflow.cx.v3.RunContinuousTestResponse]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::RunContinuousTestRequest,google/cloud/dialogflow/cx/v3/environment.proto#L388}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::RunContinuousTestRequest,google/cloud/dialogflow/cx/v3/environment.proto#L401}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::RunContinuousTestResponse,google/cloud/dialogflow/cx/v3/environment.proto#L400}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::RunContinuousTestResponse,google/cloud/dialogflow/cx/v3/environment.proto#L413}
   ///
   /// [google.cloud.dialogflow.cx.v3.RunContinuousTestRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L388}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L401}
   /// [google.cloud.dialogflow.cx.v3.RunContinuousTestResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L400}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L413}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
   RunContinuousTest(
@@ -407,12 +407,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ContinuousTestResult,google/cloud/dialogflow/cx/v3/environment.proto#L350}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ContinuousTestResult,google/cloud/dialogflow/cx/v3/environment.proto#L363}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListContinuousTestResultsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L413}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L426}
   /// [google.cloud.dialogflow.cx.v3.ContinuousTestResult]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L350}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L363}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
   ListContinuousTestResults(std::string const& parent, Options opts = {});
@@ -421,16 +421,16 @@ class EnvironmentsClient {
   /// Fetches a list of continuous test results for a given environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest,google/cloud/dialogflow/cx/v3/environment.proto#L413}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest,google/cloud/dialogflow/cx/v3/environment.proto#L426}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ContinuousTestResult,google/cloud/dialogflow/cx/v3/environment.proto#L350}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ContinuousTestResult,google/cloud/dialogflow/cx/v3/environment.proto#L363}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListContinuousTestResultsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L413}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L426}
   /// [google.cloud.dialogflow.cx.v3.ContinuousTestResult]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L350}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L363}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
   ListContinuousTestResults(
@@ -452,16 +452,16 @@ class EnvironmentsClient {
   /// [DeployFlowResponse][google.cloud.dialogflow.cx.v3.DeployFlowResponse]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeployFlowRequest,google/cloud/dialogflow/cx/v3/environment.proto#L443}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeployFlowRequest,google/cloud/dialogflow/cx/v3/environment.proto#L456}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeployFlowResponse,google/cloud/dialogflow/cx/v3/environment.proto#L466}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeployFlowResponse,google/cloud/dialogflow/cx/v3/environment.proto#L479}
   ///
   /// [google.cloud.dialogflow.cx.v3.DeployFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L443}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L456}
   /// [google.cloud.dialogflow.cx.v3.DeployFlowResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L466}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L479}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
   DeployFlow(

@@ -1,1 +1,6 @@
 @com_google_googleapis//google/cloud/baremetalsolution/v2:baremetalsolution.proto
+@com_google_googleapis//google/cloud/baremetalsolution/v2:instance.proto
+@com_google_googleapis//google/cloud/baremetalsolution/v2:lun.proto
+@com_google_googleapis//google/cloud/baremetalsolution/v2:network.proto
+@com_google_googleapis//google/cloud/baremetalsolution/v2:nfs_share.proto
+@com_google_googleapis//google/cloud/baremetalsolution/v2:volume.proto

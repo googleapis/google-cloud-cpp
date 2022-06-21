@@ -67,6 +67,25 @@ BareMetalSolutionClient::GetInstance(
   return connection_->GetInstance(request);
 }
 
+future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+BareMetalSolutionClient::UpdateInstance(
+    google::cloud::baremetalsolution::v2::Instance const& instance,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::UpdateInstanceRequest request;
+  *request.mutable_instance() = instance;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateInstance(request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+BareMetalSolutionClient::UpdateInstance(
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstance(request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
 BareMetalSolutionClient::ResetInstance(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -81,6 +100,56 @@ BareMetalSolutionClient::ResetInstance(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetInstance(request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
+BareMetalSolutionClient::StartInstance(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::StartInstanceRequest request;
+  request.set_name(name);
+  return connection_->StartInstance(request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
+BareMetalSolutionClient::StartInstance(
+    google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartInstance(request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
+BareMetalSolutionClient::StopInstance(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::StopInstanceRequest request;
+  request.set_name(name);
+  return connection_->StopInstance(request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
+BareMetalSolutionClient::StopInstance(
+    google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopInstance(request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+BareMetalSolutionClient::DetachLun(std::string const& instance,
+                                   std::string const& lun, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::DetachLunRequest request;
+  request.set_instance(instance);
+  request.set_lun(lun);
+  return connection_->DetachLun(request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+BareMetalSolutionClient::DetachLun(
+    google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DetachLun(request);
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::Volume>
@@ -134,6 +203,24 @@ BareMetalSolutionClient::UpdateVolume(
   return connection_->UpdateVolume(request);
 }
 
+future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+BareMetalSolutionClient::ResizeVolume(std::string const& volume,
+                                      std::int64_t size_gib, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::ResizeVolumeRequest request;
+  request.set_volume(volume);
+  request.set_size_gib(size_gib);
+  return connection_->ResizeVolume(request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+BareMetalSolutionClient::ResizeVolume(
+    google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResizeVolume(request);
+}
+
 StreamRange<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionClient::ListNetworks(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -148,6 +235,24 @@ BareMetalSolutionClient::ListNetworks(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNetworks(std::move(request));
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
+BareMetalSolutionClient::ListNetworkUsage(std::string const& location,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::ListNetworkUsageRequest request;
+  request.set_location(location);
+  return connection_->ListNetworkUsage(request);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
+BareMetalSolutionClient::ListNetworkUsage(
+    google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListNetworkUsage(request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
@@ -166,195 +271,23 @@ BareMetalSolutionClient::GetNetwork(
   return connection_->GetNetwork(request);
 }
 
-StreamRange<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionClient::ListSnapshotSchedulePolicies(std::string const& parent,
-                                                      Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::baremetalsolution::v2::ListSnapshotSchedulePoliciesRequest
-      request;
-  request.set_parent(parent);
-  return connection_->ListSnapshotSchedulePolicies(request);
-}
-
-StreamRange<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionClient::ListSnapshotSchedulePolicies(
-    google::cloud::baremetalsolution::v2::ListSnapshotSchedulePoliciesRequest
-        request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ListSnapshotSchedulePolicies(std::move(request));
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionClient::GetSnapshotSchedulePolicy(std::string const& name,
-                                                   Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::baremetalsolution::v2::GetSnapshotSchedulePolicyRequest
-      request;
-  request.set_name(name);
-  return connection_->GetSnapshotSchedulePolicy(request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionClient::GetSnapshotSchedulePolicy(
-    google::cloud::baremetalsolution::v2::
-        GetSnapshotSchedulePolicyRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetSnapshotSchedulePolicy(request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionClient::CreateSnapshotSchedulePolicy(
-    std::string const& parent,
-    google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy const&
-        snapshot_schedule_policy,
-    std::string const& snapshot_schedule_policy_id, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::baremetalsolution::v2::CreateSnapshotSchedulePolicyRequest
-      request;
-  request.set_parent(parent);
-  *request.mutable_snapshot_schedule_policy() = snapshot_schedule_policy;
-  request.set_snapshot_schedule_policy_id(snapshot_schedule_policy_id);
-  return connection_->CreateSnapshotSchedulePolicy(request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionClient::CreateSnapshotSchedulePolicy(
-    google::cloud::baremetalsolution::v2::
-        CreateSnapshotSchedulePolicyRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSnapshotSchedulePolicy(request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionClient::UpdateSnapshotSchedulePolicy(
-    google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy const&
-        snapshot_schedule_policy,
+future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
+BareMetalSolutionClient::UpdateNetwork(
+    google::cloud::baremetalsolution::v2::Network const& network,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::baremetalsolution::v2::UpdateSnapshotSchedulePolicyRequest
-      request;
-  *request.mutable_snapshot_schedule_policy() = snapshot_schedule_policy;
+  google::cloud::baremetalsolution::v2::UpdateNetworkRequest request;
+  *request.mutable_network() = network;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateSnapshotSchedulePolicy(request);
+  return connection_->UpdateNetwork(request);
 }
 
-StatusOr<google::cloud::baremetalsolution::v2::SnapshotSchedulePolicy>
-BareMetalSolutionClient::UpdateSnapshotSchedulePolicy(
-    google::cloud::baremetalsolution::v2::
-        UpdateSnapshotSchedulePolicyRequest const& request,
+future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
+BareMetalSolutionClient::UpdateNetwork(
+    google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSnapshotSchedulePolicy(request);
-}
-
-Status BareMetalSolutionClient::DeleteSnapshotSchedulePolicy(
-    std::string const& name, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::baremetalsolution::v2::DeleteSnapshotSchedulePolicyRequest
-      request;
-  request.set_name(name);
-  return connection_->DeleteSnapshotSchedulePolicy(request);
-}
-
-Status BareMetalSolutionClient::DeleteSnapshotSchedulePolicy(
-    google::cloud::baremetalsolution::v2::
-        DeleteSnapshotSchedulePolicyRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSnapshotSchedulePolicy(request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-BareMetalSolutionClient::CreateVolumeSnapshot(
-    std::string const& parent,
-    google::cloud::baremetalsolution::v2::VolumeSnapshot const& volume_snapshot,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest request;
-  request.set_parent(parent);
-  *request.mutable_volume_snapshot() = volume_snapshot;
-  return connection_->CreateVolumeSnapshot(request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-BareMetalSolutionClient::CreateVolumeSnapshot(
-    google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
-        request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateVolumeSnapshot(request);
-}
-
-future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
-BareMetalSolutionClient::RestoreVolumeSnapshot(
-    std::string const& volume_snapshot, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest request;
-  request.set_volume_snapshot(volume_snapshot);
-  return connection_->RestoreVolumeSnapshot(request);
-}
-
-future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
-BareMetalSolutionClient::RestoreVolumeSnapshot(
-    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
-        request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestoreVolumeSnapshot(request);
-}
-
-Status BareMetalSolutionClient::DeleteVolumeSnapshot(std::string const& name,
-                                                     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest request;
-  request.set_name(name);
-  return connection_->DeleteVolumeSnapshot(request);
-}
-
-Status BareMetalSolutionClient::DeleteVolumeSnapshot(
-    google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
-        request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteVolumeSnapshot(request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-BareMetalSolutionClient::GetVolumeSnapshot(std::string const& name,
-                                           Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest request;
-  request.set_name(name);
-  return connection_->GetVolumeSnapshot(request);
-}
-
-StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-BareMetalSolutionClient::GetVolumeSnapshot(
-    google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
-        request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetVolumeSnapshot(request);
-}
-
-StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-BareMetalSolutionClient::ListVolumeSnapshots(std::string const& parent,
-                                             Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request;
-  request.set_parent(parent);
-  return connection_->ListVolumeSnapshots(request);
-}
-
-StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-BareMetalSolutionClient::ListVolumeSnapshots(
-    google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ListVolumeSnapshots(std::move(request));
+  return connection_->UpdateNetwork(request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Lun>
@@ -387,6 +320,58 @@ BareMetalSolutionClient::ListLuns(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLuns(std::move(request));
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
+BareMetalSolutionClient::GetNfsShare(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::GetNfsShareRequest request;
+  request.set_name(name);
+  return connection_->GetNfsShare(request);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
+BareMetalSolutionClient::GetNfsShare(
+    google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetNfsShare(request);
+}
+
+StreamRange<google::cloud::baremetalsolution::v2::NfsShare>
+BareMetalSolutionClient::ListNfsShares(std::string const& parent,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::ListNfsSharesRequest request;
+  request.set_parent(parent);
+  return connection_->ListNfsShares(request);
+}
+
+StreamRange<google::cloud::baremetalsolution::v2::NfsShare>
+BareMetalSolutionClient::ListNfsShares(
+    google::cloud::baremetalsolution::v2::ListNfsSharesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListNfsShares(std::move(request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+BareMetalSolutionClient::UpdateNfsShare(
+    google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::UpdateNfsShareRequest request;
+  *request.mutable_nfs_share() = nfs_share;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateNfsShare(request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+BareMetalSolutionClient::UpdateNfsShare(
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateNfsShare(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
