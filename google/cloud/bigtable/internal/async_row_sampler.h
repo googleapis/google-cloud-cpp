@@ -38,13 +38,13 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
  public:
   static future<StatusOr<std::vector<bigtable::RowKeySample>>> Create(
       CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
-      std::unique_ptr<DataRetryPolicy> retry_policy,
+      std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy,
       std::string const& app_profile_id, std::string const& table_name);
 
  private:
   AsyncRowSampler(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
-                  std::unique_ptr<DataRetryPolicy> retry_policy,
+                  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                   std::unique_ptr<BackoffPolicy> backoff_policy,
                   std::string const& app_profile_id,
                   std::string const& table_name);
@@ -55,7 +55,7 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
 
   CompletionQueue cq_;
   std::shared_ptr<BigtableStub> stub_;
-  std::unique_ptr<DataRetryPolicy> retry_policy_;
+  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   std::string app_profile_id_;
   std::string table_name_;

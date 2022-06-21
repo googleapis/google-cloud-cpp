@@ -128,7 +128,7 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
       app_profile_id, table_name, *idempotency_policy(), std::move(mut));
   // We wait to allocate the policies until they are needed as a
   // micro-optimization.
-  std::unique_ptr<DataRetryPolicy> retry;
+  std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
   do {
     auto status = mutator.MakeOneRequest(*stub_);
@@ -265,7 +265,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
 
   Status status;
   std::vector<bigtable::RowKeySample> samples;
-  std::unique_ptr<DataRetryPolicy> retry;
+  std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
   while (true) {
     auto context = absl::make_unique<grpc::ClientContext>();

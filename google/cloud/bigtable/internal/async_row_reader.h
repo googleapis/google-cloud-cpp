@@ -57,7 +57,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
                      RowFunctor on_row, FinishFunctor on_finish,
                      bigtable::RowSet row_set, std::int64_t rows_limit,
                      bigtable::Filter filter,
-                     std::unique_ptr<DataRetryPolicy> retry_policy,
+                     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                      std::unique_ptr<BackoffPolicy> backoff_policy) {
     auto reader = std::shared_ptr<AsyncRowReader>(new AsyncRowReader(
         std::move(cq), std::move(stub), std::move(app_profile_id),
@@ -73,7 +73,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
                  RowFunctor on_row, FinishFunctor on_finish,
                  bigtable::RowSet row_set, std::int64_t rows_limit,
                  bigtable::Filter filter,
-                 std::unique_ptr<DataRetryPolicy> retry_policy,
+                 std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                  std::unique_ptr<BackoffPolicy> backoff_policy)
       : cq_(std::move(cq)),
         stub_(std::move(stub)),
@@ -128,7 +128,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   bigtable::RowSet row_set_;
   std::int64_t rows_limit_;
   bigtable::Filter filter_;
-  std::unique_ptr<DataRetryPolicy> retry_policy_;
+  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;
   /// Number of rows read so far, used to set row_limit in retries.

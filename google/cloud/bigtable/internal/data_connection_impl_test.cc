@@ -32,6 +32,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace v2 = ::google::bigtable::v2;
+using ::google::cloud::bigtable::DataBackoffPolicyOption;
+using ::google::cloud::bigtable::DataLimitedErrorCountRetryPolicy;
+using ::google::cloud::bigtable::DataRetryPolicyOption;
+using ::google::cloud::bigtable::IdempotentMutationPolicyOption;
 using ::google::cloud::bigtable::testing::MockAsyncReadRowsStream;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::bigtable::testing::MockDataRetryPolicy;

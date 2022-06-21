@@ -183,20 +183,20 @@ Options DefaultDataOptions(Options opts) {
   if (!opts.has<AuthorityOption>()) {
     opts.set<AuthorityOption>("bigtable.googleapis.com");
   }
-  if (!opts.has<bigtable_internal::DataRetryPolicyOption>()) {
-    opts.set<bigtable_internal::DataRetryPolicyOption>(
-        bigtable_internal::DataLimitedTimeRetryPolicy(
+  if (!opts.has<bigtable::DataRetryPolicyOption>()) {
+    opts.set<bigtable::DataRetryPolicyOption>(
+        bigtable::DataLimitedTimeRetryPolicy(
             kBigtableLimits.maximum_retry_period)
             .clone());
   }
-  if (!opts.has<bigtable_internal::DataBackoffPolicyOption>()) {
-    opts.set<bigtable_internal::DataBackoffPolicyOption>(
+  if (!opts.has<bigtable::DataBackoffPolicyOption>()) {
+    opts.set<bigtable::DataBackoffPolicyOption>(
         ExponentialBackoffPolicy(kBigtableLimits.initial_delay / 2,
                                  kBigtableLimits.maximum_delay, kBackoffScaling)
             .clone());
   }
-  if (!opts.has<bigtable_internal::IdempotentMutationPolicyOption>()) {
-    opts.set<bigtable_internal::IdempotentMutationPolicyOption>(
+  if (!opts.has<bigtable::IdempotentMutationPolicyOption>()) {
+    opts.set<bigtable::IdempotentMutationPolicyOption>(
         bigtable::DefaultIdempotentMutationPolicy());
   }
   opts = DefaultOptions(std::move(opts));

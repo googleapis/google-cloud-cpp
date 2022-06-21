@@ -26,7 +26,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DefaultRowReader::DefaultRowReader(
     std::shared_ptr<BigtableStub> stub, std::string app_profile_id,
     std::string table_name, bigtable::RowSet row_set, std::int64_t rows_limit,
-    bigtable::Filter filter, std::unique_ptr<DataRetryPolicy> retry_policy,
+    bigtable::Filter filter,
+    std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy)
     : stub_(std::move(stub)),
       app_profile_id_(std::move(app_profile_id)),

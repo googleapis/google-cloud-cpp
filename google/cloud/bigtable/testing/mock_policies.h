@@ -31,9 +31,9 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
-class MockDataRetryPolicy : public bigtable_internal::DataRetryPolicy {
+class MockDataRetryPolicy : public bigtable::DataRetryPolicy {
  public:
-  MOCK_METHOD(std::unique_ptr<bigtable_internal::DataRetryPolicy>, clone, (),
+  MOCK_METHOD(std::unique_ptr<bigtable::DataRetryPolicy>, clone, (),
               (const, override));
   MOCK_METHOD(bool, OnFailure, (Status const&), (override));
   MOCK_METHOD(void, OnFailureImpl, (), (override));

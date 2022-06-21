@@ -46,7 +46,7 @@ class DefaultRowReader : public RowReaderImpl {
                    std::string app_profile_id, std::string table_name,
                    bigtable::RowSet row_set, std::int64_t rows_limit,
                    bigtable::Filter filter,
-                   std::unique_ptr<DataRetryPolicy> retry_policy,
+                   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                    std::unique_ptr<BackoffPolicy> backoff_policy);
 
   ~DefaultRowReader() override;
@@ -89,7 +89,7 @@ class DefaultRowReader : public RowReaderImpl {
   bigtable::RowSet row_set_;
   std::int64_t rows_limit_;
   bigtable::Filter filter_;
-  std::unique_ptr<DataRetryPolicy> retry_policy_;
+  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
 
   std::unique_ptr<grpc::ClientContext> context_;
