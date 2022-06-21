@@ -41,7 +41,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
  public:
   static future<std::vector<bigtable::FailedMutation>> Create(
       CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
-      std::unique_ptr<DataRetryPolicy> retry_policy,
+      std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy,
       bigtable::IdempotentMutationPolicy& idempotent_policy,
       std::string const& app_profile_id, std::string const& table_name,
@@ -49,7 +49,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
 
  private:
   AsyncBulkApplier(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
-                   std::unique_ptr<DataRetryPolicy> retry_policy,
+                   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                    std::unique_ptr<BackoffPolicy> backoff_policy,
                    bigtable::IdempotentMutationPolicy& idempotent_policy,
                    std::string const& app_profile_id,
@@ -62,7 +62,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
 
   CompletionQueue cq_;
   std::shared_ptr<BigtableStub> stub_;
-  std::unique_ptr<DataRetryPolicy> retry_policy_;
+  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   bigtable::internal::BulkMutatorState state_;
   std::atomic<bool> keep_reading_{true};

@@ -104,28 +104,28 @@ class DataConnectionImpl : public DataConnection {
       std::string row_key, bigtable::Filter filter) override;
 
  private:
-  std::unique_ptr<DataRetryPolicy> retry_policy() {
+  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<DataRetryPolicyOption>()) {
-      return options.get<DataRetryPolicyOption>()->clone();
+    if (options.has<bigtable::DataRetryPolicyOption>()) {
+      return options.get<bigtable::DataRetryPolicyOption>()->clone();
     }
-    return options_.get<DataRetryPolicyOption>()->clone();
+    return options_.get<bigtable::DataRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<DataBackoffPolicyOption>()) {
-      return options.get<DataBackoffPolicyOption>()->clone();
+    if (options.has<bigtable::DataBackoffPolicyOption>()) {
+      return options.get<bigtable::DataBackoffPolicyOption>()->clone();
     }
-    return options_.get<DataBackoffPolicyOption>()->clone();
+    return options_.get<bigtable::DataBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<bigtable::IdempotentMutationPolicy> idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<IdempotentMutationPolicyOption>()) {
-      return options.get<IdempotentMutationPolicyOption>()->clone();
+    if (options.has<bigtable::IdempotentMutationPolicyOption>()) {
+      return options.get<bigtable::IdempotentMutationPolicyOption>()->clone();
     }
-    return options_.get<IdempotentMutationPolicyOption>()->clone();
+    return options_.get<bigtable::IdempotentMutationPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackgroundThreads> background_;

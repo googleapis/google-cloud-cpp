@@ -25,8 +25,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace v2 = ::google::bigtable::v2;
 
 future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncRowSampler::Create(
-    CompletionQueue cq, std::shared_ptr<bigtable_internal::BigtableStub> stub,
-    std::unique_ptr<bigtable_internal::DataRetryPolicy> retry_policy,
+    CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+    std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::string const& app_profile_id, std::string const& table_name) {
   std::shared_ptr<AsyncRowSampler> sampler(new AsyncRowSampler(
@@ -37,8 +37,8 @@ future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncRowSampler::Create(
 }
 
 AsyncRowSampler::AsyncRowSampler(
-    CompletionQueue cq, std::shared_ptr<bigtable_internal::BigtableStub> stub,
-    std::unique_ptr<bigtable_internal::DataRetryPolicy> retry_policy,
+    CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+    std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::string const& app_profile_id, std::string const& table_name)
     : cq_(std::move(cq)),

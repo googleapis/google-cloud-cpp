@@ -190,9 +190,9 @@ TEST(OptionsTest, DefaultTableAdminOptions) {
 
 TEST(OptionsTest, DefaultDataOptionsPolicies) {
   auto options = DefaultDataOptions(Options{});
-  EXPECT_TRUE(options.has<bigtable_internal::DataRetryPolicyOption>());
-  EXPECT_TRUE(options.has<bigtable_internal::DataBackoffPolicyOption>());
-  EXPECT_TRUE(options.has<bigtable_internal::IdempotentMutationPolicyOption>());
+  EXPECT_TRUE(options.has<bigtable::DataRetryPolicyOption>());
+  EXPECT_TRUE(options.has<bigtable::DataBackoffPolicyOption>());
+  EXPECT_TRUE(options.has<bigtable::IdempotentMutationPolicyOption>());
 }
 
 TEST(OptionsTest, DataUserProjectOption) {

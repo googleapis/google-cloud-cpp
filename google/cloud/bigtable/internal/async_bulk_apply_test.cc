@@ -29,6 +29,7 @@ namespace {
 
 namespace v2 = ::google::bigtable::v2;
 using ms = std::chrono::milliseconds;
+using ::google::cloud::bigtable::DataLimitedErrorCountRetryPolicy;
 using ::google::cloud::bigtable::testing::MockAsyncMutateRowsStream;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::testing_util::MockBackoffPolicy;

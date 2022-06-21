@@ -111,13 +111,6 @@ using ClientOptionList =
                InstanceAdminEndpointOption, MinConnectionRefreshOption,
                MaxConnectionRefreshOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
-
-// TODO(#8860) - Make these options public.
-namespace bigtable_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
 using DataRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     bigtable::internal::SafeGrpcRetry>;
 
@@ -149,7 +142,7 @@ using DataPolicyOptionList =
                IdempotentMutationPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_internal
+}  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
 
