@@ -889,19 +889,32 @@ class Table {
             future<bool>>::value,
         "RowFunctor should return a future<bool>.");
 
+    auto on_row_ptr = std::make_shared<RowFunctor>(std::move(on_row));
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    auto on_row_fn = [on_row_ptr](Row row) {
+      return (*on_row_ptr)(std::move(row));
+    };
+
+    auto on_finish_ptr = std::make_shared<FinishFunctor>(std::move(on_finish));
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    auto on_finish_fn = [on_finish_ptr](Status status) {
+      return (*on_finish_ptr)(std::move(status));
+    };
+
     if (connection_) {
       google::cloud::internal::OptionsSpan span(options_);
-      connection_->AsyncReadRows(
-          app_profile_id_, table_name_, std::move(on_row), std::move(on_finish),
-          std::move(row_set), rows_limit, std::move(filter));
+      connection_->AsyncReadRows(app_profile_id_, table_name_,
+                                 std::move(on_row_fn), std::move(on_finish_fn),
+                                 std::move(row_set), rows_limit,
+                                 std::move(filter));
       return;
     }
 
     bigtable_internal::LegacyAsyncRowReader::Create(
         background_threads_->cq(), client_, app_profile_id_, table_name_,
-        std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
-        std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        metadata_update_policy_,
+        std::move(on_row_fn), std::move(on_finish_fn), std::move(row_set),
+        rows_limit, std::move(filter), clone_rpc_retry_policy(),
+        clone_rpc_backoff_policy(), metadata_update_policy_,
         absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
   }
 
