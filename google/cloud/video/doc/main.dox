@@ -2,8 +2,14 @@
 
 @mainpage Transcoder API C++ Client Library
 
-An idiomatic C++ client library for the [Transcoder API][cloud-service-docs], a service
-to This API converts video files into formats suitable for consumer distribution.
+An idiomatic C++ client library for video services, including:
+
+- [Transcoder API][transcoder-service-docs], a service to convert video files
+ into formats suitable for consumer distribution.
+- [Video Stitcher API][stitcher-service-docs], a service to generate dynamic
+  content for delivery to client devices. Call the Video Stitcher API from your
+  servers to dynamically insert ads into video-on-demand and live streams for
+  your users.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -39,6 +45,13 @@ which should give you a taste of the Transcoder API C++ client library API.
 ## Environment Variables
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_TRANSCODER_SERVICE_ENDPOINT=...` changes the default endpoint
+  (transcoder.googleapis.com) used by `TranscoderServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_VIDEO_STITCHER_SERVICE_ENDPOINT=...` changes the default endpoint
+  (videostitcher.googleapis.com) used by `VideoStitcherServiceConnection`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
@@ -84,7 +97,8 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/video
+[transcoder-service-docs]: https://cloud.google.com/transcoder
+[stitcher-service-docs]: https://cloud.google.com/video-stitcher
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

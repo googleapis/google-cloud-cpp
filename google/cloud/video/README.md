@@ -2,8 +2,15 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Transcoder API][cloud-service-docs], a service to This API converts video files into formats suitable for consumer distribution.
+This directory contains an idiomatic C++ client library for video services, 
+including:
+
+- [Transcoder API][transcoder-service-docs], a service to convert video files
+ into formats suitable for consumer distribution.
+- [Video Stitcher API][stitcher-service-docs], a service to generate dynamic
+  content for delivery to client devices. Call the Video Stitcher API from your
+  servers to dynamically insert ads into video-on-demand and live streams for
+  your users.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -20,12 +27,14 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Transcoder API][cloud-service-docs] service
+* Official documentation about the [Transcoder API][transcoder-service-docs] service
+* Official documentation about the [Video Stitcher API][stitcher-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/video
+[transcoder-service-docs]: https://cloud.google.com/transcoder
+[stitcher-service-docs]: https://cloud.google.com/video-stitcher
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-video/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/video
 
@@ -38,22 +47,23 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/video/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/video/transcoder_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace video = ::google::cloud::video;
-  auto client = video::Client(video::MakeConnection(/* EDIT HERE */));
+  auto client =
+      video::TranscoderServiceClient(video::MakeTranscoderServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListJobs(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

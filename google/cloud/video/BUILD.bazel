@@ -38,7 +38,8 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
-        "@com_google_googleapis//google/cloud/video/transcoder/v1:video_cc_grpc",
+        "@com_google_googleapis//google/cloud/video/stitcher/v1:stitcher_cc_grpc",
+        "@com_google_googleapis//google/cloud/video/transcoder/v1:transcoder_cc_grpc",
     ],
 )
 
