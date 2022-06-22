@@ -165,7 +165,7 @@ env -C "${out_dir}" ctest "${ctest_args[@]}"
 
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
-libraries="$(printf ";%s" $(features::list_full | grep -v experimental- | grep -v grafeas))"
+libraries="$(printf ";%s" $(features::list_full | grep -v grafeas))"
 libraries="${libraries:1}"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \

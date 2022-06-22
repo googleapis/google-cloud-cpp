@@ -23,43 +23,49 @@ if (NOT LIBRARIES)
                         " -DLIBRARIES=\"storage;spanner\"")
 endif ()
 
-set(ARGS)
-if (CMAKE_PREFIX_PATH)
-    list(APPEND ARGS "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}")
-endif ()
-if (CMAKE_TOOLCHAIN_FILE)
-    list(APPEND ARGS "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
-endif ()
-
 add_custom_target(verify-quickstart-cmake ALL)
 add_custom_target(verify-quickstart-make ALL)
 
 include(ExternalProject)
 
-foreach (library IN LISTS LIBRARIES)
+function (add_cmake_quickstart_target feature library target)
+    set(COMMON_CMAKE_ARGS)
+    if (CMAKE_PREFIX_PATH)
+        list(APPEND COMMON_CMAKE_ARGS
+             "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}")
+    endif ()
+    if (CMAKE_TOOLCHAIN_FILE)
+        list(APPEND COMMON_CMAKE_ARGS
+             "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
+    endif ()
+
     externalproject_add(
-        verify-quickstart-cmake-${library}
+        verify-quickstart-cmake-${feature}
         EXCLUDE_FROM_ALL ON
-        PREFIX "${PROJECT_BINARY_DIR}/cmake-${library}-prefix"
+        PREFIX "${PROJECT_BINARY_DIR}/cmake-${feature}-prefix"
         SOURCE_DIR
             "${PROJECT_SOURCE_DIR}/../../google/cloud/${library}/quickstart"
-        BINARY_DIR "${PROJECT_BINARY_DIR}/cmake-${library}"
-        CMAKE_ARGS ${ARGS}
+        BINARY_DIR "${PROJECT_BINARY_DIR}/cmake-${feature}"
+        CMAKE_ARGS ${COMMON_CMAKE_ARGS}
+        BUILD_COMMAND "${CMAKE_COMMAND}" "--build" "<BINARY_DIR>" "--target"
+                      "${target}"
         INSTALL_COMMAND ""
-                        # Use LOG_* ON to keep builds quiet on success
+        # Use LOG_* ON to keep builds quiet on success
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_OUTPUT_ON_FAILURE ON)
-    add_dependencies(verify-quickstart-cmake verify-quickstart-cmake-${library})
+    add_dependencies(verify-quickstart-cmake verify-quickstart-cmake-${feature})
+endfunction ()
 
+function (add_make_quickstart_target feature library target)
     externalproject_add(
-        verify-quickstart-makefile-${library}
+        verify-quickstart-makefile-${feature}
         EXCLUDE_FROM_ALL ON
-        PREFIX "${PROJECT_BINARY_DIR}/makefile-${library}-prefix"
+        PREFIX "${PROJECT_BINARY_DIR}/makefile-${feature}-prefix"
         SOURCE_DIR
             "${PROJECT_SOURCE_DIR}/../../google/cloud/${library}/quickstart"
-        BINARY_DIR "${PROJECT_BINARY_DIR}/makefile-${library}"
+        BINARY_DIR "${PROJECT_BINARY_DIR}/makefile-${feature}"
         CONFIGURE_COMMAND ""
         BUILD_COMMAND
             "env"
@@ -68,12 +74,23 @@ foreach (library IN LISTS LIBRARIES)
             "-C"
             "<SOURCE_DIR>"
             "BIN=<BINARY_DIR>"
+            "<BINARY_DIR>/${target}"
         INSTALL_COMMAND ""
-                        # Use LOG_* ON to keep builds quiet on success
+        # Use LOG_* ON to keep builds quiet on success
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_OUTPUT_ON_FAILURE ON)
     add_dependencies(verify-quickstart-make
-                     verify-quickstart-makefile-${library})
+                     verify-quickstart-makefile-${feature})
+endfunction ()
+
+foreach (feature IN LISTS LIBRARIES)
+    if ("${feature}" STREQUAL "experimental-storage-grpc")
+        add_cmake_quickstart_target("${feature}" storage quickstart_grpc)
+        add_make_quickstart_target("${feature}" storage quickstart_grpc)
+        continue()
+    endif ()
+    add_cmake_quickstart_target("${feature}" "${feature}" quickstart)
+    add_make_quickstart_target("${feature}" "${feature}" quickstart)
 endforeach ()
