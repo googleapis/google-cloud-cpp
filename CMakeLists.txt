@@ -26,7 +26,7 @@ endif ()
 project(
     google-cloud-cpp
     VERSION 1.43.0
-    LANGUAGES CXX C)
+    LANGUAGES CXX)
 
 if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
     # AppleClang defaults to C++98, so we bump it to C++11.
