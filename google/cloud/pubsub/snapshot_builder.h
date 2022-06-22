@@ -31,24 +31,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Build a request to create a Cloud Pub/Sub snapshot.
+ *
+ * Makes it easier to create the protobuf messages consumed by
+ * `SubscriptionAdminClient`.  The main advantages are:
+ *
+ * - Use a fluent API to set multiple values when constructing complex objects.
+ * - Automatically compute the set of paths for update requests.
  */
 class SnapshotBuilder {
  public:
   SnapshotBuilder() = default;
 
-  /// Build a CreateSnapshotRequest where the server assigns the snapshot id.
+  /// Build a protocol buffer message to create snapshots with server-assigned
+  /// ids.
   google::pubsub::v1::CreateSnapshotRequest BuildCreateRequest(
       Subscription const& subscription) &&;
 
-  /// Build a CreateSnapshotRequest where the application assigns the snapshot
-  /// id.
+  /// Build a protocol buffer message to create snapshots with
+  /// application-assigned ids.
   google::pubsub::v1::CreateSnapshotRequest BuildCreateRequest(
       Subscription const& subscription, Snapshot const& snapshot) &&;
 
-  /// Build a UpdateSnapshotRequest.
+  /// Build a protocol buffer message to update an existing snapshot.
   google::pubsub::v1::UpdateSnapshotRequest BuildUpdateRequest(
       Snapshot const& snapshot) &&;
 
+  /// @name Setters for each protocol buffer field.
+  ///@{
   SnapshotBuilder& add_label(std::string const& key,
                              std::string const& value) & {
     using value_type = protobuf::Map<std::string, std::string>::value_type;
@@ -67,6 +76,7 @@ class SnapshotBuilder {
     return *this;
   }
   SnapshotBuilder&& clear_labels() && { return std::move(clear_labels()); }
+  ///@}
 
  private:
   google::pubsub::v1::Snapshot proto_;

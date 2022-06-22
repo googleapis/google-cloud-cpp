@@ -301,6 +301,79 @@ TEST(SubscriptionBuilder, SetPushConfigSetAuthentication) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(SubscriptionBuilder, CreateWithBigQueryFull) {
+  auto const actual =
+      SubscriptionBuilder{}
+          .set_bigquery_config(
+              BigQueryConfigBuilder()
+                  .set_table("test-bq-project", "test-bq-data", "test-bq-table")
+                  .set_write_metadata(true)
+                  .set_use_topic_schema(true)
+                  .set_drop_unknown_fields(true))
+          .BuildCreateRequest(
+              Topic("test-project", "test-topic"),
+              Subscription("test-project", "test-subscription"));
+  google::pubsub::v1::Subscription expected;
+  std::string const text = R"pb(
+    topic: "projects/test-project/topics/test-topic"
+    name: "projects/test-project/subscriptions/test-subscription"
+    bigquery_config {
+      table: "test-bq-project:test-bq-data.test-bq-table"
+      write_metadata: true
+      use_topic_schema: true
+      drop_unknown_fields: true
+    })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionBuilder, UpdateWithBigQueryFull) {
+  auto const actual =
+      SubscriptionBuilder{}
+          .set_bigquery_config(
+              BigQueryConfigBuilder()
+                  .set_table("test-bq-project", "test-bq-data", "test-bq-table")
+                  .set_write_metadata(true)
+                  .set_use_topic_schema(true)
+                  .set_drop_unknown_fields(true))
+          .BuildUpdateRequest(
+              Subscription("test-project", "test-subscription"));
+  google::pubsub::v1::UpdateSubscriptionRequest expected;
+  std::string const text = R"pb(
+    subscription {
+      name: "projects/test-project/subscriptions/test-subscription"
+      bigquery_config {
+        table: "test-bq-project:test-bq-data.test-bq-table"
+        write_metadata: true
+        use_topic_schema: true
+        drop_unknown_fields: true
+      }
+    }
+    update_mask {
+      paths: "bigquery_config.drop_unknown_fields"
+      paths: "bigquery_config.table"
+      paths: "bigquery_config.use_topic_schema"
+      paths: "bigquery_config.write_metadata"
+    })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionBuilder, UpdateWithBigQueryEmpty) {
+  auto const actual = SubscriptionBuilder{}
+                          .set_bigquery_config(BigQueryConfigBuilder())
+                          .BuildUpdateRequest(Subscription(
+                              "test-project", "test-subscription"));
+  google::pubsub::v1::UpdateSubscriptionRequest expected;
+  std::string const text = R"pb(
+    subscription {
+      name: "projects/test-project/subscriptions/test-subscription"
+    }
+    update_mask { paths: "bigquery_config" })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(SubscriptionBuilder, SetAckDeadline) {
   auto const actual = SubscriptionBuilder{}
                           .set_ack_deadline(std::chrono::seconds(600))
@@ -489,6 +562,43 @@ TEST(SubscriptionBuilder, SetDeadLetterPolicy) {
       }
     }
     update_mask { paths: "dead_letter_policy" })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionBuilder, SetRetryPolicy) {
+  auto const actual =
+      SubscriptionBuilder{}
+          .set_retry_policy(SubscriptionBuilder::MakeRetryPolicy(
+              std::chrono::seconds(10), std::chrono::seconds(450)))
+          .BuildUpdateRequest(
+              Subscription("test-project", "test-subscription"));
+  google::pubsub::v1::UpdateSubscriptionRequest expected;
+  std::string const text = R"pb(
+    subscription {
+      name: "projects/test-project/subscriptions/test-subscription"
+      retry_policy {
+        minimum_backoff { seconds: 10 }
+        maximum_backoff { seconds: 450 }
+      }
+    }
+    update_mask { paths: "retry_policy" })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionBuilder, EnableExactlyOnceDelivery) {
+  auto const actual = SubscriptionBuilder{}
+                          .enable_exactly_once_delivery(true)
+                          .BuildUpdateRequest(Subscription(
+                              "test-project", "test-subscription"));
+  google::pubsub::v1::UpdateSubscriptionRequest expected;
+  std::string const text = R"pb(
+    subscription {
+      name: "projects/test-project/subscriptions/test-subscription"
+      enable_exactly_once_delivery: true
+    }
+    update_mask { paths: "enable_exactly_once_delivery" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
