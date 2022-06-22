@@ -36,7 +36,7 @@ class SubscriptionBuilder;
  * Helper class to create google::pubsub::v1::PushConfig protos.
  *
  * Makes it easier to create the protobuf messages consumed by
- * `google::cloud::SubscriptionAdmin`.  The main advantages are:
+ * `google::cloud::pubsub::SubscriptionAdmin`.  The main advantages are:
  *
  * - Use a fluent API to set multiple values when constructing complex objects.
  * - Automatically compute the set of paths for update requests.
@@ -137,7 +137,7 @@ class PushConfigBuilder {
  * A helper class to build `google::pubsub::v1::BigQueryConfig` protos.
  *
  * Makes it easier to create the protobuf messages consumed by
- * `google::cloud::SubscriptionAdmin`.  The main advantages are:
+ * `google::cloud::pubsub::SubscriptionAdmin`.  The main advantages are:
  *
  * - Use a fluent API to set multiple values when constructing complex objects.
  * - Automatically compute the set of paths for update requests.
@@ -205,7 +205,7 @@ class BigQueryConfigBuilder {
  * Create a Cloud Pub/Sub subscription configuration.
  *
  * Makes it easier to create the protobuf messages consumed by
- * `google::cloud::SubscriptionAdmin`.  The main advantages are:
+ * `google::cloud::pubsub::SubscriptionAdmin`.  The main advantages are:
  *
  * - Use a fluent API to set multiple values when constructing complex objects.
  * - Automatically compute the set of paths for update requests.
