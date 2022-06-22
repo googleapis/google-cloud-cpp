@@ -174,6 +174,11 @@ declare -A -r LIBRARIES=(
   ["tpu"]="@com_google_googleapis//google/cloud/tpu/v1:tpu_cc_grpc"
   ["trace"]="@com_google_googleapis//google/devtools/cloudtrace/v2:cloudtrace_cc_grpc"
   ["translate"]="@com_google_googleapis//google/cloud/translate/v3:translation_cc_grpc"
+  ["video"]="$(
+    printf ",%s" \
+    "@com_google_googleapis//google/cloud/video/stitcher/v1:stitcher_cc_grpc" \
+    "@com_google_googleapis//google/cloud/video/transcoder/v1:transcoder_cc_grpc"
+  )"
   ["videointelligence"]="@com_google_googleapis//google/cloud/videointelligence/v1:videointelligence_cc_grpc"
   ["vision"]="@com_google_googleapis//google/cloud/vision/v1:vision_cc_grpc"
   ["vmmigration"]="@com_google_googleapis//google/cloud/vmmigration/v1:vmmigration_cc_grpc"

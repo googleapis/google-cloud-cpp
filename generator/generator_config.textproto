@@ -1294,6 +1294,21 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Video
+service {
+  service_proto_path: "google/cloud/video/stitcher/v1/video_stitcher_service.proto"
+  product_path: "google/cloud/video"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/video/transcoder/v1/services.proto"
+  product_path: "google/cloud/video"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Video Intelligence
 service {
   service_proto_path: "google/cloud/videointelligence/v1/video_intelligence.proto"
