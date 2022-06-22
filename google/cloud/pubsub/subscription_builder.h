@@ -34,6 +34,12 @@ class SubscriptionBuilder;
 
 /**
  * Helper class to create google::pubsub::v1::PushConfig protos.
+ *
+ * Makes it easier to create the protobuf messages consumed by
+ * `google::cloud::SubscriptionAdmin`.  The main advantages are:
+ *
+ * - Use a fluent API to set multiple values when constructing complex objects.
+ * - Automatically compute the set of paths for update requests.
  */
 class PushConfigBuilder {
  public:
@@ -42,9 +48,12 @@ class PushConfigBuilder {
     set_push_endpoint(std::move(push_endpoint));
   }
 
+  /// Create a protocol buffer message for the `ModifyPushConfig()` RPC.
   google::pubsub::v1::ModifyPushConfigRequest BuildModifyPushConfig(
       Subscription const& subscription) &&;
 
+  /// @name Setters for each protocol buffer field.
+  ///@{
   PushConfigBuilder& set_push_endpoint(std::string v) & {
     proto_.set_push_endpoint(std::move(v));
     paths_.insert("push_endpoint");
@@ -116,6 +125,7 @@ class PushConfigBuilder {
       google::pubsub::v1::PushConfig::OidcToken token) && {
     return std::move(set_authentication(std::move(token)));
   }
+  //@}
 
  private:
   friend class SubscriptionBuilder;
@@ -126,12 +136,18 @@ class PushConfigBuilder {
 /**
  * A helper class to build `google::pubsub::v1::BigQueryConfig` protos.
  *
- * Makes it easier to build admin requests to
+ * Makes it easier to create the protobuf messages consumed by
+ * `google::cloud::SubscriptionAdmin`.  The main advantages are:
+ *
+ * - Use a fluent API to set multiple values when constructing complex objects.
+ * - Automatically compute the set of paths for update requests.
  */
 class BigQueryConfigBuilder {
  public:
   BigQueryConfigBuilder() = default;
 
+  /// @name Setters for each protocol buffer field.
+  ///@{
   BigQueryConfigBuilder& set_table(std::string full_path) & {
     *proto_.mutable_table() = std::move(full_path);
     paths_.insert("table");
@@ -177,6 +193,7 @@ class BigQueryConfigBuilder {
   BigQueryConfigBuilder&& set_drop_unknown_fields(bool v) && {
     return std::move(set_drop_unknown_fields(v));
   }
+  ///@}
 
  private:
   friend class SubscriptionBuilder;
@@ -186,17 +203,27 @@ class BigQueryConfigBuilder {
 
 /**
  * Create a Cloud Pub/Sub subscription configuration.
+ *
+ * Makes it easier to create the protobuf messages consumed by
+ * `google::cloud::SubscriptionAdmin`.  The main advantages are:
+ *
+ * - Use a fluent API to set multiple values when constructing complex objects.
+ * - Automatically compute the set of paths for update requests.
  */
 class SubscriptionBuilder {
  public:
   SubscriptionBuilder() = default;
 
+  /// Construct a request to update an existing subscription.
   google::pubsub::v1::UpdateSubscriptionRequest BuildUpdateRequest(
       Subscription const& subscription) &&;
 
+  /// Construct a request to create a new subscription.
   google::pubsub::v1::Subscription BuildCreateRequest(
       Topic const& topic, Subscription const& subscription) &&;
 
+  /// @name Setters for each protocol buffer field.
+  ///@{
   SubscriptionBuilder& set_push_config(PushConfigBuilder v) &;
   SubscriptionBuilder&& set_push_config(PushConfigBuilder v) && {
     return std::move(set_push_config(std::move(v)));
@@ -348,7 +375,14 @@ class SubscriptionBuilder {
   SubscriptionBuilder&& enable_exactly_once_delivery(bool v) && {
     return std::move(enable_exactly_once_delivery(v));
   }
+  ///@}
 
+  /**
+   * Construct a `google::pubsub::v1::ExpirationPolicy` using a C++ duration.
+   *
+   * This is a convenience function to create the `set_expiration_policy()`
+   * argument.
+   */
   template <typename Rep, typename Period>
   static google::pubsub::v1::ExpirationPolicy MakeExpirationPolicy(
       std::chrono::duration<Rep, Period> d) {
@@ -358,6 +392,12 @@ class SubscriptionBuilder {
     return result;
   }
 
+  /**
+   * Construct a `google::pubsub::v1::DeadLetterPolicy`.
+   *
+   * This is a convenience function to create the `set_dead_letter_policy()`
+   * argument.
+   */
   static google::pubsub::v1::DeadLetterPolicy MakeDeadLetterPolicy(
       Topic const& dead_letter_topic, std::int32_t max_delivery_attempts = 0) {
     google::pubsub::v1::DeadLetterPolicy result;
@@ -366,6 +406,12 @@ class SubscriptionBuilder {
     return result;
   }
 
+  /**
+   * Construct a `google::pubsub::v1::RetryPolicy` using C++ durations.
+   *
+   * This is a convenience function to create the `set_retry_policy()`
+   * argument.
+   */
   template <typename Rep1, typename Period1, typename Rep2, typename Period2>
   static google::pubsub::v1::RetryPolicy MakeRetryPolicy(
       std::chrono::duration<Rep1, Period1> minimum_backoff,
