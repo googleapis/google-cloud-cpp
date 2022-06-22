@@ -30,6 +30,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Builds requests to create or update a Cloud Pub/Sub topic.
+ *
+ * Makes it easier to create the protobuf messages consumed by
+ * `TopicAdminClient`.  The main advantages are:
+ *
+ * - Use a fluent API to set multiple values when constructing complex objects.
+ * - Automatically compute the set of paths for update requests.
  */
 class TopicBuilder {
  public:
@@ -37,10 +43,14 @@ class TopicBuilder {
     proto_.set_name(topic.FullName());
   }
 
+  /// Build a protocol buffer message to create a new topic.
   google::pubsub::v1::Topic BuildCreateRequest() &&;
 
+  /// Build a protocol buffer message to update an existing topic.
   google::pubsub::v1::UpdateTopicRequest BuildUpdateRequest() &&;
 
+  /// @name Setters for each protocol buffer field.
+  ///@{
   TopicBuilder& add_label(std::string const& key, std::string const& value) & {
     using value_type = protobuf::Map<std::string, std::string>::value_type;
     proto_.mutable_labels()->insert(value_type(key, value));
@@ -128,6 +138,7 @@ class TopicBuilder {
       google::protobuf::Duration const& d) && {
     return std::move(set_message_retention_duration(d));
   }
+  ///@}
 
  private:
   google::pubsub::v1::Topic proto_;

@@ -36,7 +36,7 @@ class SubscriptionBuilder;
  * Helper class to create google::pubsub::v1::PushConfig protos.
  *
  * Makes it easier to create the protobuf messages consumed by
- * `google::cloud::pubsub::SubscriptionAdmin`.  The main advantages are:
+ * `SubscriptionAdminClient`.  The main advantages are:
  *
  * - Use a fluent API to set multiple values when constructing complex objects.
  * - Automatically compute the set of paths for update requests.
@@ -48,7 +48,7 @@ class PushConfigBuilder {
     set_push_endpoint(std::move(push_endpoint));
   }
 
-  /// Create a protocol buffer message for the `ModifyPushConfig()` RPC.
+  /// Build a protocol buffer message to update an existing push config.
   google::pubsub::v1::ModifyPushConfigRequest BuildModifyPushConfig(
       Subscription const& subscription) &&;
 
@@ -137,7 +137,7 @@ class PushConfigBuilder {
  * A helper class to build `google::pubsub::v1::BigQueryConfig` protos.
  *
  * Makes it easier to create the protobuf messages consumed by
- * `google::cloud::pubsub::SubscriptionAdmin`.  The main advantages are:
+ * `SubscriptionAdminClient`.  The main advantages are:
  *
  * - Use a fluent API to set multiple values when constructing complex objects.
  * - Automatically compute the set of paths for update requests.
@@ -205,7 +205,7 @@ class BigQueryConfigBuilder {
  * Create a Cloud Pub/Sub subscription configuration.
  *
  * Makes it easier to create the protobuf messages consumed by
- * `google::cloud::pubsub::SubscriptionAdmin`.  The main advantages are:
+ * `SubscriptionAdminClient`.  The main advantages are:
  *
  * - Use a fluent API to set multiple values when constructing complex objects.
  * - Automatically compute the set of paths for update requests.
@@ -214,11 +214,11 @@ class SubscriptionBuilder {
  public:
   SubscriptionBuilder() = default;
 
-  /// Construct a request to update an existing subscription.
+  /// Build a protocol buffer message to update an existing subscription.
   google::pubsub::v1::UpdateSubscriptionRequest BuildUpdateRequest(
       Subscription const& subscription) &&;
 
-  /// Construct a request to create a new subscription.
+  /// Build a protocol buffer message to create a new subscription.
   google::pubsub::v1::Subscription BuildCreateRequest(
       Topic const& topic, Subscription const& subscription) &&;
 
