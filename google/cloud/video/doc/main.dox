@@ -46,11 +46,13 @@ which should give you a taste of the Transcoder API C++ client library API.
 
 <!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_TRANSCODER_SERVICE_ENDPOINT=...` changes the default endpoint
-  (transcoder.googleapis.com) used by `TranscoderServiceConnection`.
+- `GOOGLE_CLOUD_CPP_TRANSCODER_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "transcoder.googleapis.com")
+  used by `MakeTranscoderServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_VIDEO_STITCHER_SERVICE_ENDPOINT=...` changes the default endpoint
-  (videostitcher.googleapis.com) used by `VideoStitcherServiceConnection`.
+- `GOOGLE_CLOUD_CPP_VIDEO_STITCHER_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "videostitcher.googleapis.com")
+  used by `MakeVideoStitcherServiceConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 
