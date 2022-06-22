@@ -78,7 +78,7 @@ TEST(ThroughputResult, HeaderMatches) {
       /*app_buffer_size=*/2 * kMiB, /*lib_buffer_size=*/4 * kMiB,
       /*crc_enabled=*/true, /*md5_enabled=*/false,
       std::chrono::microseconds(234000), std::chrono::microseconds(345000),
-      Status{StatusCode::kOutOfRange, "OOR-status-message"}, "peer"});
+      Status{StatusCode::kOutOfRange, "OOR-status-message"}, "peer", "notes"});
   ASSERT_STATUS_OK(line);
   ASSERT_FALSE(header.empty());
   ASSERT_FALSE(line->empty());
@@ -106,6 +106,7 @@ TEST(ThroughputResult, HeaderMatches) {
   EXPECT_THAT(*line, HasSubstr(StatusCodeToString(StatusCode::kOutOfRange)));
   EXPECT_THAT(*line, HasSubstr("OOR-status-message"));
   EXPECT_THAT(*line, HasSubstr("peer"));
+  EXPECT_THAT(*line, HasSubstr(",notes,"));
 }
 
 TEST(ThroughputResult, QuoteCsv) {

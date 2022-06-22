@@ -89,6 +89,8 @@ struct ThroughputResult {
   google::cloud::Status status;
   /// The peer used during the transfer
   std::string peer;
+  /// Additional notes
+  std::string notes;
 };
 
 /// Print @p r as a CSV line.
