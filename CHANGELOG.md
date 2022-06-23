@@ -110,8 +110,8 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
 ## v1.43.0 (or maybe v2.43.0) - TBD
 
 We are introducing a new client library. While we do not anticipate any API
-changes to this library before declaring them GA, we are releasing it early in
-case they elicit some feedback that requires changes.
+changes to this library before declaring it GA, we are releasing it early in
+case it elicits some feedback that requires changes.
 
 * [Video Services](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/video/README.md)
 
