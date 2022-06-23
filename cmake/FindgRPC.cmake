@@ -275,26 +275,26 @@ if (_gRPC_grpc++_LIBRARY)
             set_property(
                 TARGET gRPC::grpc++
                 APPEND
-                PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_11)
+                PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_14)
         elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             # CMake 3.5 is still alive and kicking in some older distros, use
             # the compiler-specific versions in these cases.
             set_property(
                 TARGET gRPC::grpc++
                 APPEND
-                PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
+                PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++14")
         elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             set_property(
                 TARGET gRPC::grpc++
                 APPEND
-                PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
+                PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++14")
         else ()
             message(
                 WARNING
-                    "gRPC::grpc++ requires C++11, but this module"
+                    "gRPC::grpc++ requires C++14, but this module"
                     " (${CMAKE_CURRENT_LIST_FILE})"
                     " cannot enable it for the library target in your CMake and"
-                    " compiler versions. You need to enable C++11 in the"
+                    " compiler versions. You need to enable C++14 in the"
                     " CMakeLists.txt for your project. Consider filing a bug"
                     " so we can fix this problem.")
         endif ()
