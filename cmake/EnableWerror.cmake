@@ -40,7 +40,7 @@ endfunction ()
 
 function (google_cloud_cpp_add_common_options target)
     google_cloud_cpp_silence_warnings_in_deps(${target})
-    # Require C++ >= 11.  Unfortunately CMake can only express such requirements
+    # Require C++ >= 14.  Unfortunately CMake can only express such requirements
     # starting with CMake == 3.8.0. Note that this is a *minimum* requirement.
     # It is still possible to compile the library (and its dependencies) with
     # C++14 or higher.
