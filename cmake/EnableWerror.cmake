@@ -50,11 +50,13 @@ function (google_cloud_cpp_add_common_options target)
         # CMake < 3.8 does not have a feature to express "requires C++ >= 14",
         # but it has a way to express "I need generalized lambda captures", so
         # we do that.  This may seem unnecessary, as the default C++ version is
-        # 14 for all the compilers we support, unfortunately nlohmann::json
+        # 14 for all the compilers we support. Unfortunately nlohmann::json
         # sneakily adds a requirement for "ranged for loops". CMake interprets
         # this requirement as "add the -std=c++11" flag, which disables the
         # C++14 features.  Sigh.
+        # ~~~
         # TODO(#9343) - remove this workaround once CMake < 3.8 is not needed
+        # ~~~
         target_compile_features(${target} PUBLIC cxx_lambda_init_captures)
     endif ()
     if (MSVC)
