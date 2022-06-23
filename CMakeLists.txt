@@ -29,7 +29,7 @@ project(
     LANGUAGES CXX)
 
 if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
-    # AppleClang defaults to C++98, so we bump it to C++11.
+    # AppleClang defaults to C++98, so we bump it to C++14.
     message(
         WARNING
             "CMAKE_CXX_STANDARD was undefined, defaulting to C++14."

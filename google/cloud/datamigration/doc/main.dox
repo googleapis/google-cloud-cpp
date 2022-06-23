@@ -7,7 +7,7 @@ to Manage Cloud Database Migration Service resources on Google Cloud Platform.
 
 While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
-This library requires a C++11 compiler. It is supported (and tested) on multiple
+This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
 on [GitHub][github-link] provides detailed instructions to install the necessary
 dependencies, as well as how to compile the client library.
