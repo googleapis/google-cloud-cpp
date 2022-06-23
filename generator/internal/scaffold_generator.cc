@@ -1016,6 +1016,9 @@ void GenerateQuickstartBazelrc(
 #   [1]: https://github.com/bazelbuild/bazel/issues/4341
 build --copt=-DGRPC_BAZEL_BUILD
 
+build:linux --cxxopt=-std=c++14
+build:macos --cxxopt=-std=c++14
+
 # Do not create the convenience links, they are inconvenient when the build
 # runs inside a docker image or if one builds a quickstart and then builds
 # the project separately.
