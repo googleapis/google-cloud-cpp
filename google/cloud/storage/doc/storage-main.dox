@@ -3,7 +3,7 @@
 @mainpage Google Cloud Storage C++ Client Library
 
 The Google Cloud Storage (GCS) C++ Client library offers types and functions
-access GCS from C++11 applications. It offers full access to the GCS API,
+access GCS from C++ applications. It offers full access to the GCS API,
 including operations to list, read, write, and delete
 [GCS objects][object-definition-link] and [buckets][bucket-definition-link].
 The library also provides functions to modify the IAM permissions on buckets,
@@ -11,7 +11,7 @@ read and modify the metadata associated with objects and buckets, configure
 encryption keys, configure notifications via Cloud Pub/Sub, and change the
 access control list of object or buckets.
 
-This library requires a C++11 compiler. It is supported (and tested) on multiple
+This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The
 [README][github-readme] on [GitHub][github-link] provides detailed
 instructions to install the necessary dependencies, as well as how to compile

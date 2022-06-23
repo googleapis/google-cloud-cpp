@@ -3,9 +3,9 @@
 @mainpage Cloud IAM C++ Client Library
 
 The Cloud IAM C++ Client library offers types and functions to use Cloud
-IAM from C++11 applications.
+IAM from C++ applications.
 
-This library requires a C++11 compiler. It is supported (and tested) on multiple
+This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, macOS, and Windows.
 
 ## Quickstart
