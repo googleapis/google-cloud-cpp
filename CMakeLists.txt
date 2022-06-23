@@ -25,14 +25,14 @@ if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
 endif ()
 project(
     google-cloud-cpp
-    VERSION 1.43.0
+    VERSION 2.43.0
     LANGUAGES CXX)
 
 if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
     # AppleClang defaults to C++98, so we bump it to C++11.
     message(
         WARNING
-            "CMAKE_CXX_STANDARD was undefined, defaulting to C++11."
+            "CMAKE_CXX_STANDARD was undefined, defaulting to C++14."
             "To select the desired standard use something like the following:"
             "\n"
             "    cmake -DCMAKE_CXX_STANDARD=17 ..."
@@ -40,27 +40,17 @@ if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
             "For more details, see "
             "https://cmake.org/cmake/help/latest/variable/CMAKE_CXX_STANDARD.html"
     )
-    set(CMAKE_CXX_STANDARD 11)
+    set(CMAKE_CXX_STANDARD 14)
 endif ()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
-        message(
-            FATAL_ERROR
-                "GCC version must be at least 5.0. Older versions either lack"
-                " C++11 support or have bugs that prevent us from using them.")
-    elseif (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.3)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.3)
         message(
             WARNING "The `google-cloud-cpp` library is tested with GCC >= 6.3."
                     " We will consider patches for older versions.")
     endif ()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.8)
-        message(
-            FATAL_ERROR
-                "Clang version must be at least 3.8. Older versions either lack"
-                " C++11 support or have bugs that prevent us from using them.")
-    elseif (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)
         message(
             WARNING
                 "The `google-cloud-cpp` library is tested with Clang >= 6.0."
