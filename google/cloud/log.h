@@ -85,6 +85,7 @@
  */
 
 #include "google/cloud/version.h"
+#include "absl/memory/memory.h"
 #include <atomic>
 #include <chrono>
 #include <cstdlib>
@@ -415,9 +416,7 @@ class Logger {
 
   /// Return the iostream that captures the log message.
   std::ostream& Stream() {
-    if (!stream_) {
-      stream_.reset(new std::ostringstream);
-    }
+    if (!stream_) stream_ = absl::make_unique<std::ostringstream>();
     return *stream_;
   }
 
