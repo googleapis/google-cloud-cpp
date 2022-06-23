@@ -81,7 +81,7 @@ test are:
 - Compilers: Clang, GCC, MSVC
 - Build tool: Bazel, CMake
 - Configuration: release, debug, with/without exceptions, dynamic vs static
-- C++ Language: C++11, ..., C++20
+- C++ Language: C++14, ..., C++20
 - Installation: CMake, pkg-config
 
 In addition to these main dimensions, we also want to use tools and analyzers

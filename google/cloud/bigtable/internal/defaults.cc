@@ -67,7 +67,7 @@ int DefaultConnectionPoolSize() {
   // to calculate the default pool size based on cores(CPU) available. However,
   // as per C++11 documentation `std::thread::hardware_concurrency()` cannot be
   // fully relied upon. It is only a hint and the value can be 0 if it is not
-  // well defined or not computable. Apart from CPU count, multiple channels
+  // well-defined or not computable. Apart from CPU count, multiple channels
   // can be opened for each CPU to increase throughput. The pool size is also
   // capped so that servers with many cores do not create too many channels.
   int cpu_count = std::thread::hardware_concurrency();
