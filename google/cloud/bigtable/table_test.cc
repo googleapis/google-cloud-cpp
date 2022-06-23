@@ -120,8 +120,8 @@ Options TableOptions() { return Options{}.set<TestOption>(true); }
 
 Table TestTable(std::shared_ptr<MockDataConnection> mock) {
   EXPECT_CALL(*mock, options).WillOnce(Return(Options{}));
-  return bigtable_internal::MakeTable(std::move(mock), kProjectId, kInstanceId,
-                                      kAppProfileId, kTableId, TableOptions());
+  return Table(std::move(mock), kProjectId, kInstanceId, kAppProfileId,
+               kTableId, TableOptions());
 }
 
 void CheckCurrentOptions() {
@@ -129,9 +129,20 @@ void CheckCurrentOptions() {
   EXPECT_TRUE(options.has<TestOption>());
 }
 
-TEST(TableTest, ConnectionConstructor) {
+TEST(TableTest, ConnectionConstructorNoAppProfile) {
   auto conn = std::make_shared<MockDataConnection>();
-  auto table = TestTable(std::move(conn));
+  auto table = Table(std::move(conn), kProjectId, kInstanceId, kTableId);
+  EXPECT_EQ("", table.app_profile_id());
+  EXPECT_EQ(kProjectId, table.project_id());
+  EXPECT_EQ(kInstanceId, table.instance_id());
+  EXPECT_EQ(kTableId, table.table_id());
+  EXPECT_EQ(kTableName, table.table_name());
+}
+
+TEST(TableTest, ConnectionConstructorWithAppProfile) {
+  auto conn = std::make_shared<MockDataConnection>();
+  auto table =
+      Table(std::move(conn), kProjectId, kInstanceId, kAppProfileId, kTableId);
   EXPECT_EQ(kAppProfileId, table.app_profile_id());
   EXPECT_EQ(kProjectId, table.project_id());
   EXPECT_EQ(kInstanceId, table.instance_id());

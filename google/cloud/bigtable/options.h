@@ -122,17 +122,17 @@ using DataLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigtable::internal::SafeGrpcRetry>;
 
-/// Option to use with `google::cloud::Options`.
+/// Option to configure the retry policy used by `Table`.
 struct DataRetryPolicyOption {
   using Type = std::shared_ptr<DataRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/// Option to configure the backoff policy used by `Table`.
 struct DataBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/// Option to configure the idempotency policy used by `Table`.
 struct IdempotentMutationPolicyOption {
   using Type = std::shared_ptr<bigtable::IdempotentMutationPolicy>;
 };

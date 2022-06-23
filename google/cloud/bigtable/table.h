@@ -42,22 +42,6 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-// Make a `Table` that is implemented by a `DataConnection`, instead of a
-// `DataClient`. We will use this in tests while the `DataConnection` is under
-// development.
-//
-// TODO(#8860) - remove this when we make the `DataConnection` constructor
-// public.
-bigtable::Table MakeTable(std::shared_ptr<bigtable::DataConnection> conn,
-                          std::string project_id, std::string instance_id,
-                          std::string app_profile_id, std::string table_id,
-                          Options options = {});
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_internal
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -192,6 +176,64 @@ class Table {
   struct ValidPolicies : absl::conjunction<ValidPolicy<Policies>...> {};
 
  public:
+  /**
+   * Constructs a `Table` object using the specified @p conn and @p options.
+   *
+   * The full table name is:
+   * `projects/<project_id>/instances/<instance_id>/tables/<table_id>`
+   *
+   * See `MakeDataConnection()` for how to create a connection to Bigtable.
+   *
+   * To mock the behavior of `Table` in your tests, use a
+   * `bigtable_mocks::MockDataConnection`.
+   *
+   * The relevant options are enumerated in `DataPolicyOptionList`.
+   *   - `DataRetryPolicyOption`
+   *   - `DataBackoffPolicyOption`
+   *   - `IdempotentMutationPolicyOption`
+   */
+  explicit Table(std::shared_ptr<DataConnection> conn, std::string project_id,
+                 std::string instance_id, std::string table_id,
+                 Options options = {})
+      : Table(std::move(conn), std::move(project_id), std::move(instance_id),
+              "", std::move(table_id), std::move(options)) {}
+
+  /**
+   * Constructs a `Table` object using the specified @p conn and @p options.
+   *
+   * The full table name is:
+   * `projects/<project_id>/instances/<instance_id>/tables/<table_id>`
+   *
+   * @param app_profile_id the [application profile id][app-profile-docs] needed
+   *     for using the replication API.
+   *
+   * [app-profile-docs]: https://cloud.google.com/bigtable/docs/app-profiles
+   *
+   * See `MakeDataConnection()` for how to create a connection to Bigtable.
+   *
+   * To mock the behavior of `Table` in your tests, use a
+   * `bigtable_mocks::MockDataConnection`.
+   *
+   * The relevant options are enumerated in `DataPolicyOptionList`.
+   *   - `DataRetryPolicyOption`
+   *   - `DataBackoffPolicyOption`
+   *   - `IdempotentMutationPolicyOption`
+   */
+  explicit Table(std::shared_ptr<DataConnection> conn, std::string project_id,
+                 std::string instance_id, std::string app_profile_id,
+                 std::string table_id, Options options = {})
+      : app_profile_id_(std::move(app_profile_id)),
+        project_id_(std::move(project_id)),
+        instance_id_(std::move(instance_id)),
+        table_name_(TableName(project_id_, instance_id_, table_id)),
+        table_id_(std::move(table_id)),
+        metadata_update_policy_(
+            MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
+        connection_(std::move(conn)),
+        options_(google::cloud::internal::MergeOptions(
+            std::move(options),
+            internal::DefaultDataOptions(connection_->options()))) {}
+
   /**
    * Constructor with default policies.
    *
@@ -951,25 +993,6 @@ class Table {
                                                       Filter filter);
 
  private:
-  friend Table bigtable_internal::MakeTable(
-      std::shared_ptr<bigtable::DataConnection>, std::string, std::string,
-      std::string, std::string, Options);
-  explicit Table(std::shared_ptr<bigtable::DataConnection> conn,
-                 std::string project_id, std::string instance_id,
-                 std::string app_profile_id, std::string table_id,
-                 Options options = {})
-      : app_profile_id_(std::move(app_profile_id)),
-        project_id_(std::move(project_id)),
-        instance_id_(std::move(instance_id)),
-        table_name_(TableName(project_id_, instance_id_, table_id)),
-        table_id_(std::move(table_id)),
-        metadata_update_policy_(
-            MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
-        connection_(std::move(conn)),
-        options_(google::cloud::internal::MergeOptions(
-            std::move(options),
-            internal::DefaultDataOptions(connection_->options()))) {}
-
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
@@ -1046,21 +1069,6 @@ class Table {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
-namespace bigtable_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-inline bigtable::Table MakeTable(std::shared_ptr<bigtable::DataConnection> conn,
-                                 std::string project_id,
-                                 std::string instance_id,
-                                 std::string app_profile_id,
-                                 std::string table_id, Options options) {
-  return bigtable::Table(std::move(conn), std::move(project_id),
-                         std::move(instance_id), std::move(app_profile_id),
-                         std::move(table_id), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 
