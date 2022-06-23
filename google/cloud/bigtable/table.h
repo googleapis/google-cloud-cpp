@@ -17,9 +17,9 @@
 
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
+#include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
-#include "google/cloud/bigtable/internal/data_connection.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/legacy_async_row_reader.h"
 #include "google/cloud/bigtable/mutation_branch.h"
@@ -51,7 +51,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 //
 // TODO(#8860) - remove this when we make the `DataConnection` constructor
 // public.
-bigtable::Table MakeTable(std::shared_ptr<DataConnection> conn,
+bigtable::Table MakeTable(std::shared_ptr<bigtable::DataConnection> conn,
                           std::string project_id, std::string instance_id,
                           std::string app_profile_id, std::string table_id,
                           Options options = {});
@@ -952,9 +952,9 @@ class Table {
 
  private:
   friend Table bigtable_internal::MakeTable(
-      std::shared_ptr<bigtable_internal::DataConnection>, std::string,
-      std::string, std::string, std::string, Options);
-  explicit Table(std::shared_ptr<bigtable_internal::DataConnection> conn,
+      std::shared_ptr<bigtable::DataConnection>, std::string, std::string,
+      std::string, std::string, Options);
+  explicit Table(std::shared_ptr<bigtable::DataConnection> conn,
                  std::string project_id, std::string instance_id,
                  std::string app_profile_id, std::string table_id,
                  Options options = {})
@@ -1040,7 +1040,7 @@ class Table {
   MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   std::shared_ptr<BackgroundThreads> background_threads_;
-  std::shared_ptr<bigtable_internal::DataConnection> connection_;
+  std::shared_ptr<DataConnection> connection_;
   Options options_;
 };
 
@@ -1049,7 +1049,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-inline bigtable::Table MakeTable(std::shared_ptr<DataConnection> conn,
+inline bigtable::Table MakeTable(std::shared_ptr<bigtable::DataConnection> conn,
                                  std::string project_id,
                                  std::string instance_id,
                                  std::string app_profile_id,

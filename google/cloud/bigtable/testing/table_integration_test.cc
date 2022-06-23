@@ -112,7 +112,7 @@ void TableAdminTestEnvironment::TearDown() {
 }
 
 void TableIntegrationTest::SetUp() {
-  data_connection_ = bigtable_internal::MakeDataConnection();
+  data_connection_ = MakeDataConnection();
   data_client_ = bigtable::MakeDataClient(TableTestEnvironment::project_id(),
                                           TableTestEnvironment::instance_id());
 

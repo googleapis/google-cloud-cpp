@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MOCKS_MOCK_DATA_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MOCKS_MOCK_DATA_CONNECTION_H
 
-#include "google/cloud/bigtable/internal/data_connection.h"
+#include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 
@@ -34,7 +34,7 @@ namespace internal {
  * `bigtable::Table` with an instance of this class. Then use the Google Test
  * framework functions to program the behavior of this mock.
  */
-class MockDataConnection : public bigtable_internal::DataConnection {
+class MockDataConnection : public bigtable::DataConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 

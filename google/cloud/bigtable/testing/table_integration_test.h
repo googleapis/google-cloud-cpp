@@ -180,7 +180,7 @@ class TableIntegrationTest
   }
 
   std::shared_ptr<bigtable::DataClient> data_client_;
-  std::shared_ptr<bigtable_internal::DataConnection> data_connection_;
+  std::shared_ptr<bigtable::DataConnection> data_connection_;
 };
 
 }  // namespace testing
