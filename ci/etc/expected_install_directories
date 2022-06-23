@@ -326,6 +326,13 @@
 ./include/google/cloud/translate/internal
 ./include/google/cloud/translate/mocks
 ./include/google/cloud/translate/v3
+./include/google/cloud/video
+./include/google/cloud/video/internal
+./include/google/cloud/video/mocks
+./include/google/cloud/video/stitcher
+./include/google/cloud/video/stitcher/v1
+./include/google/cloud/video/transcoder
+./include/google/cloud/video/transcoder/v1
 ./include/google/cloud/videointelligence
 ./include/google/cloud/videointelligence/internal
 ./include/google/cloud/videointelligence/mocks
@@ -479,6 +486,7 @@
 ./lib64/cmake/google_cloud_cpp_tpu
 ./lib64/cmake/google_cloud_cpp_trace
 ./lib64/cmake/google_cloud_cpp_translate
+./lib64/cmake/google_cloud_cpp_video
 ./lib64/cmake/google_cloud_cpp_videointelligence
 ./lib64/cmake/google_cloud_cpp_vision
 ./lib64/cmake/google_cloud_cpp_vmmigration

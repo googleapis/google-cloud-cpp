@@ -1,0 +1,10 @@
+@com_google_googleapis//google/cloud/video/stitcher/v1:ad_tag_details.proto
+@com_google_googleapis//google/cloud/video/stitcher/v1:cdn_keys.proto
+@com_google_googleapis//google/cloud/video/stitcher/v1:companions.proto
+@com_google_googleapis//google/cloud/video/stitcher/v1:events.proto
+@com_google_googleapis//google/cloud/video/stitcher/v1:sessions.proto
+@com_google_googleapis//google/cloud/video/stitcher/v1:slates.proto
+@com_google_googleapis//google/cloud/video/stitcher/v1:stitch_details.proto
+@com_google_googleapis//google/cloud/video/stitcher/v1:video_stitcher_service.proto
+@com_google_googleapis//google/cloud/video/transcoder/v1:resources.proto
+@com_google_googleapis//google/cloud/video/transcoder/v1:services.proto
