@@ -270,7 +270,7 @@ if (_gRPC_grpc++_LIBRARY)
             PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc protobuf::libprotobuf
                      Threads::Threads)
         if (CMAKE_VERSION VERSION_GREATER 3.8)
-            # gRPC++ requires C++11, but only CMake-3.8 introduced a target
+            # gRPC++ requires C++14 (soon), but only CMake-3.8 introduced a
             # compiler feature to meet that requirement.
             set_property(
                 TARGET gRPC::grpc++
