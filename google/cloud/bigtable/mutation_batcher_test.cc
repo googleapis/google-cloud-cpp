@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -138,7 +139,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
   MutationBatcherTest()
       : TableTestFixture(
             CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
-        batcher_(new MutationBatcher(table_)) {}
+        batcher_(absl::make_unique<MutationBatcher>(table_)) {}
 
   void ExpectInteraction(std::vector<Exchange> const& interactions) {
     // gMock expectation matching starts from the latest added, so we need to
@@ -310,11 +311,12 @@ TEST_F(MutationBatcherTest, BatchIsFlushedImmediately) {
       {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
        SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
        SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz")})});
-  batcher_.reset(new MutationBatcher(table_, MutationBatcher::Options()
-                                                 .SetMaxMutationsPerBatch(10)
-                                                 .SetMaxSizePerBatch(2000)
-                                                 .SetMaxBatches(1)
-                                                 .SetMaxOutstandingSize(4000)));
+  batcher_ = absl::make_unique<MutationBatcher>(
+      table_, MutationBatcher::Options()
+                  .SetMaxMutationsPerBatch(10)
+                  .SetMaxSizePerBatch(2000)
+                  .SetMaxBatches(1)
+                  .SetMaxOutstandingSize(4000));
 
   ExpectInteraction(
       {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
@@ -359,7 +361,7 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
 
   bool hit_batch_size_limit = GetParam();
 
-  batcher_.reset(new MutationBatcher(
+  batcher_ = absl::make_unique<MutationBatcher>(
       table_, MutationBatcher::Options()
                   .SetMaxMutationsPerBatch(hit_batch_size_limit ? 1000 : 4)
                   .SetMaxSizePerBatch(hit_batch_size_limit
@@ -368,7 +370,7 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
                                              MutationSize(mutations[3]) - 1)
                                           : 2000)
                   .SetMaxBatches(1)
-                  .SetMaxOutstandingSize(4000)));
+                  .SetMaxOutstandingSize(4000));
 
   ExpectInteraction(
       {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
@@ -428,8 +430,8 @@ TEST_F(MutationBatcherTest, RequestsWithManyMutationsAreRejected) {
                                  bt::SetCell("fam", "col2", 0_ms, "baz"),
                                  bt::SetCell("fam", "col3", 0_ms, "baz")})});
 
-  batcher_.reset(new MutationBatcher(
-      table_, MutationBatcher::Options().SetMaxMutationsPerBatch(2)));
+  batcher_ = absl::make_unique<MutationBatcher>(
+      table_, MutationBatcher::Options().SetMaxMutationsPerBatch(2));
 
   auto state = Apply(mutations[0]);
   EXPECT_TRUE(state->admitted);
@@ -447,8 +449,8 @@ TEST_F(MutationBatcherTest, OutstandingMutationsAreCapped) {
 
   // The second mutation will go through alone. But it will not go through if
   // the first mutation is outstanding due to the outstanding mutations limit.
-  batcher_.reset(new MutationBatcher(
-      table_, MutationBatcher::Options().SetMaxOutstandingMutations(3)));
+  batcher_ = absl::make_unique<MutationBatcher>(
+      table_, MutationBatcher::Options().SetMaxOutstandingMutations(3));
 
   ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}},
                      {{mutations[1]}, {ResultPiece({0, 1, 2}, {}, {})}}});
@@ -486,9 +488,9 @@ TEST_F(MutationBatcherTest, OutstandingMutationSizeIsCapped) {
 
   // The second mutation will go through alone. But it will not go through if
   // the first mutation is outstanding due to the outstanding size limit.
-  batcher_.reset(new MutationBatcher(
+  batcher_ = absl::make_unique<MutationBatcher>(
       table_, MutationBatcher::Options().SetMaxOutstandingSize(
-                  MutationSize(mutations[1]))));
+                  MutationSize(mutations[1])));
 
   ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}},
                      {{mutations[1]}, {ResultPiece({0, 1, 2}, {}, {})}}});
@@ -522,9 +524,9 @@ TEST_F(MutationBatcherTest, LargeMutationsAreRejected) {
   std::vector<SingleRowMutation> mutations(
       {SingleRowMutation("foo", {bt::SetCell("fam", "col3", 0_ms, "baz")})});
 
-  batcher_.reset(
-      new MutationBatcher(table_, MutationBatcher::Options().SetMaxSizePerBatch(
-                                      MutationSize(mutations[0]) - 1)));
+  batcher_ = absl::make_unique<MutationBatcher>(
+      table_, MutationBatcher::Options().SetMaxSizePerBatch(
+                  MutationSize(mutations[0]) - 1));
 
   auto state = Apply(mutations[0]);
   EXPECT_TRUE(state->admitted);
@@ -548,8 +550,8 @@ TEST_F(MutationBatcherTest, ErrorsArePropagated) {
       {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
        SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
        SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz")})});
-  batcher_.reset(
-      new MutationBatcher(table_, MutationBatcher::Options().SetMaxBatches(1)));
+  batcher_ = absl::make_unique<MutationBatcher>(
+      table_, MutationBatcher::Options().SetMaxBatches(1));
 
   ExpectInteraction(
       {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
@@ -586,9 +588,9 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
        SingleRowMutation("foo3", {bt::SetCell("fam", "col1", 0_ms, "baz"),
                                   bt::SetCell("fam", "col2", 0_ms, "baz")}),
        SingleRowMutation("foo4", {bt::SetCell("fam", "col", 0_ms, "baz")})});
-  batcher_.reset(new MutationBatcher(
+  batcher_ = absl::make_unique<MutationBatcher>(
       table_,
-      MutationBatcher::Options().SetMaxBatches(1).SetMaxMutationsPerBatch(2)));
+      MutationBatcher::Options().SetMaxBatches(1).SetMaxMutationsPerBatch(2));
 
   // The first mutation flushes the batch immediately.
   // The second opens a new batch and waits until the first returns.
@@ -657,9 +659,9 @@ TEST_F(MutationBatcherTest, WaitForNoPendingSimple) {
        SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "baz")}),
        SingleRowMutation("baz", {bt::SetCell("fam", "col", 0_ms, "baz")})});
 
-  batcher_.reset(new MutationBatcher(
+  batcher_ = absl::make_unique<MutationBatcher>(
       table_,
-      MutationBatcher::Options().SetMaxMutationsPerBatch(2).SetMaxBatches(1)));
+      MutationBatcher::Options().SetMaxMutationsPerBatch(2).SetMaxBatches(1));
 
   ExpectInteraction(
       {{{mutations[0]}, {ResultPiece({0}, {}, {})}},
@@ -716,9 +718,9 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
        SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz"),
                                   bt::SetCell("fam", "col", 0_ms, "baz")})});
 
-  batcher_.reset(new MutationBatcher(
+  batcher_ = absl::make_unique<MutationBatcher>(
       table_,
-      MutationBatcher::Options().SetMaxMutationsPerBatch(1).SetMaxBatches(1)));
+      MutationBatcher::Options().SetMaxMutationsPerBatch(1).SetMaxBatches(1));
   ExpectInteraction({Exchange({mutations[0]}, {ResultPiece({}, {}, {0})}),
                      Exchange({mutations[1]}, {ResultPiece({}, {}, {0})})});
 

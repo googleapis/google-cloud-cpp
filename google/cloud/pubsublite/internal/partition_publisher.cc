@@ -37,12 +37,13 @@ PartitionPublisher::PartitionPublisher(
     AlarmRegistry& alarm_registry)
     : batching_options_{std::move(batching_options)},
       initial_publish_request_{std::move(ipr)},
-      resumable_stream_{resumable_stream_factory(std::bind(
-          &PartitionPublisher::Initializer, this, std::placeholders::_1))},
+      resumable_stream_{resumable_stream_factory(
+          [this](ResumableStreamImpl::UnderlyingStream stream) {
+            return Initializer(std::move(stream));
+          })},
       service_composite_{resumable_stream_.get()},
       cancel_token_{alarm_registry.RegisterAlarm(
-          batching_options_.alarm_period(),
-          std::bind(&PartitionPublisher::Flush, this))} {}
+          batching_options_.alarm_period(), [this] { Flush(); })} {}
 
 PartitionPublisher::~PartitionPublisher() {
   future<void> shutdown = Shutdown();
