@@ -176,7 +176,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 ## Supported Platforms
 
 * Windows, macOS, Linux
-* C++11 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and
+* C++14 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and
   MSVC >= 2017)
 * Environments with or without exceptions
 * Bazel (>= 4.0) and CMake (>= 3.5) builds
@@ -500,7 +500,7 @@ to $description$
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
-This library requires a C++11 compiler. It is supported (and tested) on multiple
+This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
 on [GitHub][github-link] provides detailed instructions to install the necessary
 dependencies, as well as how to compile the client library.
