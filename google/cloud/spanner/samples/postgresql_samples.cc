@@ -67,7 +67,7 @@ void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
   std::vector<std::string> statements = {
       R"""(
         ALTER TABLE Albums
-            ADD COLUMN MarketingBudget BIGINT
+            ADD COLUMN NumberOfSongs BIGINT
       )""",
   };
   auto metadata =
