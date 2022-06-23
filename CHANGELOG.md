@@ -95,7 +95,7 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
   details.
 </details>
 
-## v2.43.0 - TBD
+## v2.0.0 - TBD
 
 **BREAKING CHANGES**
 
