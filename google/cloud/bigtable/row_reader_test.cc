@@ -45,7 +45,7 @@ TEST(RowReaderTest, BadStatusOnly) {
 TEST(RowReaderTest, IteratorPostincrement) {
   std::vector<Row> rows = {Row("r1", {})};
 
-  auto reader = bigtable_mocks::internal::MakeTestRowReader(rows);
+  auto reader = bigtable_mocks::MakeRowReader(rows);
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());

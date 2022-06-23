@@ -26,7 +26,7 @@ namespace {
 
 namespace v2 = ::google::bigtable::v2;
 using ms = std::chrono::milliseconds;
-using ::google::cloud::bigtable_mocks::internal::MockDataConnection;
+using ::google::cloud::bigtable_mocks::MockDataConnection;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
@@ -230,8 +230,7 @@ TEST(TableTest, ReadRows) {
         EXPECT_THAT(row_set, IsTestRowSet());
         EXPECT_EQ(rows_limit, RowReader::NO_ROWS_LIMIT);
         EXPECT_THAT(filter, IsTestFilter());
-        return bigtable_mocks::internal::MakeTestRowReader({},
-                                                           PermanentError());
+        return bigtable_mocks::MakeRowReader({}, PermanentError());
       });
 
   auto table = TestTable(std::move(mock));
@@ -254,8 +253,7 @@ TEST(TableTest, ReadRowsWithRowLimit) {
         EXPECT_THAT(row_set, IsTestRowSet());
         EXPECT_EQ(rows_limit, 42);
         EXPECT_THAT(filter, IsTestFilter());
-        return bigtable_mocks::internal::MakeTestRowReader({},
-                                                           PermanentError());
+        return bigtable_mocks::MakeRowReader({}, PermanentError());
       });
 
   auto table = TestTable(std::move(mock));
