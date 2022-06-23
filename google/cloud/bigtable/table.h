@@ -177,17 +177,17 @@ class Table {
 
  public:
   /**
-   * Constructs a `Table` object using the specified @p conn and @p options.
+   * Constructs a `Table` object.
    *
-   * The full table name is:
-   * `projects/<project_id>/instances/<instance_id>/tables/<table_id>`
-   *
-   * See `MakeDataConnection()` for how to create a connection to Bigtable.
-   *
-   * To mock the behavior of `Table` in your tests, use a
-   * `bigtable_mocks::MockDataConnection`.
-   *
-   * The relevant options are enumerated in `DataPolicyOptionList`.
+   * @param conn the connection to the Cloud Bigtable service. See
+   *     `MakeDataConnection()` for how to create a connection. To mock the
+   *     behavior of `Table` in your tests, use a
+   *     `bigtable_mocks::MockDataConnection`.
+   * @param project_id the project id of the table.
+   * @param instance_id the instance id of the table.
+   * @param table_id the table id of the table.
+   * @param options Configuration options for the table. The relevant options
+   *     are enumerated in `DataPolicyOptionList`. They include:
    *   - `DataRetryPolicyOption`
    *   - `DataBackoffPolicyOption`
    *   - `IdempotentMutationPolicyOption`
@@ -199,25 +199,24 @@ class Table {
               "", std::move(table_id), std::move(options)) {}
 
   /**
-   * Constructs a `Table` object using the specified @p conn and @p options.
+   * Constructs a `Table` object with an application profile id.
    *
-   * The full table name is:
-   * `projects/<project_id>/instances/<instance_id>/tables/<table_id>`
-   *
+   * @param conn the connection to the Cloud Bigtable service. See
+   *     `MakeDataConnection()` for how to create a connection. To mock the
+   *     behavior of `Table` in your tests, use a
+   *     `bigtable_mocks::MockDataConnection`.
+   * @param project_id the project id of the table.
+   * @param instance_id the instance id of the table.
    * @param app_profile_id the [application profile id][app-profile-docs] needed
    *     for using the replication API.
-   *
-   * [app-profile-docs]: https://cloud.google.com/bigtable/docs/app-profiles
-   *
-   * See `MakeDataConnection()` for how to create a connection to Bigtable.
-   *
-   * To mock the behavior of `Table` in your tests, use a
-   * `bigtable_mocks::MockDataConnection`.
-   *
-   * The relevant options are enumerated in `DataPolicyOptionList`.
+   * @param table_id the table id of the table.
+   * @param options Configuration options for the table. The relevant options
+   *     are enumerated in `DataPolicyOptionList`. They include:
    *   - `DataRetryPolicyOption`
    *   - `DataBackoffPolicyOption`
    *   - `IdempotentMutationPolicyOption`
+   *
+   * [app-profile-docs]: https://cloud.google.com/bigtable/docs/app-profiles
    */
   explicit Table(std::shared_ptr<DataConnection> conn, std::string project_id,
                  std::string instance_id, std::string app_profile_id,
