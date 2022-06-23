@@ -18,6 +18,7 @@
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_format.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -955,9 +956,7 @@ TEST(AsyncRowReaderTest, DeepStack) {
               int i = 0;
               std::vector<std::pair<std::string, bool>> v(101);
               std::generate_n(v.begin(), 101, [&i] {
-                std::stringstream s_idx;
-                s_idx << std::setfill('0') << std::setw(3) << i++;
-                return std::make_pair(s_idx.str(), true);
+                return std::make_pair(absl::StrFormat("%03d", i++), true);
               });
               return make_ready_future(MakeResponse(std::move(v)));
             })
@@ -973,7 +972,7 @@ TEST(AsyncRowReaderTest, DeepStack) {
   EXPECT_CALL(on_row, Call)
       .Times(101)
       .WillRepeatedly([&row_index](bigtable::Row const& row) {
-        EXPECT_EQ(row_index++, std::stoi(row.row_key()));
+        EXPECT_EQ(absl::StrFormat("%03d", row_index++), row.row_key());
         return make_ready_future(true);
       });
 
