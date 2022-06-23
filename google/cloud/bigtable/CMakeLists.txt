@@ -294,8 +294,7 @@ if (BUILD_TESTING)
         testing/table_test_fixture.h)
     target_link_libraries(
         bigtable_client_testing
-        PUBLIC absl::memory
-               google-cloud-cpp::bigtable
+        PUBLIC google-cloud-cpp::bigtable
                google-cloud-cpp::bigtable_mocks
                google-cloud-cpp::bigtable_protos
                google-cloud-cpp::common
@@ -307,6 +306,8 @@ if (BUILD_TESTING)
                GTest::gtest
                gRPC::grpc++
                gRPC::grpc
+               absl::memory
+               absl::str_format
                protobuf::libprotobuf)
     google_cloud_cpp_add_common_options(bigtable_client_testing)
 

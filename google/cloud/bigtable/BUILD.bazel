@@ -31,6 +31,7 @@ cc_library(
         "//:common",
         "//:grpc_utils",
         "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/strings:str_format",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
