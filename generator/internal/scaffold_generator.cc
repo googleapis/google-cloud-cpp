@@ -1016,6 +1016,11 @@ void GenerateQuickstartBazelrc(
 #   [1]: https://github.com/bazelbuild/bazel/issues/4341
 build --copt=-DGRPC_BAZEL_BUILD
 
+# Use host-OS-specific config lines from bazelrc files.
+build --enable_platform_specific_config=true
+
+# The project requires C++ >= 14. By default Bazel adds `-std=c++0x` which
+# disables C++14 features, even if the compilers defaults to C++ >= 14
 build:linux --cxxopt=-std=c++14
 build:macos --cxxopt=-std=c++14
 
