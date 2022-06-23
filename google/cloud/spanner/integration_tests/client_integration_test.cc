@@ -896,7 +896,7 @@ TEST_F(ClientIntegrationTest, DatabaseDialect) {
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
     if (emulator_) {
-      EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
+      EXPECT_THAT(row, AnyOf(IsOk(), StatusIs(StatusCode::kInvalidArgument)));
     } else {
       EXPECT_THAT(row, IsOk());
     }
