@@ -49,7 +49,7 @@
 // Abort compilation if the compiler does not support C++14.
 #if GOOGLE_CLOUD_CPP_CPP_VERSION < 201402L
 #  error "C++14 or newer is required"
-#endif  // GOOGLE_CLOUD_CPP_CPP_VERSION < 201103L
+#endif  // GOOGLE_CLOUD_CPP_CPP_VERSION < 201402L
 
 // Abort the build if the version of the compiler is too old. This simplifies
 // the tests further down in this file. Because Clang defines both `__GNUC__`
