@@ -59,7 +59,7 @@
 #    error "Only Clang >= 6.0 is supported."
 #  endif  // Clang < 6.0
 #elif defined(__GNUC__)
-#  if __GNUC__ < 6 || (__GNUC__ == 6 && __GNUC_MINOR__ < 4)
+#  if __GNUC__ < 6 || (__GNUC__ == 6 && __GNUC_MINOR__ < 3)
 #    error "Only GCC >= 6.3 is supported."
 #  endif  // GCC < 6.3
 #endif  // defined(__clang__)
