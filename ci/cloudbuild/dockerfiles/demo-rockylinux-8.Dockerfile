@@ -46,7 +46,7 @@ RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.g
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
-# default Rocky Linux 8 does not search for shared libraries in these
+# default, Rocky Linux 8 does not search for shared libraries in these
 # directories, there are multiple ways to solve this problem, the following
 # steps are one solution:
 
@@ -60,6 +60,16 @@ ENV PATH=/usr/local/bin:${PATH}
 # #### Abseil
 
 # We need a recent version of Abseil.
+
+# :warning: By default, Abseil's ABI changes depending on whether it is used
+# with C++ >= 17 enabled or not. Installing Abseil with the default
+# configuration is error-prone, unless you can guarantee that all the code using
+# Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+# C++ version. We recommend that you switch the default configuration to pin
+# Abseil's ABI to the version used at compile time. In this case, the compiler
+# defaults to C++14. Therefore, we change `absl/base/options.h` to **always**
+# use `absl::any`, `absl::string_view`, and `absl::variant`. See
+# [abseil/abseil-cpp#696] for more information.
 
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
