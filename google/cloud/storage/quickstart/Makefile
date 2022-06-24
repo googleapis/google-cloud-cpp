@@ -18,7 +18,7 @@
 # The CXX, CXXFLAGS and CXXLD variables are hard-coded. These values work for
 # our tests, but applications would typically make them configurable parameters.
 CXX=g++
-CXXFLAGS=-std=c++11
+CXXFLAGS=
 CXXLD=$(CXX)
 BIN=.
 

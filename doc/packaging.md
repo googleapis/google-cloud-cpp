@@ -148,6 +148,80 @@ the case, the instructions describe how you can manually download and install
 these dependencies.
 
 <details>
+<summary>Alpine (Stable)</summary>
+<br>
+
+Install the minimal development tools, libcurl, and OpenSSL:
+
+```bash
+apk update && \
+    apk add bash ca-certificates ccache cmake curl git \
+        gcc g++ make tar unzip zip zlib-dev
+```
+
+Alpine's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
+when handling `.pc` files with lots of `Requires:` deps, which happens with
+Abseil, so we use the normal `pkg-config` binary, which seems to not suffer
+from this bottleneck. For more details see
+https://github.com/pkgconf/pkgconf/issues/229
+https://github.com/googleapis/google-cloud-cpp/issues/7052
+mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
+curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    ./configure --with-internal-glib && \
+    make -j ${NCPU:-4} && \
+sudo make install
+export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
+
+#### Dependencies
+
+The versions of Abseil, Protobuf, gRPC, OpenSSL, and nlohmann-json included
+with Alpine >= 3.16 meet `google-cloud-cpp`'s requirements. We can simply
+install the development packages
+
+apk update && \
+    apk add abseil-cpp-dev c-ares-dev curl-dev grpc-dev \
+        protobuf-dev nlohmann-json openssl-dev re2-dev
+
+#### crc32c
+
+The project depends on the Crc32c library, we need to compile this from
+source:
+
+```bash
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DCRC32C_BUILD_TESTS=OFF \
+        -DCRC32C_BUILD_BENCHMARKS=OFF \
+        -DCRC32C_USE_GLOG=OFF \
+        -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+```
+
+#### Compile and install the main project
+
+We can now compile and install `google-cloud-cpp`
+
+```bash
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -H. -Bcmake-out \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
+  -DCMAKE_INSTALL_MESSAGE=NEVER \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
+```
+
+</details>
+
+<details>
 <summary>Fedora (35)</summary>
 <br>
 
