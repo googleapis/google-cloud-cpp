@@ -24,6 +24,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/log.h"
 #include <functional>
 #include <future>
 #include <set>
@@ -210,6 +211,9 @@ int main(int argc, char* argv[]) {
   auto handler = [&mu](gcs_bm::ThroughputResult const& result) {
     std::lock_guard<std::mutex> lk(mu);
     gcs_bm::PrintAsCsv(std::cout, result);
+    if (!result.status.ok()) {
+      google::cloud::LogSink::Instance().Flush();
+    }
   };
   auto provider = MakeProvider(*options);
 
@@ -368,12 +372,7 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
     auto status = upload_result.status;
     handler(std::move(upload_result));
 
-    if (!status.ok()) {
-      if (options.thread_count == 1) {
-        std::cout << "# status=" << status << "\n";
-      }
-      continue;
-    }
+    if (!status.ok()) continue;
 
     auto& downloader = downloaders[downloader_generator(generator)];
     for (auto op : {gcs_bm::kOpRead0, gcs_bm::kOpRead1, gcs_bm::kOpRead2}) {

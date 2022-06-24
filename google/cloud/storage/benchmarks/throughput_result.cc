@@ -51,6 +51,7 @@ void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
      << ',' << r.elapsed_time.count()          //
      << ',' << r.cpu_time.count()              //
      << ',' << CleanupCsv(r.peer)              //
+     << ',' << CleanupCsv(r.notes)             //
      << ',' << r.status.code()                 //
      << ',' << CleanupCsv(r.status.message())  //
      << '\n';
@@ -59,7 +60,7 @@ void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
 void PrintThroughputResultHeader(std::ostream& os) {
   os << "Library,Transport,Op,Start,ObjectSize,TransferSize,AppBufferSize"
      << ",LibBufferSize,Crc32cEnabled,MD5Enabled"
-     << ",ElapsedTimeUs,CpuTimeUs,Peer,StatusCode,Status\n";
+     << ",ElapsedTimeUs,CpuTimeUs,Peer,Notes,StatusCode,Status\n";
 }
 
 char const* ToString(OpType op) {

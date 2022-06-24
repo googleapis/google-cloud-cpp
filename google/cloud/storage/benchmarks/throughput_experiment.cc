@@ -75,6 +75,10 @@ class UploadObject : public ThroughputExperiment {
           gcs::DisableCrc32cChecksum(!config.enable_crc32c),
           gcs::DisableMD5Hash(!config.enable_md5), api_selector);
       auto const usage = timer.Sample();
+      auto notes =
+          bucket_name + ';' + object_name + ';' +
+          (object_metadata ? std::to_string(object_metadata->generation())
+                           : std::string{});
       return ThroughputResult{ExperimentLibrary::kCppClient,
                               transport_,
                               kOpInsert,
@@ -88,7 +92,8 @@ class UploadObject : public ThroughputExperiment {
                               usage.elapsed_time,
                               usage.cpu_time,
                               object_metadata.status(),
-                              "[insert-no-peer]"};
+                              "[insert-no-peer]",
+                              std::move(notes)};
     }
     auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
@@ -106,6 +111,10 @@ class UploadObject : public ThroughputExperiment {
     }
     writer.Close();
     auto const usage = timer.Sample();
+    auto notes =
+        bucket_name + ';' + object_name + ';' +
+        (writer.metadata() ? std::to_string(writer.metadata()->generation())
+                           : std::string{});
 
     return ThroughputResult{ExperimentLibrary::kCppClient,
                             transport_,
@@ -120,7 +129,8 @@ class UploadObject : public ThroughputExperiment {
                             usage.elapsed_time,
                             usage.cpu_time,
                             writer.metadata().status(),
-                            ExtractPeer(writer.headers())};
+                            ExtractPeer(writer.headers()),
+                            std::move(notes)};
   }
 
  private:
@@ -164,6 +174,8 @@ class DownloadObject : public ThroughputExperiment {
       transfer_size += reader.gcount();
     }
     auto const usage = timer.Sample();
+    auto notes = bucket_name + ';' + object_name + ';' +
+                 std::to_string(reader.generation().value_or(-1));
     return ThroughputResult{ExperimentLibrary::kCppClient,
                             transport_,
                             config.op,
@@ -177,7 +189,8 @@ class DownloadObject : public ThroughputExperiment {
                             usage.elapsed_time,
                             usage.cpu_time,
                             reader.status(),
-                            ExtractPeer(reader.headers())};
+                            ExtractPeer(reader.headers()),
+                            std::move(notes)};
   }
 
  private:
@@ -257,6 +270,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     curl_easy_cleanup(hnd);
     curl_slist_free_all(slist1);
     auto const usage = timer.Sample();
+    auto notes = bucket_name + ';' + object_name + ";N/A";
     return ThroughputResult{ExperimentLibrary::kRaw,
                             ExperimentTransport::kXml,
                             config.op,
@@ -270,7 +284,8 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
                             usage.elapsed_time,
                             usage.cpu_time,
                             status,
-                            std::move(peer)};
+                            std::move(peer),
+                            std::move(notes)};
   }
 
  private:
@@ -313,15 +328,20 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
     auto stream = stub_->ReadObject(&context, request);
     google::storage::v2::ReadObjectResponse response;
     std::int64_t bytes_received = 0;
+    std::string generation = "N/A";
     while (stream->Read(&response)) {
       if (response.has_checksummed_data()) {
         bytes_received += response.checksummed_data().content().size();
+      }
+      if (response.has_metadata()) {
+        generation = std::to_string(response.metadata().generation());
       }
     }
     auto const status =
         ::google::cloud::MakeStatusFromRpcError(stream->Finish());
     auto const usage = timer.Sample();
 
+    auto notes = bucket_name + ';' + object_name + ';' + generation;
     return ThroughputResult{ExperimentLibrary::kRaw,
                             transport_,
                             config.op,
@@ -335,7 +355,8 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
                             usage.elapsed_time,
                             usage.cpu_time,
                             status,
-                            context.peer()};
+                            context.peer(),
+                            std::move(notes)};
   }
 
  private:
