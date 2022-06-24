@@ -55,12 +55,12 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib
 # Install Abseil, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.rc1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=20 \
       -DCMAKE_BUILD_TYPE="Release" \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out/abseil && \
     cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
