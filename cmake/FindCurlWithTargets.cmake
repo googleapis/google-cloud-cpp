@@ -68,6 +68,10 @@ else ()
                 TARGET CURL::libcurl
                 APPEND
                 PROPERTY INTERFACE_LINK_LIBRARIES crypt32 wsock32 ws2_32)
+            set_property(
+                TARGET CURL::libcurl
+                APPEND
+                PROPERTY INTERFACE_COMPILE_DEFINITIONS "CURL_STATICLIB")
         endif ()
         if (APPLE)
             set_property(
