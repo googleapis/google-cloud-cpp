@@ -56,12 +56,12 @@ ENV PATH=/usr/local/bin:${PATH}
 
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
