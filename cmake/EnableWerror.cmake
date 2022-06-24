@@ -43,7 +43,7 @@ function (google_cloud_cpp_add_common_options target)
     # Require C++ >= 14.  Unfortunately CMake can only express such requirements
     # starting with CMake == 3.8.0. Note that this is a *minimum* requirement.
     # It is still possible to compile the library (and its dependencies) with
-    # C++14 or higher.
+    # C++17 or higher.
     if (NOT ("${CMAKE_VERSION}" VERSION_LESS 3.8))
         target_compile_features(${target} PUBLIC cxx_std_14)
     elseif (NOT CMAKE_CXX_STANDARD)
@@ -52,7 +52,7 @@ function (google_cloud_cpp_add_common_options target)
         # we do that.  This may seem unnecessary, as the default C++ version is
         # 14 for all the compilers we support. Unfortunately nlohmann::json
         # sneakily adds a requirement for "ranged for loops". CMake interprets
-        # this requirement as "add the -std=c++11" flag, which disables the
+        # this requirement as "add the -std=c++11 flag", which disables the
         # C++14 features.  Sigh.
         # ~~~
         # TODO(#9343) - remove this workaround once CMake < 3.8 is not needed
