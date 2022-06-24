@@ -19,7 +19,9 @@
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscription_message_source.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/status.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <deque>
 #include <functional>
@@ -72,8 +74,8 @@ class SubscriptionMessageQueue
   void Start(MessageCallback cb) override;
   void Shutdown() override;
   void Read(std::size_t max_callbacks) override;
-  void AckMessage(std::string const& ack_id) override;
-  void NackMessage(std::string const& ack_id) override;
+  future<Status> AckMessage(std::string const& ack_id) override;
+  future<Status> NackMessage(std::string const& ack_id) override;
 
  private:
   explicit SubscriptionMessageQueue(

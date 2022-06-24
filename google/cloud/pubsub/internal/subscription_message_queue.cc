@@ -44,14 +44,15 @@ void SubscriptionMessageQueue::Read(std::size_t max_callbacks) {
   DrainQueue(std::move(lk));
 }
 
-void SubscriptionMessageQueue::AckMessage(std::string const& ack_id) {
+future<Status> SubscriptionMessageQueue::AckMessage(std::string const& ack_id) {
   HandlerDone(ack_id);
-  source_->AckMessage(ack_id);
+  return source_->AckMessage(ack_id);
 }
 
-void SubscriptionMessageQueue::NackMessage(std::string const& ack_id) {
+future<Status> SubscriptionMessageQueue::NackMessage(
+    std::string const& ack_id) {
   HandlerDone(ack_id);
-  source_->NackMessage(ack_id);
+  return source_->NackMessage(ack_id);
 }
 
 void SubscriptionMessageQueue::OnRead(

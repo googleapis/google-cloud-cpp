@@ -88,9 +88,9 @@ class StreamingSubscriptionBatchSource
   void Start(BatchCallback callback) override;
 
   void Shutdown() override;
-  void AckMessage(std::string const& ack_id) override;
-  void NackMessage(std::string const& ack_id) override;
-  void BulkNack(std::vector<std::string> ack_ids) override;
+  future<Status> AckMessage(std::string const& ack_id) override;
+  future<Status> NackMessage(std::string const& ack_id) override;
+  future<Status> BulkNack(std::vector<std::string> ack_ids) override;
   void ExtendLeases(std::vector<std::string> ack_ids,
                     std::chrono::seconds extension) override;
 
