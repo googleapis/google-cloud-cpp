@@ -5,7 +5,7 @@
 The Cloud BigQuery C++ Client library offers types and functions to use Cloud
 BigQuery from C++11 applications.
 
-This library requires a C++11 compiler. It is supported (and tested) on multiple
+This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, macOS, and Windows.
 
 ## Quickstart

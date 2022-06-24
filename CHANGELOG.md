@@ -5,18 +5,6 @@
 <!-- Keep these sorted by estimated date -->
 
 <details>
-<summary>2022-06-01: last release with C++11 support</summary>
-
-* The release on 2022-06-01 (tentatively v1.41.0) will be the last release
-  supporting C++11, future releases will require C++ >= 14. We plan to backport
-  critical (P0) bugs and security fixes to this release for a year, that is,
-  until 2023-06-01.
-  The release following will be v2.0.0, to more clearly communicate this change.
-  There are no immediate plans to start using C++14 features. However, some of
-  our dependencies do plan to use C++14 features.
-</details>
-
-<details>
 <summary>2022-10-01: retiring legacy Spanner admin APIs</summary>
 <br>
 
@@ -107,7 +95,24 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
   details.
 </details>
 
-## v1.43.0 (or maybe v2.43.0) - TBD
+## v2.0.0 - TBD
+
+**BREAKING CHANGES**
+
+As previously announced, `google-cloud-cpp` now requires C++ >= 14. This is
+motivated by similar changes in our dependencies, and because C++ 14 has been
+the default C++ version in all the compilers we support for several years.
+
+We think this change is large enough that deserves a major version bump to
+signal the new requirements.
+
+If you are already using C++ >= 14 you need to make no changes.  If you are
+using C++11: please consider updating as soon as possible. To ease your
+transition to C++ >= 14 we will, if requested, backport critical fixes to
+v1.42.0 until 2023-07-01.  After 2023-07-01 we will drop all support to v1.42.0
+and earlier versions.
+
+**OTHER CHANGES**
 
 We are introducing a new client library. While we do not anticipate any API
 changes to this library before declaring it GA, we are releasing it early in

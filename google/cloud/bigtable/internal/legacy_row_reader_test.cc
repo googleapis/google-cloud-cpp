@@ -97,7 +97,7 @@ class ReadRowsParserMockFactory
   ParserPtr Create() override {
     CreateHook();
     if (parsers_.empty()) {
-      return ParserPtr(new bigtable::internal::ReadRowsParser);
+      return absl::make_unique<bigtable::internal::ReadRowsParser>();
     }
     ParserPtr parser = std::move(parsers_.front());
     parsers_.pop_front();

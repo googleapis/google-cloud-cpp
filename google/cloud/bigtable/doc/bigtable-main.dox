@@ -8,7 +8,7 @@ database that powers many core Google services, including Search, Analytics,
 Maps, and Gmail.
 
 The Cloud Bigtable C++ Client library offers types and functions
-to access Cloud Bigtable from C++11 applications
+to access Cloud Bigtable from C++ applications
 ([Read more about Cloud Bigtable][read-more-about-gcp-bigtable]).
 It offers access to the Cloud Bigtable API, including operations to list, read,
 write, and delete [Instances and Clusters][read-instances-clusters],
