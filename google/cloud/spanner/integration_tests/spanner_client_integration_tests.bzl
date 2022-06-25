@@ -24,6 +24,5 @@ spanner_client_integration_tests = [
     "data_types_integration_test.cc",
     "database_admin_integration_test.cc",
     "instance_admin_integration_test.cc",
-    "rpc_failure_threshold_integration_test.cc",
     "session_pool_integration_test.cc",
 ]
