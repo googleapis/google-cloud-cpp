@@ -41,25 +41,28 @@ void SubscriptionLeaseManagement::Shutdown() {
   child_->Shutdown();
 }
 
-void SubscriptionLeaseManagement::AckMessage(std::string const& ack_id) {
+future<Status> SubscriptionLeaseManagement::AckMessage(
+    std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   leases_.erase(ack_id);
   lk.unlock();
-  child_->AckMessage(ack_id);
+  return child_->AckMessage(ack_id);
 }
 
-void SubscriptionLeaseManagement::NackMessage(std::string const& ack_id) {
+future<Status> SubscriptionLeaseManagement::NackMessage(
+    std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   leases_.erase(ack_id);
   lk.unlock();
-  child_->NackMessage(ack_id);
+  return child_->NackMessage(ack_id);
 }
 
-void SubscriptionLeaseManagement::BulkNack(std::vector<std::string> ack_ids) {
+future<Status> SubscriptionLeaseManagement::BulkNack(
+    std::vector<std::string> ack_ids) {
   std::unique_lock<std::mutex> lk(mu_);
   for (auto const& id : ack_ids) leases_.erase(id);
   lk.unlock();
-  child_->BulkNack(std::move(ack_ids));
+  return child_->BulkNack(std::move(ack_ids));
 }
 
 // Users of this class should have no need to call ExtendLeases(); they create

@@ -43,28 +43,30 @@ void StreamingSubscriptionBatchSource::Shutdown() {
   if (stream_) stream_->Cancel();
 }
 
-void StreamingSubscriptionBatchSource::AckMessage(std::string const& ack_id) {
+future<Status> StreamingSubscriptionBatchSource::AckMessage(
+    std::string const& ack_id) {
   internal::OptionsSpan span(options_);
 
   google::pubsub::v1::AcknowledgeRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
-  (void)stub_->AsyncAcknowledge(cq_, absl::make_unique<grpc::ClientContext>(),
-                                request);
+  return stub_->AsyncAcknowledge(cq_, absl::make_unique<grpc::ClientContext>(),
+                                 request);
 }
 
-void StreamingSubscriptionBatchSource::NackMessage(std::string const& ack_id) {
+future<Status> StreamingSubscriptionBatchSource::NackMessage(
+    std::string const& ack_id) {
   internal::OptionsSpan span(options_);
 
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
   request.set_ack_deadline_seconds(0);
-  (void)stub_->AsyncModifyAckDeadline(
+  return stub_->AsyncModifyAckDeadline(
       cq_, absl::make_unique<grpc::ClientContext>(), request);
 }
 
-void StreamingSubscriptionBatchSource::BulkNack(
+future<Status> StreamingSubscriptionBatchSource::BulkNack(
     std::vector<std::string> ack_ids) {
   internal::OptionsSpan span(options_);
 
@@ -72,7 +74,7 @@ void StreamingSubscriptionBatchSource::BulkNack(
   request.set_subscription(subscription_full_name_);
   for (auto& a : ack_ids) *request.add_ack_ids() = std::move(a);
   request.set_ack_deadline_seconds(0);
-  (void)stub_->AsyncModifyAckDeadline(
+  return stub_->AsyncModifyAckDeadline(
       cq_, absl::make_unique<grpc::ClientContext>(), request);
 }
 

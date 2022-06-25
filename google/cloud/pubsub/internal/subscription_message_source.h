@@ -58,7 +58,7 @@ class SubscriptionMessageSource {
    * The application has successfully handled this message and no new deliveries
    * are necessary.
    */
-  virtual void AckMessage(std::string const& ack_id) = 0;
+  virtual future<Status> AckMessage(std::string const& ack_id) = 0;
 
   /**
    * Reject the message associated with @p ack_id.
@@ -67,7 +67,7 @@ class SubscriptionMessageSource {
    * allows the service to re-deliver it, subject to the topic and subscription
    * configuration.
    */
-  virtual void NackMessage(std::string const& ack_id) = 0;
+  virtual future<Status> NackMessage(std::string const& ack_id) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

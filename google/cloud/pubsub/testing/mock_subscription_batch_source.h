@@ -32,9 +32,12 @@ class MockSubscriptionBatchSource
  public:
   MOCK_METHOD(void, Start, (pubsub_internal::BatchCallback), (override));
   MOCK_METHOD(void, Shutdown, (), (override));
-  MOCK_METHOD(void, AckMessage, (std::string const& ack_id), (override));
-  MOCK_METHOD(void, NackMessage, (std::string const& ack_id), (override));
-  MOCK_METHOD(void, BulkNack, (std::vector<std::string> ack_ids), (override));
+  MOCK_METHOD(future<Status>, AckMessage, (std::string const& ack_id),
+              (override));
+  MOCK_METHOD(future<Status>, NackMessage, (std::string const& ack_id),
+              (override));
+  MOCK_METHOD(future<Status>, BulkNack, (std::vector<std::string> ack_ids),
+              (override));
   MOCK_METHOD(void, ExtendLeases,
               (std::vector<std::string> ack_ids,
                std::chrono::seconds extension),
