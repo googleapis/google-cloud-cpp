@@ -99,9 +99,10 @@ std::string DebugString(Status const& status, TracingOptions const& options) {
   return std::move(os).str();
 }
 
-std::string RequestIdForLogging() {
-  static std::atomic<std::uint64_t> generator{0};
-  return std::to_string(++generator);
+std::string DebugString(std::string s, TracingOptions const& options) {
+  std::size_t const pos = options.truncate_string_field_longer_than();
+  if (s.size() > pos) s.replace(pos, std::string::npos, "...<truncated>...");
+  return s;
 }
 
 char const* DebugFutureStatus(std::future_status status) {
@@ -121,6 +122,11 @@ char const* DebugFutureStatus(std::future_status status) {
       break;
   }
   return msg;
+}
+
+std::string RequestIdForLogging() {
+  static std::atomic<std::uint64_t> generator{0};
+  return std::to_string(++generator);
 }
 
 }  // namespace internal

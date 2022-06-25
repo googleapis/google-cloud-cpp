@@ -144,6 +144,23 @@ TEST(LogWrapper, Truncate) {
   EXPECT_EQ(text, DebugString(MakeMutation(), tracing_options));
 }
 
+TEST(LogWrapper, TruncateString) {
+  TracingOptions tracing_options;
+  tracing_options.SetOptions("truncate_string_field_longer_than=8");
+  struct Case {
+    std::string actual;
+    std::string expected;
+  } cases[] = {
+      {"1234567", "1234567"},
+      {"12345678", "12345678"},
+      {"123456789", "12345678...<truncated>..."},
+      {"1234567890", "12345678...<truncated>..."},
+  };
+  for (auto const& c : cases) {
+    EXPECT_EQ(c.expected, DebugString(c.actual, tracing_options));
+  }
+}
+
 TEST(LogWrapper, FutureStatus) {
   struct Case {
     std::future_status actual;

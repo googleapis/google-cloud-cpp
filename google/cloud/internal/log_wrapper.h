@@ -38,6 +38,8 @@ std::string DebugString(google::protobuf::Message const& m,
 
 std::string DebugString(Status const& status, TracingOptions const& options);
 
+std::string DebugString(std::string s, TracingOptions const& options);
+
 char const* DebugFutureStatus(std::future_status s);
 
 // Create a unique ID that can be used to match asynchronous requests/response
