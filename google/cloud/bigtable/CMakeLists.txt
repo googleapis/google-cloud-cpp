@@ -145,6 +145,8 @@ add_library(
     instance_config.cc
     instance_config.h
     instance_list_responses.h
+    instance_resource.cc
+    instance_resource.h
     instance_update_config.cc
     instance_update_config.h
     internal/admin_client_params.cc
@@ -334,6 +336,7 @@ if (BUILD_TESTING)
         instance_admin_client_test.cc
         instance_admin_test.cc
         instance_config_test.cc
+        instance_resource_test.cc
         instance_update_config_test.cc
         internal/admin_client_params_test.cc
         internal/async_bulk_apply_test.cc
