@@ -41,7 +41,8 @@ std::string ExtractPeer(
 class UploadObject : public ThroughputExperiment {
  public:
   explicit UploadObject(google::cloud::storage::Client client,
-                        ExperimentTransport transport, std::string random_data,
+                        ExperimentTransport transport,
+                        std::shared_ptr<std::string> random_data,
                         bool prefer_insert)
       : client_(std::move(client)),
         transport_(transport),
@@ -64,12 +65,12 @@ class UploadObject : public ThroughputExperiment {
     // When the object is relatively small using `ObjectInsert` might be more
     // efficient. Randomly select about 1/2 of the small writes to use
     // ObjectInsert()
-    if (static_cast<std::size_t>(config.object_size) < random_data_.size() &&
+    if (static_cast<std::size_t>(config.object_size) < random_data_->size() &&
         prefer_insert_) {
       auto const start = std::chrono::system_clock::now();
       auto timer = Timer::PerThread();
       std::string data =
-          random_data_.substr(0, static_cast<std::size_t>(config.object_size));
+          random_data_->substr(0, static_cast<std::size_t>(config.object_size));
       auto object_metadata = client_.InsertObject(
           bucket_name, object_name, std::move(data),
           gcs::DisableCrc32cChecksum(!config.enable_crc32c),
@@ -107,7 +108,7 @@ class UploadObject : public ThroughputExperiment {
       if (offset + static_cast<std::int64_t>(len) > config.object_size) {
         len = static_cast<std::size_t>(config.object_size - offset);
       }
-      writer.write(random_data_.data(), len);
+      writer.write(random_data_->data(), len);
     }
     writer.Close();
     auto const usage = timer.Sample();
@@ -136,7 +137,7 @@ class UploadObject : public ThroughputExperiment {
  private:
   google::cloud::storage::Client client_;
   ExperimentTransport transport_;
-  std::string random_data_;
+  std::shared_ptr<std::string> random_data_;
   bool prefer_insert_;
 };
 
@@ -369,7 +370,8 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
     ThroughputOptions const& options, ClientProvider const& provider) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto contents = MakeRandomData(generator, options.maximum_write_size);
+  auto contents = std::make_shared<std::string>(
+      MakeRandomData(generator, options.maximum_write_size));
 
   std::vector<std::unique_ptr<ThroughputExperiment>> result;
   for (auto l : options.libs) {
