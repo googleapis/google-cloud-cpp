@@ -336,9 +336,9 @@ void StreamingSubscriptionBatchSource::DrainQueues(
   auto stream = stream_;
   pending_write_ = true;
 
-  auto stream_ack_deadline = std::int32_t{0};
+  auto stream_ack_deadline = std::chrono::seconds(0);
   if (needs_stream_ack_deadline_update_) {
-    stream_ack_deadline = static_cast<std::int32_t>(min_deadline_time_.count());
+    stream_ack_deadline = min_deadline_time_;
     needs_stream_ack_deadline_update_ = false;
   }
   std::vector<std::pair<std::string, std::chrono::seconds>> deadlines;
@@ -346,7 +346,8 @@ void StreamingSubscriptionBatchSource::DrainQueues(
   lk.unlock();
 
   google::pubsub::v1::StreamingPullRequest request;
-  request.set_stream_ack_deadline_seconds(stream_ack_deadline);
+  request.set_stream_ack_deadline_seconds(
+      static_cast<std::int32_t>(stream_ack_deadline.count()));
   for (auto& d : deadlines) {
     request.add_modify_deadline_ack_ids(std::move(d.first));
     request.add_modify_deadline_seconds(
