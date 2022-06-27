@@ -38,13 +38,12 @@ std::string ExtractPeer(
   return p == headers.end() ? std::string{"unknown"} : p->second;
 }
 
-using SharedContents = std::shared_ptr<std::string>;
-
 class UploadObject : public ThroughputExperiment {
  public:
   explicit UploadObject(google::cloud::storage::Client client,
                         ExperimentTransport transport,
-                        SharedContents random_data, bool prefer_insert)
+                        std::shared_ptr<std::string> random_data,
+                        bool prefer_insert)
       : client_(std::move(client)),
         transport_(transport),
         random_data_(std::move(random_data)),
@@ -138,7 +137,7 @@ class UploadObject : public ThroughputExperiment {
  private:
   google::cloud::storage::Client client_;
   ExperimentTransport transport_;
-  SharedContents random_data_;
+  std::shared_ptr<std::string> random_data_;
   bool prefer_insert_;
 };
 
