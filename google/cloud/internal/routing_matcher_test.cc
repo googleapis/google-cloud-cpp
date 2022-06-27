@@ -19,8 +19,8 @@
 
 namespace google {
 namespace cloud {
-namespace internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
 namespace {
 
 using ::testing::UnorderedElementsAre;
@@ -107,7 +107,7 @@ TEST(RoutingMatcher, FirstNonEmptyMatchIsUsed) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
