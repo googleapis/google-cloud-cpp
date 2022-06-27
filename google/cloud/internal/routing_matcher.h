@@ -17,9 +17,10 @@
 
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
+#include <functional>
 #include <regex>
 #include <string>
-#include <unordered_map>
+#include <vector>
 
 namespace google {
 namespace cloud {

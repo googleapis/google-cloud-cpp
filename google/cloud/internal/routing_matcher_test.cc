@@ -14,8 +14,6 @@
 
 #include "google/cloud/internal/routing_matcher.h"
 #include <gmock/gmock.h>
-#include <regex>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
