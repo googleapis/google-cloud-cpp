@@ -35,6 +35,7 @@
 #include "generator/internal/retry_traits_generator.h"
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
+#include <google/api/routing.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/compiler/cpp/names.h>
@@ -546,6 +547,50 @@ absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
   std::smatch match;
   if (!std::regex_match(url_pattern, match, kUrlPatternRegex)) return {};
   return ResourceRoutingInfo{match[0], match[1], match[2], http_rule.body()};
+}
+
+ExplicitRoutingInfo ParseExplicitRoutingHeader(
+    google::protobuf::MethodDescriptor const& method) {
+  ExplicitRoutingInfo info;
+  if (!method.options().HasExtension(google::api::routing)) return {};
+  google::api::RoutingRule rule =
+      method.options().GetExtension(google::api::routing);
+
+  auto const* input_type = method.input_type();
+  auto const& rps = rule.routing_parameters();
+  // We use reverse iterators so that "last wins" becomes "first wins".
+  for (auto it = rps.rbegin(); it != rps.rend(); ++it) {
+    auto const* descriptor = input_type->FindFieldByName(it->field());
+    auto field_name = FieldName(descriptor);
+    auto const& path_template = it->path_template();
+    // When a path_template is not supplied, we use the field name as the
+    // routing parameter key. The pattern matches the whole value of the field.
+    if (path_template.empty()) {
+      info[it->field()].push_back({std::move(field_name), "(.*)"});
+      continue;
+    }
+    // When a path_template is supplied, we convert the pattern from the proto
+    // into a std::regex. We extract the routing parameter key and set up a
+    // single capture group. For example:
+    //
+    // Input :
+    //   - path_template = "projects/*/{foo=instances/*/}/**"
+    // Output:
+    //   - param         = "foo"
+    //   - pattern       = "projects/[^/]+/(instances/[^/]+)/.*"
+    static std::regex const kPatternRegex(R"((.*)\{(.*)=(.*)\}(.*))");
+    std::smatch match;
+    if (!std::regex_match(path_template, match, kPatternRegex)) {
+      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": "
+                     << "RoutingParameters path template is malformed: "
+                     << path_template;
+    }
+    auto pattern =
+        absl::StrCat(match[1].str(), "(", match[3].str(), ")", match[4].str());
+    pattern = absl::StrReplaceAll(pattern, {{"**", ".*"}, {"*", "[^/]+"}});
+    info[match[2].str()].push_back({std::move(field_name), std::move(pattern)});
+  }
+  return info;
 }
 
 std::string FormatMethodComments(
