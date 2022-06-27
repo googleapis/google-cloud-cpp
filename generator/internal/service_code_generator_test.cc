@@ -77,6 +77,7 @@ class TestGenerator : public ServiceCodeGenerator {
                              context) {}
 
   using ServiceCodeGenerator::HasBidirStreamingMethod;
+  using ServiceCodeGenerator::HasExplicitRoutingMethod;
   using ServiceCodeGenerator::HasLongrunningMethod;
   using ServiceCodeGenerator::HasMessageWithMapField;
   using ServiceCodeGenerator::HasPaginatedMethod;
@@ -747,6 +748,111 @@ service Service1 {
   TestGenerator g_service_1(service_file_descriptor->service(1),
                             generator_context.get());
   EXPECT_FALSE(g_service_1.HasBidirStreamingMethod());
+}
+
+TEST(ServiceCodeGeneratorTest, HasExplicitRoutingMethod) {
+  auto constexpr kHttpProto = R"""(
+syntax = "proto3";
+package google.api;
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MethodOptions {
+  HttpRule http = 72295728;
+}
+message HttpRule {
+  string post = 4;
+  string body = 7;
+}
+)""";
+
+  auto constexpr kRoutingProto = R"""(
+syntax = "proto3";
+package google.api;
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MethodOptions {
+  google.api.RoutingRule routing = 72295729;
+}
+message RoutingRule {
+  repeated RoutingParameter routing_parameters = 2;
+}
+message RoutingParameter {
+  string field = 1;
+  string path_template = 2;
+}
+)""";
+
+  auto constexpr kExplicitRoutingServiceProto = R"""(
+syntax = "proto3";
+package google.protobuf;
+import "google/api/http.proto";
+import "google/api/routing.proto";
+
+message Foo {
+  string foo = 1;
+}
+
+// This service has a method with explicit routing.
+service Service0 {
+  // Leading comments about rpc Method0.
+  rpc Method0(Foo) returns (Foo) {
+    option (google.api.http) = {
+      post: "{foo=*}:method0"
+      body: "*"
+    };
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "foo"
+      }
+    };
+  }
+}
+
+// This service does not have a method with explicit routing.
+service Service1 {
+  rpc Method0(Foo) returns (Foo) {
+    option (google.api.http) = {
+      post: "{foo=*}:method0"
+      body: "*"
+    };
+  }
+}
+)""";
+
+  StringSourceTree source_tree(std::map<std::string, std::string>{
+      {"google/api/http.proto", kHttpProto},
+      {"google/api/routing.proto", kRoutingProto},
+      {"google/cloud/foo/explicit_routing_service.proto",
+       kExplicitRoutingServiceProto}});
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db(
+      &source_tree);
+  google::protobuf::SimpleDescriptorDatabase simple_db;
+  FileDescriptorProto file_proto;
+  // we need descriptor.proto to be accessible by the pool
+  // since our test file imports it
+  FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto);
+  simple_db.Add(file_proto);
+  google::protobuf::MergedDescriptorDatabase merged_db(&simple_db,
+                                                       &source_tree_db);
+  AbortingErrorCollector collector;
+  DescriptorPool pool(&merged_db, &collector);
+
+  FileDescriptor const* service_file_descriptor =
+      pool.FindFileByName("google/cloud/foo/explicit_routing_service.proto");
+
+  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  EXPECT_CALL(*generator_context, Open("header_path"))
+      .Times(2)
+      .WillRepeatedly(
+          [](std::string const&) { return new MockZeroCopyOutputStream(); });
+
+  TestGenerator g_service_0(service_file_descriptor->service(0),
+                            generator_context.get());
+  EXPECT_TRUE(g_service_0.HasExplicitRoutingMethod());
+
+  TestGenerator g_service_1(service_file_descriptor->service(1),
+                            generator_context.get());
+  EXPECT_FALSE(g_service_1.HasExplicitRoutingMethod());
 }
 
 }  // namespace
