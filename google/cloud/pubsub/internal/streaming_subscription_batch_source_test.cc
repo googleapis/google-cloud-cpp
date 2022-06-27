@@ -41,10 +41,12 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::AtMost;
+using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Property;
+using ::testing::Return;
 using ::testing::Unused;
 
 using AckRequest = ::google::pubsub::v1::AcknowledgeRequest;
@@ -512,7 +514,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
               cq, std::move(context), request);
           using Request = ::google::pubsub::v1::StreamingPullRequest;
           // Add expectations for Write() calls with empty subscriptions, only
-          // the first call has a non-empty value and it is already set.
+          // the first call has a non-empty value, and it is already set.
           EXPECT_CALL(*stream,
                       Write(Property(&Request::subscription, std::string{}), _))
               .WillOnce(
@@ -1038,6 +1040,126 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
   write = aseq.PopFrontWithName();
   EXPECT_EQ(write.second, "Write");
   write.first.set_value(true);  // Write()
+
+  shutdown->MarkAsShutdown("test", {});
+  uut->Shutdown();
+  read.first.set_value(false);
+  aseq.PopFront().set_value(true);  // Finish()
+
+  EXPECT_THAT(done.get(), IsOk());
+}
+
+TEST(StreamingSubscriptionBatchSourceTest, AckNackWithRetry) {
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::StreamingPullRequest const&) {
+        auto start_response = [&] {
+          return aseq.PushBack("Start").then(
+              [](future<bool> g) { return g.get(); });
+        };
+        auto write_response =
+            [&](google::pubsub::v1::StreamingPullRequest const&,
+                grpc::WriteOptions const&) {
+              return aseq.PushBack("Write").then(
+                  [](future<bool> g) { return g.get(); });
+            };
+        auto read_response_with_eos = [&] {
+          return aseq.PushBack("Read").then([](future<bool> g) {
+            auto ok = g.get();
+            using Response = ::google::pubsub::v1::StreamingPullResponse;
+            if (!ok) return absl::optional<Response>{};
+            Response response;
+            response.mutable_subscription_properties()
+                ->set_exactly_once_delivery_enabled(true);
+            return absl::make_optional(std::move(response));
+          });
+        };
+        auto finish_response = [&] {
+          return aseq.PushBack("Finish").then(
+              [](future<bool>) mutable { return Status{}; });
+        };
+
+        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+        ::testing::InSequence sequence;
+        EXPECT_CALL(*stream, Start).WillOnce(start_response);
+        EXPECT_CALL(*stream, Write).WillOnce(write_response);
+        // Two Read() calls with subscription properties, only the first should
+        // trigger a `Write()` call that updates the stream deadline.
+        EXPECT_CALL(*stream, Read).WillOnce(read_response_with_eos);
+        EXPECT_CALL(*stream, Read).WillOnce(read_response_with_eos);
+        EXPECT_CALL(*stream, Finish)
+            .Times(AtMost(1))
+            .WillRepeatedly(finish_response);
+
+        return stream;
+      });
+
+  EXPECT_CALL(
+      *mock, AsyncAcknowledge(
+                 _, _, Property(&AckRequest::ack_ids, ElementsAre("fake-001"))))
+      .WillOnce(Return(ByMove(
+          make_ready_future(Status(StatusCode::kUnavailable, "try-again")))))
+      .WillOnce(Return(ByMove(make_ready_future(
+          Status(StatusCode::kUnknown, "uh?",
+                 ErrorInfo("test-only-reason", "test-only-domain",
+                           {{"fake-001", "TRANSIENT_FAILURE_BLAH_BLAH"}}))))))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _,
+                                            Property(&ModifyRequest::ack_ids,
+                                                     ElementsAre("fake-002"))))
+      .WillOnce(Return(ByMove(
+          make_ready_future(Status(StatusCode::kUnavailable, "try-again")))))
+      .WillOnce(Return(ByMove(make_ready_future(
+          Status(StatusCode::kUnknown, "uh?",
+                 ErrorInfo("test-only-reason", "test-only-domain",
+                           {{"fake-002", "TRANSIENT_FAILURE_BLAH_BLAH"}}))))))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = MakeTestBatchSource(cq, shutdown, mock);
+
+  auto done = shutdown->Start({});
+  uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
+  auto timer = aseq.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  aseq.PopFront().set_value(true);  // Start()
+  aseq.PopFront().set_value(true);  // Write()
+
+  auto read = aseq.PopFrontWithName();
+  EXPECT_EQ(read.second, "Read");
+  read.first.set_value(true);
+
+  // The successful Read() generates a RunAsync() which generates a Read().
+  auto run = aseq.PopFrontWithName();
+  EXPECT_EQ(run.second, "RunAsync");
+  run.first.set_value(true);
+  read = aseq.PopFrontWithName();
+  EXPECT_EQ(read.second, "Read");
+
+  auto ack = uut->AckMessage("fake-001");
+  auto backoff = aseq.PopFrontWithName();
+  EXPECT_EQ(backoff.second, "MakeRelativeTimer");
+  backoff.first.set_value(true);
+  backoff = aseq.PopFrontWithName();
+  EXPECT_EQ(backoff.second, "MakeRelativeTimer");
+  backoff.first.set_value(true);
+  EXPECT_STATUS_OK(ack.get());
+
+  auto nack = uut->NackMessage("fake-002");
+  backoff = aseq.PopFrontWithName();
+  EXPECT_EQ(backoff.second, "MakeRelativeTimer");
+  backoff.first.set_value(true);
+  backoff = aseq.PopFrontWithName();
+  EXPECT_EQ(backoff.second, "MakeRelativeTimer");
+  backoff.first.set_value(true);
+  EXPECT_STATUS_OK(nack.get());
 
   shutdown->MarkAsShutdown("test", {});
   uut->Shutdown();

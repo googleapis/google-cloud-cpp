@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
+#include "google/cloud/pubsub/internal/exactly_once_policies.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/log.h"
 #include <ostream>
 
@@ -20,6 +22,25 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+StreamingSubscriptionBatchSource::StreamingSubscriptionBatchSource(
+    CompletionQueue cq,
+    std::shared_ptr<SessionShutdownManager> shutdown_manager,
+    std::shared_ptr<SubscriberStub> stub, std::string subscription_full_name,
+    std::string client_id, Options opts, AckBatchingConfig ack_batching_config)
+    : cq_(std::move(cq)),
+      shutdown_manager_(std::move(shutdown_manager)),
+      stub_(std::move(stub)),
+      subscription_full_name_(std::move(subscription_full_name)),
+      client_id_(std::move(client_id)),
+      options_(std::move(opts)),
+      max_outstanding_messages_(
+          options_.get<pubsub::MaxOutstandingMessagesOption>()),
+      max_outstanding_bytes_(options_.get<pubsub::MaxOutstandingBytesOption>()),
+      // TODO(#9327) - allow applications to configure this value
+      min_deadline_time_(std::chrono::seconds(60)),
+      max_deadline_time_(options_.get<pubsub::MaxDeadlineTimeOption>()),
+      ack_batching_config_(std::move(ack_batching_config)) {}
 
 void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   std::unique_lock<std::mutex> lk(mu_);
@@ -46,10 +67,23 @@ void StreamingSubscriptionBatchSource::Shutdown() {
 future<Status> StreamingSubscriptionBatchSource::AckMessage(
     std::string const& ack_id) {
   internal::OptionsSpan span(options_);
-
   google::pubsub::v1::AcknowledgeRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
+
+  std::unique_lock<std::mutex> lk(mu_);
+  if (exactly_once_delivery_enabled_.value_or(false)) {
+    lk.unlock();
+    auto retry = absl::make_unique<ExactlyOnceRetryPolicy>(ack_id);
+    return google::cloud::internal::AsyncRetryLoop(
+        std::move(retry), ExactlyOnceBackoffPolicy(), Idempotency::kIdempotent,
+        cq_,
+        [stub = stub_](auto& cq, auto context, auto const& request) {
+          return stub->AsyncAcknowledge(cq, std::move(context), request);
+        },
+        std::move(request), __func__);
+  }
+  lk.unlock();
   return stub_->AsyncAcknowledge(cq_, absl::make_unique<grpc::ClientContext>(),
                                  request);
 }
@@ -57,11 +91,24 @@ future<Status> StreamingSubscriptionBatchSource::AckMessage(
 future<Status> StreamingSubscriptionBatchSource::NackMessage(
     std::string const& ack_id) {
   internal::OptionsSpan span(options_);
-
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
   request.set_ack_deadline_seconds(0);
+
+  std::unique_lock<std::mutex> lk(mu_);
+  if (exactly_once_delivery_enabled_.value_or(false)) {
+    lk.unlock();
+    auto retry = absl::make_unique<ExactlyOnceRetryPolicy>(ack_id);
+    return google::cloud::internal::AsyncRetryLoop(
+        std::move(retry), ExactlyOnceBackoffPolicy(), Idempotency::kIdempotent,
+        cq_,
+        [stub = stub_](auto& cq, auto context, auto const& request) {
+          return stub->AsyncModifyAckDeadline(cq, std::move(context), request);
+        },
+        std::move(request), __func__);
+  }
+  lk.unlock();
   return stub_->AsyncModifyAckDeadline(
       cq_, absl::make_unique<grpc::ClientContext>(), request);
 }
