@@ -170,7 +170,7 @@ class StreamingSubscriptionBatchSource
   bool pending_read_ = false;
   Status status_;
   std::shared_ptr<AsyncPullStream> stream_;
-  bool exactly_once_delivery_enabled_ = false;
+  absl::optional<bool> exactly_once_delivery_enabled_;
   std::vector<std::pair<std::string, std::chrono::seconds>> deadlines_queue_;
   bool needs_stream_ack_deadline_update_ = false;
 };
