@@ -82,6 +82,7 @@ add_library(
     internal/retry_loop.h
     internal/retry_loop_helpers.cc
     internal/retry_loop_helpers.h
+    internal/routing_matcher.h
     internal/setup_context.h
     internal/streaming_read_rpc.cc
     internal/streaming_read_rpc.h
@@ -246,6 +247,7 @@ if (BUILD_TESTING)
         internal/populate_grpc_options_test.cc
         internal/resumable_streaming_read_rpc_test.cc
         internal/retry_loop_test.cc
+        internal/routing_matcher_test.cc
         internal/streaming_read_rpc_logging_test.cc
         internal/streaming_read_rpc_test.cc
         internal/streaming_write_rpc_logging_test.cc
