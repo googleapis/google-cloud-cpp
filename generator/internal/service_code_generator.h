@@ -145,6 +145,12 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasBidirStreamingMethod() const;
 
   /**
+   * Determines if the service contains at least one RPC with a
+   * google.api.routing annotation.
+   */
+  bool HasExplicitRoutingMethod() const;
+
+  /**
    * Determines if any of the method signatures has any Protocol Buffer
    * Well-Known Types per
    * https://developers.google.com/protocol-buffers/docs/reference/google.protobuf

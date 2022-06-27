@@ -23,6 +23,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/printer.h"
 #include <google/api/client.pb.h>
+#include <google/api/routing.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <unordered_map>
 
@@ -153,6 +154,13 @@ bool ServiceCodeGenerator::HasBidirStreamingMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {
                        return IsBidirStreaming(m);
+                     });
+}
+
+bool ServiceCodeGenerator::HasExplicitRoutingMethod() const {
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return m.options().HasExtension(google::api::routing);
                      });
 }
 
