@@ -80,6 +80,8 @@ class StreamingSubscriptionBatchSource
             options_.get<pubsub::MaxOutstandingMessagesOption>()),
         max_outstanding_bytes_(
             options_.get<pubsub::MaxOutstandingBytesOption>()),
+        // TODO(#9327) - allow applications to configure this value
+        min_deadline_time_(std::chrono::seconds(60)),
         max_deadline_time_(options_.get<pubsub::MaxDeadlineTimeOption>()),
         ack_batching_config_(std::move(ack_batching_config)) {}
 
@@ -156,6 +158,7 @@ class StreamingSubscriptionBatchSource
   Options options_;
   std::int64_t const max_outstanding_messages_;
   std::int64_t const max_outstanding_bytes_;
+  std::chrono::seconds const min_deadline_time_;
   std::chrono::seconds const max_deadline_time_;
   AckBatchingConfig const ack_batching_config_;
 
@@ -167,7 +170,9 @@ class StreamingSubscriptionBatchSource
   bool pending_read_ = false;
   Status status_;
   std::shared_ptr<AsyncPullStream> stream_;
+  absl::optional<bool> exactly_once_delivery_enabled_;
   std::vector<std::pair<std::string, std::chrono::seconds>> deadlines_queue_;
+  bool needs_stream_ack_deadline_update_ = false;
 };
 
 std::ostream& operator<<(std::ostream& os,

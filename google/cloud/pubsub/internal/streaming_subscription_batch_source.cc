@@ -278,6 +278,14 @@ void StreamingSubscriptionBatchSource::OnRead(
   std::unique_lock<std::mutex> lk(mu_);
   pending_read_ = false;
   if (response && stream_state_ == StreamState::kActive && !shutdown_) {
+    if (response->has_subscription_properties()) {
+      auto const enabled =
+          response->subscription_properties().exactly_once_delivery_enabled();
+      if (exactly_once_delivery_enabled_ != enabled) {
+        exactly_once_delivery_enabled_ = enabled;
+        needs_stream_ack_deadline_update_ = true;
+      }
+    }
     lk.unlock();
     callback_(*std::move(response));
     cq_.RunAsync([weak] {
@@ -323,16 +331,23 @@ void StreamingSubscriptionBatchSource::OnFinish(Status status) {
 
 void StreamingSubscriptionBatchSource::DrainQueues(
     std::unique_lock<std::mutex> lk, bool /*force_flush*/) {
-  if (deadlines_queue_.empty()) return;
+  if (deadlines_queue_.empty() && !needs_stream_ack_deadline_update_) return;
   if (stream_state_ != StreamState::kActive || pending_write_) return;
   auto stream = stream_;
   pending_write_ = true;
 
+  auto stream_ack_deadline = std::chrono::seconds(0);
+  if (needs_stream_ack_deadline_update_) {
+    stream_ack_deadline = min_deadline_time_;
+    needs_stream_ack_deadline_update_ = false;
+  }
   std::vector<std::pair<std::string, std::chrono::seconds>> deadlines;
   deadlines.swap(deadlines_queue_);
   lk.unlock();
 
   google::pubsub::v1::StreamingPullRequest request;
+  request.set_stream_ack_deadline_seconds(
+      static_cast<std::int32_t>(stream_ack_deadline.count()));
   for (auto& d : deadlines) {
     request.add_modify_deadline_ack_ids(std::move(d.first));
     request.add_modify_deadline_seconds(
