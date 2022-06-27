@@ -28,9 +28,15 @@ void LoggingResultSetReader::TryCancel() {
   GCP_LOG(DEBUG) << __func__ << "() >> (void)";
 }
 
-absl::optional<PartialResultSet> LoggingResultSetReader::Read() {
-  GCP_LOG(DEBUG) << __func__ << "() << (void)";
-  auto result = impl_->Read();
+absl::optional<PartialResultSet> LoggingResultSetReader::Read(
+    absl::optional<std::string> const& resume_token) {
+  if (resume_token) {
+    GCP_LOG(DEBUG) << __func__ << "() << \""
+                   << DebugString(*resume_token, tracing_options_) << "\"";
+  } else {
+    GCP_LOG(DEBUG) << __func__ << "() << (unresumable)";
+  }
+  auto result = impl_->Read(resume_token);
   if (!result) {
     GCP_LOG(DEBUG) << __func__ << "() >> (optional-with-no-value)";
   } else {

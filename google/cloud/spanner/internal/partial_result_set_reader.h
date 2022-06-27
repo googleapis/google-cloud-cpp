@@ -17,10 +17,12 @@
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <google/spanner/v1/spanner.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -30,8 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The result of a successful `PartialResultSetReader::Read()`, which may
  * be the next partial result of a stream, or a resumption of an interrupted
- * stream from the last "resume token". In the latter case, the caller should
- * discard any pending row-assembly state as that data will be replayed.
+ * stream from the `resume_token` if it was engaged. In the latter case, the
+ * caller should discard any pending state not covered by the token, as that
+ * data will be replayed.
  */
 struct PartialResultSet {
   google::spanner::v1::PartialResultSet result;
@@ -41,17 +44,18 @@ struct PartialResultSet {
 /**
  * Wrap `grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>`.
  *
- * This defines an interface to handle a streaming RPC returning a sequence of
- * `google::spanner::v1::PartialResultSet`. Its main purpose is to simplify
- * memory management, as each streaming RPC requires two separate
- * `std::unique_ptr<>`. As a side-effect, it is easier to mock this class, as
- * it has a narrower interface.
+ * This defines an interface to handle a streaming RPC returning a sequence
+ * of `google::spanner::v1::PartialResultSet`. Its main purpose is to
+ * simplify memory management, as each streaming RPC requires two separate
+ * `std::unique_ptr<>`. As a side-effect, it is also easier to mock as it
+ * has a narrower interface.
  */
 class PartialResultSetReader {
  public:
   virtual ~PartialResultSetReader() = default;
   virtual void TryCancel() = 0;
-  virtual absl::optional<PartialResultSet> Read() = 0;
+  virtual absl::optional<PartialResultSet> Read(
+      absl::optional<std::string> const& resume_token) = 0;
   virtual Status Finish() = 0;
 };
 

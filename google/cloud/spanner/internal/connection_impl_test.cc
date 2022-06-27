@@ -387,8 +387,6 @@ TEST(ConnectionImplTest, ReadSuccess) {
         }
         values: { string_value: "12" }
         values: { string_value: "Steve" }
-        values: { string_value: "4" }
-        chunked_value: true
         resume_token: "restart-row-2"
       )pb",
       R"pb(
@@ -398,7 +396,6 @@ TEST(ConnectionImplTest, ReadSuccess) {
       )pb",
       R"pb(
         values: { string_value: "nn" }
-        resume_token: "end-of-stream"
       )pb",
   };
   EXPECT_CALL(
@@ -415,8 +412,8 @@ TEST(ConnectionImplTest, ReadSuccess) {
       .WillOnce([&responses, &retry_status](
                     grpc::ClientContext&,
                     google::spanner::v1::ReadRequest const& request) {
-        // Restart from the beginning, but return the first row and part of
-        // the second before failing again.
+        // Restart from the beginning, but return the metadata and first
+        // row before failing again.
         EXPECT_THAT(request.resume_token(), IsEmpty());
         return MakeReader({responses[0]}, retry_status);
       })
@@ -428,19 +425,11 @@ TEST(ConnectionImplTest, ReadSuccess) {
         EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
         return MakeReader({responses[1]}, retry_status);
       })
-      .WillOnce([&responses, &retry_status](
-                    grpc::ClientContext&,
-                    google::spanner::v1::ReadRequest const& request) {
-        // Restart from the second row, but now deliver it all in two chunks
-        // before failing for the last time.
+      .WillOnce([&responses](grpc::ClientContext&,
+                             google::spanner::v1::ReadRequest const& request) {
+        // Restart from the second row, but now deliver it all in two chunks.
         EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
-        return MakeReader({responses[1], responses[2]}, retry_status);
-      })
-      .WillOnce([](grpc::ClientContext&,
-                   google::spanner::v1::ReadRequest const& request) {
-        // Finally, restart from the end, and signal end of stream.
-        EXPECT_THAT(request.resume_token(), Eq("end-of-stream"));
-        return MakeReader({});
+        return MakeReader({responses[1], responses[2]});
       });
 
   spanner::ReadOptions read_options;
@@ -522,7 +511,10 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  auto constexpr kText = R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb";
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
+  auto constexpr kText = R"pb(
+    metadata: { transaction: { id: "ABCDEF00" } }
+  )pb";
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
@@ -935,7 +927,10 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  auto constexpr kText = R"pb(metadata: { transaction: { id: "00FEDCBA" } })pb";
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
+  auto constexpr kText = R"pb(
+    metadata: { transaction: { id: "00FEDCBA" } }
+  )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
@@ -1084,8 +1079,9 @@ TEST(ConnectionImplTest, QueryOptions) {
     // the first call), and we want to minimize gMock's "uninteresting mock
     // function call" warnings.
     auto grpc_reader = absl::make_unique<NiceMock<MockGrpcReader>>();
-    auto constexpr kResponseText =
-        R"pb(metadata: { transaction: { id: "2468ACE" } })pb";
+    auto constexpr kResponseText = R"pb(
+      metadata: { transaction: { id: "2468ACE" } }
+    )pb";
     google::spanner::v1::PartialResultSet response;
     ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &response));
     EXPECT_CALL(*grpc_reader, Read)
@@ -1866,8 +1862,9 @@ TEST(ConnectionImplTest, ExecuteBatchDmlNoResultSets) {
         .WillOnce(Return(MakeSessionsResponse({"session-name"})));
     // The `ExecuteBatchDml` call can succeed, but with no `ResultSet`s and an
     // error status in the response.
-    auto constexpr kText =
-        R"pb(status: { code: 6 message: "failed to insert ..." })pb";
+    auto constexpr kText = R"pb(
+      status: { code: 6 message: "failed to insert ..." }
+    )pb";
     google::spanner::v1::ExecuteBatchDmlResponse response;
     ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
     EXPECT_CALL(*mock, ExecuteBatchDml(_, AllOf(HasSession("session-name"),
@@ -1902,8 +1899,10 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(MakeTestTransaction()));
 
-  auto constexpr kTextResponse = R"pb(metadata: {}
-                                      stats: { row_count_lower_bound: 42 })pb";
+  auto constexpr kTextResponse = R"pb(
+    metadata: {}
+    stats: { row_count_lower_bound: 42 }
+  )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql(
                          _, AllOf(HasRequestTag("tag"), HasTransactionTag(""))))
       .WillOnce(Return(
@@ -1998,13 +1997,13 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
   EXPECT_CALL(*mock, BeginTransaction)
       .WillOnce(Return(MakeTestTransaction("2345678901")));
 
-  auto constexpr kTextResponse =
-      R"pb(metadata: {}
-           stats: { row_count_lower_bound: 99999 })pb";
-
   // `kInternal` is usually a permanent failure, but if the message indicates
   // the gRPC connection has been closed (which these do), they are treated as
   // transient failures.
+  auto constexpr kTextResponse = R"pb(
+    metadata: {}
+    stats: { row_count_lower_bound: 99999 }
+  )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader(
           {}, {grpc::StatusCode::INTERNAL,
@@ -2843,8 +2842,11 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
 
-  auto constexpr kText = R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb";
+  auto constexpr kText = R"pb(
+    metadata: { transaction: { id: "ABCDEF00" } }
+  )pb";
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 

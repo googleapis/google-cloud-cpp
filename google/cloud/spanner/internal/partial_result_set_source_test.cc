@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/mocks/row.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/mock_partial_result_set_reader.h"
 #include "google/cloud/spanner/value.h"
@@ -38,7 +39,7 @@ using ::google::cloud::spanner_testing::MockPartialResultSetReader;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
-using ::testing::HasSubstr;
+using ::testing::_;
 using ::testing::UnitTest;
 
 std::string CurrentTestName() {
@@ -53,8 +54,10 @@ struct StringOption {
 // `StringOption` set to the current test name, so that we might check that
 // all `PartialResultSetReader` calls happen within a matching span.
 StatusOr<std::unique_ptr<ResultSourceInterface>> CreatePartialResultSetSource(
-    std::unique_ptr<PartialResultSetReader> reader) {
-  internal::OptionsSpan span(Options{}.set<StringOption>(CurrentTestName()));
+    std::unique_ptr<PartialResultSetReader> reader, Options opts = {}) {
+  internal::OptionsSpan span(internal::MergeOptions(
+      std::move(opts.set<StringOption>(CurrentTestName())),
+      internal::CurrentOptions()));
   return PartialResultSetSource::Create(std::move(reader));
 }
 
@@ -93,7 +96,7 @@ MATCHER_P(IsValidAndEquals, expected,
 /// @test Verify the behavior when the initial `Read()` fails.
 TEST(PartialResultSetSourceTest, InitialReadFailure) {
   auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read()).WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish())
       .WillOnce(ResultMock(Status(StatusCode::kInvalidArgument, "invalid")));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
@@ -108,7 +111,6 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
  * failed `Read()`.
  */
 TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   auto constexpr kText = R"pb(
     metadata: {
       row_type: {
@@ -122,7 +124,9 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   )pb";
   google::spanner::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
-  EXPECT_CALL(*grpc_reader, Read())
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response)))
       .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish())
@@ -132,7 +136,7 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   // The first call to NextRow() yields a row but the second gives an error.
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
-  EXPECT_STATUS_OK(reader.status());
+  ASSERT_STATUS_OK(reader);
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow(
                                         {{"AnInt", spanner::Value(80)}})));
   auto row = (*reader)->NextRow();
@@ -141,17 +145,18 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
 
 /// @test Verify the behavior when the first response does not contain metadata.
 TEST(PartialResultSetSourceTest, MissingMetadata) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   google::spanner::v1::PartialResultSet response;
-  EXPECT_CALL(*grpc_reader, Read()).WillOnce(ResultMock(ReadResult(response)));
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(ResultMock(ReadResult(response)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
-  // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_THAT(reader, StatusIs(StatusCode::kInternal,
-                               "response contained no metadata"));
+                               "PartialResultSetSource response"
+                               " contained no metadata"));
 }
 
 /**
@@ -159,11 +164,14 @@ TEST(PartialResultSetSourceTest, MissingMetadata) {
  * type information.
  */
 TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
-  auto constexpr kText = R"pb(metadata: {})pb";
+  auto constexpr kText = R"pb(
+    metadata: {}
+  )pb";
   google::spanner::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
-  EXPECT_CALL(*grpc_reader, Read())
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response)))
       .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
@@ -180,23 +188,26 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
  * row type information.
  */
 TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   auto constexpr kText = R"pb(
     metadata: {}
-    values: { string_value: "10" })pb";
+    values: { string_value: "10" }
+  )pb";
   google::spanner::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
-  EXPECT_CALL(*grpc_reader, Read()).WillOnce(ResultMock(ReadResult(response)));
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(ResultMock(ReadResult(response)))
+      .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
-  // The destructor should try to cancel the RPC to avoid deadlocks.
-  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
-  StatusOr<spanner::Row> row = (*reader)->NextRow();
-  EXPECT_THAT(row, StatusIs(StatusCode::kInternal,
-                            HasSubstr("missing row type information")));
+  EXPECT_THAT((*reader)->NextRow(),
+              StatusIs(StatusCode::kInternal,
+                       "PartialResultSetSource metadata is missing row type"));
 }
 
 /**
@@ -205,7 +216,6 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
  * All of the data is returned in a single Read() from the gRPC reader.
  */
 TEST(PartialResultSetSourceTest, SingleResponse) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   auto constexpr kText = R"pb(
     metadata: {
       row_type: {
@@ -240,7 +250,9 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   )pb";
   google::spanner::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
-  EXPECT_CALL(*grpc_reader, Read())
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response)))
       .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
@@ -248,7 +260,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
-  EXPECT_STATUS_OK(reader.status());
+  ASSERT_STATUS_OK(reader);
 
   // Verify the returned metadata is correct.
   auto constexpr kTextExpectedMetadata = R"pb(
@@ -308,7 +320,6 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
  * reader returns data across multiple Read() calls.
  */
 TEST(PartialResultSetSourceTest, MultipleResponses) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 5> text{{
       R"pb(
         metadata: {
@@ -336,7 +347,7 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
         values: { string_value: "99" }
       )pb",
       R"pb(
-        values: { string_value: "99user99" }
+        values: { string_value: "user99" }
         stats: {
           query_stats: {
             fields: {
@@ -360,44 +371,55 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
-  EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock(ReadResult(response[0])))
-      .WillOnce(ResultMock(ReadResult(response[1])))
-      .WillOnce(ResultMock(ReadResult(response[2])))
-      .WillOnce(ResultMock(ReadResult(response[3])))
-      .WillOnce(ResultMock(ReadResult(response[4])))
-      .WillOnce(ResultMock(ReadResult()));
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
-  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
-  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
-  EXPECT_STATUS_OK(reader.status());
+  // Choose values for the `StreamingResumabilityBufferSizeOption` that,
+  // given `text`, yield complete rows after varying numbers of calls to
+  // `ReadFromStream()`.
+  for (std::size_t buffer_size : {0, 153, 161, 321, 385, 448}) {
+    auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+    EXPECT_CALL(*grpc_reader, Read(_))
+        .WillOnce(ResultMock(ReadResult(response[0])))
+        .WillOnce(ResultMock(ReadResult(response[1])))
+        .WillOnce(ResultMock(ReadResult(response[2])))
+        .WillOnce(ResultMock(ReadResult(response[3])))
+        .WillOnce(ResultMock(ReadResult(response[4])))
+        .WillOnce(ResultMock(ReadResult()));
+    EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
+    EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
-  // Verify the returned rows are correct.
-  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow({
-                                        {"UserId", spanner::Value(10)},
-                                        {"UserName", spanner::Value("user10")},
-                                    })));
-  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow({
-                                        {"UserId", spanner::Value(22)},
-                                        {"UserName", spanner::Value("user22")},
-                                    })));
-  EXPECT_THAT((*reader)->NextRow(),
-              IsValidAndEquals(spanner_mocks::MakeRow({
-                  {"UserId", spanner::Value(99)},
-                  {"UserName", spanner::Value("99user99")},
-              })));
+    internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    auto reader = CreatePartialResultSetSource(
+        std::move(grpc_reader),
+        Options{}.set<spanner::StreamingResumabilityBufferSizeOption>(
+            buffer_size));
+    ASSERT_STATUS_OK(reader);
 
-  // At end of stream, we get an 'ok' response with an empty row.
-  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner::Row{}));
+    // Verify the returned rows are correct.
+    EXPECT_THAT((*reader)->NextRow(),
+                IsValidAndEquals(spanner_mocks::MakeRow({
+                    {"UserId", spanner::Value(10)},
+                    {"UserName", spanner::Value("user10")},
+                })));
+    EXPECT_THAT((*reader)->NextRow(),
+                IsValidAndEquals(spanner_mocks::MakeRow({
+                    {"UserId", spanner::Value(22)},
+                    {"UserName", spanner::Value("user22")},
+                })));
+    EXPECT_THAT((*reader)->NextRow(),
+                IsValidAndEquals(spanner_mocks::MakeRow({
+                    {"UserId", spanner::Value(99)},
+                    {"UserName", spanner::Value("user99")},
+                })));
+
+    // At end of stream, we get an 'ok' response with an empty row.
+    EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner::Row{}));
+  }
 }
 
 /**
  * @test Verify the behavior when a response with no values is received.
  */
 TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 3> text{{
       R"pb(
         metadata: {
@@ -409,7 +431,8 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
           }
         }
       )pb",
-      "",
+      R"pb(
+      )pb",
       R"pb(
         values: { string_value: "22" }
       )pb",
@@ -419,7 +442,9 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
-  EXPECT_CALL(*grpc_reader, Read())
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
       .WillOnce(ResultMock(ReadResult(response[2])))
@@ -429,7 +454,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
-  EXPECT_STATUS_OK(reader.status());
+  ASSERT_STATUS_OK(reader);
 
   // Verify the returned row is correct.
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow(
@@ -440,11 +465,10 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
 }
 
 /**
- * @Test Verify reassembling chunked values works correctly, including a mixture
- * of chunked and reassembled chunked values.
+ * @test Verify reassembling chunked values works correctly, including a mixture
+ * of chunked and un-chunked values.
  */
 TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 5> text{{
       R"pb(
         metadata: {
@@ -482,7 +506,9 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
-  EXPECT_CALL(*grpc_reader, Read())
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
       .WillOnce(ResultMock(ReadResult(response[2])))
@@ -494,7 +520,7 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
-  EXPECT_STATUS_OK(reader.status());
+  ASSERT_STATUS_OK(reader);
 
   // Verify the returned values are correct.
   for (auto const& value :
@@ -514,92 +540,6 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
  * values in the response.
  */
 TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
-  std::array<char const*, 2> text{{
-      R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "Prose",
-              type: { code: STRING }
-            }
-          }
-        }
-      )pb",
-      R"pb(chunked_value: true)pb",
-  }};
-  std::array<google::spanner::v1::PartialResultSet, text.size()> response;
-  for (std::size_t i = 0; i != text.size(); ++i) {
-    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
-    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
-  }
-  EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock(ReadResult(response[0])))
-      .WillOnce(ResultMock(ReadResult(response[1])));
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
-  // The destructor should try to cancel the RPC to avoid deadlocks.
-  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
-
-  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
-  EXPECT_STATUS_OK(reader.status());
-
-  // Trying to read the next row should fail.
-  auto row = (*reader)->NextRow();
-  EXPECT_THAT(row, StatusIs(StatusCode::kInternal,
-                            "PartialResultSet had chunked_value set true but "
-                            "contained no values"));
-}
-
-/**
- * @test Verify the behavior when a response with no values follows one
- * with `chunked_value` set.
- */
-TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
-  std::array<char const*, 2> text{{
-      R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "Prose",
-              type: { code: STRING }
-            }
-          }
-        }
-        values: { string_value: "incomplete" }
-        chunked_value: true
-      )pb",
-      R"pb()pb",
-  }};
-  std::array<google::spanner::v1::PartialResultSet, text.size()> response;
-  for (std::size_t i = 0; i != text.size(); ++i) {
-    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
-    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
-  }
-  EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock(ReadResult(response[0])))
-      .WillOnce(ResultMock(ReadResult(response[1])));
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
-  // The destructor should try to cancel the RPC to avoid deadlocks.
-  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
-
-  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
-  EXPECT_STATUS_OK(reader.status());
-
-  // Trying to read the next row should fail.
-  auto row = (*reader)->NextRow();
-  EXPECT_THAT(row, StatusIs(StatusCode::kInternal,
-                            "PartialResultSet contained no values to merge "
-                            "with prior chunked_value"));
-}
-
-/**
- * @test Verify the behavior when `chunked_value` is set in the final response.
- */
-TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 2> text{{
       R"pb(
         metadata: {
@@ -612,7 +552,6 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
         }
       )pb",
       R"pb(
-        values: { string_value: "incomplete" }
         chunked_value: true
       )pb",
   }};
@@ -621,7 +560,9 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
-  EXPECT_CALL(*grpc_reader, Read())
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
       .WillOnce(ResultMock(ReadResult()));
@@ -630,12 +571,101 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
-  EXPECT_STATUS_OK(reader.status());
+  ASSERT_STATUS_OK(reader);
+
+  // We ignore `chunked_value` when there is no value to be chunked.
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner::Row{}));
+}
+
+/**
+ * @test Verify the behavior when a response with no values follows one
+ * with `chunked_value` set.
+ */
+TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
+  std::array<char const*, 2> text{{
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "Prose",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "incomplete" }
+        chunked_value: true
+      )pb",
+      R"pb(
+      )pb",
+  }};
+  std::array<google::spanner::v1::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(ResultMock(ReadResult(response[0])))
+      .WillOnce(ResultMock(ReadResult(response[1])))
+      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
+  ASSERT_STATUS_OK(reader);
 
   // Trying to read the next row should fail.
-  auto row = (*reader)->NextRow();
-  EXPECT_THAT(row, StatusIs(StatusCode::kInternal,
-                            "incomplete chunked_value at end of stream"));
+  EXPECT_THAT((*reader)->NextRow(),
+              StatusIs(StatusCode::kInternal,
+                       "PartialResultSetSource stream ended at a point"
+                       " that is not on a row boundary"));
+}
+
+/**
+ * @test Verify the behavior when `chunked_value` is set in the final response.
+ */
+TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
+  std::array<char const*, 2> text{{
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "Prose",
+              type: { code: STRING }
+            }
+          }
+        }
+      )pb",
+      R"pb(
+        values: { string_value: "incomplete" }
+        chunked_value: true
+      )pb",
+  }};
+  std::array<google::spanner::v1::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(ResultMock(ReadResult(response[0])))
+      .WillOnce(ResultMock(ReadResult(response[1])))
+      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
+  ASSERT_STATUS_OK(reader);
+
+  // Trying to read the next row should fail.
+  EXPECT_THAT((*reader)->NextRow(),
+              StatusIs(StatusCode::kInternal,
+                       "PartialResultSetSource stream ended at a point"
+                       " that is not on a row boundary"));
 }
 
 /**
@@ -643,7 +673,6 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
  * chunked (float64/number).
  */
 TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 3> text{{
       R"pb(
         metadata: {
@@ -668,28 +697,28 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
-  EXPECT_CALL(*grpc_reader, Read())
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
       .WillOnce(ResultMock(ReadResult(response[2])));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
-  // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
-  EXPECT_STATUS_OK(reader.status());
+  ASSERT_STATUS_OK(reader);
 
   // Trying to read the next row should fail.
-  auto row = (*reader)->NextRow();
-  EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument, "invalid type"));
+  EXPECT_THAT((*reader)->NextRow(),
+              StatusIs(StatusCode::kInvalidArgument, "invalid type"));
 }
 
 /**
  * @test Verify the behavior when we get an incomplete Row.
  */
 TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 5> text{{
       R"pb(
         metadata: {
@@ -740,7 +769,9 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
-  EXPECT_CALL(*grpc_reader, Read())
+
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
       .WillOnce(ResultMock(ReadResult(response[2])))
@@ -752,7 +783,7 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
-  EXPECT_STATUS_OK(reader.status());
+  ASSERT_STATUS_OK(reader);
 
   // Verify the first two rows are correct.
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow({
@@ -764,9 +795,11 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
                                         {"UserName", spanner::Value("user22")},
                                     })));
 
-  auto row = (*reader)->NextRow();
-  EXPECT_THAT(row,
-              StatusIs(StatusCode::kInternal, HasSubstr("incomplete row")));
+  // Trying to read the next row should fail.
+  EXPECT_THAT((*reader)->NextRow(),
+              StatusIs(StatusCode::kInternal,
+                       "PartialResultSetSource stream ended at a point"
+                       " that is not on a row boundary"));
 }
 
 }  // namespace

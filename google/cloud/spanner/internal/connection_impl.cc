@@ -50,7 +50,8 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
   void TryCancel() override { context_->TryCancel(); }
 
-  absl::optional<PartialResultSet> Read() override {
+  absl::optional<PartialResultSet> Read(
+      absl::optional<std::string> const&) override {
     google::spanner::v1::PartialResultSet result;
     bool success = reader_->Read(&result);
     if (!success) return {};
@@ -466,7 +467,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
   auto const& tracing_options = RpcTracingOptions();
   auto factory = [stub, request, tracing_enabled,
                   tracing_options](std::string const& resume_token) mutable {
-    request->set_resume_token(resume_token);
+    if (!resume_token.empty()) request->set_resume_token(resume_token);
     auto context = absl::make_unique<grpc::ClientContext>();
     std::unique_ptr<PartialResultSetReader> reader =
         absl::make_unique<DefaultPartialResultSetReader>(
@@ -685,7 +686,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
       -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
     auto factory = [stub, request, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
-      request.set_resume_token(resume_token);
+      if (!resume_token.empty()) request.set_resume_token(resume_token);
       auto context = absl::make_unique<grpc::ClientContext>();
       std::unique_ptr<PartialResultSetReader> reader =
           absl::make_unique<DefaultPartialResultSetReader>(
