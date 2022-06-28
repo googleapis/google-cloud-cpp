@@ -28,8 +28,8 @@ class MockPartialResultSetReader
     : public spanner_internal::PartialResultSetReader {
  public:
   MOCK_METHOD(void, TryCancel, (), (override));
-  MOCK_METHOD(absl::optional<spanner_internal::PartialResultSet>, Read, (),
-              (override));
+  MOCK_METHOD(absl::optional<spanner_internal::PartialResultSet>, Read,
+              (absl::optional<std::string> const& resume_token), (override));
   MOCK_METHOD(Status, Finish, (), (override));
 };
 

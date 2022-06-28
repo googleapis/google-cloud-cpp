@@ -46,6 +46,8 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/options.h"
 #include <chrono>
+#include <cstddef>
+#include <cstdint>
 #include <map>
 #include <memory>
 
@@ -202,6 +204,16 @@ struct ReadIndexNameOption {
  */
 struct ReadRowLimitOption {
   using Type = std::int64_t;
+};
+
+/**
+ * Option for `google::cloud::Options` to set a limit on how much data will
+ * be buffered to guarantee resumability of a streaming read or SQL query.
+ * If the limit is exceeded, and the stream is subsequently interrupted before
+ * a new resumption point can be established, the read/query will fail.
+ */
+struct StreamingResumabilityBufferSizeOption {
+  using Type = std::size_t;
 };
 
 /**
