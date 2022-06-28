@@ -2,7 +2,7 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for video services, 
+This directory contains an idiomatic C++ client library for video services,
 including:
 
 - [Transcoder API][transcoder-service-docs], a service to convert video files
