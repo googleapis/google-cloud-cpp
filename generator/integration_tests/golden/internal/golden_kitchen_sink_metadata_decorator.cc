@@ -18,7 +18,9 @@
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
@@ -106,6 +108,74 @@ GoldenKitchenSinkMetadata::WriteObject(
     std::unique_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->WriteObject(std::move(context));
+}
+
+Status
+GoldenKitchenSinkMetadata::ExplicitRouting1(
+    grpc::ClientContext& context,
+    google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(2);
+
+  static auto* table_location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::ExplicitRoutingRequest>{
+      "table_location=", {
+      {[](google::test::admin::database::v1::ExplicitRoutingRequest const& request) -> std::string const& {
+        return request.table_name();
+      },
+      std::regex{"(regions/[^/]+/zones/[^/]+)/tables/[^/]+", std::regex::optimize}},
+      {[](google::test::admin::database::v1::ExplicitRoutingRequest const& request) -> std::string const& {
+        return request.table_name();
+      },
+      std::regex{"projects/[^/]+/(instances/[^/]+)/tables/[^/]+", std::regex::optimize}},
+      }};
+  }();
+  table_location_matcher->AppendParam(request, params);
+
+  static auto* routing_id_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::ExplicitRoutingRequest>{
+      "routing_id=", {
+      {[](google::test::admin::database::v1::ExplicitRoutingRequest const& request) -> std::string const& {
+        return request.app_profile_id();
+      },
+      std::regex{"profiles/([^/]+)", std::regex::optimize}},
+      {[](google::test::admin::database::v1::ExplicitRoutingRequest const& request) -> std::string const& {
+        return request.app_profile_id();
+      },
+      absl::nullopt},
+      {[](google::test::admin::database::v1::ExplicitRoutingRequest const& request) -> std::string const& {
+        return request.table_name();
+      },
+      std::regex{"(projects/[^/]+)/.*", std::regex::optimize}},
+      }};
+  }();
+  routing_id_matcher->AppendParam(request, params);
+
+  if (!params.empty()) {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
+  return child_->ExplicitRouting1(context, request);
+}
+
+Status
+GoldenKitchenSinkMetadata::ExplicitRouting2(
+    grpc::ClientContext& context,
+    google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.app_profile_id().empty()) {
+    params.push_back("no_regex_needed=" + request.app_profile_id());
+  } else if (!request.table_name().empty()) {
+    params.push_back("no_regex_needed=" + request.table_name());
+  } else if (!request.no_regex_needed().empty()) {
+    params.push_back("no_regex_needed=" + request.no_regex_needed());
+  }
+
+  if (!params.empty()) {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
+  return child_->ExplicitRouting2(context, request);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<

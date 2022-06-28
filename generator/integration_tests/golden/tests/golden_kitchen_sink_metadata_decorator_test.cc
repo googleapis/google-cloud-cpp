@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/str_split.h"
 #include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
@@ -45,6 +46,7 @@ using ::testing::Contains;
 using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 class MetadataDecoratorTest : public ::testing::Test {
  protected:
@@ -315,6 +317,78 @@ TEST_F(MetadataDecoratorTest, AsyncWriteObject) {
   EXPECT_FALSE(start);
   auto finish = stream->Finish().get();
   EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
+}
+
+TEST_F(MetadataDecoratorTest, ExplicitRouting) {
+  EXPECT_CALL(*mock_, ExplicitRouting1)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           ExplicitRoutingRequest const&) {
+        auto headers = GetMetadata(context);
+        auto it = headers.find("x-goog-request-params");
+        EXPECT_NE(it, headers.end());
+        if (it == headers.end()) return Status(StatusCode::kAborted, "fail");
+        auto pairs = absl::StrSplit(it->second, "&");
+        // We verify the result against this expectation:
+        // https://github.com/googleapis/googleapis/blob/f46dc249e1987a6bef1a70a371e8288ea4c17481/google/api/routing.proto#L387-L390
+        EXPECT_THAT(
+            pairs, UnorderedElementsAre("table_location=instances/instance_bar",
+                                        "routing_id=prof_qux"));
+        return Status();
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_);
+  grpc::ClientContext context;
+  // Our request comes from the examples in the `google.api.routing` proto:
+  // https://github.com/googleapis/googleapis/blob/f46dc249e1987a6bef1a70a371e8288ea4c17481/google/api/routing.proto#L57-L60
+  google::test::admin::database::v1::ExplicitRoutingRequest request;
+  request.set_table_name(
+      "projects/proj_foo/instances/instance_bar/tables/table_baz");
+  request.set_app_profile_id("profiles/prof_qux");
+  auto status = stub.ExplicitRouting1(context, request);
+  EXPECT_STATUS_OK(status);
+}
+
+TEST_F(MetadataDecoratorTest, ExplicitRoutingDoesNotSendEmptyParams) {
+  EXPECT_CALL(*mock_, ExplicitRouting1)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           ExplicitRoutingRequest const&) {
+        auto headers = GetMetadata(context);
+        auto it = headers.find("x-goog-request-params");
+        EXPECT_EQ(it, headers.end());
+        return Status();
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::test::admin::database::v1::ExplicitRoutingRequest request;
+  request.set_table_name("does-not-match");
+  (void)stub.ExplicitRouting1(context, request);
+}
+
+TEST_F(MetadataDecoratorTest, ExplicitRoutingNoRegexNeeded) {
+  EXPECT_CALL(*mock_, ExplicitRouting2)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           ExplicitRoutingRequest const&) {
+        auto headers = GetMetadata(context);
+        auto it = headers.find("x-goog-request-params");
+        EXPECT_NE(it, headers.end());
+        if (it == headers.end()) return Status(StatusCode::kAborted, "fail");
+        auto pairs = absl::StrSplit(it->second, "&");
+        EXPECT_THAT(pairs, UnorderedElementsAre("no_regex_needed=used"));
+        return Status();
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::test::admin::database::v1::ExplicitRoutingRequest request;
+  request.set_table_name("used");
+  request.set_no_regex_needed("ignored");
+  // Note that the `app_profile_id` field is not set.
+  auto status = stub.ExplicitRouting2(context, request);
+  EXPECT_STATUS_OK(status);
 }
 
 }  // namespace
