@@ -89,6 +89,12 @@ class GoldenKitchenSinkConnection {
       google::test::admin::database::v1::AppendRowsRequest,
       google::test::admin::database::v1::AppendRowsResponse>>
   AsyncAppendRows(ExperimentalTag);
+
+  virtual Status
+  ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request);
+
+  virtual Status
+  ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request);
 };
 
 /**
