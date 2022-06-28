@@ -78,33 +78,33 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          options.maximum_object_size = ParseSize(val);
        }},
-      {"--minimum-write-size",
+      {"--minimum-write-buffer-size",
        "configure the minimum buffer size for write() calls",
        [&options](std::string const& val) {
-         options.minimum_write_size = ParseBufferSize(val);
+         options.minimum_write_buffer_size = ParseBufferSize(val);
        }},
-      {"--maximum-write-size",
+      {"--maximum-write-buffer-size",
        "configure the maximum buffer size for write() calls",
        [&options](std::string const& val) {
-         options.maximum_write_size = ParseBufferSize(val);
+         options.maximum_write_buffer_size = ParseBufferSize(val);
        }},
-      {"--write-quantum", "quantize the buffer sizes for write() calls",
+      {"--write-buffer-quantum", "quantize the buffer sizes for write() calls",
        [&options](std::string const& val) {
-         options.write_quantum = ParseBufferSize(val);
+         options.write_buffer_quantum = ParseBufferSize(val);
        }},
-      {"--minimum-read-size",
+      {"--minimum-read-buffer-size",
        "configure the minimum buffer size for read() calls",
        [&options](std::string const& val) {
-         options.minimum_read_size = ParseBufferSize(val);
+         options.minimum_read_buffer_size = ParseBufferSize(val);
        }},
-      {"--maximum-read-size",
+      {"--maximum-read-buffer-size",
        "configure the maximum buffer size for read() calls",
        [&options](std::string const& val) {
-         options.maximum_read_size = ParseBufferSize(val);
+         options.maximum_read_buffer_size = ParseBufferSize(val);
        }},
-      {"--read-quantum", "quantize the buffer sizes for read() calls",
+      {"--read-buffer-quantum", "quantize the buffer sizes for read() calls",
        [&options](std::string const& val) {
-         options.read_quantum = ParseBufferSize(val);
+         options.read_buffer_quantum = ParseBufferSize(val);
        }},
       {"--duration", "continue the test for at least this amount of time",
        [&options](std::string const& val) {
@@ -229,33 +229,35 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     return make_status(os);
   }
 
-  if (options.minimum_write_size > options.maximum_write_size) {
+  if (options.minimum_write_buffer_size > options.maximum_write_buffer_size) {
     std::ostringstream os;
-    os << "Invalid range for write size [" << options.minimum_write_size << ','
-       << options.maximum_write_size << "]";
+    os << "Invalid range for write buffer size ["
+       << options.minimum_write_buffer_size << ','
+       << options.maximum_write_buffer_size << "]";
     return make_status(os);
   }
-  if (options.write_quantum <= 0 ||
-      options.write_quantum > options.minimum_write_size) {
+  if (options.write_buffer_quantum <= 0 ||
+      options.write_buffer_quantum > options.minimum_write_buffer_size) {
     std::ostringstream os;
-    os << "Invalid value for --write-quantum (" << options.write_quantum
-       << "), it should be in the [1," << options.minimum_write_size
-       << "] range";
+    os << "Invalid value for --write-buffer-quantum ("
+       << options.write_buffer_quantum << "), it should be in the [1,"
+       << options.minimum_write_buffer_size << "] range";
     return make_status(os);
   }
 
-  if (options.minimum_read_size > options.maximum_read_size) {
+  if (options.minimum_read_buffer_size > options.maximum_read_buffer_size) {
     std::ostringstream os;
-    os << "Invalid range for read size [" << options.minimum_read_size << ','
-       << options.maximum_read_size << "]";
+    os << "Invalid range for read buffer size ["
+       << options.minimum_read_buffer_size << ','
+       << options.maximum_read_buffer_size << "]";
     return make_status(os);
   }
-  if (options.read_quantum <= 0 ||
-      options.read_quantum > options.minimum_read_size) {
+  if (options.read_buffer_quantum <= 0 ||
+      options.read_buffer_quantum > options.minimum_read_buffer_size) {
     std::ostringstream os;
-    os << "Invalid value for --read-quantum (" << options.read_quantum
-       << "), it should be in the [1," << options.minimum_read_size
-       << "] range";
+    os << "Invalid value for --read-buffer-quantum ("
+       << options.read_buffer_quantum << "), it should be in the [1,"
+       << options.minimum_read_buffer_size << "] range";
     return make_status(os);
   }
 

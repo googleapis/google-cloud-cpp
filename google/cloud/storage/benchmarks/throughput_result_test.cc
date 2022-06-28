@@ -75,7 +75,7 @@ TEST(ThroughputResult, HeaderMatches) {
       ExperimentLibrary::kCppClient, ExperimentTransport::kGrpc, kOpInsert,
       std::chrono::system_clock::now(),
       /*object_size=*/5 * kMiB, /*transfer_size=*/3 * kMiB,
-      /*app_buffer_size=*/2 * kMiB, /*lib_buffer_size=*/4 * kMiB,
+      /*app_buffer_size=*/2 * kMiB,
       /*crc_enabled=*/true, /*md5_enabled=*/false,
       std::chrono::microseconds(234000), std::chrono::microseconds(345000),
       Status{StatusCode::kOutOfRange, "OOR-status-message"}, "peer", "notes"});
@@ -98,7 +98,6 @@ TEST(ThroughputResult, HeaderMatches) {
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(5 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(3 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(2 * kMiB) + ","));
-  EXPECT_THAT(*line, HasSubstr("," + std::to_string(4 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr(",1,"));  // crc_enabled==true
   EXPECT_THAT(*line, HasSubstr(",0,"));  // md5_enabled==false
   EXPECT_THAT(*line, HasSubstr(",234000,"));

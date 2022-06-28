@@ -31,7 +31,6 @@ struct ThroughputExperimentConfig {
   OpType op;
   std::int64_t object_size;
   std::size_t app_buffer_size;
-  std::size_t lib_buffer_size;
   bool enable_crc32c;
   bool enable_md5;
 };

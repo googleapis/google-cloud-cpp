@@ -58,7 +58,7 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
   ASSERT_STATUS_OK(client);
 
   ThroughputOptions options;
-  options.minimum_write_size = 1 * kMiB;
+  options.minimum_write_buffer_size = 1 * kMiB;
   options.libs = {GetParam().library};
   options.transports = {GetParam().transport};
 
@@ -66,10 +66,9 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
   auto experiments = CreateUploadExperiments(options, provider);
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
-    ThroughputExperimentConfig config{
-        OpType::kOpInsert,       16 * kKiB, 1 * kMiB, 4 * kMiB,
-        /*enable_crc32c=*/false,
-        /*enable_md5=*/false};
+    ThroughputExperimentConfig config{OpType::kOpInsert, 16 * kKiB, 1 * kMiB,
+                                      /*enable_crc32c=*/false,
+                                      /*enable_md5=*/false};
     auto result = e->Run(bucket_name_, object_name, config);
     ASSERT_STATUS_OK(result.status);
     auto status = client->DeleteObject(bucket_name_, object_name);
@@ -85,7 +84,7 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
   ASSERT_STATUS_OK(client);
 
   ThroughputOptions options;
-  options.minimum_write_size = 1 * kMiB;
+  options.minimum_write_buffer_size = 1 * kMiB;
   options.libs = {GetParam().library};
   options.transports = {GetParam().transport};
 
@@ -96,10 +95,9 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
     auto object_name = MakeRandomObjectName();
 
     auto constexpr kObjectSize = 16 * kKiB;
-    ThroughputExperimentConfig config{
-        OpType::kOpRead0,        kObjectSize, 1 * kMiB, 4 * kMiB,
-        /*enable_crc32c=*/false,
-        /*enable_md5=*/false};
+    ThroughputExperimentConfig config{OpType::kOpRead0, kObjectSize, 1 * kMiB,
+                                      /*enable_crc32c=*/false,
+                                      /*enable_md5=*/false};
 
     auto contents = MakeRandomData(kObjectSize);
     auto insert =
