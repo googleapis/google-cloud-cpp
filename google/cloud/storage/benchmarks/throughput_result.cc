@@ -45,7 +45,6 @@ void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
      << ',' << r.object_size                   //
      << ',' << r.transfer_size                 //
      << ',' << r.app_buffer_size               //
-     << ',' << r.lib_buffer_size               //
      << ',' << r.crc_enabled                   //
      << ',' << r.md5_enabled                   //
      << ',' << r.elapsed_time.count()          //
@@ -59,7 +58,7 @@ void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
 
 void PrintThroughputResultHeader(std::ostream& os) {
   os << "Library,Transport,Op,Start,ObjectSize,TransferSize,AppBufferSize"
-     << ",LibBufferSize,Crc32cEnabled,MD5Enabled"
+     << ",Crc32cEnabled,MD5Enabled"
      << ",ElapsedTimeUs,CpuTimeUs,Peer,Notes,StatusCode,Status\n";
 }
 

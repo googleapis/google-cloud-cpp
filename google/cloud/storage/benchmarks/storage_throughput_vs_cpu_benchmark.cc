@@ -149,47 +149,52 @@ int main(int argc, char* argv[]) {
     }
   };
 
-  std::cout
-      << "# Running test on bucket: " << bucket_name << "\n# Start time: "
-      << google::cloud::internal::FormatRfc3339(
-             std::chrono::system_clock::now())
-      << "\n# Region: " << options->region
-      << "\n# Duration: " << options->duration.count() << "s"
-      << "\n# Thread Count: " << options->thread_count
-      << "\n# Client Per Thread: " << options->client_per_thread
-      << "\n# gRPC Channel Count: " << options->grpc_channel_count
-      << "\n# DirectPath Channel Count: " << options->direct_path_channel_count
-      << "\n# Object Size Range: [" << options->minimum_object_size << ","
-      << options->maximum_object_size << "]\n# Write Size Range: ["
-      << options->minimum_write_size << "," << options->maximum_write_size
-      << "]\n# Write Quantum: " << options->write_quantum
-      << "\n# Read Size Range: [" << options->minimum_read_size << ","
-      << options->maximum_read_size
-      << "]\n# Read Quantum: " << options->read_quantum
-      << "\n# Object Size Range (MiB): ["
-      << options->minimum_object_size / gcs_bm::kMiB << ","
-      << options->maximum_object_size / gcs_bm::kMiB
-      << "]\n# Write Size Range (KiB): ["
-      << options->minimum_write_size / gcs_bm::kKiB << ","
-      << options->maximum_write_size / gcs_bm::kKiB
-      << "]\n# Write Quantum (KiB): " << options->write_quantum / gcs_bm::kKiB
-      << "\n# Read Size Range (KiB): ["
-      << options->minimum_read_size / gcs_bm::kKiB << ","
-      << options->maximum_read_size / gcs_bm::kKiB
-      << "]\n# Read Quantum (KiB): " << options->read_quantum / gcs_bm::kKiB
-      << "\n# Minimum Sample Count: " << options->minimum_sample_count
-      << "\n# Maximum Sample Count: " << options->maximum_sample_count
-      << "\n# Enabled Libs: " << absl::StrJoin(options->libs, ",", Formatter{})
-      << "\n# Enabled Transports: "
-      << absl::StrJoin(options->transports, ",", Formatter{})
-      << "\n# Enabled CRC32C: "
-      << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
-      << "\n# Enabled MD5: "
-      << absl::StrJoin(options->enabled_md5, ",", Formatter{})
-      << "\n# REST Endpoint: " << options->rest_endpoint
-      << "\n# Grpc Endpoint: " << options->grpc_endpoint
-      << "\n# Direct Path Endpoint: " << options->direct_path_endpoint
-      << "\n# Build info: " << notes << "\n";
+  std::cout << "# Running test on bucket: " << bucket_name << "\n# Start time: "
+            << google::cloud::internal::FormatRfc3339(
+                   std::chrono::system_clock::now())
+            << "\n# Region: " << options->region
+            << "\n# Duration: " << options->duration.count() << "s"
+            << "\n# Thread Count: " << options->thread_count
+            << "\n# Client Per Thread: " << options->client_per_thread
+            << "\n# gRPC Channel Count: " << options->grpc_channel_count
+            << "\n# DirectPath Channel Count: "
+            << options->direct_path_channel_count << "\n# Object Size Range: ["
+            << options->minimum_object_size << ","
+            << options->maximum_object_size << "]\n# Write Buffer Size Range: ["
+            << options->minimum_write_buffer_size << ","
+            << options->maximum_write_buffer_size
+            << "]\n# Write Buffer Quantum: " << options->write_buffer_quantum
+            << "\n# Read Buffer Size Range: ["
+            << options->minimum_read_buffer_size << ","
+            << options->maximum_read_buffer_size
+            << "]\n# Read Buffer Quantum: " << options->read_buffer_quantum
+            << "\n# Object Buffer Size Range (MiB): ["
+            << options->minimum_object_size / gcs_bm::kMiB << ","
+            << options->maximum_object_size / gcs_bm::kMiB
+            << "]\n# Write Buffer Size Range (KiB): ["
+            << options->minimum_write_buffer_size / gcs_bm::kKiB << ","
+            << options->maximum_write_buffer_size / gcs_bm::kKiB
+            << "]\n# Write Buffer Quantum (KiB): "
+            << options->write_buffer_quantum / gcs_bm::kKiB
+            << "\n# Read Buffer Size Range (KiB): ["
+            << options->minimum_read_buffer_size / gcs_bm::kKiB << ","
+            << options->maximum_read_buffer_size / gcs_bm::kKiB
+            << "]\n# Read Buffer Quantum (KiB): "
+            << options->read_buffer_quantum / gcs_bm::kKiB
+            << "\n# Minimum Sample Count: " << options->minimum_sample_count
+            << "\n# Maximum Sample Count: " << options->maximum_sample_count
+            << "\n# Enabled Libs: "
+            << absl::StrJoin(options->libs, ",", Formatter{})
+            << "\n# Enabled Transports: "
+            << absl::StrJoin(options->transports, ",", Formatter{})
+            << "\n# Enabled CRC32C: "
+            << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
+            << "\n# Enabled MD5: "
+            << absl::StrJoin(options->enabled_md5, ",", Formatter{})
+            << "\n# REST Endpoint: " << options->rest_endpoint
+            << "\n# Grpc Endpoint: " << options->grpc_endpoint
+            << "\n# Direct Path Endpoint: " << options->direct_path_endpoint
+            << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
 
@@ -303,16 +308,6 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
                gcs_bm::ClientProvider const& provider) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
 
-  google::cloud::StatusOr<gcs::ClientOptions> client_options =
-      gcs::ClientOptions::CreateDefaultClientOptions();
-  if (!client_options) {
-    std::cout << "# Could not create ClientOptions, status="
-              << client_options.status() << "\n";
-    return;
-  }
-  auto const upload_buffer_size = client_options->upload_buffer_size();
-  auto const download_buffer_size = client_options->download_buffer_size();
-
   auto uploaders = gcs_bm::CreateUploadExperiments(options, provider);
   if (uploaders.empty()) {
     // This is possible if only gRPC is requested but the benchmark was compiled
@@ -336,12 +331,12 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
 
   std::uniform_int_distribution<std::int64_t> size_generator(
       options.minimum_object_size, options.maximum_object_size);
-  std::uniform_int_distribution<std::size_t> write_size_generator(
-      options.minimum_write_size / options.write_quantum,
-      options.maximum_write_size / options.write_quantum);
-  std::uniform_int_distribution<std::size_t> read_size_generator(
-      options.minimum_read_size / options.read_quantum,
-      options.maximum_read_size / options.read_quantum);
+  std::uniform_int_distribution<std::size_t> write_buffer_size_generator(
+      options.minimum_write_buffer_size / options.write_buffer_quantum,
+      options.maximum_write_buffer_size / options.write_buffer_quantum);
+  std::uniform_int_distribution<std::size_t> read_buffer_size_generator(
+      options.minimum_read_buffer_size / options.read_buffer_quantum,
+      options.maximum_read_buffer_size / options.read_buffer_quantum);
 
   std::uniform_int_distribution<std::size_t> crc32c_generator(
       0, options.enabled_crc32c.size() - 1);
@@ -358,8 +353,10 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
        start = std::chrono::steady_clock::now(), ++iteration_count) {
     auto object_name = gcs_bm::MakeRandomObjectName(generator);
     auto object_size = size_generator(generator);
-    auto write_size = options.write_quantum * write_size_generator(generator);
-    auto read_size = options.read_quantum * read_size_generator(generator);
+    auto write_buffer_size =
+        options.write_buffer_quantum * write_buffer_size_generator(generator);
+    auto read_buffer_size =
+        options.read_buffer_quantum * read_buffer_size_generator(generator);
     bool const enable_crc = options.enabled_crc32c[crc32c_generator(generator)];
     bool const enable_md5 = options.enabled_md5[md5_generator(generator)];
 
@@ -367,8 +364,8 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
     auto upload_result =
         uploader->Run(bucket_name, object_name,
                       gcs_bm::ThroughputExperimentConfig{
-                          gcs_bm::kOpWrite, object_size, write_size,
-                          upload_buffer_size, enable_crc, enable_md5});
+                          gcs_bm::kOpWrite, object_size, write_buffer_size,
+                          enable_crc, enable_md5});
     auto status = upload_result.status;
     handler(std::move(upload_result));
 
@@ -378,9 +375,8 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
     for (auto op : {gcs_bm::kOpRead0, gcs_bm::kOpRead1, gcs_bm::kOpRead2}) {
       handler(downloader->Run(
           bucket_name, object_name,
-          gcs_bm::ThroughputExperimentConfig{op, object_size, read_size,
-                                             download_buffer_size, enable_crc,
-                                             enable_md5}));
+          gcs_bm::ThroughputExperimentConfig{op, object_size, read_buffer_size,
+                                             enable_crc, enable_md5}));
     }
     auto client = provider(ExperimentTransport::kJson);
     (void)client.DeleteObject(bucket_name, object_name);
@@ -409,12 +405,12 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
           "--thread-count=1",
           "--minimum-object-size=16KiB",
           "--maximum-object-size=32KiB",
-          "--minimum-write-size=16KiB",
-          "--maximum-write-size=128KiB",
-          "--write-quantum=16KiB",
-          "--minimum-read-size=16KiB",
-          "--maximum-read-size=128KiB",
-          "--read-quantum=16KiB",
+          "--minimum-write-buffer-size=16KiB",
+          "--maximum-write-buffer-size=128KiB",
+          "--write-buffer-quantum=16KiB",
+          "--minimum-read-buffer-size=16KiB",
+          "--maximum-read-buffer-size=128KiB",
+          "--read-buffer-quantum=16KiB",
           "--duration=1s",
           "--minimum-sample-count=4",
           "--maximum-sample-count=10",

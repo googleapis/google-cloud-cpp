@@ -87,7 +87,6 @@ class UploadObject : public ThroughputExperiment {
                               config.object_size,
                               config.object_size,
                               config.app_buffer_size,
-                              config.lib_buffer_size,
                               config.enable_crc32c,
                               config.enable_md5,
                               usage.elapsed_time,
@@ -124,7 +123,6 @@ class UploadObject : public ThroughputExperiment {
                             config.object_size,
                             config.object_size,
                             config.app_buffer_size,
-                            config.lib_buffer_size,
                             config.enable_crc32c,
                             config.enable_md5,
                             usage.elapsed_time,
@@ -184,7 +182,6 @@ class DownloadObject : public ThroughputExperiment {
                             config.object_size,
                             transfer_size,
                             config.app_buffer_size,
-                            config.lib_buffer_size,
                             config.enable_crc32c,
                             config.enable_md5,
                             usage.elapsed_time,
@@ -279,7 +276,6 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
                             config.object_size,
                             config.object_size,
                             config.app_buffer_size,
-                            config.lib_buffer_size,
                             config.enable_crc32c,
                             config.enable_md5,
                             usage.elapsed_time,
@@ -350,7 +346,6 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
                             config.object_size,
                             bytes_received,
                             config.app_buffer_size,
-                            /*lib_buffer_size=*/0,
                             /*crc_enabled=*/false,
                             /*md5_enabled=*/false,
                             usage.elapsed_time,
@@ -371,7 +366,7 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
     ThroughputOptions const& options, ClientProvider const& provider) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto contents = std::make_shared<std::string>(
-      MakeRandomData(generator, options.maximum_write_size));
+      MakeRandomData(generator, options.maximum_write_buffer_size));
 
   std::vector<std::unique_ptr<ThroughputExperiment>> result;
   for (auto l : options.libs) {

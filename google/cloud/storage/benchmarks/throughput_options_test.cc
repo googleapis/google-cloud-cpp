@@ -36,12 +36,12 @@ TEST(ThroughputOptions, Basic) {
       "--direct-path-channel-count=2",
       "--minimum-object-size=16KiB",
       "--maximum-object-size=32KiB",
-      "--minimum-write-size=16KiB",
-      "--maximum-write-size=128KiB",
-      "--write-quantum=16KiB",
-      "--minimum-read-size=32KiB",
-      "--maximum-read-size=256KiB",
-      "--read-quantum=32KiB",
+      "--minimum-write-buffer-size=16KiB",
+      "--maximum-write-buffer-size=128KiB",
+      "--write-buffer-quantum=16KiB",
+      "--minimum-read-buffer-size=32KiB",
+      "--maximum-read-buffer-size=256KiB",
+      "--read-buffer-quantum=32KiB",
       "--duration=1s",
       "--minimum-sample-count=1",
       "--maximum-sample-count=2",
@@ -64,12 +64,12 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ(2, options->direct_path_channel_count);
   EXPECT_EQ(16 * kKiB, options->minimum_object_size);
   EXPECT_EQ(32 * kKiB, options->maximum_object_size);
-  EXPECT_EQ(16 * kKiB, options->minimum_write_size);
-  EXPECT_EQ(128 * kKiB, options->maximum_write_size);
-  EXPECT_EQ(16 * kKiB, options->write_quantum);
-  EXPECT_EQ(32 * kKiB, options->minimum_read_size);
-  EXPECT_EQ(256 * kKiB, options->maximum_read_size);
-  EXPECT_EQ(32 * kKiB, options->read_quantum);
+  EXPECT_EQ(16 * kKiB, options->minimum_write_buffer_size);
+  EXPECT_EQ(128 * kKiB, options->maximum_write_buffer_size);
+  EXPECT_EQ(16 * kKiB, options->write_buffer_quantum);
+  EXPECT_EQ(32 * kKiB, options->minimum_read_buffer_size);
+  EXPECT_EQ(256 * kKiB, options->maximum_read_buffer_size);
+  EXPECT_EQ(32 * kKiB, options->read_buffer_quantum);
   EXPECT_EQ(1, options->duration.count());
   EXPECT_EQ(1, options->minimum_sample_count);
   EXPECT_EQ(2, options->maximum_sample_count);

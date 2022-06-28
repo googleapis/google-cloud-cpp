@@ -35,12 +35,13 @@ struct ThroughputOptions {
   int direct_path_channel_count = 0;
   std::int64_t minimum_object_size = 32 * kMiB;
   std::int64_t maximum_object_size = 256 * kMiB;
-  std::size_t minimum_write_size = 16 * kMiB;
-  std::size_t maximum_write_size = 64 * kMiB;
-  std::size_t write_quantum = 256 * kKiB;
-  std::size_t minimum_read_size = 4 * kMiB;
-  std::size_t maximum_read_size = 8 * kMiB;
-  std::size_t read_quantum = 1 * kMiB;
+  // Control the size of the read and write buffers in the application.
+  std::size_t minimum_write_buffer_size = 16 * kMiB;
+  std::size_t maximum_write_buffer_size = 64 * kMiB;
+  std::size_t write_buffer_quantum = 256 * kKiB;
+  std::size_t minimum_read_buffer_size = 4 * kMiB;
+  std::size_t maximum_read_buffer_size = 8 * kMiB;
+  std::size_t read_buffer_quantum = 1 * kMiB;
   std::int32_t minimum_sample_count = 0;
   std::int32_t maximum_sample_count = std::numeric_limits<std::int32_t>::max();
   std::vector<ExperimentLibrary> libs = {
