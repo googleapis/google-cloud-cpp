@@ -55,6 +55,7 @@ TEST(ThroughputOptions, Basic) {
       "--direct-path-endpoint=test-only-direct-path",
       "--transfer-stall-timeout=86400s",
       "--download-stall-timeout=86401s",
+      "--minimum-sample-delay=250ms",
   });
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
@@ -87,6 +88,7 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ("test-only-direct-path", options->direct_path_endpoint);
   EXPECT_EQ(std::chrono::seconds(86400), options->transfer_stall_timeout);
   EXPECT_EQ(std::chrono::seconds(86401), options->download_stall_timeout);
+  EXPECT_EQ(std::chrono::milliseconds(250), options->minimum_sample_delay);
 }
 
 TEST(ThroughputOptions, Description) {
@@ -212,6 +214,16 @@ TEST(ThroughputOptions, Validate) {
       "self-test",
       "--region=r",
       "--thread-count=-2",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-sample-delay=-2ms",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-sample-delay=-1ms",
   }));
 }
 

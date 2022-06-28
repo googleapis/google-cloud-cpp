@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "absl/strings/str_split.h"
+#include "absl/time/time.h"
 #include <sstream>
 
 namespace google {
@@ -177,6 +178,19 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          options.download_stall_timeout = ParseDuration(val);
        }},
+      {"--minimum-sample-delay",
+       "configure the minimum time between samples."
+       " Sometimes we only want to collect a few samples per second."
+       " This can make the data resulting from a multi-day run more"
+       " manageable.",
+       [&options](std::string const& val) {
+         absl::Duration d;
+         if (absl::ParseDuration(val, &d)) {
+           options.minimum_sample_delay = absl::ToChronoMilliseconds(d);
+         } else {
+           options.minimum_sample_delay = std::chrono::milliseconds(-1);
+         }
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 
@@ -308,6 +322,12 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
   if (options.enabled_md5.empty()) {
     std::ostringstream os;
     os << "No MD5 settings configured for benchmark.";
+    return make_status(os);
+  }
+
+  if (options.minimum_sample_delay < std::chrono::milliseconds(0)) {
+    std::ostringstream os;
+    os << "Invalid value for --minimum-sample-delay";
     return make_status(os);
   }
 
