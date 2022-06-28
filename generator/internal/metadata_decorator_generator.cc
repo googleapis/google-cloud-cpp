@@ -58,12 +58,13 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
     if (std::all_of(
             kv.second.begin(), kv.second.end(),
             [](RoutingParameter const& rp) { return rp.pattern == "(.*)"; })) {
-      for (auto i = 0; i != kv.second.size(); ++i){
-        auto const& field = kv.second[i].field_name;
-        text += i == 0 ? "  " : " else ";
-        text += "if (!request." + field + "().empty()) {\n";
-        text += "    params.push_back(\"" + kv.first + "=\" + request." + field + "());\n";
+      bool initial_if = true;
+      for (auto const& rp : kv.second){
+        text += initial_if ? "  " : " else ";
+        text += "if (!request." + rp.field_name + "().empty()) {\n";
+        text += "    params.push_back(\"" + kv.first + "=\" + request." + rp.field_name + "());\n";
         text += "  }";
+        initial_if = false;
       }
       text += "\n\n";
       continue;
