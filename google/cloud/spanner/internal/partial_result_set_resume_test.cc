@@ -117,7 +117,7 @@ TEST(PartialResultSetResume, Success) {
   auto v = reader->Read("");
   ASSERT_TRUE(v.has_value());
   EXPECT_THAT(v->result, IsProtoEqual(response));
-  v = reader->Read("test-token-0");
+  v = reader->Read("resume-after-2");
   ASSERT_FALSE(v.has_value());
   auto status = reader->Finish();
   EXPECT_STATUS_OK(status);
