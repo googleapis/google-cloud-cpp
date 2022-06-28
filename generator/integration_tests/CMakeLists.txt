@@ -39,6 +39,7 @@ target_link_libraries(
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
            google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::api_routing_protos
            google-cloud-cpp::iam_v1_iam_policy_protos
            google-cloud-cpp::iam_v1_policy_protos
            google-cloud-cpp::longrunning_operations_protos
