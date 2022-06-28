@@ -27,7 +27,7 @@ StreamingSubscriptionBatchSource::StreamingSubscriptionBatchSource(
     CompletionQueue cq,
     std::shared_ptr<SessionShutdownManager> shutdown_manager,
     std::shared_ptr<SubscriberStub> stub, std::string subscription_full_name,
-    std::string client_id, Options opts, AckBatchingConfig ack_batching_config)
+    std::string client_id, Options opts)
     : cq_(std::move(cq)),
       shutdown_manager_(std::move(shutdown_manager)),
       stub_(std::move(stub)),
@@ -39,8 +39,7 @@ StreamingSubscriptionBatchSource::StreamingSubscriptionBatchSource(
       max_outstanding_bytes_(options_.get<pubsub::MaxOutstandingBytesOption>()),
       // TODO(#9327) - allow applications to configure this value
       min_deadline_time_(std::chrono::seconds(60)),
-      max_deadline_time_(options_.get<pubsub::MaxDeadlineTimeOption>()),
-      ack_batching_config_(std::move(ack_batching_config)) {}
+      max_deadline_time_(options_.get<pubsub::MaxDeadlineTimeOption>()) {}
 
 void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   std::unique_lock<std::mutex> lk(mu_);
@@ -48,7 +47,6 @@ void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   callback_ = std::move(callback);
   lk.unlock();
 
-  StartWriteTimer();
   shutdown_manager_->StartOperation(__func__, "stream", [this] {
     StartStream(options_.get<pubsub::RetryPolicyOption>()->clone(),
                 options_.get<pubsub::BackoffPolicyOption>()->clone());
@@ -127,11 +125,15 @@ future<Status> StreamingSubscriptionBatchSource::BulkNack(
 
 void StreamingSubscriptionBatchSource::ExtendLeases(
     std::vector<std::string> ack_ids, std::chrono::seconds extension) {
-  std::unique_lock<std::mutex> lk(mu_);
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_ack_deadline_seconds(
+      static_cast<std::int32_t>(extension.count()));
   for (auto& a : ack_ids) {
-    deadlines_queue_.emplace_back(std::move(a), extension);
+    request.add_ack_ids(std::move(a));
   }
-  DrainQueues(std::move(lk), false);
+  // TODO(#9327) - add a retry loop when exactly-once is enabled
+  (void)stub_->AsyncModifyAckDeadline(
+      cq_, absl::make_unique<grpc::ClientContext>(), request);
 }
 
 void StreamingSubscriptionBatchSource::StartStream(
@@ -325,18 +327,22 @@ void StreamingSubscriptionBatchSource::OnRead(
   std::unique_lock<std::mutex> lk(mu_);
   pending_read_ = false;
   if (response && stream_state_ == StreamState::kActive && !shutdown_) {
+    auto update_stream_deadline = false;
     if (response->has_subscription_properties()) {
       auto const enabled =
           response->subscription_properties().exactly_once_delivery_enabled();
       if (exactly_once_delivery_enabled_ != enabled) {
         exactly_once_delivery_enabled_ = enabled;
-        needs_stream_ack_deadline_update_ = true;
+        update_stream_deadline = true;
       }
     }
     lk.unlock();
     callback_(*std::move(response));
-    cq_.RunAsync([weak] {
-      if (auto self = weak.lock()) self->ReadLoop();
+    cq_.RunAsync([weak, update_stream_deadline] {
+      auto self = weak.lock();
+      if (!self) return;
+      if (update_stream_deadline) self->UpdateStreamDeadline();
+      self->ReadLoop();
     });
     return;
   }
@@ -376,30 +382,21 @@ void StreamingSubscriptionBatchSource::OnFinish(Status status) {
   });
 }
 
-void StreamingSubscriptionBatchSource::DrainQueues(
-    std::unique_lock<std::mutex> lk, bool /*force_flush*/) {
-  if (deadlines_queue_.empty() && !needs_stream_ack_deadline_update_) return;
+void StreamingSubscriptionBatchSource::UpdateStreamDeadline() {
+  std::unique_lock<std::mutex> lk(mu_);
   if (stream_state_ != StreamState::kActive || pending_write_) return;
   auto stream = stream_;
   pending_write_ = true;
 
   auto stream_ack_deadline = std::chrono::seconds(0);
-  if (needs_stream_ack_deadline_update_) {
+  if (exactly_once_delivery_enabled_.value_or(false)) {
     stream_ack_deadline = min_deadline_time_;
-    needs_stream_ack_deadline_update_ = false;
   }
-  std::vector<std::pair<std::string, std::chrono::seconds>> deadlines;
-  deadlines.swap(deadlines_queue_);
   lk.unlock();
 
   google::pubsub::v1::StreamingPullRequest request;
   request.set_stream_ack_deadline_seconds(
       static_cast<std::int32_t>(stream_ack_deadline.count()));
-  for (auto& d : deadlines) {
-    request.add_modify_deadline_ack_ids(std::move(d.first));
-    request.add_modify_deadline_seconds(
-        static_cast<std::int32_t>(d.second.count()));
-  }
   // Note that we do not use `AsyncRetryLoop()` here. The ack/nack pipeline is
   // best-effort anyway, there is no guarantee that the server will act on any
   // of these.
@@ -414,25 +411,9 @@ void StreamingSubscriptionBatchSource::OnWrite(bool ok) {
   std::unique_lock<std::mutex> lk(mu_);
   pending_write_ = false;
   if (ok && stream_state_ == StreamState::kActive && !shutdown_) {
-    DrainQueues(std::move(lk), false);
     return;
   }
   ShutdownStream(std::move(lk), ok ? "state" : "write error");
-}
-
-void StreamingSubscriptionBatchSource::StartWriteTimer() {
-  auto weak = WeakFromThis();
-  using F = future<StatusOr<std::chrono::system_clock::time_point>>;
-  cq_.MakeRelativeTimer(ack_batching_config_.max_hold_time).then([weak](F f) {
-    if (auto self = weak.lock()) self->OnWriteTimer(f.get().status());
-  });
-}
-
-void StreamingSubscriptionBatchSource::OnWriteTimer(Status const& s) {
-  if (!s.ok()) return;
-  std::unique_lock<std::mutex> lk(mu_);
-  DrainQueues(std::move(lk), true);
-  StartWriteTimer();
 }
 
 std::ostream& operator<<(std::ostream& os,

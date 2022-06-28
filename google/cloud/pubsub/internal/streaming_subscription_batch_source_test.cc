@@ -39,12 +39,12 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
+using ::testing::AllOf;
 using ::testing::AtLeast;
 using ::testing::AtMost;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-using ::testing::IsEmpty;
 using ::testing::Property;
 using ::testing::Return;
 using ::testing::Unused;
@@ -120,8 +120,7 @@ std::shared_ptr<StreamingSubscriptionBatchSource> MakeTestBatchSource(
           .set<pubsub::MaxHoldTimeOption>(std::chrono::seconds(300))));
   return std::make_shared<StreamingSubscriptionBatchSource>(
       std::move(cq), std::move(shutdown), std::move(mock),
-      std::move(subscription).FullName(), "test-client-id", std::move(opts),
-      AckBatchingConfig(1, std::chrono::milliseconds(10)));
+      std::move(subscription).FullName(), "test-client-id", std::move(opts));
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, Start) {
@@ -504,52 +503,37 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
   FakeStream success_stream(Status{});
-  {
-    ::testing::InSequence sequence;
-    EXPECT_CALL(*mock, AsyncStreamingPull)
-        .WillOnce([&](google::cloud::CompletionQueue& cq,
-                      std::unique_ptr<grpc::ClientContext> context,
-                      google::pubsub::v1::StreamingPullRequest const& request) {
-          auto stream = success_stream.MakeWriteFailureStream(
-              cq, std::move(context), request);
-          using Request = ::google::pubsub::v1::StreamingPullRequest;
-          // Add expectations for Write() calls with empty subscriptions. Only
-          // the first call has a non-empty value, and it is already set.
-          EXPECT_CALL(*stream,
-                      Write(Property(&Request::subscription, std::string{}), _))
-              .WillOnce(
-                  [&](google::pubsub::v1::StreamingPullRequest const& request,
-                      grpc::WriteOptions const&) {
-                    EXPECT_THAT(request.modify_deadline_ack_ids(),
-                                ElementsAre("fake-006"));
-                    EXPECT_THAT(request.modify_deadline_seconds(),
-                                ElementsAre(10));
-                    EXPECT_THAT(request.ack_ids(), IsEmpty());
-                    EXPECT_THAT(request.client_id(), IsEmpty());
-                    EXPECT_THAT(request.subscription(), IsEmpty());
-                    return success_stream.AddAction("Write");
-                  });
-          return stream;
-        });
-    EXPECT_CALL(*mock, AsyncAcknowledge(_, _,
-                                        Property(&AckRequest::ack_ids,
-                                                 ElementsAre("fake-001"))))
-        .WillOnce(OnAck);
-    EXPECT_CALL(*mock, AsyncAcknowledge(_, _,
-                                        Property(&AckRequest::ack_ids,
-                                                 ElementsAre("fake-002"))))
-        .WillOnce(OnAck);
-    EXPECT_CALL(
-        *mock,
-        AsyncModifyAckDeadline(
-            _, _, Property(&ModifyRequest::ack_ids, ElementsAre("fake-003"))))
-        .WillOnce(OnModify);
-    EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                           _, _,
-                           Property(&ModifyRequest::ack_ids,
-                                    ElementsAre("fake-004", "fake-005"))))
-        .WillOnce(OnModify);
-  }
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([&](google::cloud::CompletionQueue& cq,
+                    std::unique_ptr<grpc::ClientContext> context,
+                    google::pubsub::v1::StreamingPullRequest const& request) {
+        return success_stream.MakeWriteFailureStream(cq, std::move(context),
+                                                     request);
+      });
+  EXPECT_CALL(
+      *mock, AsyncAcknowledge(
+                 _, _, Property(&AckRequest::ack_ids, ElementsAre("fake-001"))))
+      .WillOnce(OnAck);
+  EXPECT_CALL(
+      *mock, AsyncAcknowledge(
+                 _, _, Property(&AckRequest::ack_ids, ElementsAre("fake-002"))))
+      .WillOnce(OnAck);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _,
+                                            Property(&ModifyRequest::ack_ids,
+                                                     ElementsAre("fake-003"))))
+      .WillOnce(OnModify);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(
+                         _, _,
+                         Property(&ModifyRequest::ack_ids,
+                                  ElementsAre("fake-004", "fake-005"))))
+      .WillOnce(OnModify);
+  EXPECT_CALL(
+      *mock,
+      AsyncModifyAckDeadline(
+          _, _,
+          AllOf(Property(&ModifyRequest::ack_ids, ElementsAre("fake-006")),
+                Property(&ModifyRequest::ack_deadline_seconds, 123))))
+      .WillOnce(OnModify);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
   auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
@@ -568,8 +552,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   uut->NackMessage("fake-003");
   uut->BulkNack({"fake-004", "fake-005"});
 
-  uut->ExtendLeases({"fake-006"}, std::chrono::seconds(10));
-  success_stream.WaitForAction().set_value(true);  // Write()
+  uut->ExtendLeases({"fake-006"}, std::chrono::seconds(123));
 
   shutdown->MarkAsShutdown("test", {});
   uut->Shutdown();
@@ -579,112 +562,159 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   EXPECT_THAT(done.get(), IsOk());
 }
 
-TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
-  AutomaticallyCreatedBackgroundThreads background;
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-
-  auto const expected_status = Status{StatusCode::kNotFound, "gone"};
-  FakeStream fake_stream(expected_status);
-
-  EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue& cq,
-                    std::unique_ptr<grpc::ClientContext> context,
-                    google::pubsub::v1::StreamingPullRequest const& request) {
-        auto stream =
-            fake_stream.MakeWriteFailureStream(cq, std::move(context), request);
-        using Request = ::google::pubsub::v1::StreamingPullRequest;
-        // Add expectations for Write() calls with empty subscriptions. Only
-        // the first call has a non-empty value, and it is already set.
-        EXPECT_CALL(*stream,
-                    Write(Property(&Request::subscription, std::string{}), _))
-            .WillOnce(
-                [&](google::pubsub::v1::StreamingPullRequest const& request,
-                    grpc::WriteOptions const&) {
-                  EXPECT_THAT(request.modify_deadline_ack_ids(),
-                              ElementsAre("fake-001"));
-                  return fake_stream.AddAction("Write");
-                });
-        return stream;
+CompletionQueue MakeMockCompletionQueue(AsyncSequencer<bool>& aseq) {
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([&](std::chrono::nanoseconds) {
+        return aseq.PushBack("MakeRelativeTimer").then([](auto) {
+          return make_status_or(std::chrono::system_clock::now());
+        });
       });
+  EXPECT_CALL(*mock_cq, RunAsync)
+      .WillRepeatedly([&](std::unique_ptr<RunAsyncBase> f) {
+        aseq.PushBack("RunAsync").then([function = std::move(f)](auto) mutable {
+          function->exec();
+        });
+      });
+  return CompletionQueue(std::move(mock_cq));
+}
+
+std::unique_ptr<pubsub_testing::MockAsyncPullStream> MakeExactlyOnceStream(
+    AsyncSequencer<bool>& aseq, Status const& finish_status) {
+  // We need a request that will trigger a `Write()` call, only subscriptions
+  // with exactly-once delivery do so. The interesting bit is in the
+  // implementation of `read_response` the rest is boiler-plate-like.
+
+  auto start_response = [&] {
+    return aseq.PushBack("Start").then([](future<bool> g) { return g.get(); });
+  };
+  auto write_response = [&](google::pubsub::v1::StreamingPullRequest const&,
+                            grpc::WriteOptions const&) {
+    return aseq.PushBack("Write").then([](future<bool> g) { return g.get(); });
+  };
+  auto read_response = [&] {
+    return aseq.PushBack("Read").then([](future<bool> g) {
+      auto ok = g.get();
+      using Response = ::google::pubsub::v1::StreamingPullResponse;
+      if (!ok) return absl::optional<Response>{};
+      Response response;
+      response.mutable_subscription_properties()
+          ->set_exactly_once_delivery_enabled(true);
+      return absl::make_optional(std::move(response));
+    });
+  };
+  auto finish_response = [&aseq, finish_status] {
+    return aseq.PushBack("Finish").then(
+        [=](future<bool>) { return finish_status; });
+  };
+
+  auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+  EXPECT_CALL(*stream, Start).WillOnce(start_response);
+  EXPECT_CALL(*stream, Write).WillOnce(write_response);
+  EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
+  using Request = ::google::pubsub::v1::StreamingPullRequest;
+  EXPECT_CALL(*stream,
+              Write(AllOf(Property(&Request::subscription, std::string{}),
+                          Property(&Request::stream_ack_deadline_seconds, 60)),
+                    _))
+      .WillRepeatedly(write_response);
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+  EXPECT_CALL(*stream, Finish).Times(AtMost(1)).WillRepeatedly(finish_response);
+  return stream;
+}
+
+/// @test Verify that on a `Read()` "error" the streaming subscription waits for
+/// pending `Write()` calls.
+TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  auto const finish_status = Status{StatusCode::kNotFound, "gone"};
+  // We need a request that will trigger a `Write()` call, only subscriptions
+  // with exactly-once delivery do so, so we can create one.
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::StreamingPullRequest const&) {
+        return MakeExactlyOnceStream(aseq, finish_status);
+      });
+
   using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
   ::testing::MockFunction<void(CallbackArg const&)> callback;
   EXPECT_CALL(callback, Call(IsOk())).Times(1);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = MakeTestBatchSource(cq, shutdown, mock);
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
-  fake_stream.WaitForAction().set_value(true);  // Start()
-  fake_stream.WaitForAction().set_value(true);  // Write()
-  fake_stream.WaitForAction().set_value(true);  // Read()
+  aseq.PopFront().set_value(true);  // Start()
+  aseq.PopFront().set_value(true);  // Write()
+  aseq.PopFront().set_value(true);  // Read()
+  auto run = aseq.PopFrontWithName();
+  EXPECT_EQ(run.second, "RunAsync");
+  run.first.set_value(true);
 
-  auto pending_read = fake_stream.WaitForAction();  // Read() start
-  uut->ExtendLeases({"fake-001"}, std::chrono::seconds(10));
-  auto pending_write = fake_stream.WaitForAction();  // Write() start
+  auto write = aseq.PopFrontWithName();
+  EXPECT_EQ(write.second, "Write");
+  auto read = aseq.PopFrontWithName();
+  EXPECT_EQ(read.second, "Read");
 
-  pending_read.set_value(false);  // Read() done
-  shutdown->MarkAsShutdown("test", expected_status);
+  read.first.set_value(false);  // Read() done
+  shutdown->MarkAsShutdown("test", finish_status);
   uut->Shutdown();
 
-  pending_write.set_value(true);                // Write() done
-  fake_stream.WaitForAction().set_value(true);  // Finish()
+  write.first.set_value(true);      // Write() done
+  aseq.PopFront().set_value(true);  // Finish()
 
-  EXPECT_EQ(expected_status, done.get());
+  EXPECT_EQ(finish_status, done.get());
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
-  AutomaticallyCreatedBackgroundThreads background;
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-
-  auto const expected_status = Status{StatusCode::kNotFound, "gone"};
-  FakeStream fake_stream(expected_status);
-
+  auto const finish_status = Status{StatusCode::kNotFound, "gone"};
+  // We need a request that will trigger a `Write()` call, only subscriptions
+  // with exactly-once delivery do so, so we can create one.
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue& cq,
-                    std::unique_ptr<grpc::ClientContext> context,
-                    google::pubsub::v1::StreamingPullRequest const& request) {
-        auto stream =
-            fake_stream.MakeWriteFailureStream(cq, std::move(context), request);
-        using Request = ::google::pubsub::v1::StreamingPullRequest;
-        // Add expectations for Write() calls with empty subscriptions. Only
-        // the first call has a non-empty value, and it is already set.
-        EXPECT_CALL(*stream,
-                    Write(Property(&Request::subscription, std::string{}), _))
-            .WillOnce(
-                [&](google::pubsub::v1::StreamingPullRequest const& request,
-                    grpc::WriteOptions const&) {
-                  EXPECT_THAT(request.modify_deadline_ack_ids(),
-                              ElementsAre("fake-001"));
-                  return fake_stream.AddAction("Write");
-                });
-        return stream;
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::StreamingPullRequest const&) {
+        return MakeExactlyOnceStream(aseq, finish_status);
       });
+
   using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
   ::testing::MockFunction<void(CallbackArg const&)> callback;
   EXPECT_CALL(callback, Call(IsOk())).Times(1);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = MakeTestBatchSource(cq, shutdown, mock);
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
-  fake_stream.WaitForAction().set_value(true);  // Start()
-  fake_stream.WaitForAction().set_value(true);  // Write()
-  fake_stream.WaitForAction().set_value(true);  // Read()
+  aseq.PopFront().set_value(true);  // Start()
+  aseq.PopFront().set_value(true);  // Write()
+  aseq.PopFront().set_value(true);  // Read()
+  auto run = aseq.PopFrontWithName();
+  EXPECT_EQ(run.second, "RunAsync");
+  run.first.set_value(true);
 
-  auto pending_read = fake_stream.WaitForAction();  // Read() start
-  uut->ExtendLeases({"fake-001"}, std::chrono::seconds(10));
-  auto pending_write = fake_stream.WaitForAction();  // Write() start
+  auto write = aseq.PopFrontWithName();
+  EXPECT_EQ(write.second, "Write");
+  auto read = aseq.PopFrontWithName();
+  EXPECT_EQ(read.second, "Read");
 
-  shutdown->MarkAsShutdown("test", expected_status);
+  write.first.set_value(false);  // Write() done
+  shutdown->MarkAsShutdown("test", finish_status);
   uut->Shutdown();
 
-  pending_write.set_value(false);               // Write() done
-  pending_read.set_value(false);                // Read() done
-  fake_stream.WaitForAction().set_value(true);  // Finish()
+  read.first.set_value(true);       // Read() done
+  aseq.PopFront().set_value(true);  // Finish()
 
-  EXPECT_EQ(expected_status, done.get());
+  EXPECT_EQ(finish_status, done.get());
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingRead) {
@@ -808,119 +838,6 @@ TEST(StreamingSubscriptionBatchSourceTest, StateOStream) {
   EXPECT_EQ("kFinishing", as_string(StreamState::kFinishing));
 }
 
-CompletionQueue MakeMockCompletionQueue(AsyncSequencer<bool>& aseq) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-      .WillRepeatedly([&](std::chrono::nanoseconds) {
-        return aseq.PushBack("MakeRelativeTimer").then([](auto) {
-          return make_status_or(std::chrono::system_clock::now());
-        });
-      });
-  EXPECT_CALL(*mock_cq, RunAsync)
-      .WillRepeatedly([&](std::unique_ptr<RunAsyncBase> f) {
-        aseq.PushBack("RunAsync").then([function = std::move(f)](auto) mutable {
-          function->exec();
-        });
-      });
-  return CompletionQueue(std::move(mock_cq));
-}
-
-TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceIncludesDeadline) {
-  AsyncSequencer<bool> aseq;
-  auto cq = MakeMockCompletionQueue(aseq);
-
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-
-  {
-    ::testing::InSequence sequence;
-    EXPECT_CALL(*mock, AsyncStreamingPull)
-        .WillOnce([&](google::cloud::CompletionQueue&,
-                      std::unique_ptr<grpc::ClientContext>,
-                      google::pubsub::v1::StreamingPullRequest const&) {
-          auto start_response = [&] {
-            return aseq.PushBack("Start").then(
-                [](future<bool> g) { return g.get(); });
-          };
-          auto write_response =
-              [&](google::pubsub::v1::StreamingPullRequest const&,
-                  grpc::WriteOptions const&) {
-                return aseq.PushBack("Write").then(
-                    [](future<bool> g) { return g.get(); });
-              };
-          auto read_response = [&] {
-            return aseq.PushBack("Read").then([](future<bool> g) {
-              auto ok = g.get();
-              using Response = ::google::pubsub::v1::StreamingPullResponse;
-              if (!ok) return absl::optional<Response>{};
-              Response response;
-              response.mutable_subscription_properties()
-                  ->set_exactly_once_delivery_enabled(true);
-              return absl::make_optional(std::move(response));
-            });
-          };
-          auto finish_response = [&] {
-            return aseq.PushBack("Finish").then(
-                [](future<bool>) mutable { return Status{}; });
-          };
-
-          auto stream =
-              absl::make_unique<pubsub_testing::MockAsyncPullStream>();
-          EXPECT_CALL(*stream, Start).WillOnce(start_response);
-          EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
-          EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
-          EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
-          EXPECT_CALL(*stream, Finish)
-              .Times(AtMost(1))
-              .WillRepeatedly(finish_response);
-
-          using Request = ::google::pubsub::v1::StreamingPullRequest;
-          // Add expectations for Write() calls with empty subscriptions, only
-          // the first call has a non-empty value, and that EXPECT_CALL() is
-          // already set.
-          EXPECT_CALL(*stream,
-                      Write(Property(&Request::subscription, std::string{}), _))
-              .WillOnce(
-                  [&](google::pubsub::v1::StreamingPullRequest const& request,
-                      grpc::WriteOptions const&) {
-                    EXPECT_EQ(request.stream_ack_deadline_seconds(), 60);
-                    EXPECT_THAT(request.modify_deadline_ack_ids(),
-                                ElementsAre("fake-006"));
-                    EXPECT_THAT(request.modify_deadline_seconds(),
-                                ElementsAre(10));
-                    EXPECT_THAT(request.ack_ids(), IsEmpty());
-                    EXPECT_THAT(request.client_id(), IsEmpty());
-                    EXPECT_THAT(request.subscription(), IsEmpty());
-                    return aseq.PushBack("Write");
-                  });
-          return stream;
-        });
-  }
-
-  auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(cq, shutdown, mock);
-
-  auto done = shutdown->Start({});
-  uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
-  auto timer = aseq.PopFrontWithName();
-  EXPECT_EQ(timer.second, "MakeRelativeTimer");
-  aseq.PopFront().set_value(true);  // Start()
-  aseq.PopFront().set_value(true);  // Write()
-  aseq.PopFront().set_value(true);  // Read()
-  auto run = aseq.PopFrontWithName();
-  EXPECT_EQ(run.second, "RunAsync");
-
-  uut->ExtendLeases({"fake-006"}, std::chrono::seconds(10));
-  aseq.PopFront().set_value(true);  // Write()
-
-  shutdown->MarkAsShutdown("test", {});
-  uut->Shutdown();
-  run.first.set_value(true);
-  aseq.PopFront().set_value(false);  // Read()
-  aseq.PopFront().set_value(true);   // Finish()
-
-  EXPECT_THAT(done.get(), IsOk());
-}
-
 TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
@@ -931,6 +848,8 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
       .WillOnce([&](google::cloud::CompletionQueue&,
                     std::unique_ptr<grpc::ClientContext>,
                     google::pubsub::v1::StreamingPullRequest const&) {
+        // We cannot reuse MakeExactlyOnceStream() because we need a more
+        // interesting set of `Read()` results.
         auto start_response = [&] {
           return aseq.PushBack("Start").then(
               [](future<bool> g) { return g.get(); });
@@ -943,12 +862,21 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
             };
         auto read_response_with_eos = [&] {
           return aseq.PushBack("Read").then([](future<bool> g) {
-            auto ok = g.get();
             using Response = ::google::pubsub::v1::StreamingPullResponse;
-            if (!ok) return absl::optional<Response>{};
+            if (!g.get()) return absl::optional<Response>{};
             Response response;
             response.mutable_subscription_properties()
                 ->set_exactly_once_delivery_enabled(true);
+            return absl::make_optional(std::move(response));
+          });
+        };
+        auto read_response_without_eos = [&] {
+          return aseq.PushBack("Read").then([](future<bool> g) {
+            using Response = ::google::pubsub::v1::StreamingPullResponse;
+            if (!g.get()) return absl::optional<Response>{};
+            Response response;
+            response.mutable_subscription_properties()
+                ->set_exactly_once_delivery_enabled(false);
             return absl::make_optional(std::move(response));
           });
         };
@@ -961,23 +889,11 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
         auto write_response_with_deadline = [&](Request const& request,
                                                 grpc::WriteOptions const&) {
           EXPECT_EQ(request.stream_ack_deadline_seconds(), 60);
-          EXPECT_THAT(request.modify_deadline_ack_ids(),
-                      ElementsAre("fake-with-stream-deadline"));
-          EXPECT_THAT(request.modify_deadline_seconds(), ElementsAre(10));
-          EXPECT_THAT(request.ack_ids(), IsEmpty());
-          EXPECT_THAT(request.client_id(), IsEmpty());
-          EXPECT_THAT(request.subscription(), IsEmpty());
           return aseq.PushBack("Write");
         };
         auto write_response_without_deadline = [&](Request const& request,
                                                    grpc::WriteOptions const&) {
           EXPECT_EQ(request.stream_ack_deadline_seconds(), 0);
-          EXPECT_THAT(request.modify_deadline_ack_ids(),
-                      ElementsAre("fake-no-stream-deadline"));
-          EXPECT_THAT(request.modify_deadline_seconds(), ElementsAre(10));
-          EXPECT_THAT(request.ack_ids(), IsEmpty());
-          EXPECT_THAT(request.client_id(), IsEmpty());
-          EXPECT_THAT(request.subscription(), IsEmpty());
           return aseq.PushBack("Write");
         };
 
@@ -990,10 +906,13 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
         // Two Read() calls with subscription properties, only the first
         // should trigger a `Write()` call that updates the stream deadline.
         EXPECT_CALL(*stream, Read).WillOnce(read_response_with_eos);
-        EXPECT_CALL(*stream, Read).WillOnce(read_response_with_eos);
         EXPECT_CALL(*stream, Write).WillOnce(write_response_with_deadline);
         EXPECT_CALL(*stream, Read).WillOnce(read_response_with_eos);
+        // A new read() call with different subscription properties. The change
+        // should trigger a `Write()` call.
+        EXPECT_CALL(*stream, Read).WillOnce(read_response_without_eos);
         EXPECT_CALL(*stream, Write).WillOnce(write_response_without_deadline);
+        EXPECT_CALL(*stream, Read).WillOnce(read_response_without_eos);
         EXPECT_CALL(*stream, Finish)
             .Times(AtMost(1))
             .WillRepeatedly(finish_response);
@@ -1006,10 +925,10 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
-  auto timer = aseq.PopFrontWithName();
-  EXPECT_EQ(timer.second, "MakeRelativeTimer");
   aseq.PopFront().set_value(true);  // Start()
-  aseq.PopFront().set_value(true);  // Write()
+  auto write = aseq.PopFrontWithName();
+  EXPECT_EQ(write.second, "Write");
+  write.first.set_value(true);  // Write()
 
   auto read = aseq.PopFrontWithName();
   EXPECT_EQ(read.second, "Read");
@@ -1019,31 +938,43 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
   auto run = aseq.PopFrontWithName();
   EXPECT_EQ(run.second, "RunAsync");
   run.first.set_value(true);
+  // Because Read() changed the subscription properties, this will trigger
+  // a Write() and Read() calls.
+  write = aseq.PopFrontWithName();
+  EXPECT_EQ(write.second, "Write");
   read = aseq.PopFrontWithName();
   EXPECT_EQ(read.second, "Read");
-  // Because Read() changed the subscription properties, this will trigger
-  // a Write() call.
-  uut->ExtendLeases({"fake-with-stream-deadline"}, std::chrono::seconds(10));
-  auto write = aseq.PopFrontWithName();
-  EXPECT_EQ(write.second, "Write");
-  write.first.set_value(true);  // Write()
 
-  // A second read, but does not change the subscription properties.
+  // Have them succeed.
+  write.first.set_value(true);
   read.first.set_value(true);
+
+  // A second read, but does not change the subscription properties, so it
+  // simply triggers a `RunAsync()` and then a `Read()` call:
   run = aseq.PopFrontWithName();
   EXPECT_EQ(run.second, "RunAsync");
   run.first.set_value(true);
+
+  read = aseq.PopFrontWithName();
+  EXPECT_EQ(read.second, "Read");
+  read.first.set_value(true);
+
+  // This time `Read()` changes the subscription properties again, we expect
+  // this to trigger a `RunAsync(), and then a `Write()` and `Read()` calls.
+  run = aseq.PopFrontWithName();
+  EXPECT_EQ(run.second, "RunAsync");
+  run.first.set_value(true);
+
+  write = aseq.PopFrontWithName();
+  EXPECT_EQ(write.second, "Write");
   read = aseq.PopFrontWithName();
   EXPECT_EQ(read.second, "Read");
 
-  uut->ExtendLeases({"fake-no-stream-deadline"}, std::chrono::seconds(10));
-  write = aseq.PopFrontWithName();
-  EXPECT_EQ(write.second, "Write");
-  write.first.set_value(true);  // Write()
+  write.first.set_value(true);
 
   shutdown->MarkAsShutdown("test", {});
   uut->Shutdown();
-  read.first.set_value(false);
+  read.first.set_value(false);      // Read() closing the stream
   aseq.PopFront().set_value(true);  // Finish()
 
   EXPECT_THAT(done.get(), IsOk());
@@ -1058,47 +989,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckNackWithRetry) {
       .WillOnce([&](google::cloud::CompletionQueue&,
                     std::unique_ptr<grpc::ClientContext>,
                     google::pubsub::v1::StreamingPullRequest const&) {
-        auto start_response = [&] {
-          return aseq.PushBack("Start").then(
-              [](future<bool> g) { return g.get(); });
-        };
-        auto write_response =
-            [&](google::pubsub::v1::StreamingPullRequest const&,
-                grpc::WriteOptions const&) {
-              return aseq.PushBack("Write").then(
-                  [](future<bool> g) { return g.get(); });
-            };
-        auto read_response_with_eos = [&] {
-          return aseq.PushBack("Read").then([](future<bool> g) {
-            auto ok = g.get();
-            using Response = ::google::pubsub::v1::StreamingPullResponse;
-            if (!ok) return absl::optional<Response>{};
-            Response response;
-            response.mutable_subscription_properties()
-                ->set_exactly_once_delivery_enabled(true);
-            return absl::make_optional(std::move(response));
-          });
-        };
-        auto finish_response = [&] {
-          return aseq.PushBack("Finish").then(
-              [](future<bool>) mutable { return Status{}; });
-        };
-
-        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
-        EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
-
-        ::testing::InSequence sequence;
-        EXPECT_CALL(*stream, Start).WillOnce(start_response);
-        EXPECT_CALL(*stream, Write).WillOnce(write_response);
-        // Two Read() calls with subscription properties, only the first should
-        // trigger a `Write()` call that updates the stream deadline.
-        EXPECT_CALL(*stream, Read).WillOnce(read_response_with_eos);
-        EXPECT_CALL(*stream, Read).WillOnce(read_response_with_eos);
-        EXPECT_CALL(*stream, Finish)
-            .Times(AtMost(1))
-            .WillRepeatedly(finish_response);
-
-        return stream;
+        return MakeExactlyOnceStream(aseq, Status{});
       });
 
   EXPECT_CALL(
@@ -1127,19 +1018,23 @@ TEST(StreamingSubscriptionBatchSourceTest, AckNackWithRetry) {
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
-  auto timer = aseq.PopFrontWithName();
-  EXPECT_EQ(timer.second, "MakeRelativeTimer");
   aseq.PopFront().set_value(true);  // Start()
-  aseq.PopFront().set_value(true);  // Write()
+  auto write = aseq.PopFrontWithName();
+  EXPECT_EQ(write.second, "Write");
+  write.first.set_value(true);  // Write()
 
   auto read = aseq.PopFrontWithName();
   EXPECT_EQ(read.second, "Read");
   read.first.set_value(true);
 
-  // The successful Read() generates a RunAsync() which generates a Read().
+  // The successful Read() generates a RunAsync() which generates a Write() and
+  // Read() pair.
   auto run = aseq.PopFrontWithName();
   EXPECT_EQ(run.second, "RunAsync");
   run.first.set_value(true);
+  write = aseq.PopFrontWithName();
+  EXPECT_EQ(write.second, "Write");
+  write.first.set_value(true);
   read = aseq.PopFrontWithName();
   EXPECT_EQ(read.second, "Read");
 
