@@ -552,7 +552,7 @@ absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
 ExplicitRoutingInfo ParseExplicitRoutingHeader(
     google::protobuf::MethodDescriptor const& method) {
   ExplicitRoutingInfo info;
-  if (!method.options().HasExtension(google::api::routing)) return {};
+  if (!method.options().HasExtension(google::api::routing)) return info;
   google::api::RoutingRule rule =
       method.options().GetExtension(google::api::routing);
 
