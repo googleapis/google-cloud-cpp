@@ -100,7 +100,8 @@ std::string DebugString(Status const& status, TracingOptions const& options) {
 }
 
 std::string DebugString(std::string s, TracingOptions const& options) {
-  std::size_t const pos = options.truncate_string_field_longer_than();
+  auto const pos =
+      static_cast<std::size_t>(options.truncate_string_field_longer_than());
   if (s.size() > pos) s.replace(pos, std::string::npos, "...<truncated>...");
   return s;
 }
