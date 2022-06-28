@@ -58,6 +58,7 @@ struct ThroughputOptions {
   std::string direct_path_endpoint = "google-c2p:///storage.googleapis.com";
   std::chrono::seconds transfer_stall_timeout{};
   std::chrono::seconds download_stall_timeout{};
+  std::chrono::milliseconds minimum_sample_delay{};
 };
 
 google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
