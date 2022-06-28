@@ -20,6 +20,7 @@ import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
 import "google/api/resource.proto";
+import "google/api/routing.proto";
 import "google/iam/v1/iam_policy.proto";
 import "google/iam/v1/policy.proto";
 import "google/longrunning/operations.proto";
@@ -844,6 +845,75 @@ service GoldenKitchenSink {
 
   // A much simplified version of the WriteObject method in google.storage.v2.Storage
   rpc WriteObject(stream WriteObjectRequest) returns (WriteObjectResponse) {}
+
+  // An RPC to test that explicit routing headers are supported.
+  //
+  // We copy the most testing example given in the `google.api.routing` proto:
+  // https://github.com/googleapis/googleapis/blob/f46dc249e1987a6bef1a70a371e8288ea4c17481/google/api/routing.proto#L353-L385
+  //
+  // Our integration test should verify that, given the message:
+  //
+  //    {
+  //      table_name: projects/proj_foo/instances/instance_bar/table/table_baz
+  //      app_profile_id: profiles/prof_qux
+  //    }
+  //
+  // ... our metadata decorator sets:
+  //
+  //    x-goog-request-params:
+  //    table_location=instances/instance_bar&routing_id=prof_qux
+  rpc ExplicitRouting1(ExplicitRoutingRequest) returns (google.protobuf.Empty) {
+    // This is ignored, in favor of the google.api.routing rule.
+    option (google.api.http) = {
+      post: "/v1/{table_name=projects/**}:explicitRouting1"
+      body: "*"
+    };
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "table_name"
+        path_template: "projects/*/{table_location=instances/*}/tables/*"
+      }
+      routing_parameters {
+        field: "table_name"
+        path_template: "{table_location=regions/*/zones/*}/tables/*"
+      }
+      routing_parameters {
+        field: "table_name"
+        path_template: "{routing_id=projects/*}/**"
+      }
+      routing_parameters {
+        field: "app_profile_id"
+        path_template: "{routing_id=**}"
+      }
+      routing_parameters {
+        field: "app_profile_id"
+        path_template: "profiles/{routing_id=*}"
+      }
+    };
+  }
+
+  // We use this RPC to verify the special case where a routing parameter key
+  // does not require a regex in order to match the correct value.
+  rpc ExplicitRouting2(ExplicitRoutingRequest) returns (google.protobuf.Empty) {
+    // This is ignored, in favor of the google.api.routing rule.
+    option (google.api.http) = {
+      post: "/v1/{table_name=projects/**}:explicitRouting2"
+      body: "*"
+    };
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "no_regex_needed"
+      }
+      routing_parameters {
+        field: "table_name"
+        path_template: "{no_regex_needed=**}"
+      }
+      routing_parameters {
+        field: "app_profile_id"
+        path_template: "{no_regex_needed=**}"
+      }
+    };
+  }
 }
 
 message AppendRowsRequest {
@@ -1319,4 +1389,25 @@ message ListServiceAccountKeysRequest {
 message ListServiceAccountKeysResponse {
   // The public keys for the service account.
   repeated string keys = 1;
+}
+
+// We use the following message for our integration test, as defined here:
+// https://github.com/googleapis/googleapis/blob/f46dc249e1987a6bef1a70a371e8288ea4c17481/google/api/routing.proto#L40-L53
+message ExplicitRoutingRequest {
+  // The name of the Table
+  // Values can be of the following formats:
+  // - `projects/<project>/tables/<table>`
+  // - `projects/<project>/instances/<instance>/tables/<table>`
+  // - `region/<region>/zones/<zone>/tables/<table>`
+  string table_name = 1;
+
+  // This value specifies routing for replication.
+  // It can be in the following formats:
+  // - `profiles/<profile_id>`
+  // - a legacy `profile_id` that can be any string
+  string app_profile_id = 2;
+
+  // We use this field to demonstrate the special case for routing parameter
+  // keys which do not require a regex in order to match the correct value.
+  string no_regex_needed = 3;
 }
