@@ -76,6 +76,14 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
   WriteObject(
       std::unique_ptr<grpc::ClientContext> context) override;
 
+  Status ExplicitRouting1(
+    grpc::ClientContext& context,
+    google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
+
+  Status ExplicitRouting2(
+    grpc::ClientContext& context,
+    google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
+
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       google::test::admin::database::v1::TailLogEntriesResponse>>
   AsyncTailLogEntries(

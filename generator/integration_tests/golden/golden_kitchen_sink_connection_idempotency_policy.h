@@ -54,6 +54,12 @@ class GoldenKitchenSinkConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency
   DoNothing(google::protobuf::Empty const& request) = 0;
+
+  virtual google::cloud::Idempotency
+  ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency
+  ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
 };
 
 std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>

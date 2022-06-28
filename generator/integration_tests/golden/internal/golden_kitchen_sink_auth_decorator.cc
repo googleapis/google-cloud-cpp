@@ -121,6 +121,22 @@ GoldenKitchenSinkAuth::WriteObject(
   return child_->WriteObject(std::move(context));
 }
 
+Status GoldenKitchenSinkAuth::ExplicitRouting1(
+    grpc::ClientContext& context,
+    google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExplicitRouting1(context, request);
+}
+
+Status GoldenKitchenSinkAuth::ExplicitRouting2(
+    grpc::ClientContext& context,
+    google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExplicitRouting2(context, request);
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::test::admin::database::v1::TailLogEntriesResponse>>
 GoldenKitchenSinkAuth::AsyncTailLogEntries(
