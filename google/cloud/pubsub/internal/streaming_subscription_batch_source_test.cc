@@ -877,7 +877,11 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceIncludesDeadline) {
   }
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = MakeTestBatchSource(
+      background.cq(), shutdown, mock,
+      // Make the hold time long enough such that we can ignore the chances of a
+      // timer triggering in the test.
+      std::chrono::milliseconds(500));
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
