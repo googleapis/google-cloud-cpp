@@ -32,6 +32,12 @@
       "versioningTemplate": "loose"
     }
   ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["com_google_protobuf"],
+      "versioning": "loose"
+    }
+  ],
   "ignoreDeps": [
     "boringssl",
     "com_google_googleapis"
