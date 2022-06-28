@@ -56,6 +56,12 @@ TEST(ThroughputOptions, Basic) {
       "--transfer-stall-timeout=86400s",
       "--download-stall-timeout=86401s",
       "--minimum-sample-delay=250ms",
+      "--minimum-read-offset=32KiB",
+      "--maximum-read-offset=48KiB",
+      "--read-offset-quantum=8KiB",
+      "--minimum-read-size=48KiB",
+      "--maximum-read-size=64KiB",
+      "--read-size-quantum=16KiB",
   });
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
@@ -154,6 +160,34 @@ TEST(ThroughputOptions, Transports) {
                                    ExperimentTransport::kJson));
 }
 
+TEST(ThroughputOptions, Readoffset) {
+  auto options = ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-read-offset=0",
+      "--maximum-read-offset=2MiB",
+      "--read-offset-quantum=128KiB",
+  });
+  ASSERT_STATUS_OK(options);
+  EXPECT_EQ(options->minimum_read_offset, 0);
+  EXPECT_EQ(options->maximum_read_offset, 2 * kMiB);
+  EXPECT_EQ(options->read_offset_quantum, 128 * kKiB);
+}
+
+TEST(ThroughputOptions, ReadSize) {
+  auto options = ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-read-size=0",
+      "--maximum-read-size=2MiB",
+      "--read-size-quantum=128KiB",
+  });
+  ASSERT_STATUS_OK(options);
+  EXPECT_EQ(options->minimum_read_size, 0);
+  EXPECT_EQ(options->maximum_read_size, 2 * kMiB);
+  EXPECT_EQ(options->read_size_quantum, 128 * kKiB);
+}
+
 TEST(ThroughputOptions, Validate) {
   EXPECT_FALSE(ParseThroughputOptions({"self-test"}));
   EXPECT_FALSE(ParseThroughputOptions({"self-test", "unused-1", "unused-2"}));
@@ -176,28 +210,28 @@ TEST(ThroughputOptions, Validate) {
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
       "--region=r",
-      "--minimum-write-size=8",
-      "--maximum-write-size=4",
+      "--minimum-write-buffer-size=8",
+      "--maximum-write-buffer-size=4",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
       "--region=r",
-      "--minimum-write-size=4",
-      "--maximum-write-size=8",
-      "--write-quantum=5",
+      "--minimum-write-buffer-size=4",
+      "--maximum-write-buffer-size=8",
+      "--write-buffer-quantum=5",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
       "--region=r",
-      "--minimum-read-size=8",
-      "--maximum-read-size=4",
+      "--minimum-read-buffer-size=8",
+      "--maximum-read-buffer-size=4",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
       "--region=r",
-      "--minimum-read-size=4",
-      "--maximum-read-size=8",
-      "--read-quantum=5",
+      "--minimum-read-buffer-size=4",
+      "--maximum-read-buffer-size=8",
+      "--read-buffer-quantum=5",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
@@ -224,6 +258,34 @@ TEST(ThroughputOptions, Validate) {
       "self-test",
       "--region=r",
       "--minimum-sample-delay=-1ms",
+  }));
+
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-read-offset=8",
+      "--maximum-read-offset=4",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-read-offset=4",
+      "--maximum-read-offset=8",
+      "--read-offset-quantum=5",
+  }));
+
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-read-size=8",
+      "--maximum-read-size=4",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-read-size=4",
+      "--maximum-read-size=8",
+      "--read-size-quantum=5",
   }));
 }
 

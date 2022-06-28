@@ -74,7 +74,8 @@ TEST(ThroughputResult, HeaderMatches) {
   auto const line = ToString(ThroughputResult{
       ExperimentLibrary::kCppClient, ExperimentTransport::kGrpc, kOpInsert,
       std::chrono::system_clock::now(),
-      /*object_size=*/5 * kMiB, /*transfer_size=*/3 * kMiB,
+      /*object_size=*/8 * kMiB, /*transfer_offset=*/4 * kMiB,
+      /*transfer_size=*/3 * kMiB,
       /*app_buffer_size=*/2 * kMiB,
       /*crc_enabled=*/true, /*md5_enabled=*/false,
       std::chrono::microseconds(234000), std::chrono::microseconds(345000),
@@ -95,7 +96,8 @@ TEST(ThroughputResult, HeaderMatches) {
   EXPECT_THAT(*line, HasSubstr(ToString(ExperimentLibrary::kCppClient)));
   EXPECT_THAT(*line, HasSubstr(ToString(ExperimentTransport::kGrpc)));
   EXPECT_THAT(*line, HasSubstr(ToString(kOpInsert)));
-  EXPECT_THAT(*line, HasSubstr("," + std::to_string(5 * kMiB) + ","));
+  EXPECT_THAT(*line, HasSubstr("," + std::to_string(8 * kMiB) + ","));
+  EXPECT_THAT(*line, HasSubstr("," + std::to_string(4 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(3 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(2 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr(",1,"));  // crc_enabled==true
