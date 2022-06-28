@@ -384,6 +384,11 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
     }
     auto client = provider(ExperimentTransport::kJson);
     (void)client.DeleteObject(bucket_name, object_name);
+    // If needed, pace the benchmark so each thread generates only so many
+    // samples each second.
+    auto const pace = start + options.minimum_sample_delay;
+    auto const now = std::chrono::steady_clock::now();
+    if (pace > now) std::this_thread::sleep_for(pace - now);
   }
 }
 
