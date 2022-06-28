@@ -276,6 +276,52 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
                ::google::test::admin::database::v1::WriteObjectResponse*,
                ::grpc::CompletionQueue*),
               (override));
+  MOCK_METHOD(
+      ::grpc::Status, ExplicitRouting1,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::ExplicitRoutingRequest const&
+           request,
+       ::google::protobuf::Empty* response),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
+      AsyncExplicitRouting1Raw,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::ExplicitRoutingRequest const&
+           request,
+       ::grpc::CompletionQueue* cq),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
+      PrepareAsyncExplicitRouting1Raw,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::ExplicitRoutingRequest const&
+           request,
+       ::grpc::CompletionQueue* cq),
+      (override));
+  MOCK_METHOD(
+      ::grpc::Status, ExplicitRouting2,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::ExplicitRoutingRequest const&
+           request,
+       ::google::protobuf::Empty* response),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
+      AsyncExplicitRouting2Raw,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::ExplicitRoutingRequest const&
+           request,
+       ::grpc::CompletionQueue* cq),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
+      PrepareAsyncExplicitRouting2Raw,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::ExplicitRoutingRequest const&
+           request,
+       ::grpc::CompletionQueue* cq),
+      (override));
 };
 
 class GoldenKitchenSinkStubTest : public ::testing::Test {

@@ -106,6 +106,16 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
     (google::cloud::CompletionQueue const& cq,
      std::unique_ptr<grpc::ClientContext> context),
     (override));
+
+  MOCK_METHOD(Status, ExplicitRouting1,
+              (grpc::ClientContext&,
+               ::google::test::admin::database::v1::ExplicitRoutingRequest const&),
+              (override));
+
+  MOCK_METHOD(Status, ExplicitRouting2,
+              (grpc::ClientContext&,
+               ::google::test::admin::database::v1::ExplicitRoutingRequest const&),
+              (override));
 };
 
 class MockTailLogEntriesStreamingReadRpc
