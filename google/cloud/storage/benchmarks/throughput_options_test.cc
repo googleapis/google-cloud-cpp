@@ -220,6 +220,11 @@ TEST(ThroughputOptions, Validate) {
       "--region=r",
       "--minimum-sample-delay=-2ms",
   }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-sample-delay=-1ms",
+  }));
 }
 
 }  // namespace

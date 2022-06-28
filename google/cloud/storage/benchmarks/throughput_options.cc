@@ -186,9 +186,10 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          absl::Duration d;
          if (absl::ParseDuration(val, &d)) {
+           options.minimum_sample_delay = absl::ToChronoMilliseconds(d);
+         } else {
            options.minimum_sample_delay = std::chrono::milliseconds(-1);
          }
-         options.minimum_sample_delay = absl::ToChronoMilliseconds(d);
        }},
   };
   auto usage = BuildUsage(desc, argv[0]);
@@ -322,7 +323,7 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     return make_status(os);
   }
 
-  if (options.minimum_sample_delay < std::chrono::milliseconds(-1)) {
+  if (options.minimum_sample_delay < std::chrono::milliseconds(0)) {
     std::ostringstream os;
     os << "Invalid value for --minimum-sample-delay";
     return make_status(os);
