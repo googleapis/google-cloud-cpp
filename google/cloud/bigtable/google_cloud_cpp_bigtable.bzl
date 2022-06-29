@@ -115,6 +115,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "table.h",
     "table_admin.h",
     "table_config.h",
+    "table_resource.h",
     "version.h",
     "version_info.h",
     "wait_for_consistency.h",
@@ -194,6 +195,7 @@ google_cloud_cpp_bigtable_srcs = [
     "table.cc",
     "table_admin.cc",
     "table_config.cc",
+    "table_resource.cc",
     "version.cc",
     "wait_for_consistency.cc",
 ]
