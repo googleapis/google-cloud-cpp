@@ -157,10 +157,9 @@ void TableIntegrationTest::SetUp() {
 bigtable::Table TableIntegrationTest::GetTable(
     std::string const& implementation) {
   if (implementation == "with-data-connection") {
-    return bigtable_internal::MakeTable(data_connection_,
-                                        TableTestEnvironment::project_id(),
-                                        TableTestEnvironment::instance_id(), "",
-                                        TableTestEnvironment::table_id());
+    return bigtable_internal::MakeTable(
+        data_connection_, TableTestEnvironment::project_id(),
+        TableTestEnvironment::instance_id(), TableTestEnvironment::table_id());
   }
   return bigtable::Table(data_client_, TableTestEnvironment::table_id());
 }

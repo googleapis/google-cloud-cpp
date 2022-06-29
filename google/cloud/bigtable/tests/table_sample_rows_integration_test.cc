@@ -72,7 +72,7 @@ class SampleRowsIntegrationTest
     auto table = bigtable_internal::MakeTable(
         MakeDataConnection(Options{}.set<TracingComponentsOption>({"rpc"})),
         TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
-        "", TableTestEnvironment::table_id());
+        TableTestEnvironment::table_id());
 
     int constexpr kBatchCount = 10;
     int constexpr kBatchSize = 5000;
@@ -107,16 +107,14 @@ class SampleRowsIntegrationTest
 TEST_F(SampleRowsIntegrationTest, SyncWithDataConnection) {
   auto table = bigtable_internal::MakeTable(
       MakeDataConnection(), TableTestEnvironment::project_id(),
-      TableTestEnvironment::instance_id(), "",
-      TableTestEnvironment::table_id());
+      TableTestEnvironment::instance_id(), TableTestEnvironment::table_id());
   VerifySamples(table.SampleRows());
 };
 
 TEST_F(SampleRowsIntegrationTest, AsyncWithDataConnection) {
   auto table = bigtable_internal::MakeTable(
       MakeDataConnection(), TableTestEnvironment::project_id(),
-      TableTestEnvironment::instance_id(), "",
-      TableTestEnvironment::table_id());
+      TableTestEnvironment::instance_id(), TableTestEnvironment::table_id());
   auto fut = table.AsyncSampleRows();
   VerifySamples(fut.get());
 };

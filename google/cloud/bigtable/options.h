@@ -52,6 +52,15 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
+ * The application profile id needed for using the replication API.
+ *
+ * @see https://cloud.google.com/bigtable/docs/app-profiles
+ */
+struct AppProfileIdOption {
+  using Type = std::string;
+};
+
+/**
  * The endpoint for data operations.
  *
  * @deprecated Please use `google::cloud::EndpointOption` instead.
