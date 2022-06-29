@@ -32,6 +32,11 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
+/**
+ * We do not use `::testing::MatchesRegex` because our Windows builds use a
+ * googletest built with `GTEST_USES_SIMPLE_RE`, instead of
+ * `GTEST_USES_POSIX_RE`.
+ */
 MATCHER_P(MatchesMetadataRegex, pattern,
           "matches the pattern: \"" + pattern + "\"") {
   // Translate the pattern into a form that can be used by std::regex
