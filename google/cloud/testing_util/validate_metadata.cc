@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/status_or.h"
 #include <google/api/annotations.pb.h>
 #include <google/protobuf/descriptor.h>
@@ -21,6 +22,7 @@
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
+#include <iterator>
 #include <regex>
 
 namespace google {
@@ -30,12 +32,19 @@ namespace testing_util {
 
 namespace {
 
+using ::testing::Contains;
+using ::testing::IsEmpty;
+using ::testing::Not;
+using ::testing::NotNull;
+using ::testing::Pair;
+
+using RoutingHeaders = std::map<std::string, std::string>;
+
 /**
  * Check if the `header` is of "foo=bar&baz=rab&..." and if it is, return a
  * `map` containing `"foo"->"bar", "baz"->"rab"`.
  */
-StatusOr<std::map<std::string, std::string> > ExtractMDFromHeader(
-    std::string header) {
+RoutingHeaders ExtractMDFromHeader(std::string header) {
   std::map<std::string, std::string> res;
   std::regex pair_re("[^&]+");
   for (std::sregex_iterator i =
@@ -45,42 +54,23 @@ StatusOr<std::map<std::string, std::string> > ExtractMDFromHeader(
     std::smatch match_res;
     std::string s = i->str();
     bool const matched = std::regex_match(s, match_res, assign_re);
-    if (!matched) {
-      return Status(
-          StatusCode::kInvalidArgument,
-          "Bad header format. The header should be a series of \"a=b\" "
-          "delimited with \"&\", but is \"" +
-              s + "\"");
-    }
+    EXPECT_TRUE(matched)
+        << "Bad header format. The header should be a series of \"a=b\" "
+           "delimited with \"&\", but is \"" +
+               s + "\"";
+    if (!matched) continue;
     bool const inserted =
         res.insert(std::make_pair(match_res[1].str(), match_res[2].str()))
             .second;
-    if (!inserted) {
-      return Status(
-          StatusCode::kInvalidArgument,
-          "Param " + match_res[1].str() + " is listed more then once");
-    }
+    EXPECT_TRUE(inserted) << "Param " + match_res[1].str() +
+                                 " is listed more than once";
   }
   return res;
 }
 
-StatusOr<std::map<std::string, std::string> > ExtractMDFromHeaders(
-    std::multimap<std::string, std::string> const& headers) {
-  auto param_header = headers.equal_range("x-goog-request-params");
-  if (param_header.first == param_header.second) {
-    return Status(StatusCode::kInvalidArgument, "Expected header not found");
-  }
-  if (std::distance(param_header.first, param_header.second) > 1U) {
-    return Status(StatusCode::kInvalidArgument, "Multiple headers found");
-  }
-  return ExtractMDFromHeader(param_header.first->second);
-}
-
-/// A poor man's check if a value matches a glob used in URL patterns.
-bool ValueMatchesPattern(std::string const& val, std::string const& pattern) {
-  std::string regexified_pattern =
-      regex_replace(pattern, std::regex("\\*"), std::string("[^/]+"));
-  return std::regex_match(val, std::regex(regexified_pattern));
+MATCHER_P(ContainsStdRegex, pattern, "ContainsRegex using std::regex") {
+  std::regex regex(pattern);
+  return std::regex_search(arg, regex);
 }
 
 /**
@@ -90,62 +80,58 @@ bool ValueMatchesPattern(std::string const& val, std::string const& pattern) {
  * `something{foo=bar}something_else{baz=rab}`. For such a content, a `map`
  * containing `"foo"->"bar", "baz"->"rab"` is returned.
  */
-StatusOr<std::map<std::string, std::string> > ExtractParamsFromMethod(
+RoutingHeaders FromHttpRule(google::api::HttpRule const& http,
+                            absl::optional<std::string> const& resource_name) {
+  RoutingHeaders headers;
+  std::string pattern;
+  if (!http.get().empty()) {
+    pattern = http.get();
+  } else if (!http.put().empty()) {
+    pattern = http.put();
+  } else if (!http.post().empty()) {
+    pattern = http.post();
+  } else if ((http.additional_bindings_size() > 0) && resource_name &&
+             !(http.additional_bindings(0).post().empty())) {
+    pattern = http.additional_bindings(0).post();
+  } else if (!http.delete_().empty()) {
+    pattern = http.delete_();
+  } else if (!http.patch().empty()) {
+    pattern = http.patch();
+  } else if (http.has_custom()) {
+    pattern = http.custom().path();
+  }
+
+  EXPECT_THAT(pattern, Not(IsEmpty()))
+      << "Method has an http option with an empty pattern.";
+  if (pattern.empty()) return headers;
+
+  std::regex subst_re("\\{([^{}=]+)=([^{}=]+)\\}");
+  for (std::sregex_iterator i =
+           std::sregex_iterator(pattern.begin(), pattern.end(), subst_re);
+       i != std::sregex_iterator(); ++i) {
+    std::string const& param = (*i)[1].str();
+    std::string const& expected_pattern =
+        absl::StrReplaceAll((*i)[2].str(), {{"*", "[^/]+"}});
+    headers.insert(std::make_pair(param, expected_pattern));
+  }
+  return headers;
+}
+
+RoutingHeaders ExtractRoutingHeaders(
     std::string const& method,
     absl::optional<std::string> const& resource_name) {
   auto const* method_desc =
       google::protobuf::DescriptorPool::generated_pool()->FindMethodByName(
           method);
-
-  if (method_desc == nullptr) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Method " + method + " is unknown.");
-  }
+  EXPECT_THAT(method_desc, NotNull()) << "Method " + method + " is unknown.";
+  if (!method_desc) return {};
   auto options = method_desc->options();
-  if (!options.HasExtension(google::api::http)) {
-    return std::map<std::string, std::string>{};
+  // TODO(#9373): Handle `google::api::routing` extension.
+  if (options.HasExtension(google::api::http)) {
+    auto const& http = options.GetExtension(google::api::http);
+    return FromHttpRule(http, resource_name);
   }
-  auto const& http = options.GetExtension(google::api::http);
-  std::string pattern;
-  if (!http.get().empty()) {
-    pattern = http.get();
-  }
-  if (!http.put().empty()) {
-    pattern = http.put();
-  }
-  if (!http.post().empty()) {
-    pattern = http.post();
-  }
-  if ((http.additional_bindings_size() > 0) && resource_name &&
-      !(http.additional_bindings(0).post().empty())) {
-    pattern = http.additional_bindings(0).post();
-  }
-  if (!http.delete_().empty()) {
-    pattern = http.delete_();
-  }
-  if (!http.patch().empty()) {
-    pattern = http.patch();
-  }
-  if (http.has_custom()) {
-    pattern = http.custom().path();
-  }
-
-  if (pattern.empty()) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "Method " + method + " has a http option with an empty pattern.");
-  }
-
-  std::regex subst_re("\\{([^{}=]+)=([^{}=]+)\\}");
-  std::map<std::string, std::string> res;
-  for (std::sregex_iterator i =
-           std::sregex_iterator(pattern.begin(), pattern.end(), subst_re);
-       i != std::sregex_iterator(); ++i) {
-    std::string const& param = (*i)[1].str();
-    std::string const& expected_pattern = (*i)[2].str();
-    res.insert(std::make_pair(param, expected_pattern));
-  }
-  return res;
+  return {};
 }
 
 }  // namespace
@@ -228,59 +214,28 @@ Status ValidateMetadataFixture::IsContextMDValid(
   auto headers = GetMetadata(context);
 
   // Check x-goog-api-client first, because it should always be present.
-  auto found_api_client_header = headers.find("x-goog-api-client");
-  if (found_api_client_header == headers.end()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Expected x-goog-api-client metadata");
-  }
-  if (found_api_client_header->second != api_client_header) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Expected x-goog-api-client to be " + api_client_header +
-                      ", was " + found_api_client_header->second);
-  }
+  EXPECT_THAT(headers, Contains(Pair("x-goog-api-client", api_client_header)));
 
   if (resource_prefix_header) {
-    std::string const header = "google-cloud-resource-prefix";
-    auto it = headers.find(header);
-    if (it == headers.end()) {
-      return Status(StatusCode::kInvalidArgument, header + " not found");
-    }
-    if (it->second != *resource_prefix_header) {
-      return Status(StatusCode::kInvalidArgument,
-                    header + " expected to be " + *resource_prefix_header +
-                        ", but was " + it->second);
-    }
+    EXPECT_THAT(headers, Contains(Pair("google-cloud-resource-prefix",
+                                       *resource_prefix_header)));
   }
+
+  // Extract the metadata from `x-goog-request-params` header in context.
+  auto param_header = headers.equal_range("x-goog-request-params");
+  auto dist = std::distance(param_header.first, param_header.second);
+  EXPECT_LE(dist, 1U) << "Multiple x-goog-request-params headers found";
+  auto actual = dist == 0 ? RoutingHeaders{}
+                          : ExtractMDFromHeader(param_header.first->second);
 
   // Extract expectations on `x-goog-request-params` from the `google.api.http`
   // annotation on the specified method.
-  auto params = ExtractParamsFromMethod(method, resource_name);
-  if (!params) return std::move(params).status();
-
-  // If there are no annotations, there is nothing to check.
-  if (params->empty()) return Status{};
-
-  // Extract the metadata from `x-goog-request-params` header in context.
-  auto md = ExtractMDFromHeaders(headers);
-  if (!md) return std::move(md).status();
+  auto expected = ExtractRoutingHeaders(method, resource_name);
 
   // Check if the metadata in the context satisfied the expectations.
-  for (auto const& param_pattern : *params) {
-    auto const& param = param_pattern.first;
-    auto const& expected_pattern = param_pattern.second;
-    auto found_it = md->find(param);
-    if (found_it == md->end()) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Expected param \"" + param + "\" not found in metadata");
-    }
-    if (!ValueMatchesPattern(found_it->second, expected_pattern)) {
-      return Status(
-          StatusCode::kInvalidArgument,
-          "Expected param \"" + param + "\" found, but its value (\"" +
-              // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
-              found_it->second + "\") does not satisfy the pattern (\"" +
-              expected_pattern + "\").");
-    }
+  for (auto const& param : expected) {
+    EXPECT_THAT(actual,
+                Contains(Pair(param.first, ContainsStdRegex(param.second))));
   }
 
   return Status();

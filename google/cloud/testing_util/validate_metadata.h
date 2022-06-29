@@ -18,6 +18,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
+#include <gmock/gmock.h>
 #include <grpcpp/generic/async_generic_service.h>
 #include <grpcpp/grpcpp.h>
 #include <map>
