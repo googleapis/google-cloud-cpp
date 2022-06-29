@@ -66,6 +66,11 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
   return res;
 }
 
+MATCHER_P(ContainsStdRegex, pattern, "ContainsRegex using std::regex") {
+  std::regex regex(pattern);
+  return std::regex_search(arg, regex);
+}
+
 /**
  * Given a `method`, extract its `google.api.http` option and parse it.
  *
@@ -228,7 +233,7 @@ Status ValidateMetadataFixture::IsContextMDValid(
   // Check if the metadata in the context satisfied the expectations.
   for (auto const& param : expected) {
     EXPECT_THAT(actual,
-                Contains(Pair(param.first, ContainsRegex(param.second))));
+                Contains(Pair(param.first, ContainsStdRegex(param.second))));
   }
 
   return Status();
