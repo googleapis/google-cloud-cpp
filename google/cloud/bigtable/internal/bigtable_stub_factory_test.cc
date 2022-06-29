@@ -53,10 +53,12 @@ using ::testing::Return;
 
 class BigtableStubFactory : public ::testing::Test {
  protected:
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  template <typename Request>
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        Request const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader("generator"));
+        context, method, request,
+        google::cloud::internal::ApiClientHeader("generator"));
   }
 
  private:
@@ -91,19 +93,21 @@ TEST_F(BigtableStubFactory, ReadRows) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, ReadRows)
-            .WillOnce([this](std::unique_ptr<grpc::ClientContext> context,
-                             google::bigtable::v2::ReadRowsRequest const&) {
-              // Verify the Auth decorator is present
-              EXPECT_THAT(context->credentials(), NotNull());
-              // Verify the Metadata decorator is present
-              EXPECT_STATUS_OK(IsContextMDValid(
-                  *context, "google.bigtable.v2.Bigtable.ReadRows"));
-              auto stream = absl::make_unique<MockReadRowsStream>();
-              EXPECT_CALL(*stream, Read)
-                  .WillOnce(
-                      Return(Status(StatusCode::kUnavailable, "nothing here")));
-              return stream;
-            });
+            .WillOnce(
+                [this](std::unique_ptr<grpc::ClientContext> context,
+                       google::bigtable::v2::ReadRowsRequest const& request) {
+                  // Verify the Auth decorator is present
+                  EXPECT_THAT(context->credentials(), NotNull());
+                  // Verify the Metadata decorator is present
+                  IsContextMDValid(*context,
+                                   "google.bigtable.v2.Bigtable.ReadRows",
+                                   request);
+                  auto stream = absl::make_unique<MockReadRowsStream>();
+                  EXPECT_CALL(*stream, Read)
+                      .WillOnce(Return(
+                          Status(StatusCode::kUnavailable, "nothing here")));
+                  return stream;
+                });
         return mock;
       });
   EXPECT_CALL(factory, Call)
@@ -132,16 +136,18 @@ TEST_F(BigtableStubFactory, MutateRow) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, MutateRow)
-            .WillOnce([this](grpc::ClientContext& context,
-                             google::bigtable::v2::MutateRowRequest const&) {
-              // Verify the Auth decorator is present
-              EXPECT_THAT(context.credentials(), NotNull());
-              // Verify the Metadata decorator is present
-              EXPECT_STATUS_OK(IsContextMDValid(
-                  context, "google.bigtable.v2.Bigtable.MutateRow"));
-              return StatusOr<google::bigtable::v2::MutateRowResponse>(
-                  Status(StatusCode::kUnavailable, "nothing here"));
-            });
+            .WillOnce(
+                [this](grpc::ClientContext& context,
+                       google::bigtable::v2::MutateRowRequest const& request) {
+                  // Verify the Auth decorator is present
+                  EXPECT_THAT(context.credentials(), NotNull());
+                  // Verify the Metadata decorator is present
+                  IsContextMDValid(context,
+                                   "google.bigtable.v2.Bigtable.MutateRow",
+                                   request);
+                  return StatusOr<google::bigtable::v2::MutateRowResponse>(
+                      Status(StatusCode::kUnavailable, "nothing here"));
+                });
         return mock;
       });
   EXPECT_CALL(factory, Call)
@@ -169,20 +175,22 @@ TEST_F(BigtableStubFactory, AsyncReadRows) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, AsyncReadRows)
-            .WillOnce([this](CompletionQueue const&,
-                             std::unique_ptr<grpc::ClientContext> context,
-                             google::bigtable::v2::ReadRowsRequest const&) {
-              // Verify the Auth decorator is present
-              EXPECT_THAT(context->credentials(), NotNull());
-              // Verify the Metadata decorator is present
-              EXPECT_STATUS_OK(IsContextMDValid(
-                  *context, "google.bigtable.v2.Bigtable.ReadRows"));
-              using ErrorStream =
-                  ::google::cloud::internal::AsyncStreamingReadRpcError<
-                      google::bigtable::v2::ReadRowsResponse>;
-              return absl::make_unique<ErrorStream>(
-                  Status(StatusCode::kUnavailable, "nothing here"));
-            });
+            .WillOnce(
+                [this](CompletionQueue const&,
+                       std::unique_ptr<grpc::ClientContext> context,
+                       google::bigtable::v2::ReadRowsRequest const& request) {
+                  // Verify the Auth decorator is present
+                  EXPECT_THAT(context->credentials(), NotNull());
+                  // Verify the Metadata decorator is present
+                  IsContextMDValid(*context,
+                                   "google.bigtable.v2.Bigtable.ReadRows",
+                                   request);
+                  using ErrorStream =
+                      ::google::cloud::internal::AsyncStreamingReadRpcError<
+                          google::bigtable::v2::ReadRowsResponse>;
+                  return absl::make_unique<ErrorStream>(
+                      Status(StatusCode::kUnavailable, "nothing here"));
+                });
         return mock;
       });
   EXPECT_CALL(factory, Call)
@@ -213,18 +221,20 @@ TEST_F(BigtableStubFactory, AsyncMutateRow) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, AsyncMutateRow)
-            .WillOnce([this](CompletionQueue&,
-                             std::unique_ptr<grpc::ClientContext> context,
-                             google::bigtable::v2::MutateRowRequest const&) {
-              // Verify the Auth decorator is present
-              EXPECT_THAT(context->credentials(), NotNull());
-              // Verify the Metadata decorator is present
-              EXPECT_STATUS_OK(IsContextMDValid(
-                  *context, "google.bigtable.v2.Bigtable.MutateRow"));
-              return make_ready_future<
-                  StatusOr<google::bigtable::v2::MutateRowResponse>>(
-                  Status(StatusCode::kUnavailable, "nothing here"));
-            });
+            .WillOnce(
+                [this](CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
+                       google::bigtable::v2::MutateRowRequest const& request) {
+                  // Verify the Auth decorator is present
+                  EXPECT_THAT(context->credentials(), NotNull());
+                  // Verify the Metadata decorator is present
+                  IsContextMDValid(*context,
+                                   "google.bigtable.v2.Bigtable.MutateRow",
+                                   request);
+                  return make_ready_future<
+                      StatusOr<google::bigtable::v2::MutateRowResponse>>(
+                      Status(StatusCode::kUnavailable, "nothing here"));
+                });
         return mock;
       });
   EXPECT_CALL(factory, Call)

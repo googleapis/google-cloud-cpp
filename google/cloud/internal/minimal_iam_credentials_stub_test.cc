@@ -49,10 +49,11 @@ class MockMinimalIamCredentialsStub : public MinimalIamCredentialsStub {
 
 class MinimalIamCredentialsStubTest : public ::testing::Test {
  protected:
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  template <typename Request>
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        Request const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader());
+        context, method, request, google::cloud::internal::ApiClientHeader());
   }
 
   static Status TransientError() {
@@ -134,10 +135,11 @@ TEST_F(MinimalIamCredentialsStubTest,
   EXPECT_CALL(*mock, AsyncGenerateAccessToken)
       .WillOnce([this](CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
-                       GenerateAccessTokenRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
+                       GenerateAccessTokenRequest const& request) {
+        IsContextMDValid(
             *context,
-            "google.iam.credentials.v1.IAMCredentials.GenerateAccessToken"));
+            "google.iam.credentials.v1.IAMCredentials.GenerateAccessToken",
+            request);
         GenerateAccessTokenResponse response;
         response.set_access_token("test-only-token");
         return make_ready_future(make_status_or(response));

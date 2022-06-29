@@ -223,9 +223,9 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
               std::unique_ptr<grpc::ClientContext> context,
               google::pubsub::v1::StreamingPullRequest const& request) {
             ValidateMetadataFixture fixture;
-            EXPECT_STATUS_OK(fixture.IsContextMDValid(
-                *context, "google.pubsub.v1.Subscriber.Pull",
-                google::cloud::internal::ApiClientHeader()));
+            fixture.IsContextMDValid(
+                *context, "google.pubsub.v1.Subscriber.Pull", request,
+                google::cloud::internal::ApiClientHeader());
             return FakeAsyncStreamingPull(cq, std::move(context), request);
           });
 

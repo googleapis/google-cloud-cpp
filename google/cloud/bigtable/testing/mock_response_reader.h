@@ -63,9 +63,10 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
    */
   std::function<UniquePtr(grpc::ClientContext*, Request const&)>
   MakeMockReturner() {
-    return [this](grpc::ClientContext* context, Request const&) {
-      EXPECT_STATUS_OK(validate_metadata_fixture_.IsContextMDValid(
-          *context, method_, google::cloud::internal::ApiClientHeader()));
+    return [this](grpc::ClientContext* context, Request const& request) {
+      validate_metadata_fixture_.IsContextMDValid(
+          *context, method_, request,
+          google::cloud::internal::ApiClientHeader());
       return UniquePtr(this);
     };
   }
