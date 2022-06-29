@@ -33,6 +33,9 @@ namespace testing_util {
 namespace {
 
 using ::testing::Contains;
+using ::testing::IsEmpty;
+using ::testing::Not;
+using ::testing::NotNull;
 using ::testing::Pair;
 
 using RoutingHeaders = std::map<std::string, std::string>;
@@ -98,7 +101,7 @@ RoutingHeaders FromHttpRule(google::api::HttpRule const& http,
     pattern = http.custom().path();
   }
 
-  EXPECT_FALSE(pattern.empty())
+  EXPECT_THAT(pattern, Not(IsEmpty()))
       << "Method has an http option with an empty pattern.";
   if (pattern.empty()) return headers;
 
@@ -120,7 +123,7 @@ RoutingHeaders ExtractRoutingHeaders(
   auto const* method_desc =
       google::protobuf::DescriptorPool::generated_pool()->FindMethodByName(
           method);
-  EXPECT_TRUE(method_desc) << "Method " + method + " is unknown.";
+  EXPECT_THAT(method_desc, NotNull()) << "Method " + method + " is unknown.";
   if (!method_desc) return {};
   auto options = method_desc->options();
   // TODO(#9373): Handle `google::api::routing` extension.
