@@ -29,13 +29,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * This class identifies a Cloud Bigtable Instance.
  *
- * A Cloud Bigtable instance is identified by its `project_id` and
- * `instance_id`.
+ * To use Cloud Bigtable, you create instances, which contain clusters that your
+ * applications can connect to. Each cluster contains nodes, the compute units
+ * that manage your data and perform maintenance tasks. A Cloud Bigtable
+ * instance is identified by its `project_id` and `instance_id`.
  *
  * @note This class makes no effort to validate the components of the
  *     instance name. It is the application's responsibility to provide valid
  *     project, and instance ids. Passing invalid values will not be checked
  *     until the instance name is used in an RPC to Bigtable.
+ *
+ * @see https://cloud.google.com/bigtable/docs/instances-clusters-nodes for an
+ *     overview of Cloud Bigtable instances, clusters, and nodes.
  */
 class InstanceResource {
  public:
