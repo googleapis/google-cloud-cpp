@@ -43,53 +43,52 @@ std::vector<FailedMutation> MakeUnimplementedFailedMutations(std::size_t n) {
 
 DataConnection::~DataConnection() = default;
 
-Status DataConnection::Apply(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, SingleRowMutation) {
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+Status DataConnection::Apply(std::string const&, SingleRowMutation) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<Status> DataConnection::AsyncApply(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, SingleRowMutation) {
+    std::string const&, SingleRowMutation) {
   return make_ready_future(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::vector<FailedMutation> DataConnection::BulkApply(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, BulkMutation mut) {
+    std::string const&, BulkMutation mut) {
   return MakeUnimplementedFailedMutations(mut.size());
 }
 
 future<std::vector<FailedMutation>> DataConnection::AsyncBulkApply(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, BulkMutation mut) {
+    std::string const&, BulkMutation mut) {
   return make_ready_future(MakeUnimplementedFailedMutations(mut.size()));
 }
 
 RowReader DataConnection::ReadRows(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, RowSet, std::int64_t, Filter) {
+    std::string const&, RowSet, std::int64_t, Filter) {
   return MakeRowReader(std::make_shared<bigtable_internal::StatusOnlyRowReader>(
       Status(StatusCode::kUnimplemented, "not implemented")));
 }
 
 StatusOr<std::pair<bool, Row>> DataConnection::ReadRow(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, std::string, Filter) {
+    std::string const&, std::string, Filter) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<MutationBranch> DataConnection::CheckAndMutateRow(
-    std::string const&, std::string const&,
+    std::string const&,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::string, Filter, std::vector<Mutation>, std::vector<Mutation>) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<MutationBranch>> DataConnection::AsyncCheckAndMutateRow(
-    std::string const&, std::string const&,
+    std::string const&,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::string, Filter, std::vector<Mutation>, std::vector<Mutation>) {
   return make_ready_future<StatusOr<MutationBranch>>(
@@ -97,12 +96,12 @@ future<StatusOr<MutationBranch>> DataConnection::AsyncCheckAndMutateRow(
 }
 
 StatusOr<std::vector<RowKeySample>> DataConnection::SampleRows(
-    std::string const&, std::string const&) {
+    std::string const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<std::vector<RowKeySample>>> DataConnection::AsyncSampleRows(
-    std::string const&, std::string const&) {
+    std::string const&) {
   return make_ready_future<StatusOr<std::vector<RowKeySample>>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
@@ -121,17 +120,16 @@ future<StatusOr<Row>> DataConnection::AsyncReadModifyWriteRow(
 }
 
 void DataConnection::AsyncReadRows(
-    std::string const&, std::string const&,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::function<future<bool>(Row)>, std::function<void(Status)> on_finish,
+    std::string const&, std::function<future<bool>(Row)>,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    RowSet, std::int64_t, Filter) {
+    std::function<void(Status)> on_finish, RowSet, std::int64_t, Filter) {
   on_finish(Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<std::pair<bool, Row>>> DataConnection::AsyncReadRow(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, std::string const&, std::string, Filter) {
+    std::string const&, std::string, Filter) {
   return make_ready_future<StatusOr<std::pair<bool, Row>>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }

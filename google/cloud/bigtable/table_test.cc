@@ -129,6 +129,7 @@ Table TestTable(std::shared_ptr<MockDataConnection> mock) {
 void CheckCurrentOptions() {
   auto const& options = google::cloud::internal::CurrentOptions();
   EXPECT_TRUE(options.has<TestOption>());
+  EXPECT_EQ(kAppProfileId, options.get<AppProfileIdOption>());
 }
 
 TEST(TableTest, ConnectionConstructor) {
@@ -156,11 +157,9 @@ TEST(TableTest, AppProfileId) {
 TEST(TableTest, Apply) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, Apply)
-      .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name,
+      .WillOnce([](std::string const& table_name,
                    bigtable::SingleRowMutation const& mut) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_EQ(mut.row_key(), "row");
         return PermanentError();
@@ -174,11 +173,9 @@ TEST(TableTest, Apply) {
 TEST(TableTest, AsyncApply) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncApply)
-      .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name,
+      .WillOnce([](std::string const& table_name,
                    bigtable::SingleRowMutation const& mut) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_EQ(mut.row_key(), "row");
         return make_ready_future(PermanentError());
@@ -194,11 +191,9 @@ TEST(TableTest, BulkApply) {
 
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, BulkApply)
-      .WillOnce([&expected](std::string const& app_profile_id,
-                            std::string const& table_name,
+      .WillOnce([&expected](std::string const& table_name,
                             bigtable::BulkMutation const& mut) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_EQ(mut.size(), 2);
         return expected;
@@ -215,11 +210,9 @@ TEST(TableTest, AsyncBulkApply) {
 
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncBulkApply)
-      .WillOnce([&expected](std::string const& app_profile_id,
-                            std::string const& table_name,
+      .WillOnce([&expected](std::string const& table_name,
                             bigtable::BulkMutation const& mut) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_EQ(mut.size(), 2);
         return make_ready_future(expected);
@@ -234,12 +227,10 @@ TEST(TableTest, AsyncBulkApply) {
 TEST(TableTest, ReadRows) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, ReadRows)
-      .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name,
+      .WillOnce([](std::string const& table_name,
                    bigtable::RowSet const& row_set, std::int64_t rows_limit,
                    bigtable::Filter const& filter) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_THAT(row_set, IsTestRowSet());
         EXPECT_EQ(rows_limit, RowReader::NO_ROWS_LIMIT);
@@ -257,12 +248,10 @@ TEST(TableTest, ReadRows) {
 TEST(TableTest, ReadRowsWithRowLimit) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, ReadRows)
-      .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name,
+      .WillOnce([](std::string const& table_name,
                    bigtable::RowSet const& row_set, std::int64_t rows_limit,
                    bigtable::Filter const& filter) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_THAT(row_set, IsTestRowSet());
         EXPECT_EQ(rows_limit, 42);
@@ -280,11 +269,9 @@ TEST(TableTest, ReadRowsWithRowLimit) {
 TEST(TableTest, ReadRow) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, ReadRow)
-      .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name, std::string const& row_key,
+      .WillOnce([](std::string const& table_name, std::string const& row_key,
                    bigtable::Filter const& filter) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_EQ("row", row_key);
         EXPECT_THAT(filter, IsTestFilter());
@@ -299,13 +286,11 @@ TEST(TableTest, ReadRow) {
 TEST(TableTest, CheckAndMutateRow) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, CheckAndMutateRow)
-      .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name, std::string const& row_key,
+      .WillOnce([](std::string const& table_name, std::string const& row_key,
                    Filter const& filter,
                    std::vector<Mutation> const& true_mutations,
                    std::vector<Mutation> const& false_mutations) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_EQ("row", row_key);
         EXPECT_THAT(filter, IsTestFilter());
@@ -327,13 +312,11 @@ TEST(TableTest, CheckAndMutateRow) {
 TEST(TableTest, AsyncCheckAndMutateRow) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
-      .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name, std::string const& row_key,
+      .WillOnce([](std::string const& table_name, std::string const& row_key,
                    Filter const& filter,
                    std::vector<Mutation> const& true_mutations,
                    std::vector<Mutation> const& false_mutations) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_EQ("row", row_key);
         EXPECT_THAT(filter, IsTestFilter());
@@ -356,14 +339,11 @@ TEST(TableTest, AsyncCheckAndMutateRow) {
 
 TEST(TableTest, SampleRows) {
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, SampleRows)
-      .WillOnce(
-          [](std::string const& app_profile_id, std::string const& table_name) {
-            CheckCurrentOptions();
-            EXPECT_EQ(kAppProfileId, app_profile_id);
-            EXPECT_EQ(kTableName, table_name);
-            return PermanentError();
-          });
+  EXPECT_CALL(*mock, SampleRows).WillOnce([](std::string const& table_name) {
+    CheckCurrentOptions();
+    EXPECT_EQ(kTableName, table_name);
+    return PermanentError();
+  });
 
   auto table = TestTable(std::move(mock));
   auto samples = table.SampleRows();
@@ -373,14 +353,12 @@ TEST(TableTest, SampleRows) {
 TEST(TableTest, AsyncSampleRows) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncSampleRows)
-      .WillOnce(
-          [](std::string const& app_profile_id, std::string const& table_name) {
-            CheckCurrentOptions();
-            EXPECT_EQ(kAppProfileId, app_profile_id);
-            EXPECT_EQ(kTableName, table_name);
-            return make_ready_future<StatusOr<std::vector<RowKeySample>>>(
-                PermanentError());
-          });
+      .WillOnce([](std::string const& table_name) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        return make_ready_future<StatusOr<std::vector<RowKeySample>>>(
+            PermanentError());
+      });
 
   auto table = TestTable(std::move(mock));
   auto samples = table.AsyncSampleRows().get();
@@ -392,7 +370,6 @@ TEST(TableTest, ReadModifyWriteRow) {
   EXPECT_CALL(*mock, ReadModifyWriteRow)
       .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.rules(),
                     ElementsAre(MatchRule(TestAppendRule()),
@@ -411,7 +388,6 @@ TEST(TableTest, AsyncReadModifyWriteRow) {
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
       .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.rules(),
                     ElementsAre(MatchRule(TestAppendRule()),
@@ -428,14 +404,12 @@ TEST(TableTest, AsyncReadModifyWriteRow) {
 TEST(TableTest, AsyncReadRows) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name,
+      .WillOnce([](std::string const& table_name,
                    std::function<future<bool>(bigtable::Row)> const& on_row,
                    std::function<void(Status)> const& on_finish,
                    bigtable::RowSet const& row_set, std::int64_t rows_limit,
                    bigtable::Filter const& filter) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_THAT(row_set, IsTestRowSet());
         EXPECT_EQ(RowReader::NO_ROWS_LIMIT, rows_limit);
@@ -471,14 +445,12 @@ TEST(TableTest, AsyncReadRows) {
 TEST(TableTest, AsyncReadRowsWithRowLimit) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name,
+      .WillOnce([](std::string const& table_name,
                    std::function<future<bool>(bigtable::Row)> const& on_row,
                    std::function<void(Status)> const& on_finish,
                    bigtable::RowSet const& row_set, std::int64_t rows_limit,
                    bigtable::Filter const& filter) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_THAT(row_set, IsTestRowSet());
         EXPECT_EQ(42, rows_limit);
@@ -514,7 +486,7 @@ TEST(TableTest, AsyncReadRowsWithRowLimit) {
 TEST(TableTest, AsyncReadRowsAcceptsMoveOnlyTypes) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](Unused, Unused,
+      .WillOnce([](Unused,
                    std::function<future<bool>(bigtable::Row)> const& on_row,
                    std::function<void(Status)> const& on_finish, Unused, Unused,
                    Unused) {
@@ -548,11 +520,9 @@ TEST(TableTest, AsyncReadRowsAcceptsMoveOnlyTypes) {
 TEST(TableTest, AsyncReadRow) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncReadRow)
-      .WillOnce([](std::string const& app_profile_id,
-                   std::string const& table_name, std::string const& row_key,
+      .WillOnce([](std::string const& table_name, std::string const& row_key,
                    bigtable::Filter const& filter) {
         CheckCurrentOptions();
-        EXPECT_EQ(kAppProfileId, app_profile_id);
         EXPECT_EQ(kTableName, table_name);
         EXPECT_EQ("row", row_key);
         EXPECT_THAT(filter, IsTestFilter());

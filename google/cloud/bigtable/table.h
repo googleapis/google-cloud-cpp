@@ -223,7 +223,6 @@ class Table {
   Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id)
       : client_(std::move(client)),
-        app_profile_id_(std::move(app_profile_id)),
         project_id_(client_->project_id()),
         instance_id_(client_->instance_id()),
         table_name_(TableName(project_id_, instance_id_, table_id)),
@@ -236,7 +235,9 @@ class Table {
             MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()),
-        background_threads_(client_->BackgroundThreadsFactory()()) {}
+        background_threads_(client_->BackgroundThreadsFactory()()),
+        options_(Options{}.set<AppProfileIdOption>(std::move(app_profile_id))) {
+  }
 
   /**
    * Constructor with explicit policies.
@@ -364,7 +365,9 @@ class Table {
   }
 
   std::string const& table_name() const { return table_name_; }
-  std::string const& app_profile_id() const { return app_profile_id_; }
+  std::string const& app_profile_id() const {
+    return options_.get<AppProfileIdOption>();
+  }
   std::string const& project_id() const { return project_id_; }
   std::string const& instance_id() const { return instance_id_; }
   std::string const& table_id() const { return table_id_; }
@@ -377,8 +380,15 @@ class Table {
    */
   Table WithNewTarget(std::string project_id, std::string instance_id,
                       std::string table_id) const {
-    return WithNewTarget(std::move(project_id), std::move(instance_id),
-                         app_profile_id_, std::move(table_id));
+    auto table = *this;
+    table.instance_id_ = std::move(instance_id);
+    table.project_id_ = std::move(project_id);
+    table.table_id_ = std::move(table_id);
+    table.table_name_ =
+        TableName(table.project_id_, table.instance_id_, table.table_id_);
+    table.metadata_update_policy_ =
+        MetadataUpdatePolicy(table.table_name_, MetadataParamTypes::TABLE_NAME);
+    return table;
   }
 
   /**
@@ -391,11 +401,11 @@ class Table {
     table.instance_id_ = std::move(instance_id);
     table.project_id_ = std::move(project_id);
     table.table_id_ = std::move(table_id);
-    table.app_profile_id_ = std::move(app_profile_id);
     table.table_name_ =
         TableName(table.project_id_, table.instance_id_, table.table_id_);
     table.metadata_update_policy_ =
         MetadataUpdatePolicy(table.table_name_, MetadataParamTypes::TABLE_NAME);
+    table.options_.set<AppProfileIdOption>(std::move(app_profile_id));
     return table;
   }
 
@@ -904,15 +914,14 @@ class Table {
 
     if (connection_) {
       google::cloud::internal::OptionsSpan span(options_);
-      connection_->AsyncReadRows(app_profile_id_, table_name_,
-                                 std::move(on_row_fn), std::move(on_finish_fn),
-                                 std::move(row_set), rows_limit,
-                                 std::move(filter));
+      connection_->AsyncReadRows(table_name_, std::move(on_row_fn),
+                                 std::move(on_finish_fn), std::move(row_set),
+                                 rows_limit, std::move(filter));
       return;
     }
 
     bigtable_internal::LegacyAsyncRowReader::Create(
-        background_threads_->cq(), client_, app_profile_id_, table_name_,
+        background_threads_->cq(), client_, app_profile_id(), table_name_,
         std::move(on_row_fn), std::move(on_finish_fn), std::move(row_set),
         rows_limit, std::move(filter), clone_rpc_retry_policy(),
         clone_rpc_backoff_policy(), metadata_update_policy_,
@@ -958,8 +967,7 @@ class Table {
   explicit Table(std::shared_ptr<bigtable::DataConnection> conn,
                  std::string project_id, std::string instance_id,
                  std::string table_id, Options options = {})
-      : app_profile_id_(options.get<AppProfileIdOption>()),
-        project_id_(std::move(project_id)),
+      : project_id_(std::move(project_id)),
         instance_id_(std::move(instance_id)),
         table_name_(TableName(project_id_, instance_id_, table_id)),
         table_id_(std::move(table_id)),
@@ -1030,7 +1038,6 @@ class Table {
 
   friend class MutationBatcher;
   std::shared_ptr<DataClient> client_;
-  std::string app_profile_id_;
   std::string project_id_;
   std::string instance_id_;
   std::string table_name_;

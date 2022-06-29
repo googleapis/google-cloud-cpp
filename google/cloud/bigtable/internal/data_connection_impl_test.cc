@@ -32,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace v2 = ::google::bigtable::v2;
+using ::google::cloud::bigtable::AppProfileIdOption;
 using ::google::cloud::bigtable::DataBackoffPolicyOption;
 using ::google::cloud::bigtable::DataLimitedErrorCountRetryPolicy;
 using ::google::cloud::bigtable::DataRetryPolicyOption;
@@ -281,7 +282,7 @@ TEST(DataConnectionTest, CallOptionsOverrideConnectionOptions) {
   auto conn =
       std::make_shared<DataConnectionImpl>(nullptr, mock, std::move(conn_opts));
   internal::OptionsSpan span(call_opts);
-  (void)conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
+  (void)conn->Apply(kTableName, IdempotentMutation("row"));
 }
 
 /**
@@ -313,7 +314,7 @@ TEST(DataConnectionTest, UseConnectionOptionsIfNoCallOptions) {
 
   auto conn =
       std::make_shared<DataConnectionImpl>(nullptr, mock, std::move(conn_opts));
-  (void)conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
+  (void)conn->Apply(kTableName, IdempotentMutation("row"));
 }
 
 TEST(DataConnectionTest, ApplySuccess) {
@@ -326,8 +327,9 @@ TEST(DataConnectionTest, ApplySuccess) {
         return v2::MutateRowResponse{};
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status = conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
+  auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status);
 }
 
@@ -341,8 +343,9 @@ TEST(DataConnectionTest, ApplyPermanentFailure) {
         return PermanentError();
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status = conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
+  auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -362,8 +365,9 @@ TEST(DataConnectionTest, ApplyRetryThenSuccess) {
         return v2::MutateRowResponse{};
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status = conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
+  auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status);
 }
 
@@ -387,9 +391,11 @@ TEST(DataConnectionTest, ApplyRetryExhausted) {
   });
 
   internal::OptionsSpan span(
-      Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
+      Options{}
+          .set<DataBackoffPolicyOption>(std::move(mock_b))
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status = conn->Apply(kAppProfile, kTableName, IdempotentMutation("row"));
+  auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -412,10 +418,11 @@ TEST(DataConnectionTest, ApplyRetryIdempotency) {
   });
 
   internal::OptionsSpan span(
-      Options{}.set<IdempotentMutationPolicyOption>(std::move(mock_i)));
+      Options{}
+          .set<IdempotentMutationPolicyOption>(std::move(mock_i))
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status =
-      conn->Apply(kAppProfile, kTableName, NonIdempotentMutation("row"));
+  auto status = conn->Apply(kTableName, NonIdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -431,9 +438,9 @@ TEST(DataConnectionTest, AsyncApplySuccess) {
         return make_ready_future(make_status_or(v2::MutateRowResponse{}));
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status =
-      conn->AsyncApply(kAppProfile, kTableName, IdempotentMutation("row"));
+  auto status = conn->AsyncApply(kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status.get());
 }
 
@@ -450,9 +457,9 @@ TEST(DataConnectionTest, AsyncApplyPermanentFailure) {
             PermanentError());
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status =
-      conn->AsyncApply(kAppProfile, kTableName, IdempotentMutation("row"));
+  auto status = conn->AsyncApply(kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -478,10 +485,11 @@ TEST(DataConnectionTest, AsyncApplyRetryExhausted) {
   });
 
   internal::OptionsSpan span(
-      Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
+      Options{}
+          .set<DataBackoffPolicyOption>(std::move(mock_b))
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status =
-      conn->AsyncApply(kAppProfile, kTableName, IdempotentMutation("row"));
+  auto status = conn->AsyncApply(kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
 
@@ -507,18 +515,18 @@ TEST(DataConnectionTest, AsyncApplyRetryIdempotency) {
   });
 
   internal::OptionsSpan span(
-      Options{}.set<IdempotentMutationPolicyOption>(std::move(mock_i)));
+      Options{}
+          .set<IdempotentMutationPolicyOption>(std::move(mock_i))
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status =
-      conn->AsyncApply(kAppProfile, kTableName, NonIdempotentMutation("row"));
+  auto status = conn->AsyncApply(kTableName, NonIdempotentMutation("row"));
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(DataConnectionTest, BulkApplyEmpty) {
   auto mock = std::make_shared<MockBigtableStub>();
   auto conn = TestConnection(std::move(mock));
-  auto actual =
-      conn->BulkApply(kAppProfile, kTableName, bigtable::BulkMutation());
+  auto actual = conn->BulkApply(kTableName, bigtable::BulkMutation());
   CheckFailedMutations(actual, {});
 }
 
@@ -541,8 +549,9 @@ TEST(DataConnectionTest, BulkApplySuccess) {
         return stream;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto actual = conn->BulkApply(kAppProfile, kTableName, std::move(mut));
+  auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, {});
 }
 
@@ -585,8 +594,9 @@ TEST(DataConnectionTest, BulkApplyRetryMutationPolicy) {
         return stream;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto actual = conn->BulkApply(kAppProfile, kTableName, std::move(mut));
+  auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
 }
 
@@ -620,8 +630,9 @@ TEST(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
         return stream;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto actual = conn->BulkApply(kAppProfile, kTableName, std::move(mut));
+  auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, {});
 }
 
@@ -650,9 +661,11 @@ TEST(DataConnectionTest, BulkApplyStreamRetryExhausted) {
   });
 
   internal::OptionsSpan span(
-      Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
+      Options{}
+          .set<DataBackoffPolicyOption>(std::move(mock_b))
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto actual = conn->BulkApply(kAppProfile, kTableName, std::move(mut));
+  auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
 }
 
@@ -671,8 +684,9 @@ TEST(DataConnectionTest, BulkApplyStreamPermanentError) {
         return stream;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto actual = conn->BulkApply(kAppProfile, kTableName, std::move(mut));
+  auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
 }
 
@@ -699,9 +713,11 @@ TEST(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
   EXPECT_CALL(*mock_b, clone).Times(0);
 
   internal::OptionsSpan span(
-      Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
+      Options{}
+          .set<DataBackoffPolicyOption>(std::move(mock_b))
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  (void)conn->BulkApply(kAppProfile, kTableName, std::move(mut));
+  (void)conn->BulkApply(kTableName, std::move(mut));
 }
 
 // The `AsyncBulkApplier` is tested extensively in `async_bulk_apply_test.cc`.
@@ -721,8 +737,9 @@ TEST(DataConnectionTest, AsyncBulkApply) {
         return absl::make_unique<ErrorStream>(PermanentError());
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto actual = conn->AsyncBulkApply(kAppProfile, kTableName, std::move(mut));
+  auto actual = conn->AsyncBulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual.get(), expected);
 }
 
@@ -744,9 +761,9 @@ TEST(DataConnectionTest, ReadRows) {
         return stream;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto reader =
-      conn->ReadRows(kAppProfile, kTableName, TestRowSet(), 42, TestFilter());
+  auto reader = conn->ReadRows(kTableName, TestRowSet(), 42, TestFilter());
   EXPECT_EQ(reader.begin(), reader.end());
 }
 
@@ -766,8 +783,9 @@ TEST(DataConnectionTest, ReadRowEmpty) {
         return stream;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto resp = conn->ReadRow(kAppProfile, kTableName, "row", TestFilter());
+  auto resp = conn->ReadRow(kTableName, "row", TestFilter());
   ASSERT_STATUS_OK(resp);
   EXPECT_FALSE(resp->first);
 }
@@ -798,8 +816,9 @@ TEST(DataConnectionTest, ReadRowSuccess) {
         return stream;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto resp = conn->ReadRow(kAppProfile, kTableName, "row", TestFilter());
+  auto resp = conn->ReadRow(kTableName, "row", TestFilter());
   ASSERT_STATUS_OK(resp);
   EXPECT_TRUE(resp->first);
   EXPECT_EQ("row", resp->second.row_key());
@@ -821,8 +840,9 @@ TEST(DataConnectionTest, ReadRowFailure) {
         return stream;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto resp = conn->ReadRow(kAppProfile, kTableName, "row", TestFilter());
+  auto resp = conn->ReadRow(kTableName, "row", TestFilter());
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -865,14 +885,15 @@ TEST(DataConnectionTest, CheckAndMutateRowSuccess) {
         return resp;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto predicate = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
-                                           TestFilter(), {t1, t2}, {f1, f2});
+  auto predicate = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
+                                           {t1, t2}, {f1, f2});
   ASSERT_STATUS_OK(predicate);
   EXPECT_EQ(*predicate, bigtable::MutationBranch::kPredicateMatched);
 
-  predicate = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
-                                      TestFilter(), {t1, t2}, {f1, f2});
+  predicate = conn->CheckAndMutateRow(kTableName, "row", TestFilter(), {t1, t2},
+                                      {f1, f2});
   ASSERT_STATUS_OK(predicate);
   EXPECT_EQ(*predicate, bigtable::MutationBranch::kPredicateNotMatched);
 }
@@ -908,10 +929,12 @@ TEST(DataConnectionTest, CheckAndMutateRowIdempotency) {
   });
 
   internal::OptionsSpan span(
-      Options{}.set<IdempotentMutationPolicyOption>(std::move(mock_i)));
+      Options{}
+          .set<IdempotentMutationPolicyOption>(std::move(mock_i))
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
-                                        TestFilter(), {t1, t2}, {f1, f2});
+  auto status = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
+                                        {t1, t2}, {f1, f2});
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -936,9 +959,10 @@ TEST(DataConnectionTest, CheckAndMutateRowPermanentError) {
         return PermanentError();
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
-                                        TestFilter(), {t1, t2}, {f1, f2});
+  auto status = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
+                                        {t1, t2}, {f1, f2});
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -975,10 +999,11 @@ TEST(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
       Options{}
           .set<DataBackoffPolicyOption>(std::move(mock_b))
           .set<IdempotentMutationPolicyOption>(
-              bigtable::AlwaysRetryMutationPolicy().clone()));
+              bigtable::AlwaysRetryMutationPolicy().clone())
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status = conn->CheckAndMutateRow(kAppProfile, kTableName, "row",
-                                        TestFilter(), {t1, t2}, {f1, f2});
+  auto status = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
+                                        {t1, t2}, {f1, f2});
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -1023,16 +1048,16 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
         return make_ready_future(make_status_or(resp));
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto predicate =
-      conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row", TestFilter(),
-                                   {t1, t2}, {f1, f2})
-          .get();
+  auto predicate = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
+                                                {t1, t2}, {f1, f2})
+                       .get();
   ASSERT_STATUS_OK(predicate);
   EXPECT_EQ(*predicate, bigtable::MutationBranch::kPredicateMatched);
 
-  predicate = conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row",
-                                           TestFilter(), {t1, t2}, {f1, f2})
+  predicate = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
+                                           {t1, t2}, {f1, f2})
                   .get();
   ASSERT_STATUS_OK(predicate);
   EXPECT_EQ(*predicate, bigtable::MutationBranch::kPredicateNotMatched);
@@ -1071,10 +1096,12 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowIdempotency) {
   });
 
   internal::OptionsSpan span(
-      Options{}.set<IdempotentMutationPolicyOption>(std::move(mock_i)));
+      Options{}
+          .set<IdempotentMutationPolicyOption>(std::move(mock_i))
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status = conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row",
-                                             TestFilter(), {t1, t2}, {f1, f2});
+  auto status = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
+                                             {t1, t2}, {f1, f2});
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
 
@@ -1101,9 +1128,10 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
             PermanentError());
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status = conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row",
-                                             TestFilter(), {t1, t2}, {f1, f2});
+  auto status = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
+                                             {t1, t2}, {f1, f2});
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -1142,10 +1170,11 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
       Options{}
           .set<DataBackoffPolicyOption>(std::move(mock_b))
           .set<IdempotentMutationPolicyOption>(
-              bigtable::AlwaysRetryMutationPolicy().clone()));
+              bigtable::AlwaysRetryMutationPolicy().clone())
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto status = conn->AsyncCheckAndMutateRow(kAppProfile, kTableName, "row",
-                                             TestFilter(), {t1, t2}, {f1, f2});
+  auto status = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
+                                             {t1, t2}, {f1, f2});
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
 
@@ -1168,9 +1197,11 @@ TEST(DataConnectionTest, SampleRowsSuccess) {
   EXPECT_CALL(mock_setup, Call).Times(1);
 
   internal::OptionsSpan span(
-      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+      Options{}
+          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto samples = conn->SampleRows(kAppProfile, kTableName);
+  auto samples = conn->SampleRows(kTableName);
   ASSERT_STATUS_OK(samples);
   auto actual = RowKeySampleVectors(*samples);
   EXPECT_THAT(actual.offset_bytes, ElementsAre(11, 22));
@@ -1205,9 +1236,11 @@ TEST(DataConnectionTest, SampleRowsRetryResetsSamples) {
   EXPECT_CALL(mock_setup, Call).Times(2);
 
   internal::OptionsSpan span(
-      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+      Options{}
+          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto samples = conn->SampleRows(kAppProfile, kTableName);
+  auto samples = conn->SampleRows(kTableName);
   ASSERT_STATUS_OK(samples);
   auto actual = RowKeySampleVectors(*samples);
   EXPECT_THAT(actual.offset_bytes, ElementsAre(22));
@@ -1239,9 +1272,10 @@ TEST(DataConnectionTest, SampleRowsRetryExhausted) {
   internal::OptionsSpan span(
       Options{}
           .set<DataBackoffPolicyOption>(std::move(mock_b))
-          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto samples = conn->SampleRows(kAppProfile, kTableName);
+  auto samples = conn->SampleRows(kTableName);
   EXPECT_THAT(samples, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -1261,9 +1295,11 @@ TEST(DataConnectionTest, SampleRowsPermanentError) {
   EXPECT_CALL(mock_setup, Call).Times(1);
 
   internal::OptionsSpan span(
-      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+      Options{}
+          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
+          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto samples = conn->SampleRows(kAppProfile, kTableName);
+  auto samples = conn->SampleRows(kTableName);
   EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -1281,8 +1317,9 @@ TEST(DataConnectionTest, AsyncSampleRows) {
         return absl::make_unique<ErrorStream>(PermanentError());
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto samples = conn->AsyncSampleRows(kAppProfile, kTableName).get();
+  auto samples = conn->AsyncSampleRows(kTableName).get();
   EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -1496,8 +1533,9 @@ TEST(DataConnectionTest, AsyncReadRows) {
     EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
   });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  conn->AsyncReadRows(kAppProfile, kTableName, on_row.AsStdFunction(),
+  conn->AsyncReadRows(kTableName, on_row.AsStdFunction(),
                       on_finish.AsStdFunction(), TestRowSet(), 42,
                       TestFilter());
 }
@@ -1526,9 +1564,9 @@ TEST(DataConnectionTest, AsyncReadRowEmpty) {
         return stream;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto resp =
-      conn->AsyncReadRow(kAppProfile, kTableName, "row", TestFilter()).get();
+  auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   ASSERT_STATUS_OK(resp);
   EXPECT_FALSE(resp->first);
 }
@@ -1568,9 +1606,9 @@ TEST(DataConnectionTest, AsyncReadRowSuccess) {
         return stream;
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto resp =
-      conn->AsyncReadRow(kAppProfile, kTableName, "row", TestFilter()).get();
+  auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   ASSERT_STATUS_OK(resp);
   EXPECT_TRUE(resp->first);
   EXPECT_EQ("row", resp->second.row_key());
@@ -1592,9 +1630,9 @@ TEST(DataConnectionTest, AsyncReadRowFailure) {
         return absl::make_unique<ErrorStream>(PermanentError());
       });
 
+  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
-  auto resp =
-      conn->AsyncReadRow(kAppProfile, kTableName, "row", TestFilter()).get();
+  auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 

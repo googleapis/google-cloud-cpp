@@ -52,44 +52,39 @@ class DataConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status Apply(std::string const& app_profile_id,
-                       std::string const& table_name, SingleRowMutation mut);
+  virtual Status Apply(std::string const& table_name, SingleRowMutation mut);
 
-  virtual future<Status> AsyncApply(std::string const& app_profile_id,
-                                    std::string const& table_name,
+  virtual future<Status> AsyncApply(std::string const& table_name,
                                     SingleRowMutation mut);
 
-  virtual std::vector<FailedMutation> BulkApply(
-      std::string const& app_profile_id, std::string const& table_name,
-      BulkMutation mut);
+  virtual std::vector<FailedMutation> BulkApply(std::string const& table_name,
+                                                BulkMutation mut);
 
   virtual future<std::vector<FailedMutation>> AsyncBulkApply(
-      std::string const& app_profile_id, std::string const& table_name,
-      BulkMutation mut);
+      std::string const& table_name, BulkMutation mut);
 
-  virtual RowReader ReadRows(std::string const& app_profile_id,
-                             std::string const& table_name, RowSet row_set,
+  virtual RowReader ReadRows(std::string const& table_name, RowSet row_set,
                              std::int64_t rows_limit, Filter filter);
 
-  virtual StatusOr<std::pair<bool, Row>> ReadRow(
-      std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, Filter filter);
+  virtual StatusOr<std::pair<bool, Row>> ReadRow(std::string const& table_name,
+                                                 std::string row_key,
+                                                 Filter filter);
 
   virtual StatusOr<MutationBranch> CheckAndMutateRow(
-      std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+      std::string const& table_name, std::string row_key, Filter filter,
+      std::vector<Mutation> true_mutations,
       std::vector<Mutation> false_mutations);
 
   virtual future<StatusOr<MutationBranch>> AsyncCheckAndMutateRow(
-      std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+      std::string const& table_name, std::string row_key, Filter filter,
+      std::vector<Mutation> true_mutations,
       std::vector<Mutation> false_mutations);
 
   virtual StatusOr<std::vector<RowKeySample>> SampleRows(
-      std::string const& app_profile_id, std::string const& table_name);
+      std::string const& table_name);
 
   virtual future<StatusOr<std::vector<RowKeySample>>> AsyncSampleRows(
-      std::string const& app_profile_id, std::string const& table_name);
+      std::string const& table_name);
 
   virtual StatusOr<Row> ReadModifyWriteRow(
       google::bigtable::v2::ReadModifyWriteRowRequest request);
@@ -97,16 +92,14 @@ class DataConnection {
   virtual future<StatusOr<Row>> AsyncReadModifyWriteRow(
       google::bigtable::v2::ReadModifyWriteRowRequest request);
 
-  virtual void AsyncReadRows(std::string const& app_profile_id,
-                             std::string const& table_name,
+  virtual void AsyncReadRows(std::string const& table_name,
                              std::function<future<bool>(Row)> on_row,
                              std::function<void(Status)> on_finish,
                              RowSet row_set, std::int64_t rows_limit,
                              Filter filter);
 
   virtual future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(
-      std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, Filter filter);
+      std::string const& table_name, std::string row_key, Filter filter);
 };
 
 /**
