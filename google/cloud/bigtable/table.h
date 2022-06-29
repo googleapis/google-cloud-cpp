@@ -24,6 +24,7 @@
 #include "google/cloud/bigtable/internal/legacy_async_row_reader.h"
 #include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/row_key_sample.h"
@@ -34,10 +35,10 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/meta/type_traits.h"
-#include "options.h"
 #include <string>
 #include <vector>
 
