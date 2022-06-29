@@ -82,6 +82,30 @@ class RecommenderAuth : public RecommenderStub {
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
           request) override;
 
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  GetRecommenderConfig(
+      grpc::ClientContext& context,
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  UpdateRecommenderConfig(
+      grpc::ClientContext& context,
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  GetInsightTypeConfig(
+      grpc::ClientContext& context,
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  UpdateInsightTypeConfig(
+      grpc::ClientContext& context,
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+          request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<RecommenderStub> child_;

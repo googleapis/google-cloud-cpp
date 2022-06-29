@@ -78,6 +78,30 @@ class RecommenderMetadata : public RecommenderStub {
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
           request) override;
 
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  GetRecommenderConfig(
+      grpc::ClientContext& context,
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  UpdateRecommenderConfig(
+      grpc::ClientContext& context,
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  GetInsightTypeConfig(
+      grpc::ClientContext& context,
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  UpdateInsightTypeConfig(
+      grpc::ClientContext& context,
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+          request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

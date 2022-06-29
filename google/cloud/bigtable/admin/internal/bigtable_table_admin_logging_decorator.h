@@ -55,6 +55,12 @@ class BigtableTableAdminLogging : public BigtableTableAdminStub {
       grpc::ClientContext& context,
       google::bigtable::admin::v2::DeleteTableRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUndeleteTable(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::bigtable::admin::v2::UndeleteTableRequest const& request)
+      override;
+
   StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       grpc::ClientContext& context,
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request)

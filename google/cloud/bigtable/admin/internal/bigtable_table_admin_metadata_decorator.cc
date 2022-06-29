@@ -65,6 +65,15 @@ Status BigtableTableAdminMetadata::DeleteTable(
   return child_->DeleteTable(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminMetadata::AsyncUndeleteTable(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncUndeleteTable(cq, std::move(context), request);
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminMetadata::ModifyColumnFamilies(
     grpc::ClientContext& context,

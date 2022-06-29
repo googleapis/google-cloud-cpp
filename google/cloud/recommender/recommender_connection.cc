@@ -86,6 +86,30 @@ RecommenderConnection::MarkRecommendationFailed(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderConnection::GetRecommenderConfig(
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderConnection::UpdateRecommenderConfig(
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderConnection::GetInsightTypeConfig(
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderConnection::UpdateInsightTypeConfig(
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -104,6 +104,46 @@ RecommenderAuth::MarkRecommendationFailed(
   return child_->MarkRecommendationFailed(context, request);
 }
 
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderAuth::GetRecommenderConfig(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetRecommenderConfig(context, request);
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderAuth::UpdateRecommenderConfig(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateRecommenderConfig(context, request);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderAuth::GetInsightTypeConfig(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetInsightTypeConfig(context, request);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderAuth::UpdateInsightTypeConfig(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInsightTypeConfig(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal
 }  // namespace cloud

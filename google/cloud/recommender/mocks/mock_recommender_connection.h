@@ -94,6 +94,34 @@ class MockRecommenderConnection : public recommender::RecommenderConnection {
       (google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::recommender::v1::RecommenderConfig>,
+      GetRecommenderConfig,
+      (google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::recommender::v1::RecommenderConfig>,
+      UpdateRecommenderConfig,
+      (google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::recommender::v1::InsightTypeConfig>,
+      GetInsightTypeConfig,
+      (google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::recommender::v1::InsightTypeConfig>,
+      UpdateInsightTypeConfig,
+      (google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

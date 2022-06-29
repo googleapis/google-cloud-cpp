@@ -87,6 +87,30 @@ class DefaultRecommenderConnectionIdempotencyPolicy
       override {
     return Idempotency::kNonIdempotent;
   }
+
+  Idempotency GetRecommenderConfig(
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency UpdateRecommenderConfig(
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency GetInsightTypeConfig(
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency UpdateInsightTypeConfig(
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
 };
 }  // namespace
 

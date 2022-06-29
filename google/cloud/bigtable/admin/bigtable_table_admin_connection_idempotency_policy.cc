@@ -63,6 +63,11 @@ class DefaultBigtableTableAdminConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency UndeleteTable(
+      google::bigtable::admin::v2::UndeleteTableRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency ModifyColumnFamilies(
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&)
       override {

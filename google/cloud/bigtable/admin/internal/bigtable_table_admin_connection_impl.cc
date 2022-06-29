@@ -114,6 +114,34 @@ Status BigtableTableAdminConnectionImpl::DeleteTable(
       request, __func__);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnectionImpl::UndeleteTable(
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::bigtable::admin::v2::Table>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+        return stub->AsyncUndeleteTable(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::Table>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UndeleteTable(request), polling_policy(), __func__);
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminConnectionImpl::ModifyColumnFamilies(
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {

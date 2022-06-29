@@ -59,6 +59,14 @@ Status BigtableTableAdminConnection::DeleteTable(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnection::UndeleteTable(
+    google::bigtable::admin::v2::UndeleteTableRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Table>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminConnection::ModifyColumnFamilies(
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&) {

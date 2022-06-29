@@ -95,6 +95,26 @@ class RecommenderConnection {
   MarkRecommendationFailed(
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
           request);
+
+  virtual StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  GetRecommenderConfig(
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  UpdateRecommenderConfig(
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  GetInsightTypeConfig(
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  UpdateInsightTypeConfig(
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+          request);
 };
 
 /**

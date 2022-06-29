@@ -81,6 +81,20 @@ Status BigtableTableAdminLogging::DeleteTable(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminLogging::AsyncUndeleteTable(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+        return child_->AsyncUndeleteTable(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminLogging::ModifyColumnFamilies(
     grpc::ClientContext& context,

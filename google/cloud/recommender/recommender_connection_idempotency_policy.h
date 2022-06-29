@@ -66,6 +66,22 @@ class RecommenderConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency MarkRecommendationFailed(
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
           request) = 0;
+
+  virtual google::cloud::Idempotency GetRecommenderConfig(
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency UpdateRecommenderConfig(
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency GetInsightTypeConfig(
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency UpdateInsightTypeConfig(
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<RecommenderConnectionIdempotencyPolicy>
