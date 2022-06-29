@@ -25,6 +25,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
+#include "absl/time/time.h"
 #include <functional>
 #include <future>
 #include <set>
