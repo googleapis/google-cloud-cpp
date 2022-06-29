@@ -134,6 +134,62 @@ DefaultRecommenderStub::MarkRecommendationFailed(
   return response;
 }
 
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+DefaultRecommenderStub::GetRecommenderConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+        request) {
+  google::cloud::recommender::v1::RecommenderConfig response;
+  auto status =
+      grpc_stub_->GetRecommenderConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+DefaultRecommenderStub::UpdateRecommenderConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+        request) {
+  google::cloud::recommender::v1::RecommenderConfig response;
+  auto status =
+      grpc_stub_->UpdateRecommenderConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+DefaultRecommenderStub::GetInsightTypeConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+        request) {
+  google::cloud::recommender::v1::InsightTypeConfig response;
+  auto status =
+      grpc_stub_->GetInsightTypeConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+DefaultRecommenderStub::UpdateInsightTypeConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+        request) {
+  google::cloud::recommender::v1::InsightTypeConfig response;
+  auto status =
+      grpc_stub_->UpdateInsightTypeConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal
 }  // namespace cloud

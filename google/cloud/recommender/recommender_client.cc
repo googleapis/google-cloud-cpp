@@ -198,6 +198,79 @@ RecommenderClient::MarkRecommendationFailed(
   return connection_->MarkRecommendationFailed(request);
 }
 
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderClient::GetRecommenderConfig(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recommender::v1::GetRecommenderConfigRequest request;
+  request.set_name(name);
+  return connection_->GetRecommenderConfig(request);
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderClient::GetRecommenderConfig(
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetRecommenderConfig(request);
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderClient::UpdateRecommenderConfig(
+    google::cloud::recommender::v1::RecommenderConfig const& recommender_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recommender::v1::UpdateRecommenderConfigRequest request;
+  *request.mutable_recommender_config() = recommender_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateRecommenderConfig(request);
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderClient::UpdateRecommenderConfig(
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRecommenderConfig(request);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderClient::GetInsightTypeConfig(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recommender::v1::GetInsightTypeConfigRequest request;
+  request.set_name(name);
+  return connection_->GetInsightTypeConfig(request);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderClient::GetInsightTypeConfig(
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetInsightTypeConfig(request);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderClient::UpdateInsightTypeConfig(
+    google::cloud::recommender::v1::InsightTypeConfig const&
+        insight_type_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recommender::v1::UpdateInsightTypeConfigRequest request;
+  *request.mutable_insight_type_config() = insight_type_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateInsightTypeConfig(request);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderClient::UpdateInsightTypeConfig(
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInsightTypeConfig(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender
 }  // namespace cloud

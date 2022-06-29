@@ -110,7 +110,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
   /// [google.cloud.recommender.v1.ListInsightsRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L234}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L298}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -122,14 +122,14 @@ class RecommenderClient {
   /// recommender.*.list IAM permission for the specified insight type.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::ListInsightsRequest,google/cloud/recommender/v1/recommender_service.proto#L234}
+  /// @googleapis_link{google::cloud::recommender::v1::ListInsightsRequest,google/cloud/recommender/v1/recommender_service.proto#L298}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
   /// [google.cloud.recommender.v1.ListInsightsRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L234}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L298}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -148,7 +148,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
   /// [google.cloud.recommender.v1.GetInsightRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L305}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L369}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -160,14 +160,14 @@ class RecommenderClient {
   /// for the specified insight type.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::GetInsightRequest,google/cloud/recommender/v1/recommender_service.proto#L305}
+  /// @googleapis_link{google::cloud::recommender::v1::GetInsightRequest,google/cloud/recommender/v1/recommender_service.proto#L369}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
   /// [google.cloud.recommender.v1.GetInsightRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L305}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L369}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -185,8 +185,8 @@ class RecommenderClient {
   ///
   /// @param name  Required. Name of the insight.
   /// @param state_metadata  Optional. State properties user wish to include
-  /// with this state.  Full replace of the
-  ///  current state_metadata.
+  /// with this state.  Full
+  ///  replace of the current state_metadata.
   /// @param etag  Required. Fingerprint of the Insight. Provides optimistic
   /// locking.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -195,7 +195,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkInsightAcceptedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L316}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L380}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -213,14 +213,14 @@ class RecommenderClient {
   /// the recommender.*.update IAM permission for the specified insight.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::MarkInsightAcceptedRequest,google/cloud/recommender/v1/recommender_service.proto#L316}
+  /// @googleapis_link{google::cloud::recommender::v1::MarkInsightAcceptedRequest,google/cloud/recommender/v1/recommender_service.proto#L380}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkInsightAcceptedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L316}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L380}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -250,7 +250,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.ListRecommendationsRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L334}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L399}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -292,7 +292,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.ListRecommendationsRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L334}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L399}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -305,14 +305,14 @@ class RecommenderClient {
   /// recommender.*.list IAM permission for the specified recommender.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::ListRecommendationsRequest,google/cloud/recommender/v1/recommender_service.proto#L334}
+  /// @googleapis_link{google::cloud::recommender::v1::ListRecommendationsRequest,google/cloud/recommender/v1/recommender_service.proto#L399}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.ListRecommendationsRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L334}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L399}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -332,7 +332,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.GetRecommendationRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L405}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L470}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -344,14 +344,14 @@ class RecommenderClient {
   /// IAM permission for the specified recommender.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::GetRecommendationRequest,google/cloud/recommender/v1/recommender_service.proto#L405}
+  /// @googleapis_link{google::cloud::recommender::v1::GetRecommendationRequest,google/cloud/recommender/v1/recommender_service.proto#L470}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.GetRecommendationRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L405}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L470}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -386,7 +386,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationClaimedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L416}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L481}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -410,14 +410,14 @@ class RecommenderClient {
   /// recommender.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationClaimedRequest,google/cloud/recommender/v1/recommender_service.proto#L416}
+  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationClaimedRequest,google/cloud/recommender/v1/recommender_service.proto#L481}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationClaimedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L416}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L481}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -454,7 +454,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationSucceededRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L436}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L501}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -478,14 +478,14 @@ class RecommenderClient {
   /// recommender.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationSucceededRequest,google/cloud/recommender/v1/recommender_service.proto#L436}
+  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationSucceededRequest,google/cloud/recommender/v1/recommender_service.proto#L501}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationSucceededRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L436}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L501}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -522,7 +522,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationFailedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L456}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L521}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -546,20 +546,196 @@ class RecommenderClient {
   /// recommender.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationFailedRequest,google/cloud/recommender/v1/recommender_service.proto#L456}
+  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationFailedRequest,google/cloud/recommender/v1/recommender_service.proto#L521}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationFailedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L456}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L521}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   StatusOr<google::cloud::recommender::v1::Recommendation>
   MarkRecommendationFailed(
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
+          request,
+      Options opts = {});
+
+  ///
+  /// Gets the requested Recommender Config. There is only one instance of the
+  /// config for each Recommender.
+  ///
+  /// @param name  Required. Name of the Recommendation Config to get.
+  ///  Acceptable formats:
+  ///  * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`
+  ///  * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`
+  ///  * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::recommender::v1::RecommenderConfig,google/cloud/recommender/v1/recommender_config.proto#L32}
+  ///
+  /// [google.cloud.recommender.v1.GetRecommenderConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L541}
+  /// [google.cloud.recommender.v1.RecommenderConfig]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_config.proto#L32}
+  ///
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  GetRecommenderConfig(std::string const& name, Options opts = {});
+
+  ///
+  /// Gets the requested Recommender Config. There is only one instance of the
+  /// config for each Recommender.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::recommender::v1::GetRecommenderConfigRequest,google/cloud/recommender/v1/recommender_service.proto#L541}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::recommender::v1::RecommenderConfig,google/cloud/recommender/v1/recommender_config.proto#L32}
+  ///
+  /// [google.cloud.recommender.v1.GetRecommenderConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L541}
+  /// [google.cloud.recommender.v1.RecommenderConfig]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_config.proto#L32}
+  ///
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  GetRecommenderConfig(
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+          request,
+      Options opts = {});
+
+  ///
+  /// Updates a Recommender Config. This will create a new revision of the
+  /// config.
+  ///
+  /// @param recommender_config  Required. The RecommenderConfig to update.
+  /// @param update_mask  The list of fields to be updated.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::recommender::v1::RecommenderConfig,google/cloud/recommender/v1/recommender_config.proto#L32}
+  ///
+  /// [google.cloud.recommender.v1.UpdateRecommenderConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L560}
+  /// [google.cloud.recommender.v1.RecommenderConfig]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_config.proto#L32}
+  ///
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  UpdateRecommenderConfig(
+      google::cloud::recommender::v1::RecommenderConfig const&
+          recommender_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  ///
+  /// Updates a Recommender Config. This will create a new revision of the
+  /// config.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::recommender::v1::UpdateRecommenderConfigRequest,google/cloud/recommender/v1/recommender_service.proto#L560}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::recommender::v1::RecommenderConfig,google/cloud/recommender/v1/recommender_config.proto#L32}
+  ///
+  /// [google.cloud.recommender.v1.UpdateRecommenderConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L560}
+  /// [google.cloud.recommender.v1.RecommenderConfig]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_config.proto#L32}
+  ///
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  UpdateRecommenderConfig(
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+          request,
+      Options opts = {});
+
+  ///
+  /// Gets the requested InsightTypeConfig. There is only one instance of the
+  /// config for each InsightType.
+  ///
+  /// @param name  Required. Name of the InsightTypeConfig to get.
+  ///  Acceptable formats:
+  ///  * `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config`
+  ///  * `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config`
+  ///  * `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::recommender::v1::InsightTypeConfig,google/cloud/recommender/v1/insight_type_config.proto#L32}
+  ///
+  /// [google.cloud.recommender.v1.GetInsightTypeConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L574}
+  /// [google.cloud.recommender.v1.InsightTypeConfig]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/insight_type_config.proto#L32}
+  ///
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  GetInsightTypeConfig(std::string const& name, Options opts = {});
+
+  ///
+  /// Gets the requested InsightTypeConfig. There is only one instance of the
+  /// config for each InsightType.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::recommender::v1::GetInsightTypeConfigRequest,google/cloud/recommender/v1/recommender_service.proto#L574}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::recommender::v1::InsightTypeConfig,google/cloud/recommender/v1/insight_type_config.proto#L32}
+  ///
+  /// [google.cloud.recommender.v1.GetInsightTypeConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L574}
+  /// [google.cloud.recommender.v1.InsightTypeConfig]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/insight_type_config.proto#L32}
+  ///
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  GetInsightTypeConfig(
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+          request,
+      Options opts = {});
+
+  ///
+  /// Updates an InsightTypeConfig change. This will create a new revision of
+  /// the config.
+  ///
+  /// @param insight_type_config  Required. The InsightTypeConfig to update.
+  /// @param update_mask  The list of fields to be updated.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::recommender::v1::InsightTypeConfig,google/cloud/recommender/v1/insight_type_config.proto#L32}
+  ///
+  /// [google.cloud.recommender.v1.UpdateInsightTypeConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L593}
+  /// [google.cloud.recommender.v1.InsightTypeConfig]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/insight_type_config.proto#L32}
+  ///
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  UpdateInsightTypeConfig(
+      google::cloud::recommender::v1::InsightTypeConfig const&
+          insight_type_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  ///
+  /// Updates an InsightTypeConfig change. This will create a new revision of
+  /// the config.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::recommender::v1::UpdateInsightTypeConfigRequest,google/cloud/recommender/v1/recommender_service.proto#L593}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::recommender::v1::InsightTypeConfig,google/cloud/recommender/v1/insight_type_config.proto#L32}
+  ///
+  /// [google.cloud.recommender.v1.UpdateInsightTypeConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L593}
+  /// [google.cloud.recommender.v1.InsightTypeConfig]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/insight_type_config.proto#L32}
+  ///
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  UpdateInsightTypeConfig(
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
           request,
       Options opts = {});
 

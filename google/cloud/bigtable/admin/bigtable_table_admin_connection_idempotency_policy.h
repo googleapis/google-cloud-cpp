@@ -50,6 +50,9 @@ class BigtableTableAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteTable(
       google::bigtable::admin::v2::DeleteTableRequest const& request) = 0;
 
+  virtual google::cloud::Idempotency UndeleteTable(
+      google::bigtable::admin::v2::UndeleteTableRequest const& request) = 0;
+
   virtual google::cloud::Idempotency ModifyColumnFamilies(
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&
           request) = 0;

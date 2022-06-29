@@ -64,6 +64,10 @@ class BigtableTableAdminConnectionImpl
   Status DeleteTable(
       google::bigtable::admin::v2::DeleteTableRequest const& request) override;
 
+  future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
+      google::bigtable::admin::v2::UndeleteTableRequest const& request)
+      override;
+
   StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request)
       override;

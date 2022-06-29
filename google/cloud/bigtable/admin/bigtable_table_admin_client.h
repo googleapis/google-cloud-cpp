@@ -112,7 +112,7 @@ class BigtableTableAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
   ///
   /// [google.bigtable.admin.v2.CreateTableRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L408}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L421}
   /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
   ///
@@ -126,14 +126,14 @@ class BigtableTableAdminClient {
   /// specified in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::CreateTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L408}
+  /// @googleapis_link{google::bigtable::admin::v2::CreateTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L421}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
   ///
   /// [google.bigtable.admin.v2.CreateTableRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L408}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L421}
   /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
   ///
@@ -153,7 +153,7 @@ class BigtableTableAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
   ///
   /// [google.bigtable.admin.v2.ListTablesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L510}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L523}
   /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
   ///
@@ -164,14 +164,14 @@ class BigtableTableAdminClient {
   /// Lists all tables served from a specified instance.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::ListTablesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L510}
+  /// @googleapis_link{google::bigtable::admin::v2::ListTablesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L523}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
   ///
   /// [google.bigtable.admin.v2.ListTablesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L510}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L523}
   /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
   ///
@@ -191,7 +191,7 @@ class BigtableTableAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
   ///
   /// [google.bigtable.admin.v2.GetTableRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L553}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L566}
   /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
   ///
@@ -202,14 +202,14 @@ class BigtableTableAdminClient {
   /// Gets metadata information about the specified table.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::GetTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L553}
+  /// @googleapis_link{google::bigtable::admin::v2::GetTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L566}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
   ///
   /// [google.bigtable.admin.v2.GetTableRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L553}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L566}
   /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
   ///
@@ -227,7 +227,7 @@ class BigtableTableAdminClient {
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DeleteTableRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L571}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L584}
   ///
   Status DeleteTable(std::string const& name, Options opts = {});
 
@@ -235,15 +235,53 @@ class BigtableTableAdminClient {
   /// Permanently deletes a specified table and all of its data.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::DeleteTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L571}
+  /// @googleapis_link{google::bigtable::admin::v2::DeleteTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L584}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DeleteTableRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L571}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L584}
   ///
   Status DeleteTable(
       google::bigtable::admin::v2::DeleteTableRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Restores a specified table which was accidentally deleted.
+  ///
+  /// @param name  Required. The unique name of the table to be restored.
+  ///  Values are of the form
+  ///  `projects/{project}/instances/{instance}/tables/{table}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
+  ///
+  /// [google.bigtable.admin.v2.UndeleteTableRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L598}
+  /// [google.bigtable.admin.v2.Table]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
+  ///
+  future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Restores a specified table which was accidentally deleted.
+  ///
+  /// @param request
+  /// @googleapis_link{google::bigtable::admin::v2::UndeleteTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L598}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
+  ///
+  /// [google.bigtable.admin.v2.UndeleteTableRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L598}
+  /// [google.bigtable.admin.v2.Table]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
+  ///
+  future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
+      google::bigtable::admin::v2::UndeleteTableRequest const& request,
       Options opts = {});
 
   ///
@@ -267,7 +305,7 @@ class BigtableTableAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
   ///
   /// [google.bigtable.admin.v2.ModifyColumnFamiliesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L585}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L625}
   /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
   ///
@@ -284,14 +322,14 @@ class BigtableTableAdminClient {
   /// where only some modifications have taken effect.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::ModifyColumnFamiliesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L585}
+  /// @googleapis_link{google::bigtable::admin::v2::ModifyColumnFamiliesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L625}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
   ///
   /// [google.bigtable.admin.v2.ModifyColumnFamiliesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L585}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L625}
   /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
   ///
@@ -305,12 +343,12 @@ class BigtableTableAdminClient {
   /// match a particular prefix.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::DropRowRangeRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L486}
+  /// @googleapis_link{google::bigtable::admin::v2::DropRowRangeRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L499}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DropRowRangeRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L486}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L499}
   ///
   Status DropRowRange(
       google::bigtable::admin::v2::DropRowRangeRequest const& request,
@@ -329,12 +367,12 @@ class BigtableTableAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L640}
+  /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L680}
   ///
   /// [google.bigtable.admin.v2.GenerateConsistencyTokenRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L626}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L666}
   /// [google.bigtable.admin.v2.GenerateConsistencyTokenResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L640}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L680}
   ///
   StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
   GenerateConsistencyToken(std::string const& name, Options opts = {});
@@ -346,16 +384,16 @@ class BigtableTableAdminClient {
   /// available for 90 days.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L626}
+  /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L666}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L640}
+  /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L680}
   ///
   /// [google.bigtable.admin.v2.GenerateConsistencyTokenRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L626}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L666}
   /// [google.bigtable.admin.v2.GenerateConsistencyTokenResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L640}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L680}
   ///
   StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
   GenerateConsistencyToken(
@@ -377,12 +415,12 @@ class BigtableTableAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L704}
   ///
   /// [google.bigtable.admin.v2.CheckConsistencyRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L687}
   /// [google.bigtable.admin.v2.CheckConsistencyResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L704}
   ///
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
   CheckConsistency(std::string const& name,
@@ -394,16 +432,16 @@ class BigtableTableAdminClient {
   /// and the check request.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L687}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L704}
   ///
   /// [google.bigtable.admin.v2.CheckConsistencyRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L687}
   /// [google.bigtable.admin.v2.CheckConsistencyResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L704}
   ///
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
   CheckConsistency(
@@ -438,7 +476,7 @@ class BigtableTableAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L303}
   ///
   /// [google.bigtable.admin.v2.CreateBackupRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L833}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L873}
   /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L303}
   ///
@@ -457,14 +495,14 @@ class BigtableTableAdminClient {
   /// returned operation will stop the creation and delete the backup.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::CreateBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L833}
+  /// @googleapis_link{google::bigtable::admin::v2::CreateBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L873}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L303}
   ///
   /// [google.bigtable.admin.v2.CreateBackupRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L833}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L873}
   /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L303}
   ///
@@ -484,7 +522,7 @@ class BigtableTableAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L303}
   ///
   /// [google.bigtable.admin.v2.GetBackupRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L889}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L929}
   /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L303}
   ///
@@ -495,14 +533,14 @@ class BigtableTableAdminClient {
   /// Gets metadata on a pending or completed Cloud Bigtable Backup.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::GetBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L889}
+  /// @googleapis_link{google::bigtable::admin::v2::GetBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L929}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L303}
   ///
   /// [google.bigtable.admin.v2.GetBackupRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L889}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L929}
   /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L303}
   ///
@@ -530,7 +568,7 @@ class BigtableTableAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L303}
   ///
   /// [google.bigtable.admin.v2.UpdateBackupRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L873}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L913}
   /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L303}
   ///
@@ -542,14 +580,14 @@ class BigtableTableAdminClient {
   /// Updates a pending or completed Cloud Bigtable Backup.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::UpdateBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L873}
+  /// @googleapis_link{google::bigtable::admin::v2::UpdateBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L913}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L303}
   ///
   /// [google.bigtable.admin.v2.UpdateBackupRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L873}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L913}
   /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L303}
   ///
@@ -567,7 +605,7 @@ class BigtableTableAdminClient {
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DeleteBackupRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L902}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L942}
   ///
   Status DeleteBackup(std::string const& name, Options opts = {});
 
@@ -575,12 +613,12 @@ class BigtableTableAdminClient {
   /// Deletes a pending or completed Cloud Bigtable backup.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::DeleteBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L902}
+  /// @googleapis_link{google::bigtable::admin::v2::DeleteBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L942}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DeleteBackupRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L902}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L942}
   ///
   Status DeleteBackup(
       google::bigtable::admin::v2::DeleteBackupRequest const& request,
@@ -601,7 +639,7 @@ class BigtableTableAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L303}
   ///
   /// [google.bigtable.admin.v2.ListBackupsRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L915}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L955}
   /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L303}
   ///
@@ -613,14 +651,14 @@ class BigtableTableAdminClient {
   /// backups.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::ListBackupsRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L915}
+  /// @googleapis_link{google::bigtable::admin::v2::ListBackupsRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L955}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L303}
   ///
   /// [google.bigtable.admin.v2.ListBackupsRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L915}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L955}
   /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L303}
   ///
@@ -639,14 +677,14 @@ class BigtableTableAdminClient {
   /// [Table][google.bigtable.admin.v2.Table], if successful.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::RestoreTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L336}
+  /// @googleapis_link{google::bigtable::admin::v2::RestoreTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L349}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L53}
   ///
   /// [google.bigtable.admin.v2.RestoreTableRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L336}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L349}
   /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
   ///
@@ -824,12 +862,12 @@ class BigtableTableAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L704}
   ///
   /// [google.bigtable.admin.v2.CheckConsistencyRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L687}
   /// [google.bigtable.admin.v2.CheckConsistencyResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L704}
   ///
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(std::string const& name,
@@ -842,16 +880,16 @@ class BigtableTableAdminClient {
   /// and the check request.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L687}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L704}
   ///
   /// [google.bigtable.admin.v2.CheckConsistencyRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L687}
   /// [google.bigtable.admin.v2.CheckConsistencyResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L704}
   ///
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(

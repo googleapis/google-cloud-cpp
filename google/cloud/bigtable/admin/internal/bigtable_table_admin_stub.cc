@@ -77,6 +77,20 @@ Status DefaultBigtableTableAdminStub::DeleteTable(
   return google::cloud::Status();
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultBigtableTableAdminStub::AsyncUndeleteTable(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::bigtable::admin::v2::UndeleteTableRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUndeleteTable(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 DefaultBigtableTableAdminStub::ModifyColumnFamilies(
     grpc::ClientContext& client_context,

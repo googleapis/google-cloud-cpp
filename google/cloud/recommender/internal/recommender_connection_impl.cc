@@ -193,6 +193,68 @@ RecommenderConnectionImpl::MarkRecommendationFailed(
       request, __func__);
 }
 
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderConnectionImpl::GetRecommenderConfig(
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetRecommenderConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+                 request) {
+        return stub_->GetRecommenderConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderConnectionImpl::UpdateRecommenderConfig(
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateRecommenderConfig(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+              request) {
+        return stub_->UpdateRecommenderConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderConnectionImpl::GetInsightTypeConfig(
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetInsightTypeConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+                 request) {
+        return stub_->GetInsightTypeConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderConnectionImpl::UpdateInsightTypeConfig(
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateInsightTypeConfig(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+              request) {
+        return stub_->UpdateInsightTypeConfig(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal
 }  // namespace cloud

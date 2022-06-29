@@ -100,6 +100,22 @@ Status BigtableTableAdminClient::DeleteTable(
   return connection_->DeleteTable(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::UndeleteTable(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UndeleteTableRequest request;
+  request.set_name(name);
+  return connection_->UndeleteTable(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::UndeleteTable(
+    google::bigtable::admin::v2::UndeleteTableRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UndeleteTable(request);
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminClient::ModifyColumnFamilies(
     std::string const& name,
