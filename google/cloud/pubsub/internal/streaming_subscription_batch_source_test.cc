@@ -513,7 +513,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
           auto stream = success_stream.MakeWriteFailureStream(
               cq, std::move(context), request);
           using Request = ::google::pubsub::v1::StreamingPullRequest;
-          // Add expectations for Write() calls with empty subscriptions, only
+          // Add expectations for Write() calls with empty subscriptions. Only
           // the first call has a non-empty value, and it is already set.
           EXPECT_CALL(*stream,
                       Write(Property(&Request::subscription, std::string{}), _))
@@ -593,8 +593,8 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
         auto stream =
             fake_stream.MakeWriteFailureStream(cq, std::move(context), request);
         using Request = ::google::pubsub::v1::StreamingPullRequest;
-        // Add expectations for Write() calls with empty subscriptions, only
-        // the first call has a non-empty value and it is already set.
+        // Add expectations for Write() calls with empty subscriptions. Only
+        // the first call has a non-empty value, and it is already set.
         EXPECT_CALL(*stream,
                     Write(Property(&Request::subscription, std::string{}), _))
             .WillOnce(
@@ -647,8 +647,8 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
         auto stream =
             fake_stream.MakeWriteFailureStream(cq, std::move(context), request);
         using Request = ::google::pubsub::v1::StreamingPullRequest;
-        // Add expectations for Write() calls with empty subscriptions, only
-        // the first call has a non-empty value and it is already set.
+        // Add expectations for Write() calls with empty subscriptions. Only
+        // the first call has a non-empty value, and it is already set.
         EXPECT_CALL(*stream,
                     Write(Property(&Request::subscription, std::string{}), _))
             .WillOnce(
