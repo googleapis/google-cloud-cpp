@@ -24,6 +24,7 @@
 #include "google/cloud/bigtable/internal/legacy_async_row_reader.h"
 #include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/row_key_sample.h"
@@ -34,6 +35,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/meta/type_traits.h"
@@ -53,8 +55,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // public.
 bigtable::Table MakeTable(std::shared_ptr<bigtable::DataConnection> conn,
                           std::string project_id, std::string instance_id,
-                          std::string app_profile_id, std::string table_id,
-                          Options options = {});
+                          std::string table_id, Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
@@ -953,12 +954,11 @@ class Table {
  private:
   friend Table bigtable_internal::MakeTable(
       std::shared_ptr<bigtable::DataConnection>, std::string, std::string,
-      std::string, std::string, Options);
+      std::string, Options);
   explicit Table(std::shared_ptr<bigtable::DataConnection> conn,
                  std::string project_id, std::string instance_id,
-                 std::string app_profile_id, std::string table_id,
-                 Options options = {})
-      : app_profile_id_(std::move(app_profile_id)),
+                 std::string table_id, Options options = {})
+      : app_profile_id_(options.get<AppProfileIdOption>()),
         project_id_(std::move(project_id)),
         instance_id_(std::move(instance_id)),
         table_name_(TableName(project_id_, instance_id_, table_id)),
@@ -1051,12 +1051,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 inline bigtable::Table MakeTable(std::shared_ptr<bigtable::DataConnection> conn,
                                  std::string project_id,
-                                 std::string instance_id,
-                                 std::string app_profile_id,
-                                 std::string table_id, Options options) {
+                                 std::string instance_id, std::string table_id,
+                                 Options options) {
   return bigtable::Table(std::move(conn), std::move(project_id),
-                         std::move(instance_id), std::move(app_profile_id),
-                         std::move(table_id), std::move(options));
+                         std::move(instance_id), std::move(table_id),
+                         std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

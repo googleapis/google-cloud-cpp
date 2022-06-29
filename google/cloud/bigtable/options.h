@@ -52,6 +52,29 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
+ * The application profile id.
+ *
+ * An application profile, or app profile, stores settings that tell your Cloud
+ * Bigtable instance how to handle incoming requests from an application. When
+ * an applications connects to a Bigtable instance, it can specify an app
+ * profile, and Bigtable uses that app profile for requests that the application
+ * sends over that connection.
+ *
+ * This option is always used in conjunction with a `bigtable::Table`. The app
+ * profile belongs to the table's instance, with an id given by the value of
+ * this option.
+ *
+ * @see https://cloud.google.com/bigtable/docs/app-profiles for an overview of
+ *     app profiles.
+ *
+ * @see https://cloud.google.com/bigtable/docs/replication-overview#app-profiles
+ *     for how app profiles are used to achieve replication.
+ */
+struct AppProfileIdOption {
+  using Type = std::string;
+};
+
+/**
  * The endpoint for data operations.
  *
  * @deprecated Please use `google::cloud::EndpointOption` instead.
