@@ -15,19 +15,54 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_VALIDATE_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_VALIDATE_METADATA_H
 
-#include "google/cloud/status.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
+#include <google/api/annotations.pb.h>
+#include <google/protobuf/descriptor.h>
 #include <gmock/gmock.h>
 #include <grpcpp/generic/async_generic_service.h>
 #include <grpcpp/grpcpp.h>
 #include <map>
+#include <regex>
 #include <string>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
+
+MATCHER_P(MatchesMetadataRegex, pattern,
+          "matches the pattern: \"" + pattern + "\"") {
+  // Translate the pattern into a form that can be used by std::regex
+  std::regex regex(absl::StrReplaceAll(pattern, {{"*", "[^/]+"}}));
+  return std::regex_match(arg, regex);
+}
+
+std::map<std::string, std::string> ExtractMDFromHeader(std::string header);
+
+std::map<std::string, std::string> FromHttpRule(
+    google::api::HttpRule const& http,
+    absl::optional<std::string> const& resource_name);
+
+template <typename Request>
+std::map<std::string, std::string> ExtractRoutingHeaders(
+    std::string const& method, Request const&,
+    absl::optional<std::string> const& resource_name) {
+  auto const* method_desc =
+      google::protobuf::DescriptorPool::generated_pool()->FindMethodByName(
+          method);
+  using ::testing::NotNull;
+  EXPECT_THAT(method_desc, NotNull()) << "Method " + method + " is unknown.";
+  if (!method_desc) return {};
+  auto options = method_desc->options();
+  // TODO(#9373): Handle `google::api::routing` extension.
+  if (options.HasExtension(google::api::http)) {
+    auto const& http = options.GetExtension(google::api::http);
+    return FromHttpRule(http, resource_name);
+  }
+  return {};
+}
 
 /**
  * Keep the test required to test metadata contents in a grpc::Context object.
@@ -76,11 +111,43 @@ class ValidateMetadataFixture {
    *
    * @return an OK status if the `context` is properly set up
    */
-  Status IsContextMDValid(
+  template <typename Request>
+  void IsContextMDValid(
       grpc::ClientContext& context, std::string const& method,
-      std::string const& api_client_header,
+      Request const& request, std::string const& api_client_header,
       absl::optional<std::string> const& resource_name = {},
-      absl::optional<std::string> const& resource_prefix_header = {});
+      absl::optional<std::string> const& resource_prefix_header = {}) {
+    using ::testing::Contains;
+    using ::testing::Pair;
+
+    auto headers = GetMetadata(context);
+
+    // Check x-goog-api-client first, because it should always be present.
+    EXPECT_THAT(headers,
+                Contains(Pair("x-goog-api-client", api_client_header)));
+
+    if (resource_prefix_header) {
+      EXPECT_THAT(headers, Contains(Pair("google-cloud-resource-prefix",
+                                         *resource_prefix_header)));
+    }
+
+    // Extract the metadata from `x-goog-request-params` header in context.
+    auto param_header = headers.equal_range("x-goog-request-params");
+    auto dist = std::distance(param_header.first, param_header.second);
+    EXPECT_LE(dist, 1U) << "Multiple x-goog-request-params headers found";
+    auto actual = dist == 0 ? std::map<std::string, std::string>{}
+                            : ExtractMDFromHeader(param_header.first->second);
+
+    // Extract expectations on `x-goog-request-params` from the
+    // `google.api.http` annotation on the specified method.
+    auto expected = ExtractRoutingHeaders(method, request, resource_name);
+
+    // Check if the metadata in the context satisfied the expectations.
+    for (auto const& param : expected) {
+      EXPECT_THAT(actual, Contains(Pair(param.first,
+                                        MatchesMetadataRegex(param.second))));
+    }
+  }
 
  private:
   grpc::CompletionQueue cli_cq_;
