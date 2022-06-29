@@ -17,6 +17,7 @@
 #include "google/cloud/status_or.h"
 #include <google/api/annotations.pb.h>
 #include <google/protobuf/descriptor.h>
+#include <gmock/gmock.h>
 #include <grpcpp/completion_queue.h>
 #include <grpcpp/generic/generic_stub.h>
 #include <grpcpp/server.h>
@@ -68,9 +69,15 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
   return res;
 }
 
-MATCHER_P(ContainsStdRegex, pattern, "ContainsRegex using std::regex") {
-  std::regex regex(pattern);
-  return std::regex_search(arg, regex);
+/**
+ * We do not use `::testing::MatchesRegex` because our Windows builds use a
+ * googletest built with `GTEST_USES_SIMPLE_RE`, instead of
+ * `GTEST_USES_POSIX_RE`.
+ */
+MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
+  // Translate the glob into a regex pattern.
+  std::regex regex(absl::StrReplaceAll(glob, {{"*", "[^/]+"}}));
+  return std::regex_match(arg, regex);
 }
 
 /**
@@ -110,15 +117,14 @@ RoutingHeaders FromHttpRule(google::api::HttpRule const& http,
            std::sregex_iterator(pattern.begin(), pattern.end(), subst_re);
        i != std::sregex_iterator(); ++i) {
     std::string const& param = (*i)[1].str();
-    std::string const& expected_pattern =
-        absl::StrReplaceAll((*i)[2].str(), {{"*", "[^/]+"}});
+    std::string const& expected_pattern = (*i)[2].str();
     headers.insert(std::make_pair(param, expected_pattern));
   }
   return headers;
 }
 
 RoutingHeaders ExtractRoutingHeaders(
-    std::string const& method,
+    std::string const& method, google::protobuf::Message const&,
     absl::optional<std::string> const& resource_name) {
   auto const* method_desc =
       google::protobuf::DescriptorPool::generated_pool()->FindMethodByName(
@@ -206,8 +212,9 @@ std::multimap<std::string, std::string> ValidateMetadataFixture::GetMetadata(
  * `x-goog-request-params` header in `context` set all the parameters listed in
  * the curly braces.
  */
-Status ValidateMetadataFixture::IsContextMDValid(
+void ValidateMetadataFixture::IsContextMDValid(
     grpc::ClientContext& context, std::string const& method,
+    google::protobuf::Message const& request,
     std::string const& api_client_header,
     absl::optional<std::string> const& resource_name,
     absl::optional<std::string> const& resource_prefix_header) {
@@ -230,15 +237,12 @@ Status ValidateMetadataFixture::IsContextMDValid(
 
   // Extract expectations on `x-goog-request-params` from the `google.api.http`
   // annotation on the specified method.
-  auto expected = ExtractRoutingHeaders(method, resource_name);
+  auto expected = ExtractRoutingHeaders(method, request, resource_name);
 
   // Check if the metadata in the context satisfied the expectations.
   for (auto const& param : expected) {
-    EXPECT_THAT(actual,
-                Contains(Pair(param.first, ContainsStdRegex(param.second))));
+    EXPECT_THAT(actual, Contains(Pair(param.first, MatchesGlob(param.second))));
   }
-
-  return Status();
 }
 
 }  // namespace testing_util
