@@ -56,9 +56,8 @@ class MetadataDecoratorTest : public ::testing::Test {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  template <typename Request>
   void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
-                        Request const& request) {
+                        google::protobuf::Message const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
         context, method, request,
         google::cloud::internal::ApiClientHeader("generator"));
