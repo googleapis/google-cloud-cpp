@@ -54,6 +54,8 @@ add_library(
     internal/defaults.h
     internal/exactly_once_policies.cc
     internal/exactly_once_policies.h
+    internal/extend_leases_with_retry.cc
+    internal/extend_leases_with_retry.h
     internal/flow_controlled_publisher_connection.cc
     internal/flow_controlled_publisher_connection.h
     internal/ordering_key_publisher_connection.cc
@@ -243,6 +245,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/default_batch_sink_test.cc
         internal/defaults_test.cc
         internal/exactly_once_policies_test.cc
+        internal/extend_leases_with_retry_test.cc
         internal/flow_controlled_publisher_connection_test.cc
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_auth_test.cc
