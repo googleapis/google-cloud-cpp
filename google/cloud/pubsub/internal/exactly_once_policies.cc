@@ -45,8 +45,8 @@ bool ExactlyOnceRetryPolicy::IsPermanentFailure(Status const& status) const {
   auto const code = status.code();
   // Of these, `kDeadlineExceeded` might be controversial.  There is no (as of
   // this writing) mechanism for applications to set a deadline on these
-  // requests. Therefore, any deadline is an internal deadline and therefore
-  // retryable.
+  // requests. One can infer that any deadline error is due to an internal
+  // deadline and therefore retryable.
   if (code == StatusCode::kDeadlineExceeded ||
       code == StatusCode::kResourceExhausted || code == StatusCode::kAborted ||
       code == StatusCode::kInternal || code == StatusCode::kUnavailable) {
