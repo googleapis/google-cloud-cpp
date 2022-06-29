@@ -52,9 +52,8 @@ using ::testing::Return;
 
 class StorageStubFactory : public ::testing::Test {
  protected:
-  template <typename Request>
   void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
-                        Request const& request) {
+                        google::protobuf::Message const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
         context, method, request,
         google::cloud::internal::ApiClientHeader("generator"));
