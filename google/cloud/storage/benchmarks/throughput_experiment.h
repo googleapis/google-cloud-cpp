@@ -18,9 +18,12 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/storage/benchmarks/throughput_result.h"
+#include "absl/types/optional.h"
+#include <cstdint>
 #include <functional>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -33,6 +36,7 @@ struct ThroughputExperimentConfig {
   std::size_t app_buffer_size;
   bool enable_crc32c;
   bool enable_md5;
+  absl::optional<std::pair<std::int64_t, std::int64_t>> read_range;
 };
 
 /**

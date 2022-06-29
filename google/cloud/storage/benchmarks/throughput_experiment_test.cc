@@ -66,9 +66,10 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
   auto experiments = CreateUploadExperiments(options, provider);
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
-    ThroughputExperimentConfig config{OpType::kOpInsert, 16 * kKiB, 1 * kMiB,
-                                      /*enable_crc32c=*/false,
-                                      /*enable_md5=*/false};
+    ThroughputExperimentConfig config{
+        OpType::kOpInsert,       16 * kKiB,    1 * kMiB,
+        /*enable_crc32c=*/false,
+        /*enable_md5=*/false,    absl::nullopt};
     auto result = e->Run(bucket_name_, object_name, config);
     ASSERT_STATUS_OK(result.status);
     auto status = client->DeleteObject(bucket_name_, object_name);
@@ -95,9 +96,12 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
     auto object_name = MakeRandomObjectName();
 
     auto constexpr kObjectSize = 16 * kKiB;
-    ThroughputExperimentConfig config{OpType::kOpRead0, kObjectSize, 1 * kMiB,
+    ThroughputExperimentConfig config{OpType::kOpRead0,
+                                      kObjectSize,
+                                      1 * kMiB,
                                       /*enable_crc32c=*/false,
-                                      /*enable_md5=*/false};
+                                      /*enable_md5=*/false,
+                                      std::make_pair(128 * kKiB, 256 * kKiB)};
 
     auto contents = MakeRandomData(kObjectSize);
     auto insert =

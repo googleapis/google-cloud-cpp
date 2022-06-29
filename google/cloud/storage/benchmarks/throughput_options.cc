@@ -20,6 +20,28 @@
 namespace google {
 namespace cloud {
 namespace storage_benchmarks {
+namespace {
+
+Status ValidateQuantizedRange(std::string const& name, std::int64_t minimum,
+                              std::int64_t maximum, std::int64_t quantum) {
+  using ::google::cloud::StatusCode;
+  if (minimum > maximum) {
+    std::ostringstream os;
+    os << "Invalid range for " << name << " [" << minimum << ',' << maximum
+       << "]";
+    return google::cloud::Status{StatusCode::kInvalidArgument, os.str()};
+  }
+  if (quantum <= 0 || (quantum > minimum && minimum != 0)) {
+    std::ostringstream os;
+    os << "Invalid quantum for " << name << " (" << quantum
+       << "), it should be in the (0," << minimum << "] range";
+    return google::cloud::Status{StatusCode::kInvalidArgument, os.str()};
+  }
+
+  return Status{};
+}
+
+}  // namespace
 
 using ::google::cloud::testing_util::OptionDescriptor;
 
@@ -191,6 +213,32 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
            options.minimum_sample_delay = std::chrono::milliseconds(-1);
          }
        }},
+
+      {"--minimum-read-offset", "configure the minimum offset of ranged reads",
+       [&options](std::string const& val) {
+         options.minimum_read_offset = ParseBufferSize(val);
+       }},
+      {"--maximum-read-offset", "configure the maximum offset for ranged reads",
+       [&options](std::string const& val) {
+         options.maximum_read_offset = ParseBufferSize(val);
+       }},
+      {"--read-offset-quantum", "quantize the ranged read offsets",
+       [&options](std::string const& val) {
+         options.read_offset_quantum = ParseBufferSize(val);
+       }},
+
+      {"--minimum-read-size", "configure the minimum size of ranged reads",
+       [&options](std::string const& val) {
+         options.minimum_read_size = ParseBufferSize(val);
+       }},
+      {"--maximum-read-size", "configure the maximum size for ranged reads",
+       [&options](std::string const& val) {
+         options.maximum_read_size = ParseBufferSize(val);
+       }},
+      {"--read-size-quantum", "quantize the ranged read sizes",
+       [&options](std::string const& val) {
+         options.read_size_quantum = ParseBufferSize(val);
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 
@@ -243,37 +291,15 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     return make_status(os);
   }
 
-  if (options.minimum_write_buffer_size > options.maximum_write_buffer_size) {
-    std::ostringstream os;
-    os << "Invalid range for write buffer size ["
-       << options.minimum_write_buffer_size << ','
-       << options.maximum_write_buffer_size << "]";
-    return make_status(os);
-  }
-  if (options.write_buffer_quantum <= 0 ||
-      options.write_buffer_quantum > options.minimum_write_buffer_size) {
-    std::ostringstream os;
-    os << "Invalid value for --write-buffer-quantum ("
-       << options.write_buffer_quantum << "), it should be in the [1,"
-       << options.minimum_write_buffer_size << "] range";
-    return make_status(os);
-  }
+  auto status = ValidateQuantizedRange(
+      "write buffer size", options.minimum_write_buffer_size,
+      options.maximum_write_buffer_size, options.write_buffer_quantum);
+  if (!status.ok()) return status;
 
-  if (options.minimum_read_buffer_size > options.maximum_read_buffer_size) {
-    std::ostringstream os;
-    os << "Invalid range for read buffer size ["
-       << options.minimum_read_buffer_size << ','
-       << options.maximum_read_buffer_size << "]";
-    return make_status(os);
-  }
-  if (options.read_buffer_quantum <= 0 ||
-      options.read_buffer_quantum > options.minimum_read_buffer_size) {
-    std::ostringstream os;
-    os << "Invalid value for --read-buffer-quantum ("
-       << options.read_buffer_quantum << "), it should be in the [1,"
-       << options.minimum_read_buffer_size << "] range";
-    return make_status(os);
-  }
+  status = ValidateQuantizedRange(
+      "read buffer size", options.minimum_read_buffer_size,
+      options.maximum_read_buffer_size, options.read_buffer_quantum);
+  if (!status.ok()) return status;
 
   if (options.minimum_sample_count > options.maximum_sample_count) {
     std::ostringstream os;
@@ -330,6 +356,16 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     os << "Invalid value for --minimum-sample-delay";
     return make_status(os);
   }
+
+  status = ValidateQuantizedRange("read offset", options.minimum_read_offset,
+                                  options.maximum_read_offset,
+                                  options.read_offset_quantum);
+  if (!status.ok()) return status;
+
+  status = ValidateQuantizedRange("read size", options.minimum_read_size,
+                                  options.maximum_read_size,
+                                  options.read_size_quantum);
+  if (!status.ok()) return status;
 
   return options;
 }

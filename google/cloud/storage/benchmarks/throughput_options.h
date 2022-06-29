@@ -60,6 +60,12 @@ struct ThroughputOptions {
   std::chrono::seconds transfer_stall_timeout{};
   std::chrono::seconds download_stall_timeout{};
   std::chrono::milliseconds minimum_sample_delay{};
+  std::int64_t minimum_read_offset = 0;
+  std::int64_t maximum_read_offset = 0;
+  std::int64_t read_offset_quantum = 128 * kKiB;
+  std::int64_t minimum_read_size = 0;
+  std::int64_t maximum_read_size = 0;
+  std::int64_t read_size_quantum = 128 * kKiB;
 };
 
 google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(

@@ -68,6 +68,9 @@ struct ThroughputResult {
   /// The total size of the object involved in this experiment. Currently also
   /// represents the number of bytes transferred.
   std::int64_t object_size;
+  /// The beginning offset of the transfer. Only meaningful for downloads as it
+  /// it is always 0 for uploads
+  std::int64_t transfer_offset;
   /// The size of the transfer. For uploads this is always equal to the object
   /// size. For downloads this can be smaller than the object size.
   std::int64_t transfer_size;

@@ -25,6 +25,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
+#include "absl/time/time.h"
 #include <functional>
 #include <future>
 #include <set>
@@ -149,52 +150,66 @@ int main(int argc, char* argv[]) {
     }
   };
 
+  auto output_size_range = [](std::string const& name, auto minimum,
+                              auto maximum) {
+    std::cout << "\n# " << name << " Range: [" << minimum << ',' << maximum
+              << ']';
+  };
+
+  auto output_quantized_range = [](std::string const& name, auto minimum,
+                                   auto maximum, auto quantum) {
+    std::cout << "\n# " << name << " Range: [" << minimum << ',' << maximum
+              << "]\n# " << name << " Quantum: " << quantum;
+  };
+
   std::cout << "# Running test on bucket: " << bucket_name << "\n# Start time: "
             << google::cloud::internal::FormatRfc3339(
                    std::chrono::system_clock::now())
-            << "\n# Region: " << options->region
-            << "\n# Duration: " << options->duration.count() << "s"
+            << "\n# Region: " << options->region << "\n# Duration: "
+            << absl::FormatDuration(absl::FromChrono(options->duration))
             << "\n# Thread Count: " << options->thread_count
             << "\n# Client Per Thread: " << options->client_per_thread
             << "\n# gRPC Channel Count: " << options->grpc_channel_count
             << "\n# DirectPath Channel Count: "
-            << options->direct_path_channel_count << "\n# Object Size Range: ["
-            << options->minimum_object_size << ","
-            << options->maximum_object_size << "]\n# Write Buffer Size Range: ["
-            << options->minimum_write_buffer_size << ","
-            << options->maximum_write_buffer_size
-            << "]\n# Write Buffer Quantum: " << options->write_buffer_quantum
-            << "\n# Read Buffer Size Range: ["
-            << options->minimum_read_buffer_size << ","
-            << options->maximum_read_buffer_size
-            << "]\n# Read Buffer Quantum: " << options->read_buffer_quantum
-            << "\n# Object Buffer Size Range (MiB): ["
-            << options->minimum_object_size / gcs_bm::kMiB << ","
-            << options->maximum_object_size / gcs_bm::kMiB
-            << "]\n# Write Buffer Size Range (KiB): ["
-            << options->minimum_write_buffer_size / gcs_bm::kKiB << ","
-            << options->maximum_write_buffer_size / gcs_bm::kKiB
-            << "]\n# Write Buffer Quantum (KiB): "
-            << options->write_buffer_quantum / gcs_bm::kKiB
-            << "\n# Read Buffer Size Range (KiB): ["
-            << options->minimum_read_buffer_size / gcs_bm::kKiB << ","
-            << options->maximum_read_buffer_size / gcs_bm::kKiB
-            << "]\n# Read Buffer Quantum (KiB): "
-            << options->read_buffer_quantum / gcs_bm::kKiB
-            << "\n# Minimum Sample Count: " << options->minimum_sample_count
-            << "\n# Maximum Sample Count: " << options->maximum_sample_count
-            << "\n# Enabled Libs: "
-            << absl::StrJoin(options->libs, ",", Formatter{})
-            << "\n# Enabled Transports: "
-            << absl::StrJoin(options->transports, ",", Formatter{})
-            << "\n# Enabled CRC32C: "
-            << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
-            << "\n# Enabled MD5: "
-            << absl::StrJoin(options->enabled_md5, ",", Formatter{})
-            << "\n# REST Endpoint: " << options->rest_endpoint
-            << "\n# Grpc Endpoint: " << options->grpc_endpoint
-            << "\n# Direct Path Endpoint: " << options->direct_path_endpoint
-            << "\n# Build info: " << notes << "\n";
+            << options->direct_path_channel_count;
+
+  output_size_range("Object Size", options->minimum_object_size,
+                    options->maximum_object_size);
+  output_quantized_range(
+      "Write Buffer Size", options->minimum_write_buffer_size,
+      options->maximum_write_buffer_size, options->write_buffer_quantum);
+  output_quantized_range("Read Buffer Size", options->minimum_read_buffer_size,
+                         options->maximum_read_buffer_size,
+                         options->read_buffer_quantum);
+
+  std::cout
+      << "\n# Minimum Sample Count: " << options->minimum_sample_count
+      << "\n# Maximum Sample Count: " << options->maximum_sample_count
+      << "\n# Enabled Libs: " << absl::StrJoin(options->libs, ",", Formatter{})
+      << "\n# Enabled Transports: "
+      << absl::StrJoin(options->transports, ",", Formatter{})
+      << "\n# Enabled CRC32C: "
+      << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
+      << "\n# Enabled MD5: "
+      << absl::StrJoin(options->enabled_md5, ",", Formatter{})
+      << "\n# REST Endpoint: " << options->rest_endpoint
+      << "\n# Grpc Endpoint: " << options->grpc_endpoint
+      << "\n# Direct Path Endpoint: " << options->direct_path_endpoint
+      << "\n# Transfer Stall Timeout: "
+      << absl::FormatDuration(absl::FromChrono(options->transfer_stall_timeout))
+      << "\n# Download Stall Timeout: "
+      << absl::FormatDuration(absl::FromChrono(options->download_stall_timeout))
+      << "\n# Minimum Sample Delay: "
+      << absl::FormatDuration(absl::FromChrono(options->minimum_sample_delay));
+
+  output_quantized_range("Read Offset", options->minimum_read_offset,
+                         options->maximum_read_offset,
+                         options->read_offset_quantum);
+  output_quantized_range("Read Size", options->minimum_read_size,
+                         options->maximum_read_size,
+                         options->read_size_quantum);
+
+  std::cout << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
 
@@ -331,18 +346,45 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
 
   std::uniform_int_distribution<std::int64_t> size_generator(
       options.minimum_object_size, options.maximum_object_size);
-  std::uniform_int_distribution<std::size_t> write_buffer_size_generator(
-      options.minimum_write_buffer_size / options.write_buffer_quantum,
-      options.maximum_write_buffer_size / options.write_buffer_quantum);
-  std::uniform_int_distribution<std::size_t> read_buffer_size_generator(
-      options.minimum_read_buffer_size / options.read_buffer_quantum,
-      options.maximum_read_buffer_size / options.read_buffer_quantum);
+
+  auto quantized_range_generator = [](auto minimum, auto maximum,
+                                      auto quantum) {
+    auto distribution = std::uniform_int_distribution<decltype(quantum)>(
+        minimum / quantum, maximum / quantum);
+    return [d = std::move(distribution), quantum](auto& g) mutable {
+      return quantum * d(g);
+    };
+  };
+
+  auto write_buffer_size_generator = quantized_range_generator(
+      options.minimum_write_buffer_size, options.maximum_write_buffer_size,
+      options.write_buffer_quantum);
+  auto read_buffer_size_generator = quantized_range_generator(
+      options.minimum_read_buffer_size, options.maximum_read_buffer_size,
+      options.read_buffer_quantum);
+  auto read_offset_generator = quantized_range_generator(
+      options.minimum_read_offset, options.maximum_read_offset,
+      options.read_offset_quantum);
+  auto read_size_generator = quantized_range_generator(
+      options.minimum_read_size, options.maximum_read_size,
+      options.read_size_quantum);
+
+  auto const read_range_enabled =
+      options.minimum_read_size != options.maximum_read_size;
+  auto read_range_generator = [&](auto& g, std::int64_t object_size)
+      -> absl::optional<std::pair<std::int64_t, std::int64_t>> {
+    if (!read_range_enabled || !std::bernoulli_distribution{}(g)) {
+      return absl::nullopt;
+    }
+    auto offset = (std::min)(object_size, read_offset_generator(g));
+    auto size = (std::min)(object_size - offset, read_size_generator(g));
+    return std::make_pair(offset, size);
+  };
 
   std::uniform_int_distribution<std::size_t> crc32c_generator(
       0, options.enabled_crc32c.size() - 1);
   std::uniform_int_distribution<std::size_t> md5_generator(
       0, options.enabled_crc32c.size() - 1);
-  std::bernoulli_distribution use_insert;
 
   auto deadline = std::chrono::steady_clock::now() + options.duration;
 
@@ -351,21 +393,20 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
        iteration_count < options.maximum_sample_count &&
        (iteration_count < options.minimum_sample_count || start < deadline);
        start = std::chrono::steady_clock::now(), ++iteration_count) {
-    auto object_name = gcs_bm::MakeRandomObjectName(generator);
-    auto object_size = size_generator(generator);
-    auto write_buffer_size =
-        options.write_buffer_quantum * write_buffer_size_generator(generator);
-    auto read_buffer_size =
-        options.read_buffer_quantum * read_buffer_size_generator(generator);
+    auto const object_name = gcs_bm::MakeRandomObjectName(generator);
+    auto const object_size = size_generator(generator);
+    auto const write_buffer_size = write_buffer_size_generator(generator);
+    auto const read_buffer_size = read_buffer_size_generator(generator);
     bool const enable_crc = options.enabled_crc32c[crc32c_generator(generator)];
     bool const enable_md5 = options.enabled_md5[md5_generator(generator)];
+    auto const range = read_range_generator(generator, object_size);
 
     auto& uploader = uploaders[uploader_generator(generator)];
-    auto upload_result =
-        uploader->Run(bucket_name, object_name,
-                      gcs_bm::ThroughputExperimentConfig{
-                          gcs_bm::kOpWrite, object_size, write_buffer_size,
-                          enable_crc, enable_md5});
+    auto upload_result = uploader->Run(
+        bucket_name, object_name,
+        gcs_bm::ThroughputExperimentConfig{
+            gcs_bm::kOpWrite, object_size, write_buffer_size, enable_crc,
+            enable_md5, /*read_range=*/absl::nullopt});
     auto status = upload_result.status;
     handler(std::move(upload_result));
 
@@ -376,7 +417,7 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
       handler(downloader->Run(
           bucket_name, object_name,
           gcs_bm::ThroughputExperimentConfig{op, object_size, read_buffer_size,
-                                             enable_crc, enable_md5}));
+                                             enable_crc, enable_md5, range}));
     }
     auto client = provider(ExperimentTransport::kJson);
     (void)client.DeleteObject(bucket_name, object_name);

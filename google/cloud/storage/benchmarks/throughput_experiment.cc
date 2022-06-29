@@ -85,6 +85,7 @@ class UploadObject : public ThroughputExperiment {
                               kOpInsert,
                               start,
                               config.object_size,
+                              /*transfer_offset=*/0,
                               config.object_size,
                               config.app_buffer_size,
                               config.enable_crc32c,
@@ -121,6 +122,7 @@ class UploadObject : public ThroughputExperiment {
                             kOpWrite,
                             start,
                             config.object_size,
+                            /*transfer_offset=*/0,
                             config.object_size,
                             config.app_buffer_size,
                             config.enable_crc32c,
@@ -163,8 +165,13 @@ class DownloadObject : public ThroughputExperiment {
 
     auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
+    auto const offset = config.read_range.value_or(std::make_pair(0, 0)).first;
+    auto read_range =
+        config.read_range.has_value()
+            ? gcs::ReadRange(offset, offset + config.read_range->second)
+            : gcs::ReadRange();
     auto reader = client_.ReadObject(
-        bucket_name, object_name,
+        bucket_name, object_name, read_range,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
         gcs::DisableMD5Hash(!config.enable_md5), api_selector);
     std::int64_t transfer_size = 0;
@@ -180,6 +187,7 @@ class DownloadObject : public ThroughputExperiment {
                             config.op,
                             start,
                             config.object_size,
+                            offset,
                             transfer_size,
                             config.app_buffer_size,
                             config.enable_crc32c,
@@ -274,6 +282,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
                             config.op,
                             start,
                             config.object_size,
+                            /*transfer_offset=*/0,
                             config.object_size,
                             config.app_buffer_size,
                             config.enable_crc32c,
@@ -344,6 +353,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
                             config.op,
                             start,
                             config.object_size,
+                            /*transfer_offset=*/0,
                             bytes_received,
                             config.app_buffer_size,
                             /*crc_enabled=*/false,
