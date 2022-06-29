@@ -13,9 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include <google/api/annotations.pb.h>
+#include <google/api/routing.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <gmock/gmock.h>
 #include <grpcpp/completion_queue.h>
@@ -81,6 +84,53 @@ MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
 }
 
 /**
+ * Parse the `RoutingRule` proto as described in the proto comments:
+ * https://github.com/googleapis/googleapis/blob/master/google/api/routing.proto
+ *
+ * We loop over the repeated `routing_parameters` field. For each one we attempt
+ * to match and extract a routing key-value pair.
+ *
+ * We may end up matching the same key multiple times. If this happens, we
+ * overwrite the current value in the map, because the "last match wins".
+ */
+RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
+                               google::protobuf::Descriptor const* input_type,
+                               google::protobuf::Message const& request) {
+  RoutingHeaders headers;
+  for (auto const& rp : routing.routing_parameters()) {
+    auto const& path_template = rp.path_template();
+    auto const* fd = input_type->FindFieldByName(rp.field());
+    auto const& field = request.GetReflection()->GetString(request, fd);
+    // We skip empty fields.
+    if (field.empty()) continue;
+    // If the path_template is empty, we use the field's name as the routing
+    // param key, and we match the entire value of the field.
+    if (path_template.empty()) {
+      headers[rp.field()] = field;
+      continue;
+    }
+    // First we parse the path_template field to extract the routing param key
+    static std::regex const kPatternRegex(R"((.*)\{(.*)=(.*)\}(.*))");
+    std::smatch match;
+    if (!std::regex_match(path_template, match, kPatternRegex)) {
+      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": "
+                     << "RoutingParameters path template is malformed: "
+                     << path_template;
+    }
+    auto pattern =
+        absl::StrCat(match[1].str(), "(", match[3].str(), ")", match[4].str());
+    pattern = absl::StrReplaceAll(pattern, {{"**", ".*"}, {"*", "[^/]+"}});
+    auto param = match[2].str();
+    // Then we parse the field in the given request to see if it matches the
+    // pattern we expect.
+    if (std::regex_match(field, match, std::regex{pattern})) {
+      headers[std::move(param)] = match[1].str();
+    }
+  }
+  return headers;
+}
+
+/**
  * Given a `method`, extract its `google.api.http` option and parse it.
  *
  * The expected format of the option is
@@ -124,7 +174,7 @@ RoutingHeaders FromHttpRule(google::api::HttpRule const& http,
 }
 
 RoutingHeaders ExtractRoutingHeaders(
-    std::string const& method, google::protobuf::Message const&,
+    std::string const& method, google::protobuf::Message const& request,
     absl::optional<std::string> const& resource_name) {
   auto const* method_desc =
       google::protobuf::DescriptorPool::generated_pool()->FindMethodByName(
@@ -132,7 +182,11 @@ RoutingHeaders ExtractRoutingHeaders(
   EXPECT_THAT(method_desc, NotNull()) << "Method " + method + " is unknown.";
   if (!method_desc) return {};
   auto options = method_desc->options();
-  // TODO(#9373): Handle `google::api::routing` extension.
+  if (options.HasExtension(google::api::routing)) {
+    auto const& routing = options.GetExtension(google::api::routing);
+    auto const* input_type = method_desc->input_type();
+    return FromRoutingRule(routing, input_type, request);
+  }
   if (options.HasExtension(google::api::http)) {
     auto const& http = options.GetExtension(google::api::http);
     return FromHttpRule(http, resource_name);
