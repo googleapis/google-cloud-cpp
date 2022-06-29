@@ -80,6 +80,7 @@ bigtable_client_unit_tests = [
     "table_readmodifywriterow_test.cc",
     "table_readrow_test.cc",
     "table_readrows_test.cc",
+    "table_resource_test.cc",
     "table_sample_row_keys_test.cc",
     "table_test.cc",
     "testing/cleanup_stale_resources_test.cc",
