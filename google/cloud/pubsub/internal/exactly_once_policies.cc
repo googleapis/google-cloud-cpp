@@ -20,12 +20,14 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+auto constexpr kMaximumRetryTime = std::chrono::minutes(10);
+auto constexpr kInitialBackoff = std::chrono::seconds(1);
+auto constexpr kMaximumBackoff = std::chrono::minutes(1);
+
 std::unique_ptr<pubsub::BackoffPolicy> ExactlyOnceBackoffPolicy() {
   return absl::make_unique<pubsub::ExponentialBackoffPolicy>(
-      std::chrono::seconds(1), std::chrono::minutes(10), 2.0);
+      kInitialBackoff, kMaximumBackoff, 2.0);
 }
-
-auto constexpr kMaximumRetryTime = std::chrono::minutes(10);
 
 ExactlyOnceRetryPolicy::ExactlyOnceRetryPolicy(std::string ack_id)
     : ack_id_(std::move(ack_id)),
