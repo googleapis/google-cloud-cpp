@@ -34,10 +34,10 @@ class TableApplyTest : public bigtable::testing::TableTestFixture {
  protected:
   TableApplyTest() : TableTestFixture(CompletionQueue{}) {}
 
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        google::protobuf::Message const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader());
+        context, method, request, google::cloud::internal::ApiClientHeader());
   }
 
   std::function<grpc::Status(grpc::ClientContext* context,
@@ -45,10 +45,10 @@ class TableApplyTest : public bigtable::testing::TableTestFixture {
                              google::bigtable::v2::MutateRowResponse*)>
   CreateMutateRowMock(grpc::Status const& status) {
     return [this, status](grpc::ClientContext* context,
-                          google::bigtable::v2::MutateRowRequest const&,
+                          google::bigtable::v2::MutateRowRequest const& request,
                           google::bigtable::v2::MutateRowResponse*) {
-      EXPECT_STATUS_OK(
-          IsContextMDValid(*context, "google.bigtable.v2.Bigtable.MutateRow"));
+      IsContextMDValid(*context, "google.bigtable.v2.Bigtable.MutateRow",
+                       request);
       return status;
     };
   }

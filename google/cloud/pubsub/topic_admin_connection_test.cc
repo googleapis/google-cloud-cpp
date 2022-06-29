@@ -73,9 +73,9 @@ TEST(TopicAdminConnectionTest, Metadata) {
       .WillOnce([&](grpc::ClientContext& context,
                     google::pubsub::v1::Topic const& request) {
         ::google::cloud::testing_util::ValidateMetadataFixture fixture;
-        EXPECT_STATUS_OK(fixture.IsContextMDValid(
-            context, "google.pubsub.v1.Publisher.CreateTopic",
-            google::cloud::internal::ApiClientHeader()));
+        fixture.IsContextMDValid(
+            context, "google.pubsub.v1.Publisher.CreateTopic", request,
+            google::cloud::internal::ApiClientHeader());
         return make_status_or(request);
       });
 

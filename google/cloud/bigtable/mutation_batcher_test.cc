@@ -172,8 +172,8 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
                         grpc::ClientContext* context,
                         btproto::MutateRowsRequest const& r,
                         grpc::CompletionQueue*) {
-            EXPECT_STATUS_OK(IsContextMDValid(
-                *context, "google.bigtable.v2.Bigtable.MutateRows"));
+            IsContextMDValid(*context, "google.bigtable.v2.Bigtable.MutateRows",
+                             r);
             EXPECT_EQ(exchange.req.size(), r.entries_size());
             for (std::size_t i = 0; i != exchange.req.size(); ++i) {
               google::bigtable::v2::MutateRowsRequest::Entry expected;
@@ -247,10 +247,11 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
 
   std::size_t NumOperationsOutstanding() { return cq_impl_->size(); }
 
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  template <typename Request>
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        Request const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader());
+        context, method, request, google::cloud::internal::ApiClientHeader());
   }
 
   std::unique_ptr<MutationBatcher> batcher_;

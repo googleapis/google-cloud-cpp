@@ -33,10 +33,10 @@ class TableReadRowTest : public bigtable::testing::TableTestFixture {
  protected:
   TableReadRowTest() : TableTestFixture(CompletionQueue{}) {}
 
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        google::protobuf::Message const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader());
+        context, method, request, google::cloud::internal::ApiClientHeader());
   }
 
  private:
@@ -68,8 +68,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
             .WillOnce(Return(false));
         EXPECT_CALL(*stream, Finish).WillOnce(Return(grpc::Status::OK));
 
-        EXPECT_STATUS_OK(
-            IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows"));
+        IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows", req);
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
@@ -93,8 +92,7 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
         EXPECT_CALL(*stream, Read).WillOnce(Return(false));
         EXPECT_CALL(*stream, Finish).WillOnce(Return(grpc::Status::OK));
 
-        EXPECT_STATUS_OK(
-            IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows"));
+        IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows", req);
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
@@ -110,7 +108,7 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
 TEST_F(TableReadRowTest, UnrecoverableFailure) {
   EXPECT_CALL(*client_, ReadRows)
       .WillRepeatedly([this](grpc::ClientContext* context,
-                             btproto::ReadRowsRequest const&) {
+                             btproto::ReadRowsRequest const& request) {
         auto stream = absl::make_unique<MockReadRowsReader>(
             "google.bigtable.v2.Bigtable.ReadRows");
         EXPECT_CALL(*stream, Read).WillRepeatedly(Return(false));
@@ -118,8 +116,8 @@ TEST_F(TableReadRowTest, UnrecoverableFailure) {
             .WillRepeatedly(Return(
                 grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-        EXPECT_STATUS_OK(
-            IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows"));
+        IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
+                         request);
         return stream;
       });
 

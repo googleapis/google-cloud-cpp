@@ -18,7 +18,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
-#include <gmock/gmock.h>
+#include <google/protobuf/message.h>
 #include <grpcpp/generic/async_generic_service.h>
 #include <grpcpp/grpcpp.h>
 #include <map>
@@ -76,8 +76,9 @@ class ValidateMetadataFixture {
    *
    * @return an OK status if the `context` is properly set up
    */
-  Status IsContextMDValid(
+  void IsContextMDValid(
       grpc::ClientContext& context, std::string const& method,
+      google::protobuf::Message const& request,
       std::string const& api_client_header,
       absl::optional<std::string> const& resource_name = {},
       absl::optional<std::string> const& resource_prefix_header = {});

@@ -36,10 +36,10 @@ using ::testing::Pair;
 
 class SubscriberMetadataTest : public ::testing::Test {
  protected:
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        google::protobuf::Message const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader());
+        context, method, request, google::cloud::internal::ApiClientHeader());
   }
 
   void ValidateNoUserProject(grpc::ClientContext& context) {
@@ -66,9 +66,9 @@ TEST_F(SubscriberMetadataTest, CreateSubscription) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, CreateSubscription)
       .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::Subscription const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.CreateSubscription"));
+                       google::pubsub::v1::Subscription const& request) {
+        IsContextMDValid(
+            context, "google.pubsub.v1.Subscriber.CreateSubscription", request);
         return make_status_or(google::pubsub::v1::Subscription{});
       })
       .WillOnce([this](grpc::ClientContext& context,
@@ -97,10 +97,11 @@ TEST_F(SubscriberMetadataTest, CreateSubscription) {
 TEST_F(SubscriberMetadataTest, GetSubscription) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, GetSubscription)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::GetSubscriptionRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.GetSubscription"));
+      .WillOnce([this](
+                    grpc::ClientContext& context,
+                    google::pubsub::v1::GetSubscriptionRequest const& request) {
+        IsContextMDValid(context, "google.pubsub.v1.Subscriber.GetSubscription",
+                         request);
         return make_status_or(google::pubsub::v1::Subscription{});
       })
       .WillOnce([this](grpc::ClientContext& context,
@@ -129,12 +130,14 @@ TEST_F(SubscriberMetadataTest, GetSubscription) {
 TEST_F(SubscriberMetadataTest, UpdateSubscription) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, UpdateSubscription)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::UpdateSubscriptionRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.UpdateSubscription"));
-        return make_status_or(google::pubsub::v1::Subscription{});
-      })
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::UpdateSubscriptionRequest const& request) {
+            IsContextMDValid(context,
+                             "google.pubsub.v1.Subscriber.UpdateSubscription",
+                             request);
+            return make_status_or(google::pubsub::v1::Subscription{});
+          })
       .WillOnce([this](grpc::ClientContext& context,
                        google::pubsub::v1::UpdateSubscriptionRequest const&) {
         ValidateNoUserProject(context);
@@ -161,12 +164,15 @@ TEST_F(SubscriberMetadataTest, UpdateSubscription) {
 TEST_F(SubscriberMetadataTest, ListSubscriptions) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, ListSubscriptions)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::ListSubscriptionsRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.ListSubscriptions"));
-        return make_status_or(google::pubsub::v1::ListSubscriptionsResponse{});
-      })
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::ListSubscriptionsRequest const& request) {
+            IsContextMDValid(context,
+                             "google.pubsub.v1.Subscriber.ListSubscriptions",
+                             request);
+            return make_status_or(
+                google::pubsub::v1::ListSubscriptionsResponse{});
+          })
       .WillOnce([this](grpc::ClientContext& context,
                        google::pubsub::v1::ListSubscriptionsRequest const&) {
         ValidateNoUserProject(context);
@@ -192,12 +198,14 @@ TEST_F(SubscriberMetadataTest, ListSubscriptions) {
 TEST_F(SubscriberMetadataTest, DeleteSubscription) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, DeleteSubscription)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::DeleteSubscriptionRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.DeleteSubscription"));
-        return Status{};
-      })
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::DeleteSubscriptionRequest const& request) {
+            IsContextMDValid(context,
+                             "google.pubsub.v1.Subscriber.DeleteSubscription",
+                             request);
+            return Status{};
+          })
       .WillOnce([this](grpc::ClientContext& context,
                        google::pubsub::v1::DeleteSubscriptionRequest const&) {
         ValidateNoUserProject(context);
@@ -224,12 +232,14 @@ TEST_F(SubscriberMetadataTest, DeleteSubscription) {
 TEST_F(SubscriberMetadataTest, ModifyPushConfig) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, ModifyPushConfig)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::ModifyPushConfigRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.ModifyPushConfig"));
-        return Status{};
-      })
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::ModifyPushConfigRequest const& request) {
+            IsContextMDValid(context,
+                             "google.pubsub.v1.Subscriber.ModifyPushConfig",
+                             request);
+            return Status{};
+          })
       .WillOnce([this](grpc::ClientContext& context,
                        google::pubsub::v1::ModifyPushConfigRequest const&) {
         ValidateNoUserProject(context);
@@ -256,13 +266,14 @@ TEST_F(SubscriberMetadataTest, ModifyPushConfig) {
 TEST_F(SubscriberMetadataTest, AsyncStreamingPull) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([this](google::cloud::CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
-                       google::pubsub::v1::StreamingPullRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.pubsub.v1.Subscriber.StreamingPull"));
-        return absl::make_unique<pubsub_testing::MockAsyncPullStream>();
-      })
+      .WillOnce(
+          [this](google::cloud::CompletionQueue&,
+                 std::unique_ptr<grpc::ClientContext> context,
+                 google::pubsub::v1::StreamingPullRequest const& request) {
+            IsContextMDValid(
+                *context, "google.pubsub.v1.Subscriber.StreamingPull", request);
+            return absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+          })
       .WillOnce([this](google::cloud::CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
                        google::pubsub::v1::StreamingPullRequest const&) {
@@ -294,9 +305,9 @@ TEST_F(SubscriberMetadataTest, AsyncAcknowledge) {
   EXPECT_CALL(*mock, AsyncAcknowledge)
       .WillOnce([this](google::cloud::CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
-                       google::pubsub::v1::AcknowledgeRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.pubsub.v1.Subscriber.Acknowledge"));
+                       google::pubsub::v1::AcknowledgeRequest const& request) {
+        IsContextMDValid(*context, "google.pubsub.v1.Subscriber.Acknowledge",
+                         request);
         return make_ready_future(Status{});
       })
       .WillOnce([this](google::cloud::CompletionQueue&,
@@ -328,13 +339,15 @@ TEST_F(SubscriberMetadataTest, AsyncAcknowledge) {
 TEST_F(SubscriberMetadataTest, AsyncModifyAckDeadline) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillOnce([this](google::cloud::CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
-                       google::pubsub::v1::ModifyAckDeadlineRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.pubsub.v1.Subscriber.ModifyAckDeadline"));
-        return make_ready_future(Status{});
-      })
+      .WillOnce(
+          [this](google::cloud::CompletionQueue&,
+                 std::unique_ptr<grpc::ClientContext> context,
+                 google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+            IsContextMDValid(*context,
+                             "google.pubsub.v1.Subscriber.ModifyAckDeadline",
+                             request);
+            return make_ready_future(Status{});
+          })
       .WillOnce([this](google::cloud::CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
                        google::pubsub::v1::ModifyAckDeadlineRequest const&) {
@@ -364,12 +377,13 @@ TEST_F(SubscriberMetadataTest, AsyncModifyAckDeadline) {
 TEST_F(SubscriberMetadataTest, CreateSnapshot) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, CreateSnapshot)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::CreateSnapshotRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.CreateSnapshot"));
-        return make_status_or(google::pubsub::v1::Snapshot{});
-      })
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::CreateSnapshotRequest const& request) {
+            IsContextMDValid(
+                context, "google.pubsub.v1.Subscriber.CreateSnapshot", request);
+            return make_status_or(google::pubsub::v1::Snapshot{});
+          })
       .WillOnce([this](grpc::ClientContext& context,
                        google::pubsub::v1::CreateSnapshotRequest const&) {
         ValidateNoUserProject(context);
@@ -397,9 +411,9 @@ TEST_F(SubscriberMetadataTest, GetSnapshot) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, GetSnapshot)
       .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::GetSnapshotRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.GetSnapshot"));
+                       google::pubsub::v1::GetSnapshotRequest const& request) {
+        IsContextMDValid(context, "google.pubsub.v1.Subscriber.GetSnapshot",
+                         request);
         return make_status_or(google::pubsub::v1::Snapshot{});
       })
       .WillOnce([this](grpc::ClientContext& context,
@@ -428,12 +442,13 @@ TEST_F(SubscriberMetadataTest, GetSnapshot) {
 TEST_F(SubscriberMetadataTest, ListSnapshots) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, ListSnapshots)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::ListSnapshotsRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.ListSnapshots"));
-        return make_status_or(google::pubsub::v1::ListSnapshotsResponse{});
-      })
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::ListSnapshotsRequest const& request) {
+            IsContextMDValid(
+                context, "google.pubsub.v1.Subscriber.ListSnapshots", request);
+            return make_status_or(google::pubsub::v1::ListSnapshotsResponse{});
+          })
       .WillOnce([this](grpc::ClientContext& context,
                        google::pubsub::v1::ListSnapshotsRequest const&) {
         ValidateNoUserProject(context);
@@ -459,12 +474,13 @@ TEST_F(SubscriberMetadataTest, ListSnapshots) {
 TEST_F(SubscriberMetadataTest, UpdateSnapshot) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, UpdateSnapshot)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::UpdateSnapshotRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.UpdateSnapshot"));
-        return make_status_or(google::pubsub::v1::Snapshot{});
-      })
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::UpdateSnapshotRequest const& request) {
+            IsContextMDValid(
+                context, "google.pubsub.v1.Subscriber.UpdateSnapshot", request);
+            return make_status_or(google::pubsub::v1::Snapshot{});
+          })
       .WillOnce([this](grpc::ClientContext& context,
                        google::pubsub::v1::UpdateSnapshotRequest const&) {
         ValidateNoUserProject(context);
@@ -491,12 +507,13 @@ TEST_F(SubscriberMetadataTest, UpdateSnapshot) {
 TEST_F(SubscriberMetadataTest, DeleteSnapshot) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, DeleteSnapshot)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::DeleteSnapshotRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.DeleteSnapshot"));
-        return Status{};
-      })
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::DeleteSnapshotRequest const& request) {
+            IsContextMDValid(
+                context, "google.pubsub.v1.Subscriber.DeleteSnapshot", request);
+            return Status{};
+          })
       .WillOnce([this](grpc::ClientContext& context,
                        google::pubsub::v1::DeleteSnapshotRequest const&) {
         ValidateNoUserProject(context);
@@ -524,9 +541,8 @@ TEST_F(SubscriberMetadataTest, Seek) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, Seek)
       .WillOnce([this](grpc::ClientContext& context,
-                       google::pubsub::v1::SeekRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context, "google.pubsub.v1.Subscriber.Seek"));
+                       google::pubsub::v1::SeekRequest const& request) {
+        IsContextMDValid(context, "google.pubsub.v1.Subscriber.Seek", request);
         return make_status_or(google::pubsub::v1::SeekResponse{});
       })
       .WillOnce([this](grpc::ClientContext& context,

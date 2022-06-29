@@ -32,10 +32,10 @@ class TableCheckAndMutateRowTest : public bigtable::testing::TableTestFixture {
  protected:
   TableCheckAndMutateRowTest() : TableTestFixture(CompletionQueue{}) {}
 
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        google::protobuf::Message const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader());
+        context, method, request, google::cloud::internal::ApiClientHeader());
   }
 
   std::function<
@@ -43,11 +43,12 @@ class TableCheckAndMutateRowTest : public bigtable::testing::TableTestFixture {
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
                    google::bigtable::v2::CheckAndMutateRowResponse*)>
   CreateCheckAndMutateMock(grpc::Status const& status) {
-    return [this, status](grpc::ClientContext* context,
-                          google::bigtable::v2::CheckAndMutateRowRequest const&,
-                          google::bigtable::v2::CheckAndMutateRowResponse*) {
-      EXPECT_STATUS_OK(IsContextMDValid(
-          *context, "google.bigtable.v2.Bigtable.CheckAndMutateRow"));
+    return [this, status](
+               grpc::ClientContext* context,
+               google::bigtable::v2::CheckAndMutateRowRequest const& request,
+               google::bigtable::v2::CheckAndMutateRowResponse*) {
+      IsContextMDValid(
+          *context, "google.bigtable.v2.Bigtable.CheckAndMutateRow", request);
       return status;
     };
   }
