@@ -33,7 +33,6 @@ namespace testing_util {
 namespace {
 
 using ::testing::Contains;
-using ::testing::ContainsRegex;
 using ::testing::Pair;
 
 using RoutingHeaders = std::map<std::string, std::string>;
