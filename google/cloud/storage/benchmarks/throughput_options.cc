@@ -31,7 +31,7 @@ Status ValidateQuantizedRange(std::string const& name, std::int64_t minimum,
        << "]";
     return google::cloud::Status{StatusCode::kInvalidArgument, os.str()};
   }
-  if (quantum < 0 || (quantum > minimum && minimum != 0)) {
+  if (quantum <= 0 || (quantum > minimum && minimum != 0)) {
     std::ostringstream os;
     os << "Invalid quantum for " << name << " (" << quantum
        << "), it should be in the (0," << minimum << "] range";

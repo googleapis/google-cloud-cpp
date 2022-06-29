@@ -158,7 +158,7 @@ int main(int argc, char* argv[]) {
 
   auto output_quantized_range = [](std::string const& name, auto minimum,
                                    auto maximum, auto quantum) {
-    std::cout << "\n# " << name << " Size Range: [" << minimum << ',' << maximum
+    std::cout << "\n# " << name << " Range: [" << minimum << ',' << maximum
               << "]\n# " << name << " Quantum: " << quantum;
   };
 
@@ -175,10 +175,10 @@ int main(int argc, char* argv[]) {
 
   output_size_range("Object Size", options->minimum_object_size,
                     options->maximum_object_size);
-  output_quantized_range("Write Buffer", options->minimum_write_buffer_size,
-                         options->maximum_write_buffer_size,
-                         options->write_buffer_quantum);
-  output_quantized_range("Read Buffer", options->minimum_read_buffer_size,
+  output_quantized_range(
+      "Write Buffer Size", options->minimum_write_buffer_size,
+      options->maximum_write_buffer_size, options->write_buffer_quantum);
+  output_quantized_range("Read Buffer Size", options->minimum_read_buffer_size,
                          options->maximum_read_buffer_size,
                          options->read_buffer_quantum);
 
@@ -349,11 +349,8 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
 
   auto quantized_range_generator = [](auto minimum, auto maximum,
                                       auto quantum) {
-    auto distribution = std::uniform_int_distribution<decltype(quantum)>(0, 0);
-    if (quantum != 0) {
-      distribution = std::uniform_int_distribution<decltype(quantum)>(
-          minimum / quantum, maximum / quantum);
-    }
+    auto distribution = std::uniform_int_distribution<decltype(quantum)>(
+        minimum / quantum, maximum / quantum);
     return [d = std::move(distribution), quantum](auto& g) mutable {
       return quantum * d(g);
     };
