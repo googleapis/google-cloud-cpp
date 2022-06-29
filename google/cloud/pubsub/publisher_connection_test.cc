@@ -80,9 +80,9 @@ TEST(PublisherConnectionTest, Metadata) {
                           std::unique_ptr<grpc::ClientContext> context,
                           google::pubsub::v1::PublishRequest const& request) {
         google::cloud::testing_util::ValidateMetadataFixture fixture;
-        EXPECT_STATUS_OK(fixture.IsContextMDValid(
-            *context, "google.pubsub.v1.Publisher.Publish",
-            google::cloud::internal::ApiClientHeader()));
+        fixture.IsContextMDValid(*context, "google.pubsub.v1.Publisher.Publish",
+                                 request,
+                                 google::cloud::internal::ApiClientHeader());
         google::pubsub::v1::PublishResponse response;
         for (auto const& m : request.messages()) {
           response.add_message_ids("ack-" + m.message_id());

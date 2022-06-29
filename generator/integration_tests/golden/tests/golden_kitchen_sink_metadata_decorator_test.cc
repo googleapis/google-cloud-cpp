@@ -56,10 +56,12 @@ class MetadataDecoratorTest : public ::testing::Test {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  template <typename Request>
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        Request const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader("generator"));
+        context, method, request,
+        google::cloud::internal::ApiClientHeader("generator"));
   }
 
   std::multimap<std::string, std::string> GetMetadata(
@@ -118,11 +120,11 @@ TEST_F(MetadataDecoratorTest, GenerateAccessToken) {
   EXPECT_CALL(*mock_, GenerateAccessToken)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
-                           GenerateAccessTokenRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.test.admin.database.v1.GoldenKitchenSink."
-                             "GenerateAccessToken"));
+                           GenerateAccessTokenRequest const& request) {
+        IsContextMDValid(context,
+                         "google.test.admin.database.v1.GoldenKitchenSink."
+                         "GenerateAccessToken",
+                         request);
         return TransientError();
       });
 
@@ -138,10 +140,11 @@ TEST_F(MetadataDecoratorTest, GenerateIdToken) {
   EXPECT_CALL(*mock_, GenerateIdToken)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
-                           GenerateIdTokenRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
+                           GenerateIdTokenRequest const& request) {
+        IsContextMDValid(
             context,
-            "google.test.admin.database.v1.GoldenKitchenSink.GenerateIdToken"));
+            "google.test.admin.database.v1.GoldenKitchenSink.GenerateIdToken",
+            request);
         return TransientError();
       });
 
@@ -157,10 +160,11 @@ TEST_F(MetadataDecoratorTest, WriteLogEntries) {
   EXPECT_CALL(*mock_, WriteLogEntries)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
-                           WriteLogEntriesRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
+                           WriteLogEntriesRequest const& request) {
+        IsContextMDValid(
             context,
-            "google.test.admin.database.v1.GoldenKitchenSink.WriteLogEntries"));
+            "google.test.admin.database.v1.GoldenKitchenSink.WriteLogEntries",
+            request);
         return TransientError();
       });
 
@@ -173,14 +177,14 @@ TEST_F(MetadataDecoratorTest, WriteLogEntries) {
 
 TEST_F(MetadataDecoratorTest, ListLogs) {
   EXPECT_CALL(*mock_, ListLogs)
-      .WillOnce(
-          [this](grpc::ClientContext& context,
-                 google::test::admin::database::v1::ListLogsRequest const&) {
-            EXPECT_STATUS_OK(IsContextMDValid(
-                context,
-                "google.test.admin.database.v1.GoldenKitchenSink.ListLogs"));
-            return TransientError();
-          });
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::ListLogsRequest const&
+                           request) {
+        IsContextMDValid(
+            context, "google.test.admin.database.v1.GoldenKitchenSink.ListLogs",
+            request);
+        return TransientError();
+      });
 
   GoldenKitchenSinkMetadata stub(mock_);
   grpc::ClientContext context;
@@ -193,14 +197,15 @@ TEST_F(MetadataDecoratorTest, ListLogs) {
 TEST_F(MetadataDecoratorTest, TailLogEntries) {
   EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce([this](std::unique_ptr<grpc::ClientContext> context,
-                       TailLogEntriesRequest const&) {
+                       TailLogEntriesRequest const& request) {
         auto mock_response =
             absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
         EXPECT_CALL(*mock_response, Read)
             .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
-        EXPECT_STATUS_OK(IsContextMDValid(
+        IsContextMDValid(
             *context,
-            "google.test.admin.database.v1.GoldenKitchenSink.TailLogEntries"));
+            "google.test.admin.database.v1.GoldenKitchenSink.TailLogEntries",
+            request);
         return std::unique_ptr<
             internal::StreamingReadRpc<TailLogEntriesResponse>>(
             std::move(mock_response));
@@ -216,11 +221,11 @@ TEST_F(MetadataDecoratorTest, ListServiceAccountKeys) {
   EXPECT_CALL(*mock_, ListServiceAccountKeys)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
-                           ListServiceAccountKeysRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.test.admin.database.v1.GoldenKitchenSink."
-                             "ListServiceAccountKeys"));
+                           ListServiceAccountKeysRequest const& request) {
+        IsContextMDValid(context,
+                         "google.test.admin.database.v1.GoldenKitchenSink."
+                         "ListServiceAccountKeys",
+                         request);
         return TransientError();
       });
 
@@ -235,9 +240,10 @@ TEST_F(MetadataDecoratorTest, ListServiceAccountKeys) {
 TEST_F(MetadataDecoratorTest, WriteObject) {
   EXPECT_CALL(*mock_, WriteObject)
       .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
-        EXPECT_STATUS_OK(IsContextMDValid(
+        IsContextMDValid(
             *context,
-            "google.test.admin.database.v1.GoldenKitchenSink.WriteObject"));
+            "google.test.admin.database.v1.GoldenKitchenSink.WriteObject",
+            WriteObjectRequest{});
 
         auto stream = absl::make_unique<MockWriteObjectStreamingWriteRpc>();
         EXPECT_CALL(*stream, Write)
@@ -262,10 +268,11 @@ TEST_F(MetadataDecoratorTest, AsyncTailLogEntries) {
   EXPECT_CALL(*mock_, AsyncTailLogEntries)
       .WillOnce([this](google::cloud::CompletionQueue const&,
                        std::unique_ptr<grpc::ClientContext> context,
-                       TailLogEntriesRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
+                       TailLogEntriesRequest const& request) {
+        IsContextMDValid(
             *context,
-            "google.test.admin.database.v1.GoldenKitchenSink.TailLogEntries"));
+            "google.test.admin.database.v1.GoldenKitchenSink.TailLogEntries",
+            request);
         using ErrorStream =
             ::google::cloud::internal::AsyncStreamingReadRpcError<
                 TailLogEntriesResponse>;
@@ -289,9 +296,10 @@ TEST_F(MetadataDecoratorTest, AsyncWriteObject) {
   EXPECT_CALL(*mock_, AsyncWriteObject)
       .WillOnce([this](google::cloud::CompletionQueue const&,
                        std::unique_ptr<grpc::ClientContext> context) {
-        EXPECT_STATUS_OK(IsContextMDValid(
+        IsContextMDValid(
             *context,
-            "google.test.admin.database.v1.GoldenKitchenSink.TailLogEntries"));
+            "google.test.admin.database.v1.GoldenKitchenSink.WriteObject",
+            WriteObjectRequest{});
         using ErrorStream =
             ::google::cloud::internal::AsyncStreamingWriteRpcError<
                 WriteObjectRequest, WriteObjectResponse>;

@@ -78,9 +78,9 @@ TEST(SubscriptionAdminConnectionTest, CreateWithMetadata) {
       .WillOnce([&](grpc::ClientContext& context,
                     google::pubsub::v1::Subscription const& request) {
         testing_util::ValidateMetadataFixture fixture;
-        EXPECT_STATUS_OK(fixture.IsContextMDValid(
-            context, "google.pubsub.v1.Subscriber.CreateSubscription",
-            google::cloud::internal::ApiClientHeader()));
+        fixture.IsContextMDValid(
+            context, "google.pubsub.v1.Subscriber.CreateSubscription", request,
+            google::cloud::internal::ApiClientHeader());
         EXPECT_EQ(subscription.FullName(), request.name());
         return make_status_or(request);
       });

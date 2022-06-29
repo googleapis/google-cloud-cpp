@@ -52,10 +52,12 @@ using ::testing::Return;
 
 class StorageStubFactory : public ::testing::Test {
  protected:
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  template <typename Request>
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        Request const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader("generator"));
+        context, method, request,
+        google::cloud::internal::ApiClientHeader("generator"));
   }
 
  private:
@@ -90,26 +92,28 @@ TEST_F(StorageStubFactory, ReadObject) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, AsyncReadObject)
-            .WillOnce([this](google::cloud::CompletionQueue const&,
-                             std::unique_ptr<grpc::ClientContext> context,
-                             google::storage::v2::ReadObjectRequest const&) {
-              // Verify the Auth decorator is present
-              EXPECT_THAT(context->credentials(), NotNull());
-              // Verify the Metadata decorator is present
-              EXPECT_STATUS_OK(IsContextMDValid(
-                  *context, "google.storage.v2.Storage.ReadObject"));
-              auto stream = absl::make_unique<MockObjectMediaStream>();
-              EXPECT_CALL(*stream, Start)
-                  .WillOnce(Return(ByMove(make_ready_future(true))));
-              EXPECT_CALL(*stream, Read)
-                  .WillOnce(Return(ByMove(make_ready_future(
-                      absl::optional<
-                          google::storage::v2::ReadObjectResponse>()))));
-              EXPECT_CALL(*stream, Finish)
-                  .WillOnce(Return(ByMove(make_ready_future(
-                      Status(StatusCode::kUnavailable, "nothing here")))));
-              return stream;
-            });
+            .WillOnce(
+                [this](google::cloud::CompletionQueue const&,
+                       std::unique_ptr<grpc::ClientContext> context,
+                       google::storage::v2::ReadObjectRequest const& request) {
+                  // Verify the Auth decorator is present
+                  EXPECT_THAT(context->credentials(), NotNull());
+                  // Verify the Metadata decorator is present
+                  IsContextMDValid(*context,
+                                   "google.storage.v2.Storage.ReadObject",
+                                   request);
+                  auto stream = absl::make_unique<MockObjectMediaStream>();
+                  EXPECT_CALL(*stream, Start)
+                      .WillOnce(Return(ByMove(make_ready_future(true))));
+                  EXPECT_CALL(*stream, Read)
+                      .WillOnce(Return(ByMove(make_ready_future(
+                          absl::optional<
+                              google::storage::v2::ReadObjectResponse>()))));
+                  EXPECT_CALL(*stream, Finish)
+                      .WillOnce(Return(ByMove(make_ready_future(
+                          Status(StatusCode::kUnavailable, "nothing here")))));
+                  return stream;
+                });
         return mock;
       });
   EXPECT_CALL(factory, Call)
@@ -142,8 +146,9 @@ TEST_F(StorageStubFactory, WriteObject) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context->credentials(), NotNull());
               // Verify the Metadata decorator is present
-              EXPECT_STATUS_OK(IsContextMDValid(
-                  *context, "google.storage.v2.Storage.WriteObject"));
+              IsContextMDValid(*context,
+                               "google.storage.v2.Storage.WriteObject",
+                               google::storage::v2::WriteObjectRequest{});
               auto stream = absl::make_unique<MockInsertStream>();
               EXPECT_CALL(*stream, Start)
                   .WillOnce(Return(ByMove(make_ready_future(true))));
@@ -179,19 +184,19 @@ TEST_F(StorageStubFactory, StartResumableWrite) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, StartResumableWrite)
-            .WillOnce(
-                [this](grpc::ClientContext& context,
-                       google::storage::v2::StartResumableWriteRequest const&) {
-                  // Verify the Auth decorator is present
-                  EXPECT_THAT(context.credentials(), NotNull());
-                  // Verify the Metadata decorator is present
-                  EXPECT_STATUS_OK(IsContextMDValid(
-                      context,
-                      "google.storage.v2.Storage.StartResumableWrite"));
-                  return StatusOr<
-                      google::storage::v2::StartResumableWriteResponse>(
-                      Status(StatusCode::kUnavailable, "nothing here"));
-                });
+            .WillOnce([this](
+                          grpc::ClientContext& context,
+                          google::storage::v2::StartResumableWriteRequest const&
+                              request) {
+              // Verify the Auth decorator is present
+              EXPECT_THAT(context.credentials(), NotNull());
+              // Verify the Metadata decorator is present
+              IsContextMDValid(context,
+                               "google.storage.v2.Storage.StartResumableWrite",
+                               request);
+              return StatusOr<google::storage::v2::StartResumableWriteResponse>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
         return mock;
       });
   EXPECT_CALL(factory, Call)
@@ -217,14 +222,15 @@ TEST_F(StorageStubFactory, QueryWriteStatus) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, QueryWriteStatus)
-            .WillOnce([this](
-                          grpc::ClientContext& context,
-                          google::storage::v2::QueryWriteStatusRequest const&) {
+            .WillOnce([this](grpc::ClientContext& context,
+                             google::storage::v2::QueryWriteStatusRequest const&
+                                 request) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context.credentials(), NotNull());
               // Verify the Metadata decorator is present
-              EXPECT_STATUS_OK(IsContextMDValid(
-                  context, "google.storage.v2.Storage.QueryWriteStatus"));
+              IsContextMDValid(context,
+                               "google.storage.v2.Storage.QueryWriteStatus",
+                               request);
               return StatusOr<google::storage::v2::QueryWriteStatusResponse>(
                   Status(StatusCode::kUnavailable, "nothing here"));
             });
