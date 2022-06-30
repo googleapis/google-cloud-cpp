@@ -369,15 +369,18 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
       options.minimum_read_size, options.maximum_read_size,
       options.read_size_quantum);
 
-  auto const read_range_enabled =
-      options.minimum_read_size != options.maximum_read_size;
   auto read_range_generator = [&](auto& g, std::int64_t object_size)
       -> absl::optional<std::pair<std::int64_t, std::int64_t>> {
-    if (!read_range_enabled || !std::bernoulli_distribution{}(g)) {
-      return absl::nullopt;
-    }
     auto offset = (std::min)(object_size, read_offset_generator(g));
     auto size = (std::min)(object_size - offset, read_size_generator(g));
+    // This makes it easier to control the ratio of ranged vs. full reads from
+    // the command-line. To make more full reads happen set the read range size
+    // to be larger than the object sizes. The larger this read range size is,
+    // the higher the proportion of full range reads.
+    if (offset == 0 && size == object_size) return absl::nullopt;
+    // The REST API has a quirk: reading the last 0 bytes returns all the bytes,
+    // just read the *first* 0 bytes in that case.
+    if (offset == object_size) return std::make_pair(0, 0);
     return std::make_pair(offset, size);
   };
 
