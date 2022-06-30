@@ -59,11 +59,10 @@ DataConnectionImpl::DataConnectionImpl(
           std::move(options),
           bigtable::internal::DefaultDataOptions(DataConnection::options()))) {}
 
-Status DataConnectionImpl::Apply(std::string const& app_profile_id,
-                                 std::string const& table_name,
+Status DataConnectionImpl::Apply(std::string const& table_name,
                                  bigtable::SingleRowMutation mut) {
   google::bigtable::v2::MutateRowRequest request;
-  request.set_app_profile_id(app_profile_id);
+  request.set_app_profile_id(app_profile_id());
   request.set_table_name(table_name);
   mut.MoveTo(request);
 
@@ -86,11 +85,10 @@ Status DataConnectionImpl::Apply(std::string const& app_profile_id,
   return Status{};
 }
 
-future<Status> DataConnectionImpl::AsyncApply(std::string const& app_profile_id,
-                                              std::string const& table_name,
+future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
                                               bigtable::SingleRowMutation mut) {
   google::bigtable::v2::MutateRowRequest request;
-  request.set_app_profile_id(app_profile_id);
+  request.set_app_profile_id(app_profile_id());
   request.set_table_name(table_name);
   mut.MoveTo(request);
 
@@ -121,11 +119,10 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& app_profile_id,
 }
 
 std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
-    std::string const& app_profile_id, std::string const& table_name,
-    bigtable::BulkMutation mut) {
+    std::string const& table_name, bigtable::BulkMutation mut) {
   if (mut.empty()) return {};
   bigtable::internal::BulkMutator mutator(
-      app_profile_id, table_name, *idempotency_policy(), std::move(mut));
+      app_profile_id(), table_name, *idempotency_policy(), std::move(mut));
   // We wait to allocate the policies until they are needed as a
   // micro-optimization.
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
@@ -143,31 +140,30 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
 }
 
 future<std::vector<bigtable::FailedMutation>>
-DataConnectionImpl::AsyncBulkApply(std::string const& app_profile_id,
-                                   std::string const& table_name,
+DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
                                    bigtable::BulkMutation mut) {
   return AsyncBulkApplier::Create(background_->cq(), stub_, retry_policy(),
                                   backoff_policy(), *idempotency_policy(),
-                                  app_profile_id, table_name, std::move(mut));
+                                  app_profile_id(), table_name, std::move(mut));
 }
 
-bigtable::RowReader DataConnectionImpl::ReadRows(
-    std::string const& app_profile_id, std::string const& table_name,
-    bigtable::RowSet row_set, std::int64_t rows_limit,
-    bigtable::Filter filter) {
+bigtable::RowReader DataConnectionImpl::ReadRows(std::string const& table_name,
+                                                 bigtable::RowSet row_set,
+                                                 std::int64_t rows_limit,
+                                                 bigtable::Filter filter) {
   auto impl = std::make_shared<DefaultRowReader>(
-      stub_, app_profile_id, table_name, std::move(row_set), rows_limit,
+      stub_, app_profile_id(), table_name, std::move(row_set), rows_limit,
       std::move(filter), retry_policy(), backoff_policy());
   return MakeRowReader(std::move(impl));
 }
 
 StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
-    std::string const& app_profile_id, std::string const& table_name,
-    std::string row_key, bigtable::Filter filter) {
+    std::string const& table_name, std::string row_key,
+    bigtable::Filter filter) {
   bigtable::RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
-  auto reader = ReadRows(app_profile_id, table_name, std::move(row_set),
-                         rows_limit, std::move(filter));
+  auto reader =
+      ReadRows(table_name, std::move(row_set), rows_limit, std::move(filter));
 
   auto it = reader.begin();
   if (it == reader.end()) return std::make_pair(false, bigtable::Row("", {}));
@@ -182,12 +178,11 @@ StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
 }
 
 StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
-    std::string const& app_profile_id, std::string const& table_name,
-    std::string row_key, bigtable::Filter filter,
+    std::string const& table_name, std::string row_key, bigtable::Filter filter,
     std::vector<bigtable::Mutation> true_mutations,
     std::vector<bigtable::Mutation> false_mutations) {
   google::bigtable::v2::CheckAndMutateRowRequest request;
-  request.set_app_profile_id(app_profile_id);
+  request.set_app_profile_id(app_profile_id());
   request.set_table_name(table_name);
   request.set_row_key(std::move(row_key));
   *request.mutable_predicate_filter() = std::move(filter).as_proto();
@@ -216,12 +211,11 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
 
 future<StatusOr<bigtable::MutationBranch>>
 DataConnectionImpl::AsyncCheckAndMutateRow(
-    std::string const& app_profile_id, std::string const& table_name,
-    std::string row_key, bigtable::Filter filter,
+    std::string const& table_name, std::string row_key, bigtable::Filter filter,
     std::vector<bigtable::Mutation> true_mutations,
     std::vector<bigtable::Mutation> false_mutations) {
   google::bigtable::v2::CheckAndMutateRowRequest request;
-  request.set_app_profile_id(app_profile_id);
+  request.set_app_profile_id(app_profile_id());
   request.set_table_name(table_name);
   request.set_row_key(std::move(row_key));
   *request.mutable_predicate_filter() = std::move(filter).as_proto();
@@ -258,9 +252,9 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
 }
 
 StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
-    std::string const& app_profile_id, std::string const& table_name) {
+    std::string const& table_name) {
   google::bigtable::v2::SampleRowKeysRequest request;
-  request.set_app_profile_id(app_profile_id);
+  request.set_app_profile_id(app_profile_id());
   request.set_table_name(table_name);
 
   Status status;
@@ -307,10 +301,10 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
 }
 
 future<StatusOr<std::vector<bigtable::RowKeySample>>>
-DataConnectionImpl::AsyncSampleRows(std::string const& app_profile_id,
-                                    std::string const& table_name) {
+DataConnectionImpl::AsyncSampleRows(std::string const& table_name) {
   return AsyncRowSampler::Create(background_->cq(), stub_, retry_policy(),
-                                 backoff_policy(), app_profile_id, table_name);
+                                 backoff_policy(), app_profile_id(),
+                                 table_name);
 }
 
 StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
@@ -350,19 +344,18 @@ future<StatusOr<bigtable::Row>> DataConnectionImpl::AsyncReadModifyWriteRow(
 }
 
 void DataConnectionImpl::AsyncReadRows(
-    std::string const& app_profile_id, std::string const& table_name,
+    std::string const& table_name,
     std::function<future<bool>(bigtable::Row)> on_row,
     std::function<void(Status)> on_finish, bigtable::RowSet row_set,
     std::int64_t rows_limit, bigtable::Filter filter) {
   bigtable_internal::AsyncRowReader::Create(
-      background_->cq(), stub_, app_profile_id, table_name, std::move(on_row),
+      background_->cq(), stub_, app_profile_id(), table_name, std::move(on_row),
       std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),
       retry_policy(), backoff_policy());
 }
 
 future<StatusOr<std::pair<bool, bigtable::Row>>>
-DataConnectionImpl::AsyncReadRow(std::string const& app_profile_id,
-                                 std::string const& table_name,
+DataConnectionImpl::AsyncReadRow(std::string const& table_name,
                                  std::string row_key, bigtable::Filter filter) {
   class AsyncReadRowHandler {
    public:
@@ -409,7 +402,7 @@ DataConnectionImpl::AsyncReadRow(std::string const& app_profile_id,
   std::int64_t const rows_limit = 1;
   auto handler = std::make_shared<AsyncReadRowHandler>();
   AsyncReadRows(
-      app_profile_id, table_name,
+      table_name,
       [handler](bigtable::Row row) { return handler->OnRow(std::move(row)); },
       [handler](Status status) {
         handler->OnStreamFinished(std::move(status));

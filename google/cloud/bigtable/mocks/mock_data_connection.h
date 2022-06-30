@@ -37,61 +37,51 @@ class MockDataConnection : public bigtable::DataConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(Status, Apply,
-              (std::string const& app_profile_id, std::string const& table_name,
-               bigtable::SingleRowMutation mut),
+              (std::string const& table_name, bigtable::SingleRowMutation mut),
               (override));
 
   MOCK_METHOD(future<Status>, AsyncApply,
-              (std::string const& app_profile_id, std::string const& table_name,
-               bigtable::SingleRowMutation mut),
+              (std::string const& table_name, bigtable::SingleRowMutation mut),
               (override));
 
   MOCK_METHOD(std::vector<bigtable::FailedMutation>, BulkApply,
-              (std::string const& app_profile_id, std::string const& table_name,
-               bigtable::BulkMutation mut),
+              (std::string const& table_name, bigtable::BulkMutation mut),
               (override));
 
   MOCK_METHOD(future<std::vector<bigtable::FailedMutation>>, AsyncBulkApply,
-              (std::string const& app_profile_id, std::string const& table_name,
-               bigtable::BulkMutation mut),
+              (std::string const& table_name, bigtable::BulkMutation mut),
               (override));
 
   MOCK_METHOD(bigtable::RowReader, ReadRows,
-              (std::string const& app_profile_id, std::string const& table_name,
-               bigtable::RowSet row_set, std::int64_t rows_limit,
-               bigtable::Filter filter),
+              (std::string const& table_name, bigtable::RowSet row_set,
+               std::int64_t rows_limit, bigtable::Filter filter),
               (override));
 
   MOCK_METHOD((StatusOr<std::pair<bool, bigtable::Row>>), ReadRow,
-              (std::string const& app_profile_id, std::string const& table_name,
-               std::string row_key, bigtable::Filter filter),
+              (std::string const& table_name, std::string row_key,
+               bigtable::Filter filter),
               (override));
 
   MOCK_METHOD(StatusOr<bigtable::MutationBranch>, CheckAndMutateRow,
-              (std::string const& app_profile_id, std::string const& table_name,
-               std::string row_key, bigtable::Filter filter,
+              (std::string const& table_name, std::string row_key,
+               bigtable::Filter filter,
                std::vector<bigtable::Mutation> true_mutations,
                std::vector<bigtable::Mutation> false_mutations),
               (override));
 
   MOCK_METHOD(future<StatusOr<bigtable::MutationBranch>>,
               AsyncCheckAndMutateRow,
-              (std::string const& app_profile_id, std::string const& table_name,
-               std::string row_key, bigtable::Filter filter,
+              (std::string const& table_name, std::string row_key,
+               bigtable::Filter filter,
                std::vector<bigtable::Mutation> true_mutations,
                std::vector<bigtable::Mutation> false_mutations),
               (override));
 
   MOCK_METHOD(StatusOr<std::vector<bigtable::RowKeySample>>, SampleRows,
-              (std::string const& app_profile_id,
-               std::string const& table_name),
-              (override));
+              (std::string const& table_name), (override));
 
   MOCK_METHOD(future<StatusOr<std::vector<bigtable::RowKeySample>>>,
-              AsyncSampleRows,
-              (std::string const& app_profile_id,
-               std::string const& table_name),
-              (override));
+              AsyncSampleRows, (std::string const& table_name), (override));
 
   MOCK_METHOD(StatusOr<bigtable::Row>, ReadModifyWriteRow,
               (google::bigtable::v2::ReadModifyWriteRowRequest request),
@@ -102,15 +92,15 @@ class MockDataConnection : public bigtable::DataConnection {
               (override));
 
   MOCK_METHOD(void, AsyncReadRows,
-              (std::string const& app_profile_id, std::string const& table_name,
+              (std::string const& table_name,
                std::function<future<bool>(bigtable::Row)> on_row,
                std::function<void(Status)> on_finish, bigtable::RowSet row_set,
                std::int64_t rows_limit, bigtable::Filter filter),
               (override));
 
   MOCK_METHOD((future<StatusOr<std::pair<bool, bigtable::Row>>>), AsyncReadRow,
-              (std::string const& app_profile_id, std::string const& table_name,
-               std::string row_key, bigtable::Filter filter),
+              (std::string const& table_name, std::string row_key,
+               bigtable::Filter filter),
               (override));
 };
 

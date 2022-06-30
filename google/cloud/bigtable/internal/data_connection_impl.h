@@ -41,49 +41,41 @@ class DataConnectionImpl : public bigtable::DataConnection {
 
   Options options() override { return options_; }
 
-  Status Apply(std::string const& app_profile_id, std::string const& table_name,
+  Status Apply(std::string const& table_name,
                bigtable::SingleRowMutation mut) override;
 
-  future<Status> AsyncApply(std::string const& app_profile_id,
-                            std::string const& table_name,
+  future<Status> AsyncApply(std::string const& table_name,
                             bigtable::SingleRowMutation mut) override;
 
   std::vector<bigtable::FailedMutation> BulkApply(
-      std::string const& app_profile_id, std::string const& table_name,
-      bigtable::BulkMutation mut) override;
+      std::string const& table_name, bigtable::BulkMutation mut) override;
 
   future<std::vector<bigtable::FailedMutation>> AsyncBulkApply(
-      std::string const& app_profile_id, std::string const& table_name,
-      bigtable::BulkMutation mut) override;
+      std::string const& table_name, bigtable::BulkMutation mut) override;
 
-  bigtable::RowReader ReadRows(std::string const& app_profile_id,
-                               std::string const& table_name,
+  bigtable::RowReader ReadRows(std::string const& table_name,
                                bigtable::RowSet row_set,
                                std::int64_t rows_limit,
                                bigtable::Filter filter) override;
 
   StatusOr<std::pair<bool, bigtable::Row>> ReadRow(
-      std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, bigtable::Filter filter) override;
+      std::string const& table_name, std::string row_key,
+      bigtable::Filter filter) override;
 
   StatusOr<bigtable::MutationBranch> CheckAndMutateRow(
-      std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, bigtable::Filter filter,
-      std::vector<bigtable::Mutation> true_mutations,
+      std::string const& table_name, std::string row_key,
+      bigtable::Filter filter, std::vector<bigtable::Mutation> true_mutations,
       std::vector<bigtable::Mutation> false_mutations) override;
 
   future<StatusOr<bigtable::MutationBranch>> AsyncCheckAndMutateRow(
-      std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, bigtable::Filter filter,
-      std::vector<bigtable::Mutation> true_mutations,
+      std::string const& table_name, std::string row_key,
+      bigtable::Filter filter, std::vector<bigtable::Mutation> true_mutations,
       std::vector<bigtable::Mutation> false_mutations) override;
 
   StatusOr<std::vector<bigtable::RowKeySample>> SampleRows(
-      std::string const& app_profile_id,
       std::string const& table_name) override;
 
   future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows(
-      std::string const& app_profile_id,
       std::string const& table_name) override;
 
   StatusOr<bigtable::Row> ReadModifyWriteRow(
@@ -92,18 +84,21 @@ class DataConnectionImpl : public bigtable::DataConnection {
   future<StatusOr<bigtable::Row>> AsyncReadModifyWriteRow(
       google::bigtable::v2::ReadModifyWriteRowRequest request) override;
 
-  void AsyncReadRows(std::string const& app_profile_id,
-                     std::string const& table_name,
+  void AsyncReadRows(std::string const& table_name,
                      std::function<future<bool>(bigtable::Row)> on_row,
                      std::function<void(Status)> on_finish,
                      bigtable::RowSet row_set, std::int64_t rows_limit,
                      bigtable::Filter filter) override;
 
   future<StatusOr<std::pair<bool, bigtable::Row>>> AsyncReadRow(
-      std::string const& app_profile_id, std::string const& table_name,
-      std::string row_key, bigtable::Filter filter) override;
+      std::string const& table_name, std::string row_key,
+      bigtable::Filter filter) override;
 
  private:
+  static std::string const& app_profile_id() {
+    return internal::CurrentOptions().get<bigtable::AppProfileIdOption>();
+  }
+
   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<bigtable::DataRetryPolicyOption>()) {

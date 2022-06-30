@@ -49,7 +49,7 @@ static_assert(std::is_copy_assignable<bigtable::Table>::value,
 Status Table::Apply(SingleRowMutation mut) {
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
-    return connection_->Apply(app_profile_id_, table_name_, std::move(mut));
+    return connection_->Apply(table_name_, std::move(mut));
   }
 
   // Copy the policies in effect for this operation.  Many policy classes change
@@ -62,7 +62,7 @@ Status Table::Apply(SingleRowMutation mut) {
   // Build the RPC request, try to minimize copying.
   btproto::MutateRowRequest request;
   SetCommonTableOperationRequest<btproto::MutateRowRequest>(
-      request, app_profile_id_, table_name_);
+      request, app_profile_id(), table_name_);
   mut.MoveTo(request);
 
   bool const is_idempotent =
@@ -96,13 +96,12 @@ Status Table::Apply(SingleRowMutation mut) {
 future<Status> Table::AsyncApply(SingleRowMutation mut) {
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
-    return connection_->AsyncApply(app_profile_id_, table_name_,
-                                   std::move(mut));
+    return connection_->AsyncApply(table_name_, std::move(mut));
   }
 
   google::bigtable::v2::MutateRowRequest request;
   SetCommonTableOperationRequest<google::bigtable::v2::MutateRowRequest>(
-      request, app_profile_id_, table_name_);
+      request, app_profile_id(), table_name_);
   mut.MoveTo(request);
   auto context = absl::make_unique<grpc::ClientContext>();
 
@@ -141,7 +140,7 @@ future<Status> Table::AsyncApply(SingleRowMutation mut) {
 std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
-    return connection_->BulkApply(app_profile_id_, table_name_, std::move(mut));
+    return connection_->BulkApply(table_name_, std::move(mut));
   }
 
   if (mut.empty()) return {};
@@ -154,7 +153,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   auto retry_policy = clone_rpc_retry_policy();
   auto idempotent_policy = clone_idempotent_mutation_policy();
 
-  bigtable::internal::BulkMutator mutator(app_profile_id_, table_name_,
+  bigtable::internal::BulkMutator mutator(app_profile_id(), table_name_,
                                           *idempotent_policy, std::move(mut));
   while (true) {
     grpc::ClientContext client_context;
@@ -175,8 +174,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
 future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
-    return connection_->AsyncBulkApply(app_profile_id_, table_name_,
-                                       std::move(mut));
+    return connection_->AsyncBulkApply(table_name_, std::move(mut));
   }
 
   auto cq = background_threads_->cq();
@@ -184,7 +182,7 @@ future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
   return internal::AsyncRetryBulkApply::Create(
       cq, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       *mutation_policy, clone_metadata_update_policy(), client_,
-      app_profile_id_, table_name(), std::move(mut));
+      app_profile_id(), table_name(), std::move(mut));
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
@@ -196,13 +194,12 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
-    return connection_->ReadRows(app_profile_id_, table_name_,
-                                 std::move(row_set), rows_limit,
+    return connection_->ReadRows(table_name_, std::move(row_set), rows_limit,
                                  std::move(filter));
   }
 
   auto impl = std::make_shared<bigtable_internal::LegacyRowReader>(
-      client_, app_profile_id_, table_name_, std::move(row_set), rows_limit,
+      client_, app_profile_id(), table_name_, std::move(row_set), rows_limit,
       std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       metadata_update_policy_,
       absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
@@ -213,8 +210,8 @@ StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
                                               Filter filter) {
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
-    return connection_->ReadRow(app_profile_id_, table_name_,
-                                std::move(row_key), std::move(filter));
+    return connection_->ReadRow(table_name_, std::move(row_key),
+                                std::move(filter));
   }
 
   RowSet row_set(std::move(row_key));
@@ -244,7 +241,7 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
     return connection_->CheckAndMutateRow(
-        app_profile_id_, table_name_, std::move(row_key), std::move(filter),
+        table_name_, std::move(row_key), std::move(filter),
         std::move(true_mutations), std::move(false_mutations));
   }
 
@@ -252,7 +249,7 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
   SetCommonTableOperationRequest<btproto::CheckAndMutateRowRequest>(
-      request, app_profile_id_, table_name_);
+      request, app_profile_id(), table_name_);
   *request.mutable_predicate_filter() = std::move(filter).as_proto();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
@@ -281,14 +278,14 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
     return connection_->AsyncCheckAndMutateRow(
-        app_profile_id_, table_name_, std::move(row_key), std::move(filter),
+        table_name_, std::move(row_key), std::move(filter),
         std::move(true_mutations), std::move(false_mutations));
   }
 
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
   SetCommonTableOperationRequest<btproto::CheckAndMutateRowRequest>(
-      request, app_profile_id_, table_name_);
+      request, app_profile_id(), table_name_);
   *request.mutable_predicate_filter() = std::move(filter).as_proto();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
@@ -334,7 +331,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
 StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
-    return connection_->SampleRows(app_profile_id_, table_name_);
+    return connection_->SampleRows(table_name_);
   }
 
   // Copy the policies in effect for this operation.
@@ -346,7 +343,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
   btproto::SampleRowKeysRequest request;
   btproto::SampleRowKeysResponse response;
   SetCommonTableOperationRequest<btproto::SampleRowKeysRequest>(
-      request, app_profile_id_, table_name_);
+      request, app_profile_id(), table_name_);
 
   while (true) {
     grpc::ClientContext client_context;
@@ -380,20 +377,20 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
 future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
-    return connection_->AsyncSampleRows(app_profile_id_, table_name_);
+    return connection_->AsyncSampleRows(table_name_);
   }
 
   auto cq = background_threads_->cq();
   return internal::LegacyAsyncRowSampler::Create(
       cq, client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      metadata_update_policy_, app_profile_id_, table_name_);
+      metadata_update_policy_, app_profile_id(), table_name_);
 }
 
 StatusOr<Row> Table::ReadModifyWriteRowImpl(
     btproto::ReadModifyWriteRowRequest request) {
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
-      request, app_profile_id_, table_name_);
+      request, app_profile_id(), table_name_);
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
     return connection_->ReadModifyWriteRow(std::move(request));
@@ -415,7 +412,7 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
     ::google::bigtable::v2::ReadModifyWriteRowRequest request) {
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
-      request, app_profile_id_, table_name_);
+      request, app_profile_id(), table_name_);
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
     return connection_->AsyncReadModifyWriteRow(std::move(request));
@@ -448,8 +445,8 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(std::string row_key,
                                                            Filter filter) {
   if (connection_) {
     google::cloud::internal::OptionsSpan span(options_);
-    return connection_->AsyncReadRow(app_profile_id_, table_name_,
-                                     std::move(row_key), std::move(filter));
+    return connection_->AsyncReadRow(table_name_, std::move(row_key),
+                                     std::move(filter));
   }
 
   class AsyncReadRowHandler {
