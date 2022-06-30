@@ -188,15 +188,15 @@ TEST_F(LegacyRowReaderTest, ReadOneRowAppProfileId) {
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   EXPECT_CALL(*parser, HandleEndOfStreamHook).Times(1);
-  std::string expected_id = "test-id";
   EXPECT_CALL(*client_, ReadRows)
-      .WillOnce([expected_id](grpc::ClientContext* context,
-                              ReadRowsRequest const& req) {
+      .WillOnce([](grpc::ClientContext* context, ReadRowsRequest const& req) {
+        EXPECT_EQ("test-app-profile-id", req.app_profile_id());
         ValidateMetadataFixture fixture;
-        fixture.IsContextMDValid(*context,
-                                 "google.bigtable.v2.Bigtable.ReadRows", req,
-                                 google::cloud::internal::ApiClientHeader());
-        EXPECT_EQ(expected_id, req.app_profile_id());
+        // TODO(#9123): Use `req` when explicit routing is implemented for the
+        // legacy Bigtable Data API.
+        fixture.IsContextMDValid(
+            *context, "google.bigtable.v2.Bigtable.ReadRows", ReadRowsRequest{},
+            google::cloud::internal::ApiClientHeader());
         auto stream = absl::make_unique<MockReadRowsReader>(
             "google.bigtable.v2.Bigtable.ReadRows");
         ::testing::InSequence s;
@@ -208,7 +208,7 @@ TEST_F(LegacyRowReaderTest, ReadOneRowAppProfileId) {
 
   parser_factory_->AddParser(std::move(parser));
   auto impl = std::make_shared<LegacyRowReader>(
-      client_, "test-id", "", bigtable::RowSet(),
+      client_, "test-app-profile-id", "table-name", bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));

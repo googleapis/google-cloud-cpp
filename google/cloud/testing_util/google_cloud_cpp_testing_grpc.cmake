@@ -28,8 +28,11 @@ add_library(
     validate_metadata.h)
 target_link_libraries(
     google_cloud_cpp_testing_grpc
-    PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-           google-cloud-cpp::api_annotations_protos protobuf::libprotobuf
+    PUBLIC google-cloud-cpp::grpc_utils
+           google-cloud-cpp::common
+           google-cloud-cpp::api_annotations_protos
+           google-cloud-cpp::api_routing_protos
+           protobuf::libprotobuf
            GTest::gmock)
 google_cloud_cpp_add_common_options(google_cloud_cpp_testing_grpc)
 
