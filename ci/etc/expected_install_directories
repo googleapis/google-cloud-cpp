@@ -328,6 +328,8 @@
 ./include/google/cloud/translate/v3
 ./include/google/cloud/video
 ./include/google/cloud/video/internal
+./include/google/cloud/video/livestream
+./include/google/cloud/video/livestream/v1
 ./include/google/cloud/video/mocks
 ./include/google/cloud/video/stitcher
 ./include/google/cloud/video/stitcher/v1

@@ -5,8 +5,9 @@
 This directory contains an idiomatic C++ client library for video services,
 including:
 
+- [Live Stream API][livestream-service-docs], a service to transcode live, linear video streams into a variety of formats.
 - [Transcoder API][transcoder-service-docs], a service to convert video files
- into formats suitable for consumer distribution.
+  into formats suitable for consumer distribution.
 - [Video Stitcher API][stitcher-service-docs], a service to generate dynamic
   content for delivery to client devices. Call the Video Stitcher API from your
   servers to dynamically insert ads into video-on-demand and live streams for
@@ -27,12 +28,14 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
+* Official documentation about the [Live Stream API][livestream-service-docs] service
 * Official documentation about the [Transcoder API][transcoder-service-docs] service
 * Official documentation about the [Video Stitcher API][stitcher-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
+[livestream-service-docs]: https://cloud.google.com/livestream
 [transcoder-service-docs]: https://cloud.google.com/transcoder
 [stitcher-service-docs]: https://cloud.google.com/video-stitcher
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-video/latest/
