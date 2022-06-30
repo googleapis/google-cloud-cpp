@@ -51,6 +51,12 @@ TEST(TableResource, Basics) {
   EXPECT_EQ("t2", tr2.table_id());
   EXPECT_EQ(in2, tr2.instance());
   EXPECT_EQ("projects/p2/instances/i2/tables/t2", tr2.FullName());
+
+  TableResource tr_string_ctor("p1", "i1", "t1");
+  EXPECT_EQ(tr_string_ctor, tr);
+  EXPECT_EQ("t1", tr_string_ctor.table_id());
+  EXPECT_EQ(in, tr_string_ctor.instance());
+  EXPECT_EQ("projects/p1/instances/i1/tables/t1", tr_string_ctor.FullName());
 }
 
 TEST(TableResource, OutputStream) {
