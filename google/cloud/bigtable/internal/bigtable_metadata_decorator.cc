@@ -60,7 +60,9 @@ BigtableMetadata::ReadRows(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
     SetMetadata(*context, absl::StrJoin(params, "&"));
   }
   return child_->ReadRows(std::move(context), request);
@@ -91,7 +93,9 @@ BigtableMetadata::SampleRowKeys(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
     SetMetadata(*context, absl::StrJoin(params, "&"));
   }
   return child_->SampleRowKeys(std::move(context), request);
@@ -120,7 +124,9 @@ StatusOr<google::bigtable::v2::MutateRowResponse> BigtableMetadata::MutateRow(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
     SetMetadata(context, absl::StrJoin(params, "&"));
   }
   return child_->MutateRow(context, request);
@@ -151,7 +157,9 @@ BigtableMetadata::MutateRows(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
     SetMetadata(*context, absl::StrJoin(params, "&"));
   }
   return child_->MutateRows(std::move(context), request);
@@ -181,7 +189,9 @@ BigtableMetadata::CheckAndMutateRow(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
     SetMetadata(context, absl::StrJoin(params, "&"));
   }
   return child_->CheckAndMutateRow(context, request);
@@ -211,7 +221,9 @@ BigtableMetadata::PingAndWarm(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
     SetMetadata(context, absl::StrJoin(params, "&"));
   }
   return child_->PingAndWarm(context, request);
@@ -241,7 +253,9 @@ BigtableMetadata::ReadModifyWriteRow(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
     SetMetadata(context, absl::StrJoin(params, "&"));
   }
   return child_->ReadModifyWriteRow(context, request);
@@ -273,7 +287,9 @@ BigtableMetadata::AsyncReadRows(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
     SetMetadata(*context, absl::StrJoin(params, "&"));
   }
   return child_->AsyncReadRows(cq, std::move(context), request);
@@ -305,7 +321,9 @@ BigtableMetadata::AsyncSampleRowKeys(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
     SetMetadata(*context, absl::StrJoin(params, "&"));
   }
   return child_->AsyncSampleRowKeys(cq, std::move(context), request);
@@ -336,7 +354,9 @@ BigtableMetadata::AsyncMutateRow(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
     SetMetadata(*context, absl::StrJoin(params, "&"));
   }
   return child_->AsyncMutateRow(cq, std::move(context), request);
@@ -368,7 +388,9 @@ BigtableMetadata::AsyncMutateRows(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
     SetMetadata(*context, absl::StrJoin(params, "&"));
   }
   return child_->AsyncMutateRows(cq, std::move(context), request);
@@ -399,7 +421,9 @@ BigtableMetadata::AsyncCheckAndMutateRow(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
     SetMetadata(*context, absl::StrJoin(params, "&"));
   }
   return child_->AsyncCheckAndMutateRow(cq, std::move(context), request);
@@ -430,7 +454,9 @@ BigtableMetadata::AsyncReadModifyWriteRow(
     params.push_back("app_profile_id=" + request.app_profile_id());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
     SetMetadata(*context, absl::StrJoin(params, "&"));
   }
   return child_->AsyncReadModifyWriteRow(cq, std::move(context), request);

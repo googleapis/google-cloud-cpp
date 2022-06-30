@@ -71,7 +71,18 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::d
 GoldenKitchenSinkMetadata::TailLogEntries(
     std::unique_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  SetMetadata(*context);
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.filter().empty()) {
+    params.push_back("filter=" + request.filter());
+  }
+
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
+    SetMetadata(*context, absl::StrJoin(params, "&"));
+  }
   return child_->TailLogEntries(std::move(context), request);
 }
 
@@ -151,7 +162,9 @@ GoldenKitchenSinkMetadata::ExplicitRouting1(
   }();
   routing_id_matcher->AppendParam(request, params);
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
     SetMetadata(context, absl::StrJoin(params, "&"));
   }
   return child_->ExplicitRouting1(context, request);
@@ -172,7 +185,9 @@ GoldenKitchenSinkMetadata::ExplicitRouting2(
     params.push_back("no_regex_needed=" + request.no_regex_needed());
   }
 
-  if (!params.empty()) {
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
     SetMetadata(context, absl::StrJoin(params, "&"));
   }
   return child_->ExplicitRouting2(context, request);
@@ -184,7 +199,18 @@ GoldenKitchenSinkMetadata::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  SetMetadata(*context);
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.filter().empty()) {
+    params.push_back("filter=" + request.filter());
+  }
+
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
+    SetMetadata(*context, absl::StrJoin(params, "&"));
+  }
   return child_->AsyncTailLogEntries(cq, std::move(context), request);
 }
 

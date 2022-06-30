@@ -18,7 +18,9 @@
 
 #include "generator/integration_tests/golden/internal/golden_thing_admin_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
@@ -71,7 +73,47 @@ Status
 GoldenThingAdminMetadata::DropDatabase(
     grpc::ClientContext& context,
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
-  SetMetadata(context, "database=" + request.database());
+  std::vector<std::string> params;
+  params.reserve(3);
+
+  static auto* project_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::DropDatabaseRequest>{
+      "project=", {
+      {[](google::test::admin::database::v1::DropDatabaseRequest const& request) -> std::string const& {
+        return request.database();
+      },
+      std::regex{"(projects/[^/]+)/instances/[^/]+/databases/[^/]+", std::regex::optimize}},
+      }};
+  }();
+  project_matcher->AppendParam(request, params);
+
+  static auto* instance_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::DropDatabaseRequest>{
+      "instance=", {
+      {[](google::test::admin::database::v1::DropDatabaseRequest const& request) -> std::string const& {
+        return request.database();
+      },
+      std::regex{"projects/[^/]+/(instances/[^/]+)/databases/[^/]+", std::regex::optimize}},
+      }};
+  }();
+  instance_matcher->AppendParam(request, params);
+
+  static auto* database_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::DropDatabaseRequest>{
+      "database=", {
+      {[](google::test::admin::database::v1::DropDatabaseRequest const& request) -> std::string const& {
+        return request.database();
+      },
+      std::regex{"projects/[^/]+/instances/[^/]+/(databases/[^/]+)", std::regex::optimize}},
+      }};
+  }();
+  database_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->DropDatabase(context, request);
 }
 
@@ -196,7 +238,47 @@ GoldenThingAdminMetadata::AsyncDropDatabase(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
-  SetMetadata(*context, "database=" + request.database());
+  std::vector<std::string> params;
+  params.reserve(3);
+
+  static auto* project_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::DropDatabaseRequest>{
+      "project=", {
+      {[](google::test::admin::database::v1::DropDatabaseRequest const& request) -> std::string const& {
+        return request.database();
+      },
+      std::regex{"(projects/[^/]+)/instances/[^/]+/databases/[^/]+", std::regex::optimize}},
+      }};
+  }();
+  project_matcher->AppendParam(request, params);
+
+  static auto* instance_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::DropDatabaseRequest>{
+      "instance=", {
+      {[](google::test::admin::database::v1::DropDatabaseRequest const& request) -> std::string const& {
+        return request.database();
+      },
+      std::regex{"projects/[^/]+/(instances/[^/]+)/databases/[^/]+", std::regex::optimize}},
+      }};
+  }();
+  instance_matcher->AppendParam(request, params);
+
+  static auto* database_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::DropDatabaseRequest>{
+      "database=", {
+      {[](google::test::admin::database::v1::DropDatabaseRequest const& request) -> std::string const& {
+        return request.database();
+      },
+      std::regex{"projects/[^/]+/instances/[^/]+/(databases/[^/]+)", std::regex::optimize}},
+      }};
+  }();
+  database_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
+    SetMetadata(*context, absl::StrJoin(params, "&"));
+  }
   return child_->AsyncDropDatabase(cq, std::move(context), request);
 }
 
