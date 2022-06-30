@@ -26,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 // This value is hard-coded in the spec.
-auto constexpr kMaxRetryAttempts = 3;
+auto constexpr kMaxAttempts = 3;
 
 /// Updates a ModifyAckDeadlineRequest request to drop ack_ids with permanent
 /// failures, and successful ack_ids.
@@ -123,7 +123,7 @@ class ExtendLeasesWithRetryHandle
       promise_.set_value(std::move(last_status_));
       return;
     }
-    if (attempts_ > kMaxRetryAttempts) {
+    if (attempts_ >= kMaxAttempts) {
       for (auto const& a : request_.ack_ids()) {
         GCP_LOG(WARNING)
             << "retry policy exhausted while trying to extend lease for ack_id="

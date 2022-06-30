@@ -124,36 +124,29 @@ TEST(ExtendLeasesWithRetry, FailureTooManyTransients) {
   auto mock = std::make_shared<MockSubscriberStub>();
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
 
-  auto timer = [] {
-    return make_ready_future(make_status_or(std::chrono::system_clock::now()));
-  };
-  auto transient = [] {
-    return make_ready_future(MakeStatusWithDetails({
-        {"test-001", "TRANSIENT_FAILURE_1"},
-        {"test-002", "TRANSIENT_FAILURE_2"},
-    }));
-  };
-
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock,
               AsyncModifyAckDeadline(
                   _, _,
                   Property(&ModifyAckDeadlineRequest::ack_ids,
                            ElementsAre("test-001", "test-002", "test-003"))))
-      .WillOnce([] {
-        return make_ready_future(MakeStatusWithDetails({
-            {"test-001", "TRANSIENT_FAILURE_1"},
-            {"test-002", "TRANSIENT_FAILURE_2"},
-            {"test-003", "PERMANENT_ERROR_INVALID_BLAH"},
-        }));
-      });
-  for (int i = 0; i != 3; ++i) {
-    EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillOnce(timer);
+      .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({
+          {"test-001", "TRANSIENT_FAILURE_1"},
+          {"test-002", "TRANSIENT_FAILURE_2"},
+          {"test-003", "PERMANENT_ERROR_INVALID_BLAH"},
+      })))));
+  for (int i = 0; i != 2; ++i) {
+    EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+        .WillOnce(Return(ByMove(make_ready_future(
+            make_status_or(std::chrono::system_clock::now())))));
     EXPECT_CALL(*mock, AsyncModifyAckDeadline(
                            _, _,
                            Property(&ModifyAckDeadlineRequest::ack_ids,
                                     ElementsAre("test-001", "test-002"))))
-        .WillRepeatedly(transient);
+        .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({
+            {"test-001", "TRANSIENT_FAILURE_1"},
+            {"test-002", "TRANSIENT_FAILURE_2"},
+        })))));
   }
 
   google::cloud::testing_util::ScopedLog log;
