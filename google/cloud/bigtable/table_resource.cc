@@ -26,8 +26,9 @@ TableResource::TableResource(InstanceResource instance, std::string table_id)
 
 TableResource::TableResource(std::string project_id, std::string instance_id,
                              std::string table_id)
-    : instance_(Project(std::move(project_id)), std::move(instance_id)),
-      table_id_(std::move(table_id)) {}
+    : TableResource(InstanceResource(Project(std::move(project_id)),
+                                     std::move(instance_id)),
+                    std::move(table_id)) {}
 
 std::string TableResource::FullName() const {
   return instance_.FullName() + "/tables/" + table_id_;
