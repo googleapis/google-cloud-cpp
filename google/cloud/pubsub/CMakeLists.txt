@@ -52,6 +52,8 @@ add_library(
     internal/default_batch_sink.h
     internal/defaults.cc
     internal/defaults.h
+    internal/exactly_once_ack_handler.cc
+    internal/exactly_once_ack_handler.h
     internal/exactly_once_policies.cc
     internal/exactly_once_policies.h
     internal/flow_controlled_publisher_connection.cc
@@ -242,6 +244,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/batching_publisher_connection_test.cc
         internal/default_batch_sink_test.cc
         internal/defaults_test.cc
+        internal/exactly_once_ack_handler_test.cc
         internal/exactly_once_policies_test.cc
         internal/flow_controlled_publisher_connection_test.cc
         internal/ordering_key_publisher_connection_test.cc
