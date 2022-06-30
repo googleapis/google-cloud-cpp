@@ -30,11 +30,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * When applications register a callback to receive Pub/Sub messages the
  * callback must be able to receive both a `pubsub::Message` and its associated
- * `pubsub::AckHandler`. Actions on a `pubsub::AckHandler` always affect the
- * same message received in the callback. Applications cannot create standalone
- * handlers (except in unit tests via mocks).
+ * `pubsub::ExactlyOnceAckHandler`. Actions on a `pubsub::ExactlyOnceAckHandler`
+ * always affect the same message received in the callback. Applications cannot
+ * create standalone handlers (except in unit tests via mocks).
  *
- * This interface allows applications to acknowledge and reject messages in a
+ * This interface allows applications to acknowledge and reject messages that a
  * provided to the Cloud Pub/Sub C++ client library. Note that this class is
  * move-able, to support applications that process messages asynchronously.
  * However, this class is *not* copy-able, because messages can only be
@@ -59,8 +59,7 @@ class ExactlyOnceAckHandler {
    * @par Idempotency
    * Note that this is not an idempotent operation, and therefore it is never
    * retried. Furthermore, the service may still resend a message after a
-   * successful `ack()`.
-   * Applications developers are reminded that Cloud Pub/Sub
+   * successful `ack()`. Applications developers are reminded that Cloud Pub/Sub
    * offers "at least once" semantics so they should be prepared to handle
    * duplicate messages.
    */
