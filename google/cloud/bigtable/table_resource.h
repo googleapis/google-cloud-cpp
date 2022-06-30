@@ -49,6 +49,16 @@ class TableResource {
    */
   TableResource(InstanceResource instance, std::string table_id);
 
+  /**
+   * Constructs a TableResource object identified by the given IDs.
+   *
+   * This is equivalent to first constructing an `InstanceResource` from the
+   * given @p project_id and @p instance_id arguments and then calling the
+   * `TableResource(InstanceResource, std::string)` constructor.
+   */
+  TableResource(std::string project_id, std::string instance_id,
+                std::string table_id);
+
   /// Returns the `InstanceResource` containing this table.
   InstanceResource const& instance() const { return instance_; }
 
