@@ -1296,6 +1296,13 @@ service {
 
 # Video
 service {
+  service_proto_path: "google/cloud/video/livestream/v1/service.proto"
+  product_path: "google/cloud/video"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/video/stitcher/v1/video_stitcher_service.proto"
   product_path: "google/cloud/video"
   initial_copyright_year: "2022"

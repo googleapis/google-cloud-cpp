@@ -1,3 +1,6 @@
+@com_google_googleapis//google/cloud/video/livestream/v1:outputs.proto
+@com_google_googleapis//google/cloud/video/livestream/v1:resources.proto
+@com_google_googleapis//google/cloud/video/livestream/v1:service.proto
 @com_google_googleapis//google/cloud/video/stitcher/v1:ad_tag_details.proto
 @com_google_googleapis//google/cloud/video/stitcher/v1:cdn_keys.proto
 @com_google_googleapis//google/cloud/video/stitcher/v1:companions.proto

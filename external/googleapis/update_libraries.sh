@@ -176,6 +176,7 @@ declare -A -r LIBRARIES=(
   ["translate"]="@com_google_googleapis//google/cloud/translate/v3:translation_cc_grpc"
   ["video"]="$(
     printf ",%s" \
+      "@com_google_googleapis//google/cloud/video/livestream/v1:livestream_cc_grpc" \
       "@com_google_googleapis//google/cloud/video/stitcher/v1:stitcher_cc_grpc" \
       "@com_google_googleapis//google/cloud/video/transcoder/v1:transcoder_cc_grpc"
   )"

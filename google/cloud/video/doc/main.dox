@@ -4,8 +4,9 @@
 
 An idiomatic C++ client library for video services, including:
 
+- [Live Stream API][livestream-service-docs], a service to transcode live, linear video streams into a variety of formats.
 - [Transcoder API][transcoder-service-docs], a service to convert video files
- into formats suitable for consumer distribution.
+  into formats suitable for consumer distribution.
 - [Video Stitcher API][stitcher-service-docs], a service to generate dynamic
   content for delivery to client devices. Call the Video Stitcher API from your
   servers to dynamically insert ads into video-on-demand and live streams for
@@ -45,6 +46,10 @@ which should give you a taste of the Transcoder API C++ client library API.
 ## Environment Variables
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_LIVESTREAM_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "livestream.googleapis.com")
+  used by `MakeLivestreamServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_TRANSCODER_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "transcoder.googleapis.com")
@@ -99,6 +104,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
+[livestream-service-docs]: https://cloud.google.com/livestream
 [transcoder-service-docs]: https://cloud.google.com/transcoder
 [stitcher-service-docs]: https://cloud.google.com/video-stitcher
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
