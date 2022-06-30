@@ -34,7 +34,7 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["com_google_protobuf"],
+      "matchPackageNames": ["com_google_protobuf", "com_google_absl"],
       "versioning": "loose"
     }
   ],
