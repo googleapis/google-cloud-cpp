@@ -324,6 +324,8 @@ TEST_F(MetadataDecoratorTest, ExplicitRouting) {
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
                            ExplicitRoutingRequest const&) {
+        // Even though IsContextMDValid can do this work for us, let's spell out
+        // what we expect to find in the routing header.
         auto headers = GetMetadata(context);
         auto it = headers.find("x-goog-request-params");
         EXPECT_NE(it, headers.end());
@@ -354,6 +356,8 @@ TEST_F(MetadataDecoratorTest, ExplicitRoutingDoesNotSendEmptyParams) {
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
                            ExplicitRoutingRequest const&) {
+        // Even though IsContextMDValid can do this work for us, let's spell out
+        // what we expect to find in the routing header.
         auto headers = GetMetadata(context);
         auto it = headers.find("x-goog-request-params");
         EXPECT_EQ(it, headers.end());
@@ -372,6 +376,8 @@ TEST_F(MetadataDecoratorTest, ExplicitRoutingNoRegexNeeded) {
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
                            ExplicitRoutingRequest const&) {
+        // Even though IsContextMDValid can do this work for us, let's spell out
+        // what we expect to find in the routing header.
         auto headers = GetMetadata(context);
         auto it = headers.find("x-goog-request-params");
         EXPECT_NE(it, headers.end());

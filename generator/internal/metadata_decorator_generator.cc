@@ -58,13 +58,13 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
     if (std::all_of(
             kv.second.begin(), kv.second.end(),
             [](RoutingParameter const& rp) { return rp.pattern == "(.*)"; })) {
-      bool initial_if = true;
+      auto const* sep = "  ";
       for (auto const& rp : kv.second){
-        text += initial_if ? "  " : " else ";
+        text += sep;
         text += "if (!request." + rp.field_name + "().empty()) {\n";
         text += "    params.push_back(\"" + kv.first + "=\" + request." + rp.field_name + "());\n";
         text += "  }";
-        initial_if = false;
+        sep = " else ";
       }
       text += "\n\n";
       continue;
@@ -87,7 +87,9 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
     text += "  }();\n";
     text += "  " + kv.first + "_matcher->AppendParam(request, params);\n\n";
   }
-  text += "  if (!params.empty()) {\n";
+  text += "  if (params.empty()) {\n";
+  text += "    SetMetadata(" + context + ");\n";
+  text += "  } else {\n";
   text += "    SetMetadata(" + context + ", absl::StrJoin(params, \"&\"));\n";
   text += "  }";
   return text;

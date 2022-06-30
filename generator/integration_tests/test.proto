@@ -118,6 +118,20 @@ service GoldenThingAdmin {
     option (google.api.http) = {
       delete: "/v1/{database=projects/*/instances/*/databases/*}"
     };
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "database"
+        path_template: "{project=projects/*}/instances/*/databases/*"
+      }
+      routing_parameters {
+        field: "database"
+        path_template: "projects/*/{instance=instances/*}/databases/*"
+      }
+      routing_parameters {
+        field: "database"
+        path_template: "projects/*/instances/*/{database=databases/*}"
+      }
+    };
     option (google.api.method_signature) = "database";
   }
 
@@ -803,6 +817,9 @@ service GoldenKitchenSink {
     option (google.api.http) = {
       post: "/v2/entries:tail"
       body: "*"
+    };
+    option (google.api.routing) = {
+      routing_parameters { field: "filter" }
     };
     option (google.api.method_signature) = "resource_names";
   }
