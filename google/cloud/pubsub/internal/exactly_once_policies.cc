@@ -43,19 +43,22 @@ bool ExactlyOnceRetryPolicy::IsExhausted() const {
 
 bool ExactlyOnceRetryPolicy::IsPermanentFailure(Status const& status) const {
   auto const code = status.code();
-  // Of these, `kDeadlineExceeded` might be controversial.  There is no (as of
-  // this writing) mechanism for applications to set a deadline on these
-  // requests. One can infer that any deadline error is due to an internal
-  // deadline and therefore retryable.
-  if (code == StatusCode::kDeadlineExceeded ||
-      code == StatusCode::kResourceExhausted || code == StatusCode::kAborted ||
-      code == StatusCode::kInternal || code == StatusCode::kUnavailable) {
-    return false;
-  }
+  if (ExactlyOnceRetryable(code)) return false;
   auto const& metadata = status.error_info().metadata();
   return !std::any_of(metadata.begin(), metadata.end(), [this](auto const& kv) {
     return kv.first == ack_id_ && kv.second.rfind("TRANSIENT_FAILURE_", 0) == 0;
   });
+}
+
+bool ExactlyOnceRetryable(StatusCode code) {
+  // Of these, `kDeadlineExceeded` might be controversial.  There is no (as of
+  // this writing) mechanism for applications to set a deadline on these
+  // requests. One can infer that any deadline error is due to an internal
+  // deadline and therefore retryable.
+  return (code == StatusCode::kDeadlineExceeded ||
+          code == StatusCode::kResourceExhausted ||
+          code == StatusCode::kAborted || code == StatusCode::kInternal ||
+          code == StatusCode::kUnavailable);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

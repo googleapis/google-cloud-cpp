@@ -43,6 +43,9 @@ class ExactlyOnceRetryPolicy : public google::cloud::internal::RetryPolicy {
   std::chrono::steady_clock::time_point deadline_;
 };
 
+/// Some status codes are always retryable under exactly-once delivery.
+bool ExactlyOnceRetryable(StatusCode);
+
 /// Build a backoff policy suitable to retry ack/nack messages when exactly-once
 /// is enabled.
 std::unique_ptr<pubsub::BackoffPolicy> ExactlyOnceBackoffPolicy();
