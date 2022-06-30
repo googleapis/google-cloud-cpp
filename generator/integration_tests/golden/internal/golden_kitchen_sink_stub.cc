@@ -146,6 +146,32 @@ DefaultGoldenKitchenSinkStub::WriteObject(
     std::move(context), std::move(response), std::move(stream));
 }
 
+Status
+DefaultGoldenKitchenSinkStub::ExplicitRouting1(
+  grpc::ClientContext& client_context,
+  google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->ExplicitRouting1(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
+}
+
+Status
+DefaultGoldenKitchenSinkStub::ExplicitRouting2(
+  grpc::ClientContext& client_context,
+  google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->ExplicitRouting2(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::test::admin::database::v1::TailLogEntriesResponse>>
 DefaultGoldenKitchenSinkStub::AsyncTailLogEntries(

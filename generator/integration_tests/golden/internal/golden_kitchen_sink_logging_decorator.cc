@@ -169,6 +169,30 @@ GoldenKitchenSinkLogging::WriteObject(
   return stream;
 }
 
+Status
+GoldenKitchenSinkLogging::ExplicitRouting1(
+    grpc::ClientContext& context,
+    google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+        return child_->ExplicitRouting1(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status
+GoldenKitchenSinkLogging::ExplicitRouting2(
+    grpc::ClientContext& context,
+    google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+        return child_->ExplicitRouting2(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::test::admin::database::v1::TailLogEntriesResponse>>
 GoldenKitchenSinkLogging::AsyncTailLogEntries(

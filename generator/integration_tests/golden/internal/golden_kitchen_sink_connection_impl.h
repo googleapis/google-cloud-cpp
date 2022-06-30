@@ -80,6 +80,12 @@ class GoldenKitchenSinkConnectionImpl
       google::test::admin::database::v1::AppendRowsResponse>>
   AsyncAppendRows(ExperimentalTag) override;
 
+  Status
+  ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
+
+  Status
+  ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
+
  private:
   std::unique_ptr<golden::GoldenKitchenSinkRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

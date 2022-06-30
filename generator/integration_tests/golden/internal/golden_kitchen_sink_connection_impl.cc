@@ -147,6 +147,30 @@ GoldenKitchenSinkConnectionImpl::DoNothing(google::protobuf::Empty const& reques
       request, __func__);
 }
 
+Status
+GoldenKitchenSinkConnectionImpl::ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ExplicitRouting1(request),
+      [this](grpc::ClientContext& context,
+          google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+        return stub_->ExplicitRouting1(context, request);
+      },
+      request, __func__);
+}
+
+Status
+GoldenKitchenSinkConnectionImpl::ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ExplicitRouting2(request),
+      [this](grpc::ClientContext& context,
+          google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+        return stub_->ExplicitRouting2(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
 }  // namespace cloud

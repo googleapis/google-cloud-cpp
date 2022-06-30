@@ -142,6 +142,18 @@ GoldenKitchenSinkClient::AsyncAppendRows(ExperimentalTag tag, Options opts) {
   return connection_->AsyncAppendRows(std::move(tag));
 }
 
+Status
+GoldenKitchenSinkClient::ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExplicitRouting1(request);
+}
+
+Status
+GoldenKitchenSinkClient::ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExplicitRouting2(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
 }  // namespace cloud

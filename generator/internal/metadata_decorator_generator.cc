@@ -20,6 +20,7 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include <google/protobuf/descriptor.h>
+#include <algorithm>
 
 namespace google {
 namespace cloud {
@@ -32,14 +33,67 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
                             ContextType context_type) {
   std::string const context = context_type == kPointer ? "*context" : "context";
 
-  if (HasRoutingHeader(method)) {
-    return "  SetMetadata(" + context +
-           ", \"$method_request_param_key$=\" + "
-           "request.$method_request_param_value$);";
+  auto info = ParseExplicitRoutingHeader(method);
+  // If there are no explicit routing headers, we fall back to the routing as
+  // defined by the google.api.http annotation
+  if (info.empty()) {
+    if (HasRoutingHeader(method)) {
+      return "  SetMetadata(" + context +
+             ", \"$method_request_param_key$=\" + "
+             "request.$method_request_param_value$);";
+    }
+    // If the method does not have a `google.api.routing` or `google.api.http`
+    // annotation, we do not send the "x-goog-request-params" header.
+    return "  SetMetadata(" + context + ");";
   }
-  // If the method does not have a `google.api.http` annotation, we do not send
-  // the "x-goog-request-params" header.
-  return "  SetMetadata(" + context + ");";
+
+  // clang-format off
+  std::string text;
+  text += "  std::vector<std::string> params;\n";
+  text += "  params.reserve(" + std::to_string(info.size()) + ");\n\n";
+  for (auto const& kv : info) {
+    // In the simplest (and probably most common) cases where no regular
+    // expression matching is needed for a given routing parameter key, we skip
+    // the static loading of `RoutingMatcher`s and simply use if statements.
+    if (std::all_of(
+            kv.second.begin(), kv.second.end(),
+            [](RoutingParameter const& rp) { return rp.pattern == "(.*)"; })) {
+      auto const* sep = "  ";
+      for (auto const& rp : kv.second){
+        text += sep;
+        text += "if (!request." + rp.field_name + "().empty()) {\n";
+        text += "    params.push_back(\"" + kv.first + "=\" + request." + rp.field_name + "());\n";
+        text += "  }";
+        sep = " else ";
+      }
+      text += "\n\n";
+      continue;
+    }
+    text += "  static auto* " + kv.first + "_matcher = []{\n";
+    text += "    return new google::cloud::internal::RoutingMatcher<$request_type$>{\n";
+    text += "      \"" + kv.first + "=\", {\n";
+    for (auto const& rp : kv.second) {
+      text += "      {[]($request_type$ const& request) -> std::string const& {\n";
+      text += "        return request." + rp.field_name + "();\n";
+      text += "      },\n";
+      // In the special match-all case, we do not bother to set a regex.
+      if (rp.pattern == "(.*)") {
+        text += "      absl::nullopt},\n";
+      } else {
+        text += "      std::regex{\"" + rp.pattern + "\", std::regex::optimize}},\n";
+      }
+    }
+    text += "      }};\n";
+    text += "  }();\n";
+    text += "  " + kv.first + "_matcher->AppendParam(request, params);\n\n";
+  }
+  text += "  if (params.empty()) {\n";
+  text += "    SetMetadata(" + context + ");\n";
+  text += "  } else {\n";
+  text += "    SetMetadata(" + context + ", absl::StrJoin(params, \"&\"));\n";
+  text += "  }";
+  return text;
+  // clang-format on
 }
 
 }  // namespace
@@ -222,10 +276,15 @@ Status MetadataDecoratorGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes({vars("metadata_header_path"),
-                   "google/cloud/internal/api_client_header.h",
-                   "google/cloud/common_options.h",
-                   "google/cloud/status_or.h"});
+  CcLocalIncludes(
+      {vars("metadata_header_path"),
+       HasExplicitRoutingMethod()
+           ? "google/cloud/internal/absl_str_join_quiet.h"
+           : "",
+       "google/cloud/internal/api_client_header.h",
+       HasExplicitRoutingMethod() ? "google/cloud/internal/routing_matcher.h"
+                                  : "",
+       "google/cloud/common_options.h", "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);

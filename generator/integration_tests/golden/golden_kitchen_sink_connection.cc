@@ -91,6 +91,18 @@ GoldenKitchenSinkConnection::AsyncAppendRows(ExperimentalTag) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+Status
+GoldenKitchenSinkConnection::ExplicitRouting1(
+    google::test::admin::database::v1::ExplicitRoutingRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status
+GoldenKitchenSinkConnection::ExplicitRouting2(
+    google::test::admin::database::v1::ExplicitRoutingRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
