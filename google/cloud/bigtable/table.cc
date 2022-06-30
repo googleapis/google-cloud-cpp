@@ -182,7 +182,7 @@ future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
   return internal::AsyncRetryBulkApply::Create(
       cq, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       *mutation_policy, clone_metadata_update_policy(), client_,
-      app_profile_id(), table_name(), std::move(mut));
+      app_profile_id(), table_name_, std::move(mut));
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
