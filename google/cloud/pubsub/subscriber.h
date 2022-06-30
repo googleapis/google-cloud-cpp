@@ -114,9 +114,7 @@ class Subscriber {
    * @par Example
    * @snippet samples.cc subscribe
    *
-   * @param cb the callable invoked when messages are received. This must be
-   *     usable to construct a
-   *     `std::function<void(pubsub::Message, pubsub::AckHandler)>`.
+   * @param cb the callable invoked when messages are received.
    * @return a future that is satisfied when the session will no longer receive
    *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
@@ -125,10 +123,8 @@ class Subscriber {
    * [std-function-link]:
    * https://en.cppreference.com/w/cpp/utility/functional/function
    */
-  template <typename Callable>
-  future<Status> Subscribe(Callable&& cb) {
-    std::function<void(Message, AckHandler)> f(std::forward<Callable>(cb));
-    return connection_->Subscribe({std::move(f)});
+  future<Status> Subscribe(std::function<void(Message, AckHandler)> cb) {
+    return connection_->Subscribe({std::move(cb)});
   }
 
  private:
