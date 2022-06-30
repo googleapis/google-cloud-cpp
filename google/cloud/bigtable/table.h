@@ -32,6 +32,7 @@
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/bigtable/table_resource.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
@@ -223,10 +224,8 @@ class Table {
   Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id)
       : client_(std::move(client)),
-        project_id_(client_->project_id()),
-        instance_id_(client_->instance_id()),
-        table_name_(TableName(project_id_, instance_id_, table_id)),
-        table_id_(table_id),
+        table_(client_->project_id(), client_->instance_id(), table_id),
+        table_name_(table_.FullName()),
         rpc_retry_policy_prototype_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         rpc_backoff_policy_prototype_(
@@ -368,9 +367,13 @@ class Table {
   std::string const& app_profile_id() const {
     return options_.get<AppProfileIdOption>();
   }
-  std::string const& project_id() const { return project_id_; }
-  std::string const& instance_id() const { return instance_id_; }
-  std::string const& table_id() const { return table_id_; }
+  std::string const& project_id() const {
+    return table_.instance().project_id();
+  }
+  std::string const& instance_id() const {
+    return table_.instance().instance_id();
+  }
+  std::string const& table_id() const { return table_.table_id(); }
 
   /**
    * Returns a Table that reuses the connection and configuration of this
@@ -381,11 +384,9 @@ class Table {
   Table WithNewTarget(std::string project_id, std::string instance_id,
                       std::string table_id) const {
     auto table = *this;
-    table.instance_id_ = std::move(instance_id);
-    table.project_id_ = std::move(project_id);
-    table.table_id_ = std::move(table_id);
-    table.table_name_ =
-        TableName(table.project_id_, table.instance_id_, table.table_id_);
+    table.table_ = TableResource(std::move(project_id), std::move(instance_id),
+                                 std::move(table_id));
+    table.table_name_ = table.table_.FullName();
     table.metadata_update_policy_ =
         MetadataUpdatePolicy(table.table_name_, MetadataParamTypes::TABLE_NAME);
     return table;
@@ -398,11 +399,9 @@ class Table {
   Table WithNewTarget(std::string project_id, std::string instance_id,
                       std::string app_profile_id, std::string table_id) const {
     auto table = *this;
-    table.instance_id_ = std::move(instance_id);
-    table.project_id_ = std::move(project_id);
-    table.table_id_ = std::move(table_id);
-    table.table_name_ =
-        TableName(table.project_id_, table.instance_id_, table.table_id_);
+    table.table_ = TableResource(std::move(project_id), std::move(instance_id),
+                                 std::move(table_id));
+    table.table_name_ = table.table_.FullName();
     table.metadata_update_policy_ =
         MetadataUpdatePolicy(table.table_name_, MetadataParamTypes::TABLE_NAME);
     table.options_.set<AppProfileIdOption>(std::move(app_profile_id));
@@ -967,10 +966,9 @@ class Table {
   explicit Table(std::shared_ptr<bigtable::DataConnection> conn,
                  std::string project_id, std::string instance_id,
                  std::string table_id, Options options = {})
-      : project_id_(std::move(project_id)),
-        instance_id_(std::move(instance_id)),
-        table_name_(TableName(project_id_, instance_id_, table_id)),
-        table_id_(std::move(table_id)),
+      : table_(std::move(project_id), std::move(instance_id),
+               std::move(table_id)),
+        table_name_(table_.FullName()),
         metadata_update_policy_(
             MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
         connection_(std::move(conn)),
@@ -1038,10 +1036,8 @@ class Table {
 
   friend class MutationBatcher;
   std::shared_ptr<DataClient> client_;
-  std::string project_id_;
-  std::string instance_id_;
+  TableResource table_;
   std::string table_name_;
-  std::string table_id_;
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
   MetadataUpdatePolicy metadata_update_policy_;
