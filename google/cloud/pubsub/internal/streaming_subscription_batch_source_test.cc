@@ -623,6 +623,28 @@ std::unique_ptr<pubsub_testing::MockAsyncPullStream> MakeExactlyOnceStream(
   return stream;
 }
 
+// Wait until the exactly once stream is ready.  Refactors some repetitive code.
+// The promise returned here will trigger a `Write()` and `Read()` call
+// corresponding to the initial update of the stream's deadline (as this is a
+// exactly once stream), and the loop for `Read()`.
+promise<bool> WaitForExactlyOnceStreamInitialRunAsync(
+    AsyncSequencer<bool>& aseq) {
+  auto start = aseq.PopFrontWithName();
+  EXPECT_EQ(start.second, "Start");
+  start.first.set_value(true);
+  auto write = aseq.PopFrontWithName();
+  EXPECT_EQ(write.second, "Write");
+  write.first.set_value(true);  // Write()
+
+  auto read = aseq.PopFrontWithName();
+  EXPECT_EQ(read.second, "Read");
+  read.first.set_value(true);
+
+  auto run = aseq.PopFrontWithName();
+  EXPECT_EQ(run.second, "RunAsync");
+  return std::move(run.first);
+}
+
 /// @test Verify that on a `Read()` "error" the streaming subscription waits for
 /// pending `Write()` calls.
 TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
@@ -649,12 +671,8 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
-  aseq.PopFront().set_value(true);  // Start()
-  aseq.PopFront().set_value(true);  // Write()
-  aseq.PopFront().set_value(true);  // Read()
-  auto run = aseq.PopFrontWithName();
-  EXPECT_EQ(run.second, "RunAsync");
-  run.first.set_value(true);
+  auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
+  run_async.set_value(true);
 
   auto write = aseq.PopFrontWithName();
   EXPECT_EQ(write.second, "Write");
@@ -695,12 +713,8 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
-  aseq.PopFront().set_value(true);  // Start()
-  aseq.PopFront().set_value(true);  // Write()
-  aseq.PopFront().set_value(true);  // Read()
-  auto run = aseq.PopFrontWithName();
-  EXPECT_EQ(run.second, "RunAsync");
-  run.first.set_value(true);
+  auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
+  run_async.set_value(true);
 
   auto write = aseq.PopFrontWithName();
   EXPECT_EQ(write.second, "Write");
@@ -925,24 +939,12 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
-  aseq.PopFront().set_value(true);  // Start()
+  auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
+  run_async.set_value(true);
+
   auto write = aseq.PopFrontWithName();
   EXPECT_EQ(write.second, "Write");
-  write.first.set_value(true);  // Write()
-
   auto read = aseq.PopFrontWithName();
-  EXPECT_EQ(read.second, "Read");
-  read.first.set_value(true);
-
-  // The successful Read generates a RunAsync() which generates a Read().
-  auto run = aseq.PopFrontWithName();
-  EXPECT_EQ(run.second, "RunAsync");
-  run.first.set_value(true);
-  // Because Read() changed the subscription properties, this will trigger
-  // a Write() and Read() calls.
-  write = aseq.PopFrontWithName();
-  EXPECT_EQ(write.second, "Write");
-  read = aseq.PopFrontWithName();
   EXPECT_EQ(read.second, "Read");
 
   // Have them succeed.
@@ -951,7 +953,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
 
   // A second read, but does not change the subscription properties, so it
   // simply triggers a `RunAsync()` and then a `Read()` call:
-  run = aseq.PopFrontWithName();
+  auto run = aseq.PopFrontWithName();
   EXPECT_EQ(run.second, "RunAsync");
   run.first.set_value(true);
 
@@ -1018,24 +1020,13 @@ TEST(StreamingSubscriptionBatchSourceTest, AckNackWithRetry) {
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
-  aseq.PopFront().set_value(true);  // Start()
+  auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
+  run_async.set_value(true);
+
   auto write = aseq.PopFrontWithName();
   EXPECT_EQ(write.second, "Write");
-  write.first.set_value(true);  // Write()
-
-  auto read = aseq.PopFrontWithName();
-  EXPECT_EQ(read.second, "Read");
-  read.first.set_value(true);
-
-  // The successful Read() generates a RunAsync() which generates a Write() and
-  // Read() pair.
-  auto run = aseq.PopFrontWithName();
-  EXPECT_EQ(run.second, "RunAsync");
-  run.first.set_value(true);
-  write = aseq.PopFrontWithName();
-  EXPECT_EQ(write.second, "Write");
   write.first.set_value(true);
-  read = aseq.PopFrontWithName();
+  auto read = aseq.PopFrontWithName();
   EXPECT_EQ(read.second, "Read");
 
   auto ack = uut->AckMessage("fake-001");
@@ -1055,6 +1046,63 @@ TEST(StreamingSubscriptionBatchSourceTest, AckNackWithRetry) {
   EXPECT_EQ(backoff.second, "MakeRelativeTimer");
   backoff.first.set_value(true);
   EXPECT_STATUS_OK(nack.get());
+
+  shutdown->MarkAsShutdown("test", {});
+  uut->Shutdown();
+  read.first.set_value(false);
+  aseq.PopFront().set_value(true);  // Finish()
+
+  EXPECT_THAT(done.get(), IsOk());
+}
+
+TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesWithRetry) {
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::StreamingPullRequest const&) {
+        return MakeExactlyOnceStream(aseq, Status{});
+      });
+
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(
+                         _, _,
+                         Property(&ModifyRequest::ack_ids,
+                                  ElementsAre("fake-001", "fake-002"))))
+      .WillOnce(Return(ByMove(
+          make_ready_future(Status(StatusCode::kUnavailable, "try-again")))))
+      .WillOnce(Return(ByMove(make_ready_future(
+          Status(StatusCode::kUnknown, "uh?",
+                 ErrorInfo("test-only-reason", "test-only-domain",
+                           {{"fake-002", "TRANSIENT_FAILURE_BLAH_BLAH"}}))))));
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _,
+                                            Property(&ModifyRequest::ack_ids,
+                                                     ElementsAre("fake-002"))))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = MakeTestBatchSource(cq, shutdown, mock);
+
+  auto done = shutdown->Start({});
+  uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
+  auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
+  run_async.set_value(true);
+
+  auto write = aseq.PopFrontWithName();
+  EXPECT_EQ(write.second, "Write");
+  write.first.set_value(true);
+  auto read = aseq.PopFrontWithName();
+  EXPECT_EQ(read.second, "Read");
+
+  uut->ExtendLeases({"fake-001", "fake-002"}, std::chrono::seconds(10));
+  auto backoff = aseq.PopFrontWithName();
+  EXPECT_EQ(backoff.second, "MakeRelativeTimer");
+  backoff.first.set_value(true);
+  backoff = aseq.PopFrontWithName();
+  EXPECT_EQ(backoff.second, "MakeRelativeTimer");
+  backoff.first.set_value(true);
 
   shutdown->MarkAsShutdown("test", {});
   uut->Shutdown();
