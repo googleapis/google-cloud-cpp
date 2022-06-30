@@ -57,11 +57,24 @@ class ExactlyOnceAckHandler {
    * Acknowledges the message associated with this handler.
    *
    * @par Idempotency
-   * Note that this is not an idempotent operation, and therefore it is never
-   * retried. Furthermore, the service may still resend a message after a
-   * successful `ack()`. Applications developers are reminded that Cloud Pub/Sub
-   * offers "at least once" semantics so they should be prepared to handle
-   * duplicate messages.
+   * If exactly-once is enabled in the subscription, the client library will
+   * retry this operation in the background until it succeeds, fails with a
+   * permanent error, or the ack id has become unusable (all ack ids are
+   * unusable after 10 minutes). The returned future is satisfied when the retry
+   * loop completes.
+   *
+   * If exactly-once is not enabled, the request is handled on a best-effort
+   * basis.
+   *
+   * If the future is satisfied with an Okay `Status` **and** exactly-once
+   * delivery is enabled in the subscription, then the message will not be
+   * resent by Cloud Pub/Sub.  We remind the reader that Cloud Pub/Sub defaults
+   * to "at least once" delivery, that is, without exactly-once delivery, the
+   * message *may* be resent even after the future is satisfied with an Okay
+   * `Status`.
+   *
+   * If the future is satisfied with an error, it is possible that Cloud Pub/Sub
+   * never received the acknowledgement, and will resend the message.
    */
   future<Status> ack() && {
     auto impl = std::move(impl_);
@@ -72,11 +85,17 @@ class ExactlyOnceAckHandler {
    * Rejects the message associated with this handler.
    *
    * @par Idempotency
-   * Note that this is not an idempotent operation, and therefore it is never
-   * retried. Furthermore, the service may still resend a message after a
-   * successful `nack()`. Applications developers are reminded that Cloud
-   * Pub/Sub offers "at least once" semantics so they should be prepared to
-   * handle duplicate messages.
+   * If exactly-once is enabled in the subscription, the client library will
+   * retry this operation in the background until it succeeds, fails with a
+   * permanent error, or the ack id has become unusable (all ack ids are
+   * unusable after 10 minutes). The returned future is satisfied when the retry
+   * loop completes.
+   *
+   * If exactly-once is not enabled, the request is handled on a best-effort
+   * basis.
+   *
+   * In any case, Cloud Pub/Sub will eventually resend the message. It might do
+   * so sooner if the operation succeeds.
    */
   future<Status> nack() && {
     auto impl = std::move(impl_);
