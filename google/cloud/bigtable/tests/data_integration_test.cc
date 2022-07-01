@@ -526,8 +526,8 @@ TEST_P(DataIntegrationTest, TableApplyWithLogging) {
   auto make_table = [&](Options const& options) {
     if (GetParam() == "with-data-connection") {
       auto conn = MakeDataConnection(options);
-      return bigtable_internal::MakeTable(std::move(conn), project_id(),
-                                          instance_id(), table_id);
+      return Table(std::move(conn),
+                   TableResource(project_id(), instance_id(), table_id));
     }
     auto data_client = MakeDataClient(project_id(), instance_id(), options);
     return Table(std::move(data_client), table_id);
