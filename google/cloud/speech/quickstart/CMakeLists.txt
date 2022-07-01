@@ -15,7 +15,7 @@
 # This file shows how to use the Cloud Speech-to-Text API C++ client library
 # from a larger CMake project.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(google-cloud-cpp-speech-quickstart CXX)
 
 find_package(google_cloud_cpp_speech REQUIRED)

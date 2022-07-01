@@ -14,7 +14,7 @@
 # limitations under the License.
 # ~~~
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 # Define the project name and where to report bugs.
 set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
@@ -44,9 +44,9 @@ if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
 endif ()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.3)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.3)
         message(
-            WARNING "The `google-cloud-cpp` library is tested with GCC >= 6.3."
+            WARNING "The `google-cloud-cpp` library is tested with GCC >= 7.3."
                     " We will consider patches for older versions.")
     endif ()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

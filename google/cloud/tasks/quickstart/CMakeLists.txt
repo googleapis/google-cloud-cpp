@@ -15,7 +15,7 @@
 # This file shows how to use the Cloud Tasks API C++ client library from a
 # larger CMake project.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(google-cloud-cpp-tasks-quickstart CXX)
 
 find_package(google_cloud_cpp_tasks REQUIRED)
