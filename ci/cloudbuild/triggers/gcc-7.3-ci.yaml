@@ -4,7 +4,7 @@ github:
   owner: googleapis
   push:
     branch: ^(master|main|v\d+\..*)$
-name: gcc-7.3-ci
+name: gcc-7-3-ci
 substitutions:
   _BUILD_NAME: gcc-7.3
   _DISTRO: centos-7
