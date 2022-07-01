@@ -25,7 +25,7 @@ namespace {
 Status ValidateQuantizedRange(std::string const& name, std::int64_t minimum,
                               std::int64_t maximum, std::int64_t quantum) {
   using ::google::cloud::StatusCode;
-  if (minimum > maximum) {
+  if (minimum > maximum || minimum < 0 || maximum < 0) {
     std::ostringstream os;
     os << "Invalid range for " << name << " [" << minimum << ',' << maximum
        << "]";
