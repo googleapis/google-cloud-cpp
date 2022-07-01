@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
+#include "google/cloud/pubsub/internal/extend_leases_with_retry.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/log.h"
 #include <ostream>
@@ -131,7 +132,13 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   for (auto& a : ack_ids) {
     request.add_ack_ids(std::move(a));
   }
-  // TODO(#9327) - add a retry loop when exactly-once is enabled
+  std::unique_lock<std::mutex> lk(mu_);
+  if (exactly_once_delivery_enabled_.value_or(false)) {
+    lk.unlock();
+    (void)ExtendLeasesWithRetry(stub_, cq_, std::move(request));
+    return;
+  }
+  lk.unlock();
   (void)stub_->AsyncModifyAckDeadline(
       cq_, absl::make_unique<grpc::ClientContext>(), request);
 }
