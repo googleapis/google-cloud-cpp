@@ -175,7 +175,7 @@ GoldenKitchenSinkMetadata::ExplicitRouting2(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   std::vector<std::string> params;
-  params.reserve(1);
+  params.reserve(2);
 
   if (!request.app_profile_id().empty()) {
     params.push_back("no_regex_needed=" + request.app_profile_id());
@@ -183,6 +183,10 @@ GoldenKitchenSinkMetadata::ExplicitRouting2(
     params.push_back("no_regex_needed=" + request.table_name());
   } else if (!request.no_regex_needed().empty()) {
     params.push_back("no_regex_needed=" + request.no_regex_needed());
+  }
+
+  if (!request.nested1().nested2().value().empty()) {
+    params.push_back("routing_id=" + request.nested1().nested2().value());
   }
 
   if (params.empty()) {

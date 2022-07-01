@@ -929,6 +929,10 @@ service GoldenKitchenSink {
         field: "app_profile_id"
         path_template: "{no_regex_needed=**}"
       }
+      routing_parameters {
+        field: "nested1.nested2.value"
+        path_template: "{routing_id=**}"
+      }
     };
   }
 }
@@ -1427,4 +1431,13 @@ message ExplicitRoutingRequest {
   // We use this field to demonstrate the special case for routing parameter
   // keys which do not require a regex in order to match the correct value.
   string no_regex_needed = 3;
+
+  // We use this field to test routing keys for nested types.
+  message Nested1 {
+    message Nested2 {
+      string value = 1;
+    }
+    optional Nested2 nested2 = 1;
+  }
+  Nested1 nested1 = 4;
 }
