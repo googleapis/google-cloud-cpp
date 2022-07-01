@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "absl/memory/memory.h"
+#include <algorithm>
 
 namespace google {
 namespace cloud {
