@@ -45,10 +45,6 @@ std::string HttpBinEndpoint() {
       .value_or("https://httpbin.org");
 }
 
-bool UsingEmulator() {
-  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT").has_value();
-}
-
 // The integration tests sometimes flake (e.g. DNS failures) if we do not have a
 // retry loop.
 StatusOr<HttpResponse> RetryMakeRequest(
@@ -357,6 +353,11 @@ TEST(CurlRequestTest, UserAgent) {
   EXPECT_THAT(headers.value("User-Agent", ""), HasSubstr("gcloud-cpp/"));
 }
 
+#if CURL_AT_LEAST_VERSION(7, 43, 0)
+bool UsingEmulator() {
+  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT").has_value();
+}
+
 /// @test Verify the HTTP Version option.
 TEST(CurlRequestTest, HttpVersion) {
   struct Test {
@@ -400,6 +401,7 @@ TEST(CurlRequestTest, HttpVersion) {
     }
   }
 }
+#endif  // CURL_AT_LEAST_VERSION
 
 /// @test Verify that the Projection parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersProjection) {

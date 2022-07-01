@@ -179,8 +179,8 @@ TEST(Options, UserProject) {
       Options{}.set<UserProjectOption>("opt-user-project"));
   EXPECT_THAT(opts.get<UserProjectOption>(), "opt-user-project");
 
-  env = testing_util::ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT",
-                                        "env-user-project");
+  auto env2 = testing_util::ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT",
+                                              "env-user-project");
   opts = spanner_internal::DefaultOptions(
       Options{}.set<UserProjectOption>("opt-user-project"));
   EXPECT_THAT(opts.get<UserProjectOption>(), "env-user-project");

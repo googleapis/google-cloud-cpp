@@ -41,10 +41,6 @@ std::string HttpBinEndpoint() {
       .value_or("https://httpbin.org");
 }
 
-bool UsingEmulator() {
-  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT").has_value();
-}
-
 Status Make3Attempts(std::function<Status()> const& attempt) {
   Status status;
   auto backoff = std::chrono::seconds(1);
@@ -363,6 +359,11 @@ TEST(CurlDownloadRequestTest, Regression7051) {
   ASSERT_STATUS_OK(status);
 }
 
+#if CURL_AT_LEAST_VERSION(7, 43, 0)
+bool UsingEmulator() {
+  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT").has_value();
+}
+
 TEST(CurlDownloadRequestTest, HttpVersion) {
   // Run one attempt and return the response.
   struct Response {
@@ -433,6 +434,7 @@ TEST(CurlDownloadRequestTest, HttpVersion) {
     }
   }
 }
+#endif  // CURL_AT_LEAST_VERSION
 
 }  // namespace
 }  // namespace internal
