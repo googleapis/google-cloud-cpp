@@ -186,7 +186,6 @@ DOCKER_DISTROS=(
   "demo-ubuntu-bionic.Dockerfile,Ubuntu (18.04 LTS - Bionic Beaver)"
   "demo-debian-bullseye.Dockerfile,Debian (11 - Bullseye)"
   "demo-debian-buster.Dockerfile,Debian (10 - Buster)"
-  "demo-debian-stretch.Dockerfile,Debian (9 - Stretch)"
   "demo-rockylinux-8.Dockerfile,Rocky Linux (8)"
   "demo-centos-7.Dockerfile,CentOS (7)"
 )

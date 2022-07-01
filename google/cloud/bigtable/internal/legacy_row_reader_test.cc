@@ -519,6 +519,10 @@ TEST_F(LegacyRowReaderTest, FailedParseSkipsAlreadyReadRows) {
 }
 
 TEST_F(LegacyRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
+#if defined(__GNUC__) && (__GNUC__ < 7 || (__GNUC__ == 7 && __GNUC_MINOR__ < 4))
+  // TODO(#9411) - enable on GCC < 7.4
+  GTEST_SKIP();
+#endif  // GCC < 7.4
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});

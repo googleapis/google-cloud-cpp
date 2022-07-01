@@ -201,7 +201,7 @@ TEST(OptionsTest, DataUserProjectOption) {
       DefaultDataOptions(Options{}.set<UserProjectOption>("test-project"));
   EXPECT_EQ(options.get<UserProjectOption>(), "test-project");
 
-  env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "env-project");
+  auto env2 = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "env-project");
   options =
       DefaultDataOptions(Options{}.set<UserProjectOption>("test-project"));
   EXPECT_EQ(options.get<UserProjectOption>(), "env-project");

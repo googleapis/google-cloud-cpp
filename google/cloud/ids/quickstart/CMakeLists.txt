@@ -15,7 +15,7 @@
 # This file shows how to use the Cloud IDS API C++ client library from a larger
 # CMake project.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(google-cloud-cpp-ids-quickstart CXX)
 
 find_package(google_cloud_cpp_ids REQUIRED)

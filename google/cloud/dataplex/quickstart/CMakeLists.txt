@@ -15,7 +15,7 @@
 # This file shows how to use the Cloud Dataplex API C++ client library from a
 # larger CMake project.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(google-cloud-cpp-dataplex-quickstart CXX)
 
 find_package(google_cloud_cpp_dataplex REQUIRED)

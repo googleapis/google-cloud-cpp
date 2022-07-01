@@ -28,26 +28,27 @@ TEST(CurlHandleTest, AsStatus) {
   struct {
     CURLcode curl;
     StatusCode expected;
-  } expected_codes[]{
-      {CURLE_OK, StatusCode::kOk},
-      {CURLE_RECV_ERROR, StatusCode::kUnavailable},
-      {CURLE_SEND_ERROR, StatusCode::kUnavailable},
-      {CURLE_PARTIAL_FILE, StatusCode::kUnavailable},
-      {CURLE_SSL_CONNECT_ERROR, StatusCode::kUnavailable},
-      {CURLE_COULDNT_RESOLVE_HOST, StatusCode::kUnavailable},
-      {CURLE_COULDNT_RESOLVE_PROXY, StatusCode::kUnavailable},
-      {CURLE_COULDNT_CONNECT, StatusCode::kUnavailable},
-      {CURLE_REMOTE_ACCESS_DENIED, StatusCode::kPermissionDenied},
-      {CURLE_OPERATION_TIMEDOUT, StatusCode::kDeadlineExceeded},
-      {CURLE_RANGE_ERROR, StatusCode::kUnimplemented},
-      {CURLE_BAD_DOWNLOAD_RESUME, StatusCode::kInvalidArgument},
-      {CURLE_ABORTED_BY_CALLBACK, StatusCode::kAborted},
-      {CURLE_REMOTE_FILE_NOT_FOUND, StatusCode::kNotFound},
-      {CURLE_FAILED_INIT, StatusCode::kUnknown},
-      {CURLE_FTP_PORT_FAILED, StatusCode::kUnknown},
-      {CURLE_GOT_NOTHING, StatusCode::kUnavailable},
-      {CURLE_AGAIN, StatusCode::kUnknown},
-      {CURLE_HTTP2, StatusCode::kUnavailable},
+  } expected_codes[] {
+    {CURLE_OK, StatusCode::kOk}, {CURLE_RECV_ERROR, StatusCode::kUnavailable},
+        {CURLE_SEND_ERROR, StatusCode::kUnavailable},
+        {CURLE_PARTIAL_FILE, StatusCode::kUnavailable},
+        {CURLE_SSL_CONNECT_ERROR, StatusCode::kUnavailable},
+        {CURLE_COULDNT_RESOLVE_HOST, StatusCode::kUnavailable},
+        {CURLE_COULDNT_RESOLVE_PROXY, StatusCode::kUnavailable},
+        {CURLE_COULDNT_CONNECT, StatusCode::kUnavailable},
+        {CURLE_REMOTE_ACCESS_DENIED, StatusCode::kPermissionDenied},
+        {CURLE_OPERATION_TIMEDOUT, StatusCode::kDeadlineExceeded},
+        {CURLE_RANGE_ERROR, StatusCode::kUnimplemented},
+        {CURLE_BAD_DOWNLOAD_RESUME, StatusCode::kInvalidArgument},
+        {CURLE_ABORTED_BY_CALLBACK, StatusCode::kAborted},
+        {CURLE_REMOTE_FILE_NOT_FOUND, StatusCode::kNotFound},
+        {CURLE_FAILED_INIT, StatusCode::kUnknown},
+        {CURLE_FTP_PORT_FAILED, StatusCode::kUnknown},
+        {CURLE_GOT_NOTHING, StatusCode::kUnavailable},
+        {CURLE_AGAIN, StatusCode::kUnknown},
+#if CURL_AT_LEAST_VERSION(7, 43, 0)
+        {CURLE_HTTP2, StatusCode::kUnavailable},
+#endif  // CURL_AT_LEAST_VERSION
   };
 
   for (auto const& codes : expected_codes) {
