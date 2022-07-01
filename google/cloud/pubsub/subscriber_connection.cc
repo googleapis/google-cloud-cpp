@@ -55,7 +55,7 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
     }();
     return CreateSubscriptionSession(subscription_, opts_, stub_,
                                      background_->cq(), std::move(client_id),
-                                     std::move(p));
+                                     std::move(p.callback));
   }
 
  private:
