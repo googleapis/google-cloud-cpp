@@ -112,6 +112,13 @@ transition to C++ >= 14 we will, if requested, backport critical fixes to
 v1.42.0 until 2023-07-01.  After 2023-07-01 we will drop all support to v1.42.0
 and earlier versions.
 
+**Debian 9 (Stretch) is EOL**
+
+Debian 9 (Stretch) reached EOL on 2022-06-30. Therefore, we have stopped testing
+or supporting this distribution. This was the last distribution we supported
+that required GCC < 7.3, and/or CMake < 3.10. Starting with this release we
+require GCC >= 7.3 and CMake >= 3.10.
+
 **OTHER CHANGES**
 
 We are introducing a new client library. While we do not anticipate any API
