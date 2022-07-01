@@ -25,6 +25,7 @@
 #include <google/api/client.pb.h>
 #include <google/api/routing.pb.h>
 #include <google/protobuf/descriptor.h>
+#include <algorithm>
 #include <unordered_map>
 
 namespace google {
