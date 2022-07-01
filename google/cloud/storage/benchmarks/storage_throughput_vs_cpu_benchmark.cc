@@ -378,8 +378,9 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
     // to be larger than the object sizes. The larger this read range size is,
     // the higher the proportion of full range reads.
     if (offset == 0 && size == object_size) return absl::nullopt;
-    // The REST API has a quirk: reading the last 0 bytes returns all the bytes,
-    // just read the *first* 0 bytes in that case.
+    // The REST API has a quirk: reading the last 0 bytes returns all the bytes.
+    // Just read the *first* 0 bytes in that case. Note that `size == 0` is
+    // implied by the initialization to `min(object_size - offset, ...)`.
     if (offset == object_size) return std::make_pair(0, 0);
     return std::make_pair(offset, size);
   };
