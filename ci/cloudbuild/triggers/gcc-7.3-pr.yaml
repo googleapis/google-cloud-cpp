@@ -5,7 +5,7 @@ github:
   pullRequest:
     branch: ^(master|main|v\d+\..*)$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: gcc-7.3-pr
+name: gcc-7-3-pr
 substitutions:
   _BUILD_NAME: gcc-7.3
   _DISTRO: centos-7
