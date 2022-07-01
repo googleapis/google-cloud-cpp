@@ -42,11 +42,11 @@ using ::google::test::admin::database::v1::TailLogEntriesResponse;
 using ::google::test::admin::database::v1::WriteObjectRequest;
 using ::google::test::admin::database::v1::WriteObjectResponse;
 using ::testing::_;
+using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Return;
-using ::testing::UnorderedElementsAre;
 
 class MetadataDecoratorTest : public ::testing::Test {
  protected:
@@ -320,81 +320,165 @@ TEST_F(MetadataDecoratorTest, AsyncWriteObject) {
 }
 
 TEST_F(MetadataDecoratorTest, ExplicitRouting) {
-  EXPECT_CALL(*mock_, ExplicitRouting1)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::test::admin::database::v1::
-                           ExplicitRoutingRequest const&) {
-        // Even though IsContextMDValid can do this work for us, let's spell out
-        // what we expect to find in the routing header.
-        auto headers = GetMetadata(context);
-        auto it = headers.find("x-goog-request-params");
-        EXPECT_NE(it, headers.end());
-        if (it == headers.end()) return Status(StatusCode::kAborted, "fail");
-        auto pairs = absl::StrSplit(it->second, "&");
-        // We verify the result against this expectation:
-        // https://github.com/googleapis/googleapis/blob/f46dc249e1987a6bef1a70a371e8288ea4c17481/google/api/routing.proto#L387-L390
-        EXPECT_THAT(
-            pairs, UnorderedElementsAre("table_location=instances/instance_bar",
-                                        "routing_id=prof_qux"));
-        return Status();
-      });
-
-  GoldenKitchenSinkMetadata stub(mock_);
-  grpc::ClientContext context;
-  // Our request comes from the examples in the `google.api.routing` proto:
+  // In `test.proto` we define the `ExplicitRouting1` rpc to have the same
+  // routing parameters as Example 9 from the `google.api.routing` proto.
+  //
+  // In this test, we will use the request message provided in the
+  // `google.api.routing` examples:
+  //
   // https://github.com/googleapis/googleapis/blob/f46dc249e1987a6bef1a70a371e8288ea4c17481/google/api/routing.proto#L57-L60
   google::test::admin::database::v1::ExplicitRoutingRequest request;
   request.set_table_name(
       "projects/proj_foo/instances/instance_bar/tables/table_baz");
   request.set_app_profile_id("profiles/prof_qux");
-  auto status = stub.ExplicitRouting1(context, request);
-  EXPECT_STATUS_OK(status);
+
+  // We verify the routing metadata against the expectations provided in
+  // `google.api.routing` for Example 9:
+  //
+  // https://github.com/googleapis/googleapis/blob/f46dc249e1987a6bef1a70a371e8288ea4c17481/google/api/routing.proto#L387-L390
+  std::string expected1 = "table_location=instances/instance_bar";
+  std::string expected2 = "routing_id=prof_qux";
+
+  EXPECT_CALL(*mock_, ExplicitRouting1)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           ExplicitRoutingRequest const& request) {
+        IsContextMDValid(
+            context,
+            "google.test.admin.database.v1.GoldenKitchenSink.ExplicitRouting1",
+            request);
+        return Status();
+      })
+      .WillOnce([&, this](grpc::ClientContext& context,
+                          google::test::admin::database::v1::
+                              ExplicitRoutingRequest const&) {
+        auto headers = GetMetadata(context);
+        EXPECT_THAT(headers,
+                    Contains(Pair("x-goog-request-params",
+                                  // We use `AnyOf` because it does not matter
+                                  // which order the parameters are added in.
+                                  AnyOf(expected1 + "&" + expected2,
+                                        expected2 + "&" + expected1))));
+        return Status();
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_);
+  grpc::ClientContext context1;
+  grpc::ClientContext context2;
+  // We make the same call twice. In the first call, we use `IsContextMDValid`
+  // to verify expectations. In the second call, we verify the routing
+  // parameters by hand. This gives us extra confidence in `IsContextMDValid`
+  // which is reasonably complex, but untested. (We cannot do them both in the
+  // same call, because the `grpc::ClientContext` is consumed in order to
+  // extract its metadata).
+  (void)stub.ExplicitRouting1(context1, request);
+  (void)stub.ExplicitRouting1(context2, request);
 }
 
 TEST_F(MetadataDecoratorTest, ExplicitRoutingDoesNotSendEmptyParams) {
   EXPECT_CALL(*mock_, ExplicitRouting1)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
+                           ExplicitRoutingRequest const& request) {
+        IsContextMDValid(
+            context,
+            "google.test.admin.database.v1.GoldenKitchenSink.ExplicitRouting1",
+            request);
+        return Status();
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
                            ExplicitRoutingRequest const&) {
-        // Even though IsContextMDValid can do this work for us, let's spell out
-        // what we expect to find in the routing header.
         auto headers = GetMetadata(context);
-        auto it = headers.find("x-goog-request-params");
-        EXPECT_EQ(it, headers.end());
+        EXPECT_THAT(headers, Not(Contains(Pair("x-goog-request-params", _))));
         return Status();
       });
 
   GoldenKitchenSinkMetadata stub(mock_);
-  grpc::ClientContext context;
+  grpc::ClientContext context1;
+  grpc::ClientContext context2;
   google::test::admin::database::v1::ExplicitRoutingRequest request;
   request.set_table_name("does-not-match");
-  (void)stub.ExplicitRouting1(context, request);
+  // We make the same call twice. In the first call, we use `IsContextMDValid`
+  // to verify expectations. In the second call, we verify the routing
+  // parameters by hand. This gives us extra confidence in `IsContextMDValid`
+  // which is reasonably complex, but untested. (We cannot do them both in the
+  // same call, because the `grpc::ClientContext` is consumed in order to
+  // extract its metadata).
+  (void)stub.ExplicitRouting1(context1, request);
+  (void)stub.ExplicitRouting1(context2, request);
 }
 
 TEST_F(MetadataDecoratorTest, ExplicitRoutingNoRegexNeeded) {
   EXPECT_CALL(*mock_, ExplicitRouting2)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
+                           ExplicitRoutingRequest const& request) {
+        IsContextMDValid(
+            context,
+            "google.test.admin.database.v1.GoldenKitchenSink.ExplicitRouting2",
+            request);
+        return Status();
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
                            ExplicitRoutingRequest const&) {
-        // Even though IsContextMDValid can do this work for us, let's spell out
-        // what we expect to find in the routing header.
         auto headers = GetMetadata(context);
-        auto it = headers.find("x-goog-request-params");
-        EXPECT_NE(it, headers.end());
-        if (it == headers.end()) return Status(StatusCode::kAborted, "fail");
-        auto pairs = absl::StrSplit(it->second, "&");
-        EXPECT_THAT(pairs, UnorderedElementsAre("no_regex_needed=used"));
+        EXPECT_THAT(headers, Contains(Pair("x-goog-request-params",
+                                           "no_regex_needed=used")));
         return Status();
       });
 
   GoldenKitchenSinkMetadata stub(mock_);
-  grpc::ClientContext context;
+  grpc::ClientContext context1;
+  grpc::ClientContext context2;
+  // Note that the `app_profile_id` field is not set.
   google::test::admin::database::v1::ExplicitRoutingRequest request;
   request.set_table_name("used");
   request.set_no_regex_needed("ignored");
-  // Note that the `app_profile_id` field is not set.
-  auto status = stub.ExplicitRouting2(context, request);
-  EXPECT_STATUS_OK(status);
+  // We make the same call twice. In the first call, we use `IsContextMDValid`
+  // to verify expectations. In the second call, we verify the routing
+  // parameters by hand. This gives us extra confidence in `IsContextMDValid`
+  // which is reasonably complex, but untested. (We cannot do them both in the
+  // same call, because the `grpc::ClientContext` is consumed in order to
+  // extract its metadata).
+  (void)stub.ExplicitRouting2(context1, request);
+  (void)stub.ExplicitRouting2(context2, request);
+}
+
+TEST_F(MetadataDecoratorTest, ExplicitRoutingNestedField) {
+  EXPECT_CALL(*mock_, ExplicitRouting2)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           ExplicitRoutingRequest const& request) {
+        IsContextMDValid(
+            context,
+            "google.test.admin.database.v1.GoldenKitchenSink.ExplicitRouting2",
+            request);
+        return Status();
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           ExplicitRoutingRequest const&) {
+        auto headers = GetMetadata(context);
+        EXPECT_THAT(headers, Contains(Pair("x-goog-request-params",
+                                           "routing_id=value")));
+        return Status();
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_);
+  grpc::ClientContext context1;
+  grpc::ClientContext context2;
+  google::test::admin::database::v1::ExplicitRoutingRequest request;
+  request.mutable_nested1()->mutable_nested2()->set_value("value");
+  // We make the same call twice. In the first call, we use `IsContextMDValid`
+  // to verify expectations. In the second call, we verify the routing
+  // parameters by hand. This gives us extra confidence in `IsContextMDValid`
+  // which is reasonably complex, but untested. (We cannot do them both in the
+  // same call, because the `grpc::ClientContext` is consumed in order to
+  // extract its metadata).
+  (void)stub.ExplicitRouting2(context1, request);
+  (void)stub.ExplicitRouting2(context2, request);
 }
 
 }  // namespace

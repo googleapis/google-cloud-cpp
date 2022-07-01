@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_split.h"
 #include <google/api/annotations.pb.h>
 #include <google/api/routing.pb.h>
 #include <google/protobuf/descriptor.h>
@@ -26,6 +27,7 @@
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
+#include <deque>
 #include <iterator>
 #include <regex>
 
@@ -83,6 +85,23 @@ MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
   return std::regex_match(arg, regex);
 }
 
+// This method is recursive because dbolduc could not figure out the iterative
+// solution.
+std::string GetField(  // NOLINT(misc-no-recursion)
+    std::deque<std::string> fields,
+    google::protobuf::Descriptor const* input_type,
+    google::protobuf::Message const& msg) {
+  if (fields.empty()) {
+    GCP_LOG(FATAL) << "Empty field name defined in RoutingRule.";
+  }
+  auto const& field_name = fields.front();
+  fields.pop_front();
+  auto const* fd = input_type->FindFieldByName(field_name);
+  if (fields.empty()) return msg.GetReflection()->GetString(msg, fd);
+  auto const& sub_msg = msg.GetReflection()->GetMessage(msg, fd);
+  return GetField(fields, fd->message_type(), sub_msg);
+}
+
 /**
  * Parse the `RoutingRule` proto as described in the proto comments:
  * https://github.com/googleapis/googleapis/blob/master/google/api/routing.proto
@@ -94,13 +113,18 @@ MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
  * overwrite the current value in the map, because the "last match wins".
  */
 RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
-                               google::protobuf::Descriptor const* input_type,
+                               google::protobuf::MethodDescriptor const* method,
                                google::protobuf::Message const& request) {
   RoutingHeaders headers;
   for (auto const& rp : routing.routing_parameters()) {
     auto const& path_template = rp.path_template();
-    auto const* fd = input_type->FindFieldByName(rp.field());
-    auto const& field = request.GetReflection()->GetString(request, fd);
+    // Some fields may look like: "nested1.nested2.value", where `nested1` and
+    // `nested2` are generic Messages, and `value` is the string field we are to
+    // match against. We must iterate over the nested messages to get to the
+    // string value.
+    std::deque<std::string> fields = absl::StrSplit(rp.field(), ".");
+    auto const& field = GetField(fields, method->input_type(), request);
+
     // We skip empty fields.
     if (field.empty()) continue;
     // If the path_template is empty, we use the field's name as the routing
@@ -184,8 +208,7 @@ RoutingHeaders ExtractRoutingHeaders(
   auto options = method_desc->options();
   if (options.HasExtension(google::api::routing)) {
     auto const& routing = options.GetExtension(google::api::routing);
-    auto const* input_type = method_desc->input_type();
-    return FromRoutingRule(routing, input_type, request);
+    return FromRoutingRule(routing, method_desc, request);
   }
   if (options.HasExtension(google::api::http)) {
     auto const& http = options.GetExtension(google::api::http);

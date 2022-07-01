@@ -556,12 +556,18 @@ ExplicitRoutingInfo ParseExplicitRoutingHeader(
   google::api::RoutingRule rule =
       method.options().GetExtension(google::api::routing);
 
-  auto const* input_type = method.input_type();
   auto const& rps = rule.routing_parameters();
   // We use reverse iterators so that "last wins" becomes "first wins".
   for (auto it = rps.rbegin(); it != rps.rend(); ++it) {
-    auto const* descriptor = input_type->FindFieldByName(it->field());
-    auto field_name = FieldName(descriptor);
+    std::vector<std::string> chunks;
+    auto const* input_type = method.input_type();
+    for (auto const& sv : absl::StrSplit(it->field(), '.')) {
+      auto const chunk = std::string(sv);
+      auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
+      chunks.push_back(FieldName(chunk_descriptor));
+      input_type = chunk_descriptor->message_type();
+    }
+    auto field_name = absl::StrJoin(chunks, "().");
     auto const& path_template = it->path_template();
     // When a path_template is not supplied, we use the field name as the
     // routing parameter key. The pattern matches the whole value of the field.
