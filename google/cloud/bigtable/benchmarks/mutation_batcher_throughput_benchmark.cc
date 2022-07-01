@@ -192,11 +192,10 @@ int main(int argc, char* argv[]) {
   }
 
   auto table = cbt::Table(
-      cbt::MakeDataClient(
-          options->project_id, options->instance_id,
+      cbt::MakeDataConnection(
           Options{}.set<google::cloud::GrpcBackgroundThreadPoolSizeOption>(
               options->max_batches)),
-      table_id);
+      cbt::TableResource(options->project_id, options->instance_id, table_id));
 
   std::cout << "# Project ID: " << options->project_id
             << "\n# Instance ID: " << options->instance_id

@@ -85,8 +85,8 @@ struct LatencyBenchmarkResult {
 
 /// Run an iteration of the test.
 google::cloud::StatusOr<LatencyBenchmarkResult> RunBenchmark(
-    bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
-    std::string const& table_id, std::chrono::seconds test_duration);
+    bigtable::benchmarks::Benchmark const& benchmark,
+    std::chrono::seconds test_duration);
 
 //@{
 /// @name Test constants.  Defined as requirements in the original bug (#189).
@@ -117,7 +117,6 @@ int main(int argc, char* argv[]) {
   Benchmark::PrintThroughputResult(std::cout, "perf", "Upload",
                                    *populate_results);
 
-  auto data_client = benchmark.MakeDataClient();
   // Start the threads running the latency test.
   std::cout << "Running Latency Benchmark " << std::flush;
   auto latency_test_start = std::chrono::steady_clock::now();
@@ -130,8 +129,7 @@ int main(int argc, char* argv[]) {
       launch_policy = std::launch::deferred;
     }
     tasks.emplace_back(std::async(launch_policy, RunBenchmark,
-                                  std::ref(benchmark), options->app_profile_id,
-                                  options->table_id, options->test_duration));
+                                  std::ref(benchmark), options->test_duration));
   }
 
   // Wait for the threads and combine all the results.
@@ -209,13 +207,11 @@ OperationResult RunOneReadRow(bigtable::Table& table, std::string row_key) {
 }
 
 google::cloud::StatusOr<LatencyBenchmarkResult> RunBenchmark(
-    bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
-    std::string const& table_id, std::chrono::seconds test_duration) {
+    bigtable::benchmarks::Benchmark const& benchmark,
+    std::chrono::seconds test_duration) {
   LatencyBenchmarkResult result = {};
 
-  auto data_client = benchmark.MakeDataClient();
-  bigtable::Table table(std::move(data_client), std::move(app_profile_id),
-                        table_id);
+  auto table = benchmark.MakeTable();
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::uniform_int_distribution<int> prng_operation(0, 1);

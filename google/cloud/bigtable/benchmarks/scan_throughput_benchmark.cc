@@ -62,11 +62,7 @@ constexpr int kScanSizes[] = {100, 1000, 10000};
 
 /// Run an iteration of the test.
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
-                             std::shared_ptr<bigtable::DataClient> data_client,
-                             std::int64_t table_size,
-                             std::string app_profile_id,
-                             std::string const& table_id,
-                             std::int64_t scan_size,
+                             std::int64_t table_size, std::int64_t scan_size,
                              std::chrono::seconds test_duration);
 }  // anonymous namespace
 
@@ -86,14 +82,12 @@ int main(int argc, char* argv[]) {
   Benchmark::PrintThroughputResult(std::cout, "scant", "Upload",
                                    *populate_results);
 
-  auto data_client = benchmark.MakeDataClient();
   std::map<std::string, BenchmarkResult> results_by_size;
   for (auto scan_size : kScanSizes) {
     std::cout << "# Running benchmark [" << scan_size << "] " << std::flush;
     auto start = std::chrono::steady_clock::now();
-    auto combined = RunBenchmark(benchmark, data_client, options->table_size,
-                                 options->app_profile_id, options->table_id,
-                                 scan_size, options->test_duration);
+    auto combined = RunBenchmark(benchmark, options->table_size, scan_size,
+                                 options->test_duration);
     using std::chrono::duration_cast;
     combined.elapsed = duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - start);
@@ -121,16 +115,11 @@ int main(int argc, char* argv[]) {
 namespace {
 
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
-                             std::shared_ptr<bigtable::DataClient> data_client,
-                             std::int64_t table_size,
-                             std::string app_profile_id,
-                             std::string const& table_id,
-                             std::int64_t scan_size,
+                             std::int64_t table_size, std::int64_t scan_size,
                              std::chrono::seconds test_duration) {
   BenchmarkResult result = {};
 
-  bigtable::Table table(std::move(data_client), std::move(app_profile_id),
-                        table_id);
+  auto table = benchmark.MakeTable();
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::uniform_int_distribution<std::int64_t> prng(0,
