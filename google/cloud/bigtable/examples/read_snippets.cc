@@ -14,11 +14,11 @@
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/resource_names.h"
-#include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
-#include "google/cloud/bigtable/testing/random_names.h"
 //! [bigtable includes]
 #include "google/cloud/bigtable/table.h"
 //! [bigtable includes]
+#include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
+#include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -145,7 +145,8 @@ void ReadKeysSet(std::vector<std::string> argv) {
   }
 
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataClient(argv[0], argv[1]), argv[2]);
+      google::cloud::bigtable::MakeDataConnection(),
+      google::cloud::bigtable::TableResource(argv[0], argv[1], argv[2]));
   argv.erase(argv.begin(), argv.begin() + 3);
 
   // [START bigtable_read_keys_set]
@@ -369,7 +370,8 @@ void RunAll(std::vector<std::string> const& argv) {
                                   table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
 
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id));
 
   std::cout << "Preparing data for read examples" << std::endl;
   PrepareReadSamples(table);

@@ -349,8 +349,11 @@ void RunAll(std::vector<std::string> const& argv) {
                                   table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
 
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
-                   cbt::AlwaysRetryMutationPolicy());
+  using ::google::cloud::Options;
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id),
+                   Options{}.set<cbt::IdempotentMutationPolicyOption>(
+                       cbt::AlwaysRetryMutationPolicy().clone()));
 
   std::cout << "\nRunning the AsyncApply() example" << std::endl;
   AsyncApply(table, {"row-0001"});
