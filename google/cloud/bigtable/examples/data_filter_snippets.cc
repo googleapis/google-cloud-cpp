@@ -579,7 +579,8 @@ void RunAll(std::vector<std::string> const& argv) {
                                   table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
 
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id));
 
   std::cout << "\nPreparing data for multiple examples" << std::endl;
   InsertTestData(table, {});

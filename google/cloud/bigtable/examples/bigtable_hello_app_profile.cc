@@ -43,10 +43,11 @@ void HelloWorldAppProfile(std::vector<std::string> const& argv) {
   std::string const& profile_id = argv[3];
 
   // Create an object to access the Cloud Bigtable Data API.
-  auto data_client = cbt::MakeDataClient(project_id, instance_id);
+  auto connection = cbt::MakeDataConnection();
 
   // Use the default profile to write some data.
-  cbt::Table write(data_client, table_id);
+  cbt::Table write(connection,
+                   cbt::TableResource(project_id, instance_id, table_id));
 
   // Modify (and create if necessary) a row.
   std::vector<std::string> greetings{"Hello World!", "Hello Cloud Bigtable!",
@@ -75,7 +76,11 @@ void HelloWorldAppProfile(std::vector<std::string> const& argv) {
 
   // Access Cloud Bigtable using a different profile
   //! [read with app profile]
-  cbt::Table read(data_client, profile_id, table_id);
+  auto options =
+      google::cloud::Options{}.set<cbt::AppProfileIdOption>(profile_id);
+  cbt::Table read(connection,
+                  cbt::TableResource(project_id, instance_id, table_id),
+                  options);
 
   google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
       read.ReadRow("key-0", cbt::Filter::ColumnRangeClosed("fam", "c0", "c0"));

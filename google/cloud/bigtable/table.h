@@ -192,6 +192,15 @@ class Table {
    *     `AppProfileIdOption` to supply an app profile for the `Table`
    *     operations. Or configure retry / backoff / idempotency policies with
    *     the options enumerated in `DataPolicyOptionList`.
+   *
+   * @par Example Using AppProfile
+   * @snippet bigtable_hello_app_profile.cc read with app profile
+   *
+   * @par Idempotency Policy Example
+   * @snippet data_snippets.cc apply relaxed idempotency
+   *
+   * @par Modified Retry Policy Example
+   * @snippet data_snippets.cc apply custom retry
    */
   explicit Table(std::shared_ptr<bigtable::DataConnection> conn,
                  TableResource tr, Options options = {})
@@ -224,12 +233,6 @@ class Table {
    * API.
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
-   *
-   * @par Example
-   * @snippet bigtable_hello_app_profile.cc cbt namespace
-   *
-   * @par Example Using AppProfile
-   * @snippet bigtable_hello_app_profile.cc read with app profile
    */
   Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id)
@@ -294,12 +297,6 @@ class Table {
    * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
    *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
    *     LimitedTimeRetryPolicy.
-   *
-   * @par Idempotency Policy Example
-   * @snippet data_snippets.cc apply relaxed idempotency
-   *
-   * @par Modified Retry Policy Example
-   * @snippet data_snippets.cc apply custom retry
    */
   template <
       typename... Policies,
@@ -357,12 +354,6 @@ class Table {
    * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
    *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
    *     LimitedTimeRetryPolicy.
-   *
-   * @par Idempotency Policy Example
-   * @snippet data_snippets.cc apply relaxed idempotency
-   *
-   * @par Modified Retry Policy Example
-   * @snippet data_snippets.cc apply custom retry
    */
   template <
       typename... Policies,

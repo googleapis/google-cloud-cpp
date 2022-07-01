@@ -65,7 +65,8 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   // Create an object to access the Cloud Bigtable Data API.
   //! [connect data]
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id));
   //! [connect data] [END bigtable_hw_create_table]
 
   // Modify (and create if necessary) a row.

@@ -54,11 +54,14 @@ void Apply(google::cloud::bigtable::Table table,
 void ApplyRelaxedIdempotency(google::cloud::bigtable::Table const& table,
                              std::vector<std::string> const& argv) {
   //! [apply relaxed idempotency]
+  using ::google::cloud::Options;
   namespace cbt = ::google::cloud::bigtable;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id, std::string const& row_key) {
-    cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
-                     cbt::AlwaysRetryMutationPolicy());
+    cbt::Table table(cbt::MakeDataConnection(),
+                     cbt::TableResource(project_id, instance_id, table_id),
+                     Options{}.set<cbt::IdempotentMutationPolicyOption>(
+                         cbt::AlwaysRetryMutationPolicy().clone()));
     // Normally this is not retried on transient failures, because the operation
     // is not idempotent (each retry would set a different timestamp), in this
     // case it would, because the table is setup to always retry.
@@ -74,11 +77,14 @@ void ApplyRelaxedIdempotency(google::cloud::bigtable::Table const& table,
 void ApplyCustomRetry(google::cloud::bigtable::Table const& table,
                       std::vector<std::string> const& argv) {
   //! [apply custom retry]
+  using ::google::cloud::Options;
   namespace cbt = ::google::cloud::bigtable;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id, std::string const& row_key) {
-    cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
-                     cbt::LimitedErrorCountRetryPolicy(7));
+    cbt::Table table(cbt::MakeDataConnection(),
+                     cbt::TableResource(project_id, instance_id, table_id),
+                     Options{}.set<cbt::DataRetryPolicyOption>(
+                         cbt::DataLimitedErrorCountRetryPolicy(7).clone()));
     cbt::SingleRowMutation mutation(
         row_key, cbt::SetCell("fam", "some-column",
                               std::chrono::milliseconds(0), "some-value"));
@@ -341,8 +347,9 @@ void MutateDeleteColumns(std::vector<std::string> const& argv) {
   }
   //! [connect data]
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataClient(project_id, instance_id),
-      table_id);
+      google::cloud::bigtable::MakeDataConnection(),
+      google::cloud::bigtable::TableResource(project_id, instance_id,
+                                             table_id));
   //! [connect data]
 
   // [START bigtable_mutate_delete_columns]
@@ -400,8 +407,9 @@ void MutateDeleteRowsCommand(std::vector<std::string> const& argv) {
   auto const table_id = *it++;
   std::vector<std::string> rows(it, argv.cend());
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataClient(project_id, instance_id),
-      table_id);
+      google::cloud::bigtable::MakeDataConnection(),
+      google::cloud::bigtable::TableResource(project_id, instance_id,
+                                             table_id));
   MutateDeleteRows(table, std::move(rows));
 }
 
@@ -468,8 +476,9 @@ void MutateInsertUpdateRowsCommand(std::vector<std::string> const& argv) {
   auto const table_id = *it++;
   std::vector<std::string> rows(it, argv.cend());
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataClient(project_id, instance_id),
-      table_id);
+      google::cloud::bigtable::MakeDataConnection(),
+      google::cloud::bigtable::TableResource(project_id, instance_id,
+                                             table_id));
   MutateInsertUpdateRows(table, std::move(rows));
 }
 
@@ -698,8 +707,8 @@ void ConfigureConnectionPoolSize(std::vector<std::string> const& argv) {
      std::string const& table_id) {
     auto constexpr kPoolSize = 10;
     auto options = gc::Options{}.set<gc::GrpcNumChannelsOption>(kPoolSize);
-    auto table = cbt::Table(
-        cbt::MakeDataClient(project_id, instance_id, options), table_id);
+    cbt::Table table(cbt::MakeDataConnection(options),
+                     cbt::TableResource(project_id, instance_id, table_id));
     std::cout << "Connected with channel pool size of " << kPoolSize << "\n";
   }
   // [END bigtable_configure_connection_pool]
@@ -721,8 +730,11 @@ void RunMutateExamples(
                                   table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
 
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
-                   cbt::AlwaysRetryMutationPolicy());
+  using ::google::cloud::Options;
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id),
+                   Options{}.set<cbt::IdempotentMutationPolicyOption>(
+                       cbt::AlwaysRetryMutationPolicy().clone()));
 
   std::cout << "Running MutateInsertUpdateRows() example [1]" << std::endl;
   MutateInsertUpdateRows(table, {"row1", "fam:col1=value1.1",
@@ -749,8 +761,11 @@ void RunWriteExamples(
                                   table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
 
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
-                   cbt::AlwaysRetryMutationPolicy());
+  using ::google::cloud::Options;
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id),
+                   Options{}.set<cbt::IdempotentMutationPolicyOption>(
+                       cbt::AlwaysRetryMutationPolicy().clone()));
 
   std::cout << "Running WriteSimple() example" << std::endl;
   WriteSimple(table, {});
@@ -780,8 +795,11 @@ void RunDataExamples(
                                   table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
 
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
-                   cbt::AlwaysRetryMutationPolicy());
+  using ::google::cloud::Options;
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id),
+                   Options{}.set<cbt::IdempotentMutationPolicyOption>(
+                       cbt::AlwaysRetryMutationPolicy().clone()));
 
   std::cout << "\nRunning ConfigureConnectionPoolSize()" << std::endl;
   ConfigureConnectionPoolSize({project_id, instance_id, table_id});
