@@ -94,9 +94,8 @@ std::string GetField(  // NOLINT(misc-no-recursion)
   if (fields.empty()) {
     GCP_LOG(FATAL) << "Empty field name defined in RoutingRule.";
   }
-  auto const& field_name = fields.front();
+  auto const* fd = input_type->FindFieldByName(fields.front());
   fields.pop_front();
-  auto const* fd = input_type->FindFieldByName(field_name);
   if (fields.empty()) return msg.GetReflection()->GetString(msg, fd);
   auto const& sub_msg = msg.GetReflection()->GetMessage(msg, fd);
   return GetField(fields, fd->message_type(), sub_msg);
