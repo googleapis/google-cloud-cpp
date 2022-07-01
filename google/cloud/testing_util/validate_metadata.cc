@@ -31,6 +31,10 @@
 #include <iterator>
 #include <regex>
 
+// Undefine a Windows macro, which conflicts with
+// `protobuf::Reflection::GetMessage`
+#undef GetMessage
+
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
