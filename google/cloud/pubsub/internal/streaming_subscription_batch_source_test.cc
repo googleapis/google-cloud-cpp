@@ -623,10 +623,10 @@ std::unique_ptr<pubsub_testing::MockAsyncPullStream> MakeExactlyOnceStream(
   return stream;
 }
 
-// Wait until the exactly once stream is ready.  Refactors some repetitive code.
+// Wait until the exactly-once stream is ready.  Refactors some repetitive code.
 // The promise returned here will trigger a `Write()` and `Read()` call
-// corresponding to the initial update of the stream's deadline (as this is a
-// exactly once stream), and the loop for `Read()`.
+// corresponding to the initial update of the stream's deadline (as this is an
+// exactly-once stream), and the loop for `Read()`.
 promise<bool> WaitForExactlyOnceStreamInitialRunAsync(
     AsyncSequencer<bool>& aseq) {
   auto start = aseq.PopFrontWithName();
