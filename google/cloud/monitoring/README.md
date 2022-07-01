@@ -13,7 +13,7 @@ While this library is **GA**, please note that the Google Cloud C++ client libra
 ## Supported Platforms
 
 * Windows, macOS, Linux
-* C++14 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and
+* C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and
   MSVC >= 2017)
 * Environments with or without exceptions
 * Bazel (>= 4.0) and CMake (>= 3.5) builds
