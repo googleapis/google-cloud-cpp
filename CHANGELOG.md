@@ -117,7 +117,7 @@ and earlier versions.
 Debian 9 (Stretch) reached EOL on 2022-06-30. Therefore, we have stopped testing
 or supporting this distribution. This was the last distribution we supported
 that required GCC < 7.3, and/or CMake < 3.10. Starting with this release we
-require GCC >= 7.3 and CMake >= 3.10.
+require CMake >= 3.10, and only test with GCC >= 7.3.
 
 **OTHER CHANGES**
 
