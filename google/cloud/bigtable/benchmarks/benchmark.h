@@ -62,8 +62,8 @@ class Benchmark {
   /// Populate the table with initial data.
   google::cloud::StatusOr<BenchmarkResult> PopulateTable();
 
-  /// Return a `bigtable::DataClient` configured for this benchmark.
-  std::shared_ptr<bigtable::DataClient> MakeDataClient();
+  /// Return a `bigtable::Table` configured for this benchmark.
+  Table MakeTable() const;
 
   /// Create a random key.
   std::string MakeRandomKey(google::cloud::internal::DefaultPRNG& gen) const;

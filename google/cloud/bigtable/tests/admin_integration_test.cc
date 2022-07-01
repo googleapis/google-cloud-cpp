@@ -257,8 +257,8 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // We need to mutate the data in the table and then wait for those mutations
   // to propagate to both clusters. First create a `bigtable::Table` object.
-  auto data_client = bigtable::MakeDataClient(project_id(), id);
-  bigtable::Table table(data_client, random_table_id);
+  auto table = Table(MakeDataConnection(),
+                     TableResource(project_id(), id, random_table_id));
 
   // Insert some cells into the table.
   std::string const row_key1 = "check-consistency-row1";

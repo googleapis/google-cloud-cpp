@@ -123,14 +123,16 @@ void Benchmark::DeleteTable() {
   }
 }
 
-std::shared_ptr<bigtable::DataClient> Benchmark::MakeDataClient() {
-  return bigtable::MakeDataClient(options_.project_id, options_.instance_id,
-                                  opts_);
+Table Benchmark::MakeTable() const {
+  auto table_opts = Options{}.set<AppProfileIdOption>(options_.app_profile_id);
+  return Table(MakeDataConnection(opts_),
+               TableResource(options_.project_id, options_.instance_id,
+                             options_.table_id),
+               std::move(table_opts));
 }
 
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
-  bigtable::Table table(MakeDataClient(), options_.app_profile_id,
-                        options_.table_id);
+  auto table = MakeTable();
   std::cout << "# Populating table " << options_.table_id << " " << std::flush;
   std::vector<std::future<google::cloud::StatusOr<BenchmarkResult>>> tasks;
   auto upload_start = std::chrono::steady_clock::now();

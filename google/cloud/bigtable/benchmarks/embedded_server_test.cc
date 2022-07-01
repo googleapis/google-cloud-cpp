@@ -75,8 +75,8 @@ TEST(EmbeddedServer, TableApply) {
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<EndpointOption>(server->address());
 
-  Table table(MakeDataClient("fake-project", "fake-instance", options),
-              "fake-table");
+  Table table(MakeDataConnection(options),
+              TableResource("fake-project", "fake-instance", "fake-table"));
 
   SingleRowMutation mutation("row1",
                              {SetCell("fam", "col", milliseconds(0), "val"),
@@ -100,8 +100,8 @@ TEST(EmbeddedServer, TableBulkApply) {
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<EndpointOption>(server->address());
 
-  Table table(MakeDataClient("fake-project", "fake-instance", options),
-              "fake-table");
+  Table table(MakeDataConnection(options),
+              TableResource("fake-project", "fake-instance", "fake-table"));
 
   BulkMutation bulk;
   bulk.emplace_back(SingleRowMutation(
@@ -127,8 +127,8 @@ TEST(EmbeddedServer, ReadRows1) {
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<EndpointOption>(server->address());
 
-  Table table(MakeDataClient("fake-project", "fake-instance", options),
-              "fake-table");
+  Table table(MakeDataConnection(options),
+              TableResource("fake-project", "fake-instance", "fake-table"));
 
   EXPECT_EQ(0, server->read_rows_count());
   auto reader = table.ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
@@ -149,8 +149,8 @@ TEST(EmbeddedServer, ReadRows100) {
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<EndpointOption>(server->address());
 
-  Table table(MakeDataClient("fake-project", "fake-instance", options),
-              "fake-table");
+  Table table(MakeDataConnection(options),
+              TableResource("fake-project", "fake-instance", "fake-table"));
 
   EXPECT_EQ(0, server->read_rows_count());
   auto reader = table.ReadRows(RowSet(RowRange::StartingAt("foo")), 100,
