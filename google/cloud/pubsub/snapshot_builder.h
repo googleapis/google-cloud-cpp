@@ -60,7 +60,8 @@ class SnapshotBuilder {
   ///@{
   SnapshotBuilder& add_label(std::string const& key,
                              std::string const& value) & {
-    using value_type = protobuf::Map<std::string, std::string>::value_type;
+    using value_type =
+        google::protobuf::Map<std::string, std::string>::value_type;
     proto_.mutable_labels()->insert(value_type(key, value));
     paths_.insert("labels");
     return *this;
