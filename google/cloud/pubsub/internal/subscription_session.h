@@ -42,7 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Applications provide a callable compatible with this type to receive
  * messages.  They acknowledge (or reject) messages using
- * `ExactlyOnceAckHandler`. This is a move-only type to support asynchronously
+ * `ExactlyOnceAckHandler`.  This is a move-only type to support asynchronous
  * acknowledgments.
  */
 using ExactlyOnceApplicationCallback =
