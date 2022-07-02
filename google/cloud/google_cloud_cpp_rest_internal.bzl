@@ -75,5 +75,6 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/openssl_util.cc",
     "internal/rest_parse_json_error.cc",
     "internal/rest_request.cc",
+    "internal/rest_response.cc",
     "internal/unified_rest_credentials.cc",
 ]
