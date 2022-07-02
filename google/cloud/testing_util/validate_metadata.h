@@ -77,7 +77,7 @@ class ValidateMetadataFixture {
    * @return an OK status if the `context` is properly set up
    */
   void IsContextMDValid(
-      grpc::ClientContext& context, std::string const& method,
+      grpc::ClientContext& context, std::string const& method_name,
       google::protobuf::Message const& request,
       std::string const& api_client_header,
       absl::optional<std::string> const& resource_name = {},
