@@ -74,6 +74,7 @@ add_library(
     internal/rest_parse_json_error.h
     internal/rest_request.cc
     internal/rest_request.h
+    internal/rest_response.cc
     internal/rest_response.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h)
@@ -182,7 +183,6 @@ if (BUILD_TESTING)
         internal/curl_http_payload_test.cc
         internal/curl_impl_test.cc
         internal/curl_rest_client_test.cc
-        internal/curl_rest_response_test.cc
         internal/curl_wrappers_test.cc
         internal/make_jwt_assertion_test.cc
         internal/oauth2_access_token_credentials_test.cc
@@ -198,6 +198,7 @@ if (BUILD_TESTING)
         internal/openssl_util_test.cc
         internal/rest_parse_json_error_test.cc
         internal/rest_request_test.cc
+        internal/rest_response_test.cc
         internal/unified_rest_credentials_test.cc)
 
     # List the emulator integration tests, then setup the targets and
