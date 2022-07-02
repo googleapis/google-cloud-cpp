@@ -19,6 +19,9 @@ namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 namespace {
+
+using ::testing::StartsWith;
+
 TEST(StorageBenchmarksUtilsTest, MakeRandomData) {
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
@@ -48,7 +51,7 @@ TEST(StorageBenchmarksUtilsTest, MakeRandomBucket) {
   auto d2 = MakeRandomBucketName(generator);
   EXPECT_NE(d1, d2);
 
-  EXPECT_EQ(0, d1.rfind(RandomBucketPrefix(), 0));
+  EXPECT_THAT(d1, StartsWith(RandomBucketPrefix()));
   EXPECT_GE(63U, d1.size());
   EXPECT_EQ(std::string::npos,
             d1.find_first_not_of("-_abcdefghijklmnopqrstuvwxyz0123456789"))

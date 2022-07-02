@@ -480,9 +480,8 @@ void SetRetryStatusCodeExpression(VarsDictionary& vars) {
   std::set<std::string> codes = absl::StrSplit(iter->second, ',');
 
   auto append_status_code = [&](std::string const& status_code) {
-    absl::StrAppend(
-        &retry_status_code_expression,
-        absl::StrCat(" && status.code() != StatusCode::", status_code));
+    absl::StrAppend(&retry_status_code_expression,
+                    " && status.code() != StatusCode::", status_code);
   };
 
   for (auto const& code : codes) {

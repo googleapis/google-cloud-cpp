@@ -3722,9 +3722,9 @@ void RunAllSlowInstanceTests(
           "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
           .value_or("");
   auto const run_slow_backup_tests =
-      run_slow_integration_tests.find("backup") != std::string::npos;
+      absl::StrContains(run_slow_integration_tests, "backup");
   auto const run_slow_instance_tests =
-      run_slow_integration_tests.find("instance") != std::string::npos;
+      absl::StrContains(run_slow_integration_tests, "instance");
 
   if (!run_slow_instance_tests) return;
 

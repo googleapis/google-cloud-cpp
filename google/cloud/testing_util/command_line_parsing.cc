@@ -128,7 +128,7 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
     // Try to match `argument` against the options in `desc`
     bool matched = false;
     for (auto const& d : desc) {
-      if (argument.rfind(d.option, 0) != 0) {
+      if (!absl::StartsWith(argument, d.option)) {
         // Not a match, keep searching
         continue;
       }

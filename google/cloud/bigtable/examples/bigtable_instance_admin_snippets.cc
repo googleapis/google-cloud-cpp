@@ -764,7 +764,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
   }
   auto it = argv.cbegin();
   auto const resource_name = *it++;
-  if (resource_name.rfind("projects/", 0) != 0) {
+  if (!absl::StartsWith(resource_name, "projects/")) {
     throw Usage{usage +
                 "\nresource-name should be fully qualified. For example: "
                 "'projects/my-project/instances/my-instance'"};

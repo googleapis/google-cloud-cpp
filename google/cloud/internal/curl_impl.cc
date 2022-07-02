@@ -43,6 +43,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 char const* InitialQueryParameterSeparator(std::string const& url) {
+  // Abseil <= 20200923 does not implement StrContains(.., char)
+  // NOLINTNEXTLINE(abseil-string-find-str-contains)
   if (url.find('?') != std::string::npos) return "&";
   return "?";
 }

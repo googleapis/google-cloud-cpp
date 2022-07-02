@@ -21,11 +21,11 @@
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/timestamp.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -47,10 +47,10 @@ std::string const& ProjectId() {
 
 bool RunSlowBackupTests() {
   static bool run_slow_backup_tests =
-      google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
-          .value_or("")
-          .find("backup") != std::string::npos;
+      absl::StrContains(google::cloud::internal::GetEnv(
+                            "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
+                            .value_or(""),
+                        "backup");
   return run_slow_backup_tests;
 }
 

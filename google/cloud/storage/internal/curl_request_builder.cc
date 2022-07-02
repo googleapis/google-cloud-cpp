@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -26,6 +25,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 char const* InitialQueryParameterSeparator(std::string const& url) {
+  // Abseil <= 20200923 does not implement StrContains(.., char)
+  // NOLINTNEXTLINE(abseil-string-find-str-contains)
   if (url.find('?') != std::string::npos) return "&";
   return "?";
 }

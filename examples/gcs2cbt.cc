@@ -18,6 +18,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 #include <condition_variable>
 #include <fstream>
@@ -207,11 +208,11 @@ The options are:
     std::string argument(argv[1]);
     argv.erase(argv.begin() + 1);
     if (argument == "--help") {
-    } else if (0 == argument.find(separator_option)) {
+    } else if (absl::StartsWith(argument, separator_option)) {
       options.separator = argument.substr(separator_option.size())[0];
-    } else if (0 == argument.find(key_option)) {
+    } else if (absl::StartsWith(argument, key_option)) {
       options.keys.push_back(std::stoi(argument.substr(key_option.size())) - 1);
-    } else if (0 == argument.find(keys_separator_option)) {
+    } else if (absl::StartsWith(argument, keys_separator_option)) {
       options.keys_separator = argument.substr(keys_separator_option.size());
     } else {
       return argument;

@@ -125,7 +125,7 @@ RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
     // `nested2` are generic Messages, and `value` is the string field we are to
     // match against. We must iterate over the nested messages to get to the
     // string value.
-    std::deque<std::string> fields = absl::StrSplit(rp.field(), ".");
+    std::deque<std::string> fields = absl::StrSplit(rp.field(), '.');
     auto const& field = GetField(fields, method->input_type(), request);
 
     // We skip empty fields.

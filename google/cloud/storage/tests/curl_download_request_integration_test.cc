@@ -281,7 +281,7 @@ TEST(CurlDownloadRequestTest, SimpleStreamReadAfterClosed) {
     delay *= 2;
   }
   ASSERT_STATUS_OK(received);
-  std::vector<std::string> lines = absl::StrSplit(*received, "\n");
+  std::vector<std::string> lines = absl::StrSplit(*received, '\n');
   auto p = std::remove(lines.begin(), lines.end(), std::string{});
   lines.erase(p, lines.end());
   EXPECT_EQ(kLineCount, lines.size());

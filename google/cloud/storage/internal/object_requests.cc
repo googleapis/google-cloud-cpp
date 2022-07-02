@@ -484,7 +484,7 @@ StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range) {
   // that is the value should match `bytes=0-[0-9]+`:
   char const prefix[] = "bytes=0-";
   auto constexpr kPrefixLen = sizeof(prefix) - 1;
-  if (range.rfind(prefix, 0) != 0) {
+  if (!absl::StartsWith(range, prefix)) {
     return Status(
         StatusCode::kInternal,
         "cannot parse Range header in resumable upload response, value=" +

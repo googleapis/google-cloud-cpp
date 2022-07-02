@@ -19,6 +19,7 @@
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/internal/getenv.h"
+#include "absl/strings/match.h"
 #include <nlohmann/json.hpp>
 
 namespace google {
@@ -35,14 +36,14 @@ bool UseGrpcForMetadata() {
   auto v =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
           .value_or("");
-  return v.find("metadata") != std::string::npos;
+  return absl::StrContains(v, "metadata");
 }
 
 bool UseGrpcForMedia() {
   auto v =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
           .value_or("");
-  return v.find("media") != std::string::npos;
+  return absl::StrContains(v, "media");
 }
 
 }  // namespace
