@@ -47,8 +47,9 @@ if (BUILD_TESTING)
         table_admin_iam_policy_snippets.cc
         table_admin_snippets.cc)
 
-    set(bigtable_examples_unit_tests # cmake-format: sort
-                                     bigtable_examples_common_test.cc)
+    set(bigtable_examples_unit_tests
+        # cmake-format: sort
+        bigtable_examples_common_test.cc howto_mock_data_api.cc)
 
     include(CreateBazelConfig)
     export_list_to_bazel("bigtable_examples.bzl" "bigtable_examples" YEAR

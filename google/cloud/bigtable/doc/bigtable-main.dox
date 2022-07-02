@@ -88,6 +88,8 @@ which should give you a taste of the Cloud Bigtable C++ client library API.
 
 - @ref bigtable-samples-grpc-credentials "Examples for using various gRPC Credential Classes with Cloud Bigtable C++ client"
 
+- @ref bigtable-mocking "Mocking the Cloud Bigtable C++ client"
+
 [read-more-about-gcp-bigtable]: https://cloud.google.com/bigtable/docs/ 'Read more about GCP Bigtable'
 [read-instances-clusters]: https://cloud.google.com/bigtable/docs/instances-clusters-nodes 'Instances and Clusters'
 [read-tables]: https://cloud.google.com/bigtable/docs/overview 'Tables'
