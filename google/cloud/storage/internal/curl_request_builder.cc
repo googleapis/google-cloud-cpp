@@ -17,7 +17,6 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "absl/memory/memory.h"
-#include "absl/strings/match.h"
 
 namespace google {
 namespace cloud {
@@ -26,7 +25,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 char const* InitialQueryParameterSeparator(std::string const& url) {
-  if (absl::StrContains(url, '?')) return "&";
+  // Abseil <= 20200923 does not implement StrContains(.., char)
+  // NOLINTNEXTLINE(abseil-string-find-str-contains)
+  if (url.find('?') != std::string::npos) return "&";
   return "?";
 }
 }  // namespace
