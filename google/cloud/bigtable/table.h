@@ -206,12 +206,12 @@ class Table {
                  TableResource tr, Options options = {})
       : table_(std::move(tr)),
         table_name_(table_.FullName()),
-        metadata_update_policy_(
-            MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
         connection_(std::move(conn)),
         options_(google::cloud::internal::MergeOptions(
             std::move(options),
-            internal::DefaultDataOptions(connection_->options()))) {}
+            internal::DefaultDataOptions(connection_->options()))),
+        metadata_update_policy_(bigtable_internal::MakeMetadataUpdatePolicy(
+            table_name_, app_profile_id())) {}
 
   /**
    * Constructor with default policies.
@@ -243,13 +243,12 @@ class Table {
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         rpc_backoff_policy_prototype_(
             bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
-        metadata_update_policy_(
-            MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()),
         background_threads_(client_->BackgroundThreadsFactory()()),
-        options_(Options{}.set<AppProfileIdOption>(std::move(app_profile_id))) {
-  }
+        options_(Options{}.set<AppProfileIdOption>(std::move(app_profile_id))),
+        metadata_update_policy_(bigtable_internal::MakeMetadataUpdatePolicy(
+            table_name_, this->app_profile_id())) {}
 
   /**
    * Constructor with explicit policies.
@@ -388,8 +387,8 @@ class Table {
     table.table_ = TableResource(std::move(project_id), std::move(instance_id),
                                  std::move(table_id));
     table.table_name_ = table.table_.FullName();
-    table.metadata_update_policy_ =
-        MetadataUpdatePolicy(table.table_name_, MetadataParamTypes::TABLE_NAME);
+    table.metadata_update_policy_ = bigtable_internal::MakeMetadataUpdatePolicy(
+        table.table_name_, table.app_profile_id());
     return table;
   }
 
@@ -403,9 +402,9 @@ class Table {
     table.table_ = TableResource(std::move(project_id), std::move(instance_id),
                                  std::move(table_id));
     table.table_name_ = table.table_.FullName();
-    table.metadata_update_policy_ =
-        MetadataUpdatePolicy(table.table_name_, MetadataParamTypes::TABLE_NAME);
     table.options_.set<AppProfileIdOption>(std::move(app_profile_id));
+    table.metadata_update_policy_ = bigtable_internal::MakeMetadataUpdatePolicy(
+        table.table_name_, table.app_profile_id());
     return table;
   }
 
@@ -1025,11 +1024,11 @@ class Table {
   std::string table_name_;
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
-  MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   std::shared_ptr<BackgroundThreads> background_threads_;
   std::shared_ptr<DataConnection> connection_;
   Options options_;
+  MetadataUpdatePolicy metadata_update_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
