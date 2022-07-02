@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/match.h"
 
 namespace google {
 namespace cloud {
@@ -26,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 char const* InitialQueryParameterSeparator(std::string const& url) {
-  if (url.find('?') != std::string::npos) return "&";
+  if (absl::StrContains(url, '?')) return "&";
   return "?";
 }
 }  // namespace

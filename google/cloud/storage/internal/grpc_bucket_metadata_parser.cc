@@ -19,6 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/algorithm/container.h"
+#include "absl/strings/match.h"
 #include "absl/time/civil_time.h"
 #include <algorithm>
 #include <cctype>
@@ -144,7 +145,7 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   // may have a project id (instead of number), we need to do some parsing. We
   // are forgiving here. It is better to drop one field rather than dropping
   // the full message.
-  if (rhs.project().rfind("projects/", 0) == 0) {
+  if (absl::StartsWith(rhs.project(), "projects/")) {
     auto s = rhs.project().substr(std::strlen("projects/"));
     char* end;
     auto number = std::strtol(s.c_str(), &end, 10);

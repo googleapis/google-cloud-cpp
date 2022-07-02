@@ -20,6 +20,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"  // NOLINT(modernize-deprecated-headers)
 #include <curl/curl.h>
@@ -214,7 +215,7 @@ void UseIdTokenGrpc(google::cloud::iam::IAMCredentialsClient client,
     if (!token) throw std::runtime_error(token.status().message());
 
     auto const prefix = std::string{"https://"};
-    if (url.rfind(prefix, 0) != 0) {
+    if (!absl::StartsWith(url, prefix)) {
       throw std::runtime_error("Invalid URL" + url);
     }
     auto endpoint = url.substr(prefix.length()) + ":443";

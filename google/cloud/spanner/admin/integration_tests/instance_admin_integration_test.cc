@@ -56,10 +56,10 @@ std::string const& InstanceId() {
 }
 
 bool RunSlowInstanceTests() {
-  static bool run_slow_instance_tests =
+  static bool run_slow_instance_tests = absl::StrContains(
       internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
-          .value_or("")
-          .find("instance") != std::string::npos;
+          .value_or(""),
+      "instance");
   return run_slow_instance_tests;
 }
 

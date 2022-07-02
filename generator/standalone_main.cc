@@ -17,6 +17,7 @@
 #include "google/cloud/status_or.h"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
+#include "absl/strings/match.h"
 #include "generator/generator.h"
 #include "generator/generator_config.pb.h"
 #include "generator/internal/scaffold_generator.h"
@@ -72,7 +73,7 @@ std::string Dirname(std::string const& path) {
 std::vector<std::string> Parents(std::string path) {
   std::vector<std::string> p;
   p.push_back(path);
-  while (path.find('/') != std::string::npos) {
+  while (absl::StrContains(path, '/')) {
     path = Dirname(path);
     p.push_back(path);
   }

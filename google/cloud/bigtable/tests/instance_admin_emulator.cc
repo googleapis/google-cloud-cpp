@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/match.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/text_format.h>
@@ -106,7 +107,7 @@ class InstanceAdminEmulator final
 
     std::string prefix = request->parent() + "/instances/";
     for (auto const& kv : instances_) {
-      if (0 == kv.first.find(prefix)) {
+      if (absl::StartsWith(kv.first, prefix)) {
         *response->add_instances() = kv.second;
       }
     }
@@ -385,7 +386,7 @@ class InstanceAdminEmulator final
 
     auto const& parent = request->parent();
     for (auto const& kv : app_profiles_) {
-      if (0 == kv.first.find(parent)) {
+      if (absl::StartsWith(kv.first, parent)) {
         *response->add_app_profiles() = kv.second;
       }
     }

@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/status_payload_keys.h"
+#include "absl/strings/match.h"
 #include <google/rpc/error_details.pb.h>
 #include <google/rpc/status.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
@@ -45,7 +46,7 @@ bool IsSessionNotFound(google::cloud::Status const& status) {
 
   // Without an attached `ResourceInfo` (which should never happen outside
   // of tests), we fallback to looking at the `Status` message.
-  return status.message().find("Session not found") != std::string::npos;
+  return absl::StrContains(status.message(), "Session not found");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

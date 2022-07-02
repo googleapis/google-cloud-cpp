@@ -30,6 +30,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
+#include "absl/strings/match.h"
 #include <crc32c/crc32c.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
@@ -97,8 +98,8 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using DirectPath the gRPC library already does load balancing across
   // multiple sockets, it makes little sense to perform additional load
   // balancing in the client library.
-  if (endpoint.rfind("google-c2p:///", 0) == 0 ||
-      endpoint.rfind("google-c2p-experimental:///", 0) == 0) {
+  if (absl::StartsWith(endpoint, "google-c2p:///") ||
+      absl::StartsWith(endpoint, "google-c2p-experimental:///")) {
     return 1;
   }
   // When not using DirectPath, there are limits to the bandwidth per channel,

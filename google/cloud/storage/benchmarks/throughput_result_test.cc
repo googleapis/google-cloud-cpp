@@ -16,7 +16,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/strings/str_split.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #include <algorithm>
 
@@ -49,7 +49,7 @@ MATCHER_P(
     ++pos;
   }
   std::string status = arg.substr(pos);
-  if (status.find(substr) == std::string::npos) {
+  if (!absl::StrContains(status, substr)) {
     *result_listener << "Didn't find " << substr << " in " << status;
     return false;
   }

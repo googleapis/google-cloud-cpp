@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/match.h"
 #include <sstream>
 #include <thread>
 
@@ -485,7 +486,7 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
       auto constexpr kConcurrentMessagePrefix = "Concurrent requests received.";
       auto const is_concurrent_write =
           last_status.code() == StatusCode::kAborted &&
-          last_status.message().rfind(kConcurrentMessagePrefix, 0) == 0;
+          absl::StartsWith(last_status.message(), kConcurrentMessagePrefix);
       auto const is_retryable =
           is_concurrent_write
               ? retry_policy->OnFailure(Status(StatusCode::kUnavailable, ""))

@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 char const* InitialQueryParameterSeparator(std::string const& url) {
-  if (url.find('?') != std::string::npos) return "&";
+  if (absl::StrContains(url, '?')) return "&";
   return "?";
 }
 

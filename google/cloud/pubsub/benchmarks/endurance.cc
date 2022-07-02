@@ -24,6 +24,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/match.h"
 #include <chrono>
 #include <iostream>
 #include <limits>
@@ -450,7 +451,7 @@ void PublisherTask(Config const& config, ExperimentFlowControl& flow_control,
       publisher = make_publisher();
     }
     auto message = flow_control.GenerateMessage(task);
-    auto const shutdown = message.data().rfind("shutdown:", 0) == 0;
+    auto const shutdown = absl::StartsWith(message.data(), "shutdown:");
     last_publish = publisher.Publish(std::move(message))
                        .then([&flow_control](future<StatusOr<std::string>> f) {
                          flow_control.Published(f.get().ok());
