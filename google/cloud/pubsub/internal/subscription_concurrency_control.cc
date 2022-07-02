@@ -22,7 +22,8 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-class AckHandlerImpl : public pubsub::AckHandler::Impl {
+
+class AckHandlerImpl : public pubsub_internal::ExactlyOnceAckHandler::Impl {
  public:
   explicit AckHandlerImpl(std::weak_ptr<SubscriptionConcurrencyControl> w,
                           std::string ack_id, std::int32_t delivery_attempt)
@@ -31,11 +32,15 @@ class AckHandlerImpl : public pubsub::AckHandler::Impl {
         delivery_attempt_(delivery_attempt) {}
   ~AckHandlerImpl() override = default;
 
-  void ack() override {
-    if (auto s = source_.lock()) s->AckMessage(ack_id_);
+  future<Status> ack() override {
+    if (auto s = source_.lock()) return s->AckMessage(ack_id_);
+    return make_ready_future(
+        Status(StatusCode::kFailedPrecondition, "session already shutdown"));
   }
-  void nack() override {
-    if (auto s = source_.lock()) s->NackMessage(ack_id_);
+  future<Status> nack() override {
+    if (auto s = source_.lock()) return s->NackMessage(ack_id_);
+    return make_ready_future(
+        Status(StatusCode::kFailedPrecondition, "session already shutdown"));
   }
   std::int32_t delivery_attempt() const override { return delivery_attempt_; }
 
@@ -47,13 +52,12 @@ class AckHandlerImpl : public pubsub::AckHandler::Impl {
 
 }  // namespace
 
-void SubscriptionConcurrencyControl::Start(pubsub::ApplicationCallback cb) {
+void SubscriptionConcurrencyControl::Start(Callback cb) {
   std::unique_lock<std::mutex> lk(mu_);
   if (callback_) return;
   callback_ = std::move(cb);
-  std::weak_ptr<SubscriptionConcurrencyControl> weak = shared_from_this();
-  source_->Start([weak](google::pubsub::v1::ReceivedMessage r) {
-    if (auto self = weak.lock()) self->OnMessage(std::move(r));
+  source_->Start([w = WeakFromThis()](google::pubsub::v1::ReceivedMessage r) {
+    if (auto self = w.lock()) self->OnMessage(std::move(r));
   });
   if (total_messages() >= max_concurrency_) return;
   auto const read_count = max_concurrency_ - total_messages();
@@ -67,14 +71,18 @@ void SubscriptionConcurrencyControl::Shutdown() {
   source_->Shutdown();
 }
 
-void SubscriptionConcurrencyControl::AckMessage(std::string const& ack_id) {
-  source_->AckMessage(ack_id);
+future<Status> SubscriptionConcurrencyControl::AckMessage(
+    std::string const& ack_id) {
+  auto r = source_->AckMessage(ack_id);
   MessageHandled();
+  return r;
 }
 
-void SubscriptionConcurrencyControl::NackMessage(std::string const& ack_id) {
-  source_->NackMessage(ack_id);
+future<Status> SubscriptionConcurrencyControl::NackMessage(
+    std::string const& ack_id) {
+  auto r = source_->NackMessage(ack_id);
   MessageHandled();
+  return r;
 }
 
 void SubscriptionConcurrencyControl::MessageHandled() {
@@ -111,8 +119,8 @@ void SubscriptionConcurrencyControl::OnMessageAsync(
     google::pubsub::v1::ReceivedMessage m,
     std::weak_ptr<SubscriptionConcurrencyControl> w) {
   shutdown_manager_->StartOperation(__func__, "handler", [&] {
-    pubsub::AckHandler h(absl::make_unique<AckHandlerImpl>(
-        std::move(w), std::move(*m.mutable_ack_id()), m.delivery_attempt()));
+    auto h = absl::make_unique<AckHandlerImpl>(
+        std::move(w), std::move(*m.mutable_ack_id()), m.delivery_attempt());
     callback_(FromProto(std::move(*m.mutable_message())), std::move(h));
   });
   shutdown_manager_->FinishedOperation("callback");

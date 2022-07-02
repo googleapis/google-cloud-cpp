@@ -15,12 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_SESSION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_SESSION_H
 
+#include "google/cloud/pubsub/application_callback.h"
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/internal/session_shutdown_manager.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_concurrency_control.h"
 #include "google/cloud/pubsub/retry_policy.h"
-#include "google/cloud/pubsub/subscriber_connection.h"
+#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/status_or.h"
@@ -34,10 +35,28 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// TODO(#9327) - move this to application_callback.h
+/**
+ * Defines the interface for application-level callbacks with exactly-once
+ * delivery.
+ *
+ * Applications provide a callable compatible with this type to receive
+ * messages.  They acknowledge (or reject) messages using
+ * `ExactlyOnceAckHandler`.  This is a move-only type to support asynchronous
+ * acknowledgments.
+ */
+using ExactlyOnceApplicationCallback =
+    std::function<void(pubsub::Message, ExactlyOnceAckHandler)>;
+
 future<Status> CreateSubscriptionSession(
     pubsub::Subscription const& subscription, Options const& opts,
     std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
-    std::string client_id, pubsub::SubscriberConnection::SubscribeParams p);
+    std::string client_id, pubsub::ApplicationCallback application_callback);
+
+future<Status> CreateSubscriptionSession(
+    pubsub::Subscription const& subscription, Options const& opts,
+    std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
+    std::string client_id, ExactlyOnceApplicationCallback application_callback);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

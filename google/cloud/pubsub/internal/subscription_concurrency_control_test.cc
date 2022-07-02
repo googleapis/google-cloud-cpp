@@ -32,7 +32,11 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::testing::AtLeast;
+using ::testing::ByMove;
+using ::testing::Return;
 using ::testing::StartsWith;
+
+using Handler = std::unique_ptr<ExactlyOnceAckHandler::Impl>;
 
 class SubscriptionConcurrencyControlTest : public ::testing::Test {
  protected:
@@ -89,11 +93,16 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageLifecycle) {
   }
   {
     ::testing::InSequence sequence;
-    EXPECT_CALL(*source, AckMessage("ack-0-0"));
-    EXPECT_CALL(*source, NackMessage("ack-0-1"));
-    EXPECT_CALL(*source, AckMessage("ack-1-0"));
-    EXPECT_CALL(*source, NackMessage("ack-1-1"));
-    EXPECT_CALL(*source, NackMessage("ack-1-2"));
+    EXPECT_CALL(*source, AckMessage("ack-0-0"))
+        .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+    EXPECT_CALL(*source, NackMessage("ack-0-1"))
+        .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+    EXPECT_CALL(*source, AckMessage("ack-1-0"))
+        .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+    EXPECT_CALL(*source, NackMessage("ack-1-1"))
+        .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+    EXPECT_CALL(*source, NackMessage("ack-1-2"))
+        .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   }
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
@@ -105,36 +114,36 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageLifecycle) {
   auto uut = SubscriptionConcurrencyControl::Create(
       background.cq(), shutdown, source, /*max_concurrency=*/1);
 
-  std::mutex handler_mu;
-  std::condition_variable handler_cv;
-  std::deque<pubsub::AckHandler> ack_handlers;
-  auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
-    std::lock_guard<std::mutex> lk(handler_mu);
+  std::mutex queue_mu;
+  std::condition_variable queue_cv;
+  std::deque<Handler> ack_handlers;
+  auto callback = [&](pubsub::Message const&, Handler h) {
+    std::lock_guard<std::mutex> lk(queue_mu);
     ack_handlers.push_back(std::move(h));
-    handler_cv.notify_one();
+    queue_cv.notify_one();
   };
   auto pull_next = [&] {
-    std::unique_lock<std::mutex> lk(handler_mu);
-    handler_cv.wait(lk, [&] { return !ack_handlers.empty(); });
+    std::unique_lock<std::mutex> lk(queue_mu);
+    queue_cv.wait(lk, [&] { return !ack_handlers.empty(); });
     auto h = std::move(ack_handlers.front());
     ack_handlers.pop_front();
     return h;
   };
 
   auto done = shutdown->Start({});
-  uut->Start(handler);
+  uut->Start(callback);
 
   auto h = pull_next();
-  std::move(h).ack();
+  h->ack();
   h = pull_next();
-  std::move(h).nack();
+  h->nack();
 
   h = pull_next();
-  std::move(h).ack();
+  h->ack();
   h = pull_next();
-  std::move(h).nack();
+  h->nack();
   h = pull_next();
-  std::move(h).nack();
+  h->nack();
 
   shutdown->MarkAsShutdown(__func__, {});
   uut->Shutdown();
@@ -167,11 +176,21 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
   }
   {
     ::testing::InSequence sequence;
-    EXPECT_CALL(*source, AckMessage(StartsWith("ack-0-"))).Times(8);
-    EXPECT_CALL(*source, AckMessage(StartsWith("ack-1-"))).Times(1);
-    EXPECT_CALL(*source, NackMessage(StartsWith("ack-1-"))).Times(1);
-    EXPECT_CALL(*source, AckMessage(StartsWith("ack-1-"))).Times(1);
-    EXPECT_CALL(*source, NackMessage(StartsWith("ack-1-"))).Times(5);
+    EXPECT_CALL(*source, AckMessage(StartsWith("ack-0-")))
+        .Times(8)
+        .WillRepeatedly([] { return make_ready_future(Status{}); });
+    EXPECT_CALL(*source, AckMessage(StartsWith("ack-1-")))
+        .Times(1)
+        .WillRepeatedly([] { return make_ready_future(Status{}); });
+    EXPECT_CALL(*source, NackMessage(StartsWith("ack-1-")))
+        .Times(1)
+        .WillRepeatedly([] { return make_ready_future(Status{}); });
+    EXPECT_CALL(*source, AckMessage(StartsWith("ack-1-")))
+        .Times(1)
+        .WillRepeatedly([] { return make_ready_future(Status{}); });
+    EXPECT_CALL(*source, NackMessage(StartsWith("ack-1-")))
+        .Times(5)
+        .WillRepeatedly([] { return make_ready_future(Status{}); });
   }
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
@@ -181,40 +200,40 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
       SubscriptionConcurrencyControl::Create(background.cq(), shutdown, source,
                                              /*max_concurrency=*/4);
 
-  std::mutex handler_mu;
-  std::condition_variable handler_cv;
-  std::deque<pubsub::AckHandler> ack_handlers;
-  auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
-    std::lock_guard<std::mutex> lk(handler_mu);
+  std::mutex callback_mu;
+  std::condition_variable callback_cv;
+  std::deque<Handler> ack_handlers;
+  auto callback = [&](pubsub::Message const&, Handler h) {
+    std::lock_guard<std::mutex> lk(callback_mu);
     ack_handlers.push_back(std::move(h));
-    handler_cv.notify_one();
+    callback_cv.notify_one();
   };
   auto wait_n = [&](std::size_t n) {
-    std::unique_lock<std::mutex> lk(handler_mu);
-    handler_cv.wait(lk, [&] { return ack_handlers.size() >= n; });
+    std::unique_lock<std::mutex> lk(callback_mu);
+    callback_cv.wait(lk, [&] { return ack_handlers.size() >= n; });
   };
   auto pull_next = [&] {
-    std::unique_lock<std::mutex> lk(handler_mu);
-    handler_cv.wait(lk, [&] { return !ack_handlers.empty(); });
+    std::unique_lock<std::mutex> lk(callback_mu);
+    callback_cv.wait(lk, [&] { return !ack_handlers.empty(); });
     auto h = std::move(ack_handlers.front());
     ack_handlers.pop_front();
     return h;
   };
 
   auto done = shutdown->Start({});
-  uut->Start(handler);
+  uut->Start(callback);
 
   wait_n(4);
-  for (int i = 0; i != 2; ++i) pull_next().ack();
+  for (int i = 0; i != 2; ++i) pull_next()->ack();
   wait_n(4);
-  for (int i = 0; i != 2; ++i) pull_next().ack();
+  for (int i = 0; i != 2; ++i) pull_next()->ack();
   wait_n(4);
-  for (int i = 0; i != 4; ++i) pull_next().ack();
+  for (int i = 0; i != 4; ++i) pull_next()->ack();
 
-  pull_next().ack();
-  pull_next().nack();
-  pull_next().ack();
-  for (int i = 0; i != 5; ++i) pull_next().nack();
+  pull_next()->ack();
+  pull_next()->nack();
+  pull_next()->ack();
+  for (int i = 0; i != 5; ++i) pull_next()->nack();
 
   shutdown->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
@@ -245,8 +264,12 @@ TEST_F(SubscriptionConcurrencyControlTest,
   }
 
   EXPECT_CALL(*source, Shutdown).Times(1);
-  EXPECT_CALL(*source, AckMessage).Times(AtLeast(kCallbackCount));
-  EXPECT_CALL(*source, NackMessage).Times(AtLeast(0));
+  EXPECT_CALL(*source, AckMessage)
+      .Times(AtLeast(kCallbackCount))
+      .WillRepeatedly([] { return make_ready_future(Status{}); });
+  EXPECT_CALL(*source, NackMessage).WillRepeatedly([] {
+    return make_ready_future(Status{});
+  });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(
       2 * kMaxConcurrency);
@@ -264,35 +287,31 @@ TEST_F(SubscriptionConcurrencyControlTest,
   int current_callbacks = 0;
   int total_callbacks = 0;
   int observed_hwm = 0;
-  auto delayed_handler = [&](pubsub::AckHandler h) {
+  auto delayed_callback = [&](Handler h) {
+    pubsub_internal::ExactlyOnceAckHandler wrapper(std::move(h));
     {
       std::lock_guard<std::mutex> lk(handler_mu);
       --current_callbacks;
       if (++total_callbacks > kCallbackCount) return;
     }
     handler_cv.notify_one();
-    std::move(h).ack();
+    std::move(wrapper).ack();
   };
-  auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
+  auto callback = [&](pubsub::Message const&, Handler h) {
     {
       std::lock_guard<std::mutex> lk(handler_mu);
       ++current_callbacks;
       observed_hwm = (std::max)(observed_hwm, current_callbacks);
     }
-    struct DelayedHandler {
-      pubsub::AckHandler h;
-      std::function<void(pubsub::AckHandler)> handler;
-      void operator()(future<StatusOr<std::chrono::system_clock::time_point>>) {
-        handler(std::move(h));
-      }
-    };
     background.cq()
         .MakeRelativeTimer(std::chrono::microseconds(100))
-        .then(DelayedHandler{std::move(h), delayed_handler});
+        .then([h = std::move(h), callback = delayed_callback](auto) mutable {
+          callback(std::move(h));
+        });
   };
 
   auto done = shutdown->Start({});
-  uut->Start(handler);
+  uut->Start(callback);
 
   {
     std::unique_lock<std::mutex> lk(handler_mu);
@@ -329,22 +348,29 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
   }
 
   EXPECT_CALL(*source, Shutdown).Times(1);
-  EXPECT_CALL(*source, AckMessage).Times(AtLeast(1));
-  EXPECT_CALL(*source, NackMessage).Times(AtLeast(1));
+  EXPECT_CALL(*source, AckMessage).Times(AtLeast(1)).WillRepeatedly([] {
+    return make_ready_future(Status{});
+  });
+  ;
+  EXPECT_CALL(*source, NackMessage).Times(AtLeast(1)).WillRepeatedly([] {
+    return make_ready_future(Status{});
+  });
+  ;
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
 
-  std::mutex handler_mu;
-  std::condition_variable handler_cv;
+  std::mutex callback_mu;
+  std::condition_variable callback_cv;
   int message_counter = 0;
-  auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
-    std::unique_lock<std::mutex> lk(handler_mu);
+  auto callback = [&](pubsub::Message const&, Handler h) {
+    pubsub_internal::ExactlyOnceAckHandler wrapper(std::move(h));
+    std::unique_lock<std::mutex> lk(callback_mu);
     if (++message_counter >= kTestDoneThreshold) {
-      handler_cv.notify_one();
+      callback_cv.notify_one();
       return;
     }
     if (message_counter >= kNackThreshold) return;
-    std::move(h).ack();
+    std::move(wrapper).ack();
   };
 
   // Transfer ownership to a future, like we would do for a fully configured
@@ -359,13 +385,13 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
     });
 
     auto f = shutdown->Start(std::move(p));
-    uut->Start(std::move(handler));
+    uut->Start(std::move(callback));
     return f;
   }();
 
   {
-    std::unique_lock<std::mutex> lk(handler_mu);
-    handler_cv.wait(lk, [&] { return message_counter >= kTestDoneThreshold; });
+    std::unique_lock<std::mutex> lk(callback_mu);
+    callback_cv.wait(lk, [&] { return message_counter >= kTestDoneThreshold; });
   }
   session.cancel();
   EXPECT_THAT(session.get(), IsOk());
@@ -394,19 +420,22 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
   }
 
   EXPECT_CALL(*source, Shutdown).Times(1);
-  EXPECT_CALL(*source, AckMessage).Times(AtLeast(1));
+  EXPECT_CALL(*source, AckMessage).Times(AtLeast(1)).WillRepeatedly([] {
+    return make_ready_future(Status{});
+  });
+  ;
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
 
-  std::mutex handler_mu;
-  std::condition_variable handler_cv;
+  std::mutex callback_mu;
+  std::condition_variable callback_cv;
   int message_counter = 0;
-  auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
-    std::move(h).ack();
+  auto callback = [&](pubsub::Message const&, Handler h) {
+    h->ack();
     // Sleep after the `ack()` call to more easily reproduce #5148
     std::this_thread::sleep_for(std::chrono::microseconds(500));
-    std::unique_lock<std::mutex> lk(handler_mu);
-    if (++message_counter >= kTestDoneThreshold) handler_cv.notify_one();
+    std::unique_lock<std::mutex> lk(callback_mu);
+    if (++message_counter >= kTestDoneThreshold) callback_cv.notify_one();
   };
 
   // Transfer ownership to a future. The library also does this for a fully
@@ -422,13 +451,13 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
     });
 
     auto f = shutdown->Start(std::move(p));
-    uut->Start(std::move(handler));
+    uut->Start(std::move(callback));
     return f;
   }();
 
   {
-    std::unique_lock<std::mutex> lk(handler_mu);
-    handler_cv.wait(lk, [&] { return message_counter >= kTestDoneThreshold; });
+    std::unique_lock<std::mutex> lk(callback_mu);
+    callback_cv.wait(lk, [&] { return message_counter >= kTestDoneThreshold; });
   }
   session.cancel();
   EXPECT_THAT(session.get(), IsOk());
@@ -468,33 +497,33 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
   auto uut = SubscriptionConcurrencyControl::Create(
       background.cq(), shutdown, source, /*max_concurrency=*/10);
 
-  std::mutex handler_mu;
-  std::condition_variable handler_cv;
-  std::vector<std::pair<pubsub::Message, pubsub::AckHandler>> messages;
-  auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
-    std::lock_guard<std::mutex> lk(handler_mu);
+  std::mutex callback_mu;
+  std::condition_variable callback_cv;
+  std::vector<std::pair<pubsub::Message, Handler>> messages;
+  auto callback = [&](pubsub::Message const& m, Handler h) {
+    std::lock_guard<std::mutex> lk(callback_mu);
     messages.emplace_back(std::move(m), std::move(h));
-    handler_cv.notify_one();
+    callback_cv.notify_one();
   };
   auto wait_message_count = [&](std::size_t n) {
-    std::unique_lock<std::mutex> lk(handler_mu);
-    handler_cv.wait(lk, [&] { return messages.size() >= n; });
+    std::unique_lock<std::mutex> lk(callback_mu);
+    callback_cv.wait(lk, [&] { return messages.size() >= n; });
   };
 
   auto done = shutdown->Start({});
-  uut->Start(handler);
+  uut->Start(callback);
   wait_message_count(5);
 
   // We only push 5 messages so after this no more messages will show up.
   // Grab the mutex to avoid false positives in TSAN.
-  std::unique_lock<std::mutex> lk(handler_mu);
+  std::unique_lock<std::mutex> lk(callback_mu);
   for (auto& p : messages) {
     EXPECT_THAT(p.first.message_id(), StartsWith("message:"));
     auto const suffix = p.first.message_id().substr(sizeof("message:") - 1);
-    EXPECT_EQ(42, p.second.delivery_attempt());
+    EXPECT_EQ(42, p.second->delivery_attempt());
     EXPECT_EQ(p.first.data(), "data:" + suffix);
     EXPECT_EQ(p.first.attributes()["k0"], "l0:" + suffix);
-    std::move(p.second).ack();
+    std::move(p.second)->ack();
   }
 
   shutdown->MarkAsShutdown(__func__, {});

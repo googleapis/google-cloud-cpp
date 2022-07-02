@@ -14,12 +14,14 @@
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/internal/defaults.h"
+#include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <atomic>
@@ -34,8 +36,12 @@ namespace {
 
 using ::google::cloud::pubsub_testing::FakeAsyncStreamingPull;
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::ScopedLog;
+using ::testing::AllOf;
 using ::testing::AtLeast;
 using ::testing::AtMost;
+using ::testing::Contains;
+using ::testing::HasSubstr;
 
 future<Status> CreateTestSubscriptionSession(
     pubsub::Subscription const& subscription, Options opts,
@@ -44,7 +50,17 @@ future<Status> CreateTestSubscriptionSession(
   opts = DefaultSubscriberOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
   return CreateSubscriptionSession(subscription, std::move(opts), mock, cq,
-                                   "test-client-id", std::move(p));
+                                   "test-client-id", std::move(p.callback));
+}
+
+future<Status> CreateTestSubscriptionSession(
+    pubsub::Subscription const& subscription, Options opts,
+    std::shared_ptr<SubscriberStub> const& mock, CompletionQueue const& cq,
+    ExactlyOnceApplicationCallback callback) {
+  opts = DefaultSubscriberOptions(
+      pubsub_testing::MakeTestOptions(std::move(opts)));
+  return CreateSubscriptionSession(subscription, std::move(opts), mock, cq,
+                                   "test-client-id", std::move(callback));
 }
 
 /// @test Verify callbacks are scheduled in the background threads.
@@ -169,6 +185,268 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
 
   cq.Shutdown();
   for (auto& t : tasks) t.join();
+}
+
+/// @test Verify callbacks are scheduled in the background threads.
+TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  pubsub::Subscription const subscription("test-project", "test-subscription");
+
+  std::mutex mu;
+  int count = 0;
+  std::mutex ack_id_mu;
+  std::condition_variable ack_id_cv;
+  int expected_ack_id = 0;
+  auto constexpr kAckCount = 100;
+
+  google::cloud::CompletionQueue cq;
+  using us = std::chrono::microseconds;
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillRepeatedly(
+          [&](google::cloud::CompletionQueue&,
+              std::unique_ptr<grpc::ClientContext>,
+              google::pubsub::v1::AcknowledgeRequest const& request) {
+            for (auto const& a : request.ack_ids()) {
+              std::lock_guard<std::mutex> lk(ack_id_mu);
+              EXPECT_EQ("test-ack-id-" + std::to_string(expected_ack_id), a);
+              ++expected_ack_id;
+              if (expected_ack_id >= kAckCount) ack_id_cv.notify_one();
+            }
+            return cq.MakeRelativeTimer(us(10)).then(
+                [](auto) { return Status{}; });
+          });
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::StreamingPullRequest const&) {
+        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([&] {
+          return cq.MakeRelativeTimer(us(10)).then([](auto) { return true; });
+        });
+        EXPECT_CALL(*stream, Write)
+            .WillOnce(
+                [&](google::pubsub::v1::StreamingPullRequest const& request,
+                    grpc::WriteOptions const&) {
+                  EXPECT_EQ(subscription.FullName(), request.subscription());
+                  EXPECT_TRUE(request.ack_ids().empty());
+                  EXPECT_TRUE(request.modify_deadline_ack_ids().empty());
+                  EXPECT_TRUE(request.modify_deadline_seconds().empty());
+                  return cq.MakeRelativeTimer(us(10)).then(
+                      [](auto) { return true; });
+                });
+
+        ::testing::InSequence sequence;
+        EXPECT_CALL(*stream, Read).WillRepeatedly([&] {
+          google::pubsub::v1::StreamingPullResponse response;
+          for (int i = 0; i != 2; ++i) {
+            auto& m = *response.add_received_messages();
+            std::lock_guard<std::mutex> lk(mu);
+            m.set_ack_id("test-ack-id-" + std::to_string(count));
+            m.set_delivery_attempt(42);
+            m.mutable_message()->set_message_id("test-message-id-" +
+                                                std::to_string(count));
+            ++count;
+          }
+          return cq.MakeRelativeTimer(us(10)).then(
+              [response](auto) { return absl::make_optional(response); });
+        });
+        EXPECT_CALL(*stream, Cancel).Times(1);
+        EXPECT_CALL(*stream, Read).WillRepeatedly([&] {
+          return cq.MakeRelativeTimer(us(10)).then([](auto) {
+            return absl::optional<google::pubsub::v1::StreamingPullResponse>{};
+          });
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([&] {
+          return cq.MakeRelativeTimer(us(10)).then([](auto) {
+            return Status{StatusCode::kCancelled, "cancel"};
+          });
+        });
+
+        return stream;
+      });
+
+  std::vector<std::thread> tasks;
+  std::generate_n(std::back_inserter(tasks), 4,
+                  [&] { return std::thread([&cq] { cq.Run(); }); });
+  std::set<std::thread::id> ids;
+  auto const main_id = std::this_thread::get_id();
+  std::transform(tasks.begin(), tasks.end(), std::inserter(ids, ids.end()),
+                 [](std::thread const& t) { return t.get_id(); });
+
+  std::atomic<int> expected_message_id{0};
+  auto callback = [&](pubsub::Message const& m, ExactlyOnceAckHandler h) {
+    EXPECT_EQ(42, h.delivery_attempt());
+    EXPECT_EQ("test-message-id-" + std::to_string(expected_message_id),
+              m.message_id());
+    auto pos = ids.find(std::this_thread::get_id());
+    EXPECT_NE(ids.end(), pos);
+    EXPECT_NE(main_id, std::this_thread::get_id());
+    // Increment the counter before acking, as the ack() may trigger a new call
+    // before this function gets to run.
+    ++expected_message_id;
+    std::move(h).ack();
+  };
+
+  auto response = CreateTestSubscriptionSession(
+      subscription, Options{}.set<pubsub::MaxConcurrencyOption>(1), mock, cq,
+      callback);
+  {
+    std::unique_lock<std::mutex> lk(ack_id_mu);
+    ack_id_cv.wait(lk, [&] { return expected_ack_id >= kAckCount; });
+  }
+  response.cancel();
+  EXPECT_STATUS_OK(response.get());
+
+  cq.Shutdown();
+  for (auto& t : tasks) t.join();
+}
+
+/// @test Verify ack/nack errors are delivered to the application.
+TEST(SubscriptionSessionTest, ExactlyOnceAckErrors) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  pubsub::Subscription const subscription("test-project", "test-subscription");
+
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .Times(AtLeast(1))
+      .WillRepeatedly(FakeAsyncStreamingPull);
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::AcknowledgeRequest const& r) {
+        if (r.ack_ids_size() == 1 && r.ack_ids(0) == "test-ack-id-0") {
+          return make_ready_future(Status{StatusCode::kUnauthenticated, "0"});
+        }
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&
+                             r) {
+        if (r.ack_ids_size() == 1 && r.ack_ids(0) == "test-ack-id-1") {
+          return make_ready_future(Status{StatusCode::kPermissionDenied, "1"});
+        }
+        return make_ready_future(Status{});
+      });
+
+  promise<void> enough_messages;
+  std::atomic<int> received_counter{0};
+  auto constexpr kMaximumMessages = 9;
+  auto callback = [&](pubsub::Message const& m, ExactlyOnceAckHandler h) {
+    auto c = received_counter.load();
+    EXPECT_LE(c, kMaximumMessages);
+    SCOPED_TRACE("Running for message " + m.message_id() +
+                 ", counter=" + std::to_string(c));
+    EXPECT_EQ("test-message-id-" + std::to_string(c), m.message_id());
+    if (++received_counter == kMaximumMessages) {
+      enough_messages.set_value();
+    }
+    if (m.message_id() == "test-message-id-0") {
+      std::move(h).ack().then([m](auto f) {
+        EXPECT_EQ(f.get(), Status(StatusCode::kUnauthenticated, "0"));
+      });
+    } else if (m.message_id() == "test-message-id-1") {
+      std::move(h).nack().then([m](auto f) {
+        EXPECT_EQ(f.get(), Status(StatusCode::kPermissionDenied, "1"));
+      });
+    } else {
+      std::move(h).ack();
+    }
+  };
+
+  google::cloud::CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+  auto response = CreateTestSubscriptionSession(
+      subscription, Options{}.set<pubsub::MaxConcurrencyOption>(1), mock, cq,
+      callback);
+  enough_messages.get_future()
+      .then([&](future<void>) { response.cancel(); })
+      .get();
+  EXPECT_STATUS_OK(response.get());
+
+  cq.Shutdown();
+  t.join();
+}
+
+/// @test Verify ack/nack errors are logged if the application ignores them.
+TEST(SubscriptionSessionTest, DefaultAckHandlerLogsErrors) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  pubsub::Subscription const subscription("test-project", "test-subscription");
+
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .Times(AtLeast(1))
+      .WillRepeatedly(FakeAsyncStreamingPull);
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::AcknowledgeRequest const& r) {
+        if (r.ack_ids_size() == 1 && r.ack_ids(0) == "test-ack-id-0") {
+          return make_ready_future(Status{StatusCode::kUnauthenticated,
+                                          "some error for test-ack-id-0"});
+        }
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly(
+          [](google::cloud::CompletionQueue&,
+             std::unique_ptr<grpc::ClientContext>,
+             google::pubsub::v1::ModifyAckDeadlineRequest const& r) {
+            if (r.ack_ids_size() == 1 && r.ack_ids(0) == "test-ack-id-1") {
+              return make_ready_future(Status{StatusCode::kPermissionDenied,
+                                              "some error for test-ack-id-1"});
+            }
+            return make_ready_future(Status{});
+          });
+
+  promise<void> enough_messages;
+  std::atomic<int> received_counter{0};
+  auto constexpr kMaximumMessages = 9;
+  auto callback = [&](pubsub::Message const& m, pubsub::AckHandler h) {
+    auto c = received_counter.load();
+    EXPECT_LE(c, kMaximumMessages);
+    SCOPED_TRACE("Running for message " + m.message_id() +
+                 ", counter=" + std::to_string(c));
+    EXPECT_EQ("test-message-id-" + std::to_string(c), m.message_id());
+    if (++received_counter == kMaximumMessages) {
+      enough_messages.set_value();
+    }
+    if (m.message_id() == "test-message-id-1") {
+      std::move(h).nack();
+      return;
+    }
+    std::move(h).ack();
+  };
+
+  ScopedLog log;
+  google::cloud::CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+  auto response = CreateTestSubscriptionSession(
+      subscription, Options{}.set<pubsub::MaxConcurrencyOption>(1), mock, cq,
+      {callback});
+  enough_messages.get_future()
+      .then([&](future<void>) { response.cancel(); })
+      .get();
+  EXPECT_STATUS_OK(response.get());
+
+  cq.Shutdown();
+  t.join();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(
+      log_lines,
+      Contains(AllOf(HasSubstr(" ack()"), HasSubstr("test-message-id-0"),
+                     HasSubstr("some error for test-ack-id-0"))));
+  EXPECT_THAT(
+      log_lines,
+      Contains(AllOf(HasSubstr(" nack()"), HasSubstr("test-message-id-1"),
+                     HasSubstr("some error for test-ack-id-1"))));
 }
 
 /// @test Verify callbacks are scheduled in sequence.
