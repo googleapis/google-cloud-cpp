@@ -88,7 +88,7 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
                  [](char x) { return x == '/' ? ' ' : x; });
   // LibreSSL seems to be using semantic versioning, so just check the major
   // version.
-  if (absl::StartsWith(expected_prefix, "LibreSSL 2", 0)) {
+  if (absl::StartsWith(expected_prefix, "LibreSSL 2")) {
     expected_prefix = "LibreSSL 2";
   }
 #ifdef OPENSSL_VERSION
