@@ -1,0 +1,53 @@
+/*!
+
+@page bigtable-mocking Mocking the Cloud Bigtable C++ Client with Google Mock
+
+In this document we describe how to write unit tests that mock
+`google::cloud::bigtable::Table` using Google Mock. This document assumes the
+reader is familiar with the Google Test and Google Mock frameworks and with
+the Cloud Bigtable C++ Client.
+
+## Mocking a successful `Table::ReadRows()`
+
+First include the headers for the `Table`, the mocking classes, and the Google
+Mock framework.
+
+@snippet howto_mock_data_api.cc required-includes
+
+The example uses a number of aliases to save typing and improve readability:
+
+@snippet howto_mock_data_api.cc helper-aliases
+
+Create a mock connection:
+
+@snippet howto_mock_data_api.cc create-mock
+
+Now we are going to set expectations on this mock. For this test we will have it
+return a `RowReader` that will successfully yield "r1" then "r2". A helper
+function, `bigtable_mocks::MakeRowReader()` is provided for this purpose.
+
+@snippet howto_mock_data_api.cc simulate-call
+
+Create a table with the mocked connection:
+
+@snippet howto_mock_data_api.cc create-table
+
+Make the table call:
+
+@snippet howto_mock_data_api.cc make-call
+
+To verify the results, we loop over the rows returned by the `RowReader`:
+
+@snippet howto_mock_data_api.cc verify-results
+
+## Full Listing
+
+Finally we present the full code for this example in the `ReadRowsSuccess` test.
+
+We also provide `ReadRowsFailure` as an example for mocking an unsuccessful
+`Table::ReadRows()` call, plus `AsyncReadRows` as an example for how one might
+use the `DataConnection` to mock a `Table::AsyncReadRows()` call.
+
+@snippet howto_mock_data_api.cc all
+
+*/

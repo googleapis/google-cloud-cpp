@@ -31,6 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * including errors from a `bigtable::Table`. To do so, construct a
  * `bigtable::Table` with an instance of this class. Then use the Google Test
  * framework functions to program the behavior of this mock.
+ *
+ * See @ref bigtable-mocking for a complete example that mocks `Table` calls.
  */
 class MockDataConnection : public bigtable::DataConnection {
  public:

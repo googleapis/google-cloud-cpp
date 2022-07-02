@@ -18,4 +18,5 @@
 
 bigtable_examples_unit_tests = [
     "bigtable_examples_common_test.cc",
+    "howto_mock_data_api.cc",
 ]
