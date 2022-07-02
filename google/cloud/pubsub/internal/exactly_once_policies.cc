@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/match.h"
 #include <algorithm>
 
 namespace google {
@@ -47,7 +48,8 @@ bool ExactlyOnceRetryPolicy::IsPermanentFailure(Status const& status) const {
   if (ExactlyOnceRetryable(code)) return false;
   auto const& metadata = status.error_info().metadata();
   return !std::any_of(metadata.begin(), metadata.end(), [this](auto const& kv) {
-    return kv.first == ack_id_ && kv.second.rfind("TRANSIENT_FAILURE_", 0) == 0;
+    return kv.first == ack_id_ &&
+           absl::StartsWith(kv.second, "TRANSIENT_FAILURE_");
   });
 }
 

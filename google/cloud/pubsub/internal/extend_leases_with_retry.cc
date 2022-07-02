@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/log.h"
+#include "absl/strings/match.h"
 #include <algorithm>
 #include <memory>
 
@@ -39,7 +40,7 @@ google::pubsub::v1::ModifyAckDeadlineRequest UpdateRequest(
     auto const& m = status.error_info().metadata();
     auto f = m.find(ack_id);
     auto const permanent =
-        f == m.end() || f->second.rfind("TRANSIENT_FAILURE_", 0) != 0;
+        f == m.end() || !absl::StartsWith(f->second, "TRANSIENT_FAILURE_");
     if (permanent) {
       GCP_LOG(WARNING)
           << "permanent failure trying to extend the lease for ack_id="
