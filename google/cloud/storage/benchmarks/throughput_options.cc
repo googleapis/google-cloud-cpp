@@ -41,6 +41,39 @@ Status ValidateQuantizedRange(std::string const& name, std::int64_t minimum,
   return Status{};
 }
 
+std::vector<bool> ParseChecksums(std::string const& val) {
+  if (val == "enabled") {
+    return {true};
+  }
+  if (val == "disabled") {
+    return {false};
+  }
+  if (val == "random") {
+    return {false, true};
+  }
+  return {};
+}
+
+std::vector<ExperimentLibrary> ParseLibraries(std::string const& val) {
+  std::set<ExperimentLibrary> libs;  // avoid duplicates
+  for (auto const& token : absl::StrSplit(val, ',')) {
+    auto lib = ParseExperimentLibrary(std::string{token});
+    if (!lib) return {};
+    libs.insert(*lib);
+  }
+  return {libs.begin(), libs.end()};
+}
+
+std::vector<ExperimentTransport> ParseTransports(std::string const& val) {
+  std::set<ExperimentTransport> transports;  // avoid duplicates
+  for (auto const& token : absl::StrSplit(val, ',')) {
+    auto transport = ParseExperimentTransport(std::string{token});
+    if (!transport) return {};
+    transports.insert(*transport);
+  }
+  return {transports.begin(), transports.end()};
+}
+
 }  // namespace
 
 using ::google::cloud::testing_util::OptionDescriptor;
@@ -50,19 +83,6 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
   ThroughputOptions options;
   bool wants_help = false;
   bool wants_description = false;
-
-  auto parse_checksums = [](std::string const& val) -> std::vector<bool> {
-    if (val == "enabled") {
-      return {true};
-    }
-    if (val == "disabled") {
-      return {false};
-    }
-    if (val == "random") {
-      return {false, true};
-    }
-    return {};
-  };
 
   std::vector<OptionDescriptor> desc{
       {"--help", "print usage information",
@@ -145,34 +165,20 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        }},
       {"--enabled-libs", "enable more libraries (e.g. Raw, CppClient)",
        [&options](std::string const& val) {
-         options.libs.clear();              //
-         std::set<ExperimentLibrary> libs;  // avoid duplicates
-         for (auto const& token : absl::StrSplit(val, ',')) {
-           auto lib = ParseExperimentLibrary(std::string{token});
-           if (!lib) return;
-           libs.insert(*lib);
-         }
-         options.libs = {libs.begin(), libs.end()};
+         options.libs = ParseLibraries(val);
        }},
       {"--enabled-transports",
        "enable a subset of the transports (DirectPath, Grpc, Json, Xml)",
        [&options](std::string const& val) {
-         options.transports.clear();
-         std::set<ExperimentTransport> transports;  // avoid duplicates
-         for (auto const& token : absl::StrSplit(val, ',')) {
-           auto transport = ParseExperimentTransport(std::string{token});
-           if (!transport) return;
-           transports.insert(*transport);
-         }
-         options.transports = {transports.begin(), transports.end()};
+         options.transports = ParseTransports(val);
        }},
       {"--enabled-crc32c", "run with CRC32C enabled, disabled, or both",
-       [&options, &parse_checksums](std::string const& val) {
-         options.enabled_crc32c = parse_checksums(val);
+       [&options](std::string const& val) {
+         options.enabled_crc32c = ParseChecksums(val);
        }},
       {"--enabled-md5", "run with MD5 enabled, disabled, or both",
-       [&options, &parse_checksums](std::string const& val) {
-         options.enabled_md5 = parse_checksums(val);
+       [&options](std::string const& val) {
+         options.enabled_md5 = ParseChecksums(val);
        }},
       {"--rest-endpoint", "sets the endpoint for REST-based benchmarks",
        [&options](std::string const& val) { options.rest_endpoint = val; }},
