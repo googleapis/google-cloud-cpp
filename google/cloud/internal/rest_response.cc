@@ -124,6 +124,8 @@ StatusCode MapHttpCodeToStatus5xx(std::int32_t code) {
   return StatusCode::kInternal;
 }
 
+}  // namespace
+
 StatusCode MapHttpCodeToStatus(std::int32_t code) {
   if (code < 100) return MapHttpCodeToStatus0xx(code);
   if (code < 200) return MapHttpCodeToStatus1xx(code);
@@ -133,8 +135,6 @@ StatusCode MapHttpCodeToStatus(std::int32_t code) {
   if (code < 600) return MapHttpCodeToStatus5xx(code);
   return StatusCode::kUnknown;
 }
-
-}  // namespace
 
 Status AsStatus(HttpStatusCode http_status_code, std::string payload) {
   auto const status_code = MapHttpCodeToStatus(http_status_code);
