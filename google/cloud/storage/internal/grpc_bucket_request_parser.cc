@@ -28,6 +28,177 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
+
+using ::google::storage::v2::Bucket;
+
+Status PatchAcl(Bucket& b, nlohmann::json const& patch) {
+  for (auto const& a : patch) {
+    auto& acl = *b.add_acl();
+    acl.set_entity(a.value("entity", ""));
+    acl.set_role(a.value("role", ""));
+  }
+  return Status{};
+}
+
+Status PatchDefaultObjectAcl(Bucket& b, nlohmann::json const& patch) {
+  for (auto const& a : patch) {
+    auto& acl = *b.add_default_object_acl();
+    acl.set_entity(a.value("entity", ""));
+    acl.set_role(a.value("role", ""));
+  }
+  return Status{};
+}
+
+Status PatchLifecycle(Bucket& b, nlohmann::json const& patch) {
+  auto& lifecycle = *b.mutable_lifecycle();
+  // By construction, the PatchBuilder always includes the "rule"
+  // subobject.
+  for (auto const& r : patch["rule"]) {
+    auto lf = LifecycleRuleParser::FromJson(r);
+    if (!lf) return std::move(lf).status();
+    *lifecycle.add_rule() = GrpcBucketMetadataParser::ToProto(*lf);
+  }
+  return Status{};
+}
+
+Status PatchCors(Bucket& b, nlohmann::json const& patch) {
+  for (auto const& c : patch) {
+    auto& cors = *b.add_cors();
+    cors.set_max_age_seconds(c.value("maxAgeSeconds", std::int32_t{0}));
+    if (c.contains("origin")) {
+      for (auto const& o : c["origin"]) {
+        cors.add_origin(o.get<std::string>());
+      }
+    }
+    if (c.contains("method")) {
+      for (auto const& m : c["method"]) {
+        cors.add_method(m.get<std::string>());
+      }
+    }
+    if (c.contains("responseHeader")) {
+      for (auto const& h : c["responseHeader"]) {
+        cors.add_response_header(h.get<std::string>());
+      }
+    }
+  }
+  return Status{};
+}
+
+Status PatchIamConfig(Bucket& b, nlohmann::json const& i) {
+  auto& iam_config = *b.mutable_iam_config();
+  if (i.contains("uniformBucketLevelAccess")) {
+    iam_config.mutable_uniform_bucket_level_access()->set_enabled(
+        i["uniformBucketLevelAccess"].value("enabled", false));
+  }
+  if (i.contains("publicAccessPrevention")) {
+    auto pap = i.value("publicAccessPrevention", "");
+    iam_config.set_public_access_prevention(pap);
+  }
+  return Status{};
+}
+
+void UpdateAcl(Bucket& bucket, BucketMetadata const& metadata) {
+  for (auto const& a : metadata.acl()) {
+    auto& acl = *bucket.add_acl();
+    acl.set_entity(a.entity());
+    acl.set_role(a.role());
+  }
+}
+
+void UpdateDefaultObjectAcl(Bucket& bucket, BucketMetadata const& metadata) {
+  for (auto const& a : metadata.default_acl()) {
+    auto& acl = *bucket.add_default_object_acl();
+    acl.set_entity(a.entity());
+    acl.set_role(a.role());
+  }
+}
+
+void UpdateLifecycle(Bucket& bucket, BucketMetadata const& metadata) {
+  if (!metadata.has_lifecycle()) return;
+  auto& lifecycle = *bucket.mutable_lifecycle();
+  // By construction, the PatchBuilder always includes the "rule"
+  // subobject.
+  for (auto const& r : metadata.lifecycle().rule) {
+    *lifecycle.add_rule() = GrpcBucketMetadataParser::ToProto(r);
+  }
+}
+
+void UpdateCors(Bucket& bucket, BucketMetadata const& metadata) {
+  for (auto const& c : metadata.cors()) {
+    auto& cors = *bucket.add_cors();
+    cors.set_max_age_seconds(
+        static_cast<std::int32_t>(c.max_age_seconds.value_or(0)));
+    for (auto const& o : c.origin) {
+      cors.add_origin(o);
+    }
+    for (auto const& m : c.method) {
+      cors.add_method(m);
+    }
+    for (auto const& h : c.response_header) {
+      cors.add_response_header(h);
+    }
+  }
+}
+
+void UpdateLabels(Bucket& bucket, BucketMetadata const& metadata) {
+  for (auto const& kv : metadata.labels()) {
+    (*bucket.mutable_labels())[kv.first] = kv.second;
+  }
+}
+
+void UpdateWebsite(Bucket& bucket, BucketMetadata const& metadata) {
+  if (!metadata.has_website()) return;
+  auto const& w = metadata.website();
+  bucket.mutable_website()->set_main_page_suffix(w.main_page_suffix);
+  bucket.mutable_website()->set_not_found_page(w.not_found_page);
+}
+
+void UpdateVersioning(Bucket& bucket, BucketMetadata const& metadata) {
+  if (!metadata.has_versioning()) return;
+  bucket.mutable_versioning()->set_enabled(metadata.versioning()->enabled);
+}
+
+void UpdateLogging(Bucket& bucket, BucketMetadata const& metadata) {
+  if (!metadata.has_logging()) return;
+  bucket.mutable_logging()->set_log_bucket(metadata.logging().log_bucket);
+  bucket.mutable_logging()->set_log_object_prefix(
+      metadata.logging().log_object_prefix);
+}
+
+void UpdateEncryption(Bucket& bucket, BucketMetadata const& metadata) {
+  if (!metadata.has_encryption()) return;
+  bucket.mutable_encryption()->set_default_kms_key(
+      metadata.encryption().default_kms_key_name);
+}
+
+void UpdateBilling(Bucket& bucket, BucketMetadata const& metadata) {
+  if (!metadata.has_billing()) return;
+  bucket.mutable_billing()->set_requester_pays(
+      metadata.billing().requester_pays);
+}
+
+void UpdateRetentionPolicy(Bucket& bucket, BucketMetadata const& metadata) {
+  if (!metadata.has_retention_policy()) return;
+  bucket.mutable_retention_policy()->set_retention_period(
+      metadata.retention_policy().retention_period.count());
+}
+
+void UpdateIamConfig(Bucket& bucket, BucketMetadata const& metadata) {
+  if (!metadata.has_iam_configuration()) return;
+  auto& iam_config = *bucket.mutable_iam_config();
+  auto const& i = metadata.iam_configuration();
+  if (i.uniform_bucket_level_access.has_value()) {
+    iam_config.mutable_uniform_bucket_level_access()->set_enabled(
+        i.uniform_bucket_level_access->enabled);
+  }
+  if (i.public_access_prevention.has_value()) {
+    auto pap = i.public_access_prevention.value();
+    iam_config.set_public_access_prevention(pap);
+  }
+}
+
+}  // namespace
 
 google::storage::v2::DeleteBucketRequest GrpcBucketRequestParser::ToProto(
     DeleteBucketRequest const& request) {
@@ -228,7 +399,6 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
 
   // This struct and the vector refactors some common code to create patches for
   // each field.
-  using google::storage::v2::Bucket;
   struct Field {
     std::string name;
     std::string rename;
@@ -246,59 +416,10 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
          b.set_rpo(patch.get<std::string>());
          return Status{};
        }},
-      {"acl", "",
-       [](Bucket& b, nlohmann::json const& patch) {
-         for (auto const& a : patch) {
-           auto& acl = *b.add_acl();
-           acl.set_entity(a.value("entity", ""));
-           acl.set_role(a.value("role", ""));
-         }
-         return Status{};
-       }},
-      {"defaultObjectAcl", "default_object_acl",
-       [](Bucket& b, nlohmann::json const& patch) {
-         for (auto const& a : patch) {
-           auto& acl = *b.add_default_object_acl();
-           acl.set_entity(a.value("entity", ""));
-           acl.set_role(a.value("role", ""));
-         }
-         return Status{};
-       }},
-      {"lifecycle", "",
-       [](Bucket& b, nlohmann::json const& patch) {
-         auto& lifecycle = *b.mutable_lifecycle();
-         // By construction, the PatchBuilder always includes the "rule"
-         // subobject.
-         for (auto const& r : patch["rule"]) {
-           auto lf = LifecycleRuleParser::FromJson(r);
-           if (!lf) return std::move(lf).status();
-           *lifecycle.add_rule() = GrpcBucketMetadataParser::ToProto(*lf);
-         }
-         return Status{};
-       }},
-      {"cors", "",
-       [](Bucket& b, nlohmann::json const& patch) {
-         for (auto const& c : patch) {
-           auto& cors = *b.add_cors();
-           cors.set_max_age_seconds(c.value("maxAgeSeconds", std::int32_t{0}));
-           if (c.contains("origin")) {
-             for (auto const& o : c["origin"]) {
-               cors.add_origin(o.get<std::string>());
-             }
-           }
-           if (c.contains("method")) {
-             for (auto const& m : c["method"]) {
-               cors.add_method(m.get<std::string>());
-             }
-           }
-           if (c.contains("responseHeader")) {
-             for (auto const& h : c["responseHeader"]) {
-               cors.add_response_header(h.get<std::string>());
-             }
-           }
-         }
-         return Status{};
-       }},
+      {"acl", "", PatchAcl},
+      {"defaultObjectAcl", "default_object_acl", PatchDefaultObjectAcl},
+      {"lifecycle", "", PatchLifecycle},
+      {"cors", "", PatchCors},
       {"defaultEventBasedHold", "default_event_based_hold",
        [](Bucket& b, nlohmann::json const& patch) {
          b.set_default_event_based_hold(patch.get<bool>());
@@ -341,19 +462,7 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
              r.value("retentionPeriod", int64_t{0}));
          return Status{};
        }},
-      {"iamConfiguration", "iam_config",
-       [](Bucket& b, nlohmann::json const& i) {
-         auto& iam_config = *b.mutable_iam_config();
-         if (i.contains("uniformBucketLevelAccess")) {
-           iam_config.mutable_uniform_bucket_level_access()->set_enabled(
-               i["uniformBucketLevelAccess"].value("enabled", false));
-         }
-         if (i.contains("publicAccessPrevention")) {
-           auto pap = i.value("publicAccessPrevention", "");
-           iam_config.set_public_access_prevention(pap);
-         }
-         return Status{};
-       }},
+      {"iamConfiguration", "iam_config", PatchIamConfig},
   };
 
   for (auto const& field : fields) {
@@ -399,91 +508,31 @@ google::storage::v2::UpdateBucketRequest GrpcBucketRequestParser::ToProto(
   result.mutable_update_mask()->add_paths("rpo");
   bucket.set_rpo(metadata.rpo());
   result.mutable_update_mask()->add_paths("acl");
-  for (auto const& a : metadata.acl()) {
-    auto& acl = *bucket.add_acl();
-    acl.set_entity(a.entity());
-    acl.set_role(a.role());
-  }
+  UpdateAcl(bucket, metadata);
   result.mutable_update_mask()->add_paths("default_object_acl");
-  for (auto const& a : metadata.default_acl()) {
-    auto& acl = *bucket.add_default_object_acl();
-    acl.set_entity(a.entity());
-    acl.set_role(a.role());
-  }
+  UpdateDefaultObjectAcl(bucket, metadata);
   result.mutable_update_mask()->add_paths("lifecycle");
-  if (metadata.has_lifecycle()) {
-    auto& lifecycle = *bucket.mutable_lifecycle();
-    // By construction, the PatchBuilder always includes the "rule"
-    // subobject.
-    for (auto const& r : metadata.lifecycle().rule) {
-      *lifecycle.add_rule() = GrpcBucketMetadataParser::ToProto(r);
-    }
-  }
+  UpdateLifecycle(bucket, metadata);
   result.mutable_update_mask()->add_paths("cors");
-  for (auto const& c : metadata.cors()) {
-    auto& cors = *bucket.add_cors();
-    cors.set_max_age_seconds(
-        static_cast<std::int32_t>(c.max_age_seconds.value_or(0)));
-    for (auto const& o : c.origin) {
-      cors.add_origin(o);
-    }
-    for (auto const& m : c.method) {
-      cors.add_method(m);
-    }
-    for (auto const& h : c.response_header) {
-      cors.add_response_header(h);
-    }
-  }
+  UpdateCors(bucket, metadata);
   result.mutable_update_mask()->add_paths("default_event_based_hold");
   bucket.set_default_event_based_hold(metadata.default_event_based_hold());
   result.mutable_update_mask()->add_paths("labels");
-  for (auto const& kv : metadata.labels()) {
-    (*bucket.mutable_labels())[kv.first] = kv.second;
-  }
+  UpdateLabels(bucket, metadata);
   result.mutable_update_mask()->add_paths("website");
-  if (metadata.has_website()) {
-    auto const& w = metadata.website();
-    bucket.mutable_website()->set_main_page_suffix(w.main_page_suffix);
-    bucket.mutable_website()->set_not_found_page(w.not_found_page);
-  }
+  UpdateWebsite(bucket, metadata);
   result.mutable_update_mask()->add_paths("versioning");
-  if (metadata.has_versioning()) {
-    bucket.mutable_versioning()->set_enabled(metadata.versioning()->enabled);
-  }
+  UpdateVersioning(bucket, metadata);
   result.mutable_update_mask()->add_paths("logging");
-  if (metadata.has_logging()) {
-    bucket.mutable_logging()->set_log_bucket(metadata.logging().log_bucket);
-    bucket.mutable_logging()->set_log_object_prefix(
-        metadata.logging().log_object_prefix);
-  }
+  UpdateLogging(bucket, metadata);
   result.mutable_update_mask()->add_paths("encryption");
-  if (metadata.has_encryption()) {
-    bucket.mutable_encryption()->set_default_kms_key(
-        metadata.encryption().default_kms_key_name);
-  }
+  UpdateEncryption(bucket, metadata);
   result.mutable_update_mask()->add_paths("billing");
-  if (metadata.has_billing()) {
-    bucket.mutable_billing()->set_requester_pays(
-        metadata.billing().requester_pays);
-  }
+  UpdateBilling(bucket, metadata);
   result.mutable_update_mask()->add_paths("retention_policy");
-  if (metadata.has_retention_policy()) {
-    bucket.mutable_retention_policy()->set_retention_period(
-        metadata.retention_policy().retention_period.count());
-  }
+  UpdateRetentionPolicy(bucket, metadata);
   result.mutable_update_mask()->add_paths("iam_config");
-  if (metadata.has_iam_configuration()) {
-    auto& iam_config = *bucket.mutable_iam_config();
-    auto const& i = metadata.iam_configuration();
-    if (i.uniform_bucket_level_access.has_value()) {
-      iam_config.mutable_uniform_bucket_level_access()->set_enabled(
-          i.uniform_bucket_level_access->enabled);
-    }
-    if (i.public_access_prevention.has_value()) {
-      auto pap = i.public_access_prevention.value();
-      iam_config.set_public_access_prevention(pap);
-    }
-  }
+  UpdateIamConfig(bucket, metadata);
 
   if (request.HasOption<IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
