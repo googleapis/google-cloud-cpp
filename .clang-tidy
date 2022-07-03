@@ -99,3 +99,4 @@ CheckOptions:
   - { key: readability-identifier-naming.StaticConstantPrefix,     value: k         }
   - { key: readability-implicit-bool-conversion.AllowIntegerConditions,  value: 1   }
   - { key: readability-implicit-bool-conversion.AllowPointerConditions,  value: 1   }
+  - { key: readability-function-cognitive-complexity.IgnoreMacros,  value: 1   }
