@@ -40,6 +40,98 @@ absl::optional<std::vector<std::string>> MergeStringListConditions(
   return tmp;
 }
 
+void MergeAge(LifecycleRuleCondition& result,
+              LifecycleRuleCondition const& rhs) {
+  if (!rhs.age.has_value()) return;
+  if (result.age.has_value()) {
+    result.age = std::min(*result.age, *rhs.age);
+  } else {
+    auto tmp = *rhs.age;
+    result.age.emplace(std::forward<std::int32_t>(tmp));
+  }
+}
+
+void MergeCreatedBefore(LifecycleRuleCondition& result,
+                        LifecycleRuleCondition const& rhs) {
+  if (!rhs.created_before.has_value()) return;
+  if (result.created_before.has_value()) {
+    result.created_before =
+        std::max(*result.created_before, *rhs.created_before);
+  } else {
+    result.created_before.emplace(std::move(*rhs.created_before));
+  }
+}
+
+void MergeIsLive(LifecycleRuleCondition& result,
+                 LifecycleRuleCondition const& rhs) {
+  if (!rhs.is_live.has_value()) return;
+  if (result.is_live.has_value()) {
+    if (result.is_live.value() != rhs.is_live.value()) {
+      google::cloud::internal::ThrowInvalidArgument(
+          "Cannot set is_live to both true and false in LifecycleRule "
+          "condition");
+    }
+  } else {
+    auto tmp = *rhs.is_live;
+    result.is_live.emplace(std::forward<bool>(tmp));
+  }
+}
+
+void MergeNumNewerVersions(LifecycleRuleCondition& result,
+                           LifecycleRuleCondition const& rhs) {
+  if (!rhs.num_newer_versions.has_value()) return;
+  if (result.num_newer_versions.has_value()) {
+    result.num_newer_versions =
+        std::max(*result.num_newer_versions, *rhs.num_newer_versions);
+  } else {
+    auto tmp = *rhs.num_newer_versions;
+    result.num_newer_versions.emplace(std::forward<std::int32_t>(tmp));
+  }
+}
+
+void MergeDaysSinceNoncurrent(LifecycleRuleCondition& result,
+                              LifecycleRuleCondition const& rhs) {
+  if (!rhs.days_since_noncurrent_time.has_value()) return;
+  if (result.days_since_noncurrent_time.has_value()) {
+    result.days_since_noncurrent_time = (std::max)(
+        *result.days_since_noncurrent_time, *rhs.days_since_noncurrent_time);
+  } else {
+    result.days_since_noncurrent_time = *rhs.days_since_noncurrent_time;
+  }
+}
+
+void MergeNoncurrentTimeBefore(LifecycleRuleCondition& result,
+                               LifecycleRuleCondition const& rhs) {
+  if (!rhs.noncurrent_time_before.has_value()) return;
+  if (result.noncurrent_time_before.has_value()) {
+    result.noncurrent_time_before =
+        (std::min)(*result.noncurrent_time_before, *rhs.noncurrent_time_before);
+  } else {
+    result.noncurrent_time_before = *rhs.noncurrent_time_before;
+  }
+}
+
+void MergeDaysSinceCustomTime(LifecycleRuleCondition& result,
+                              LifecycleRuleCondition const& rhs) {
+  if (!rhs.days_since_custom_time.has_value()) return;
+  if (result.days_since_custom_time.has_value()) {
+    result.days_since_custom_time =
+        (std::max)(*result.days_since_custom_time, *rhs.days_since_custom_time);
+  } else {
+    result.days_since_custom_time = *rhs.days_since_custom_time;
+  }
+}
+void MergeCustomTimeBefore(LifecycleRuleCondition& result,
+                           LifecycleRuleCondition const& rhs) {
+  if (!rhs.custom_time_before.has_value()) return;
+  if (result.custom_time_before.has_value()) {
+    result.custom_time_before =
+        (std::min)(*result.custom_time_before, *rhs.custom_time_before);
+  } else {
+    result.custom_time_before = *rhs.custom_time_before;
+  }
+}
+
 }  // namespace
 
 bool operator==(LifecycleRuleCondition const& lhs,
@@ -175,77 +267,16 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs) {
 
 void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
                                     LifecycleRuleCondition const& rhs) {
-  if (rhs.age.has_value()) {
-    if (result.age.has_value()) {
-      result.age = std::min(*result.age, *rhs.age);
-    } else {
-      auto tmp = *rhs.age;
-      result.age.emplace(std::forward<std::int32_t>(tmp));
-    }
-  }
-  if (rhs.created_before.has_value()) {
-    if (result.created_before.has_value()) {
-      result.created_before =
-          std::max(*result.created_before, *rhs.created_before);
-    } else {
-      result.created_before.emplace(std::move(*rhs.created_before));
-    }
-  }
-  if (rhs.is_live.has_value()) {
-    if (result.is_live.has_value()) {
-      if (result.is_live.value() != rhs.is_live.value()) {
-        google::cloud::internal::ThrowInvalidArgument(
-            "Cannot set is_live to both true and false in LifecycleRule "
-            "condition");
-      }
-    } else {
-      auto tmp = *rhs.is_live;
-      result.is_live.emplace(std::forward<bool>(tmp));
-    }
-  }
+  MergeAge(result, rhs);
+  MergeCreatedBefore(result, rhs);
+  MergeIsLive(result, rhs);
   result.matches_storage_class = MergeStringListConditions(
       std::move(result.matches_storage_class), rhs.matches_storage_class);
-  if (rhs.num_newer_versions.has_value()) {
-    if (result.num_newer_versions.has_value()) {
-      result.num_newer_versions =
-          std::max(*result.num_newer_versions, *rhs.num_newer_versions);
-    } else {
-      auto tmp = *rhs.num_newer_versions;
-      result.num_newer_versions.emplace(std::forward<std::int32_t>(tmp));
-    }
-  }
-  if (rhs.days_since_noncurrent_time.has_value()) {
-    if (result.days_since_noncurrent_time.has_value()) {
-      result.days_since_noncurrent_time = (std::max)(
-          *result.days_since_noncurrent_time, *rhs.days_since_noncurrent_time);
-    } else {
-      result.days_since_noncurrent_time = *rhs.days_since_noncurrent_time;
-    }
-  }
-  if (rhs.noncurrent_time_before.has_value()) {
-    if (result.noncurrent_time_before.has_value()) {
-      result.noncurrent_time_before = (std::min)(*result.noncurrent_time_before,
-                                                 *rhs.noncurrent_time_before);
-    } else {
-      result.noncurrent_time_before = *rhs.noncurrent_time_before;
-    }
-  }
-  if (rhs.days_since_custom_time.has_value()) {
-    if (result.days_since_custom_time.has_value()) {
-      result.days_since_custom_time = (std::max)(*result.days_since_custom_time,
-                                                 *rhs.days_since_custom_time);
-    } else {
-      result.days_since_custom_time = *rhs.days_since_custom_time;
-    }
-  }
-  if (rhs.custom_time_before.has_value()) {
-    if (result.custom_time_before.has_value()) {
-      result.custom_time_before =
-          (std::min)(*result.custom_time_before, *rhs.custom_time_before);
-    } else {
-      result.custom_time_before = *rhs.custom_time_before;
-    }
-  }
+  MergeNumNewerVersions(result, rhs);
+  MergeDaysSinceNoncurrent(result, rhs);
+  MergeNoncurrentTimeBefore(result, rhs);
+  MergeDaysSinceCustomTime(result, rhs);
+  MergeCustomTimeBefore(result, rhs);
   result.matches_prefix = MergeStringListConditions(
       std::move(result.matches_prefix), rhs.matches_prefix);
   result.matches_suffix = MergeStringListConditions(

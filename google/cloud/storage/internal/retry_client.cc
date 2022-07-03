@@ -93,6 +93,48 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
   return error(std::move(os).str());
 }
 
+// Returns an error if the response contains an unexpected (or invalid)
+// committed size.
+Status ValidateCommittedSize(UploadChunkRequest const& request,
+                             QueryResumableUploadResponse const& response,
+                             std::uint64_t expected_committed_size) {
+  // This should not happen, it indicates an invalid sequence of responses
+  // from the server.
+  if (*response.committed_size < request.offset()) {
+    std::stringstream os;
+    os << __func__ << ": server previously confirmed " << request.offset()
+       << " bytes as committed, but the current response only reports "
+       << response.committed_size.value_or(0) << " bytes as committed."
+       << " This is most likely a bug in the GCS client library, possibly"
+       << " related to parsing the server response."
+       << " Please contact support or report the problem at"
+       << " https://github.com/googleapis/google-cloud-cpp/issues/new"
+       << " Include as much information as you can including this message";
+    os << ", session_id=" << request.upload_session_url();
+    os << ", result=" << response;
+    os << ", request=" << request;
+    return Status(StatusCode::kInternal, os.str());
+  }
+  if (*response.committed_size > expected_committed_size) {
+    std::stringstream os;
+    os << __func__ << ": the server indicates that "
+       << response.committed_size.value_or(0) << " bytes are committed "
+       << " but given the current request no more than "
+       << expected_committed_size << " should be."
+       << " This could be caused by multiple applications trying to use the"
+       << " same resumable upload, but could be a bug in the library or"
+       << " the service. If you believe this is a bug, please contact support"
+       << " or report the bug at"
+       << " https://github.com/googleapis/google-cloud-cpp/issues/new"
+       << " Include as much information as you can including this message";
+    os << ", session_id=" << request.upload_session_url();
+    os << ", result=" << response;
+    os << ", request=" << request;
+    return Status(StatusCode::kInternal, os.str());
+  }
+  return {};
+}
+
 }  // namespace
 
 std::shared_ptr<RetryClient> RetryClient::Create(
@@ -525,40 +567,9 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
     // With a successful operation, we can continue (or go back to) uploading.
     operation = &upload;
 
-    // This should not happen, it indicates an invalid sequence of responses
-    // from the server.
-    if (*result->committed_size < request.offset()) {
-      std::stringstream os;
-      os << __func__ << ": server previously confirmed " << request.offset()
-         << " bytes as committed, but the current response only reports "
-         << result->committed_size.value_or(0) << " bytes as committed."
-         << " This is most likely a bug in the GCS client library, possibly"
-         << " related to parsing the server response."
-         << " Please contact support or report the problem at"
-         << " https://github.com/googleapis/google-cloud-cpp/issues/new"
-         << " Include as much information as you can including this message";
-      os << ", session_id=" << request.upload_session_url();
-      os << ", result=" << *result;
-      os << ", request=" << request;
-      return Status(StatusCode::kInternal, os.str());
-    }
-    if (*result->committed_size > expected_committed_size) {
-      std::stringstream os;
-      os << __func__ << ": the server indicates that "
-         << result->committed_size.value_or(0) << " bytes are committed "
-         << " but given the current request no more than "
-         << expected_committed_size << " should be."
-         << " This could be caused by multiple applications trying to use the"
-         << " same resumable upload, but could be a bug in the library or"
-         << " the service. If you believe this is a bug, please contact support"
-         << " or report the bug at"
-         << " https://github.com/googleapis/google-cloud-cpp/issues/new"
-         << " Include as much information as you can including this message";
-      os << ", session_id=" << request.upload_session_url();
-      os << ", result=" << *result;
-      os << ", request=" << request;
-      return Status(StatusCode::kInternal, os.str());
-    }
+    auto validate =
+        ValidateCommittedSize(request, *result, expected_committed_size);
+    if (!validate.ok()) return validate;
 
     committed_size = *result->committed_size;
 
