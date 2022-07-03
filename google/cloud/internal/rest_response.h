@@ -79,6 +79,9 @@ class RestResponse {
   virtual std::unique_ptr<HttpPayload> ExtractPayload() && = 0;
 };
 
+/// Convert a HTTP status code to a google::cloud::StatusCode.
+StatusCode MapHttpCodeToStatus(std::int32_t code);
+
 /**
  * Maps a response to a `Status`.
  *
