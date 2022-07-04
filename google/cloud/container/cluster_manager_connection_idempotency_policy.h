@@ -104,6 +104,9 @@ class ClusterManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteNodePool(
       google::container::v1::DeleteNodePoolRequest const& request) = 0;
 
+  virtual google::cloud::Idempotency CompleteNodePoolUpgrade(
+      google::container::v1::CompleteNodePoolUpgradeRequest const& request) = 0;
+
   virtual google::cloud::Idempotency RollbackNodePoolUpgrade(
       google::container::v1::RollbackNodePoolUpgradeRequest const& request) = 0;
 

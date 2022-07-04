@@ -138,7 +138,7 @@ class AnswerRecordsClient {
   /// @googleapis_link{google::cloud::dialogflow::v2::AnswerRecord,google/cloud/dialogflow/v2/answer_record.proto#L94}
   ///
   /// [google.cloud.dialogflow.v2.UpdateAnswerRecordRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L165}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L168}
   /// [google.cloud.dialogflow.v2.AnswerRecord]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L94}
   ///
@@ -150,14 +150,14 @@ class AnswerRecordsClient {
   /// Updates the specified answer record.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateAnswerRecordRequest,google/cloud/dialogflow/v2/answer_record.proto#L165}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateAnswerRecordRequest,google/cloud/dialogflow/v2/answer_record.proto#L168}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::AnswerRecord,google/cloud/dialogflow/v2/answer_record.proto#L94}
   ///
   /// [google.cloud.dialogflow.v2.UpdateAnswerRecordRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L165}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L168}
   /// [google.cloud.dialogflow.v2.AnswerRecord]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L94}
   ///

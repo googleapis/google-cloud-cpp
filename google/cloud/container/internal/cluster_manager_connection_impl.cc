@@ -327,6 +327,19 @@ ClusterManagerConnectionImpl::DeleteNodePool(
       request, __func__);
 }
 
+Status ClusterManagerConnectionImpl::CompleteNodePoolUpgrade(
+    google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CompleteNodePoolUpgrade(request),
+      [this](grpc::ClientContext& context,
+             google::container::v1::CompleteNodePoolUpgradeRequest const&
+                 request) {
+        return stub_->CompleteNodePoolUpgrade(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::container::v1::Operation>
 ClusterManagerConnectionImpl::RollbackNodePoolUpgrade(
     google::container::v1::RollbackNodePoolUpgradeRequest const& request) {

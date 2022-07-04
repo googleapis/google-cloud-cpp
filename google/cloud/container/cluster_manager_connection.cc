@@ -163,6 +163,11 @@ ClusterManagerConnection::DeleteNodePool(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+Status ClusterManagerConnection::CompleteNodePoolUpgrade(
+    google::container::v1::CompleteNodePoolUpgradeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::container::v1::Operation>
 ClusterManagerConnection::RollbackNodePoolUpgrade(
     google::container::v1::RollbackNodePoolUpgradeRequest const&) {

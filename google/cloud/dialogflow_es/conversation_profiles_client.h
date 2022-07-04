@@ -333,7 +333,7 @@ class ConversationProfilesClient {
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationProfile,google/cloud/dialogflow/v2/conversation_profile.proto#L175}
   ///
   /// [google.cloud.dialogflow.v2.SetSuggestionFeatureConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L687}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L688}
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L175}
   ///
@@ -362,14 +362,14 @@ class ConversationProfilesClient {
   /// before sending such request, otherwise the request will be rejected.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest,google/cloud/dialogflow/v2/conversation_profile.proto#L687}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest,google/cloud/dialogflow/v2/conversation_profile.proto#L688}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationProfile,google/cloud/dialogflow/v2/conversation_profile.proto#L175}
   ///
   /// [google.cloud.dialogflow.v2.SetSuggestionFeatureConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L687}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L688}
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L175}
   ///
@@ -402,7 +402,7 @@ class ConversationProfilesClient {
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationProfile,google/cloud/dialogflow/v2/conversation_profile.proto#L175}
   ///
   /// [google.cloud.dialogflow.v2.ClearSuggestionFeatureConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L702}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L703}
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L175}
   ///
@@ -424,14 +424,14 @@ class ConversationProfilesClient {
   /// [ConversationProfile][google.cloud.dialogflow.v2.ConversationProfile]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest,google/cloud/dialogflow/v2/conversation_profile.proto#L702}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest,google/cloud/dialogflow/v2/conversation_profile.proto#L703}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationProfile,google/cloud/dialogflow/v2/conversation_profile.proto#L175}
   ///
   /// [google.cloud.dialogflow.v2.ClearSuggestionFeatureConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L702}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L703}
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L175}
   ///

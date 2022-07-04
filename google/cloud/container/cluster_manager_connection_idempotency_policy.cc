@@ -153,6 +153,11 @@ class DefaultClusterManagerConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency CompleteNodePoolUpgrade(
+      google::container::v1::CompleteNodePoolUpgradeRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency RollbackNodePoolUpgrade(
       google::container::v1::RollbackNodePoolUpgradeRequest const&) override {
     return Idempotency::kNonIdempotent;

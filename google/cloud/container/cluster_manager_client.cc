@@ -334,6 +334,13 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::DeleteNodePool(
   return connection_->DeleteNodePool(request);
 }
 
+Status ClusterManagerClient::CompleteNodePoolUpgrade(
+    google::container::v1::CompleteNodePoolUpgradeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CompleteNodePoolUpgrade(request);
+}
+
 StatusOr<google::container::v1::Operation>
 ClusterManagerClient::RollbackNodePoolUpgrade(std::string const& name,
                                               Options opts) {

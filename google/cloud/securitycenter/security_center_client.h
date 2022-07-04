@@ -191,12 +191,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   /// [google.cloud.securitycenter.v1.CreateFindingRequest]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L612}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> CreateFinding(
       std::string const& parent, std::string const& finding_id,
@@ -212,12 +212,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   /// [google.cloud.securitycenter.v1.CreateFindingRequest]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L612}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> CreateFinding(
       google::cloud::securitycenter::v1::CreateFindingRequest const& request,
@@ -974,12 +974,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   /// [google.cloud.securitycenter.v1.SetFindingStateRequest]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1642}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
       std::string const& name,
@@ -994,12 +994,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   /// [google.cloud.securitycenter.v1.SetFindingStateRequest]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1642}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
       google::cloud::securitycenter::v1::SetFindingStateRequest const& request,
@@ -1018,12 +1018,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   /// [google.cloud.securitycenter.v1.SetMuteRequest]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1662}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> SetMute(
       std::string const& name,
@@ -1037,12 +1037,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   /// [google.cloud.securitycenter.v1.SetMuteRequest]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1662}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> SetMute(
       google::cloud::securitycenter::v1::SetMuteRequest const& request,
@@ -1215,12 +1215,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   /// [google.cloud.securitycenter.v1.UpdateFindingRequest]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1704}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> UpdateFinding(
       google::cloud::securitycenter::v1::Finding const& finding,
@@ -1235,12 +1235,12 @@ class SecurityCenterClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   /// [google.cloud.securitycenter.v1.UpdateFindingRequest]:
   /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1704}
   /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L49}
+  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L50}
   ///
   StatusOr<google::cloud::securitycenter::v1::Finding> UpdateFinding(
       google::cloud::securitycenter::v1::UpdateFindingRequest const& request,
