@@ -69,11 +69,12 @@ class CurlRequest {
                            std::size_t nitems);
 
   std::string url_;
-  CurlHeaders headers_ = CurlHeaders(nullptr, &curl_slist_free_all);
+  rest_internal::CurlHeaders headers_ =
+      rest_internal::CurlHeaders(nullptr, &curl_slist_free_all);
   std::string user_agent_;
   std::string http_version_;
   std::string response_payload_;
-  CurlReceivedHeaders received_headers_;
+  rest_internal::CurlReceivedHeaders received_headers_;
   bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds transfer_stall_timeout_;

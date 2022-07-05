@@ -44,8 +44,8 @@ DefaultCurlHandleFactory::DefaultCurlHandleFactory(Options const& o) {
   if (o.has<CAPathOption>()) capath_ = o.get<CAPathOption>();
 }
 
-CurlPtr DefaultCurlHandleFactory::CreateHandle() {
-  auto curl = MakeCurlPtr();
+rest_internal::CurlPtr DefaultCurlHandleFactory::CreateHandle() {
+  auto curl = rest_internal::MakeCurlPtr();
   SetCurlOptions(curl.get());
   return curl;
 }
@@ -61,11 +61,14 @@ void DefaultCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
   ResetHandle(h);
 }
 
-CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
-  return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
+rest_internal::CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
+  return rest_internal::CurlMulti(curl_multi_init(), &curl_multi_cleanup);
 }
 
-void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) { m.reset(); }
+void DefaultCurlHandleFactory::CleanupMultiHandle(
+    rest_internal::CurlMulti&& m) {
+  m.reset();
+}
 
 void DefaultCurlHandleFactory::SetCurlOptions(CURL* handle) {
   if (cainfo_) {
@@ -92,18 +95,18 @@ PooledCurlHandleFactory::~PooledCurlHandleFactory() {
   }
 }
 
-CurlPtr PooledCurlHandleFactory::CreateHandle() {
+rest_internal::CurlPtr PooledCurlHandleFactory::CreateHandle() {
   std::unique_lock<std::mutex> lk(mu_);
   if (!handles_.empty()) {
     auto* handle = handles_.back();
     // Clear all the options in the handle so we do not leak its previous state.
     (void)curl_easy_reset(handle);
     handles_.pop_back();
-    CurlPtr curl(handle, &curl_easy_cleanup);
+    rest_internal::CurlPtr curl(handle, &curl_easy_cleanup);
     SetCurlOptions(curl.get());
     return curl;
   }
-  auto curl = MakeCurlPtr();
+  auto curl = rest_internal::MakeCurlPtr();
   SetCurlOptions(curl.get());
   return curl;
 }
@@ -126,17 +129,17 @@ void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
   ReleaseHandle(h);
 }
 
-CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
+rest_internal::CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
   std::unique_lock<std::mutex> lk(mu_);
   if (!multi_handles_.empty()) {
     auto* m = multi_handles_.back();
     multi_handles_.pop_back();
-    return CurlMulti(m, &curl_multi_cleanup);
+    return rest_internal::CurlMulti(m, &curl_multi_cleanup);
   }
-  return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
+  return rest_internal::CurlMulti(curl_multi_init(), &curl_multi_cleanup);
 }
 
-void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) {
+void PooledCurlHandleFactory::CleanupMultiHandle(rest_internal::CurlMulti&& m) {
   if (!m) return;
   std::unique_lock<std::mutex> lk(mu_);
   while (multi_handles_.size() >= maximum_size_) {

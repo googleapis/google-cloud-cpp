@@ -56,7 +56,8 @@ extern "C" std::size_t CurlDownloadRequestHeader(char* contents,
  */
 class CurlDownloadRequest : public ObjectReadSource {
  public:
-  CurlDownloadRequest(CurlHeaders headers, CurlHandle handle, CurlMulti multi);
+  CurlDownloadRequest(rest_internal::CurlHeaders headers, CurlHandle handle,
+                      rest_internal::CurlMulti multi);
 
   ~CurlDownloadRequest() override;
 
@@ -125,17 +126,17 @@ class CurlDownloadRequest : public ObjectReadSource {
   static Status AsStatus(CURLMcode result, char const* where);
 
   std::string url_;
-  CurlHeaders headers_;
+  rest_internal::CurlHeaders headers_;
   std::string payload_;
   std::string user_agent_;
   std::string http_version_;
-  CurlReceivedHeaders received_headers_;
+  rest_internal::CurlReceivedHeaders received_headers_;
   std::int32_t http_code_ = 0;
   bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds download_stall_timeout_;
   CurlHandle handle_;
-  CurlMulti multi_;
+  rest_internal::CurlMulti multi_;
   std::shared_ptr<CurlHandleFactory> factory_;
 
   // Explicitly closing the handle happens in two steps.

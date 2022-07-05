@@ -103,8 +103,9 @@ extern "C" std::size_t CurlDownloadRequestHeader(char* contents,
                  << ", closing=" << closing_ << ", closed=" << curl_closed_ \
                  << ", paused=" << paused_ << ", in_multi=" << in_multi_
 
-CurlDownloadRequest::CurlDownloadRequest(CurlHeaders headers, CurlHandle handle,
-                                         CurlMulti multi)
+CurlDownloadRequest::CurlDownloadRequest(rest_internal::CurlHeaders headers,
+                                         CurlHandle handle,
+                                         rest_internal::CurlMulti multi)
     : headers_(std::move(headers)),
       download_stall_timeout_(0),
       handle_(std::move(handle)),
@@ -255,7 +256,7 @@ Status CurlDownloadRequest::SetOptions() {
   handle_.EnableLogging(logging_enabled_);
   handle_.SetSocketCallback(socket_options_);
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
-                             VersionToCurlCode(http_version_));
+                             rest_internal::VersionToCurlCode(http_version_));
   if (download_stall_timeout_.count() != 0) {
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
     auto const timeout = static_cast<long>(download_stall_timeout_.count());
@@ -377,7 +378,8 @@ std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
 std::size_t CurlDownloadRequest::HeaderCallback(char* contents,
                                                 std::size_t size,
                                                 std::size_t nitems) {
-  return CurlAppendHeaderData(received_headers_, contents, size * nitems);
+  return rest_internal::CurlAppendHeaderData(received_headers_, contents,
+                                             size * nitems);
 }
 
 Status CurlDownloadRequest::Wait(absl::FunctionRef<bool()> predicate) {
