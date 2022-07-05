@@ -179,10 +179,11 @@ fi
 CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
 LOG_LINKER_PAT="$(tr -d '[:space:]' <<<"${LOG_LINKER_PAT:-}")"
 
-export TRIGGER_TYPE
+export CODECOV_TOKEN
 export BRANCH_NAME
 export COMMIT_SHA
-export CODECOV_TOKEN
+export TRIGGER_TYPE
+export VERBOSE_FLAG
 export LOG_LINKER_PAT
 
 # --local is the most fundamental build mode, in that all other builds
