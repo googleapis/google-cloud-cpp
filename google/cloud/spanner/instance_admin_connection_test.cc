@@ -71,6 +71,8 @@ TEST(InstanceAdminConnectionTest, GetInstanceSuccess) {
     display_name: "test display name"
     node_count: 7
     state: CREATING
+    create_time { seconds: 1657025805 nanos: 967908745 }
+    update_time { seconds: 1657025805 nanos: 967908745 }
   )pb";
   gsai::v1::Instance expected_instance;
   ASSERT_TRUE(TextFormat::ParseFromString(kInstanceText, &expected_instance));
