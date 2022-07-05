@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_FACTORY_H
 
 #include "google/cloud/storage/internal/curl_handle.h"
-#include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/options.h"
 #include <deque>
 #include <mutex>
@@ -35,11 +35,11 @@ class CurlHandleFactory {
  public:
   virtual ~CurlHandleFactory() = default;
 
-  virtual CurlPtr CreateHandle() = 0;
+  virtual rest_internal::CurlPtr CreateHandle() = 0;
   virtual void CleanupHandle(CurlHandle&&) = 0;
 
-  virtual CurlMulti CreateMultiHandle() = 0;
-  virtual void CleanupMultiHandle(CurlMulti&&) = 0;
+  virtual rest_internal::CurlMulti CreateMultiHandle() = 0;
+  virtual void CleanupMultiHandle(rest_internal::CurlMulti&&) = 0;
 
   virtual std::string LastClientIpAddress() const = 0;
 
@@ -74,11 +74,11 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
   DefaultCurlHandleFactory() = default;
   explicit DefaultCurlHandleFactory(Options const& o);
 
-  CurlPtr CreateHandle() override;
+  rest_internal::CurlPtr CreateHandle() override;
   void CleanupHandle(CurlHandle&&) override;
 
-  CurlMulti CreateMultiHandle() override;
-  void CleanupMultiHandle(CurlMulti&&) override;
+  rest_internal::CurlMulti CreateMultiHandle() override;
+  void CleanupMultiHandle(rest_internal::CurlMulti&&) override;
 
   std::string LastClientIpAddress() const override {
     std::lock_guard<std::mutex> lk(mu_);
@@ -110,11 +110,11 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
       : PooledCurlHandleFactory(maximum_size, {}) {}
   ~PooledCurlHandleFactory() override;
 
-  CurlPtr CreateHandle() override;
+  rest_internal::CurlPtr CreateHandle() override;
   void CleanupHandle(CurlHandle&&) override;
 
-  CurlMulti CreateMultiHandle() override;
-  void CleanupMultiHandle(CurlMulti&&) override;
+  rest_internal::CurlMulti CreateMultiHandle() override;
+  void CleanupMultiHandle(rest_internal::CurlMulti&&) override;
 
   std::string LastClientIpAddress() const override {
     std::lock_guard<std::mutex> lk(mu_);

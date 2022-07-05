@@ -172,7 +172,7 @@ class CurlRequestBuilder {
   std::string UserAgentSuffix() const;
 
   /// URL-escapes a string.
-  CurlString MakeEscapedString(std::string const& s) {
+  rest_internal::CurlString MakeEscapedString(std::string const& s) {
     return handle_.MakeEscapedString(s);
   }
 
@@ -187,7 +187,7 @@ class CurlRequestBuilder {
   std::shared_ptr<CurlHandleFactory> factory_;
 
   CurlHandle handle_;
-  CurlHeaders headers_;
+  rest_internal::CurlHeaders headers_;
 
   std::string url_;
   char const* query_parameter_separator_;
