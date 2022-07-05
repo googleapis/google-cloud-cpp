@@ -29,6 +29,61 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+nlohmann::json ConditionAsPatch(LifecycleRuleCondition const& c) {
+  nlohmann::json condition;
+  if (c.age.has_value()) {
+    condition["age"] = *c.age;
+  }
+  if (c.created_before.has_value()) {
+    condition["createdBefore"] =
+        absl::StrFormat("%04d-%02d-%02d", c.created_before->year(),
+                        c.created_before->month(), c.created_before->day());
+  }
+  if (c.is_live.has_value()) {
+    condition["isLive"] = *c.is_live;
+  }
+  if (c.matches_storage_class.has_value()) {
+    condition["matchesStorageClass"] = *c.matches_storage_class;
+  }
+  if (c.num_newer_versions.has_value()) {
+    condition["numNewerVersions"] = *c.num_newer_versions;
+  }
+  if (c.days_since_noncurrent_time.has_value()) {
+    condition["daysSinceNoncurrentTime"] = *c.days_since_noncurrent_time;
+  }
+  if (c.noncurrent_time_before.has_value()) {
+    condition["noncurrentTimeBefore"] =
+        internal::ToJsonString(*c.noncurrent_time_before);
+  }
+  if (c.days_since_custom_time.has_value()) {
+    condition["daysSinceCustomTime"] = *c.days_since_custom_time;
+  }
+  if (c.custom_time_before.has_value()) {
+    condition["customTimeBefore"] =
+        internal::ToJsonString(*c.custom_time_before);
+  }
+  if (c.matches_prefix.has_value()) {
+    condition["matchesPrefix"] = *c.matches_prefix;
+  }
+  if (c.matches_suffix.has_value()) {
+    condition["matchesSuffix"] = *c.matches_suffix;
+  }
+  return condition;
+}
+
+nlohmann::json ActionAsPatch(LifecycleRuleAction const& a) {
+  nlohmann::json action;
+  if (!a.type.empty()) {
+    action["type"] = a.type;
+  }
+  if (!a.storage_class.empty()) {
+    action["storageClass"] = a.storage_class;
+  }
+  return action;
+}
+
+}  // namespace
 
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
   os << "CorsEntry={";
@@ -372,52 +427,8 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
   internal::PatchBuilder subpatch;
   auto array = nlohmann::json::array();
   for (auto const& a : v.rule) {
-    nlohmann::json condition;
-    auto const& c = a.condition();
-    if (c.age.has_value()) {
-      condition["age"] = *c.age;
-    }
-    if (c.created_before.has_value()) {
-      condition["createdBefore"] =
-          absl::StrFormat("%04d-%02d-%02d", c.created_before->year(),
-                          c.created_before->month(), c.created_before->day());
-    }
-    if (c.is_live.has_value()) {
-      condition["isLive"] = *c.is_live;
-    }
-    if (c.matches_storage_class.has_value()) {
-      condition["matchesStorageClass"] = *c.matches_storage_class;
-    }
-    if (c.num_newer_versions.has_value()) {
-      condition["numNewerVersions"] = *c.num_newer_versions;
-    }
-    if (c.days_since_noncurrent_time.has_value()) {
-      condition["daysSinceNoncurrentTime"] = *c.days_since_noncurrent_time;
-    }
-    if (c.noncurrent_time_before.has_value()) {
-      condition["noncurrentTimeBefore"] =
-          internal::ToJsonString(*c.noncurrent_time_before);
-    }
-    if (c.days_since_custom_time.has_value()) {
-      condition["daysSinceCustomTime"] = *c.days_since_custom_time;
-    }
-    if (c.custom_time_before.has_value()) {
-      condition["customTimeBefore"] =
-          internal::ToJsonString(*c.custom_time_before);
-    }
-    if (c.matches_prefix.has_value()) {
-      condition["matchesPrefix"] = *c.matches_prefix;
-    }
-    if (c.matches_suffix.has_value()) {
-      condition["matchesSuffix"] = *c.matches_suffix;
-    }
-    nlohmann::json action;
-    if (!a.action().type.empty()) {
-      action["type"] = a.action().type;
-    }
-    if (!a.action().storage_class.empty()) {
-      action["storageClass"] = a.action().storage_class;
-    }
+    auto condition = ConditionAsPatch(a.condition());
+    auto action = ActionAsPatch(a.action());
     array.emplace_back(nlohmann::json{
         {"action", action},
         {"condition", condition},

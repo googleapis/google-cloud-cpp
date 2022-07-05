@@ -20,6 +20,52 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
+
+absl::optional<std::vector<std::string>> ParseStringListCondition(
+    nlohmann::json const& condition, char const* name) {
+  if (!condition.contains(name)) return absl::nullopt;
+  std::vector<std::string> matches;
+  for (auto const& kv : condition[name].items()) {
+    matches.emplace_back(kv.value().get<std::string>());
+  }
+  return matches;
+}
+
+Status ParseIntCondition(absl::optional<std::int32_t>& field,
+                         nlohmann::json const& condition, char const* name) {
+  if (!condition.contains(name)) return Status{};
+  auto value = internal::ParseIntField(condition, name);
+  if (!value) return std::move(value).status();
+  field.emplace(*value);
+  return Status{};
+}
+
+Status ParseBoolCondition(absl::optional<bool>& field,
+                          nlohmann::json const& condition, char const* name) {
+  if (!condition.contains(name)) return Status{};
+  auto value = internal::ParseBoolField(condition, name);
+  if (!value) return std::move(value).status();
+  field.emplace(*value);
+  return Status{};
+}
+
+Status ParseDateCondition(absl::optional<absl::CivilDay>& field,
+                          nlohmann::json const& condition, char const* name) {
+  if (!condition.contains(name)) return Status{};
+  auto const date = condition.value(name, "");
+  absl::CivilDay day;
+  if (!absl::ParseCivilTime(date, &day)) {
+    return Status(StatusCode::kInvalidArgument,
+                  "Cannot parse " + std::string(name) + " with value=<" + date +
+                      "> as a date");
+  }
+  field.emplace(std::move(day));
+  return Status{};
+}
+
+}  // namespace
+
 StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
     nlohmann::json const& json) {
   if (!json.is_object()) {
@@ -33,82 +79,35 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
   if (json.count("condition") == 0) return result;
 
   auto condition = json["condition"];
-  if (condition.count("age") != 0) {
-    auto age = internal::ParseIntField(condition, "age");
-    if (!age) return std::move(age).status();
-    result.condition_.age.emplace(*age);
-  }
-  if (condition.count("createdBefore") != 0) {
-    auto const date = condition.value("createdBefore", "");
-    absl::CivilDay day;
-    if (!absl::ParseCivilTime(date, &day)) {
-      return Status(
-          StatusCode::kInvalidArgument,
-          "Cannot parse createdBefore value (" + date + ") as a date");
-    }
-    result.condition_.created_before.emplace(std::move(day));
-  }
-  if (condition.count("isLive") != 0) {
-    auto is_live = internal::ParseBoolField(condition, "isLive");
-    if (!is_live.ok()) return std::move(is_live).status();
-    result.condition_.is_live.emplace(*is_live);
-  }
-  if (condition.count("matchesStorageClass") != 0) {
-    std::vector<std::string> matches;
-    for (auto const& kv : condition["matchesStorageClass"].items()) {
-      matches.emplace_back(kv.value().get<std::string>());
-    }
-    result.condition_.matches_storage_class.emplace(std::move(matches));
-  }
-  if (condition.count("numNewerVersions") != 0) {
-    auto v = internal::ParseIntField(condition, "numNewerVersions");
-    if (!v) return std::move(v).status();
-    result.condition_.num_newer_versions.emplace(*v);
-  }
-  if (condition.count("daysSinceNoncurrentTime") != 0) {
-    auto v = internal::ParseIntField(condition, "daysSinceNoncurrentTime");
-    if (!v) return std::move(v).status();
-    result.condition_.days_since_noncurrent_time.emplace(*v);
-  }
-  if (condition.count("noncurrentTimeBefore") != 0) {
-    auto const date = condition.value("noncurrentTimeBefore", "");
-    absl::CivilDay day;
-    if (!absl::ParseCivilTime(date, &day)) {
-      return Status(
-          StatusCode::kInvalidArgument,
-          "Cannot parse noncurrentTimeBefore value (" + date + ") as a date");
-    }
-    result.condition_.noncurrent_time_before.emplace(std::move(day));
-  }
-  if (condition.count("daysSinceCustomTime") != 0) {
-    auto v = internal::ParseIntField(condition, "daysSinceCustomTime");
-    if (!v) return std::move(v).status();
-    result.condition_.days_since_custom_time.emplace(*v);
-  }
-  if (condition.count("customTimeBefore") != 0) {
-    auto const date = condition.value("customTimeBefore", "");
-    absl::CivilDay day;
-    if (!absl::ParseCivilTime(date, &day)) {
-      return Status(
-          StatusCode::kInvalidArgument,
-          "Cannot parse customTimeBefore value (" + date + ") as a date");
-    }
-    result.condition_.custom_time_before.emplace(std::move(day));
-  }
-  if (condition.count("matchesPrefix") != 0) {
-    std::vector<std::string> matches;
-    for (auto const& kv : condition["matchesPrefix"].items()) {
-      matches.emplace_back(kv.value().get<std::string>());
-    }
-    result.condition_.matches_prefix.emplace(std::move(matches));
-  }
-  if (condition.count("matchesSuffix") != 0) {
-    std::vector<std::string> matches;
-    for (auto const& kv : condition["matchesSuffix"].items()) {
-      matches.emplace_back(kv.value().get<std::string>());
-    }
-    result.condition_.matches_suffix.emplace(std::move(matches));
-  }
+
+  auto status = ParseIntCondition(result.condition_.age, condition, "age");
+  if (!status.ok()) return status;
+  status = ParseDateCondition(result.condition_.created_before, condition,
+                              "createdBefore");
+  if (!status.ok()) return status;
+  status = ParseBoolCondition(result.condition_.is_live, condition, "isLive");
+  if (!status.ok()) return status;
+  result.condition_.matches_storage_class =
+      ParseStringListCondition(condition, "matchesStorageClass");
+  status = ParseIntCondition(result.condition_.num_newer_versions, condition,
+                             "numNewerVersions");
+  if (!status.ok()) return status;
+  status = ParseIntCondition(result.condition_.days_since_noncurrent_time,
+                             condition, "daysSinceNoncurrentTime");
+  if (!status.ok()) return status;
+  status = ParseDateCondition(result.condition_.noncurrent_time_before,
+                              condition, "noncurrentTimeBefore");
+  if (!status.ok()) return status;
+  status = ParseIntCondition(result.condition_.days_since_custom_time,
+                             condition, "daysSinceCustomTime");
+  if (!status.ok()) return status;
+  status = ParseDateCondition(result.condition_.custom_time_before, condition,
+                              "customTimeBefore");
+  if (!status.ok()) return status;
+  result.condition_.matches_prefix =
+      ParseStringListCondition(condition, "matchesPrefix");
+  result.condition_.matches_suffix =
+      ParseStringListCondition(condition, "matchesSuffix");
   return result;
 }
 
