@@ -29,7 +29,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
-using ::google::cloud::testing_util::IsOk;
 using ::testing::ElementsAreArray;
 
 class DecompressiveTranscodingIntegrationTest
