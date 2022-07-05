@@ -78,7 +78,7 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
   }
   if (json.count("condition") == 0) return result;
 
-  auto condition = json["condition"];
+  auto const& condition = json["condition"];
 
   auto status = ParseIntCondition(result.condition_.age, condition, "age");
   if (!status.ok()) return status;
