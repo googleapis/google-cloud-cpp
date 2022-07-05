@@ -951,11 +951,11 @@ int RunAll() {
 }  // namespace
 
 int main(int ac, char* av[]) try {
-  const auto* const emulator_host = "SPANNER_EMULATOR_HOST";
+  auto const* const emulator_host = "SPANNER_EMULATOR_HOST";
   if (google::cloud::internal::GetEnv(emulator_host).has_value()) {
     return 0;  // emulator does not support PostgreSQL dialect
   }
-  const auto* const auto_run = "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES";
+  auto const* const auto_run = "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES";
   if (google::cloud::internal::GetEnv(auto_run).value_or("") == "yes") {
     return RunAll();
   }

@@ -499,8 +499,8 @@ TEST(TableTest, AsyncReadRowsAcceptsMoveOnlyTypes) {
     MoveOnly() = default;
     MoveOnly(MoveOnly&&) = default;
     MoveOnly& operator=(MoveOnly&&) = default;
-    MoveOnly(const MoveOnly&) = delete;
-    MoveOnly& operator=(const MoveOnly&) = delete;
+    MoveOnly(MoveOnly const&) = delete;
+    MoveOnly& operator=(MoveOnly const&) = delete;
 
     future<bool> operator()(Row const& row) {
       EXPECT_EQ("row", row.row_key());
