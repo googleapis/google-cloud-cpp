@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::string EventTimestampAttribute();
 
 StatusOr<google::cloud::pubsublite::v1::PubSubMessage>
-DefaultPublishMessageTransformer(const google::cloud::pubsub::Message& message);
+DefaultPublishMessageTransformer(google::cloud::pubsub::Message const& message);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
