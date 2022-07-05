@@ -57,7 +57,8 @@ Status ParseDateCondition(absl::optional<absl::CivilDay>& field,
   absl::CivilDay day;
   if (!absl::ParseCivilTime(date, &day)) {
     return Status(StatusCode::kInvalidArgument,
-                  "Cannot parse createdBefore value (" + date + ") as a date");
+                  "Cannot parse " + std::string(name) + " with value=<" + date +
+                      "> as a date");
   }
   field.emplace(std::move(day));
   return Status{};

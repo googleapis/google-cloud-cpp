@@ -93,7 +93,7 @@ void MergeDaysSinceNoncurrent(LifecycleRuleCondition& result,
                               LifecycleRuleCondition const& rhs) {
   if (!rhs.days_since_noncurrent_time.has_value()) return;
   if (result.days_since_noncurrent_time.has_value()) {
-    result.days_since_noncurrent_time = (std::max)(
+    result.days_since_noncurrent_time = std::max(
         *result.days_since_noncurrent_time, *rhs.days_since_noncurrent_time);
   } else {
     result.days_since_noncurrent_time = *rhs.days_since_noncurrent_time;
@@ -105,7 +105,7 @@ void MergeNoncurrentTimeBefore(LifecycleRuleCondition& result,
   if (!rhs.noncurrent_time_before.has_value()) return;
   if (result.noncurrent_time_before.has_value()) {
     result.noncurrent_time_before =
-        (std::min)(*result.noncurrent_time_before, *rhs.noncurrent_time_before);
+        std::min(*result.noncurrent_time_before, *rhs.noncurrent_time_before);
   } else {
     result.noncurrent_time_before = *rhs.noncurrent_time_before;
   }
@@ -116,7 +116,7 @@ void MergeDaysSinceCustomTime(LifecycleRuleCondition& result,
   if (!rhs.days_since_custom_time.has_value()) return;
   if (result.days_since_custom_time.has_value()) {
     result.days_since_custom_time =
-        (std::max)(*result.days_since_custom_time, *rhs.days_since_custom_time);
+        std::max(*result.days_since_custom_time, *rhs.days_since_custom_time);
   } else {
     result.days_since_custom_time = *rhs.days_since_custom_time;
   }
@@ -126,7 +126,7 @@ void MergeCustomTimeBefore(LifecycleRuleCondition& result,
   if (!rhs.custom_time_before.has_value()) return;
   if (result.custom_time_before.has_value()) {
     result.custom_time_before =
-        (std::min)(*result.custom_time_before, *rhs.custom_time_before);
+        std::min(*result.custom_time_before, *rhs.custom_time_before);
   } else {
     result.custom_time_before = *rhs.custom_time_before;
   }
