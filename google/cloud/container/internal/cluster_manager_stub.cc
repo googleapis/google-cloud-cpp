@@ -297,6 +297,18 @@ DefaultClusterManagerStub::DeleteNodePool(
   return response;
 }
 
+Status DefaultClusterManagerStub::CompleteNodePoolUpgrade(
+    grpc::ClientContext& client_context,
+    google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->CompleteNodePoolUpgrade(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::RollbackNodePoolUpgrade(
     grpc::ClientContext& client_context,

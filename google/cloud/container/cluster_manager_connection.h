@@ -130,6 +130,9 @@ class ClusterManagerConnection {
   virtual StatusOr<google::container::v1::Operation> DeleteNodePool(
       google::container::v1::DeleteNodePoolRequest const& request);
 
+  virtual Status CompleteNodePoolUpgrade(
+      google::container::v1::CompleteNodePoolUpgradeRequest const& request);
+
   virtual StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
       google::container::v1::RollbackNodePoolUpgradeRequest const& request);
 

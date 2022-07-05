@@ -142,6 +142,11 @@ class MockClusterManagerConnection
               (override));
 
   MOCK_METHOD(
+      Status, CompleteNodePoolUpgrade,
+      (google::container::v1::CompleteNodePoolUpgradeRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::container::v1::Operation>, RollbackNodePoolUpgrade,
       (google::container::v1::RollbackNodePoolUpgradeRequest const& request),
       (override));

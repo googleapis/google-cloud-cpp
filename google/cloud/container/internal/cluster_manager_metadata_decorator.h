@@ -124,6 +124,11 @@ class ClusterManagerMetadata : public ClusterManagerStub {
       grpc::ClientContext& context,
       google::container::v1::DeleteNodePoolRequest const& request) override;
 
+  Status CompleteNodePoolUpgrade(
+      grpc::ClientContext& context,
+      google::container::v1::CompleteNodePoolUpgradeRequest const& request)
+      override;
+
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
       grpc::ClientContext& context,
       google::container::v1::RollbackNodePoolUpgradeRequest const& request)

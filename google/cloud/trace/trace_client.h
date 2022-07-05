@@ -102,7 +102,7 @@ class TraceServiceClient {
   ///     backoff policies.
   ///
   /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L66}
+  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L65}
   ///
   Status BatchWriteSpans(
       std::string const& name,
@@ -114,12 +114,12 @@ class TraceServiceClient {
   /// existing spans.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudtrace::v2::BatchWriteSpansRequest,google/devtools/cloudtrace/v2/tracing.proto#L66}
+  /// @googleapis_link{google::devtools::cloudtrace::v2::BatchWriteSpansRequest,google/devtools/cloudtrace/v2/tracing.proto#L65}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L66}
+  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L65}
   ///
   Status BatchWriteSpans(
       google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request,
@@ -129,16 +129,16 @@ class TraceServiceClient {
   /// Creates a new span.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L40}
+  /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L39}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L40}
+  /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L39}
   ///
   /// [google.devtools.cloudtrace.v2.Span]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L40}
+  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L39}
   /// [google.devtools.cloudtrace.v2.Span]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L40}
+  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L39}
   ///
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
       google::devtools::cloudtrace::v2::Span const& request, Options opts = {});

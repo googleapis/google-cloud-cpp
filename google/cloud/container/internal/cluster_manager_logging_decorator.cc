@@ -290,6 +290,18 @@ ClusterManagerLogging::DeleteNodePool(
       context, request, __func__, tracing_options_);
 }
 
+Status ClusterManagerLogging::CompleteNodePoolUpgrade(
+    grpc::ClientContext& context,
+    google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::container::v1::CompleteNodePoolUpgradeRequest const&
+                 request) {
+        return child_->CompleteNodePoolUpgrade(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::RollbackNodePoolUpgrade(
     grpc::ClientContext& context,

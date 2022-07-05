@@ -214,6 +214,14 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::DeleteNodePool(
   return child_->DeleteNodePool(context, request);
 }
 
+Status ClusterManagerAuth::CompleteNodePoolUpgrade(
+    grpc::ClientContext& context,
+    google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CompleteNodePoolUpgrade(context, request);
+}
+
 StatusOr<google::container::v1::Operation>
 ClusterManagerAuth::RollbackNodePoolUpgrade(
     grpc::ClientContext& context,

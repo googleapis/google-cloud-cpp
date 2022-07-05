@@ -204,6 +204,13 @@ ClusterManagerMetadata::DeleteNodePool(
   return child_->DeleteNodePool(context, request);
 }
 
+Status ClusterManagerMetadata::CompleteNodePoolUpgrade(
+    grpc::ClientContext& context,
+    google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->CompleteNodePoolUpgrade(context, request);
+}
+
 StatusOr<google::container::v1::Operation>
 ClusterManagerMetadata::RollbackNodePoolUpgrade(
     grpc::ClientContext& context,
