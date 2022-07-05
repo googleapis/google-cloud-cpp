@@ -33,7 +33,6 @@ using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
 using ::google::cloud::golden_internal::MockWriteObjectStreamingWriteRpc;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::test::admin::database::v1::TailLogEntriesRequest;
 using ::google::test::admin::database::v1::TailLogEntriesResponse;
 using ::google::test::admin::database::v1::WriteObjectRequest;
 using ::google::test::admin::database::v1::WriteObjectResponse;
