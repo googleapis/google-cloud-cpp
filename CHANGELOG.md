@@ -185,10 +185,7 @@ See [Migrating from `DataClient` to `DataConnection`][cbt-dataclient-migration].
 ### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
 
 * doc(pubsub): improve documentation for `*AckHandler` ([#9404](https://github.com/googleapis/google-cloud-cpp/pull/9404))
-* deflake(pubsub): mock completion queue to avoid unwanted timers ([#9369](https://github.com/googleapis/google-cloud-cpp/pull/9369))
-* deflake(pubsub): make time-triggered `Write()` events less likely ([#9366](https://github.com/googleapis/google-cloud-cpp/pull/9366))
 * feat(pubsub): update subscription builders ([#9326](https://github.com/googleapis/google-cloud-cpp/pull/9326))
-* doc(pubsub): use the right region tags ([#9322](https://github.com/googleapis/google-cloud-cpp/pull/9322))
 
 ### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
 
