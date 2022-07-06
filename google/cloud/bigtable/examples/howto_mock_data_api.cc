@@ -111,7 +111,7 @@ TEST(TableTest, AsyncReadRows) {
   auto on_row = [](cbt::Row const&) { return gc::make_ready_future(true); };
   auto on_finish = [](gc::Status const&) {};
 
-  // Make the client cal.
+  // Make the client call.
   table.AsyncReadRows(on_row, on_finish, cbt::RowSet(),
                       cbt::Filter::PassAllFilter());
 }

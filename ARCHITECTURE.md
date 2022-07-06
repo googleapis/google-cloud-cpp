@@ -97,23 +97,25 @@ defined, there are separate `${library}::*Client` objects.
 
 These are some examples:
 
-- Bigtable has a [bigtable::Table](/google/cloud/bigtable/table.h) client, as
-  well as [TableAdmin](/google/cloud/bigtable/table_admin.h) and
-  [InstanceAdmin](/google/cloud/bigtable/instance_admin.h) clients.
-- Storage has a single [storage::Client](/google/cloud/storage/client.h) client
+- Bigtable has a [`bigtable::Table`](/google/cloud/bigtable/table.h) client. It
+  also has two admin clients:
+  [`bigtable_admin::BigtableInstanceAdminClient`](/google/cloud/bigtable/admin/bigtable_instance_admin_client.h)
+  and
+  [`bigtable_admin::BigtableTableAdminClient`](/google/cloud/bigtable/admin/bigtable_table_admin_client.h).
+- Storage has a single [`storage::Client`](/google/cloud/storage/client.h) client
   class.
 - Pub/Sub has two non-admin clients, the
-  [pubsub::Publisher](/google/cloud/pubsub/publisher.h)
-  and the [pubsub::Subscriber](/google/cloud/pubsub/subscriber.h). It also has
+  [`pubsub::Publisher`](/google/cloud/pubsub/publisher.h)
+  and the [`pubsub::Subscriber`](/google/cloud/pubsub/subscriber.h). It also has
   two admin clients:
-  [pubsub::TopicAdminClient](/google/cloud/pubsub/topic_admin_client.h),
-  and [pubsub::SubscriptionAdminClient](/google/cloud/pubsub/subscription_admin_client.h).
+  [`pubsub::TopicAdminClient`](/google/cloud/pubsub/topic_admin_client.h),
+  and [`pubsub::SubscriptionAdminClient`](/google/cloud/pubsub/subscription_admin_client.h).
 - Spanner has one non-admin client, the
-  [spanner::Client](/google/cloud/spanner/client.h). It also has two admin
+  [`spanner::Client`](/google/cloud/spanner/client.h). It also has two admin
   clients:
-  [spanner_admin::InstanceAdminClient](/google/cloud/spanner/admin/instance_admin_client.h),
+  [`spanner_admin::InstanceAdminClient`](/google/cloud/spanner/admin/instance_admin_client.h),
   and
-  [spanner_admin::DatabaseAdminClient](/google/cloud/spanner/admin/database_admin_client.h).
+  [`spanner_admin::DatabaseAdminClient`](/google/cloud/spanner/admin/database_admin_client.h).
 
 Generally these classes are very "thin"; they take function arguments from the
 application, package them in lightweight structure, and then forward the request
@@ -215,11 +217,6 @@ in order to help users diagnose option-related issues in their code.
 
 ## Deviations from the "normal" Architecture
 
-### Bigtable
-
-Bigtable does not have `*Stub` and `*Connection` classes, they are sadly merged
-into a single layer.
-
 ### Pub/Sub
 
 Pub/Sub generally follow these patterns, but there is substantial code outside
@@ -238,7 +235,7 @@ the main classes to implement a few features:
 ### Spanner
 
 Spanner implements some key features in the
-[spanner_internal::SessionPool](/google/cloud/spanner/internal/session_pool.h).
+[`spanner_internal::SessionPool`](/google/cloud/spanner/internal/session_pool.h).
 
 ### Storage
 

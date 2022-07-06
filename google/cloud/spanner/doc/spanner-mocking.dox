@@ -7,7 +7,7 @@ In this document we describe how to write unit tests that mock
 reader is familiar with the Google Test and Google Mock frameworks and with
 the Cloud Spanner C++ Client.
 
-## Mocking a successful `ExecuteQuery`
+## Mocking a successful ExecuteQuery
 
 First include the headers for the Cloud Spanner Client, the mocking class, and
 the Google Mock framework.
