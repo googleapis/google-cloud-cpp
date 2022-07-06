@@ -95,7 +95,9 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
   details.
 </details>
 
-## v2.0.0 - TBD
+## v2.1.0 - TBD
+
+## v2.0.0 - 2022-07
 
 **BREAKING CHANGES**
 
@@ -120,12 +122,6 @@ that required GCC < 7.3, and/or CMake < 3.10. Starting with this release we
 require CMake >= 3.10, and only test with GCC >= 7.3.
 
 **OTHER CHANGES**
-
-We are introducing a new client library. While we do not anticipate any API
-changes to this library before declaring it GA, we are releasing it early in
-case it elicits some feedback that requires changes.
-
-* [Video Services](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/video/README.md)
 
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
@@ -174,6 +170,35 @@ See [Migrating from `DataClient` to `DataConnection`][cbt-dataclient-migration].
 [new-issue]: https://github.com/googleapis/google-cloud-cpp/issues/new/choose
 [cbt-dataclient-migration]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/migrating-from-dataclient.html
 [cbt-modern-policies]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/options.h#L137-L165
+
+* doc(bigtable): how to mock the Data API ([#9415](https://github.com/googleapis/google-cloud-cpp/pull/9415))
+* feat(bigtable): modern `Table` constructor ([#9403](https://github.com/googleapis/google-cloud-cpp/pull/9403))
+* feat(generator): support explicit routing headers ([#9368](https://github.com/googleapis/google-cloud-cpp/pull/9368))
+* fix(bigtable)!: pass app profile id to connection as options ([#9388](https://github.com/googleapis/google-cloud-cpp/pull/9388))
+* feat(bigtable): add `AppProfileIdOption` ([#9382](https://github.com/googleapis/google-cloud-cpp/pull/9382))
+* feat(bigtable): table resource name as a class ([#9377](https://github.com/googleapis/google-cloud-cpp/pull/9377))
+* feat(bigtable): instance name as a class ([#9374](https://github.com/googleapis/google-cloud-cpp/pull/9374))
+* feat(bigtable): introduce `MockDataConnection` and `MakeTestRowReader` ([#9335](https://github.com/googleapis/google-cloud-cpp/pull/9335))
+* feat(bigtable): introduce `DataConnection` ([#9323](https://github.com/googleapis/google-cloud-cpp/pull/9323))
+* feat(bigtable): modern Data API policy options ([#9320](https://github.com/googleapis/google-cloud-cpp/pull/9320))
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* doc(pubsub): improve documentation for `*AckHandler` ([#9404](https://github.com/googleapis/google-cloud-cpp/pull/9404))
+* feat(pubsub): update subscription builders ([#9326](https://github.com/googleapis/google-cloud-cpp/pull/9326))
+
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+* fix(generator): handle explicit routing params for nested fields ([#9408](https://github.com/googleapis/google-cloud-cpp/pull/9408))
+* feat(common): truncation support for plain strings in the RPC log ([#9351](https://github.com/googleapis/google-cloud-cpp/pull/9351))
+
+### New Libraries
+
+We are introducing a new client library. While we do not anticipate any API
+changes to this library before declaring it GA, we are releasing it early in
+case it elicits some feedback that requires changes.
+
+* [Video Services](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/video/README.md)
 
 ## v1.42.0 - 2022-06
 
