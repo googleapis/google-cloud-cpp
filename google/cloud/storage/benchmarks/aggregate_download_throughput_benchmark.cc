@@ -137,6 +137,17 @@ gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
   return gcs::Client(std::move(client_options));
 }
 
+std::string CurrentTime() {
+  auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
+  auto const t = absl::FromChrono(std::chrono::system_clock::now());
+  return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
+};
+
+void PrintResults(AggregateDownloadThroughputOptions const& options,
+                  std::size_t object_count, std::uint64_t dataset_size,
+                  std::vector<TaskResult> const& iteration_results,
+                  Timer::Snapshot usage);
+
 }  // namespace
 
 int main(int argc, char* argv[]) {
@@ -169,13 +180,7 @@ int main(int argc, char* argv[]) {
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
 
-  auto current_time = [] {
-    auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
-    auto const t = absl::FromChrono(std::chrono::system_clock::now());
-    return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
-  };
-
-  std::cout << "# Start time: " << current_time()
+  std::cout << "# Start time: " << CurrentTime()
             << "\n# Labels: " << options->labels
             << "\n# Bucket Name: " << options->bucket_name
             << "\n# Object Prefix: " << options->object_prefix
@@ -219,13 +224,6 @@ int main(int argc, char* argv[]) {
     objects.insert(objects.end(), dataset.begin(), dataset.end());
   }
 
-  auto accumulate_bytes_downloaded = [](std::vector<TaskResult> const& r) {
-    return std::accumulate(r.begin(), r.end(), std::int64_t{0},
-                           [](std::int64_t a, TaskResult const& b) {
-                             return a + b.bytes_downloaded;
-                           });
-  };
-
   Counters accumulated;
   // Print the header, so it can be easily loaded using the tools available in
   // our analysis tools (typically Python pandas, but could be R). Flush the
@@ -255,57 +253,14 @@ int main(int argc, char* argv[]) {
                    std::make_move_iterator(tasks.end()),
                    iteration_results.begin(),
                    [](std::future<TaskResult> f) { return f.get(); });
-    auto const usage = timer.Sample();
-    auto const downloaded_bytes =
-        accumulate_bytes_downloaded(iteration_results);
 
-    auto clean_csv_field = [](std::string v) {
-      std::replace(v.begin(), v.end(), ',', ';');
-      return v;
-    };
-    auto const labels = clean_csv_field(options->labels);
-    auto const grpc_plugin_config =
-        clean_csv_field(options->grpc_plugin_config);
-    auto const* client_per_thread =
-        options->client_per_thread ? "true" : "false";
-    // Print the results after each iteration. Makes it possible to interrupt
-    // the benchmark in the middle and still get some data.
+    // Update the counters.
     for (auto const& r : iteration_results) {
-      for (auto const& d : r.details) {
-        // Join the iteration details with the per-download details. That makes
-        // it easier to analyze the data in external scripts.
-        std::cout << labels                                 //
-                  << ',' << d.iteration                     //
-                  << ',' << objects.size()                  //
-                  << ',' << dataset_size                    //
-                  << ',' << options->thread_count           //
-                  << ',' << options->repeats_per_iteration  //
-                  << ',' << options->read_size              //
-                  << ',' << options->read_buffer_size       //
-                  << ',' << ToString(options->api)          //
-                  << ',' << options->grpc_channel_count     //
-                  << ',' << grpc_plugin_config              //
-                  << ',' << client_per_thread               //
-                  << ',' << d.status.code()                 //
-                  << ',' << d.peer                          //
-                  << ',' << d.bytes_downloaded              //
-                  << ',' << d.elapsed_time.count()          //
-                  << ',' << downloaded_bytes                //
-                  << ',' << usage.elapsed_time.count()      //
-                  << ',' << usage.cpu_time.count()          //
-                  << "\n";
-      }
-      // Update the counters.
       for (auto const& kv : r.counters) accumulated[kv.first] += kv.second;
     }
-    // After each iteration print a human-readable summary. Flush it because
-    // the operator of these benchmarks (coryan@) is an impatient person.
-    auto const bandwidth =
-        FormatBandwidthGbPerSecond(downloaded_bytes, usage.elapsed_time);
-    std::cout << "# " << current_time() << " downloaded=" << downloaded_bytes
-              << " cpu_time=" << absl::FromChrono(usage.cpu_time)
-              << " elapsed_time=" << absl::FromChrono(usage.elapsed_time)
-              << " Gbit/s=" << bandwidth << std::endl;
+
+    PrintResults(*options, objects.size(), dataset_size, iteration_results,
+                 timer.Sample());
   }
 
   for (auto& kv : accumulated) {
@@ -424,6 +379,64 @@ google::cloud::StatusOr<AggregateDownloadThroughputOptions> ParseArgs(
 
   return gcs_bm::ParseAggregateDownloadThroughputOptions({argv, argv + argc},
                                                          kDescription);
+}
+
+void PrintResults(AggregateDownloadThroughputOptions const& options,
+                  std::size_t object_count, std::uint64_t dataset_size,
+                  std::vector<TaskResult> const& iteration_results,
+                  Timer::Snapshot usage) {
+  auto accumulate_bytes_downloaded = [](std::vector<TaskResult> const& r) {
+    return std::accumulate(r.begin(), r.end(), std::int64_t{0},
+                           [](std::int64_t a, TaskResult const& b) {
+                             return a + b.bytes_downloaded;
+                           });
+  };
+
+  auto const downloaded_bytes = accumulate_bytes_downloaded(iteration_results);
+
+  auto clean_csv_field = [](std::string v) {
+    std::replace(v.begin(), v.end(), ',', ';');
+    return v;
+  };
+  auto const labels = clean_csv_field(options.labels);
+  auto const grpc_plugin_config = clean_csv_field(options.grpc_plugin_config);
+  auto const* client_per_thread = options.client_per_thread ? "true" : "false";
+  // Print the results after each iteration. Makes it possible to interrupt
+  // the benchmark in the middle and still get some data.
+  for (auto const& r : iteration_results) {
+    for (auto const& d : r.details) {
+      // Join the iteration details with the per-download details. That makes
+      // it easier to analyze the data in external scripts.
+      std::cout << labels                                //
+                << ',' << d.iteration                    //
+                << ',' << object_count                   //
+                << ',' << dataset_size                   //
+                << ',' << options.thread_count           //
+                << ',' << options.repeats_per_iteration  //
+                << ',' << options.read_size              //
+                << ',' << options.read_buffer_size       //
+                << ',' << ToString(options.api)          //
+                << ',' << options.grpc_channel_count     //
+                << ',' << grpc_plugin_config             //
+                << ',' << client_per_thread              //
+                << ',' << d.status.code()                //
+                << ',' << d.peer                         //
+                << ',' << d.bytes_downloaded             //
+                << ',' << d.elapsed_time.count()         //
+                << ',' << downloaded_bytes               //
+                << ',' << usage.elapsed_time.count()     //
+                << ',' << usage.cpu_time.count()         //
+                << "\n";
+    }
+  }
+  // After each iteration print a human-readable summary. Flush it because
+  // the operator of these benchmarks (coryan@) is an impatient person.
+  auto const bandwidth =
+      FormatBandwidthGbPerSecond(downloaded_bytes, usage.elapsed_time);
+  std::cout << "# " << CurrentTime() << " downloaded=" << downloaded_bytes
+            << " cpu_time=" << absl::FromChrono(usage.cpu_time)
+            << " elapsed_time=" << absl::FromChrono(usage.elapsed_time)
+            << " Gbit/s=" << bandwidth << std::endl;
 }
 
 }  // namespace
