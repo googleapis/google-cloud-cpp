@@ -135,7 +135,7 @@ interface that more closely matches the client surface of `Table`. Read more
 about `*Connection` classes in our
 [Architecture Design][architecture-connection] document.
 
-**What are the benefits of `DataConnection`?**
+#### What are the benefits of `DataConnection`?
 
 The new API greatly simplifies mocking. Every `Table::Foo(..)` call has an
 associated `DataConnection::Foo(...)` call. This allows you to set expectations
@@ -149,7 +149,7 @@ also enables the use of some common library features, such as our
 [`UnifiedCredentialsOption`][guac-dox]. Also, any new features will be added to
 the `DataConnection` API first.
 
-**Do I need to update my code?**
+#### Do I need to update my code?
 
 No. If the benefits are not appealing enough, you do not need to update your
 code. All code that currently uses `DataClient` will continue to function as
@@ -158,62 +158,21 @@ before. This includes uses of `testing::MockDataClient`.
 However, if you are using `testing::MockDataClient` to mock the behavior of
 `Table` in your tests:
 
-1. I am impressed, that is not easy to do.
-2. Be aware that we have announced our intention to remove classes derived from
+1. Be aware that we have announced our intention to remove classes derived from
    `DataClient` on or around 2023-05. Your tests will break then.
-3. Please consider using `bigtable_mocks::MockDataConnection`. It will greatly
+2. Please consider using `bigtable_mocks::MockDataConnection`. It will greatly
    simplify your tests.
 
-**How do I update existing `DataClient` code?**
+#### How do I update existing `DataClient` code?
 
-```c++
-namespace gc = ::google::cloud;
-namespace cbt = ::google::cloud::bigtable;
-
-// An option which affects the `DataClient` / `DataConnection`.
-auto options = gc::Options{}.set<gc::GrpcNumChannels>(4);
-
-// Existing code...
-auto data_client = cbt::MakeDataClient("project-id", "instance-id", options);
-auto table = cbt::Table(data_client, "app-profile-id", "table-id",
-                        cbt::LimitedErrorCountRetryPolicy(7));
-
-// Becomes...
-auto connection = cbt::MakeDataConnection(options);
-auto table = cbt::Table(
-    connection, cbt::TableResource("project-id", "instance-id", "table-id"),
-    gc::Options{}
-        .set<cbt::DataRetryPolicyOption>(
-            cbt::DataLimitedErrorCountRetryPolicy(7)->clone())
-        .set<cbt::AppProfileIdOption>("app-profile-id"));
-```
-
-Note the following differences:
-
-1. Resource identifiers are now packaged as a `TableResource` object and passed
-   directly to the `Table`.
-2. The retry and backoff policy types have changed.
-3. The retry, backoff, and idempotency policies are packaged in `Options` as
-   `shared_ptr`s, instead of passed by value as variadic parameters to
-   `Table(..., Policies&&)`.
-4. App profiles are also passed via `Options`.
-
-**What can't the new API do?**
-
-The new [policies][cbt-modern-policies] do not have a
-`Setup(grpc::ClientContext&)` interface. This interface has not been included
-because we believe that setting up the `grpc::ClientContext`...
-  1. Should not be tied to the retry policies.
-  2. Is unlikely to be needed by external customers.
-
-If you do need a `Setup()` feature, please [open a feature request][new-issue]
-explaining your use case, and we will be happy to accommodate you.
+See [Migrating from `DataClient` to `DataConnection`][cbt-dataclient-migration].
 
 [modern-table-ctor]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/table.h#L182-L214
 [architecture-connection]: https://github.com/googleapis/google-cloud-cpp/blob/main/ARCHITECTURE.md#the-connection-classes
 [howto-mock-data-api]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-mocking.html
 [guac-dox]: https://googleapis.dev/cpp/google-cloud-common/latest/credentials_8h.html
 [new-issue]: https://github.com/googleapis/google-cloud-cpp/issues/new/choose
+[cbt-dataclient-migration]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/migrating-from-dataclient.html
 [cbt-modern-policies]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/options.h#L137-L165
 
 ## v1.42.0 - 2022-06

@@ -1,0 +1,90 @@
+/*!
+
+@page migrating-from-dataclient Migrating from `DataClient` to `DataConnection`
+
+In this document we describe how to migrate existing code that uses `DataClient`
+to use `DataConnection`.
+
+All examples use the following aliases:
+
+```{.cc}
+namespace gc = ::google::cloud;
+namespace cbt = ::google::cloud::bigtable;
+```
+
+## Simple case
+
+```{.cc}
+cbt::Table OldCode() {
+  auto data_client = cbt::MakeDataClient("project-id", "instance-id");
+  return cbt::Table(data_client, "table-id");
+}
+
+cbt::Table UpdatedCode() {
+  auto connection = cbt::MakeDataConnection();
+  return cbt::Table(
+      connection, cbt::TableResource("project-id", "instance-id", "table-id"));
+}
+```
+
+Note that the `DataConnection` is not associated with any resource ids. They
+are instead packaged as a `TableResource` and passed as a single object to
+`Table`.
+
+## Optional configuration
+
+Note that there is only one `Table` constructor that accepts a
+`DataConnection`. All configuration is done via the `Options` parameter.
+
+### Set an application profile id
+
+```{.cc}
+cbt::Table OldCode() {
+  auto data_client = cbt::MakeDataClient("project-id", "instance-id");
+  return cbt::Table(data_client, "app-profile-id", "table-id");
+}
+
+cbt::Table UpdatedCode() {
+  auto connection = cbt::MakeDataConnection();
+  return cbt::Table(
+      connection, cbt::TableResource("project-id", "instance-id", "table-id"),
+      gc::Options{}.set<cbt::AppProfileIdOption>("app-profile-id"));
+}
+```
+
+### Set a custom retry policy
+
+```{.cc}
+cbt::Table OldCode() {
+  auto data_client = cbt::MakeDataClient("project-id", "instance-id");
+  return cbt::Table(data_client, "table-id",
+                    cbt::LimitedErrorCountRetryPolicy(7));
+}
+
+cbt::Table UpdatedCode() {
+  auto connection = cbt::MakeDataConnection();
+  return cbt::Table(connection,
+                    cbt::TableResource("project-id", "instance-id", "table-id"),
+                    gc::Options{}.set<cbt::DataRetryPolicyOption>(
+                        cbt::DataLimitedErrorCountRetryPolicy(7).clone()));
+}
+```
+
+The retry, backoff, and idempotency policies are packaged in `Options` as
+`shared_ptr`s, instead of passed by value as variadic parameters to
+`Table(..., Policies&&)`.
+
+Also note that the retry and backoff policy types have changed. If you defined
+your own policy, extending `RPCRetryPolicy` or `RPCBackoffPolicy`, it will not
+be compatible with the new types. The new policies do not have a
+`Setup(grpc::ClientContext&)` function. This function has not been included
+because we believe that setting up the `grpc::ClientContext`...
+  1. Should not be tied to the retry policies.
+  2. Is unlikely to be needed by external customers.
+
+If you do need a `Setup()` feature, please [open a feature request][new-issue]
+explaining your use case, and we will be happy to accommodate you.
+
+[new-issue]: https://github.com/googleapis/google-cloud-cpp/issues/new/choose
+
+*/
