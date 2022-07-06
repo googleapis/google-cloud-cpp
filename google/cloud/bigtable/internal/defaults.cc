@@ -105,30 +105,23 @@ Options DefaultOptions(Options opts) {
     opts.set<InstanceAdminEndpointOption>(*std::move(instance_admin_emulator));
   }
 
-  if (!opts.has<DataEndpointOption>()) {
-    opts.set<DataEndpointOption>("bigtable.googleapis.com");
-  }
-  if (!opts.has<AdminEndpointOption>()) {
-    opts.set<AdminEndpointOption>("bigtableadmin.googleapis.com");
-  }
-  if (!opts.has<InstanceAdminEndpointOption>()) {
-    opts.set<InstanceAdminEndpointOption>("bigtableadmin.googleapis.com");
-  }
-  if (!opts.has<GrpcCredentialOption>()) {
-    opts.set<GrpcCredentialOption>(emulator ? grpc::InsecureChannelCredentials()
-                                            : grpc::GoogleDefaultCredentials());
-  }
-  if (!opts.has<TracingComponentsOption>()) {
-    opts.set<TracingComponentsOption>(
-        ::google::cloud::internal::DefaultTracingComponents());
-  }
-  if (!opts.has<GrpcTracingOptionsOption>()) {
-    opts.set<GrpcTracingOptionsOption>(
-        ::google::cloud::internal::DefaultTracingOptions());
-  }
-  if (!opts.has<GrpcNumChannelsOption>()) {
-    opts.set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
-  }
+  // Fill any missing default values.
+  auto defaults =
+      Options{}
+          .set<DataEndpointOption>("bigtable.googleapis.com")
+          .set<AdminEndpointOption>("bigtableadmin.googleapis.com")
+          .set<InstanceAdminEndpointOption>("bigtableadmin.googleapis.com")
+          .set<GrpcCredentialOption>(emulator
+                                         ? grpc::InsecureChannelCredentials()
+                                         : grpc::GoogleDefaultCredentials())
+          .set<TracingComponentsOption>(
+              ::google::cloud::internal::DefaultTracingComponents())
+          .set<GrpcTracingOptionsOption>(
+              ::google::cloud::internal::DefaultTracingOptions())
+          .set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
+
+  opts = google::cloud::internal::MergeOptions(std::move(opts),
+                                               std::move(defaults));
 
   auto const has_min = opts.has<MinConnectionRefreshOption>();
   auto const has_max = opts.has<MaxConnectionRefreshOption>();
