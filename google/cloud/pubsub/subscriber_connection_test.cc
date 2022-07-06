@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscriber_connection.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
@@ -87,6 +88,51 @@ TEST(SubscriberConnectionTest, Basic) {
   };
   std::thread t([&cq] { cq.Run(); });
   auto response = subscriber->Subscribe({handler});
+  waiter.get_future().wait();
+  response.cancel();
+  ASSERT_STATUS_OK(response.get());
+  // We need to explicitly cancel any pending timers (some of which may be quite
+  // long) left by the subscription.
+  cq.CancelAll();
+  cq.Shutdown();
+  t.join();
+}
+
+TEST(SubscriberConnectionTest, ExactlyOnce) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  Subscription const subscription("test-project", "test-subscription");
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillOnce([](google::cloud::CompletionQueue&,
+                   std::unique_ptr<grpc::ClientContext>,
+                   google::pubsub::v1::AcknowledgeRequest const& request) {
+        EXPECT_THAT(request.ack_ids(), Contains("test-ack-id-0"));
+        return make_ready_future(
+            Status{StatusCode::kUnknown, "test-only-unknown"});
+      });
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .Times(AtLeast(1))
+      .WillRepeatedly(FakeAsyncStreamingPull);
+
+  CompletionQueue cq;
+  auto subscriber = MakeTestSubscriberConnection(subscription, mock,
+                                                 UserSuppliedThreadsOption(cq));
+  std::atomic_flag received_one{false};
+  promise<void> waiter;
+  auto callback = [&](Message const& m, ExactlyOnceAckHandler h) {
+    if (received_one.test_and_set()) return;
+    EXPECT_THAT(m.message_id(), StartsWith("test-message-id-"));
+    auto status = std::move(h).ack().get();
+    EXPECT_THAT(status, StatusIs(StatusCode::kUnknown, "test-only-unknown"));
+    waiter.set_value();
+  };
+  std::thread t([&cq] { cq.Run(); });
+  auto response = subscriber->ExactlyOnceSubscribe({callback});
   waiter.get_future().wait();
   response.cancel();
   ASSERT_STATUS_OK(response.get());

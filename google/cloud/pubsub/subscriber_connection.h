@@ -65,6 +65,13 @@ class SubscriberConnection {
 
   /// Defines the interface for `Subscriber::Subscribe()`
   virtual future<Status> Subscribe(SubscribeParams p);
+
+  struct ExactlyOnceSubscribeParams {
+    ExactlyOnceApplicationCallback callback;
+  };
+
+  /// Defines the interface for `Subscriber::Subscribe()`
+  virtual future<Status> ExactlyOnceSubscribe(ExactlyOnceSubscribeParams p);
 };
 
 /**

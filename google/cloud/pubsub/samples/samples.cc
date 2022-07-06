@@ -287,6 +287,30 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void CreateSubscriptionWithExactlyOnceDelivery(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  // [START pubsub_create_subscription_with_exactly_once_delivery]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& topic_id, std::string const& subscription_id) {
+    auto sub = client.CreateSubscription(
+        pubsub::Topic(project_id, topic_id),
+        pubsub::Subscription(project_id, subscription_id),
+        pubsub::SubscriptionBuilder{}.enable_exactly_once_delivery(true));
+    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The subscription already exists\n";
+      return;
+    }
+    if (!sub) throw std::runtime_error(sub.status().message());
+
+    std::cout << "The subscription was successfully created: "
+              << sub->DebugString() << "\n";
+  }
+  // [END pubsub_create_subscription_with_exactly_once_delivery]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
 void CreateFilteredSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
@@ -1285,6 +1309,29 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
       sample(std::move(subscriber)), __func__);
 }
 
+void ExactlyOnceSubscribe(google::cloud::pubsub::Subscriber subscriber,
+                          std::vector<std::string> const&) {
+  auto const initial = EventCounter::Instance().Current();
+  //! [START pubsub_subscriber_exactly_once] [exactly-once-subscribe]
+  namespace pubsub = ::google::cloud::pubsub;
+  auto sample = [](pubsub::Subscriber subscriber) {
+    return subscriber.Subscribe(
+        [&](pubsub::Message const& m, pubsub::ExactlyOnceAckHandler h) {
+          std::cout << "Received message " << m << "\n";
+          std::move(h).ack().then([id = m.message_id()](auto f) {
+            auto status = f.get();
+            std::cout << "Message id " << id
+                      << " ack() completed with status=" << status << "\n";
+          });
+          PleaseIgnoreThisSimplifiesTestingTheSamples();
+        });
+  };
+  //! [END pubsub_subscriber_exactly_once] [exactly-once-subscribe]
+  EventCounter::Instance().Wait(
+      [initial](std::int64_t count) { return count > initial; },
+      sample(std::move(subscriber)), __func__);
+}
+
 void SubscribeErrorListener(google::cloud::pubsub::Subscriber subscriber,
                             std::vector<std::string> const&) {
   auto current = EventCounter::Instance().Current();
@@ -1972,6 +2019,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const topic_id = RandomTopicId(generator);
   auto const subscription_id = RandomSubscriptionId(generator);
+  auto const exactly_once_subscription_id = RandomSubscriptionId(generator);
   auto const filtered_subscription_id = RandomSubscriptionId(generator);
   auto const push_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_subscription_id = RandomSubscriptionId(generator);
@@ -2022,6 +2070,20 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateFilteredSubscription() sample [2]" << std::endl;
   CreateFilteredSubscription(subscription_admin_client,
                              {project_id, topic_id, filtered_subscription_id});
+
+  std::cout
+      << "\nRunning CreateSubscriptionWithExactlyOnceDelivery() sample [1]"
+      << std::endl;
+  CreateSubscriptionWithExactlyOnceDelivery(
+      subscription_admin_client,
+      {project_id, topic_id, exactly_once_subscription_id});
+
+  std::cout
+      << "\nRunning CreateSubscriptionWithExactlyOnceDelivery() sample [2]"
+      << std::endl;
+  CreateSubscriptionWithExactlyOnceDelivery(
+      subscription_admin_client,
+      {project_id, topic_id, exactly_once_subscription_id});
 
   std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
   ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
@@ -2137,6 +2199,11 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::pubsub::MakeSubscriberConnection(
           dead_letter_subscription));
 
+  auto exactly_once_subscriber = google::cloud::pubsub::Subscriber(
+      google::cloud::pubsub::MakeSubscriberConnection(
+          google::cloud::pubsub::Subscription(project_id,
+                                              exactly_once_subscription_id)));
+
   auto filtered_subscriber = google::cloud::pubsub::Subscriber(
       google::cloud::pubsub::MakeSubscriberConnection(
           google::cloud::pubsub::Subscription(project_id,
@@ -2150,6 +2217,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning Subscribe() sample" << std::endl;
   Subscribe(subscriber, {});
+
+  std::cout << "\nRunning ExactlyOnceSubscribe() sample" << std::endl;
+  ExactlyOnceSubscribe(exactly_once_subscriber, {});
 
   std::cout << "\nRunning Subscribe(filtered) sample" << std::endl;
   PublishHelper(publisher, "Subscribe(filtered)", 8);
@@ -2297,6 +2367,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           {"project-id", "topic-id", "subscription-id"},
           CreateFilteredSubscription),
       CreateSubscriptionAdminCommand(
+          "create-subscription-with-exactly-once-delivery",
+          {"project-id", "topic-id", "subscription-id"},
+          CreateSubscriptionWithExactlyOnceDelivery),
+      CreateSubscriptionAdminCommand(
           "create-push-subscription",
           {"project-id", "topic-id", "subscription-id", "endpoint"},
           CreatePushSubscription),
@@ -2388,6 +2462,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreatePublisherCommand("publish-ordering-key", {}, PublishOrderingKey),
       CreatePublisherCommand("resume-ordering-key", {}, ResumeOrderingKey),
       CreateSubscriberCommand("subscribe", {}, Subscribe),
+      CreateSubscriberCommand("exactly-once-subscribe", {},
+                              ExactlyOnceSubscribe),
       CreateSubscriberCommand("subscribe-error-listener", {},
                               SubscribeErrorListener),
       CreateSubscriberCommand("subscribe-custom-attributes", {},

@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
+#include "google/cloud/pubsub/application_callback.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
@@ -34,6 +36,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::pubsub::ExactlyOnceAckHandler;
 using ::google::cloud::pubsub_testing::FakeAsyncStreamingPull;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::ScopedLog;
@@ -56,7 +59,7 @@ future<Status> CreateTestSubscriptionSession(
 future<Status> CreateTestSubscriptionSession(
     pubsub::Subscription const& subscription, Options opts,
     std::shared_ptr<SubscriberStub> const& mock, CompletionQueue const& cq,
-    ExactlyOnceApplicationCallback callback) {
+    pubsub::ExactlyOnceApplicationCallback callback) {
   opts = DefaultSubscriberOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
   return CreateSubscriptionSession(subscription, std::move(opts), mock, cq,
