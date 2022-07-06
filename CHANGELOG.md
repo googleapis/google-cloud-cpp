@@ -127,6 +127,54 @@ case it elicits some feedback that requires changes.
 
 * [Video Services](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/video/README.md)
 
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+We introduced a [new constructor][modern-table-ctor] for `Table` which accepts a
+`DataConnection` instead of a `DataClient`. The `DataConnection` is a new
+interface that more closely matches the client surface of `Table`. Read more
+about `*Connection` classes in our
+[Architecture Design][architecture-connection] document.
+
+#### What are the benefits of `DataConnection`?
+
+The new API greatly simplifies mocking. Every `Table::Foo(..)` call has an
+associated `DataConnection::Foo(...)` call. This allows you to set expectations
+on the exact values returned by the client call. See
+[Mocking the Cloud Bigtable C++ Client][howto-mock-data-api] for a complete
+example on how to mock the behavior of `Table` with
+`bigtable_mocks::MockDataConnection`.
+
+The new `DataConnection` API offers more consistency across our libraries. It
+also enables the use of some common library features, such as our
+[`UnifiedCredentialsOption`][guac-dox]. Also, any new features will be added to
+the `DataConnection` API first.
+
+#### Do I need to update my code?
+
+No. If the benefits are not appealing enough, you do not need to update your
+code. All code that currently uses `DataClient` will continue to function as
+before. This includes uses of `testing::MockDataClient`.
+
+However, if you are using `testing::MockDataClient` to mock the behavior of
+`Table` in your tests:
+
+1. Be aware that we have announced our intention to remove classes derived from
+   `DataClient` on or around 2023-05. Your tests will break then.
+2. Please consider using `bigtable_mocks::MockDataConnection`. It will greatly
+   simplify your tests.
+
+#### How do I update existing `DataClient` code?
+
+See [Migrating from `DataClient` to `DataConnection`][cbt-dataclient-migration].
+
+[modern-table-ctor]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/table.h#L182-L214
+[architecture-connection]: https://github.com/googleapis/google-cloud-cpp/blob/main/ARCHITECTURE.md#the-connection-classes
+[howto-mock-data-api]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-mocking.html
+[guac-dox]: https://googleapis.dev/cpp/google-cloud-common/latest/credentials_8h.html
+[new-issue]: https://github.com/googleapis/google-cloud-cpp/issues/new/choose
+[cbt-dataclient-migration]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/migrating-from-dataclient.html
+[cbt-modern-policies]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/options.h#L137-L165
+
 ## v1.42.0 - 2022-06
 
 We are happy to announce the following GA libraries.  Unless specifically noted,
