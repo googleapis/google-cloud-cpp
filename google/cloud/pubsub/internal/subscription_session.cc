@@ -14,7 +14,7 @@
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/ack_handler.h"
-#include "google/cloud/pubsub/internal/exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscription_lease_management.h"
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
@@ -27,11 +27,13 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-class AckHandlerWrapper : public pubsub::AckHandler::Impl {
+using ::google::cloud::pubsub::AckHandler;
+using ::google::cloud::pubsub::ExactlyOnceAckHandler;
+
+class AckHandlerWrapper : public AckHandler::Impl {
  public:
-  explicit AckHandlerWrapper(
-      std::unique_ptr<pubsub_internal::ExactlyOnceAckHandler::Impl> impl,
-      std::string message_id)
+  explicit AckHandlerWrapper(std::unique_ptr<ExactlyOnceAckHandler::Impl> impl,
+                             std::string message_id)
       : impl_(std::move(impl)), message_id_(std::move(message_id)) {}
   ~AckHandlerWrapper() override = default;
 
@@ -54,7 +56,7 @@ class AckHandlerWrapper : public pubsub::AckHandler::Impl {
   }
 
  private:
-  std::unique_ptr<pubsub_internal::ExactlyOnceAckHandler::Impl> impl_;
+  std::unique_ptr<ExactlyOnceAckHandler::Impl> impl_;
   std::string message_id_;
 };
 
@@ -98,27 +100,27 @@ class SubscriptionSessionImpl
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
       pubsub::ApplicationCallback application_callback) {
-    return Create(
-        opts, std::move(cq), std::move(shutdown_manager), std::move(source),
-        [cb = std::move(application_callback)](
-            pubsub::Message m, std::unique_ptr<ExactlyOnceAckHandler::Impl> h) {
-          auto wrapper = absl::make_unique<AckHandlerWrapper>(std::move(h),
-                                                              m.message_id());
-          cb(std::move(m), pubsub::AckHandler(std::move(wrapper)));
-        });
+    return Create(opts, std::move(cq), std::move(shutdown_manager),
+                  std::move(source),
+                  [cb = std::move(application_callback)](
+                      pubsub::Message m,
+                      std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> h) {
+                    auto wrapper = absl::make_unique<AckHandlerWrapper>(
+                        std::move(h), m.message_id());
+                    cb(std::move(m), pubsub::AckHandler(std::move(wrapper)));
+                  });
   }
 
   static future<Status> Create(
       Options const& opts, CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
-      pubsub_internal::ExactlyOnceApplicationCallback application_callback) {
+      pubsub::ExactlyOnceApplicationCallback application_callback) {
     return Create(
         opts, std::move(cq), std::move(shutdown_manager), std::move(source),
         [cb = std::move(application_callback)](
             pubsub::Message m, std::unique_ptr<ExactlyOnceAckHandler::Impl> h) {
-          cb(std::move(m),
-             pubsub_internal::ExactlyOnceAckHandler(std::move(h)));
+          cb(std::move(m), pubsub::ExactlyOnceAckHandler(std::move(h)));
         });
   }
 
@@ -241,7 +243,7 @@ future<Status> CreateSubscriptionSession(
     pubsub::Subscription const& subscription, Options const& opts,
     std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
     std::string client_id,
-    pubsub_internal::ExactlyOnceApplicationCallback application_callback) {
+    pubsub::ExactlyOnceApplicationCallback application_callback) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto batch = std::make_shared<StreamingSubscriptionBatchSource>(
       cq, shutdown_manager, stub, subscription.FullName(), std::move(client_id),

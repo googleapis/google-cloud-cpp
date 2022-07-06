@@ -55,6 +55,12 @@ Finally we present the full code for this example:
 
 @snippet mock_subscriber.cc all
 
+### Mocking with Exactly-Once Delivery
+
+To mock exactly once delivery is very similar:
+
+@snippet mock_subscriber.cc exactly-once
+
 [googletest-link]: https://github.com/google/googletest
 [googlemock-link]: https://github.com/google/googletest/tree/main/googlemock
 

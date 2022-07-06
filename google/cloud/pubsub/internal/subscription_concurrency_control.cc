@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_concurrency_control.h"
-#include "google/cloud/pubsub/ack_handler.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
 
@@ -23,7 +23,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-class AckHandlerImpl : public pubsub_internal::ExactlyOnceAckHandler::Impl {
+class AckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
  public:
   explicit AckHandlerImpl(std::weak_ptr<SubscriptionConcurrencyControl> w,
                           std::string ack_id, std::int32_t delivery_attempt)

@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_concurrency_control.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/testing/mock_subscription_message_source.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <atomic>
 #include <condition_variable>
 #include <deque>
 #include <mutex>
@@ -30,6 +30,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::pubsub::ExactlyOnceAckHandler;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::AtLeast;
 using ::testing::ByMove;

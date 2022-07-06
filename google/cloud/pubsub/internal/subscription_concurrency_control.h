@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_CONCURRENCY_CONTROL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_CONCURRENCY_CONTROL_H
 
-#include "google/cloud/pubsub/internal/exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/session_shutdown_manager.h"
 #include "google/cloud/pubsub/internal/subscription_message_source.h"
 #include "google/cloud/pubsub/message.h"
@@ -30,7 +30,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using Callback = std::function<void(
-    pubsub::Message, std::unique_ptr<ExactlyOnceAckHandler::Impl>)>;
+    pubsub::Message, std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl>)>;
 
 class SubscriptionConcurrencyControl
     : public std::enable_shared_from_this<SubscriptionConcurrencyControl> {

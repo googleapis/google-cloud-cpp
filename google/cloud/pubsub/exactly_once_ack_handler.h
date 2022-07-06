@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_EXACTLY_ONCE_ACK_HANDLER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_EXACTLY_ONCE_ACK_HANDLER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXACTLY_ONCE_ACK_HANDLER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXACTLY_ONCE_ACK_HANDLER_H
 
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
+namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -135,8 +135,8 @@ class ExactlyOnceAckHandler {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_internal
+}  // namespace pubsub
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_EXACTLY_ONCE_ACK_HANDLER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXACTLY_ONCE_ACK_HANDLER_H

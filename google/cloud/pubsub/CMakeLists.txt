@@ -42,6 +42,8 @@ add_library(
     backoff_policy.h
     connection_options.cc
     connection_options.h
+    exactly_once_ack_handler.cc
+    exactly_once_ack_handler.h
     internal/batch_sink.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h
@@ -52,8 +54,6 @@ add_library(
     internal/default_batch_sink.h
     internal/defaults.cc
     internal/defaults.h
-    internal/exactly_once_ack_handler.cc
-    internal/exactly_once_ack_handler.h
     internal/exactly_once_policies.cc
     internal/exactly_once_policies.h
     internal/extend_leases_with_retry.cc
@@ -185,6 +185,7 @@ target_sources(
     google_cloud_cpp_pubsub_mocks
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_exactly_once_ack_handler.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_schema_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscription_admin_connection.h
@@ -243,10 +244,10 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     set(pubsub_client_unit_tests
         # cmake-format: sort
         ack_handler_test.cc
+        exactly_once_ack_handler_test.cc
         internal/batching_publisher_connection_test.cc
         internal/default_batch_sink_test.cc
         internal/defaults_test.cc
-        internal/exactly_once_ack_handler_test.cc
         internal/exactly_once_policies_test.cc
         internal/extend_leases_with_retry_test.cc
         internal/flow_controlled_publisher_connection_test.cc

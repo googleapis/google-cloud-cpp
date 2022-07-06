@@ -47,18 +47,25 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
   ~SubscriberConnectionImpl() override = default;
 
   future<Status> Subscribe(SubscribeParams p) override {
-    auto client_id = [this] {
-      std::lock_guard<std::mutex> lk(mu_);
-      auto constexpr kLength = 32;
-      auto constexpr kChars = "abcdefghijklmnopqrstuvwxyz0123456789";
-      return internal::Sample(generator_, kLength, kChars);
-    }();
     return CreateSubscriptionSession(subscription_, opts_, stub_,
-                                     background_->cq(), std::move(client_id),
+                                     background_->cq(), MakeClientId(),
+                                     std::move(p.callback));
+  }
+
+  future<Status> ExactlyOnceSubscribe(ExactlyOnceSubscribeParams p) override {
+    return CreateSubscriptionSession(subscription_, opts_, stub_,
+                                     background_->cq(), MakeClientId(),
                                      std::move(p.callback));
   }
 
  private:
+  std::string MakeClientId() {
+    std::lock_guard<std::mutex> lk(mu_);
+    auto constexpr kLength = 32;
+    auto constexpr kChars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    return internal::Sample(generator_, kLength, kChars);
+  }
+
   pubsub::Subscription const subscription_;
   Options const opts_;
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
@@ -95,6 +102,13 @@ SubscriberConnection::~SubscriberConnection() = default;
 
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 future<Status> SubscriberConnection::Subscribe(SubscribeParams) {
+  return make_ready_future(
+      Status{StatusCode::kUnimplemented, "needs-override"});
+}
+
+future<Status> SubscriberConnection::ExactlyOnceSubscribe(
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    ExactlyOnceSubscribeParams) {
   return make_ready_future(
       Status{StatusCode::kUnimplemented, "needs-override"});
 }
