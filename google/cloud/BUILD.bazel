@@ -194,9 +194,11 @@ cc_library(
     name = "google_cloud_cpp_rest_internal",
     srcs = google_cloud_cpp_rest_internal_srcs,
     hdrs = google_cloud_cpp_rest_internal_hdrs,
-    copts = select({
+    # These are needed to use the BoringSSL libraries, and should be set in
+    # any downstream dependency too.
+    defines = select({
         "@platforms//os:windows": [
-            "/DWIN32_LEAN_AND_MEAN",
+            "WIN32_LEAN_AND_MEAN",
         ],
         "//conditions:default": [],
     }),

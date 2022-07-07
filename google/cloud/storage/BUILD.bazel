@@ -16,8 +16,10 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-GOOGLE_CLOUD_STORAGE_WIN_COPTS = [
-    "/DWIN32_LEAN_AND_MEAN",
+# These are needed to use the BoringSSL libraries, and should be set in any
+# downstream dependency too.
+GOOGLE_CLOUD_STORAGE_WIN_DEFINES = [
+    "WIN32_LEAN_AND_MEAN",
 ]
 
 load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
@@ -27,11 +29,10 @@ cc_library(
     name = "google_cloud_cpp_storage_grpc",
     srcs = google_cloud_cpp_storage_grpc_srcs,
     hdrs = google_cloud_cpp_storage_grpc_hdrs,
-    copts = select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+    defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"] + select({
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
         "//conditions:default": [],
     }),
-    defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
     visibility = [
         ":__subpackages__",
         "//:__pkg__",
@@ -58,8 +59,8 @@ cc_library(
     name = "google_cloud_cpp_storage",
     srcs = google_cloud_cpp_storage_srcs,
     hdrs = google_cloud_cpp_storage_hdrs,
-    copts = select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+    defines = select({
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
         "//conditions:default": [],
     }),
     visibility = [
@@ -89,10 +90,6 @@ cc_library(
     testonly = True,
     srcs = storage_client_testing_srcs,
     hdrs = storage_client_testing_hdrs,
-    copts = select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
-        "//conditions:default": [],
-    }),
     visibility = ["//visibility:public"],
     deps = [
         ":google_cloud_cpp_storage",
@@ -113,10 +110,6 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    copts = select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
-        "//conditions:default": [],
-    }),
     linkopts = select({
         "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
@@ -139,10 +132,6 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    copts = select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
-        "//conditions:default": [],
-    }),
     linkopts = select({
         "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
