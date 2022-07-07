@@ -22,6 +22,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 using ::google::bigtable::v2::ReadRowsResponse_CellChunk;
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
                                  grpc::Status& status) {
   if (end_of_stream_) {

@@ -126,6 +126,47 @@ cbt::SingleRowMutation MakeMutation(
       {cbt::SetCell(options.column_family, options.column, "value")});
 }
 
+StatusOr<std::string> CreateTableIfNeeded(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    MutationBatcherThroughputOptions const& options, int key_width) {
+  using ::google::cloud::bigtable::testing::RandomTableId;
+  if (options.table_id.empty()) {
+    auto generator = google::cloud::internal::MakeDefaultPRNG();
+    auto table_id = RandomTableId(generator);
+
+    google::bigtable::admin::v2::CreateTableRequest r;
+    r.set_parent(cbt::InstanceName(options.project_id, options.instance_id));
+    r.set_table_id(table_id);
+    // Provide initial splits to the table
+    for (auto i = 0; i != options.shard_count; ++i) {
+      auto row_index = options.mutation_count * i / options.shard_count;
+      r.add_initial_splits()->set_key(MakeRowString(key_width, row_index));
+    }
+    auto& families = *r.mutable_table()->mutable_column_families();
+    families[options.column_family].mutable_gc_rule()->set_max_num_versions(10);
+
+    std::cout << "# Creating Table\n";
+    auto table = admin.CreateTable(std::move(r));
+    if (!table) {
+      std::cout << table.status() << std::endl;
+      return std::move(table).status();
+    }
+    std::cout << "#\n";
+    return table_id;
+  }
+  google::bigtable::admin::v2::GetTableRequest r;
+  r.set_name(cbt::TableName(options.project_id, options.instance_id,
+                            options.table_id));
+  r.set_view(google::bigtable::admin::v2::Table_View_NAME_ONLY);
+  auto table = admin.GetTable(std::move(r));
+  if (!table) {
+    std::cout << "Error trying to get Table " << options.table_id << ":\n"
+              << table.status() << std::endl;
+    return std::move(table).status();
+  }
+  return options.table_id;
+}
+
 }  // namespace
 
 int main(int argc, char* argv[]) {
@@ -143,7 +184,6 @@ int main(int argc, char* argv[]) {
   using ::google::cloud::Options;
   using ::google::cloud::Status;
   using ::google::cloud::StatusOr;
-  using ::google::cloud::bigtable::testing::RandomTableId;
   using ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
 
@@ -154,52 +194,18 @@ int main(int argc, char* argv[]) {
   for (auto i = options->mutation_count - 1; i != 0; i /= 10) ++key_width;
 
   // Create a new table if one was not supplied
-  auto table_id = options->table_id;
-  if (table_id.empty()) {
-    auto generator = google::cloud::internal::MakeDefaultPRNG();
-    table_id = RandomTableId(generator);
-
-    google::bigtable::admin::v2::CreateTableRequest r;
-    r.set_parent(cbt::InstanceName(options->project_id, options->instance_id));
-    r.set_table_id(table_id);
-    // Provide initial splits to the table
-    for (auto i = 0; i != options->shard_count; ++i) {
-      auto row_index = options->mutation_count * i / options->shard_count;
-      r.add_initial_splits()->set_key(MakeRowString(key_width, row_index));
-    }
-    auto& families = *r.mutable_table()->mutable_column_families();
-    families[options->column_family].mutable_gc_rule()->set_max_num_versions(
-        10);
-
-    std::cout << "# Creating Table\n";
-    auto table = admin.CreateTable(std::move(r));
-    if (!table) {
-      std::cout << table.status() << std::endl;
-      return 1;
-    }
-    std::cout << "#\n";
-  } else {
-    google::bigtable::admin::v2::GetTableRequest r;
-    r.set_name(
-        cbt::TableName(options->project_id, options->instance_id, table_id));
-    r.set_view(google::bigtable::admin::v2::Table_View_NAME_ONLY);
-    auto table = admin.GetTable(std::move(r));
-    if (!table) {
-      std::cout << "Error trying to get Table " << table_id << ":\n"
-                << table.status() << std::endl;
-      return 1;
-    }
-  }
+  auto table_id = CreateTableIfNeeded(admin, *options, key_width);
+  if (!table_id) return 1;
 
   auto table = cbt::Table(
       cbt::MakeDataConnection(
           Options{}.set<google::cloud::GrpcBackgroundThreadPoolSizeOption>(
               options->max_batches)),
-      cbt::TableResource(options->project_id, options->instance_id, table_id));
+      cbt::TableResource(options->project_id, options->instance_id, *table_id));
 
   std::cout << "# Project ID: " << options->project_id
             << "\n# Instance ID: " << options->instance_id
-            << "\n# Table ID: " << table_id << "\n# Cutoff Time: "
+            << "\n# Table ID: " << *table_id << "\n# Cutoff Time: "
             << absl::FormatDuration(absl::FromChrono(options->max_time))
             << "\n# Shard Count: " << options->shard_count
             << "\n# Write Thread Count: " << options->write_thread_count
@@ -309,7 +315,7 @@ int main(int argc, char* argv[]) {
   if (options->table_id.empty()) {
     std::cout << "#\n# Deleting Table\n";
     auto status = admin.DeleteTable(
-        cbt::TableName(options->project_id, options->instance_id, table_id));
+        cbt::TableName(options->project_id, options->instance_id, *table_id));
     if (!status.ok()) {
       std::cout << status << std::endl;
       return -1;
