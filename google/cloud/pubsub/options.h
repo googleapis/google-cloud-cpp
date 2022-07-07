@@ -224,12 +224,11 @@ struct MaxDeadlineTimeOption {
  * extend the deadline by at most this amount. The default extension time is 10
  * minutes. An application may wish to reduce this extension time so the Pub/Sub
  * service will resend a message sooner when it does not hear back from a
- * Subscriber. With at-least-once semantics making the time too short may
+ * Subscriber. With at-least-once semantics, making the time too short may
  * increase the number of duplicate messages delivered by the service.
  *
- * The value is clamped between 10 seconds and 10 minutes.  If the application
- * configures `MinDeadlineExtensionOption` to be larger than
- * `MaxDeadlineExtensionOption` the value of `MaxDeadlineExtension` is used.
+ * The value is clamped between 10 seconds and 10 minutes. Note that this option
+ * also affects the effective range for `MinDeadlineExtensionOption`.
  */
 struct MaxDeadlineExtensionOption {
   using Type = std::chrono::seconds;
@@ -243,12 +242,12 @@ struct MaxDeadlineExtensionOption {
  * minimum extension is 1 minute. An application may wish to reduce this
  * extension so that the Pub/Sub service will resend a message sooner when it
  * does not hear back from a Subscriber. An application may wish to increase
- * this extension time to avoid duplicate
+ * this extension time to avoid duplicate message delivery.
  *
- * The value is clamped between 10 seconds and 10 minutes.  Furthermore, if
- * configures both `MinDeadlineExtensionOption` and
- * `MaxDeadlineExtensionOption`, then `MinDeadlineExtensionOption` is clamped
- * between 10 seconds and the value of `MaxDeadlineExtensionOption`.
+ * The value is clamped between 10 seconds and 10 minutes.  Furthermore, if the
+ * application configures `MaxDeadlineExtensionOption`, then
+ * `MinDeadlineExtensionOption` is clamped between 10 seconds and the value of
+ * `MaxDeadlineExtensionOption`.
  */
 struct MinDeadlineExtensionOption {
   using Type = std::chrono::seconds;

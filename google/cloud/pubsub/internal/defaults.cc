@@ -110,42 +110,37 @@ Options DefaultSubscriberOptions(Options opts) {
 }
 
 Options DefaultSubscriberOptionsOnly(Options opts) {
-  if (!opts.has<pubsub::MaxDeadlineTimeOption>()) {
-    opts.set<pubsub::MaxDeadlineTimeOption>(seconds(0));
-  }
-  if (!opts.has<pubsub::MaxDeadlineExtensionOption>()) {
-    opts.set<pubsub::MaxDeadlineExtensionOption>(seconds(600));
-  }
-  if (!opts.has<pubsub::MaxOutstandingMessagesOption>()) {
-    opts.set<pubsub::MaxOutstandingMessagesOption>(1000);
-  }
-  if (!opts.has<pubsub::MaxOutstandingBytesOption>()) {
-    opts.set<pubsub::MaxOutstandingBytesOption>(100 * 1024 * 1024L);
-  }
+  auto defaults =
+      Options{}
+          .set<pubsub::MaxDeadlineTimeOption>(seconds(0))
+          .set<pubsub::MaxDeadlineExtensionOption>(seconds(600))
+          .set<pubsub::MaxOutstandingMessagesOption>(1000)
+          .set<pubsub::MaxOutstandingBytesOption>(100 * 1024 * 1024L)
+          .set<pubsub::ShutdownPollingPeriodOption>(seconds(5))
+          // Subscribers are special: by default we want to retry essentially
+          // forever because (a) the service will disconnect the streaming pull
+          // from time to time, but that is not a "failure", (b) applications
+          // can change this behavior if they need, and this is easier than some
+          // hard-coded "treat these disconnects as non-failures" code.
+          .set<pubsub::RetryPolicyOption>(pubsub::LimitedErrorCountRetryPolicy(
+                                              (std::numeric_limits<int>::max)())
+                                              .clone());
+  opts = google::cloud::internal::MergeOptions(std::move(opts),
+                                               std::move(defaults));
+
+  // Enforce constraints
   if (opts.get<pubsub::MaxConcurrencyOption>() == 0) {
     opts.set<pubsub::MaxConcurrencyOption>(DefaultThreadCount());
   }
-  if (!opts.has<pubsub::ShutdownPollingPeriodOption>()) {
-    opts.set<pubsub::ShutdownPollingPeriodOption>(seconds(5));
-  }
-  // Subscribers are special: by default we want to retry essentially forever
-  // because (a) the service will disconnect the streaming pull from time to
-  // time, but that is not a "failure", (b) applications can change this
-  // behavior if they need, and this is easier than some hard-coded "treat these
-  // disconnects as non-failures" code.
-  if (!opts.has<pubsub::RetryPolicyOption>()) {
-    opts.set<pubsub::RetryPolicyOption>(
-        pubsub::LimitedErrorCountRetryPolicy((std::numeric_limits<int>::max)())
-            .clone());
-  }
 
-  // Enforce constraints
   auto& max = opts.lookup<pubsub::MaxDeadlineExtensionOption>();
   max = (std::max)((std::min)(max, seconds(600)), seconds(10));
 
   if (opts.has<pubsub::MinDeadlineExtensionOption>()) {
     auto& min = opts.lookup<pubsub::MinDeadlineExtensionOption>();
     min = (std::max)((std::min)(min, max), seconds(10));
+  } else {
+    opts.set<pubsub::MinDeadlineExtensionOption>((std::min)(seconds(60), max));
   }
 
   auto& messages = opts.lookup<pubsub::MaxOutstandingMessagesOption>();
