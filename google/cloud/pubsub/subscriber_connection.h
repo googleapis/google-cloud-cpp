@@ -63,8 +63,21 @@ class SubscriberConnection {
     ApplicationCallback callback;
   };
 
-  /// Defines the interface for `Subscriber::Subscribe()`
+  /// Defines the interface for `Subscriber::Subscribe(ApplicationCallback)`
   virtual future<Status> Subscribe(SubscribeParams p);
+
+  struct ExactlyOnceSubscribeParams {
+    ExactlyOnceApplicationCallback callback;
+  };
+
+  /**
+   * Defines the interface for
+   * `Subscriber::Subscribe(ExactlyOnceApplicationCallback)`.
+   *
+   * We use a different name for this function (as opposed to an overload) to
+   * simplify the use of mocks.
+   */
+  virtual future<Status> ExactlyOnceSubscribe(ExactlyOnceSubscribeParams p);
 };
 
 /**

@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_H
 
+#include "google/cloud/pubsub/ack_handler.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -94,9 +96,6 @@ class Subscriber {
   /**
    * Creates a new session to receive messages from @p subscription.
    *
-   * @note Callable must be `CopyConstructible`, as @p cb will be stored in a
-   *   [`std::function<>`][std-function-link].
-   *
    * @par Idempotency
    * @parblock
    * This is an idempotent operation; it only reads messages from the service.
@@ -119,12 +118,40 @@ class Subscriber {
    *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
    *     terminate the session and satisfy the future.
-   *
-   * [std-function-link]:
-   * https://en.cppreference.com/w/cpp/utility/functional/function
    */
-  future<Status> Subscribe(std::function<void(Message, AckHandler)> cb) {
+  future<Status> Subscribe(ApplicationCallback cb) {
     return connection_->Subscribe({std::move(cb)});
+  }
+
+  /**
+   * Creates a new session to receive messages from @p subscription using
+   * exactly-once delivery.
+   *
+   * @par Idempotency
+   * @parblock
+   * This is an idempotent operation; it only reads messages from the service.
+   * Will make multiple attempts to start a connection to the service, subject
+   * to the retry policies configured in the `SubscriberConnection`. Once a
+   * successful connection is established the library will try to resume the
+   * connection even if the connection fails with a permanent error. Resuming
+   * the connection is subject to the retry policies as described earlier.
+   *
+   * Note that calling `ExactlyOnceAckHandler::ack()` and/or
+   * `ExactlyOnceAckHandler::nack()` have their own rules with respect to
+   * retrying. Check the documentation of these functions for details.
+   * @endparblock
+   *
+   * @par Example
+   * @snippet samples.cc exactly-once-subscribe
+   *
+   * @param cb the callable invoked when messages are received.
+   * @return a future that is satisfied when the session will no longer receive
+   *     messages. For example, because there was an unrecoverable error trying
+   *     to receive data. Calling `.cancel()` in this object will (eventually)
+   *     terminate the session and satisfy the future.
+   */
+  future<Status> Subscribe(ExactlyOnceApplicationCallback cb) {
+    return connection_->ExactlyOnceSubscribe({std::move(cb)});
   }
 
  private:

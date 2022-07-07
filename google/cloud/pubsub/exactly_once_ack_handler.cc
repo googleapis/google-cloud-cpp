@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include <type_traits>
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
+namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 static_assert(!std::is_copy_assignable<ExactlyOnceAckHandler>::value,
@@ -36,6 +36,6 @@ ExactlyOnceAckHandler::~ExactlyOnceAckHandler() {
 ExactlyOnceAckHandler::Impl::~Impl() = default;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_internal
+}  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

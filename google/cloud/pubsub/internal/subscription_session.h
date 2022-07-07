@@ -35,19 +35,6 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// TODO(#9327) - move this to application_callback.h
-/**
- * Defines the interface for application-level callbacks with exactly-once
- * delivery.
- *
- * Applications provide a callable compatible with this type to receive
- * messages.  They acknowledge (or reject) messages using
- * `ExactlyOnceAckHandler`.  This is a move-only type to support asynchronous
- * acknowledgments.
- */
-using ExactlyOnceApplicationCallback =
-    std::function<void(pubsub::Message, ExactlyOnceAckHandler)>;
-
 future<Status> CreateSubscriptionSession(
     pubsub::Subscription const& subscription, Options const& opts,
     std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
@@ -56,7 +43,8 @@ future<Status> CreateSubscriptionSession(
 future<Status> CreateSubscriptionSession(
     pubsub::Subscription const& subscription, Options const& opts,
     std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
-    std::string client_id, ExactlyOnceApplicationCallback application_callback);
+    std::string client_id,
+    pubsub::ExactlyOnceApplicationCallback application_callback);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
