@@ -164,6 +164,7 @@ TEST(OptionsTest, SubscriberDefaults) {
   auto opts = DefaultSubscriberOptions(Options{});
   EXPECT_EQ(seconds(0), opts.get<pubsub::MaxDeadlineTimeOption>());
   EXPECT_EQ(seconds(600), opts.get<pubsub::MaxDeadlineExtensionOption>());
+  EXPECT_EQ(seconds(60), opts.get<pubsub::MinDeadlineExtensionOption>());
   EXPECT_EQ(1000, opts.get<pubsub::MaxOutstandingMessagesOption>());
   EXPECT_EQ(100 * 1024 * 1024L, opts.get<pubsub::MaxOutstandingBytesOption>());
   EXPECT_EQ(DefaultThreadCount(), opts.get<pubsub::MaxConcurrencyOption>());
@@ -192,6 +193,28 @@ TEST(OptionsTest, SubscriberConstraints) {
   opts = DefaultSubscriberOptions(
       Options{}.set<pubsub::MaxDeadlineExtensionOption>(seconds(5000)));
   EXPECT_EQ(seconds(600), opts.get<pubsub::MaxDeadlineExtensionOption>());
+
+  opts = DefaultSubscriberOptions(
+      Options{}.set<pubsub::MinDeadlineExtensionOption>(seconds(5000)));
+  EXPECT_EQ(seconds(600), opts.get<pubsub::MinDeadlineExtensionOption>());
+
+  opts = DefaultSubscriberOptions(
+      Options{}.set<pubsub::MinDeadlineExtensionOption>(seconds(5)));
+  EXPECT_EQ(seconds(10), opts.get<pubsub::MinDeadlineExtensionOption>());
+
+  opts = DefaultSubscriberOptions(
+      Options{}.set<pubsub::MaxDeadlineExtensionOption>(seconds(30)));
+  EXPECT_EQ(seconds(30), opts.get<pubsub::MinDeadlineExtensionOption>());
+
+  opts = DefaultSubscriberOptions(
+      Options{}.set<pubsub::MaxDeadlineExtensionOption>(seconds(120)));
+  EXPECT_EQ(seconds(60), opts.get<pubsub::MinDeadlineExtensionOption>());
+
+  opts = DefaultSubscriberOptions(
+      Options{}
+          .set<pubsub::MinDeadlineExtensionOption>(seconds(5000))
+          .set<pubsub::MaxDeadlineExtensionOption>(seconds(500)));
+  EXPECT_EQ(seconds(500), opts.get<pubsub::MinDeadlineExtensionOption>());
 }
 
 TEST(OptionsTest, UserSetSubscriberOptions) {

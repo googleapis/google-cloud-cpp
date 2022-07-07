@@ -220,15 +220,36 @@ struct MaxDeadlineTimeOption {
 /**
  * The maximum time by which the deadline for each incoming message is extended.
  *
- * The Cloud Pub/Sub C++ client library will extend the deadline by at most this
- * amount, while waiting for an ack or nack. The default extension is 10
- * minutes. An application may wish to reduce this extension so that the Pub/Sub
+ * While waiting for an ack or nack, The Cloud Pub/Sub C++ client library will
+ * extend the deadline by at most this amount. The default extension time is 10
+ * minutes. An application may wish to reduce this extension time so the Pub/Sub
  * service will resend a message sooner when it does not hear back from a
- * Subscriber.
+ * Subscriber. With at-least-once semantics, making the time too short may
+ * increase the number of duplicate messages delivered by the service.
  *
- * The value is clamped between 10 seconds and 10 minutes.
+ * The value is clamped between 10 seconds and 10 minutes. Note that this option
+ * also affects the effective range for `MinDeadlineExtensionOption`.
  */
 struct MaxDeadlineExtensionOption {
+  using Type = std::chrono::seconds;
+};
+
+/**
+ * The minimum time by which the deadline for each incoming message is extended.
+ *
+ * While waiting for an ack or nack from the application the Cloud Pub/Sub C++
+ * client library will extend the deadline by at least this amount. The default
+ * minimum extension is 1 minute. An application may wish to reduce this
+ * extension so that the Pub/Sub service will resend a message sooner when it
+ * does not hear back from a Subscriber. An application may wish to increase
+ * this extension time to avoid duplicate message delivery.
+ *
+ * The value is clamped between 10 seconds and 10 minutes.  Furthermore, if the
+ * application configures `MaxDeadlineExtensionOption`, then
+ * `MinDeadlineExtensionOption` is clamped between 10 seconds and the value of
+ * `MaxDeadlineExtensionOption`.
+ */
+struct MinDeadlineExtensionOption {
   using Type = std::chrono::seconds;
 };
 
@@ -304,8 +325,9 @@ struct ShutdownPollingPeriodOption {
 /// The list of options specific to subscribers.
 using SubscriberOptionList =
     OptionList<MaxDeadlineTimeOption, MaxDeadlineExtensionOption,
-               MaxOutstandingMessagesOption, MaxOutstandingBytesOption,
-               MaxConcurrencyOption, ShutdownPollingPeriodOption>;
+               MinDeadlineExtensionOption, MaxOutstandingMessagesOption,
+               MaxOutstandingBytesOption, MaxConcurrencyOption,
+               ShutdownPollingPeriodOption>;
 
 /**
  * Convenience function to initialize a
