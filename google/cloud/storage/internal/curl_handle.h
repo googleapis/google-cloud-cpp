@@ -30,6 +30,8 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+class CurlHandleFactory;
+
 /**
  * Wraps CURL* handles in a safer C++ interface.
  *
@@ -39,6 +41,9 @@ namespace internal {
  */
 class CurlHandle {
  public:
+  static CurlHandle MakeFromPool(CurlHandleFactory& factory);
+  static void ReturnToPool(CurlHandleFactory& factory, CurlHandle h);
+
   explicit CurlHandle();
   ~CurlHandle();
 
@@ -132,7 +137,9 @@ class CurlHandle {
   };
 
  private:
-  explicit CurlHandle(rest_internal::CurlPtr ptr) : handle_(std::move(ptr)) {}
+  struct InternalOnly {};
+  explicit CurlHandle(InternalOnly, rest_internal::CurlPtr ptr)
+      : handle_(std::move(ptr)) {}
 
   friend class CurlDownloadRequest;
   friend class CurlRequestBuilder;

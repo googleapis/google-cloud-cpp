@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_handle_factory.h"
+#include "google/cloud/storage/options.h"
 
 namespace google {
 namespace cloud {
@@ -50,15 +51,15 @@ rest_internal::CurlPtr DefaultCurlHandleFactory::CreateHandle() {
   return curl;
 }
 
-void DefaultCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  if (GetHandle(h) == nullptr) return;
+void DefaultCurlHandleFactory::CleanupHandle(rest_internal::CurlPtr h) {
+  if (!h) return;
   char* ip;
-  auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
+  auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
     std::lock_guard<std::mutex> lk(mu_);
     last_client_ip_address_ = ip;
   }
-  ResetHandle(h);
+  h.reset();
 }
 
 rest_internal::CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
@@ -111,11 +112,11 @@ rest_internal::CurlPtr PooledCurlHandleFactory::CreateHandle() {
   return curl;
 }
 
-void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  if (GetHandle(h) == nullptr) return;
+void PooledCurlHandleFactory::CleanupHandle(rest_internal::CurlPtr h) {
+  if (!h) return;
   std::unique_lock<std::mutex> lk(mu_);
   char* ip;
-  auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
+  auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
     last_client_ip_address_ = ip;
   }
@@ -124,9 +125,9 @@ void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
     handles_.erase(handles_.begin());
     curl_easy_cleanup(tmp);
   }
-  handles_.push_back(GetHandle(h));
+  handles_.push_back(h.get());
   // The handles_ vector now has ownership, so release it.
-  ReleaseHandle(h);
+  (void)h.release();
 }
 
 rest_internal::CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {

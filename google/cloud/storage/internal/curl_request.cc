@@ -65,7 +65,7 @@ extern "C" std::size_t CurlRequestOnReadData(char* ptr, std::size_t size,
 }
 
 CurlRequest::~CurlRequest() {
-  if (factory_) factory_->CleanupHandle(std::move(handle_));
+  if (factory_) CurlHandle::ReturnToPool(*factory_, std::move(handle_));
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) && {

@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/binary_data_as_debug_string.h"
+#include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
 #ifdef _WIN32
@@ -126,6 +127,16 @@ extern "C" int RestCurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
 }
 
 }  // namespace
+
+CurlHandle CurlHandle::MakeFromPool(CurlHandleFactory& factory) {
+  return CurlHandle(factory.CreateHandle());
+}
+
+void CurlHandle::ReturnToPool(CurlHandleFactory& factory, CurlHandle h) {
+  CurlPtr tmp(nullptr, curl_easy_cleanup);
+  h.handle_.swap(tmp);
+  factory.CleanupHandle(std::move(tmp));
+}
 
 CurlHandle::CurlHandle() : handle_(MakeCurlPtr()) {
   if (handle_.get() == nullptr) {

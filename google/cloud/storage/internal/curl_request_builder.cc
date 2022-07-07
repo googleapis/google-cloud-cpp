@@ -39,7 +39,7 @@ char const* InitialQueryParameterSeparator(std::string const& url) {
 CurlRequestBuilder::CurlRequestBuilder(
     std::string base_url, std::shared_ptr<CurlHandleFactory> factory)
     : factory_(std::move(factory)),
-      handle_(factory_->CreateHandle()),
+      handle_(CurlHandle::MakeFromPool(*factory_)),
       headers_(nullptr, &curl_slist_free_all),
       url_(std::move(base_url)),
       query_parameter_separator_(InitialQueryParameterSeparator(url_)),

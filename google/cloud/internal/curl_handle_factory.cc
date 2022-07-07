@@ -51,22 +51,22 @@ CurlPtr DefaultCurlHandleFactory::CreateHandle() {
   return curl;
 }
 
-void DefaultCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  if (GetHandle(h) == nullptr) return;
+void DefaultCurlHandleFactory::CleanupHandle(CurlPtr h) {
+  if (!h) return;
   char* ip;
-  auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
+  auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
     std::lock_guard<std::mutex> lk(mu_);
     last_client_ip_address_ = ip;
   }
-  ResetHandle(h);
+  h.reset();
 }
 
 CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
   return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
 }
 
-void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) { m.reset(); }
+void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti m) { m.reset(); }
 
 void DefaultCurlHandleFactory::SetCurlOptions(CURL* handle) {
   if (cainfo_) {
@@ -109,11 +109,11 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
   return curl;
 }
 
-void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  if (GetHandle(h) == nullptr) return;
+void PooledCurlHandleFactory::CleanupHandle(CurlPtr h) {
+  if (!h) return;
   std::unique_lock<std::mutex> lk(mu_);
   char* ip;
-  auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
+  auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
     last_client_ip_address_ = ip;
   }
@@ -122,9 +122,9 @@ void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
     handles_.erase(handles_.begin());
     curl_easy_cleanup(tmp);
   }
-  handles_.push_back(GetHandle(h));
+  handles_.push_back(h.get());
   // The handles_ vector now has ownership, so release it.
-  ReleaseHandle(h);
+  (void)h.release();
 }
 
 CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
@@ -137,7 +137,7 @@ CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
   return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
 }
 
-void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) {
+void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m) {
   if (!m) return;
   std::unique_lock<std::mutex> lk(mu_);
   while (multi_handles_.size() >= maximum_size_) {
@@ -157,10 +157,6 @@ void PooledCurlHandleFactory::SetCurlOptions(CURL* handle) {
   if (capath_) {
     SetCurlStringOption(handle, CURLOPT_CAPATH, capath_->c_str());
   }
-}
-
-CurlHandle GetCurlHandle(std::shared_ptr<CurlHandleFactory> const& factory) {
-  return CurlHandle(factory->CreateHandle());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

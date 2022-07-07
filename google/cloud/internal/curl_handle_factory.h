@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CURL_HANDLE_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CURL_HANDLE_FACTORY_H
 
-#include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <deque>
 #include <mutex>
 #include <string>
@@ -35,10 +35,10 @@ class CurlHandleFactory {
   virtual ~CurlHandleFactory() = default;
 
   virtual CurlPtr CreateHandle() = 0;
-  virtual void CleanupHandle(CurlHandle&&) = 0;
+  virtual void CleanupHandle(CurlPtr) = 0;
 
   virtual CurlMulti CreateMultiHandle() = 0;
-  virtual void CleanupMultiHandle(CurlMulti&&) = 0;
+  virtual void CleanupMultiHandle(CurlMulti) = 0;
 
   virtual std::string LastClientIpAddress() const = 0;
 
@@ -51,10 +51,6 @@ class CurlHandleFactory {
   // Only virtual for testing purposes.
   virtual void SetCurlStringOption(CURL* handle, CURLoption option_tag,
                                    char const* value);
-
-  static CURL* GetHandle(CurlHandle& h) { return h.handle_.get(); }
-  static void ResetHandle(CurlHandle& h) { h.handle_.reset(); }
-  static void ReleaseHandle(CurlHandle& h) { (void)h.handle_.release(); }
 };
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory(
@@ -74,10 +70,10 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
   explicit DefaultCurlHandleFactory(Options const& o);
 
   CurlPtr CreateHandle() override;
-  void CleanupHandle(CurlHandle&&) override;
+  void CleanupHandle(CurlPtr) override;
 
   CurlMulti CreateMultiHandle() override;
-  void CleanupMultiHandle(CurlMulti&&) override;
+  void CleanupMultiHandle(CurlMulti) override;
 
   std::string LastClientIpAddress() const override {
     std::lock_guard<std::mutex> lk(mu_);
@@ -110,10 +106,10 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   ~PooledCurlHandleFactory() override;
 
   CurlPtr CreateHandle() override;
-  void CleanupHandle(CurlHandle&&) override;
+  void CleanupHandle(CurlPtr) override;
 
   CurlMulti CreateMultiHandle() override;
-  void CleanupMultiHandle(CurlMulti&&) override;
+  void CleanupMultiHandle(CurlMulti) override;
 
   std::string LastClientIpAddress() const override {
     std::lock_guard<std::mutex> lk(mu_);

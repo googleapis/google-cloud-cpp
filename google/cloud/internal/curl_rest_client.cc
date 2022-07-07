@@ -107,7 +107,7 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
 
 StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
     RestRequest const& request) {
-  auto handle = GetCurlHandle(handle_factory_);
+  auto handle = CurlHandle::MakeFromPool(*handle_factory_);
   auto impl =
       absl::make_unique<CurlImpl>(std::move(handle), handle_factory_, options_);
   if (options_.has<UnifiedCredentialsOption>()) {

@@ -115,7 +115,7 @@ CurlDownloadRequest::CurlDownloadRequest(rest_internal::CurlHeaders headers,
 CurlDownloadRequest::~CurlDownloadRequest() {
   CleanupHandles();
   if (factory_) {
-    factory_->CleanupHandle(std::move(handle_));
+    CurlHandle::ReturnToPool(*factory_, std::move(handle_));
     factory_->CleanupMultiHandle(std::move(multi_));
   }
 }
@@ -299,7 +299,7 @@ void CurlDownloadRequest::OnTransferDone() {
   // Release the handles back to the factory as soon as possible, so they can be
   // reused for any other requests.
   if (factory_) {
-    factory_->CleanupHandle(std::move(handle_));
+    CurlHandle::ReturnToPool(*factory_, std::move(handle_));
     factory_->CleanupMultiHandle(std::move(multi_));
   }
 }
