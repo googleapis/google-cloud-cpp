@@ -473,9 +473,8 @@ TEST_F(SubscriberIntegrationTest, UnifiedCredentials) {
 }
 
 TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
-  auto options =
-      google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
-          google::cloud::MakeGoogleDefaultCredentials());
+  auto options = Options{}.set<google::cloud::UnifiedCredentialsOption>(
+      MakeGoogleDefaultCredentials());
   auto const using_emulator =
       internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
   if (using_emulator) {
@@ -505,21 +504,23 @@ TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
     SCOPED_TRACE("Search for message " + m.message_id());
     std::unique_lock<std::mutex> lk(mu);
     auto i = ids.find(m.message_id());
-    // Remember that Cloud Pub/Sub has "at least once" semantics, so a dup is
-    // perfectly possible, in that case the message would not be in the map
-    // of pending ids.
-    if (i == ids.end()) return;
-    // The first time just NACK the message to exercise that path, we expect
-    // Cloud Pub/Sub to retry.
+    ASSERT_FALSE(i == ids.end());
     if (i->second == 0) {
-      std::move(h).nack();
       ++i->second;
+      lk.unlock();
+      std::move(h).nack().then([id = m.message_id()](auto f) {
+        auto status = f.get();
+        ASSERT_STATUS_OK(status) << " nack() failed for id=" << id;
+      });
       return;
     }
     ids.erase(i);
     if (ids.empty()) ids_empty.set_value();
     lk.unlock();
-    std::move(h).ack();
+    std::move(h).ack().then([id = m.message_id()](auto f) {
+      auto status = f.get();
+      ASSERT_STATUS_OK(status) << " ack() failed for id=" << id;
+    });
   };
 
   auto result = subscriber.Subscribe(callback);

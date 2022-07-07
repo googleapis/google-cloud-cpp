@@ -118,9 +118,6 @@ class Subscriber {
    *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
    *     terminate the session and satisfy the future.
-   *
-   * [std-function-link]:
-   * https://en.cppreference.com/w/cpp/utility/functional/function
    */
   future<Status> Subscribe(ApplicationCallback cb) {
     return connection_->Subscribe({std::move(cb)});
@@ -152,9 +149,6 @@ class Subscriber {
    *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
    *     terminate the session and satisfy the future.
-   *
-   * [std-function-link]:
-   * https://en.cppreference.com/w/cpp/utility/functional/function
    */
   future<Status> Subscribe(ExactlyOnceApplicationCallback cb) {
     return connection_->ExactlyOnceSubscribe({std::move(cb)});
