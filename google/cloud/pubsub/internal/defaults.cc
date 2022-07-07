@@ -114,6 +114,7 @@ Options DefaultSubscriberOptionsOnly(Options opts) {
       Options{}
           .set<pubsub::MaxDeadlineTimeOption>(seconds(0))
           .set<pubsub::MaxDeadlineExtensionOption>(seconds(600))
+          .set<pubsub::MinDeadlineExtensionOption>(seconds(60))
           .set<pubsub::MaxOutstandingMessagesOption>(1000)
           .set<pubsub::MaxOutstandingBytesOption>(100 * 1024 * 1024L)
           .set<pubsub::ShutdownPollingPeriodOption>(seconds(5))
@@ -136,12 +137,8 @@ Options DefaultSubscriberOptionsOnly(Options opts) {
   auto& max = opts.lookup<pubsub::MaxDeadlineExtensionOption>();
   max = (std::max)((std::min)(max, seconds(600)), seconds(10));
 
-  if (opts.has<pubsub::MinDeadlineExtensionOption>()) {
-    auto& min = opts.lookup<pubsub::MinDeadlineExtensionOption>();
-    min = (std::max)((std::min)(min, max), seconds(10));
-  } else {
-    opts.set<pubsub::MinDeadlineExtensionOption>((std::min)(seconds(60), max));
-  }
+  auto& min = opts.lookup<pubsub::MinDeadlineExtensionOption>();
+  min = (std::max)((std::min)(min, max), seconds(10));
 
   auto& messages = opts.lookup<pubsub::MaxOutstandingMessagesOption>();
   messages = std::max<std::int64_t>(0, messages);
