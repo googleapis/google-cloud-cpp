@@ -457,8 +457,7 @@ TEST_F(SubscriberIntegrationTest, PublishOrdered) {
 
 TEST_F(SubscriberIntegrationTest, UnifiedCredentials) {
   auto options =
-      google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
-          google::cloud::MakeGoogleDefaultCredentials());
+      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   auto const using_emulator =
       internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
   if (using_emulator) {
@@ -473,18 +472,9 @@ TEST_F(SubscriberIntegrationTest, UnifiedCredentials) {
 }
 
 TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
-  auto options = Options{}.set<google::cloud::UnifiedCredentialsOption>(
-      MakeGoogleDefaultCredentials());
-  auto const using_emulator =
-      internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
-  if (using_emulator) {
-    options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                  .set<internal::UseInsecureChannelOption>(true);
-  }
-  auto publisher = Publisher(MakePublisherConnection(topic_, options));
+  auto publisher = Publisher(MakePublisherConnection(topic_));
   auto subscriber =
-      Subscriber(MakeSubscriberConnection(exactly_once_subscription_, options));
+      Subscriber(MakeSubscriberConnection(exactly_once_subscription_));
 
   std::mutex mu;
   std::map<std::string, int> ids;

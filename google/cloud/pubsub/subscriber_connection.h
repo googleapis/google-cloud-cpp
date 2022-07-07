@@ -75,7 +75,7 @@ class SubscriberConnection {
    * `Subscriber::Subscribe(ExactlyOnceApplicationCallback)`.
    *
    * We use a different name for this function (as opposed to an overload) to
-   * simplify the use is mocks.
+   * simplify the use of mocks.
    */
   virtual future<Status> ExactlyOnceSubscribe(ExactlyOnceSubscribeParams p);
 };
