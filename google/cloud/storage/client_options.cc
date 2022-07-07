@@ -17,7 +17,10 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/rest_options.h"
+#include "google/cloud/internal/rest_response.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include <cstdlib>
@@ -224,10 +227,41 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
     o.set<ProjectIdOption>(std::move(*project_id));
   }
 
-  auto rest = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT");
-  if (rest.has_value()) o.set<UseRestClientOption>(true);
+  auto use_rest = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT");
+  if (use_rest.has_value()) o.set<UseRestClientOption>(true);
 
-  return o;
+  // Always apply the RestClient defaults, even if it is not in use. Now that we
+  // use the low-level initialization code in
+  // google/cloud/internal/curl_wrappers.cc, these are always needed.
+  namespace rest = ::google::cloud::rest_internal;
+  auto rest_defaults =
+      Options{}
+          .set<rest_internal::DownloadStallTimeoutOption>(
+              o.get<DownloadStallTimeoutOption>())
+          .set<rest::TransferStallTimeoutOption>(
+              o.get<TransferStallTimeoutOption>())
+          .set<rest::MaximumCurlSocketRecvSizeOption>(
+              o.get<MaximumCurlSocketRecvSizeOption>())
+          .set<rest::MaximumCurlSocketSendSizeOption>(
+              o.get<MaximumCurlSocketSendSizeOption>())
+          .set<rest::HttpVersionOption>(
+              o.get<storage_experimental::HttpVersionOption>())
+          .set<rest::CAPathOption>(o.get<internal::CAPathOption>())
+          .set<rest::ConnectionPoolSizeOption>(
+              o.get<ConnectionPoolSizeOption>())
+          .set<rest::EnableCurlSslLockingOption>(
+              o.get<EnableCurlSslLockingOption>())
+          .set<rest::EnableCurlSigpipeHandlerOption>(
+              o.get<EnableCurlSigpipeHandlerOption>())
+          // This prevents the RestClient from treating these codes as errors.
+          // Instead, it will  allow them to propagate back to the calling code
+          // where it can determine if they are indeed errors or not.
+          .set<rest::IgnoredHttpErrorCodes>(
+              {rest::HttpStatusCode::kResumeIncomplete,
+               rest::HttpStatusCode::kClientClosedRequest});
+
+  return google::cloud::internal::MergeOptions(std::move(o),
+                                               std::move(rest_defaults));
 }
 
 Options DefaultOptionsWithCredentials(Options opts) {
