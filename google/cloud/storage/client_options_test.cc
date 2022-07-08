@@ -14,8 +14,11 @@
 
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/rest_options.h"
+#include "google/cloud/internal/rest_response.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -29,8 +32,10 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::UnorderedElementsAre;
 
 namespace {
 class ClientOptionsTest : public ::testing::Test {
@@ -52,9 +57,9 @@ class ClientOptionsTest : public ::testing::Test {
   }
 
  protected:
-  testing_util::ScopedEnvironment enable_tracing_;
-  testing_util::ScopedEnvironment endpoint_;
-  testing_util::ScopedEnvironment old_endpoint_;
+  ScopedEnvironment enable_tracing_;
+  ScopedEnvironment endpoint_;
+  ScopedEnvironment old_endpoint_;
   google::cloud::internal::DefaultPRNG generator_;
 };
 
@@ -339,6 +344,122 @@ TEST_F(ClientOptionsTest, DefaultOptions) {
       oauth2::CreateAnonymousCredentials(),
       Options{}.set<RestEndpointOption>("https://private.googleapis.com"));
   EXPECT_EQ("https://private.googleapis.com", o.get<RestEndpointOption>());
+
+  o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_EQ("https://storage.googleapis.com", o.get<RestEndpointOption>());
+  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+            o.get<IamEndpointOption>());
+
+  EXPECT_EQ("v1", o.get<internal::TargetApiVersionOption>());
+  EXPECT_LT(0, o.get<ConnectionPoolSizeOption>());
+  EXPECT_LT(0, o.get<DownloadBufferSizeOption>());
+  EXPECT_LT(0, o.get<UploadBufferSizeOption>());
+  EXPECT_LE(0, o.get<MaximumSimpleUploadSizeOption>());
+  EXPECT_TRUE(o.get<EnableCurlSslLockingOption>());
+  EXPECT_TRUE(o.get<EnableCurlSigpipeHandlerOption>());
+  EXPECT_EQ(0, o.get<MaximumCurlSocketRecvSizeOption>());
+  EXPECT_EQ(0, o.get<MaximumCurlSocketSendSizeOption>());
+  EXPECT_LT(std::chrono::seconds(0), o.get<TransferStallTimeoutOption>());
+  EXPECT_LT(std::chrono::seconds(0), o.get<DownloadStallTimeoutOption>());
+
+  namespace rest = ::google::cloud::rest_internal;
+  EXPECT_EQ(o.get<rest::DownloadStallTimeoutOption>(),
+            o.get<DownloadStallTimeoutOption>());
+  EXPECT_EQ(o.get<rest::TransferStallTimeoutOption>(),
+            o.get<TransferStallTimeoutOption>());
+  EXPECT_EQ(o.get<rest::MaximumCurlSocketRecvSizeOption>(),
+            o.get<MaximumCurlSocketRecvSizeOption>());
+  EXPECT_EQ(o.get<rest::MaximumCurlSocketSendSizeOption>(),
+            o.get<MaximumCurlSocketSendSizeOption>());
+  EXPECT_EQ(o.get<rest::ConnectionPoolSizeOption>(),
+            o.get<ConnectionPoolSizeOption>());
+  EXPECT_EQ(o.get<rest::EnableCurlSslLockingOption>(),
+            o.get<EnableCurlSslLockingOption>());
+  EXPECT_EQ(o.get<rest::EnableCurlSigpipeHandlerOption>(),
+            o.get<EnableCurlSigpipeHandlerOption>());
+
+  EXPECT_THAT(o.get<rest::IgnoredHttpErrorCodes>(),
+              UnorderedElementsAre(rest::kResumeIncomplete,
+                                   rest::kClientClosedRequest));
+
+  EXPECT_FALSE(o.has<rest::HttpVersionOption>());
+  EXPECT_FALSE(o.has<rest::CAPathOption>());
+}
+
+TEST_F(ClientOptionsTest, HttpVersion) {
+  namespace rest = ::google::cloud::rest_internal;
+  auto const options = internal::DefaultOptions(
+      oauth2::CreateAnonymousCredentials(),
+      Options{}.set<storage_experimental::HttpVersionOption>("2.0"));
+  EXPECT_EQ("2.0", options.get<rest::HttpVersionOption>());
+}
+
+TEST_F(ClientOptionsTest, CAPathOption) {
+  namespace rest = ::google::cloud::rest_internal;
+  auto const options = internal::DefaultOptions(
+      oauth2::CreateAnonymousCredentials(),
+      Options{}.set<internal::CAPathOption>("test-only"));
+  EXPECT_EQ("test-only", options.get<rest::CAPathOption>());
+}
+
+TEST_F(ClientOptionsTest, TracingWithoutEnv) {
+  ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                               absl::nullopt);
+  ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  auto const options =
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_FALSE(options.has<TracingComponentsOption>());
+}
+
+TEST_F(ClientOptionsTest, TracingWithEnv) {
+  ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                               absl::nullopt);
+  ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", "rpc,http");
+  auto const options =
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_THAT(options.get<TracingComponentsOption>(),
+              UnorderedElementsAre("rpc", "http"));
+}
+
+TEST_F(ClientOptionsTest, ProjectIdWithoutEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto const options =
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_FALSE(options.has<ProjectIdOption>());
+}
+
+TEST_F(ClientOptionsTest, ProjecIdtWithEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", "my-project");
+  auto const options =
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_EQ("my-project", options.get<ProjectIdOption>());
+}
+
+TEST_F(ClientOptionsTest, UseRestClientWithoutEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
+                        absl::nullopt);
+  auto const options =
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_FALSE(options.has<internal::UseRestClientOption>());
+}
+
+TEST_F(ClientOptionsTest, UseRestClientWithEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT", "yes");
+  auto const options =
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_TRUE(options.has<internal::UseRestClientOption>());
+  EXPECT_TRUE(options.get<internal::UseRestClientOption>());
+}
+
+TEST_F(ClientOptionsTest, OverrideWithRestInternal) {
+  namespace rest = ::google::cloud::rest_internal;
+  auto const options =
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
+                               Options{}
+                                   .set<rest::ConnectionPoolSizeOption>(1234)
+                                   .set<ConnectionPoolSizeOption>(2345));
+  EXPECT_EQ(1234, options.get<rest::ConnectionPoolSizeOption>());
+  EXPECT_EQ(2345, options.get<ConnectionPoolSizeOption>());
 }
 
 TEST_F(ClientOptionsTest, Timeouts) {
