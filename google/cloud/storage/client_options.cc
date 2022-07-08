@@ -236,7 +236,7 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
   namespace rest = ::google::cloud::rest_internal;
   auto rest_defaults =
       Options{}
-          .set<rest_internal::DownloadStallTimeoutOption>(
+          .set<rest::DownloadStallTimeoutOption>(
               o.get<DownloadStallTimeoutOption>())
           .set<rest::TransferStallTimeoutOption>(
               o.get<TransferStallTimeoutOption>())
@@ -244,9 +244,6 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
               o.get<MaximumCurlSocketRecvSizeOption>())
           .set<rest::MaximumCurlSocketSendSizeOption>(
               o.get<MaximumCurlSocketSendSizeOption>())
-          .set<rest::HttpVersionOption>(
-              o.get<storage_experimental::HttpVersionOption>())
-          .set<rest::CAPathOption>(o.get<internal::CAPathOption>())
           .set<rest::ConnectionPoolSizeOption>(
               o.get<ConnectionPoolSizeOption>())
           .set<rest::EnableCurlSslLockingOption>(
@@ -254,11 +251,21 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
           .set<rest::EnableCurlSigpipeHandlerOption>(
               o.get<EnableCurlSigpipeHandlerOption>())
           // This prevents the RestClient from treating these codes as errors.
-          // Instead, it will  allow them to propagate back to the calling code
+          // Instead, it will allow them to propagate back to the calling code
           // where it can determine if they are indeed errors or not.
           .set<rest::IgnoredHttpErrorCodes>(
               {rest::HttpStatusCode::kResumeIncomplete,
                rest::HttpStatusCode::kClientClosedRequest});
+
+  // These two are not always present, but if they are, and only if they are, we
+  // need to map their value to the corresponding option in `rest_internal::`.
+  if (o.has<storage_experimental::HttpVersionOption>()) {
+    rest_defaults.set<rest::HttpVersionOption>(
+        o.get<storage_experimental::HttpVersionOption>());
+  }
+  if (o.has<internal::CAPathOption>()) {
+    rest_defaults.set<rest::CAPathOption>(o.get<internal::CAPathOption>());
+  }
 
   return google::cloud::internal::MergeOptions(std::move(o),
                                                std::move(rest_defaults));
