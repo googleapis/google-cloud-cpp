@@ -38,7 +38,8 @@ class MinimalIamCredentialsRestImpl : public MinimalIamCredentialsRest {
       std::shared_ptr<oauth2::Credentials> credentials, Options options)
       : endpoint_(NormalizeEndpoint(options.get<RestEndpointOption>())),
         credentials_(std::move(credentials)),
-        handle_factory_(std::make_shared<DefaultCurlHandleFactory>(options)),
+        handle_factory_(
+            std::make_shared<rest_internal::DefaultCurlHandleFactory>(options)),
         x_goog_api_client_header_("x-goog-api-client: " + x_goog_api_client()),
         options_(std::move(options)) {}
 
@@ -90,7 +91,7 @@ class MinimalIamCredentialsRestImpl : public MinimalIamCredentialsRest {
 
   std::string endpoint_;
   std::shared_ptr<oauth2::Credentials> credentials_;
-  std::shared_ptr<CurlHandleFactory> handle_factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> handle_factory_;
   std::string x_goog_api_client_header_;
   Options options_;
 };

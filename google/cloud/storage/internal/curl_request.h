@@ -79,7 +79,7 @@ class CurlRequest {
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds transfer_stall_timeout_;
   CurlHandle handle_;
-  std::shared_ptr<CurlHandleFactory> factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> factory_;
 };
 
 }  // namespace internal

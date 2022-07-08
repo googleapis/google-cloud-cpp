@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_H
 
 #include "google/cloud/storage/client_options.h"
+#include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/status_or.h"
@@ -30,8 +31,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-class CurlHandleFactory;
-
 /**
  * Wraps CURL* handles in a safer C++ interface.
  *
@@ -41,8 +40,9 @@ class CurlHandleFactory;
  */
 class CurlHandle {
  public:
-  static CurlHandle MakeFromPool(CurlHandleFactory& factory);
-  static void ReturnToPool(CurlHandleFactory& factory, CurlHandle h);
+  static CurlHandle MakeFromPool(rest_internal::CurlHandleFactory& factory);
+  static void ReturnToPool(rest_internal::CurlHandleFactory& factory,
+                           CurlHandle h);
 
   explicit CurlHandle();
   ~CurlHandle();

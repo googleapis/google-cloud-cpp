@@ -128,11 +128,12 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
 
 }  // namespace
 
-CurlHandle CurlHandle::MakeFromPool(CurlHandleFactory& factory) {
+CurlHandle CurlHandle::MakeFromPool(rest_internal::CurlHandleFactory& factory) {
   return CurlHandle(CurlHandle::InternalOnly{}, factory.CreateHandle());
 }
 
-void CurlHandle::ReturnToPool(CurlHandleFactory& factory, CurlHandle h) {
+void CurlHandle::ReturnToPool(rest_internal::CurlHandleFactory& factory,
+                              CurlHandle h) {
   rest_internal::CurlPtr tmp(nullptr, curl_easy_cleanup);
   h.handle_.swap(tmp);
   factory.CleanupHandle(std::move(tmp));

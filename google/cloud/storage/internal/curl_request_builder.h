@@ -36,8 +36,9 @@ class CurlRequestBuilder {
  public:
   using RequestType = CurlRequest;
 
-  explicit CurlRequestBuilder(std::string base_url,
-                              std::shared_ptr<CurlHandleFactory> factory);
+  explicit CurlRequestBuilder(
+      std::string base_url,
+      std::shared_ptr<rest_internal::CurlHandleFactory> factory);
 
   /**
    * Creates a http request with the given payload.
@@ -184,7 +185,7 @@ class CurlRequestBuilder {
  private:
   void ValidateBuilderState(char const* where) const;
 
-  std::shared_ptr<CurlHandleFactory> factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> factory_;
 
   CurlHandle handle_;
   rest_internal::CurlHeaders headers_;
