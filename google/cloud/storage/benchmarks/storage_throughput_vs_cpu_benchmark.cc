@@ -232,6 +232,8 @@ int main(int argc, char* argv[]) {
     std::lock_guard<std::mutex> lk(mu);
     gcs_bm::PrintAsCsv(std::cout, result);
     if (!result.status.ok()) {
+      std::cout << std::flush;
+      std::cerr << std::flush;
       google::cloud::LogSink::Instance().Flush();
     }
   };
