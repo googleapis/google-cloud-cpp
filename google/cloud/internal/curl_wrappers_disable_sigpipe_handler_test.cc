@@ -12,41 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/curl_wrappers.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/curl_wrappers.h"
 #include <gmock/gmock.h>
 #include <csignal>
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 extern "C" void test_handler(int) {}
 
-/// @test Verify that configuring the library to enable the SIGPIPE handler
+/// @test Verify that configuring the library to disable the SIGPIPE handler
 /// works as expected.
-TEST(CurlWrappers, SigpipeHandlerEnabledTest) {
+TEST(CurlWrappers, SigpipeHandlerDisabledTest) {
+#if defined(__has_feature)
+#if __has_feature(memory_sanitizer)
+  // The memory sanitizer seems to intercept SIGPIPE, simply disable the test
+  // in this case.
+  GTEST_SKIP();
+#endif  // __has_feature(memory_sanitizer)
+#endif  // __has_feature
+
 #if !defined(SIGPIPE)
   GTEST_SKIP();  // nothing to do
-#else
+#elif CURL_AT_LEAST_VERSION(7, 30, 0)
+  // libcurl <= 7.29.0 installs its own signal handler for SIGPIPE during
+  // curl_global_init(). Unfortunately 7.29.0 is the default on CentOS-7, and
+  // the tests here fails. We simply skip the test with this ancient library.
   auto initial_handler = std::signal(SIGPIPE, &test_handler);
-  CurlInitializeOnce(Options{}.set<EnableCurlSigpipeHandlerOption>(true));
+  CurlInitializeOnce(Options{}.set<EnableCurlSigpipeHandlerOption>(false));
   auto actual = std::signal(SIGPIPE, initial_handler);
-  EXPECT_EQ(actual, SIG_IGN);
-
-  // Also verify a second call has no effect.
-  CurlInitializeOnce(Options{}.set<EnableCurlSigpipeHandlerOption>(true));
-  actual = std::signal(SIGPIPE, initial_handler);
-  EXPECT_EQ(actual, initial_handler);
+  EXPECT_EQ(actual, &test_handler);
 #endif  // defined(SIGPIPE)
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google

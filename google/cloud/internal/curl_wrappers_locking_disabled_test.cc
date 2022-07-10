@@ -12,34 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/curl_wrappers.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/curl_wrappers.h"
 #include <gmock/gmock.h>
-#include <openssl/crypto.h>
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
-// An empty callback just to test things.
-extern "C" void test_cb(int /*mode*/, int /*type*/, char const* /*file*/,
-                        int /*line*/) {}
 
 /// @test Verify that installing the libraries
 TEST(CurlWrappers, LockingDisabledTest) {
   // The test cannot execute in this case.
   if (!SslLibraryNeedsLocking(CurlSslLibraryId())) GTEST_SKIP();
-  // Install a trivial callback, this should disable the installation of the
-  // normal callbacks in the the curl wrappers.
-  CRYPTO_set_locking_callback(test_cb);
-  CurlInitializeOnce(Options{}.set<EnableCurlSslLockingOption>(true));
+  CurlInitializeOnce(Options{}.set<EnableCurlSslLockingOption>(false));
   EXPECT_FALSE(SslLockingCallbacksInstalled());
 }
+
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google

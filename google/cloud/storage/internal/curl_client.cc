@@ -178,7 +178,7 @@ CurlClient::CurlClient(google::cloud::Options options)
       upload_factory_(CreateHandleFactory(opts_)),
       xml_upload_factory_(CreateHandleFactory(opts_)),
       xml_download_factory_(CreateHandleFactory(opts_)) {
-  CurlInitializeOnce(opts_);
+  rest_internal::CurlInitializeOnce(opts_);
 }
 
 Options CurlClient::options() const { return opts_; }

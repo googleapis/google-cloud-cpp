@@ -127,7 +127,7 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
 
 }  // namespace
 
-CurlHandle::CurlHandle() : handle_(MakeCurlPtr()) {
+CurlHandle::CurlHandle() : handle_(rest_internal::MakeCurlPtr()) {
   if (handle_.get() == nullptr) {
     google::cloud::internal::ThrowRuntimeError("Cannot initialize CURL handle");
   }
