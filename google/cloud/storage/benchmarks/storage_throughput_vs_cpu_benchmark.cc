@@ -127,7 +127,9 @@ int main(int argc, char* argv[]) {
   }
 
   auto client_options =
-      google::cloud::Options{}.set<gcs::ProjectIdOption>(options->project_id);
+      google::cloud::Options{}
+          .set<gcs::ProjectIdOption>(options->project_id)
+          .set<gcs::RestEndpointOption>(options->rest_endpoint);
   auto client = gcs::Client(client_options);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
