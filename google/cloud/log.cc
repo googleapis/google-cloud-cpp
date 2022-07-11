@@ -140,6 +140,8 @@ void LogSink::Log(LogRecord log_record) {
 }
 
 void LogSink::Flush() {
+  std::cout << std::flush;
+  std::cerr << std::flush;
   auto copy = CopyBackends();
   for (auto& kv : copy) kv.second->Flush();
 }
