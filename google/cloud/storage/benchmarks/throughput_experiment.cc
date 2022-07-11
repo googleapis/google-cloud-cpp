@@ -220,6 +220,8 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
   explicit DownloadObjectLibcurl(ThroughputOptions const& options,
                                  ExperimentTransport transport)
       : endpoint_(options.rest_endpoint),
+        target_api_version_path_(
+            options.target_api_version_path.value_or("v1")),
         creds_(
             google::cloud::storage::oauth2::GoogleDefaultCredentials().value()),
         transport_(transport) {}
@@ -243,8 +245,8 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
       url = endpoint_ + "/" + bucket_name + "/" + object_name;
     } else {
       // For this benchmark it is not necessary to URL escape the object name.
-      url = endpoint_ + "/storage/v1/b/" + bucket_name + "/o/" + object_name +
-            "?alt=media";
+      url = endpoint_ + "/storage/" + target_api_version_path_ + "/b/" +
+            bucket_name + "/o/" + object_name + "?alt=media";
     }
     curl_easy_setopt(hnd, CURLOPT_URL, url.c_str());
     curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
@@ -296,6 +298,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
 
  private:
   std::string endpoint_;
+  std::string target_api_version_path_;
   std::shared_ptr<google::cloud::storage::oauth2::Credentials> creds_;
   ExperimentTransport transport_;
 };

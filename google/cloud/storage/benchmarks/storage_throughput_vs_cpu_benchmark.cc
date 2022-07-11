@@ -130,10 +130,16 @@ int main(int argc, char* argv[]) {
       google::cloud::Options{}
           .set<gcs::ProjectIdOption>(options->project_id)
           .set<gcs::RestEndpointOption>(options->rest_endpoint);
+  if (options->target_api_version_path.has_value()) {
+    client_options
+        .set<google::cloud::storage::internal::TargetApiVersionOption>(
+            *options->target_api_version_path);
+  }
   auto client = gcs::Client(client_options);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto bucket_name = gcs_bm::MakeRandomBucketName(generator);
+  auto bucket_name =
+      gcs::testing::MakeRandomBucketName(generator, options->bucket_prefix);
   std::string notes = google::cloud::storage::version_string() + ";" +
                       google::cloud::internal::compiler() + ";" +
                       google::cloud::internal::compiler_flags();
@@ -211,7 +217,9 @@ int main(int argc, char* argv[]) {
                          options->maximum_read_size,
                          options->read_size_quantum);
 
-  std::cout << "\n# Build info: " << notes << "\n";
+  std::cout << "\n# Api Version Path: "
+            << options->target_api_version_path.value_or("[default]")
+            << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
 
@@ -283,6 +291,10 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
                         options.download_stall_timeout)
                     .set<gcs::TransferStallTimeoutOption>(
                         options.transfer_stall_timeout);
+    if (options.target_api_version_path.has_value()) {
+      opts.set<google::cloud::storage::internal::TargetApiVersionOption>(
+          *options.target_api_version_path);
+    }
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     using ::google::cloud::storage_experimental::DefaultGrpcClient;
     if (t == ExperimentTransport::kDirectPath) {

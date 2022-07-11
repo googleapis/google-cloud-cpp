@@ -31,6 +31,7 @@ TEST(ThroughputOptions, Basic) {
       "self-test",
       "--project-id=test-project",
       "--region=test-region",
+      "--bucket-prefix=custom-prefix",
       "--thread-count=42",
       "--grpc-channel-count=8",
       "--direct-path-channel-count=2",
@@ -62,10 +63,12 @@ TEST(ThroughputOptions, Basic) {
       "--minimum-read-size=48KiB",
       "--maximum-read-size=64KiB",
       "--read-size-quantum=16KiB",
+      "--target-api-version-path=vN",
   });
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
   EXPECT_EQ("test-region", options->region);
+  EXPECT_EQ("custom-prefix", options->bucket_prefix);
   EXPECT_EQ(42, options->thread_count);
   EXPECT_EQ(8, options->grpc_channel_count);
   EXPECT_EQ(2, options->direct_path_channel_count);
@@ -95,6 +98,7 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ(std::chrono::seconds(86400), options->transfer_stall_timeout);
   EXPECT_EQ(std::chrono::seconds(86401), options->download_stall_timeout);
   EXPECT_EQ(std::chrono::milliseconds(250), options->minimum_sample_delay);
+  EXPECT_EQ("vN", options->target_api_version_path.value_or(""));
 }
 
 TEST(ThroughputOptions, Description) {
