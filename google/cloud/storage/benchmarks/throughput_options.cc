@@ -93,6 +93,8 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) { options.project_id = val; }},
       {"--region", "use the given region for the benchmark",
        [&options](std::string const& val) { options.region = val; }},
+      {"--bucket-prefix", "use this prefix when creating the bucket",
+       [&options](std::string const& val) { options.bucket_prefix = val; }},
       {"--thread-count", "set the number of threads in the benchmark",
        [&options](std::string const& val) {
          options.thread_count = std::stoi(val);
@@ -244,6 +246,10 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
       {"--read-size-quantum", "quantize the ranged read sizes",
        [&options](std::string const& val) {
          options.read_size_quantum = ParseBufferSize(val);
+       }},
+      {"--target-api-version-path", "change the API version path for REST",
+       [&options](std::string const& val) {
+         options.target_api_version_path = val;
        }},
   };
   auto usage = BuildUsage(desc, argv[0]);

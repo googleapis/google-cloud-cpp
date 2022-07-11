@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_THROUGHPUT_OPTIONS_H
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include "absl/types/optional.h"
 #include <chrono>
 #include <string>
 #include <vector>
@@ -27,6 +28,7 @@ namespace storage_benchmarks {
 struct ThroughputOptions {
   std::string project_id;
   std::string region;
+  std::string bucket_prefix = "cloud-cpp-testing-bm";
   std::chrono::seconds duration =
       std::chrono::seconds(std::chrono::minutes(15));
   int thread_count = 1;
@@ -66,6 +68,7 @@ struct ThroughputOptions {
   std::int64_t minimum_read_size = 0;
   std::int64_t maximum_read_size = 0;
   std::int64_t read_size_quantum = 128 * kKiB;
+  absl::optional<std::string> target_api_version_path;
 };
 
 google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
