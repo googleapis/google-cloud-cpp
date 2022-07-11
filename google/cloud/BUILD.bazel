@@ -256,3 +256,15 @@ load(":google_cloud_cpp_rest_internal_production_integration_tests.bzl", "google
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_production_integration_tests]
+
+load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_internal_benchmarks")
+
+[cc_binary(
+    name = benchmark.replace("/", "_").replace(".cc", ""),
+    srcs = [benchmark],
+    tags = ["benchmark"],
+    deps = [
+        ":google_cloud_cpp_rest_internal",
+        "@com_google_benchmark//:benchmark_main",
+    ],
+) for benchmark in google_cloud_cpp_rest_internal_benchmarks]
