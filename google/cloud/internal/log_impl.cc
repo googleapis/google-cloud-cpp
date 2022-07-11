@@ -24,6 +24,7 @@ void StdClogBackend::Process(LogRecord const& lr) {
   std::lock_guard<std::mutex> lk(mu_);
   if (lr.severity >= min_severity_) {
     std::cout << std::flush;
+    std::cerr << std::flush;
     std::clog << lr << "\n";
     if (lr.severity >= Severity::GCP_LS_WARNING) {
       std::clog << std::flush;
