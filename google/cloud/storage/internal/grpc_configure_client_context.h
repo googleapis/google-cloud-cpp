@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/grpc_options.h"
 #include <grpcpp/client_context.h>
 
 namespace google {
@@ -57,6 +58,9 @@ void ApplyQueryParameters(grpc::ClientContext& context, Request const& request,
     if (!prefix.empty()) field_mask = prefix + "(" + field_mask + ")";
     context.AddMetadata("x-goog-fieldmask", std::move(field_mask));
   }
+
+  google::cloud::internal::ConfigureContext(
+      context, google::cloud::internal::CurrentOptions());
 }
 
 }  // namespace internal
