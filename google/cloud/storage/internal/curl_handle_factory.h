@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_FACTORY_H
 
-#include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/options.h"
+#include "absl/types/optional.h"
 #include <deque>
 #include <mutex>
 #include <string>
@@ -36,7 +36,7 @@ class CurlHandleFactory {
   virtual ~CurlHandleFactory() = default;
 
   virtual rest_internal::CurlPtr CreateHandle() = 0;
-  virtual void CleanupHandle(CurlHandle&&) = 0;
+  virtual void CleanupHandle(rest_internal::CurlPtr) = 0;
 
   virtual rest_internal::CurlMulti CreateMultiHandle() = 0;
   virtual void CleanupMultiHandle(rest_internal::CurlMulti&&) = 0;
@@ -52,10 +52,6 @@ class CurlHandleFactory {
   // Only virtual for testing purposes.
   virtual void SetCurlStringOption(CURL* handle, CURLoption option_tag,
                                    char const* value);
-
-  static CURL* GetHandle(CurlHandle& h) { return h.handle_.get(); }
-  static void ResetHandle(CurlHandle& h) { h.handle_.reset(); }
-  static void ReleaseHandle(CurlHandle& h) { (void)h.handle_.release(); }
 };
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory(
@@ -75,7 +71,7 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
   explicit DefaultCurlHandleFactory(Options const& o);
 
   rest_internal::CurlPtr CreateHandle() override;
-  void CleanupHandle(CurlHandle&&) override;
+  void CleanupHandle(rest_internal::CurlPtr) override;
 
   rest_internal::CurlMulti CreateMultiHandle() override;
   void CleanupMultiHandle(rest_internal::CurlMulti&&) override;
@@ -111,7 +107,7 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   ~PooledCurlHandleFactory() override;
 
   rest_internal::CurlPtr CreateHandle() override;
-  void CleanupHandle(CurlHandle&&) override;
+  void CleanupHandle(rest_internal::CurlPtr) override;
 
   rest_internal::CurlMulti CreateMultiHandle() override;
   void CleanupMultiHandle(rest_internal::CurlMulti&&) override;

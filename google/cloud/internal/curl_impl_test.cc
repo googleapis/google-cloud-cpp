@@ -28,7 +28,7 @@ class CurlImplTest : public ::testing::Test {
  protected:
   void SetUp() override {
     factory_ = GetDefaultCurlHandleFactory();
-    handle_ = GetCurlHandle(factory_);
+    handle_ = CurlHandle::MakeFromPool(*factory_);
   }
 
   CurlHandle handle_;

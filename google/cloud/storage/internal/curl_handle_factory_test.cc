@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_handle_factory.h"
+#include "google/cloud/storage/options.h"
 #include <gmock/gmock.h>
 #include <map>
 
