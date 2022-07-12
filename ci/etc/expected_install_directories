@@ -259,6 +259,10 @@
 ./include/google/cloud/retail/internal
 ./include/google/cloud/retail/mocks
 ./include/google/cloud/retail/v2
+./include/google/cloud/run
+./include/google/cloud/run/internal
+./include/google/cloud/run/mocks
+./include/google/cloud/run/v2
 ./include/google/cloud/scheduler
 ./include/google/cloud/scheduler/internal
 ./include/google/cloud/scheduler/mocks
@@ -471,6 +475,7 @@
 ./lib64/cmake/google_cloud_cpp_resourcemanager
 ./lib64/cmake/google_cloud_cpp_resourcesettings
 ./lib64/cmake/google_cloud_cpp_retail
+./lib64/cmake/google_cloud_cpp_run
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
 ./lib64/cmake/google_cloud_cpp_securitycenter
