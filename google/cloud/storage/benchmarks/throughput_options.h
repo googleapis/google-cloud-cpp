@@ -69,6 +69,7 @@ struct ThroughputOptions {
   std::int64_t maximum_read_size = 0;
   std::int64_t read_size_quantum = 128 * kKiB;
   absl::optional<std::string> target_api_version_path;
+  absl::optional<int> grpc_background_threads;
 };
 
 google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(

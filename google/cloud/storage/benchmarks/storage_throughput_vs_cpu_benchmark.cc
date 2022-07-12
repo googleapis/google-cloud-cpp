@@ -219,7 +219,13 @@ int main(int argc, char* argv[]) {
 
   std::cout << "\n# Api Version Path: "
             << options->target_api_version_path.value_or("[default]")
-            << "\n# Build info: " << notes << "\n";
+            << "\n# Grpc Background Threads: ";
+  if (options->grpc_background_threads.has_value()) {
+    std::cout << *options->grpc_background_threads;
+  } else {
+    std::cout << "[default]";
+  }
+  std::cout << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
 
@@ -297,6 +303,10 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
     }
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     using ::google::cloud::storage_experimental::DefaultGrpcClient;
+    if (options.grpc_background_threads.has_value()) {
+      opts.set<google::cloud::GrpcBackgroundThreadPoolSizeOption>(
+          *options.grpc_background_threads);
+    }
     if (t == ExperimentTransport::kDirectPath) {
       if (options.direct_path_channel_count > 0) {
         opts.set<google::cloud::GrpcNumChannelsOption>(
