@@ -67,13 +67,14 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
   auto const viewers = "project-viewers-" + project_id;
 
   ASSERT_THAT(metadata->default_acl(), Not(IsEmpty()))
-      << "Test aborted. Empty ACL returned from newly created bucket <"
-      << bucket_name << "> even though we requested the <full> projection.";
-  ASSERT_THAT(AclEntityNames(metadata->acl()), Not(Contains(viewers)))
+      << "Test aborted. Empty default object ACL returned from newly created"
+      << " bucket <" << bucket_name << "> even though we requested the <full>"
+      << " projection.";
+  ASSERT_THAT(AclEntityNames(metadata->default_acl()), Not(Contains(viewers)))
       << "Test aborted. The bucket <" << bucket_name << "> has <" << viewers
-      << "> in its ACL.  This is unexpected because the bucket was just"
-      << " created with a predefined object ACL which should preclude this"
-      << " result.";
+      << "> in its default object ACL.  This is unexpected because the bucket"
+      << " was just created with a predefined object ACL which should preclude"
+      << " this result.";
 
   auto const existing_entity = metadata->default_acl().front();
   auto current_acl = client->ListDefaultObjectAcl(bucket_name);
