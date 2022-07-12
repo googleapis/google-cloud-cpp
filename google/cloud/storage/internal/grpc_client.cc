@@ -80,6 +80,17 @@ StatusOr<ObjectAccessControl> FindObjectAccessControl(
                                            "> in object id " + response->id());
 }
 
+// Used in the implementation of `*DefaultObjectAcl()`.
+StatusOr<ObjectAccessControl> FindDefaultObjectAccessControl(
+    StatusOr<BucketMetadata> response, std::string const& entity) {
+  if (!response) return std::move(response).status();
+  for (auto const& acl : response->default_acl()) {
+    if (acl.entity() == entity) return acl;
+  }
+  return Status(StatusCode::kNotFound, "cannot find entity <" + entity +
+                                           "> in object id " + response->id());
+}
+
 std::chrono::milliseconds DefaultTransferStallTimeout(
     std::chrono::milliseconds value) {
   if (value != std::chrono::milliseconds(0)) return value;
@@ -862,8 +873,12 @@ StatusOr<EmptyResponse> GrpcClient::DeleteDefaultObjectAcl(
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::GetDefaultObjectAcl(
-    GetDefaultObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetDefaultObjectAclRequest const& request) {
+  auto get_request = GetBucketMetadataRequest(request.bucket_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto get = GetBucketMetadata(get_request);
+  if (!get) return std::move(get).status();
+  return FindDefaultObjectAccessControl(std::move(get), request.entity());
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::UpdateDefaultObjectAcl(
