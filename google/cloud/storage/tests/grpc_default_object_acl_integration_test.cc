@@ -92,6 +92,19 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
       client->GetDefaultObjectAcl(bucket_name, "not-found-entity");
   EXPECT_THAT(not_found_acl, StatusIs(StatusCode::kNotFound));
 
+  auto create_acl = client->CreateDefaultObjectAcl(
+      bucket_name, viewers, ObjectAccessControl::ROLE_READER());
+  ASSERT_STATUS_OK(create_acl);
+
+  current_acl = client->ListDefaultObjectAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(create_acl->entity()));
+
+  auto c2 = client->CreateDefaultObjectAcl(bucket_name, viewers,
+                                           ObjectAccessControl::ROLE_READER());
+  ASSERT_STATUS_OK(c2);
+  EXPECT_EQ(*create_acl, *c2);
+
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }

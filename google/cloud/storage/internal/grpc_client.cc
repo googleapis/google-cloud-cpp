@@ -863,8 +863,14 @@ StatusOr<ListDefaultObjectAclResponse> GrpcClient::ListDefaultObjectAcl(
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::CreateDefaultObjectAcl(
-    CreateDefaultObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    CreateDefaultObjectAclRequest const& request) {
+  auto get_request = GetBucketMetadataRequest(request.bucket_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto updater = [&request](std::vector<ObjectAccessControl> acl) {
+    return UpsertAcl(std::move(acl), request.entity(), request.role());
+  };
+  return FindDefaultObjectAccessControl(
+      ModifyDefaultAccessControl(get_request, updater), request.entity());
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteDefaultObjectAcl(
@@ -1011,6 +1017,28 @@ StatusOr<ObjectMetadata> GrpcClient::ModifyObjectAccessControl(
         StatusCode::kUnavailable,
         "retrying ObjectAccessControl change due to conflict, bucket=" +
             request.bucket_name() + ", object=" + request.object_name());
+  }
+  return patch;
+}
+
+StatusOr<BucketMetadata> GrpcClient::ModifyDefaultAccessControl(
+    GetBucketMetadataRequest const& request,
+    DefaultObjectAclUpdater const& updater) {
+  auto get = GetBucketMetadata(request);
+  if (!get) return std::move(get).status();
+  auto acl = updater(get->default_acl());
+  if (!acl) return std::move(acl).status();
+  auto patch = PatchBucket(
+      PatchBucketRequest(
+          request.bucket_name(),
+          BucketMetadataPatchBuilder().SetDefaultAcl(*std::move(acl)))
+          .set_option(IfMetagenerationMatch(get->metageneration())));
+  // Retry on failed preconditions
+  if (patch.status().code() == StatusCode::kFailedPrecondition) {
+    return Status(
+        StatusCode::kUnavailable,
+        "retrying BucketAccessControl change due to conflict, bucket=" +
+            request.bucket_name());
   }
   return patch;
 }
