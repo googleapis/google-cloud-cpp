@@ -2,8 +2,17 @@
 
 @mainpage Cloud Run Admin API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Run Admin API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+This directory contains an idiomatic C++ client library for
+[Cloud Run][cloud-service-docs], a managed compute platform that lets
+you run containers directly on top of Google's scalable infrastructure.
+
+Note that this library only provides tools to **manage** Cloud Run resources. To
+actually deploy a C++ function to Cloud Run, see the
+[Cloud Run for C++ Hello World][hello-world] example, which uses the
+[C++ Functions Framework][functions-framework] library.
+
+[hello-world]: https://github.com/GoogleCloudPlatform/cpp-samples/tree/main/cloud-run-hello-world
+[functions-framework]: https://github.com/GoogleCloudPlatform/functions-framework-cpp
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -39,6 +48,15 @@ which should give you a taste of the Cloud Run Admin API C++ client library API.
 ## Environment Variables
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_REVISIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "run.googleapis.com")
+  used by `MakeRevisionsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_RUN_SERVICES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "run.googleapis.com")
+  used by `MakeServicesConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC

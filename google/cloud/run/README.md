@@ -2,8 +2,17 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Run Admin API][cloud-service-docs], a service to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+This directory contains an idiomatic C++ client library for
+[Cloud Run][cloud-service-root], a managed compute platform that lets
+you run containers directly on top of Google's scalable infrastructure.
+
+Note that this library only provides tools to **manage** Cloud Run resources. To
+actually deploy a C++ function to Cloud Run, see the
+[Cloud Run for C++ Hello World][hello-world] example, which uses the
+[C++ Functions Framework][functions-framework] library.
+
+[hello-world]: https://github.com/GoogleCloudPlatform/cpp-samples/tree/main/cloud-run-hello-world
+[functions-framework]: https://github.com/GoogleCloudPlatform/functions-framework-cpp
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +34,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/run
+[cloud-service-root]: https://cloud.google.com/run
+[cloud-service-docs]: https://cloud.google.com/run/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-run/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/run
 
@@ -38,22 +48,22 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/run/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/run/services_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace run = ::google::cloud::run;
-  auto client = run::Client(run::MakeConnection(/* EDIT HERE */));
+  auto client = run::ServicesClient(run::MakeServicesConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListServices(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
