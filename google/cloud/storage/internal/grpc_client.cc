@@ -907,8 +907,14 @@ StatusOr<ObjectAccessControl> GrpcClient::GetDefaultObjectAcl(
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::UpdateDefaultObjectAcl(
-    UpdateDefaultObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    UpdateDefaultObjectAclRequest const& request) {
+  auto get_request = GetBucketMetadataRequest(request.bucket_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto updater = [&request](std::vector<ObjectAccessControl> acl) {
+    return UpsertAcl(std::move(acl), request.entity(), request.role());
+  };
+  return FindDefaultObjectAccessControl(
+      ModifyDefaultAccessControl(get_request, updater), request.entity());
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
