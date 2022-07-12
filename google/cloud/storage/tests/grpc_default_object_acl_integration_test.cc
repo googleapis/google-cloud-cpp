@@ -105,6 +105,14 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
   ASSERT_STATUS_OK(c2);
   EXPECT_EQ(*create_acl, *c2);
 
+  auto delete_acl = client->DeleteDefaultObjectAcl(bucket_name, viewers);
+  ASSERT_STATUS_OK(delete_acl);
+
+  current_acl = client->ListDefaultObjectAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_THAT(AclEntityNames(*current_acl),
+              Not(Contains(create_acl->entity())));
+
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
