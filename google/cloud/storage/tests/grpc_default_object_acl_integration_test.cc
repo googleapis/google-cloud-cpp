@@ -120,6 +120,25 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
                        ObjectAccessControl::ROLE_OWNER()));
   ASSERT_STATUS_OK(updated_acl);
 
+  auto patched_acl =
+      client->PatchDefaultObjectAcl(bucket_name, viewers,
+                                    ObjectAccessControlPatchBuilder().set_role(
+                                        ObjectAccessControl::ROLE_READER()));
+  ASSERT_STATUS_OK(patched_acl);
+  EXPECT_EQ(patched_acl->entity(), create_acl->entity());
+  EXPECT_EQ(patched_acl->role(), ObjectAccessControl::ROLE_READER());
+
+  // "Patching" an entity that does not exist should create the entity
+  delete_acl = client->DeleteDefaultObjectAcl(bucket_name, viewers);
+  ASSERT_STATUS_OK(delete_acl);
+  patched_acl =
+      client->PatchDefaultObjectAcl(bucket_name, viewers,
+                                    ObjectAccessControlPatchBuilder().set_role(
+                                        ObjectAccessControl::ROLE_READER()));
+  ASSERT_STATUS_OK(patched_acl);
+  EXPECT_EQ(patched_acl->entity(), create_acl->entity());
+  EXPECT_EQ(patched_acl->role(), ObjectAccessControl::ROLE_READER());
+
   delete_acl = client->DeleteDefaultObjectAcl(bucket_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
 
