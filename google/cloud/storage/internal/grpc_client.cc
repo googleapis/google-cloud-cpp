@@ -841,8 +841,14 @@ StatusOr<ObjectAccessControl> GrpcClient::PatchObjectAcl(
 }
 
 StatusOr<ListDefaultObjectAclResponse> GrpcClient::ListDefaultObjectAcl(
-    ListDefaultObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ListDefaultObjectAclRequest const& request) {
+  auto get_request = GetBucketMetadataRequest(request.bucket_name());
+  request.ForEachOption(CopyCommonOptions(get_request));
+  auto get = GetBucketMetadata(get_request);
+  if (!get) return std::move(get).status();
+  ListDefaultObjectAclResponse response;
+  response.items = get->default_acl();
+  return response;
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::CreateDefaultObjectAcl(
