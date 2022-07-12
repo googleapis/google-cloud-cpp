@@ -28,6 +28,7 @@ set(storage_client_integration_tests
     error_injection_integration_test.cc
     grpc_bucket_acl_integration_test.cc
     grpc_bucket_metadata_integration_test.cc
+    grpc_default_object_acl_integration_test.cc
     grpc_hmac_key_integration_test.cc
     grpc_integration_test.cc
     grpc_object_acl_integration_test.cc
