@@ -41,12 +41,14 @@ using ::google::cloud::internal::CurrentOptions;
 
 namespace {
 
-std::shared_ptr<CurlHandleFactory> CreateHandleFactory(Options const& options) {
+std::shared_ptr<rest_internal::CurlHandleFactory> CreateHandleFactory(
+    Options const& options) {
   auto const pool_size = options.get<ConnectionPoolSizeOption>();
   if (pool_size == 0) {
-    return std::make_shared<DefaultCurlHandleFactory>(options);
+    return std::make_shared<rest_internal::DefaultCurlHandleFactory>(options);
   }
-  return std::make_shared<PooledCurlHandleFactory>(pool_size, options);
+  return std::make_shared<rest_internal::PooledCurlHandleFactory>(pool_size,
+                                                                  options);
 }
 
 std::string UrlEscapeString(std::string const& value) {

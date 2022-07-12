@@ -137,7 +137,7 @@ class CurlDownloadRequest : public ObjectReadSource {
   std::chrono::seconds download_stall_timeout_;
   CurlHandle handle_;
   rest_internal::CurlMulti multi_;
-  std::shared_ptr<CurlHandleFactory> factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> factory_;
 
   // Explicitly closing the handle happens in two steps.
   // 1. First the application (or higher-level class), calls Close(). This class

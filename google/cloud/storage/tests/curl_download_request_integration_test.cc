@@ -147,8 +147,8 @@ TEST(CurlDownloadRequestTest, Generation) {
 TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
   auto constexpr kLineCount = 10;
   auto constexpr kTestPoolSize = 8;
-  auto factory =
-      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
+      kTestPoolSize, Options{});
   ASSERT_EQ(0, factory->CurrentHandleCount());
   ASSERT_EQ(0, factory->CurrentMultiHandleCount());
 
@@ -184,8 +184,8 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
 TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
   auto constexpr kLineCount = 10;
   auto constexpr kTestPoolSize = 8;
-  auto factory =
-      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
+      kTestPoolSize, Options{});
   ASSERT_EQ(0, factory->CurrentHandleCount());
   ASSERT_EQ(0, factory->CurrentMultiHandleCount());
 
@@ -223,8 +223,8 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
 
 TEST(CurlDownloadRequestTest, HandlesReleasedOnError) {
   auto constexpr kTestPoolSize = 8;
-  auto factory =
-      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
+      kTestPoolSize, Options{});
   ASSERT_EQ(0, factory->CurrentHandleCount());
   ASSERT_EQ(0, factory->CurrentMultiHandleCount());
 
@@ -300,8 +300,8 @@ Status AttemptRegression7051() {
   // Download the maximum number of lines supported by httpbin.org
   auto constexpr kDownloadedLines = 100;
   auto constexpr kTestPoolSize = 32;
-  auto factory =
-      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
+      kTestPoolSize, Options{});
 
   auto make_download = [&] {
     CurlRequestBuilder builder(
@@ -372,7 +372,7 @@ TEST(CurlDownloadRequestTest, HttpVersion) {
   };
   auto attempt = [](std::string const& version) -> StatusOr<Response> {
     Response response;
-    auto factory = std::make_shared<DefaultCurlHandleFactory>();
+    auto factory = std::make_shared<rest_internal::DefaultCurlHandleFactory>();
     CurlRequestBuilder builder(HttpBinEndpoint() + "/get", factory);
     builder.ApplyClientOptions(
         Options{}.set<storage_experimental::HttpVersionOption>(version));

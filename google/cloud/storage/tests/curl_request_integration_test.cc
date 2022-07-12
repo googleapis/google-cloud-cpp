@@ -378,7 +378,8 @@ TEST(CurlRequestTest, HttpVersion) {
   for (auto const& test : cases) {
     SCOPED_TRACE("Testing with version=<" + test.version + ">");
     auto factory = [&] {
-      auto factory = std::make_shared<DefaultCurlHandleFactory>();
+      auto factory =
+          std::make_shared<rest_internal::DefaultCurlHandleFactory>();
       CurlRequestBuilder builder(HttpBinEndpoint() + "/get", factory);
       builder.ApplyClientOptions(
           Options{}.set<storage_experimental::HttpVersionOption>(test.version));
@@ -643,8 +644,8 @@ TEST(CurlRequestTest, Logging) {
 
 TEST(CurlRequestTest, HandlesReleasedOnError) {
   auto constexpr kTestPoolSize = 8;
-  auto factory =
-      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
+      kTestPoolSize, Options{});
   ASSERT_EQ(0, factory->CurrentHandleCount());
   ASSERT_EQ(0, factory->CurrentMultiHandleCount());
 
@@ -658,8 +659,8 @@ TEST(CurlRequestTest, HandlesReleasedOnError) {
 
 TEST(CurlRequestTest, HandlesReusedOnSuccess) {
   auto constexpr kTestPoolSize = 8;
-  auto factory =
-      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
+      kTestPoolSize, Options{});
   ASSERT_EQ(0, factory->CurrentHandleCount());
   ASSERT_EQ(0, factory->CurrentMultiHandleCount());
 

@@ -37,7 +37,8 @@ char const* InitialQueryParameterSeparator(std::string const& url) {
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE
 
 CurlRequestBuilder::CurlRequestBuilder(
-    std::string base_url, std::shared_ptr<CurlHandleFactory> factory)
+    std::string base_url,
+    std::shared_ptr<rest_internal::CurlHandleFactory> factory)
     : factory_(std::move(factory)),
       handle_(CurlHandle::MakeFromPool(*factory_)),
       headers_(nullptr, &curl_slist_free_all),

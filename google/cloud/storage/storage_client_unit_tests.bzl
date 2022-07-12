@@ -49,7 +49,6 @@ storage_client_unit_tests = [
     "internal/const_buffer_test.cc",
     "internal/curl_client_test.cc",
     "internal/curl_download_request_test.cc",
-    "internal/curl_handle_factory_test.cc",
     "internal/curl_handle_test.cc",
     "internal/default_object_acl_requests_test.cc",
     "internal/generate_message_boundary_test.cc",

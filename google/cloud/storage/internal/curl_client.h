@@ -218,10 +218,10 @@ class CurlClient : public RawClient,
   std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
 
-  std::shared_ptr<CurlHandleFactory> storage_factory_;
-  std::shared_ptr<CurlHandleFactory> upload_factory_;
-  std::shared_ptr<CurlHandleFactory> xml_upload_factory_;
-  std::shared_ptr<CurlHandleFactory> xml_download_factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> storage_factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> upload_factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> xml_upload_factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> xml_download_factory_;
 };
 
 }  // namespace internal
