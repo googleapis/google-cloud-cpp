@@ -1082,6 +1082,22 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Cloud Run
+service {
+  service_proto_path: "google/cloud/run/v2/revision.proto"
+  product_path: "google/cloud/run"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/run/v2/service.proto"
+  product_path: "google/cloud/run"
+  initial_copyright_year: "2022"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_RUN_SERVICES_ENDPOINT"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Scheduler
 service {
   service_proto_path: "google/cloud/scheduler/v1/cloudscheduler.proto"
