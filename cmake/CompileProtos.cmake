@@ -80,9 +80,10 @@ function (google_cloud_cpp_generate_proto SRCS)
     foreach (file_path ${_opt_UNPARSED_ARGUMENTS})
         get_filename_component(file_directory "${file_path}" DIRECTORY)
         get_filename_component(file_name "${file_path}" NAME)
-        # This gets the filename without the extension, analogous to $(basename
-        # "${file_path}" .proto)
-        get_filename_component(file_stem "${file_path}" NAME_WE)
+        # This gets the file name without the ".proto" extension. We would like
+        # to use get_filename_component with the option NAME_WLE, but that is
+        # not available until CMake 3.14
+        string(REPLACE ".proto" "" file_stem "${file_name}")
 
         # Strip all the prefixes in ${_opt_PROTO_PATH_DIRECTORIES} from the
         # source proto directory
@@ -175,11 +176,13 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
     endforeach ()
 
     set(${SRCS})
-    foreach (filename ${_opt_UNPARSED_ARGUMENTS})
-        get_filename_component(file_directory "${filename}" DIRECTORY)
-        # This gets the filename without the extension, analogous to $(basename
-        # "${filename}" .proto)
-        get_filename_component(file_stem "${filename}" NAME_WE)
+    foreach (file_path ${_opt_UNPARSED_ARGUMENTS})
+        get_filename_component(file_directory "${file_path}" DIRECTORY)
+        get_filename_component(file_name "${file_path}" NAME)
+        # This gets the file name without the ".proto" extension. We would like
+        # to use get_filename_component with the option NAME_WLE, but that is
+        # not available until CMake 3.14
+        string(REPLACE ".proto" "" file_stem "${file_name}")
 
         # Strip all the prefixes in ${_opt_PROTO_PATH_DIRECTORIES} from the
         # source proto directory
@@ -201,9 +204,9 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
                 --plugin=protoc-gen-grpc=$<TARGET_FILE:gRPC::grpc_cpp_plugin>
                 "--grpc_out=${CMAKE_CURRENT_BINARY_DIR}"
                 "--cpp_out=${CMAKE_CURRENT_BINARY_DIR}" ${protobuf_include_path}
-                "${filename}"
-            DEPENDS "${filename}" protobuf::protoc gRPC::grpc_cpp_plugin
-            COMMENT "Running gRPC C++ protocol buffer compiler on ${filename}"
+                "${file_path}"
+            DEPENDS "${file_path}" protobuf::protoc gRPC::grpc_cpp_plugin
+            COMMENT "Running gRPC C++ protocol buffer compiler on ${file_path}"
             VERBATIM)
     endforeach ()
 

@@ -1,0 +1,7 @@
+@com_google_googleapis//google/cloud/run/v2:condition.proto
+@com_google_googleapis//google/cloud/run/v2:k8s.min.proto
+@com_google_googleapis//google/cloud/run/v2:revision.proto
+@com_google_googleapis//google/cloud/run/v2:revision_template.proto
+@com_google_googleapis//google/cloud/run/v2:service.proto
+@com_google_googleapis//google/cloud/run/v2:traffic_target.proto
+@com_google_googleapis//google/cloud/run/v2:vendor_settings.proto

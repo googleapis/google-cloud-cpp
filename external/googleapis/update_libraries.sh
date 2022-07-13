@@ -147,6 +147,7 @@ declare -A -r LIBRARIES=(
   ["resourcemanager"]="@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_cc_grpc"
   ["resourcesettings"]="@com_google_googleapis//google/cloud/resourcesettings/v1:resourcesettings_cc_grpc"
   ["retail"]="@com_google_googleapis//google/cloud/retail/v2:retail_cc_grpc"
+  ["run"]="@com_google_googleapis//google/cloud/run/v2:run_cc_grpc"
   ["scheduler"]="@com_google_googleapis//google/cloud/scheduler/v1:scheduler_cc_grpc"
   ["secretmanager"]="$(
     printf ",%s" \
