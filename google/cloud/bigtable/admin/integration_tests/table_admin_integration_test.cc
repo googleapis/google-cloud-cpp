@@ -16,6 +16,8 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/bigtable/wait_for_consistency.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -303,8 +305,10 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
 
   // We need to mutate the data in the table and then wait for those mutations
   // to propagate to both clusters. First create a `bigtable::Table` object.
+  internal::AutomaticallyCreatedBackgroundThreads background;
   auto table = bigtable::Table(
-      bigtable::MakeDataConnection(),
+      bigtable::MakeDataConnection(
+          Options{}.set<GrpcCompletionQueueOption>(background.cq())),
       bigtable::TableResource(project_id(), id, random_table_id));
 
   // Insert some cells into the table.
@@ -325,39 +329,14 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   auto consistency_token =
       std::move(*consistency_token_resp->mutable_consistency_token());
 
-  // A retry loop that checks if the data replication has completed.
-  auto wait_for_consistency = [&]() -> Status {
-    auto retry = google::cloud::internal::LimitedTimeRetryPolicy<
-        bigtable::internal::SafeGrpcRetry>(std::chrono::minutes(2));
-    auto backoff = google::cloud::internal::ExponentialBackoffPolicy(
-        std::chrono::milliseconds(5), std::chrono::minutes(2), 2.0);
+  // Verify that our clusters are eventually consistent. This calls
+  // `AsyncCheckConsistency` under the hood.
+  auto result = AsyncWaitForConsistency(background.cq(), client_,
+                                        table.table_name(), consistency_token);
+  ASSERT_STATUS_OK(result.get());
 
-    Status status;
-    do {
-      auto result = client_.CheckConsistency(table_name, consistency_token);
-      if (result.ok()) {
-        // Consistency has been achieved. Break the loop.
-        if (result->consistent()) return Status();
-        status = Status(StatusCode::kUnavailable, "Not consistent yet");
-      } else {
-        status = std::move(result).status();
-      }
-      if (!retry.OnFailure(status)) {
-        // The retry policy is exhausted or the error is not retryable.
-        return status;
-      }
-      std::this_thread::sleep_for(backoff.OnCompletion());
-    } while (!retry.IsExhausted());
-    return status;
-  };
-
-  // Verify that our clusters are eventually consistent.
-  auto result = wait_for_consistency();
-  ASSERT_STATUS_OK(result);
-
-  // Make an asynchronous call, just to test all functions.
-  auto resp =
-      client_.AsyncCheckConsistency(table_name, consistency_token).get();
+  // Make a synchronous call, just to test all functions.
+  auto resp = client_.CheckConsistency(table_name, consistency_token);
   ASSERT_STATUS_OK(resp);
   EXPECT_TRUE(resp->consistent());
 
