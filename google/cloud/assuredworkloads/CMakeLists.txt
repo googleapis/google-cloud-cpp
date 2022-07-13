@@ -14,16 +14,6 @@
 # limitations under the License.
 # ~~~
 
-# TODO(#8198): Re-enable the macos build.
-if (WIN32)
-    message(
-        WARNING
-            "Cannot build google/cloud/assuredworkloads on Windows platforms."
-            " More details at https://github.com/googleapis/google-cloud-cpp/issues/8198"
-    )
-    return()
-endif ()
-
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Assured Workloads API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Assured Workloads API")
