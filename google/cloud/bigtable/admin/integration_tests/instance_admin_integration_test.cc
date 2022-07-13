@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
+#include "google/cloud/bigtable/app_profile_config.h"
 #include "google/cloud/bigtable/iam_binding.h"
 #include "google/cloud/bigtable/iam_policy.h"
 #include "google/cloud/bigtable/resource_names.h"
@@ -222,11 +223,15 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   EXPECT_THAT(*profiles, Not(Contains(name_1)));
   EXPECT_THAT(*profiles, Not(Contains(name_2)));
 
-  auto profile_1 = client_.CreateAppProfile(instance_name, id_1, {});
+  auto ap_1 = bigtable::AppProfileConfig::MultiClusterUseAny(id_1).as_proto();
+  ap_1.set_parent(instance_name);
+  auto profile_1 = client_.CreateAppProfile(ap_1);
   ASSERT_STATUS_OK(profile_1);
   EXPECT_EQ(profile_1->name(), name_1);
 
-  auto profile_2 = client_.CreateAppProfile(instance_name, id_2, {});
+  auto ap_2 = bigtable::AppProfileConfig::MultiClusterUseAny(id_2).as_proto();
+  ap_2.set_parent(instance_name);
+  auto profile_2 = client_.CreateAppProfile(ap_2);
   ASSERT_STATUS_OK(profile_2);
   EXPECT_EQ(profile_2->name(), name_2);
 
@@ -394,10 +399,10 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
 
-  auto initial_policy = client_.SetIamPolicy(instance_id, iam_policy);
+  auto initial_policy = client_.SetIamPolicy(instance_name, iam_policy);
   ASSERT_STATUS_OK(initial_policy);
 
-  auto fetched_policy = client_.GetIamPolicy(instance_id);
+  auto fetched_policy = client_.GetIamPolicy(instance_name);
   ASSERT_STATUS_OK(fetched_policy);
 
   EXPECT_EQ(initial_policy->version(), fetched_policy->version());
