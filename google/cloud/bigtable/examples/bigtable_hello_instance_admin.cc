@@ -21,11 +21,11 @@
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
-#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
+#include <algorithm>
 #include <iostream>
 
 namespace {
@@ -61,9 +61,9 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
 
   //! [check instance exists]
   std::cout << "\nCheck Instance exists:\n";
-  auto all_instances = cbt::InstanceName(project_id, "-");
+  std::string const project_name = Project(project_id).FullName();
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> instances =
-      instance_admin.ListInstances(all_instances);
+      instance_admin.ListInstances(project_name);
   if (!instances) throw std::runtime_error(instances.status().message());
   if (!instances->failed_locations().empty()) {
     std::cerr
@@ -73,12 +73,14 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
     }
     std::cerr << ". Continuing anyway\n";
   }
-  std::string instance_name = cbt::InstanceName(project_id, instance_id);
-  bool instance_exists = google::cloud::internal::ContainsIf(
-      instances->instances(),
+  std::string const instance_name = cbt::InstanceName(project_id, instance_id);
+  auto is_instance =
       [&instance_name](google::bigtable::admin::v2::Instance const& i) {
         return i.name() == instance_name;
-      });
+      };
+  auto const& ins = instances->instances();
+  auto instance_exists =
+      std::find_if(ins.begin(), ins.end(), is_instance) != ins.end();
   std::cout << "The instance " << instance_id
             << (instance_exists ? " already exists" : " does not exist")
             << "\n";
@@ -88,8 +90,6 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
   if (!instance_exists) {
     //! [create production instance]
     std::cout << "\nCreating a PRODUCTION Instance: ";
-
-    std::string project_name = Project(project_id).FullName();
 
     // production instance needs at least 3 nodes
     google::bigtable::admin::v2::Cluster c;
@@ -126,7 +126,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
 
   //! [list instances]
   std::cout << "\nListing Instances:\n";
-  instances = instance_admin.ListInstances(all_instances);
+  instances = instance_admin.ListInstances(project_name);
   if (!instances) throw std::runtime_error(instances.status().message());
   if (!instances->failed_locations().empty()) {
     std::cerr
