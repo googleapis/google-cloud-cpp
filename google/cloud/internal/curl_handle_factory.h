@@ -112,18 +112,18 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   void CleanupMultiHandle(CurlMulti) override;
 
   std::string LastClientIpAddress() const override {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> lk(last_client_ip_address_mu_);
     return last_client_ip_address_;
   }
 
   // Test only
   std::size_t CurrentHandleCount() const {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> lk(handles_mu_);
     return handles_.size();
   }
   // Test only
   std::size_t CurrentMultiHandleCount() const {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> lk(multi_handles_mu_);
     return multi_handles_.size();
   }
 
@@ -132,14 +132,20 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
 
  private:
   void SetCurlOptions(CURL* handle);
+  static absl::optional<std::string> CAInfo(Options const& o);
+  static absl::optional<std::string> CAPath(Options const& o);
 
-  std::size_t maximum_size_;
-  mutable std::mutex mu_;
-  std::deque<CURL*> handles_;
-  std::deque<CURLM*> multi_handles_;
+  // These are constant after initialization and thus need no locking.
+  std::size_t const maximum_size_;
+  absl::optional<std::string> const cainfo_;
+  absl::optional<std::string> const capath_;
+
+  mutable std::mutex handles_mu_;
+  std::deque<CurlPtr> handles_;
+  mutable std::mutex multi_handles_mu_;
+  std::deque<CurlMulti> multi_handles_;
+  mutable std::mutex last_client_ip_address_mu_;
   std::string last_client_ip_address_;
-  absl::optional<std::string> cainfo_;
-  absl::optional<std::string> capath_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

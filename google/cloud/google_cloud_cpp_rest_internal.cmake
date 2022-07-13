@@ -243,4 +243,25 @@ if (BUILD_TESTING)
         google_cloud_cpp_rest_internal_add_test(
             "${fname}" "integration-test;integration-test-production")
     endforeach ()
+
+    set(google_cloud_cpp_rest_internal_benchmarks
+        # cmake-format: sortable
+        internal/curl_handle_factory_benchmark.cc)
+
+    # Export the list of benchmarks to a .bzl file so we do not need to maintain
+    # the list in two places.
+    export_list_to_bazel(
+        "google_cloud_cpp_rest_internal_benchmarks.bzl"
+        "google_cloud_cpp_rest_internal_benchmarks" YEAR "2022")
+
+    # Generate a target for each benchmark.
+    foreach (fname ${google_cloud_cpp_rest_internal_benchmarks})
+        google_cloud_cpp_add_executable(target "common" "${fname}")
+        add_test(NAME ${target} COMMAND ${target})
+        target_link_libraries(
+            ${target}
+            PRIVATE google-cloud-cpp::rest-internal google-cloud-cpp::common
+                    benchmark::benchmark_main)
+        google_cloud_cpp_add_common_options(${target})
+    endforeach ()
 endif ()

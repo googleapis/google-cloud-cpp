@@ -98,20 +98,23 @@ struct ProjectIdOption {
  * The C++ client library uses this value to limit the growth of the
  * connection pool. Once an operation (a RPC or a download) completes the
  * connection used for that operation is returned to the pool. If the pool is
- * full the connection is immediately released. If the pool has room the
- * connection is cached for the next RPC or download.
- *
- * @note The behavior of this pool may change in the future, depending on the
- * low-level implementation details of the library.
- *
- * @note The library does not create connections proactively, setting a high
- * value may result in very few connections if your application does not need
- * them.
+ * full one or more connections are released. Otherwise, the connection is
+ * cached for use in following RPCs or downloads.
  *
  * @note Setting this value to 0 disables connection pooling.
  *
- * @warning The library may create more connections than this option configures,
- * for example if your application requests many simultaneous downloads.
+ * @warning The behavior of the connection pool may change in the future, only
+ *   the maximum number of handles in use can be controlled by the application.
+ *   The information about which handles are released and when is for
+ *   informational purposes only.
+ *
+ * The library does not create connections proactively, setting a high value
+ * may result in very few connections if your application does not need them.
+ * The library may create more connections than this option configures, for
+ * example if your application requests many simultaneous downloads. When the
+ * pool is full, the library typically releases older connections first, and
+ * tries to reuse newer connections if they are available. The library may
+ * release more than one connection when the pool becomes full.
  */
 struct ConnectionPoolSizeOption {
   using Type = std::size_t;
