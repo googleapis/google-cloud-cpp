@@ -32,6 +32,7 @@ using ::google::cloud::internal::GetEnv;
 using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -81,6 +82,15 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl),
               ContainsOnce(existing_entity.entity()));
+
+  auto get_acl =
+      client->GetDefaultObjectAcl(bucket_name, existing_entity.entity());
+  ASSERT_STATUS_OK(get_acl);
+  EXPECT_EQ(*get_acl, existing_entity);
+
+  auto not_found_acl =
+      client->GetDefaultObjectAcl(bucket_name, "not-found-entity");
+  EXPECT_THAT(not_found_acl, StatusIs(StatusCode::kNotFound));
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
