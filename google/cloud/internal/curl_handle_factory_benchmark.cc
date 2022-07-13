@@ -31,11 +31,9 @@ class PoolFixture : public ::benchmark::Fixture {
   PooledCurlHandleFactory pool_;
 };
 
-bool CreateAndCleanup(CurlHandleFactory& factory, benchmark::State& state) {
+bool CreateAndCleanup(CurlHandleFactory& factory) {
   auto h = factory.CreateHandle();
-  if (!h) ++state.counters["CreateHandleError"];
   auto m = factory.CreateMultiHandle();
-  if (!m) ++state.counters["CreateMultiHandleError"];
   auto const success = h && m;
   factory.CleanupMultiHandle(std::move(m));
   factory.CleanupHandle(std::move(h));
@@ -44,7 +42,7 @@ bool CreateAndCleanup(CurlHandleFactory& factory, benchmark::State& state) {
 
 BENCHMARK_DEFINE_F(PoolFixture, Burst)(benchmark::State& state) {
   for (auto _ : state) {
-    if (!CreateAndCleanup(pool(), state)) {
+    if (!CreateAndCleanup(pool())) {
       state.SkipWithError("error creating handles");
       break;
     }
@@ -55,7 +53,10 @@ BENCHMARK_REGISTER_F(PoolFixture, Burst)->ThreadRange(1, 1 << 8)->UseRealTime();
 BENCHMARK_DEFINE_F(PoolFixture, Linear)(benchmark::State& state) {
   for (auto _ : state) {
     for (auto i = 0; i != state.range(0); ++i) {
-      CreateAndCleanup(pool(), state);
+      if (!CreateAndCleanup(pool())) {
+        state.SkipWithError("error creating handles");
+        break;
+      }
     }
   }
   state.SetComplexityN(state.range(0));
