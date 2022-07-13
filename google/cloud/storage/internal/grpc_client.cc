@@ -1037,7 +1037,7 @@ StatusOr<BucketMetadata> GrpcClient::ModifyDefaultAccessControl(
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
     return Status(
         StatusCode::kUnavailable,
-        "retrying BucketAccessControl change due to conflict, bucket=" +
+        "retrying DefaultObjectAccessControl change due to conflict, bucket=" +
             request.bucket_name());
   }
   return patch;
