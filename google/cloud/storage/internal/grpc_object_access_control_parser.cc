@@ -36,6 +36,7 @@ google::storage::v2::ObjectAccessControl GrpcObjectAccessControlParser::ToProto(
         acl.project_team().project_number);
     result.mutable_project_team()->set_team(acl.project_team().team);
   }
+  result.set_etag(acl.etag());
   return result;
 }
 
@@ -61,6 +62,7 @@ ObjectAccessControl GrpcObjectAccessControlParser::FromProto(
   }
   result.role_ = std::move(*acl.mutable_role());
   result.self_link_.clear();
+  result.etag_ = std::move(*acl.mutable_etag());
 
   return result;
 }

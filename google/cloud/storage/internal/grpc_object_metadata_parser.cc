@@ -90,6 +90,7 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
   metadata.bucket_ = bucket_id(object);
   metadata.name_ = std::move(*object.mutable_name());
   metadata.generation_ = object.generation();
+  metadata.etag_ = object.etag();
   metadata.id_ = metadata.bucket() + "/" + metadata.name() + "/" +
                  std::to_string(metadata.generation());
   auto const metadata_endpoint = [&options]() -> std::string {

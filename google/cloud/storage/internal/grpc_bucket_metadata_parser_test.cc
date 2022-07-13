@@ -43,10 +43,18 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     location_type: "REGIONAL"
     storage_class: "test-storage-class"
     rpo: "test-rpo"
-    acl: { role: "test-role1" entity: "test-entity1" }
-    acl: { role: "test-role2" entity: "test-entity2" }
-    default_object_acl: { role: "test-role3" entity: "test-entity3" }
-    default_object_acl: { role: "test-role4" entity: "test-entity4" }
+    acl: { role: "test-role1" entity: "test-entity1", etag: "test-etag1" }
+    acl: { role: "test-role2" entity: "test-entity2", etag: "test-etag2" }
+    default_object_acl: {
+      role: "test-role3"
+      entity: "test-entity3",
+      etag: "test-etag3"
+    }
+    default_object_acl: {
+      role: "test-role4"
+      entity: "test-entity4",
+      etag: "test-etag4"
+    }
     lifecycle {
       rule {
         action { type: "Delete" }
@@ -107,6 +115,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       }
       public_access_prevention: "inherited"
     }
+    etag: "test-etag"
   )pb";
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
 
@@ -117,23 +126,27 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       "kind": "storage#bucketAccessControl",
       "bucket": "test-bucket-id",
       "role": "test-role1",
-      "entity": "test-entity1"
+      "entity": "test-entity1",
+      "etag": "test-etag1"
     }, {
       "kind": "storage#bucketAccessControl",
       "bucket": "test-bucket-id",
       "role": "test-role2",
-      "entity": "test-entity2"
+      "entity": "test-entity2",
+      "etag": "test-etag2"
     }],
     "defaultObjectAcl": [{
       "kind": "storage#objectAccessControl",
       "bucket": "test-bucket-id",
       "role": "test-role3",
-      "entity": "test-entity3"
+      "entity": "test-entity3",
+      "etag": "test-etag3"
     }, {
       "kind": "storage#objectAccessControl",
       "bucket": "test-bucket-id",
       "role": "test-role4",
-      "entity": "test-entity4"
+      "entity": "test-entity4",
+      "etag": "test-etag4"
     }],
     "lifecycle": {
       "rule": [{
@@ -203,7 +216,8 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
         "lockedTime": "2019-08-07T16:22:07.123456000Z"
       },
       "publicAccessPrevention": "inherited"
-    }
+    },
+    "etag": "test-etag"
   })""");
   ASSERT_THAT(expected, IsOk());
 
