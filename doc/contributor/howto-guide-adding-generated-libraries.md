@@ -208,26 +208,6 @@ were written by a robot:
 The Cloud documentation links (`cloud.google.com/*/docs/*`) in these files are
 not always valid. Find the correct urls and update the links.
 
-## Document the service's endpoint environment variable
-
-```shell
-lib="google/cloud/${library}"
-services=$(ls ${lib}/*_connection.h | xargs -I {} basename {} _connection.h)
-(
-  sed '/<!-- inject-endpoint-env-vars-start -->/q' "${lib}/doc/main.dox"
-  echo ""
-  for service in ${services[@]}; do
-    # Should we generate documentation for GOOGLE_CLOUD_CPP_.*_AUTHORITY?
-    env_var=$(grep -o "GOOGLE_CLOUD_CPP_.*_ENDPOINT" ${lib}/internal/${service}_option_defaults.cc)
-    endpoint=$(grep -ro "\"[[:alnum:]]*\.googleapis\.com" ${lib}/internal/${service}_option_defaults.cc)
-    connection=$(grep -ro "\~[[:alnum:]]*()" ${lib}/${service}_connection.h)
-    echo -e "- \`${env_var}=...\` changes the default endpoint\n  (${endpoint:1}) used by \`${connection:1:-2}\`.\n"
-  done
-  sed -n '/<!-- inject-endpoint-env-vars-end -->/,$p' "${lib}/doc/main.dox"
-) >"main.dox.tmp"
-mv "main.dox.tmp" "${lib}/doc/main.dox"
-```
-
 ## Edit the top-level CHANGELOG file
 
 Announce the new library in the CHANGELOG for the next release.
