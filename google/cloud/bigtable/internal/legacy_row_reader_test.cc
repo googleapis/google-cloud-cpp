@@ -518,10 +518,6 @@ TEST_F(LegacyRowReaderTest, FailedParseSkipsAlreadyReadRows) {
 }
 
 TEST_F(LegacyRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
-#if defined(__GNUC__) && (__GNUC__ < 7 || (__GNUC__ == 7 && __GNUC_MINOR__ < 4))
-  // TODO(#9411) - enable on GCC < 7.4
-  GTEST_SKIP();
-#endif  // GCC < 7.4
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
@@ -539,7 +535,6 @@ TEST_F(LegacyRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
         .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
 
     // The stream fails with a retry-able error
-    EXPECT_CALL(*stream, Read).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
     EXPECT_CALL(*parser, HandleEndOfStreamHook)
