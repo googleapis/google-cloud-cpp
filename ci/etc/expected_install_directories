@@ -52,6 +52,10 @@
 ./include/google/cloud/baremetalsolution/internal
 ./include/google/cloud/baremetalsolution/mocks
 ./include/google/cloud/baremetalsolution/v2
+./include/google/cloud/batch
+./include/google/cloud/batch/internal
+./include/google/cloud/batch/mocks
+./include/google/cloud/batch/v1
 ./include/google/cloud/bigquery
 ./include/google/cloud/bigquery/connection
 ./include/google/cloud/bigquery/connection/v1
@@ -426,6 +430,7 @@
 ./lib64/cmake/google_cloud_cpp_assuredworkloads
 ./lib64/cmake/google_cloud_cpp_automl
 ./lib64/cmake/google_cloud_cpp_baremetalsolution
+./lib64/cmake/google_cloud_cpp_batch
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_bigtable
 ./lib64/cmake/google_cloud_cpp_billing
