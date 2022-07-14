@@ -55,4 +55,4 @@ bazel test "${args[@]}" "${integration_args[@]}" \
 io::log_h2 "Running Spanner integration tests (against prod)"
 bazel test "${args[@]}" "${integration_args[@]}" \
   --test_tag_filters="integration-test" --test_timeout=-1,-1,-1,10800 \
-  google/cloud/spanner/...
+  "//google/cloud/spanner/..."
