@@ -34,11 +34,6 @@ cc_library(
         include = [HEADER_GLOB],
         exclude = [MOCK_HEADER_GLOB],
     ),
-    # TODO(#8198): Re-enable the Windows build.
-    target_compatible_with = select({
-        "@platforms//os:windows": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
