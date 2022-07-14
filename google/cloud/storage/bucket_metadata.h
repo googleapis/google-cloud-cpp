@@ -527,7 +527,7 @@ inline bool operator>=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
  * It should specify precisely two eligible regions within the same Multiregion.
  *
  * @see Additional information on custom dual regions in the
- *     [feature documentation][cdr-link].More information on [dual regions].
+ *     [feature documentation][cdr-link].
  *
  * [cdr-link]: https://cloud.google.com/storage/docs/locations
  */
