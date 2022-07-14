@@ -34,6 +34,8 @@ std::string DebugString(google::protobuf::Message const& m,
   p.SetUseShortRepeatedPrimitives(options.use_short_repeated_primitives());
   p.SetTruncateStringFieldLongerThan(
       options.truncate_string_field_longer_than());
+  p.SetPrintMessageFieldsInIndexOrder(true);
+  p.SetExpandAny(true);
   p.PrintToString(m, &str);
   return absl::StrCat(m.GetTypeName(), " {",
                       (options.single_line_mode() ? " " : "\n"), str, "}");
