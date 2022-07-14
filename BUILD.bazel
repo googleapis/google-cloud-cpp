@@ -22,6 +22,7 @@ exports_files([
 
 EXPERIMENTAL_LIBRARIES = [
     # Introduced circa 2022-07-12
+    "batch",
     "run",
     # Introduced circa 2022-06-22
     "video",

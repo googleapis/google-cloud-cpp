@@ -99,11 +99,12 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
 
 ### New Libraries
 
-We are introducing a new client library for [Cloud Run]. While we do not
-anticipate any API changes to this library before declaring it GA, we are
-releasing it early in case it elicits some feedback that requires changes.
+We are introducing 2 new client libraries for GCP services. While we do not
+anticipate any API changes to these libraries before declaring them GA, we are
+releasing them early in case they elicit some feedback that requires changes.
 
-[Cloud Run]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/run/README.md
+* [Batch](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/batch/README.md)
+* [Cloud Run](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/run/README.md)
 
 ## v2.0.0 - 2022-07
 

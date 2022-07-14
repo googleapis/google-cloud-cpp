@@ -35,6 +35,7 @@ declare -A -r LIBRARIES=(
   ["assuredworkloads"]="@com_google_googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_cc_grpc"
   ["automl"]="@com_google_googleapis//google/cloud/automl/v1:automl_cc_grpc"
   ["baremetalsolution"]="@com_google_googleapis//google/cloud/baremetalsolution/v2:baremetalsolution_cc_grpc"
+  ["batch"]="@com_google_googleapis//google/cloud/batch/v1:batch_cc_grpc"
   ["bigquery"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/bigquery/v2:bigquery_cc_grpc" \
