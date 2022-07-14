@@ -52,6 +52,7 @@ google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
   // later.
   result.set_name("projects/_/buckets/" + rhs.id());
   result.set_bucket_id(rhs.id());
+  result.set_etag(rhs.etag());
   result.set_project("projects/" + std::to_string(rhs.project_number()));
   result.set_metageneration(rhs.metageneration());
   result.set_location(rhs.location());
@@ -125,6 +126,7 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   if (rhs.has_iam_config()) {
     metadata.iam_configuration_ = FromProto(rhs.iam_config());
   }
+  metadata.etag_ = rhs.etag();
   metadata.id_ = rhs.bucket_id();
   metadata.kind_ = "storage#bucket";
   for (auto const& kv : rhs.labels()) {

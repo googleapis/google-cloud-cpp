@@ -41,6 +41,7 @@ HmacKeyMetadata GrpcHmacKeyMetadataParser::FromProto(
       google::cloud::internal::ToChronoTimePoint(rhs.create_time());
   result.updated_ =
       google::cloud::internal::ToChronoTimePoint(rhs.update_time());
+  result.etag_ = rhs.etag();
   return result;
 }
 
@@ -56,6 +57,7 @@ google::storage::v2::HmacKeyMetadata GrpcHmacKeyMetadataParser::ToProto(
       google::cloud::internal::ToProtoTimestamp(rhs.time_created());
   *result.mutable_update_time() =
       google::cloud::internal::ToProtoTimestamp(rhs.updated());
+  result.set_etag(rhs.etag());
   return result;
 }
 

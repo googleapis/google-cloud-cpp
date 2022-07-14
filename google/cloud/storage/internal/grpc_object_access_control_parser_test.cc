@@ -42,6 +42,7 @@ TEST(GrpcObjectAccessControlParser, FromProto) {
        project_number: "test-project-number"
        team: "test-team"
      }
+     etag: "test-etag"
      )""",
                                                             &input));
 
@@ -59,7 +60,8 @@ TEST(GrpcObjectAccessControlParser, FromProto) {
      "projectTeam": {
        "projectNumber": "test-project-number",
        "team": "test-team"
-     }
+     },
+     "etag": "test-etag"
   })""");
   ASSERT_STATUS_OK(expected);
 
@@ -83,7 +85,8 @@ TEST(GrpcObjectAccessControlParser, ToProtoSimple) {
      "projectTeam": {
        "projectNumber": "test-project-number",
        "team": "test-team"
-     }
+     },
+     "etag": "test-etag"
   })""");
   ASSERT_STATUS_OK(acl);
   auto actual = GrpcObjectAccessControlParser::ToProto(*acl);
@@ -100,6 +103,7 @@ TEST(GrpcObjectAccessControlParser, ToProtoSimple) {
        project_number: "test-project-number"
        team: "test-team"
      }
+     etag: "test-etag"
      )""",
                                                             &expected));
 

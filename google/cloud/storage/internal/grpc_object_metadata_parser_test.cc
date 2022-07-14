@@ -39,6 +39,7 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     acl: {
       role: "OWNER"
       entity: "user:test-user@gmail.com"
+      etag: "test-etag-acl"
     }
     content_encoding: "test-content-encoding"
     content_disposition: "test-content-disposition"
@@ -91,6 +92,7 @@ TEST(GrpcClientFromProto, ObjectSimple) {
       encryption_algorithm: "test-encryption-algorithm"
       key_sha256_bytes: "01234567"
     }
+    etag: "test-etag"
 )""",
                                                             &input));
 
@@ -104,7 +106,10 @@ TEST(GrpcClientFromProto, ObjectSimple) {
        "object": "test-object-name",
        "generation": 2345,
        "kind": "storage#objectAccessControl",
-       "role": "OWNER", "entity": "user:test-user@gmail.com"}
+       "role": "OWNER",
+       "entity": "user:test-user@gmail.com",
+       "etag": "test-etag-acl"
+      }
     ],
     "contentEncoding": "test-content-encoding",
     "contentDisposition": "test-content-disposition",
@@ -143,9 +148,10 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     "customerEncryption": {
       "encryptionAlgorithm": "test-encryption-algorithm",
       "keySha256": "MDEyMzQ1Njc="
-    }
+    },
+    "etag": "test-etag"
 })""");
-  EXPECT_STATUS_OK(expected);
+  ASSERT_STATUS_OK(expected);
 
   auto actual = GrpcObjectMetadataParser::FromProto(
       input,

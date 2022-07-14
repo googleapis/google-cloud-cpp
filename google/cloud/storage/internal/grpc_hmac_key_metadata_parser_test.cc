@@ -40,13 +40,15 @@ TEST(GrpcHmacKeyMetadataParser, Roundtrip) {
     service_account_email: "test-account@test-project.test"
     state: "INACTIVE"
     create_time { seconds: 1652099696 nanos: 789000000 }
-    update_time { seconds: 1652186096 nanos: 789000000 })pb";
+    update_time { seconds: 1652186096 nanos: 789000000 }
+    etag: "test-etag")pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kProtoText, &input));
 
   auto const actual = GrpcHmacKeyMetadataParser::FromProto(input);
   EXPECT_EQ(actual.id(), "test-id");
   EXPECT_EQ(actual.access_id(), "test-access-id");
   EXPECT_EQ(actual.state(), "INACTIVE");
+  EXPECT_EQ(actual.etag(), "test-etag");
   // To get the dates in RFC-3339 format I used:
   //     date --rfc-3339=seconds --date=@1652099696  # Create
   //     date --rfc-3339=seconds --date=@1652186096  # Update

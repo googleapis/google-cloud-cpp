@@ -42,7 +42,7 @@ TEST(GrpcBucketAccessControlParser, FromProto) {
        project_number: "test-project-number"
        team: "test-team"
      }
-     )""",
+     etag: "test-etag")""",
                                                             &input));
 
   auto const expected = BucketAccessControlParser::FromString(R"""({
@@ -57,7 +57,8 @@ TEST(GrpcBucketAccessControlParser, FromProto) {
      "projectTeam": {
        "projectNumber": "test-project-number",
        "team": "test-team"
-     }
+     },
+     "etag": "test-etag"
   })""");
   ASSERT_STATUS_OK(expected);
 
@@ -78,7 +79,8 @@ TEST(GrpcBucketAccessControlParser, ToProtoSimple) {
      "projectTeam": {
        "projectNumber": "test-project-number",
        "team": "test-team"
-     }
+     },
+     "etag": "test-etag"
   })""");
   ASSERT_STATUS_OK(acl);
   auto actual = GrpcBucketAccessControlParser::ToProto(*acl);
@@ -95,7 +97,7 @@ TEST(GrpcBucketAccessControlParser, ToProtoSimple) {
        project_number: "test-project-number"
        team: "test-team"
      }
-     )""",
+     etag: "test-etag")""",
                                                             &expected));
 
   EXPECT_THAT(actual, IsProtoEqual(expected));
