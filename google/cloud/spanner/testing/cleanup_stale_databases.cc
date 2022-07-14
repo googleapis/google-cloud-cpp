@@ -28,9 +28,6 @@ Status CleanupStaleDatabases(
     google::cloud::spanner_admin::DatabaseAdminClient admin_client,
     std::string const& project_id, std::string const& instance_id,
     std::chrono::system_clock::time_point tp) {
-  // Drop any databases more than 2 days old. This automatically cleans up
-  // any databases created by a previous build that may have crashed before
-  // having a chance to cleanup.
   spanner::Instance instance(Project(project_id), instance_id);
   auto const expired = RandomDatabasePrefix(tp);
   std::regex re(RandomDatabasePrefixRegex());

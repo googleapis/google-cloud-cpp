@@ -40,15 +40,14 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
   auto instance_id = PickRandomInstance(*generator_, project_id);
   ASSERT_THAT(instance_id, IsOk());
 
-  auto database_id = spanner_testing::RandomDatabaseName(*generator_);
-
-  db_ = new spanner::Database(project_id, *instance_id, database_id);
-
   spanner_admin::DatabaseAdminClient admin_client(
       spanner_admin::MakeDatabaseAdminConnection());
   CleanupStaleDatabases(
       admin_client, project_id, *instance_id,
-      std::chrono::system_clock::now() - std::chrono::hours(48));
+      std::chrono::system_clock::now() - std::chrono::hours(7 * 24));
+
+  auto database_id = spanner_testing::RandomDatabaseName(*generator_);
+  db_ = new spanner::Database(project_id, *instance_id, database_id);
 
   bool const emulator =
       google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
@@ -59,8 +58,9 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
   request.set_create_statement("CREATE DATABASE `" + db_->database_id() + "`");
   if (!emulator) {
     // TODO(#5479): Awaiting emulator support for version_retention_period.
-    request.add_extra_statements("ALTER DATABASE `" + database_id + "` " +
-                                 "SET OPTIONS (version_retention_period='2h')");
+    request.add_extra_statements(  //
+        "ALTER DATABASE `" + db_->database_id() + "` " +
+        "SET OPTIONS (version_retention_period='2h')");
   }
   request.add_extra_statements(R"sql(
         CREATE TABLE Singers (

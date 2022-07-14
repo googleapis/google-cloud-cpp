@@ -25,6 +25,10 @@ namespace cloud {
 namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// Drop all databases whose names indicate that they were created on or
+// before the (UTC) day that contains @p `tp`. This is useful to clean
+// up databases created by previous tests that crashed before having a
+// chance to cleanup after themselves.
 Status CleanupStaleDatabases(
     google::cloud::spanner_admin::DatabaseAdminClient admin_client,
     std::string const& project_id, std::string const& instance_id,
