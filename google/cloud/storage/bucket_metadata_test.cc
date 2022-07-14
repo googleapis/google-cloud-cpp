@@ -163,6 +163,9 @@ BucketMetadata CreateBucketMetadataForTest() {
       "website": {
         "mainPageSuffix": "index.html",
         "notFoundPage": "404.html"
+      },
+      "customPlacementConfig": {
+        "dataLocations": ["us-central1", "us-east1"]
       }
 })""";
   return internal::BucketMetadataParser::FromString(text).value();
@@ -277,6 +280,14 @@ TEST(BucketMetadataTest, Parse) {
   ASSERT_TRUE(actual.has_website());
   EXPECT_EQ("index.html", actual.website().main_page_suffix);
   EXPECT_EQ("404.html", actual.website().not_found_page);
+
+  // custom placement config
+  ASSERT_TRUE(actual.has_custom_placement_config());
+  EXPECT_THAT(actual.custom_placement_config().data_locations,
+              ElementsAre("us-central1", "us-east1"));
+  ASSERT_TRUE(actual.custom_placement_config_as_optional().has_value());
+  EXPECT_THAT(actual.custom_placement_config_as_optional()->data_locations,
+              ElementsAre("us-central1", "us-east1"));
 }
 
 /// @test Verify that the IOStream operator works as expected.
@@ -350,6 +361,12 @@ TEST(BucketMetadataTest, IOStream) {
   // website()
   EXPECT_THAT(actual, HasSubstr("index.html"));
   EXPECT_THAT(actual, HasSubstr("404.html"));
+
+  // custom_placement_config()
+  EXPECT_THAT(
+      actual,
+      HasSubstr(
+          "custom_placement_config.data_locations=[us-central1, us-east1]"));
 }
 
 /// @test Verify we can convert a BucketMetadata object to a JSON string.
@@ -476,6 +493,13 @@ TEST(BucketMetadataTest, ToJsonString) {
   ASSERT_TRUE(actual["website"].is_object()) << actual;
   EXPECT_EQ("index.html", actual["website"].value("mainPageSuffix", ""));
   EXPECT_EQ("404.html", actual["website"].value("notFoundPage", ""));
+
+  // custom_placement_config()
+  ASSERT_TRUE(actual.contains("customPlacementConfig")) << actual;
+  auto expected_custom_placement_config = nlohmann::json{
+      {"dataLocations", std::vector<std::string>{"us-central1", "us-east1"}},
+  };
+  EXPECT_EQ(actual["customPlacementConfig"], expected_custom_placement_config);
 }
 
 TEST(BucketMetadataTest, ToJsonLifecycleRoundtrip) {
@@ -861,6 +885,39 @@ TEST(BucketMetadataTest, ResetWebsite) {
   std::ostringstream os;
   os << copy;
   EXPECT_THAT(os.str(), Not(HasSubstr("website.")));
+}
+
+/// @test Verify we can set the custom_placement_config field in BucketMetadata.
+TEST(BucketMetadataTest, SetCustomPlacementConfig) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  copy.set_custom_placement_config(
+      BucketCustomPlacementConfig{{"test-location-1", "test-location-2"}});
+  ASSERT_TRUE(copy.has_custom_placement_config());
+  EXPECT_THAT(copy.custom_placement_config().data_locations,
+              ElementsAre("test-location-1", "test-location-2"));
+  ASSERT_TRUE(copy.custom_placement_config_as_optional().has_value());
+  EXPECT_THAT(copy.custom_placement_config_as_optional()->data_locations,
+              ElementsAre("test-location-1", "test-location-2"));
+  EXPECT_NE(copy, expected);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), HasSubstr("custom_placement_config"));
+}
+
+/// @test Verify we can set the custom_placement_config field in BucketMetadata.
+TEST(BucketMetadataTest, ResetCustomPlacementConfig) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_custom_placement_config());
+  EXPECT_TRUE(expected.custom_placement_config_as_optional().has_value());
+  auto copy = expected;
+  copy.reset_custom_placement_config();
+  EXPECT_FALSE(copy.has_custom_placement_config());
+  EXPECT_FALSE(copy.custom_placement_config_as_optional().has_value());
+  EXPECT_NE(copy, expected);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("custom_placement_config")));
 }
 
 TEST(BucketMetadataPatchBuilder, SetAcl) {

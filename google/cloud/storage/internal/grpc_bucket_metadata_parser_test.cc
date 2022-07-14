@@ -95,6 +95,10 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     labels: { key: "test-key-1" value: "test-value-1" }
     labels: { key: "test-key-2" value: "test-value-2" }
     website { main_page_suffix: "index.html" not_found_page: "404.html" }
+    custom_placement_config {
+      data_locations: "us-central1"
+      data_locations: "us-east4"
+    }
     versioning { enabled: true }
     logging {
       log_bucket: "test-log-bucket"
@@ -194,6 +198,9 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     "website": {
       "mainPageSuffix": "index.html",
       "notFoundPage": "404.html"
+    },
+    "customPlacementConfig": {
+      "dataLocations": ["us-central1", "us-east4"]
     },
     "versioning": { "enabled": true },
     "logging": {
@@ -469,6 +476,21 @@ TEST(GrpcBucketMetadataParser, BucketWebsiteRoundtrip) {
   google::storage::v2::Bucket::Website start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected = BucketWebsite{"index.html", "404.html"};
+  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcBucketMetadataParser, BucketCustomPlacementConfigRoundtrip) {
+  auto constexpr kText = R"pb(
+    data_locations: "us-central1"
+    data_locations: "us-east4"
+  )pb";
+  google::storage::v2::Bucket::CustomPlacementConfig start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected =
+      BucketCustomPlacementConfig{{"us-central1", "us-east4"}};
   auto const middle = GrpcBucketMetadataParser::FromProto(start);
   EXPECT_EQ(middle, expected);
   auto const end = GrpcBucketMetadataParser::ToProto(middle);

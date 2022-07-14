@@ -146,7 +146,8 @@ void CreateBucketDualRegion(google::cloud::storage::Client client,
      std::string const& region_a, std::string const& region_b) {
     auto metadata = client.CreateBucket(
         bucket_name,
-        gcs::BucketMetadata().set_location(region_a + '+' + region_b));
+        gcs::BucketMetadata().set_custom_placement_config(
+            gcs::BucketCustomPlacementConfig{{region_a, region_b}}));
     if (!metadata) throw std::runtime_error(metadata.status().message());
 
     std::cout << "Bucket " << metadata->name() << " created."
@@ -711,7 +712,7 @@ void RunAll(std::vector<std::string> const& argv) {
   DeleteBucket(client, {bucket_name});
 
   std::cout << "\nRunning CreateBucketDualRegion example" << std::endl;
-  CreateBucketDualRegion(client, {dual_bucket_name, "us-east1", "us-central1"});
+  CreateBucketDualRegion(client, {dual_bucket_name, "us-east4", "us-central1"});
 
   (void)client.DeleteBucket(dual_bucket_name);
 

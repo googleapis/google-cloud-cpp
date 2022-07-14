@@ -235,6 +235,29 @@ Status ParseWebsite(absl::optional<BucketWebsite>& website,
   return Status{};
 }
 
+Status ParseCustomPlacementConfig(
+    absl::optional<BucketCustomPlacementConfig>& lhs,
+    nlohmann::json const& json) {
+  if (!json.contains("customPlacementConfig")) return Status{};
+  auto const& field = json["customPlacementConfig"];
+  auto error = [] {
+    return Status{StatusCode::kInvalidArgument,
+                  "malformed customPlacementConfig"};
+  };
+  if (!field.is_object()) return error();
+  if (!field.contains("dataLocations")) return Status{};
+  auto const& locations = field["dataLocations"];
+  if (!locations.is_array()) return error();
+
+  BucketCustomPlacementConfig value;
+  for (auto const& i : locations.items()) {
+    if (!i.value().is_string()) return error();
+    value.data_locations.push_back(i.value().get<std::string>());
+  }
+  lhs = std::move(value);
+  return Status{};
+}
+
 void ToJsonAcl(nlohmann::json& json, BucketMetadata const& meta) {
   if (meta.acl().empty()) return;
   nlohmann::json value;
@@ -416,6 +439,14 @@ void ToJsonWebsite(nlohmann::json& json, BucketMetadata const& meta) {
   json["website"] = std::move(value);
 }
 
+void ToJsonCustomPlacementConfig(nlohmann::json& json,
+                                 BucketMetadata const& meta) {
+  if (!meta.has_custom_placement_config()) return;
+  json["customPlacementConfig"] = nlohmann::json{
+      {"dataLocations", meta.custom_placement_config().data_locations},
+  };
+}
+
 }  // namespace
 
 StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
@@ -484,6 +515,9 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
       [](BucketMetadata& meta, nlohmann::json const& json) {
         return ParseWebsite(meta.website_, json);
       },
+      [](BucketMetadata& meta, nlohmann::json const& json) {
+        return ParseCustomPlacementConfig(meta.custom_placement_config_, json);
+      },
   };
 
   BucketMetadata meta{};
@@ -525,6 +559,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   ToJsonStorageClass(json, meta);
   ToJsonVersioning(json, meta);
   ToJsonWebsite(json, meta);
+  ToJsonCustomPlacementConfig(json, meta);
 
   return json.dump();
 }
