@@ -1583,6 +1583,72 @@ TEST_F(GrpcClientTest, CreateDefaultObjectAclPatchFails) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
+TEST_F(GrpcClientTest, DeleteDefaultObjectAclFailure) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::GetBucketRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
+        return PermanentError();
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->DeleteDefaultObjectAcl(
+      DeleteDefaultObjectAclRequest("test-bucket-name", "test-entity1")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user"),
+                                UserProject("test-user-project")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, DeleteDefaultObjectAclPatchFails) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const&) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateBucket)
+      .WillOnce([](grpc::ClientContext&,
+                   v2::UpdateBucketRequest const& request) {
+        EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
+        auto expected = v2::ObjectAccessControl();
+        expected.set_entity("test-entity4");
+        expected.set_role("test-role4");
+        EXPECT_THAT(request.bucket().default_object_acl(),
+                    ElementsAre(IsProtoEqual(expected)));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("default_object_acl"));
+        return Status(StatusCode::kFailedPrecondition, "conflict");
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->DeleteDefaultObjectAcl(
+      DeleteDefaultObjectAclRequest("test-bucket-id", "test-entity3"));
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(GrpcClientTest, DeleteDefaultObjectAclNotFound) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const&) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateBucket).Times(0);
+
+  auto client = CreateTestClient(mock);
+  auto response = client->DeleteDefaultObjectAcl(
+      DeleteDefaultObjectAclRequest("test-bucket-id", "test-not-found"));
+  EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
+}
+
 TEST_F(GrpcClientTest, GetServiceAccount) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetServiceAccount)
