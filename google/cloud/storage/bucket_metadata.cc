@@ -133,6 +133,12 @@ std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs) {
             << ", locked=" << rhs.is_locked << "}";
 }
 
+std::ostream& operator<<(std::ostream& os,
+                         BucketCustomPlacementConfig const& rhs) {
+  return os << "BucketCustomPlacementConfig=["
+            << absl::StrJoin(rhs.data_locations, ", ") << "]";
+}
+
 bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
   return static_cast<internal::CommonMetadata<BucketMetadata> const&>(lhs) ==
              rhs &&
@@ -148,7 +154,8 @@ bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
          lhs.logging_ == rhs.logging_ && lhs.labels_ == rhs.labels_ &&
          lhs.retention_policy_ == rhs.retention_policy_ &&
          lhs.rpo_ == rhs.rpo_ && lhs.versioning_ == rhs.versioning_ &&
-         lhs.website_ == rhs.website_;
+         lhs.website_ == rhs.website_ &&
+         lhs.custom_placement_config_ == rhs.custom_placement_config_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
@@ -243,6 +250,12 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   if (rhs.has_website()) {
     os << ", website.main_page_suffix=" << rhs.website().main_page_suffix
        << ", website.not_found_page=" << rhs.website().not_found_page;
+  }
+
+  if (rhs.has_custom_placement_config()) {
+    os << ", custom_placement_config.data_locations=["
+       << absl::StrJoin(rhs.custom_placement_config().data_locations, ", ")
+       << "]";
   }
 
   return os << "}";

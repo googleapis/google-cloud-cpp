@@ -522,6 +522,56 @@ inline bool operator>=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
 }
 
 /**
+ * Configuration for Custom Dual Regions.
+ *
+ * It should specify precisely two eligible regions within the same Multiregion.
+ *
+ * @see Additional information on custom dual regions in the
+ *     [feature documentation][cdr-link].
+ *
+ * [cdr-link]: https://cloud.google.com/storage/docs/locations
+ */
+struct BucketCustomPlacementConfig {
+  std::vector<std::string> data_locations;
+};
+
+//@{
+/// @name Comparison operators for BucketCustomPlacementConfig.
+inline bool operator==(BucketCustomPlacementConfig const& lhs,
+                       BucketCustomPlacementConfig const& rhs) {
+  return lhs.data_locations == rhs.data_locations;
+}
+
+inline bool operator<(BucketCustomPlacementConfig const& lhs,
+                      BucketCustomPlacementConfig const& rhs) {
+  return lhs.data_locations < rhs.data_locations;
+}
+
+inline bool operator!=(BucketCustomPlacementConfig const& lhs,
+                       BucketCustomPlacementConfig const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketCustomPlacementConfig const& lhs,
+                      BucketCustomPlacementConfig const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketCustomPlacementConfig const& lhs,
+                       BucketCustomPlacementConfig const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketCustomPlacementConfig const& lhs,
+                       BucketCustomPlacementConfig const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+//@}
+
+std::ostream& operator<<(std::ostream& os,
+                         BucketCustomPlacementConfig const& rhs);
+
+/**
  * Represents a Google Cloud Storage Bucket Metadata object.
  */
 class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
@@ -912,6 +962,30 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   ///@}
 
+  /// @name Accessors and modifiers for custom placement configuration.
+  ///@{
+  bool has_custom_placement_config() const {
+    return custom_placement_config_.has_value();
+  }
+  BucketCustomPlacementConfig const& custom_placement_config() const {
+    return *custom_placement_config_;
+  }
+  absl::optional<BucketCustomPlacementConfig> const&
+  custom_placement_config_as_optional() const {
+    return custom_placement_config_;
+  }
+  /// Placement configuration can only be set when the bucket is created.
+  BucketMetadata& set_custom_placement_config(BucketCustomPlacementConfig v) {
+    custom_placement_config_ = std::move(v);
+    return *this;
+  }
+  /// Placement configuration can only be set when the bucket is created.
+  BucketMetadata& reset_custom_placement_config() {
+    custom_placement_config_.reset();
+    return *this;
+  }
+  ///@}
+
   friend bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs);
   friend bool operator!=(BucketMetadata const& lhs, BucketMetadata const& rhs) {
     return !(lhs == rhs);
@@ -940,6 +1014,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::string rpo_;
   absl::optional<BucketVersioning> versioning_;
   absl::optional<BucketWebsite> website_;
+  absl::optional<BucketCustomPlacementConfig> custom_placement_config_;
 };
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);

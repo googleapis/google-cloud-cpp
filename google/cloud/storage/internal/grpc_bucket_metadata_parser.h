@@ -80,6 +80,11 @@ struct GrpcBucketMetadataParser {
 
   static google::storage::v2::Bucket::Website ToProto(BucketWebsite rhs);
   static BucketWebsite FromProto(google::storage::v2::Bucket::Website rhs);
+
+  static google::storage::v2::Bucket::CustomPlacementConfig ToProto(
+      BucketCustomPlacementConfig rhs);
+  static BucketCustomPlacementConfig FromProto(
+      google::storage::v2::Bucket::CustomPlacementConfig rhs);
 };
 
 }  // namespace internal

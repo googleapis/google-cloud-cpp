@@ -100,6 +100,10 @@ google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
   if (rhs.has_iam_configuration()) {
     *result.mutable_iam_config() = ToProto(rhs.iam_configuration());
   }
+  if (rhs.has_custom_placement_config()) {
+    *result.mutable_custom_placement_config() =
+        ToProto(rhs.custom_placement_config());
+  }
   return result;
 }
 
@@ -169,6 +173,10 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   }
   if (rhs.has_versioning()) metadata.versioning_ = FromProto(rhs.versioning());
   if (rhs.has_website()) metadata.website_ = FromProto(rhs.website());
+  if (rhs.has_custom_placement_config()) {
+    metadata.custom_placement_config_ =
+        FromProto(rhs.custom_placement_config());
+  }
 
   return metadata;
 }
@@ -476,6 +484,24 @@ BucketWebsite GrpcBucketMetadataParser::FromProto(
   BucketWebsite result;
   result.main_page_suffix = std::move(*rhs.mutable_main_page_suffix());
   result.not_found_page = std::move(*rhs.mutable_not_found_page());
+  return result;
+}
+
+google::storage::v2::Bucket::CustomPlacementConfig
+GrpcBucketMetadataParser::ToProto(BucketCustomPlacementConfig rhs) {
+  google::storage::v2::Bucket::CustomPlacementConfig result;
+  for (auto& l : rhs.data_locations) {
+    *result.add_data_locations() = std::move(l);
+  }
+  return result;
+}
+
+BucketCustomPlacementConfig GrpcBucketMetadataParser::FromProto(
+    google::storage::v2::Bucket::CustomPlacementConfig rhs) {
+  BucketCustomPlacementConfig result;
+  for (auto& l : *rhs.mutable_data_locations()) {
+    result.data_locations.push_back(std::move(l));
+  }
   return result;
 }
 
