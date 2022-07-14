@@ -2,8 +2,9 @@
 
 @mainpage Batch API C++ Client Library
 
-An idiomatic C++ client library for the [Batch API][cloud-service-docs], a service
-to An API to manage the running of batch jobs on Google Cloud Platform.
+An idiomatic C++ client library for the [Batch API][cloud-service-docs], a fully
+managed service to schedule, queue, and execute batch jobs on Google's
+infrastructure.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -39,6 +40,11 @@ which should give you a taste of the Batch API C++ client library API.
 ## Environment Variables
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_BATCH_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "batch.googleapis.com")
+  used by `MakeBatchServiceConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC

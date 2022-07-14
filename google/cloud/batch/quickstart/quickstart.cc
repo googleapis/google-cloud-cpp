@@ -12,22 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/batch/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/batch/batch_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id region-id\n";
     return 1;
   }
 
   namespace batch = ::google::cloud::batch;
-  auto client = batch::Client(batch::MakeConnection(/* EDIT HERE */));
+  auto client = batch::BatchServiceClient(batch::MakeBatchServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const location =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListJobs(location)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
