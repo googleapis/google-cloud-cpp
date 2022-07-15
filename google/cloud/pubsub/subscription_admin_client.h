@@ -85,6 +85,9 @@ class SubscriptionAdminClient {
    * @par Example: Create a Push Subscription
    * @snippet samples.cc create-push-subscription
    *
+   * @par Example: Create a BigQuery Subscription
+   * @snippet samples.cc create-bigquery-subscription
+   *
    * @param topic the topic that the subscription will attach to
    * @param subscription the name for the subscription
    * @param builder any additional configuration for the subscription
