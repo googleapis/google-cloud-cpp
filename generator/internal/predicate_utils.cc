@@ -15,6 +15,7 @@
 #include "generator/internal/predicate_utils.h"
 #include "google/cloud/log.h"
 #include "google/cloud/optional.h"
+#include "absl/strings/match.h"
 #include "generator/internal/descriptor_utils.h"
 #include <google/longrunning/operations.pb.h>
 #include <string>
@@ -121,6 +122,18 @@ bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
     return operation_info.response_type() == "google.protobuf.Empty";
+  }
+  return false;
+}
+
+bool IsUpdateDatabaseDdl(google::protobuf::MethodDescriptor const& method) {
+  if (method.output_type()->full_name() == "google.longrunning.Operation") {
+    auto operation_info =
+        method.options().GetExtension(google::longrunning::operation_info);
+    if (operation_info.response_type() == "google.protobuf.Empty") {
+      return absl::EndsWith(operation_info.metadata_type(),
+                            ".admin.database.v1.UpdateDatabaseDdlMetadata");
+    }
   }
   return false;
 }

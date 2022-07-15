@@ -456,6 +456,51 @@ TEST(PredicateUtilsTest,
       *service_file_descriptor->service(0)->method(0)));
 }
 
+TEST(PredicateUtilsTest, UpdateDatabaseDdlSuccess) {
+  FileDescriptorProto longrunning_file;
+  auto constexpr kLongrunningText = R"pb(
+    name: "google/longrunning/operation.proto"
+    package: "google.longrunning"
+    message_type { name: "Operation" }
+  )pb";
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kLongrunningText,
+                                                            &longrunning_file));
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    dependency: "google/longrunning/operation.proto"
+    message_type { name: "UpdateDatabaseDdlRequest" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "UpdateDatabaseDdl"
+        input_type: "google.protobuf.UpdateDatabaseDdlRequest"
+        output_type: "google.longrunning.Operation"
+        options {
+          [google.longrunning.operation_info] {
+            response_type: "google.protobuf.Empty"
+            metadata_type: "google.test.admin.database.v1.UpdateDatabaseDdlMetadata"
+          }
+          [google.api.http] {
+            put: "/v1/{database=projects/*/instances/*/databases/*}/ddl"
+          }
+        }
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  pool.BuildFile(longrunning_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_TRUE(
+      IsUpdateDatabaseDdl(*service_file_descriptor->service(0)->method(0)));
+}
+
 TEST(PredicateUtilsTest, PaginationSuccess) {
   FileDescriptorProto service_file;
   /// @cond

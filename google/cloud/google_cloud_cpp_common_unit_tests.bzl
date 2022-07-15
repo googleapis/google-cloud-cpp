@@ -36,6 +36,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/future_impl_test.cc",
     "internal/invoke_result_test.cc",
     "internal/log_impl_test.cc",
+    "internal/operation_id_test.cc",
     "internal/pagination_range_test.cc",
     "internal/parse_rfc3339_test.cc",
     "internal/populate_common_options_test.cc",

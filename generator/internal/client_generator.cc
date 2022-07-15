@@ -339,6 +339,9 @@ Status ClientGenerator::GenerateCc() {
     CcLocalIncludes({vars("options_header_path")});
     CcSystemIncludes({"thread"});
   }
+  if (HasUpdateDatabaseDdlMethod()) {
+    CcLocalIncludes({"google/cloud/internal/operation_id.h"});
+  }
 
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
@@ -383,8 +386,8 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
           method,
           {MethodPattern(
                {
+                   // clang-format off
                    {IsResponseTypeEmpty,
-                    // clang-format off
                    "\nStatus\n",
                    "\nStatusOr<$response_type$>\n"},
                   {method_string},
@@ -400,8 +403,8 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
                    Not(IsPaginated))),
            MethodPattern(
                {
+                   // clang-format off
                    {IsResponseTypeEmpty,
-                    // clang-format off
                     "\nfuture<Status>\n",
                     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
                   {method_string},
@@ -409,6 +412,10 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
+                   {IsUpdateDatabaseDdl,
+                    "  request.set_operation_id(\n"
+                    "      google::cloud::internal::OperationId(\"$method_name$\"));\n",
+                    ""},
                   {"  return connection_->$method_name$(request);\n"
                   "}\n"}
                    // clang-format on
@@ -501,8 +508,8 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
         method,
         {MethodPattern(
              {
+                 // clang-format off
                  {IsResponseTypeEmpty,
-                  // clang-format off
     "\nStatus\n",
     "\nStatusOr<$response_type$>\n"},
    {"$client_class_name$::$method_name$($request_type$ const& request"
@@ -517,15 +524,23 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
                  Not(IsPaginated))),
          MethodPattern(
              {
+                 // clang-format off
                  {IsResponseTypeEmpty,
-                  // clang-format off
     "\nfuture<Status>\n",
     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"$client_class_name$::$method_name$($request_type$ const& request"
     ", Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
-    "std::move(opts), options_));\n"
-    "  return connection_->$method_name$(request);\n"
+    "std::move(opts), options_));\n"},
+                 {IsUpdateDatabaseDdl,
+    "  if (request.operation_id().empty()) {\n"
+    "    auto request_with_operation_id = request;\n"
+    "    request_with_operation_id.set_operation_id(\n"
+    "        google::cloud::internal::OperationId(\"$method_name$\"));\n"
+    "    return connection_->$method_name$(request_with_operation_id);\n"
+    "  }\n",
+    ""},
+   {"  return connection_->$method_name$(request);\n"
     "}\n"}
                  // clang-format on
              },
@@ -574,8 +589,8 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
           method,
           {MethodPattern(
               {
+                  // clang-format off
                   {IsResponseTypeEmpty,
-                   // clang-format off
                    "\nfuture<Status>\n",
                    "\nfuture<StatusOr<$response_type$>>\n"},
                   {method_string},
@@ -595,8 +610,8 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
         method,
         {MethodPattern(
             {
+                // clang-format off
                 {IsResponseTypeEmpty,
-                 // clang-format off
     "\nfuture<Status>\n",
     "\nfuture<StatusOr<$response_type$>>\n"},
    {"$client_class_name$::Async$method_name$($request_type$ const& request"

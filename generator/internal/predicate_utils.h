@@ -73,6 +73,13 @@ bool IsLongrunningMetadataTypeUsedAsResponse(
     google::protobuf::MethodDescriptor const& method);
 
 /**
+ * Determines if the given method's response is contained in the longrunning
+ * metadata field, and, if so, whether that response's type ends with
+ * ".admin.database.v1.UpdateDatabaseDdlMetadata".
+ */
+bool IsUpdateDatabaseDdl(google::protobuf::MethodDescriptor const& method);
+
+/**
  * Determines if the method contains a routing header as specified in AIP-4222.
  */
 bool HasRoutingHeader(google::protobuf::MethodDescriptor const& method);

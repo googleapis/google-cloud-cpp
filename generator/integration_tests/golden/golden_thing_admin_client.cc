@@ -21,6 +21,7 @@
 #include <memory>
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
 #include <thread>
+#include "google/cloud/internal/operation_id.h"
 
 namespace google {
 namespace cloud {
@@ -79,12 +80,20 @@ GoldenThingAdminClient::UpdateDatabaseDdl(std::string const& database, std::vect
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(database);
   *request.mutable_statements() = {statements.begin(), statements.end()};
+  request.set_operation_id(
+      google::cloud::internal::OperationId("UpdateDatabaseDdl"));
   return connection_->UpdateDatabaseDdl(request);
 }
 
 future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
 GoldenThingAdminClient::UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  if (request.operation_id().empty()) {
+    auto request_with_operation_id = request;
+    request_with_operation_id.set_operation_id(
+        google::cloud::internal::OperationId("UpdateDatabaseDdl"));
+    return connection_->UpdateDatabaseDdl(request_with_operation_id);
+  }
   return connection_->UpdateDatabaseDdl(request);
 }
 

@@ -158,6 +158,13 @@ bool ServiceCodeGenerator::HasBidirStreamingMethod() const {
                      });
 }
 
+bool ServiceCodeGenerator::HasUpdateDatabaseDdlMethod() const {
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsUpdateDatabaseDdl(m);
+                     });
+}
+
 bool ServiceCodeGenerator::HasExplicitRoutingMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {

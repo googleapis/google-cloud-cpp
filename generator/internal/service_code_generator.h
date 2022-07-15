@@ -140,9 +140,14 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasStreamingWriteMethod() const;
 
   /**
-   * Determines if the service contains at least one bidir streaming RPC
+   * Determines if the service contains at least one bidir streaming RPC.
    */
   bool HasBidirStreamingMethod() const;
+
+  /**
+   * Determines if the service contains at least one "UpdateDatabaseDdl" RPC.
+   */
+  bool HasUpdateDatabaseDdlMethod() const;
 
   /**
    * Determines if the service contains at least one RPC with a

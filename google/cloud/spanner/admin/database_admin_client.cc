@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/admin/database_admin_options.h"
 #include "google/cloud/spanner/admin/internal/database_admin_option_defaults.h"
+#include "google/cloud/internal/operation_id.h"
 #include <memory>
 #include <thread>
 
@@ -95,6 +96,8 @@ DatabaseAdminClient::UpdateDatabaseDdl(
   google::spanner::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(database);
   *request.mutable_statements() = {statements.begin(), statements.end()};
+  request.set_operation_id(
+      google::cloud::internal::OperationId("UpdateDatabaseDdl"));
   return connection_->UpdateDatabaseDdl(request);
 }
 
@@ -105,6 +108,12 @@ DatabaseAdminClient::UpdateDatabaseDdl(
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  if (request.operation_id().empty()) {
+    auto request_with_operation_id = request;
+    request_with_operation_id.set_operation_id(
+        google::cloud::internal::OperationId("UpdateDatabaseDdl"));
+    return connection_->UpdateDatabaseDdl(request_with_operation_id);
+  }
   return connection_->UpdateDatabaseDdl(request);
 }
 
