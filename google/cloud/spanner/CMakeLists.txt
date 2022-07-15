@@ -270,6 +270,8 @@ function (spanner_client_define_tests)
         testing/cleanup_stale_instances.h
         testing/database_integration_test.cc
         testing/database_integration_test.h
+        testing/debug_log.cc
+        testing/debug_log.h
         testing/fake_clock.h
         testing/instance_location.cc
         testing/instance_location.h

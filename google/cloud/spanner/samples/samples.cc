@@ -24,6 +24,7 @@
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/row.h"
+#include "google/cloud/spanner/testing/debug_log.h"  // TODO(#4758): remove
 #include "google/cloud/spanner/testing/instance_location.h"
 #include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
@@ -556,6 +557,8 @@ void UpdateDatabaseWithDefaultLeader(
   auto metadata =
       client.UpdateDatabaseDdl(database.FullName(), std::move(statements))
           .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`default_leader` altered, new DDL metadata:\n"
             << metadata->DebugString();
@@ -584,6 +587,8 @@ void CreateTableWithDatatypes(
                                 (allow_commit_timestamp=true)
                         ) PRIMARY KEY (VenueId))"""})
                       .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`Venues` table created, new DDL:\n" << metadata->DebugString();
 }
@@ -608,6 +613,8 @@ void CreateTableWithTimestamp(
                         ) PRIMARY KEY (SingerId, VenueId, EventDate),
                             INTERLEAVE IN PARENT Singers ON DELETE CASCADE)"""})
                       .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`Performances` table created, new DDL:\n"
             << metadata->DebugString();
@@ -626,6 +633,8 @@ void AddIndex(google::cloud::spanner_admin::DatabaseAdminClient client,
               database.FullName(),
               {"CREATE INDEX AlbumsByAlbumTitle ON Albums(AlbumTitle)"})
           .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`AlbumsByAlbumTitle` Index successfully added, new DDL:\n"
             << metadata->DebugString();
@@ -669,6 +678,8 @@ void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
               database.FullName(),
               {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"})
           .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Added MarketingBudget column\n";
 }
@@ -688,6 +699,8 @@ void AddTimestampColumn(
               {"ALTER TABLE Albums ADD COLUMN LastUpdateTime TIMESTAMP "
                "OPTIONS (allow_commit_timestamp=true)"})
           .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Added LastUpdateTime column\n";
 }
@@ -705,6 +718,8 @@ void AddStoringIndex(google::cloud::spanner_admin::DatabaseAdminClient client,
                         CREATE INDEX AlbumsByAlbumTitle2 ON Albums(AlbumTitle)
                             STORING (MarketingBudget))"""})
                       .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`AlbumsByAlbumTitle2` Index successfully added, new DDL:\n"
             << metadata->DebugString();
@@ -1981,6 +1996,8 @@ void AddJsonColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
                       .UpdateDatabaseDdl(database.FullName(), {R"""(
                         ALTER TABLE Venues ADD COLUMN VenueDetails JSON)"""})
                       .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`Venues` table altered, new DDL:\n" << metadata->DebugString();
 }
@@ -2058,6 +2075,8 @@ void AddNumericColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
                       .UpdateDatabaseDdl(database.FullName(), {R"""(
                         ALTER TABLE Venues ADD COLUMN Revenue NUMERIC)"""})
                       .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`Venues` table altered, new DDL:\n" << metadata->DebugString();
 }
