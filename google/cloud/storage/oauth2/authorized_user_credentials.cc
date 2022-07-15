@@ -71,7 +71,8 @@ ParseAuthorizedUserRefreshResponse(
     auto payload =
         response.payload +
         "Could not find all required fields in response (access_token,"
-        " id_token, expires_in, token_type).";
+        " id_token, expires_in, token_type) while trying to obtain an access"
+        " token for authorized user credentials.";
     return AsStatus(storage::internal::HttpResponse{response.status_code,
                                                     payload, response.headers});
   }
