@@ -424,7 +424,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
 //
 // A description of the gRPC analog can be found in the proto file. Pay
 // particular attention to the documentation for `WriteObject()`,
-// `WriteObjectRequest`, `StartResumablewrite()` and `QueryResumableWrite()`:
+// `WriteObjectRequest`, `StartResumableWrite()` and `QueryResumableWrite()`:
 //    https://github.com/googleapis/googleapis/blob/master/google/storage/v2/storage.proto
 //
 // At a high level one starts a resumable upload by creating a "session". These
