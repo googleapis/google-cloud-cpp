@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/numeric.h"
+#include "google/cloud/spanner/testing/debug_log.h"  // TODO(#4758): remove
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
@@ -72,6 +73,8 @@ void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
   };
   auto metadata =
       client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Column added.\nNew DDL:\n" << metadata->DebugString();
 }
@@ -249,6 +252,8 @@ void CaseSensitivity(
   };
   auto metadata =
       admin_client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      admin_client, database, metadata.status());        //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Tables created.\nNew DDL:\n" << metadata->DebugString();
 
@@ -486,6 +491,8 @@ void InterleavedTable(google::cloud::spanner_admin::DatabaseAdminClient client,
   };
   auto metadata =
       client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Tables created.\nNew DDL:\n" << metadata->DebugString();
 }
@@ -504,6 +511,8 @@ void CreateStoringIndex(
   };
   auto metadata =
       client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Index added.\nNew DDL:\n" << metadata->DebugString();
 }
@@ -526,6 +535,8 @@ void InformationSchema(
   };
   auto metadata =
       admin_client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      admin_client, database, metadata.status());        //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Table created.\nNew DDL:\n" << metadata->DebugString();
 
@@ -724,6 +735,8 @@ void CreateTables(google::cloud::spanner_admin::DatabaseAdminClient client,
   };
   auto metadata =
       client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Tables created.\nNew DDL:\n" << metadata->DebugString();
 }
@@ -740,6 +753,8 @@ void DropTables(google::cloud::spanner_admin::DatabaseAdminClient client,
   };
   auto metadata =
       client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Tables dropped.\nNew DDL:\n" << metadata->DebugString();
 }
