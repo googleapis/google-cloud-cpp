@@ -55,10 +55,10 @@ cache_download_tarball() {
   activate_service_account_keyfile "${CACHE_KEYFILE}"
 
   io::log_h2 "Downloading build cache ${FILENAME} from ${GCS_FOLDER}"
-  io::log "gsutil configuration"
-  gsutil version -l
+  io::log "gcloud configuration"
+  gcloud version
   env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
-    gsutil "${CACHE_GSUTIL_DEBUG:--q}" \
+    "${GCLOUD_BIN}" alpha storage "${CACHE_GSUTIL_DEBUG:--q}" \
     cp "gs://${GCS_FOLDER}/${FILENAME}" "${DESTINATION}"
 }
 
@@ -89,7 +89,7 @@ cache_upload_tarball() {
   create_gcloud_config
   activate_service_account_keyfile "${CACHE_KEYFILE}"
   env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
-    gsutil "${CACHE_GSUTIL_DEBUG:--q}" \
+    "${GCLOUD_BIN}" alpha storage "${CACHE_GSUTIL_DEBUG:--q}" \
     cp "${SOURCE_DIRECTORY}/${FILENAME}" "gs://${CACHE_FOLDER}/"
 
   io::log "Upload completed"
