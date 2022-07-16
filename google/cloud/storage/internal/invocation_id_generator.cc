@@ -31,8 +31,6 @@ std::string InvocationIdGenerator::MakeInvocationId() {
   // A retry id is supposed to be a UUID V4 string. We assume you have read the
   // wikipedia page for the details:
   //     https://en.wikipedia.org/wiki/Universally_unique_identifier
-  auto constexpr kIdBitCount = 128;
-  auto constexpr kArraySize = kIdBitCount / 8;
   auto constexpr kVersionOctet = 6;
   auto constexpr kVariantOctet = 8;
   auto constexpr kVersion = static_cast<std::uint8_t>(4 << 4);
@@ -40,7 +38,9 @@ std::string InvocationIdGenerator::MakeInvocationId() {
   auto constexpr kVariant = static_cast<std::uint8_t>(1 << 5);
   auto constexpr kVariantMask = static_cast<std::uint8_t>(0b0001'1111);
 
-  auto o = [&] {
+  auto o = [this]() {
+    auto constexpr kIdBitCount = 128;
+    auto constexpr kArraySize = kIdBitCount / 8;
     std::array<std::uint8_t, kArraySize> buf;
     std::uniform_int_distribution<std::uint8_t> d(0, 255);
 
