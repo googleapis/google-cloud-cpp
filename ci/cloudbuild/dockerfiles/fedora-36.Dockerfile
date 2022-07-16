@@ -14,6 +14,7 @@
 
 FROM fedora:36
 ARG NCPU=4
+ARG ARCH=amd64
 
 # Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
 # for `google-cloud-cpp`. Install these packages and additional development
@@ -186,6 +187,6 @@ RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 # those library directories will be found.
 RUN ldconfig /usr/local/lib*
 
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.12.0/bazelisk-linux-amd64" && \
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.12.0/bazelisk-linux-${ARCH}" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel

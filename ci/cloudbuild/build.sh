@@ -92,11 +92,12 @@ function die() {
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
   --options="t:c:ldsh" \
-  --longoptions="build:,distro:,trigger:,cloud:,local,docker,docker-shell,docker-clean,verbose,help" \
+  --longoptions="arch:,build:,distro:,trigger:,cloud:,local,docker,docker-shell,docker-clean,verbose,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
+ARCH_FLAG=""
 BUILD_FLAG=""
 DISTRO_FLAG=""
 TRIGGER_FLAG=""
@@ -108,6 +109,10 @@ SHELL_FLAG="false"
 : "${VERBOSE_FLAG:=false}"
 while true; do
   case "$1" in
+    --arch)
+      ARCH_FLAG="$2"
+      shift 2
+      ;;
     --build)
       BUILD_FLAG="$2"
       shift 2
@@ -307,6 +312,9 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--build-arg=NCPU=$(nproc)"
     -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile"
   )
+  if [[ -n "${ARCH_FLAG}" ]]; then
+    build_flags+=("--build-arg=ARCH=${ARCH_FLAG}")
+  fi
   export DOCKER_BUILDKIT=1
   io::run docker build "${build_flags[@]}" ci
   io::log_h2 "Starting docker container: ${image}"
