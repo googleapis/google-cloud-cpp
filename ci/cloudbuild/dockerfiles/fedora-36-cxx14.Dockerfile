@@ -141,7 +141,7 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.2.tar.gz |
 
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel re2-devel
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.47.0.tar.gz | \
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.47.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
