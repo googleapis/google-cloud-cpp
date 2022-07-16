@@ -58,30 +58,30 @@ FALLBACK_KEY=""
 PATHS=()
 while true; do
   case "$1" in
-    --bucket_url)
-      BUCKET_URL="$2"
-      shift 2
-      ;;
-    --key)
-      KEY="$2"
-      shift 2
-      ;;
-    --fallback_key)
-      FALLBACK_KEY="$2"
-      shift 2
-      ;;
-    --path)
-      PATHS+=("$2")
-      shift 2
-      ;;
-    -h | --help)
-      print_usage
-      exit 0
-      ;;
-    --)
-      shift
-      break
-      ;;
+  --bucket_url)
+    BUCKET_URL="$2"
+    shift 2
+    ;;
+  --key)
+    KEY="$2"
+    shift 2
+    ;;
+  --fallback_key)
+    FALLBACK_KEY="$2"
+    shift 2
+    ;;
+  --path)
+    PATHS+=("$2")
+    shift 2
+    ;;
+  -h | --help)
+    print_usage
+    exit 0
+    ;;
+  --)
+    shift
+    break
+    ;;
   esac
 done
 readonly BUCKET_URL
@@ -118,27 +118,31 @@ function save_cache() {
   io::log "Saving ( ${paths[*]} ) to ${PRIMARY_CACHE_URL}"
   du -sh "${paths[@]}"
   # We use a temp file here so gcloud can retry failed uploads. See #6508.
+  local tmpd
   tmpd="$(mktemp -d)"
-  tmpf="${tmpd}/cache.tar.gz"
+  local tmpf="${tmpd}/cache.tar.gz"
   tar -czf "${tmpf}" "${paths[@]}"
   gcloud --quiet alpha storage cp "${tmpf}" "${PRIMARY_CACHE_URL}"
   gsutil stat "${PRIMARY_CACHE_URL}"
-  rm "${tmpf}"
-  rmdir "${tmpd}"
+  rm -fr "${tmpd}" || true
 }
 
 function restore_cache() {
   local urls=("${PRIMARY_CACHE_URL}")
+  local tmpd
+  tmpd="$(mktemp -d)"
+  local tmpf="${tmpd}/cache.tar.gz"
   if [[ -n "${FALLBACK_KEY}" ]]; then
     urls+=("${BUCKET_URL}/${FALLBACK_KEY}/cache.tar.gz")
   fi
   for url in "${urls[@]}"; do
     if gsutil stat "${url}"; then
       io::log "Fetching cache url ${url}"
-      gcloud --quiet alpha storage cp "${url}" - | tar -zxf - || continue
+      (gcloud --quiet alpha storage cp "${url}" "${tmpf}" && tar -zxf "${tmpf}") || continue
       break
     fi
   done
+  rm -fr "${tmpd}" || true
   return 0
 }
 
@@ -146,14 +150,14 @@ io::log "====> ${PROGRAM_NAME}: $*"
 readonly TIMEFORMAT="==> 🕑 ${PROGRAM_NAME} completed in %R seconds"
 time {
   case "$1" in
-    save)
-      save_cache
-      ;;
-    restore)
-      restore_cache
-      ;;
-    *)
-      print_usage
-      ;;
+  save)
+    save_cache
+    ;;
+  restore)
+    restore_cache
+    ;;
+  *)
+    print_usage
+    ;;
   esac
 }
