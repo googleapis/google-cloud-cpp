@@ -15,6 +15,7 @@
 #include "google/cloud/internal/operation_id.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -23,14 +24,13 @@ namespace internal {
 namespace {
 
 using ::testing::Eq;
-using ::testing::MatchesRegex;
 using ::testing::StartsWith;
 
 TEST(OperationId, Format) {
   auto const actual = OperationId("Foo");
   EXPECT_THAT(actual.size(), Eq(128));
   EXPECT_THAT(actual, StartsWith("foo_"));
-  EXPECT_THAT(actual, MatchesRegex("[a-z][a-z0-9_]*"));
+  EXPECT_TRUE(std::regex_match(actual, std::regex("[a-z][a-z0-9_]*")));
 }
 
 }  // namespace
