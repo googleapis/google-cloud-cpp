@@ -58,30 +58,30 @@ FALLBACK_KEY=""
 PATHS=()
 while true; do
   case "$1" in
-  --bucket_url)
-    BUCKET_URL="$2"
-    shift 2
-    ;;
-  --key)
-    KEY="$2"
-    shift 2
-    ;;
-  --fallback_key)
-    FALLBACK_KEY="$2"
-    shift 2
-    ;;
-  --path)
-    PATHS+=("$2")
-    shift 2
-    ;;
-  -h | --help)
-    print_usage
-    exit 0
-    ;;
-  --)
-    shift
-    break
-    ;;
+    --bucket_url)
+      BUCKET_URL="$2"
+      shift 2
+      ;;
+    --key)
+      KEY="$2"
+      shift 2
+      ;;
+    --fallback_key)
+      FALLBACK_KEY="$2"
+      shift 2
+      ;;
+    --path)
+      PATHS+=("$2")
+      shift 2
+      ;;
+    -h | --help)
+      print_usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
   esac
 done
 readonly BUCKET_URL
@@ -150,14 +150,14 @@ io::log "====> ${PROGRAM_NAME}: $*"
 readonly TIMEFORMAT="==> 🕑 ${PROGRAM_NAME} completed in %R seconds"
 time {
   case "$1" in
-  save)
-    save_cache
-    ;;
-  restore)
-    restore_cache
-    ;;
-  *)
-    print_usage
-    ;;
+    save)
+      save_cache
+      ;;
+    restore)
+      restore_cache
+      ;;
+    *)
+      print_usage
+      ;;
   esac
 }
