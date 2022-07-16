@@ -73,7 +73,8 @@ ParseAuthorizedUserRefreshResponse(rest_internal::RestResponse& response,
     auto error_payload =
         *payload +
         "Could not find all required fields in response (access_token,"
-        " id_token, expires_in, token_type).";
+        " id_token, expires_in, token_type) while trying to obtain an access"
+        " token for service account credentials.";
     return AsStatus(status_code, error_payload);
   }
   std::string header_value = access_token.value("token_type", "");

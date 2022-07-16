@@ -29,6 +29,7 @@
 #include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/auth_header_error.h"
 #include "google/cloud/internal/getenv.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/match.h"
@@ -42,6 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 namespace rest = google::cloud::rest_internal;
+using ::google::cloud::internal::AuthHeaderError;
 using ::google::cloud::internal::CurrentOptions;
 
 namespace {
@@ -124,9 +126,7 @@ Status AddAuthorizationHeader(Options const& options,
                               RestRequestBuilder& builder) {
   auto auth_header =
       options.get<Oauth2CredentialsOption>()->AuthorizationHeader();
-  if (!auth_header.ok()) {
-    return std::move(auth_header).status();
-  }
+  if (!auth_header) return AuthHeaderError(std::move(auth_header).status());
   builder.AddHeader("Authorization", std::string(absl::StripPrefix(
                                          *auth_header, "Authorization: ")));
   return {};

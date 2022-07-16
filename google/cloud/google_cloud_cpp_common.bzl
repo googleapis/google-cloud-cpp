@@ -31,6 +31,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/algorithm.h",
     "internal/api_client_header.h",
     "internal/attributes.h",
+    "internal/auth_header_error.h",
     "internal/backoff_policy.h",
     "internal/base64_transforms.h",
     "internal/big_endian.h",
@@ -88,6 +89,7 @@ google_cloud_cpp_common_hdrs = [
 google_cloud_cpp_common_srcs = [
     "credentials.cc",
     "internal/api_client_header.cc",
+    "internal/auth_header_error.cc",
     "internal/backoff_policy.cc",
     "internal/base64_transforms.cc",
     "internal/compiler_info.cc",

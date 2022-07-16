@@ -146,7 +146,8 @@ ParseServiceAccountRefreshResponse(rest_internal::RestResponse& response,
     auto error_payload =
         *payload +
         "Could not find all required fields in response (access_token,"
-        " expires_in, token_type).";
+        " expires_in, token_type) while trying to obtain an access token for"
+        " service account credentials.";
     return AsStatus(status_code, error_payload);
   }
 

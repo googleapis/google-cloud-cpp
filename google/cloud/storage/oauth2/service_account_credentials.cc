@@ -254,7 +254,8 @@ ParseServiceAccountRefreshResponse(
     auto payload =
         response.payload +
         "Could not find all required fields in response (access_token,"
-        " expires_in, token_type).";
+        " expires_in, token_type) while trying to obtain an access token for"
+        " service account credentials.";
     return AsStatus(storage::internal::HttpResponse{response.status_code,
                                                     payload, response.headers});
   }

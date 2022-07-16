@@ -45,6 +45,8 @@ add_library(
     internal/api_client_header.cc
     internal/api_client_header.h
     internal/attributes.h
+    internal/auth_header_error.cc
+    internal/auth_header_error.h
     internal/backoff_policy.cc
     internal/backoff_policy.h
     internal/base64_transforms.cc
