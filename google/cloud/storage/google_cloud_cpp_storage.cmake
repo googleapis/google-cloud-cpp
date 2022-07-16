@@ -106,6 +106,8 @@ add_library(
     internal/http_response.h
     internal/impersonate_service_account_credentials.cc
     internal/impersonate_service_account_credentials.h
+    internal/invocation_id_generator.cc
+    internal/invocation_id_generator.h
     internal/lifecycle_rule_parser.cc
     internal/lifecycle_rule_parser.h
     internal/logging_client.cc
@@ -456,6 +458,7 @@ if (BUILD_TESTING)
         internal/hmac_key_requests_test.cc
         internal/http_response_test.cc
         internal/impersonate_service_account_credentials_test.cc
+        internal/invocation_id_generator_test.cc
         internal/logging_client_test.cc
         internal/make_jwt_assertion_test.cc
         internal/metadata_parser_test.cc
