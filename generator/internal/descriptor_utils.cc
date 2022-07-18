@@ -600,8 +600,13 @@ ExplicitRoutingInfo ParseExplicitRoutingHeader(
 
 std::string FormatMethodComments(
     google::protobuf::MethodDescriptor const& method,
-    std::string const& variable_parameter_comments,
-    google::protobuf::SourceLocation const& method_source_location) {
+    std::string const& variable_parameter_comments) {
+  google::protobuf::SourceLocation method_source_location;
+  if (!method.GetSourceLocation(&method_source_location) ||
+      method_source_location.leading_comments.empty()) {
+    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
+                   << " no leading_comments to format";
+  }
   std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
       EscapePrinterDelimiter(method_source_location.leading_comments),
       {{"\n", "\n  ///"}});
@@ -615,6 +620,12 @@ std::string FormatMethodComments(
   if (IsLongrunningOperation(method)) {
     return_comment_string =
         "  /// @return $method_longrunning_deduced_return_doxygen_link$\n";
+  } else if (IsBidirStreaming(method)) {
+    return_comment_string =
+        "  /// @return A bidirectional streaming interface with request "
+        "(write) type: " +
+        FormatDoxygenLink(*method.input_type()) +
+        " and response (read) type: $method_return_doxygen_link$\n";
   } else if (!IsResponseTypeEmpty(method) && !IsPaginated(method)) {
     return_comment_string = "  /// @return $method_return_doxygen_link$\n";
   } else if (IsPaginated(method)) {
@@ -652,31 +663,17 @@ std::string FormatMethodComments(
 std::string FormatMethodCommentsMethodSignature(
     google::protobuf::MethodDescriptor const& method,
     std::string const& signature) {
-  google::protobuf::SourceLocation method_source_location;
-  if (!method.GetSourceLocation(&method_source_location) ||
-      method_source_location.leading_comments.empty()) {
-    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
-                   << " no leading_comments to format";
-  }
   auto parameter_comments =
       FormatApiMethodSignatureParameters(method, signature);
-  return FormatMethodComments(method, std::move(parameter_comments),
-                              method_source_location);
+  return FormatMethodComments(method, std::move(parameter_comments));
 }
 
 std::string FormatMethodCommentsProtobufRequest(
     google::protobuf::MethodDescriptor const& method) {
-  google::protobuf::SourceLocation method_source_location;
-  if (!method.GetSourceLocation(&method_source_location) ||
-      method_source_location.leading_comments.empty()) {
-    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
-                   << " no leading_comments to format";
-  }
   google::protobuf::Descriptor const* input_type = method.input_type();
   auto parameter_comment = absl::StrFormat("  /// @param %s %s\n", "request",
                                            FormatDoxygenLink(*input_type));
-  return FormatMethodComments(method, std::move(parameter_comment),
-                              method_source_location);
+  return FormatMethodComments(method, std::move(parameter_comment));
 }
 
 VarsDictionary CreateServiceVars(

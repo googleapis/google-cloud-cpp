@@ -75,13 +75,23 @@ Status PrintMethod(google::protobuf::MethodDescriptor const& method,
  * Formats comments from the source .proto file into Doxygen compatible
  * function headers, including param and return lines as necessary.
  */
+std::string FormatMethodComments(
+    google::protobuf::MethodDescriptor const& method,
+    std::string const& variable_parameter_comments);
+
+/**
+ * Formats comments from the source .proto file into Doxygen compatible
+ * function headers, including param and return lines as necessary, for a client
+ * call with the given method signature overload.
+ */
 std::string FormatMethodCommentsMethodSignature(
     google::protobuf::MethodDescriptor const& method,
     std::string const& signature);
 
 /**
  * Formats comments from the source .proto file into Doxygen compatible
- * function headers, including param and return lines as necessary.
+ * function headers, including param and return lines as necessary, for a client
+ * call using the raw request proto type as input.
  */
 std::string FormatMethodCommentsProtobufRequest(
     google::protobuf::MethodDescriptor const& method);
