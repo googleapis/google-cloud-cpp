@@ -56,7 +56,7 @@ cache_download_tarball() {
 
   io::log_h2 "Downloading build cache ${FILENAME} from ${GCS_FOLDER}"
   io::log "gcloud configuration"
-  gcloud version
+  "${GCLOUD_BIN}" version
   env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
     "${GCLOUD_BIN}" --quiet alpha storage "${CACHE_GSUTIL_DEBUG:--q}" \
     cp "gs://${GCS_FOLDER}/${FILENAME}" "${DESTINATION}"
