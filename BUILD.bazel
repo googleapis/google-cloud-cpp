@@ -34,6 +34,7 @@ EXPERIMENTAL_LIBRARIES = [
 ]
 
 TRANSITION_LIBRARIES = [
+    # Declared GA on 2022-07-18
     "osconfig",
 ]
 

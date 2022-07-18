@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "OS Config API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the OS Config API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "osconfig_internal" "osconfig_testing"
                             "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -66,14 +66,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_osconfig)
 set_target_properties(
     google_cloud_cpp_osconfig
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-osconfig
+    PROPERTIES EXPORT_NAME google-cloud-cpp::osconfig
                VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_osconfig
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-osconfig ALIAS
-            google_cloud_cpp_osconfig)
+add_library(google-cloud-cpp::osconfig ALIAS google_cloud_cpp_osconfig)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -92,11 +91,10 @@ add_library(google_cloud_cpp_osconfig_mocks INTERFACE)
 target_sources(google_cloud_cpp_osconfig_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_osconfig_mocks
-    INTERFACE google-cloud-cpp::experimental-osconfig GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_osconfig_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-osconfig_mocks)
+    INTERFACE google-cloud-cpp::osconfig GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_osconfig_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::osconfig_mocks)
 target_include_directories(
     google_cloud_cpp_osconfig_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -109,7 +107,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(osconfig_quickstart "quickstart/quickstart.cc")
     target_link_libraries(osconfig_quickstart
-                          PRIVATE google-cloud-cpp::experimental-osconfig)
+                          PRIVATE google-cloud-cpp::osconfig)
     google_cloud_cpp_add_common_options(osconfig_quickstart)
     add_test(
         NAME osconfig_quickstart
