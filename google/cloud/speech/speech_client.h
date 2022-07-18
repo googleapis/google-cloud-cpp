@@ -180,6 +180,25 @@ class SpeechClient {
       google::cloud::speech::v1::LongRunningRecognizeRequest const& request,
       Options opts = {});
 
+  ///
+  /// Performs bidirectional streaming speech recognition: receive results while
+  /// sending audio. This method is only available via the gRPC API (not REST).
+  ///
+  /// @note The presence of the `ExperimentalTag` means that this function is
+  /// experimental. It is subject to change (including removal) without notice.
+  ///
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A bidirectional streaming interface with request (write) type:
+  /// @googleapis_link{google::cloud::speech::v1::StreamingRecognizeRequest,google/cloud/speech/v1/cloud_speech.proto#L114}
+  /// and response (read) type:
+  /// @googleapis_link{google::cloud::speech::v1::StreamingRecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L745}
+  ///
+  /// [google.cloud.speech.v1.StreamingRecognizeRequest]:
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L114}
+  /// [google.cloud.speech.v1.StreamingRecognizeResponse]:
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L745}
+  ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>>

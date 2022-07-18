@@ -361,6 +361,19 @@ class GoldenKitchenSinkClient {
   Status
   DoNothing(google::protobuf::Empty const& request, Options opts = {});
 
+  ///
+  /// A much simplified version of the AppendRows in google.cloud.bigquery.storage.v1.BigQueryWrite
+  ///
+  /// @note The presence of the `ExperimentalTag` means that this function is
+  /// experimental. It is subject to change (including removal) without notice.
+  ///
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A bidirectional streaming interface with request (write) type: @googleapis_link{google::test::admin::database::v1::AppendRowsRequest,generator/integration_tests/test.proto#L940} and response (read) type: @googleapis_link{google::test::admin::database::v1::AppendRowsResponse,generator/integration_tests/test.proto#L944}
+  ///
+  /// [google.test.admin.database.v1.AppendRowsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L940}
+  /// [google.test.admin.database.v1.AppendRowsResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L944}
+  ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::AppendRowsRequest,
       google::test::admin::database::v1::AppendRowsResponse>>

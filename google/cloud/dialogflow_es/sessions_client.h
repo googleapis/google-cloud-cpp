@@ -173,6 +173,37 @@ class SessionsClient {
       google::cloud::dialogflow::v2::DetectIntentRequest const& request,
       Options opts = {});
 
+  ///
+  /// Processes a natural language query in audio format in a streaming fashion
+  /// and returns structured, actionable data as a result. This method is only
+  /// available via the gRPC API (not REST).
+  ///
+  /// If you might use
+  /// [Agent Assist](https://cloud.google.com/dialogflow/docs/#aa)
+  /// or other CCAI products now or in the future, consider using
+  /// [StreamingAnalyzeContent][google.cloud.dialogflow.v2.Participants.StreamingAnalyzeContent]
+  /// instead of `StreamingDetectIntent`. `StreamingAnalyzeContent` has
+  /// additional functionality for Agent Assist and other CCAI products.
+  ///
+  /// Note: Always use agent versions for production traffic.
+  /// See [Versions and
+  /// environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
+  ///
+  /// @note The presence of the `ExperimentalTag` means that this function is
+  /// experimental. It is subject to change (including removal) without notice.
+  ///
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A bidirectional streaming interface with request (write) type:
+  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentRequest,google/cloud/dialogflow/v2/session.proto#L411}
+  /// and response (read) type:
+  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L491}
+  ///
+  /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L411}
+  /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L491}
+  ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
