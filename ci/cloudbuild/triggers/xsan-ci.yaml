@@ -7,7 +7,7 @@ github:
 name: xsan-ci
 substitutions:
   _BUILD_NAME: xsan
-  _DISTRO: fedora-35
+  _DISTRO: fedora-36
   _TRIGGER_TYPE: ci
 tags:
 - ci

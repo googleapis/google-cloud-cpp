@@ -8,7 +8,7 @@ github:
 name: integration-production-pr
 substitutions:
   _BUILD_NAME: integration-production
-  _DISTRO: fedora-35
+  _DISTRO: fedora-36
   _TRIGGER_TYPE: pr
 tags:
 - pr
