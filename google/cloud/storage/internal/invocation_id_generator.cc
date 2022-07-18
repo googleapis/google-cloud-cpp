@@ -42,10 +42,11 @@ std::string InvocationIdGenerator::MakeInvocationId() {
     auto constexpr kIdBitCount = 128;
     auto constexpr kArraySize = kIdBitCount / 8;
     std::array<std::uint8_t, kArraySize> buf;
-    std::uniform_int_distribution<std::uint8_t> d(0, 255);
+    std::uniform_int_distribution<int> d(0, 255);
 
     std::lock_guard<std::mutex> lk(mu_);
-    std::generate(buf.begin(), buf.end(), [&] { return d(generator_); });
+    std::generate(buf.begin(), buf.end(),
+                  [&] { return static_cast<std::uint8_t>(d(generator_)); });
     return buf;
   }();
   o[kVersionOctet] = (o[kVersionOctet] & kVersionMask) | kVersion;
