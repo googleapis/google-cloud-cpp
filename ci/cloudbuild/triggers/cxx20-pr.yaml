@@ -8,7 +8,7 @@ github:
 name: cxx20-pr
 substitutions:
   _BUILD_NAME: cxx20
-  _DISTRO: fedora-35-cxx20
+  _DISTRO: fedora-36-cxx20
   _TRIGGER_TYPE: pr
 tags:
 - pr
