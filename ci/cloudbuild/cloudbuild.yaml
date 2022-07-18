@@ -80,7 +80,7 @@ steps:
 
   # Restores the homedir cache into /h in parallel with the previous step.
   # Won't break the build if this step fails.
-- name: 'gcr.io/cloud-builders/gsutil'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   waitFor: [ '-' ]
   entrypoint: 'bash'
   dir: '/h'
@@ -105,7 +105,7 @@ steps:
 
   # Caches some directories in the homedir, in the specified GCS bucket.
   # Won't break the build if this step fails.
-- name: 'gcr.io/cloud-builders/gsutil'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
   dir: '/h'
   args:
