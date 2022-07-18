@@ -82,6 +82,7 @@ RUN curl -sSL https://github.com/google/googletest/archive/release-1.12.1.tar.gz
     ldconfig && \
     cd /var/tmp && rm -fr build
 
+# TODO(#9508) - use CMAKE_CXX_STANDARD=20 here too, using 17 is a work around.
 # Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/google/benchmark/archive/v1.6.2.tar.gz | \
