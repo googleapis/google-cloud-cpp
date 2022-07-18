@@ -14,16 +14,6 @@
 # limitations under the License.
 # ~~~
 
-# TODO(8145): Enable on macOS.
-if (APPLE)
-    message(
-        WARNING
-            "Cannot build google/cloud/asset on Apple platforms."
-            " More details at https://github.com/googleapis/google-cloud-cpp/issues/8145 ."
-    )
-    return()
-endif ()
-
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Asset API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Asset API")
