@@ -282,12 +282,12 @@ for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -443,12 +443,12 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -608,12 +608,12 @@ for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -758,12 +758,12 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -907,14 +907,13 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
-      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -1074,12 +1073,12 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -1210,12 +1209,12 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -1388,12 +1387,12 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -1577,12 +1576,12 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
