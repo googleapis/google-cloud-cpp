@@ -77,7 +77,7 @@ def google_cloud_cpp_deps():
             urls = [
                 "https://github.com/google/benchmark/archive/v1.6.2.tar.gz",
             ],
-            sha256 = "82c02e5cf17d864404973e964ff272b9d652b626861e61443e497e4f67423437",
+            sha256 = "6adf850c2be6aa15843c94ac63d0819d5bf9f5678ae41244f25a1f4bf9480827",
         )
 
     # Load the googleapis dependency.
