@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:35
+FROM fedora:36
 ARG NCPU=4
 
 ## [BEGIN packaging.md]
@@ -25,7 +25,7 @@ RUN dnf makecache && \
         openssl-devel patch unzip tar wget zip zlib-devel
 # ```
 
-# Fedora 34 includes packages for gRPC and Protobuf, but they are not
+# Fedora 36 includes packages for gRPC and Protobuf, but they are not
 # recent enough to support the protos published by Google Cloud. The indirect
 # dependencies of libcurl, Protobuf, and gRPC are recent enough for our needs.
 

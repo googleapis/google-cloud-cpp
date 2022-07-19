@@ -179,7 +179,7 @@ function extract() {
 # A "map" (comma separated) of dockerfile -> summary.
 DOCKER_DISTROS=(
   "demo-alpine-stable.Dockerfile,Alpine (Stable)"
-  "demo-fedora.Dockerfile,Fedora (35)"
+  "demo-fedora.Dockerfile,Fedora (36)"
   "demo-opensuse-leap.Dockerfile,openSUSE (Leap)"
   "demo-ubuntu-jammy.Dockerfile,Ubuntu (22.04 LTS - Jammy Jellyfish)"
   "demo-ubuntu-focal.Dockerfile,Ubuntu (20.04 LTS - Focal Fossa)"
