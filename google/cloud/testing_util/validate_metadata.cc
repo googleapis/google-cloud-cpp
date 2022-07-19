@@ -42,11 +42,14 @@ namespace testing_util {
 
 namespace {
 
+using ::google::protobuf::DescriptorPool;
 using ::testing::Contains;
 using ::testing::IsEmpty;
+using ::testing::Matcher;
 using ::testing::Not;
 using ::testing::NotNull;
 using ::testing::Pair;
+using ::testing::UnorderedElementsAreArray;
 
 using RoutingHeaders = std::map<std::string, std::string>;
 
@@ -201,17 +204,13 @@ RoutingHeaders FromHttpRule(google::api::HttpRule const& http,
 }
 
 RoutingHeaders ExtractRoutingHeaders(
-    std::string const& method, google::protobuf::Message const& request,
+    google::protobuf::MethodDescriptor const* method,
+    google::protobuf::Message const& request,
     absl::optional<std::string> const& resource_name) {
-  auto const* method_desc =
-      google::protobuf::DescriptorPool::generated_pool()->FindMethodByName(
-          method);
-  EXPECT_THAT(method_desc, NotNull()) << "Method " + method + " is unknown.";
-  if (!method_desc) return {};
-  auto options = method_desc->options();
+  auto options = method->options();
   if (options.HasExtension(google::api::routing)) {
     auto const& routing = options.GetExtension(google::api::routing);
-    return FromRoutingRule(routing, method_desc, request);
+    return FromRoutingRule(routing, method, request);
   }
   if (options.HasExtension(google::api::http)) {
     auto const& http = options.GetExtension(google::api::http);
@@ -293,7 +292,7 @@ std::multimap<std::string, std::string> ValidateMetadataFixture::GetMetadata(
  * the curly braces.
  */
 void ValidateMetadataFixture::IsContextMDValid(
-    grpc::ClientContext& context, std::string const& method,
+    grpc::ClientContext& context, std::string const& method_name,
     google::protobuf::Message const& request,
     std::string const& api_client_header,
     absl::optional<std::string> const& resource_name,
@@ -315,14 +314,30 @@ void ValidateMetadataFixture::IsContextMDValid(
   auto actual = dist == 0 ? RoutingHeaders{}
                           : ExtractMDFromHeader(param_header.first->second);
 
-  // Extract expectations on `x-goog-request-params` from the `google.api.http`
-  // annotation on the specified method.
+  auto const* method =
+      DescriptorPool::generated_pool()->FindMethodByName(method_name);
+  ASSERT_THAT(method, NotNull()) << "Method " + method_name + " is unknown.";
+
+  // Extract expectations on `x-goog-request-params` from the
+  // `google.api.routing` or `google.api.http` annotation on the specified
+  // method.
   auto expected = ExtractRoutingHeaders(method, request, resource_name);
 
-  // Check if the metadata in the context satisfied the expectations.
-  for (auto const& param : expected) {
-    EXPECT_THAT(actual, Contains(Pair(param.first, MatchesGlob(param.second))));
+  // Do not verify routing parameters for streaming writes, because it is not
+  // well defined.
+  if (method->client_streaming()) {
+    GCP_LOG(INFO) << "`x-goog-request-params` header not verified for "
+                  << method_name << ", because it is a streaming write.";
+    return;
   }
+
+  // Check if the metadata in the context satisfied the expectations.
+  std::vector<Matcher<std::pair<std::string, std::string>>> matchers;
+  matchers.reserve(expected.size());
+  for (auto const& param : expected) {
+    matchers.push_back(Pair(param.first, MatchesGlob(param.second)));
+  }
+  EXPECT_THAT(actual, UnorderedElementsAreArray(matchers));
 }
 
 }  // namespace testing_util
