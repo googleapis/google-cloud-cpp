@@ -31,7 +31,8 @@ int main(int argc, char* argv[]) try {
   // Create a namespace alias to make the code easier to read.
   namespace cbt = ::google::cloud::bigtable;
 
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id));
 
   std::string row_key = "r1";
   std::string column_family = "cf1";
