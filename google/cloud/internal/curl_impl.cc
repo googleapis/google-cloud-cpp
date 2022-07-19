@@ -560,11 +560,29 @@ StatusOr<int> CurlImpl::PerformWork() {
 Status CurlImpl::WaitForHandles(int& repeats) {
   int const timeout_ms = 1000;
   int numfds = 0;
+#if CURL_AT_LEAST_VERSION(7, 66, 0)
   CURLMcode result =
       curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
   TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
                 << ", repeats=" << repeats << "\n";
   if (result != CURLM_OK) return AsStatus(result, __func__);
+#else
+  CURLMcode result =
+      curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
+                << ", repeats=" << repeats << "\n";
+  if (result != CURLM_OK) return AsStatus(result, __func__);
+  // The documentation for curl_multi_wait() recommends sleeping if it returns
+  // numfds == 0 more than once in a row :shrug:
+  //    https://curl.haxx.se/libcurl/c/curl_multi_wait.html
+  if (numfds == 0) {
+    if (++repeats > 1) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(timeout_ms));
+    }
+  } else {
+    repeats = 0;
+  }
+#endif
   return {};
 }
 
