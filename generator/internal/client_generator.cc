@@ -118,13 +118,23 @@ Status ClientGenerator::GenerateHeader() {
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {
     if (IsBidirStreaming(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__,
-                        R"""(
-  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          absl::StrCat(
+              "\n",
+              FormatMethodComments(
+                  method,
+                  // clang-format off
+R"""(  /// @note The presence of the `ExperimentalTag` means that this function is
+  /// experimental. It is subject to change (including removal) without notice.
+  ///
+)"""),
+R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
   Async$method_name$(ExperimentalTag, Options opts = {});
-)""");
+)"""));
+      // clang-format on
       continue;
     }
     auto method_signature_extension =

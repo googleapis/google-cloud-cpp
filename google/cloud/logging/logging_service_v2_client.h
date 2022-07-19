@@ -352,6 +352,25 @@ class LoggingServiceV2Client {
   StreamRange<std::string> ListLogs(
       google::logging::v2::ListLogsRequest request, Options opts = {});
 
+  ///
+  /// Streaming read of log entries as they are ingested. Until the stream is
+  /// terminated, it will continue reading logs.
+  ///
+  /// @note The presence of the `ExperimentalTag` means that this function is
+  /// experimental. It is subject to change (including removal) without notice.
+  ///
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A bidirectional streaming interface with request (write) type:
+  /// @googleapis_link{google::logging::v2::TailLogEntriesRequest,google/logging/v2/logging.proto#L417}
+  /// and response (read) type:
+  /// @googleapis_link{google::logging::v2::TailLogEntriesResponse,google/logging/v2/logging.proto#L450}
+  ///
+  /// [google.logging.v2.TailLogEntriesRequest]:
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L417}
+  /// [google.logging.v2.TailLogEntriesResponse]:
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L450}
+  ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
