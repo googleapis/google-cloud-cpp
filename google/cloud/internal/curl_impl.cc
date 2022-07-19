@@ -492,15 +492,17 @@ StatusOr<int> CurlImpl::PerformWork() {
   // work, but is it pretty harmless to keep here.
   int running_handles = 0;
   CURLMcode result;
+  CURLMcode multi_remove_result;
   do {
     result = curl_multi_perform(multi_.get(), &running_handles);
   } while (result == CURLM_CALL_MULTI_PERFORM);
 
-  auto status = AsStatus(result, __func__);
-  if (!status.ok()) {
+  if (result != CURLM_OK) {
+    auto status = AsStatus(result, __func__);
     TRACE_STATE() << ", status=" << status << "\n";
     return status;
   }
+
   if (running_handles == 0) {
     // The only way we get here is if the handle "completed", and therefore the
     // transfer either failed or was successful. Pull all the messages out of
@@ -518,8 +520,10 @@ StatusOr<int> CurlImpl::PerformWork() {
            << "]=" << curl_easy_strerror(msg->data.result);
         return Status(StatusCode::kUnknown, std::move(os).str());
       }
-      status = CurlHandle::AsStatus(msg->data.result, __func__);
-      TRACE_STATE() << ", status=" << status << ", remaining=" << remaining
+
+      TRACE_STATE() << ", status="
+                    << CurlHandle::AsStatus(msg->data.result, __func__)
+                    << ", remaining=" << remaining
                     << ", running_handles=" << running_handles << "\n";
       // Whatever the status is, the transfer is done, we need to remove it
       // from the CURLM* interface.
@@ -528,13 +532,14 @@ StatusOr<int> CurlImpl::PerformWork() {
       if (in_multi_) {
         // In the extremely unlikely case that removing the handle from CURLM*
         // was an error, return that as a status.
-        multi_remove_status = AsStatus(
-            curl_multi_remove_handle(multi_.get(), handle_.handle_.get()),
-            __func__);
+        multi_remove_result =
+            curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
         in_multi_ = false;
       }
 
-      TRACE_STATE() << ", status=" << status << ", remaining=" << remaining
+      TRACE_STATE() << ", status="
+                    << CurlHandle::AsStatus(msg->data.result, __func__)
+                    << ", remaining=" << remaining
                     << ", running_handles=" << running_handles
                     << ", multi_remove_status=" << multi_remove_status << "\n";
 
@@ -542,8 +547,10 @@ StatusOr<int> CurlImpl::PerformWork() {
       // libcurl may have received a block of data, but the WriteCallback()
       // (see above) tells libcurl that it cannot receive more data.
       if (closing_) continue;
-      if (!status.ok()) return status;
-      if (!multi_remove_status.ok()) return multi_remove_status;
+      if (result != CURLM_OK)
+        return CurlHandle::AsStatus(msg->data.result, __func__);
+      if (!multi_remove_status.ok())
+        return AsStatus(multi_remove_result, __func__);
     }
   }
   TRACE_STATE() << ", running_handles=" << running_handles << "\n";
@@ -551,26 +558,14 @@ StatusOr<int> CurlImpl::PerformWork() {
 }
 
 Status CurlImpl::WaitForHandles(int& repeats) {
-  int const timeout_ms = 1;
-  std::chrono::milliseconds const timeout(timeout_ms);
+  int const timeout_ms = 1000;
   int numfds = 0;
   CURLMcode result =
-      curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+      curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
   TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
                 << ", repeats=" << repeats << "\n";
-  Status status = AsStatus(result, __func__);
-  if (!status.ok()) return status;
-  // The documentation for curl_multi_wait() recommends sleeping if it returns
-  // numfds == 0 more than once in a row :shrug:
-  //    https://curl.haxx.se/libcurl/c/curl_multi_wait.html
-  if (numfds == 0) {
-    if (++repeats > 1) {
-      std::this_thread::sleep_for(timeout);
-    }
-  } else {
-    repeats = 0;
-  }
-  return status;
+  if (result != CURLM_OK) return AsStatus(result, __func__);
+  return {};
 }
 
 Status CurlImpl::AsStatus(CURLMcode result, char const* where) {
@@ -763,6 +758,11 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
     if (!status.ok()) return OnTransferError(std::move(status));
     status = handle_.SetOption(CURLOPT_UPLOAD, 1L);
     if (!status.ok()) return OnTransferError(std::move(status));
+    if (!ignored_http_error_codes_.empty()) {
+      status = handle_.SetOption(CURLOPT_KEEP_SENDING_ON_ERROR, 1L);
+      if (!status.ok()) return OnTransferError(std::move(status));
+    }
+
     return MakeRequestImpl();
   }
 
