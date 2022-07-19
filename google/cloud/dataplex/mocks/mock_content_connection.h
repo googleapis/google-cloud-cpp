@@ -65,6 +65,19 @@ class MockContentServiceConnection : public dataplex::ContentServiceConnection {
               (google::cloud::dataplex::v1::GetContentRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
+
   MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Content>, ListContent,
               (google::cloud::dataplex::v1::ListContentRequest request),
               (override));

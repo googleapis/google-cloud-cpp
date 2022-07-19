@@ -158,6 +158,19 @@ Status DefaultStorageStub::DeleteObject(
   return google::cloud::Status();
 }
 
+StatusOr<google::storage::v2::CancelResumableWriteResponse>
+DefaultStorageStub::CancelResumableWrite(
+    grpc::ClientContext& client_context,
+    google::storage::v2::CancelResumableWriteRequest const& request) {
+  google::storage::v2::CancelResumableWriteResponse response;
+  auto status =
+      grpc_stub_->CancelResumableWrite(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::storage::v2::Object> DefaultStorageStub::GetObject(
     grpc::ClientContext& client_context,
     google::storage::v2::GetObjectRequest const& request) {

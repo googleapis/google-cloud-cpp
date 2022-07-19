@@ -97,7 +97,7 @@ class ContentServiceClient {
   /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.CreateContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L81}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L153}
   /// [google.cloud.dataplex.v1.Content]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
@@ -109,14 +109,14 @@ class ContentServiceClient {
   /// Create a content.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::CreateContentRequest,google/cloud/dataplex/v1/content.proto#L81}
+  /// @googleapis_link{google::cloud::dataplex::v1::CreateContentRequest,google/cloud/dataplex/v1/content.proto#L153}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.CreateContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L81}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L153}
   /// [google.cloud.dataplex.v1.Content]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
@@ -136,7 +136,7 @@ class ContentServiceClient {
   /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.UpdateContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L100}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L172}
   /// [google.cloud.dataplex.v1.Content]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
@@ -148,14 +148,14 @@ class ContentServiceClient {
   /// Update a content. Only supports full resource update.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::UpdateContentRequest,google/cloud/dataplex/v1/content.proto#L100}
+  /// @googleapis_link{google::cloud::dataplex::v1::UpdateContentRequest,google/cloud/dataplex/v1/content.proto#L172}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.UpdateContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L100}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L172}
   /// [google.cloud.dataplex.v1.Content]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
@@ -172,7 +172,7 @@ class ContentServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dataplex.v1.DeleteContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L114}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L186}
   ///
   Status DeleteContent(std::string const& name, Options opts = {});
 
@@ -180,12 +180,12 @@ class ContentServiceClient {
   /// Delete a content.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::DeleteContentRequest,google/cloud/dataplex/v1/content.proto#L114}
+  /// @googleapis_link{google::cloud::dataplex::v1::DeleteContentRequest,google/cloud/dataplex/v1/content.proto#L186}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dataplex.v1.DeleteContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L114}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L186}
   ///
   Status DeleteContent(
       google::cloud::dataplex::v1::DeleteContentRequest const& request,
@@ -202,7 +202,7 @@ class ContentServiceClient {
   /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.GetContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L242}
   /// [google.cloud.dataplex.v1.Content]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
@@ -213,19 +213,116 @@ class ContentServiceClient {
   /// Get a content resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::GetContentRequest,google/cloud/dataplex/v1/content.proto#L170}
+  /// @googleapis_link{google::cloud::dataplex::v1::GetContentRequest,google/cloud/dataplex/v1/content.proto#L242}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.GetContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L242}
   /// [google.cloud.dataplex.v1.Content]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   StatusOr<google::cloud::dataplex::v1::Content> GetContent(
       google::cloud::dataplex::v1::GetContentRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Gets the access control policy for a contentitem resource. A `NOT_FOUND`
+  /// error is returned if the resource does not exist. An empty policy is
+  /// returned if the resource exists but does not have a policy set on it.
+  ///
+  /// Caller must have Google IAM `dataplex.content.getIamPolicy` permission
+  /// on the resource.
+  ///
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// requested.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  ///
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options opts = {});
+
+  ///
+  /// Gets the access control policy for a contentitem resource. A `NOT_FOUND`
+  /// error is returned if the resource does not exist. An empty policy is
+  /// returned if the resource exists but does not have a policy set on it.
+  ///
+  /// Caller must have Google IAM `dataplex.content.getIamPolicy` permission
+  /// on the resource.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  ///
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+
+  ///
+  /// Sets the access control policy on the specified contentitem resource.
+  /// Replaces any existing policy.
+  ///
+  /// Caller must have Google IAM `dataplex.content.setIamPolicy` permission
+  /// on the resource.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
+  ///
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  ///
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+
+  ///
+  /// Returns the caller's permissions on a resource.
+  /// If the resource does not exist, an empty set of
+  /// permissions is returned (a `NOT_FOUND` error is not returned).
+  ///
+  /// A caller is not required to have Google IAM permission to make this
+  /// request.
+  ///
+  /// Note: This operation is designed to be used for building permission-aware
+  /// UIs and command-line tools, not for authorization checking. This operation
+  /// may "fail open" without warning.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  ///
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});
 
   ///
@@ -239,7 +336,7 @@ class ContentServiceClient {
   /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.ListContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L126}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L198}
   /// [google.cloud.dataplex.v1.Content]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///
@@ -250,14 +347,14 @@ class ContentServiceClient {
   /// List content.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListContentRequest,google/cloud/dataplex/v1/content.proto#L126}
+  /// @googleapis_link{google::cloud::dataplex::v1::ListContentRequest,google/cloud/dataplex/v1/content.proto#L198}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Content,google/cloud/dataplex/v1/analyze.proto#L160}
   ///
   /// [google.cloud.dataplex.v1.ListContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L126}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L198}
   /// [google.cloud.dataplex.v1.Content]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L160}
   ///

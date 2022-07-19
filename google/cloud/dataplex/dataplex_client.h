@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// Dataplex service provides data lakes as a service. The primary resources
 /// offered by this service are Lakes, Zones and Assets which collectively allow
-/// a data adminstrator to organize, manage, secure and catalog data across
+/// a data administrator to organize, manage, secure and catalog data across
 /// their organization located across cloud projects in a variety of storage
 /// systems including Cloud Storage and BigQuery.
 ///
@@ -183,7 +183,7 @@ class DataplexServiceClient {
   /// the lake can be deleted.
   ///
   /// @param name  Required. The resource name of the lake:
-  ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}`
+  ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -296,7 +296,7 @@ class DataplexServiceClient {
   /// Lists action resources in a lake.
   ///
   /// @param parent  Required. The resource name of the parent lake:
-  ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}`
+  ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -569,7 +569,7 @@ class DataplexServiceClient {
   /// Creates an asset resource.
   ///
   /// @param parent  Required. The resource name of the parent zone:
-  ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}`
+  ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}`.
   /// @param asset  Required. Asset resource.
   /// @param asset_id  Required. Asset identifier.
   ///  This ID will be used to generate names such as table names when
@@ -958,7 +958,7 @@ class DataplexServiceClient {
   /// Get task resource.
   ///
   /// @param name  Required. The resource name of the task:
-  ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{tasks_id}`
+  ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{tasks_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -999,12 +999,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L273}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L299}
   ///
   /// [google.cloud.dataplex.v1.ListJobsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L919}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L273}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L299}
   ///
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       std::string const& parent, Options opts = {});
@@ -1017,12 +1017,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L273}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L299}
   ///
   /// [google.cloud.dataplex.v1.ListJobsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L919}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L273}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L299}
   ///
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       google::cloud::dataplex::v1::ListJobsRequest request, Options opts = {});
@@ -1035,12 +1035,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L273}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L299}
   ///
   /// [google.cloud.dataplex.v1.GetJobRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L907}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L273}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L299}
   ///
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(std::string const& name,
                                                     Options opts = {});
@@ -1053,12 +1053,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L273}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L299}
   ///
   /// [google.cloud.dataplex.v1.GetJobRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L907}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L273}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L299}
   ///
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(
       google::cloud::dataplex::v1::GetJobRequest const& request,
@@ -1095,7 +1095,7 @@ class DataplexServiceClient {
   /// Create an environment resource.
   ///
   /// @param parent  Required. The resource name of the parent lake:
-  ///  projects/{project_id}/locations/{location_id}/lakes/{lake_id}
+  ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}`.
   /// @param environment  Required. Environment resource.
   /// @param environment_id  Required. Environment identifier.
   ///  * Must contain only lowercase letters, numbers and hyphens.
@@ -1181,7 +1181,7 @@ class DataplexServiceClient {
   /// deleted before environment deletion can be initiated.
   ///
   /// @param name  Required. The resource name of the environment:
-  ///  projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}`
+  ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -1220,7 +1220,7 @@ class DataplexServiceClient {
   /// Lists environments under the given lake.
   ///
   /// @param parent  Required. The resource name of the parent lake:
-  ///  projects/{project_id}/locations/{location_id}/lakes/{lake_id}
+  ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -1257,7 +1257,7 @@ class DataplexServiceClient {
   /// Get environment resource.
   ///
   /// @param name  Required. The resource name of the environment:
-  ///  projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}
+  ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -1294,7 +1294,7 @@ class DataplexServiceClient {
   /// Lists session resources in an environment.
   ///
   /// @param parent  Required. The resource name of the parent environment:
-  ///  projects/{project_number}/locations/{location_id}/lakes/{lake_id}/environment/{environment_id}
+  ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/environment/{environment_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return

@@ -124,6 +124,11 @@ class VmMigrationConnection {
       google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
           request);
 
+  virtual future<
+      StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
+  UpgradeAppliance(
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request);
+
   virtual future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
   CreateMigratingVm(
       google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request);

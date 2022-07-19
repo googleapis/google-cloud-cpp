@@ -161,6 +161,18 @@ Status StorageLogging::DeleteObject(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::CancelResumableWriteResponse>
+StorageLogging::CancelResumableWrite(
+    grpc::ClientContext& context,
+    google::storage::v2::CancelResumableWriteRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::CancelResumableWriteRequest const& request) {
+        return child_->CancelResumableWrite(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::v2::Object> StorageLogging::GetObject(
     grpc::ClientContext& context,
     google::storage::v2::GetObjectRequest const& request) {

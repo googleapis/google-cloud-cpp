@@ -57,6 +57,22 @@ ContentServiceConnection::GetContent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::iam::v1::Policy> ContentServiceConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ContentServiceConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::dataplex::v1::Content>
 ContentServiceConnection::ListContent(
     google::cloud::dataplex::v1::

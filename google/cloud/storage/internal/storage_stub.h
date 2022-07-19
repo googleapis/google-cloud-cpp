@@ -84,6 +84,11 @@ class StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::DeleteObjectRequest const& request) = 0;
 
+  virtual StatusOr<google::storage::v2::CancelResumableWriteResponse>
+  CancelResumableWrite(
+      grpc::ClientContext& context,
+      google::storage::v2::CancelResumableWriteRequest const& request) = 0;
+
   virtual StatusOr<google::storage::v2::Object> GetObject(
       grpc::ClientContext& context,
       google::storage::v2::GetObjectRequest const& request) = 0;
@@ -212,6 +217,11 @@ class DefaultStorageStub : public StorageStub {
   Status DeleteObject(
       grpc::ClientContext& client_context,
       google::storage::v2::DeleteObjectRequest const& request) override;
+
+  StatusOr<google::storage::v2::CancelResumableWriteResponse>
+  CancelResumableWrite(
+      grpc::ClientContext& client_context,
+      google::storage::v2::CancelResumableWriteRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> GetObject(
       grpc::ClientContext& client_context,

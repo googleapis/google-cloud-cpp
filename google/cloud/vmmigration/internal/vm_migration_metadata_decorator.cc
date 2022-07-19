@@ -162,6 +162,16 @@ VmMigrationMetadata::AsyncDeleteDatacenterConnector(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncUpgradeAppliance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
+  SetMetadata(*context,
+              "datacenter_connector=" + request.datacenter_connector());
+  return child_->AsyncUpgradeAppliance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 VmMigrationMetadata::AsyncCreateMigratingVm(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

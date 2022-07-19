@@ -121,6 +121,15 @@ Status StorageAuth::DeleteObject(
   return child_->DeleteObject(context, request);
 }
 
+StatusOr<google::storage::v2::CancelResumableWriteResponse>
+StorageAuth::CancelResumableWrite(
+    grpc::ClientContext& context,
+    google::storage::v2::CancelResumableWriteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelResumableWrite(context, request);
+}
+
 StatusOr<google::storage::v2::Object> StorageAuth::GetObject(
     grpc::ClientContext& context,
     google::storage::v2::GetObjectRequest const& request) {

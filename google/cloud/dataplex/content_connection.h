@@ -76,6 +76,15 @@ class ContentServiceConnection {
   virtual StatusOr<google::cloud::dataplex::v1::Content> GetContent(
       google::cloud::dataplex::v1::GetContentRequest const& request);
 
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
   virtual StreamRange<google::cloud::dataplex::v1::Content> ListContent(
       google::cloud::dataplex::v1::ListContentRequest request);
 };

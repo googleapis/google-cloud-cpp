@@ -88,6 +88,10 @@ class VmMigrationConnectionIdempotencyPolicy {
       google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
           request) = 0;
 
+  virtual google::cloud::Idempotency UpgradeAppliance(
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency CreateMigratingVm(
       google::cloud::vmmigration::v1::CreateMigratingVmRequest const&
           request) = 0;

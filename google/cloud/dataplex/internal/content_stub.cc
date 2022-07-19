@@ -76,6 +76,41 @@ DefaultContentServiceStub::GetContent(
   return response;
 }
 
+StatusOr<google::iam::v1::Policy> DefaultContentServiceStub::GetIamPolicy(
+    grpc::ClientContext& client_context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::Policy> DefaultContentServiceStub::SetIamPolicy(
+    grpc::ClientContext& client_context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DefaultContentServiceStub::TestIamPermissions(
+    grpc::ClientContext& client_context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dataplex::v1::ListContentResponse>
 DefaultContentServiceStub::ListContent(
     grpc::ClientContext& client_context,

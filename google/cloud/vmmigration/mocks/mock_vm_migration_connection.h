@@ -131,6 +131,13 @@ class MockVmMigrationConnection : public vmmigration::VmMigrationConnection {
       (override));
 
   MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>,
+      UpgradeAppliance,
+      (google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>,
       CreateMigratingVm,
       (google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request),

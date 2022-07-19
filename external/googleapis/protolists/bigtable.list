@@ -5,3 +5,4 @@
 @com_google_googleapis//google/bigtable/admin/v2:table.proto
 @com_google_googleapis//google/bigtable/v2:bigtable.proto
 @com_google_googleapis//google/bigtable/v2:data.proto
+@com_google_googleapis//google/bigtable/v2:response_params.proto

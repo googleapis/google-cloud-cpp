@@ -413,6 +413,36 @@ VmMigrationConnectionImpl::DeleteDatacenterConnector(
       polling_policy(), __func__);
 }
 
+future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
+VmMigrationConnectionImpl::UpgradeAppliance(
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::vmmigration::v1::UpgradeApplianceResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
+                 request) {
+        return stub->AsyncUpgradeAppliance(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::UpgradeApplianceResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpgradeAppliance(request), polling_policy(),
+      __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnectionImpl::CreateMigratingVm(
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {

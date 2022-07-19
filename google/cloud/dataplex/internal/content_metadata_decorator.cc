@@ -65,6 +65,28 @@ ContentServiceMetadata::GetContent(
   return child_->GetContent(context, request);
 }
 
+StatusOr<google::iam::v1::Policy> ContentServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->GetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->SetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ContentServiceMetadata::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->TestIamPermissions(context, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::ListContentResponse>
 ContentServiceMetadata::ListContent(
     grpc::ClientContext& context,
