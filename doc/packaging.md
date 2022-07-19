@@ -222,7 +222,7 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
-<summary>Fedora (35)</summary>
+<summary>Fedora (36)</summary>
 <br>
 
 Install the minimal development tools:
@@ -233,7 +233,7 @@ sudo dnf install -y ccache cmake curl findutils gcc-c++ git make ninja-build \
         openssl-devel patch unzip tar wget zip zlib-devel
 ```
 
-Fedora 34 includes packages for gRPC and Protobuf, but they are not
+Fedora 36 includes packages for gRPC and Protobuf, but they are not
 recent enough to support the protos published by Google Cloud. The indirect
 dependencies of libcurl, Protobuf, and gRPC are recent enough for our needs.
 
