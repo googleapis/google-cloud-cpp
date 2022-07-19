@@ -17,7 +17,9 @@ Linux distributions, as well as Windows and macOS. The
 instructions to install the necessary dependencies, as well as how to compile
 the client library.
 
-### Setting up your repo
+@tableofcontents{HTML:2}
+
+## Setting up your repo
 
 In order to use the Cloud Cloud Storage C++ client library from your own code,
 you'll need to configure your build system how to fetch and compile the Cloud
@@ -91,7 +93,7 @@ be even simpler:
 
 @snippet storage_bucket_samples.cc create bucket
 
-### Error Handling
+## Error Handling
 
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
@@ -146,7 +148,7 @@ using gcs = ::google::cloud::storage;
 }
 @endcode
 
-### Retry, Backoff, and Idempotency Policies.
+## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
 follows the [recommended
@@ -179,7 +181,7 @@ more conservative approach:
    and [StrictIdempotencyPolicy](@ref google::cloud::storage::StrictIdempotencyPolicy)
    for alternative idempotency policies.
 
-### Next Steps
+## Next Steps
 
 The documentation for each member function in the [Client] class includes short
 snippets on how to call the function. The snippets for
