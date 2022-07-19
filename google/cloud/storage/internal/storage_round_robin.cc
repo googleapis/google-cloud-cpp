@@ -88,6 +88,13 @@ Status StorageRoundRobin::DeleteObject(
   return Child()->DeleteObject(context, request);
 }
 
+StatusOr<google::storage::v2::CancelResumableWriteResponse>
+StorageRoundRobin::CancelResumableWrite(
+    grpc::ClientContext& context,
+    google::storage::v2::CancelResumableWriteRequest const& request) {
+  return Child()->CancelResumableWrite(context, request);
+}
+
 StatusOr<google::storage::v2::Object> StorageRoundRobin::GetObject(
     grpc::ClientContext& context,
     google::storage::v2::GetObjectRequest const& request) {
