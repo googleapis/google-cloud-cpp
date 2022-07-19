@@ -4,8 +4,6 @@ This directory contains an idiomatic C++ client library for the
 [OS Config API][cloud-service-docs], a service for patch management, patch
 compliance, and configuration management on VM instances.
 
-<!-- TODO(#8139) - fix streaming read updated namespace before GA -->
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
