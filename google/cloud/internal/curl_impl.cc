@@ -776,10 +776,12 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
     if (!status.ok()) return OnTransferError(std::move(status));
     status = handle_.SetOption(CURLOPT_UPLOAD, 1L);
     if (!status.ok()) return OnTransferError(std::move(status));
+#if CURL_AT_LEAST_VERSION(7, 51, 0)
     if (!ignored_http_error_codes_.empty()) {
       status = handle_.SetOption(CURLOPT_KEEP_SENDING_ON_ERROR, 1L);
       if (!status.ok()) return OnTransferError(std::move(status));
     }
+#endif
 
     return MakeRequestImpl();
   }
