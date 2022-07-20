@@ -316,6 +316,10 @@ $metadata_class_name$::$method_name$(
       continue;
     }
     if (IsBidirStreaming(method)) {
+      // Asynchronous streaming writes do not consume a request. Typically, the
+      // first `Write()` call contains any relevant data to "start" the stream.
+      // Thus, the decorator cannot add any routing instructions. The caller
+      // should initialize `context` with any such instructions.
       CcPrintMethod(method, __FILE__, __LINE__,
                     R"""(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -397,13 +401,10 @@ $metadata_class_name$::Async$method_name$(
       continue;
     }
     if (IsStreamingWrite(method)) {
-      // Asynchronous streaming writes do not consume a request, typically the
+      // Asynchronous streaming writes do not consume a request. Typically, the
       // first `Write()` call contains any relevant data to "start" the stream.
       // Thus, the decorator cannot add any routing instructions. The caller
-      // should initialize `context` with any such instructions. At this time,
-      // all callers are hand-crafted, so this is just a bit more work for
-      // library developers, ut a lot less than writing the routing instructions
-      // for all RPCs.
+      // should initialize `context` with any such instructions.
       auto const definition = absl::StrCat(
           R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
