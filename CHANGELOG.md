@@ -95,7 +95,10 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
   details.
 </details>
 
-## v2.1.0 - TBD
+## v2.0.1 - 2022-07
+
+* fix(pubsub): missing subscription name in lease extensions.
+  This made the lease extensions fail in all cases.
 
 ## v2.0.0 - 2022-07
 
