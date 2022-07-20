@@ -95,7 +95,7 @@ if ((Test-Path env:KOKORO_GFILE_DIR) -and
 
 # TODO(#9531) - enable release builds for MSVC 2017
 if (($BuildName -like "bazel-release*") -and ($BuildName -ne "bazel-release-2017")) {
-
+    $build_flags += ("-c", "opt")
 }
 
 # Before MSVC 2022 the compiler is a 32-bit binary
