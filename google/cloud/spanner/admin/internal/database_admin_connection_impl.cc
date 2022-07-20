@@ -438,6 +438,40 @@ DatabaseAdminConnectionImpl::ListBackupOperations(
       });
 }
 
+StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+DatabaseAdminConnectionImpl::ListDatabaseRoles(
+    google::spanner::admin::database::v1::ListDatabaseRolesRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy const>(
+      retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListDatabaseRoles(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::spanner::admin::database::v1::DatabaseRole>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::spanner::admin::database::v1::
+                       ListDatabaseRolesRequest const& request) {
+              return stub->ListDatabaseRoles(context, request);
+            },
+            r, function_name);
+      },
+      [](google::spanner::admin::database::v1::ListDatabaseRolesResponse r) {
+        std::vector<google::spanner::admin::database::v1::DatabaseRole> result(
+            r.database_roles().size());
+        auto& messages = *r.mutable_database_roles();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin_internal

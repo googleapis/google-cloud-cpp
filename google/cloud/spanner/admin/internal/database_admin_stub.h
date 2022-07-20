@@ -136,6 +136,13 @@ class DatabaseAdminStub {
       google::spanner::admin::database::v1::ListBackupOperationsRequest const&
           request) = 0;
 
+  virtual StatusOr<
+      google::spanner::admin::database::v1::ListDatabaseRolesResponse>
+  ListDatabaseRoles(
+      grpc::ClientContext& context,
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -251,6 +258,12 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   ListBackupOperations(
       grpc::ClientContext& client_context,
       google::spanner::admin::database::v1::ListBackupOperationsRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
+  ListDatabaseRoles(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -104,6 +104,10 @@ class DatabaseAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsRequest
           request) = 0;
+
+  virtual google::cloud::Idempotency ListDatabaseRoles(
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest
+          request) = 0;
 };
 
 std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy>

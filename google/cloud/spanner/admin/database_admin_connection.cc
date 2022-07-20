@@ -157,6 +157,14 @@ DatabaseAdminConnection::ListBackupOperations(
       StreamRange<google::longrunning::Operation>>();
 }
 
+StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+DatabaseAdminConnection::ListDatabaseRoles(
+    google::spanner::admin::database::v1::
+        ListDatabaseRolesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::spanner::admin::database::v1::DatabaseRole>>();
+}
+
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

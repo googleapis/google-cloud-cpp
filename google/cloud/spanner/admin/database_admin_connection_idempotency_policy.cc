@@ -144,6 +144,11 @@ class DefaultDatabaseAdminConnectionIdempotencyPolicy
       override {
     return Idempotency::kIdempotent;
   }
+
+  Idempotency ListDatabaseRoles(
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest) override {
+    return Idempotency::kIdempotent;
+  }
 };
 }  // namespace
 

@@ -100,12 +100,12 @@ class DatabaseAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   /// [google.spanner.admin.database.v1.ListDatabasesRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L443}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L455}
   /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
       std::string const& parent, Options opts = {});
@@ -114,16 +114,16 @@ class DatabaseAdminClient {
   /// Lists Cloud Spanner databases.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::ListDatabasesRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L443}
+  /// @googleapis_link{google::spanner::admin::database::v1::ListDatabasesRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L455}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   /// [google.spanner.admin.database.v1.ListDatabasesRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L443}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L455}
   /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
       google::spanner::admin::database::v1::ListDatabasesRequest request,
@@ -151,12 +151,12 @@ class DatabaseAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   /// [google.spanner.admin.database.v1.CreateDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L475}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L487}
   /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   CreateDatabase(std::string const& parent, std::string const& create_statement,
@@ -173,16 +173,16 @@ class DatabaseAdminClient {
   /// [Database][google.spanner.admin.database.v1.Database], if successful.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::CreateDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L475}
+  /// @googleapis_link{google::spanner::admin::database::v1::CreateDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L487}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   /// [google.spanner.admin.database.v1.CreateDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L475}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L487}
   /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   CreateDatabase(
@@ -199,12 +199,12 @@ class DatabaseAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   /// [google.spanner.admin.database.v1.GetDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L517}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L529}
   /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       std::string const& name, Options opts = {});
@@ -213,16 +213,16 @@ class DatabaseAdminClient {
   /// Gets the state of a Cloud Spanner database.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L517}
+  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L529}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   /// [google.spanner.admin.database.v1.GetDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L517}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L529}
   /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const& request,
@@ -243,12 +243,12 @@ class DatabaseAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L580}
+  /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L592}
   ///
   /// [google.spanner.admin.database.v1.UpdateDatabaseDdlRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L544}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L556}
   /// [google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L580}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L592}
   ///
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
@@ -267,16 +267,16 @@ class DatabaseAdminClient {
   /// The operation has no response.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L544}
+  /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L556}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L580}
+  /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L592}
   ///
   /// [google.spanner.admin.database.v1.UpdateDatabaseDdlRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L544}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L556}
   /// [google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L580}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L592}
   ///
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
@@ -297,7 +297,7 @@ class DatabaseAdminClient {
   ///     backoff policies.
   ///
   /// [google.spanner.admin.database.v1.DropDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L612}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L624}
   ///
   Status DropDatabase(std::string const& database, Options opts = {});
 
@@ -309,12 +309,12 @@ class DatabaseAdminClient {
   /// after the database has been deleted.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::DropDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L612}
+  /// @googleapis_link{google::spanner::admin::database::v1::DropDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L624}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.spanner.admin.database.v1.DropDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L612}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L624}
   ///
   Status DropDatabase(
       google::spanner::admin::database::v1::DropDatabaseRequest const& request,
@@ -331,12 +331,12 @@ class DatabaseAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L636}
+  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L648}
   ///
   /// [google.spanner.admin.database.v1.GetDatabaseDdlRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L623}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L635}
   /// [google.spanner.admin.database.v1.GetDatabaseDdlResponse]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L636}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L648}
   ///
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(std::string const& database, Options opts = {});
@@ -347,16 +347,16 @@ class DatabaseAdminClient {
   /// may be queried using the [Operations][google.longrunning.Operations] API.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L623}
+  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L635}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L636}
+  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L648}
   ///
   /// [google.spanner.admin.database.v1.GetDatabaseDdlRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L623}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L635}
   /// [google.spanner.admin.database.v1.GetDatabaseDdlResponse]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L636}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L648}
   ///
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(
@@ -901,12 +901,12 @@ class DatabaseAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   /// [google.spanner.admin.database.v1.RestoreDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L727}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L739}
   /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id,
@@ -932,16 +932,16 @@ class DatabaseAdminClient {
   /// first restore to complete.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::RestoreDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L727}
+  /// @googleapis_link{google::spanner::admin::database::v1::RestoreDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L739}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   /// [google.spanner.admin.database.v1.RestoreDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L727}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L739}
   /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L353}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(
@@ -967,7 +967,7 @@ class DatabaseAdminClient {
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
   /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L644}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L656}
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -985,14 +985,14 @@ class DatabaseAdminClient {
   /// 7 days, and pending operations.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::ListDatabaseOperationsRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L644}
+  /// @googleapis_link{google::spanner::admin::database::v1::ListDatabaseOperationsRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L656}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
   /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L644}
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L656}
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -1055,6 +1055,45 @@ class DatabaseAdminClient {
   ///
   StreamRange<google::longrunning::Operation> ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsRequest request,
+      Options opts = {});
+
+  ///
+  /// Lists Cloud Spanner database roles.
+  ///
+  /// @param parent  Required. The database whose roles should be listed.
+  ///  Values are of the form
+  ///  `projects/<project>/instances/<instance>/databases/<database>/databaseRoles`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::DatabaseRole,google/spanner/admin/database/v1/spanner_database_admin.proto#L885}
+  ///
+  /// [google.spanner.admin.database.v1.ListDatabaseRolesRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L900}
+  /// [google.spanner.admin.database.v1.DatabaseRole]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L885}
+  ///
+  StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+  ListDatabaseRoles(std::string const& parent, Options opts = {});
+
+  ///
+  /// Lists Cloud Spanner database roles.
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::ListDatabaseRolesRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L900}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::DatabaseRole,google/spanner/admin/database/v1/spanner_database_admin.proto#L885}
+  ///
+  /// [google.spanner.admin.database.v1.ListDatabaseRolesRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L900}
+  /// [google.spanner.admin.database.v1.DatabaseRole]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L885}
+  ///
+  StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+  ListDatabaseRoles(
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest request,
       Options opts = {});
 
  private:
