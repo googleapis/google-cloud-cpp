@@ -522,17 +522,25 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
                                             Property(&ModifyRequest::ack_ids,
                                                      ElementsAre("fake-003"))))
       .WillOnce(OnModify);
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _,
-                         Property(&ModifyRequest::ack_ids,
-                                  ElementsAre("fake-004", "fake-005"))))
+  EXPECT_CALL(
+      *mock,
+      AsyncModifyAckDeadline(
+          _, _,
+          AllOf(
+              Property(&ModifyRequest::subscription,
+                       "projects/test-project/subscriptions/test-subscription"),
+              Property(&ModifyRequest::ack_ids,
+                       ElementsAre("fake-004", "fake-005")))))
       .WillOnce(OnModify);
   EXPECT_CALL(
       *mock,
       AsyncModifyAckDeadline(
           _, _,
-          AllOf(Property(&ModifyRequest::ack_ids, ElementsAre("fake-006")),
-                Property(&ModifyRequest::ack_deadline_seconds, 123))))
+          AllOf(
+              Property(&ModifyRequest::subscription,
+                       "projects/test-project/subscriptions/test-subscription"),
+              Property(&ModifyRequest::ack_ids, ElementsAre("fake-006")),
+              Property(&ModifyRequest::ack_deadline_seconds, 123))))
       .WillOnce(OnModify);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
