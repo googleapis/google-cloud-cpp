@@ -93,7 +93,7 @@ if ((Test-Path env:KOKORO_GFILE_DIR) -and
     $build_flags += @("--experimental_guard_against_concurrent_changes")
 }
 
-if ($BuildName -like "bazel-release-*") {
+if ($BuildName -like "bazel-release*") {
     $build_flags += ("-c", "opt")
 }
 
