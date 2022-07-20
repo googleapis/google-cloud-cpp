@@ -25,7 +25,6 @@
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
-#include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
 
@@ -227,15 +226,14 @@ std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
   }
 
   if (pool_size > 0) {
+    auto pool = std::make_shared<PooledCurlHandleFactory>(pool_size, options);
     return std::unique_ptr<RestClient>(new CurlRestClient(
-        std::move(endpoint_address),
-        std::make_shared<PooledCurlHandleFactory>(pool_size, options),
-        std::move(options)));
+        std::move(endpoint_address), std::move(pool), std::move(options)));
   }
 
+  auto pool = std::make_shared<DefaultCurlHandleFactory>(options);
   return std::unique_ptr<RestClient>(new CurlRestClient(
-      std::move(endpoint_address),
-      std::make_shared<DefaultCurlHandleFactory>(options), std::move(options)));
+      std::move(endpoint_address), std::move(pool), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
