@@ -23,7 +23,7 @@
 # `ci/cloudbuild/triggers` directory. "Manual" triggers exist only within the
 # GCB UI at the time of this writing. Users with the appropriate access can run
 # this build by hand with:
-#   `ci/cloudbuild/build.sh --distro fedora-35 --build integration-daily --cloud cloud-cpp-testing-resources`
+#   `ci/cloudbuild/build.sh --distro fedora-36 --build integration-daily --cloud cloud-cpp-testing-resources`
 
 set -euo pipefail
 
