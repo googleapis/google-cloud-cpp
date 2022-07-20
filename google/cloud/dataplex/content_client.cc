@@ -101,6 +101,33 @@ StatusOr<google::cloud::dataplex::v1::Content> ContentServiceClient::GetContent(
   return connection_->GetContent(request);
 }
 
+StatusOr<google::iam::v1::Policy> ContentServiceClient::GetIamPolicy(
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(resource);
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ContentServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestIamPermissions(request);
+}
+
 StreamRange<google::cloud::dataplex::v1::Content>
 ContentServiceClient::ListContent(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

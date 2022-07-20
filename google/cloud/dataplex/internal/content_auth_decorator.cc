@@ -64,6 +64,31 @@ StatusOr<google::cloud::dataplex::v1::Content> ContentServiceAuth::GetContent(
   return child_->GetContent(context, request);
 }
 
+StatusOr<google::iam::v1::Policy> ContentServiceAuth::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceAuth::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ContentServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TestIamPermissions(context, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::ListContentResponse>
 ContentServiceAuth::ListContent(
     grpc::ClientContext& context,

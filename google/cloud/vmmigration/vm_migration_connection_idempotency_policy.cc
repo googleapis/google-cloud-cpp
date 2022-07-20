@@ -120,6 +120,11 @@ class DefaultVmMigrationConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency UpgradeAppliance(
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency CreateMigratingVm(
       google::cloud::vmmigration::v1::CreateMigratingVmRequest const&)
       override {

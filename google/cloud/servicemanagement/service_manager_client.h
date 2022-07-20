@@ -320,12 +320,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L68}
   ///
   /// [google.api.servicemanagement.v1.ListServiceConfigsRequest]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L355}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L68}
   ///
   StreamRange<google::api::Service> ListServiceConfigs(
       std::string const& service_name, Options opts = {});
@@ -339,12 +339,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L68}
   ///
   /// [google.api.servicemanagement.v1.ListServiceConfigsRequest]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L355}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L68}
   ///
   StreamRange<google::api::Service> ListServiceConfigs(
       google::api::servicemanagement::v1::ListServiceConfigsRequest request,
@@ -365,12 +365,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L68}
   ///
   /// [google.api.servicemanagement.v1.GetServiceConfigRequest]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L326}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L68}
   ///
   StatusOr<google::api::Service> GetServiceConfig(
       std::string const& service_name, std::string const& config_id,
@@ -386,12 +386,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L68}
   ///
   /// [google.api.servicemanagement.v1.GetServiceConfigRequest]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L326}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L68}
   ///
   StatusOr<google::api::Service> GetServiceConfig(
       google::api::servicemanagement::v1::GetServiceConfigRequest const&
@@ -415,12 +415,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L68}
   ///
   /// [google.api.servicemanagement.v1.CreateServiceConfigRequest]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L379}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L68}
   ///
   StatusOr<google::api::Service> CreateServiceConfig(
       std::string const& service_name,
@@ -441,12 +441,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L68}
   ///
   /// [google.api.servicemanagement.v1.CreateServiceConfigRequest]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L379}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L68}
   ///
   StatusOr<google::api::Service> CreateServiceConfig(
       google::api::servicemanagement::v1::CreateServiceConfigRequest const&

@@ -70,6 +70,11 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::DeleteObjectRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::CancelResumableWriteResponse>,
+              CancelResumableWrite,
+              (grpc::ClientContext&,
+               google::storage::v2::CancelResumableWriteRequest const&),
+              (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Object>, GetObject,
               (grpc::ClientContext&,
                google::storage::v2::GetObjectRequest const&),

@@ -284,6 +284,14 @@ VmMigrationClient::DeleteDatacenterConnector(
   return connection_->DeleteDatacenterConnector(request);
 }
 
+future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
+VmMigrationClient::UpgradeAppliance(
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpgradeAppliance(request);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationClient::CreateMigratingVm(
     std::string const& parent,

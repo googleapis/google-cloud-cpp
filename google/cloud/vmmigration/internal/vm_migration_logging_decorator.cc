@@ -244,6 +244,21 @@ VmMigrationLogging::AsyncDeleteDatacenterConnector(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+VmMigrationLogging::AsyncUpgradeAppliance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
+                 request) {
+        return child_->AsyncUpgradeAppliance(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCreateMigratingVm(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

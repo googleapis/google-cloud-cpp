@@ -138,6 +138,14 @@ VmMigrationConnection::DeleteDatacenterConnector(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
+VmMigrationConnection::UpgradeAppliance(
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnection::CreateMigratingVm(
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const&) {

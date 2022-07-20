@@ -63,6 +63,22 @@ class DefaultContentServiceConnectionIdempotencyPolicy
     return Idempotency::kIdempotent;
   }
 
+  Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override {
+    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                           : Idempotency::kIdempotent;
+  }
+
+  Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency ListContent(
       google::cloud::dataplex::v1::ListContentRequest) override {
     return Idempotency::kIdempotent;

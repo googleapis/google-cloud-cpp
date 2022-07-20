@@ -83,6 +83,11 @@ class StorageAuth : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::DeleteObjectRequest const& request) override;
 
+  StatusOr<google::storage::v2::CancelResumableWriteResponse>
+  CancelResumableWrite(
+      grpc::ClientContext& context,
+      google::storage::v2::CancelResumableWriteRequest const& request) override;
+
   StatusOr<google::storage::v2::Object> GetObject(
       grpc::ClientContext& context,
       google::storage::v2::GetObjectRequest const& request) override;

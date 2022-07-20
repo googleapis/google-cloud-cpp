@@ -50,6 +50,15 @@ class ContentServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetContent(
       google::cloud::dataplex::v1::GetContentRequest const& request) = 0;
 
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+
   virtual google::cloud::Idempotency ListContent(
       google::cloud::dataplex::v1::ListContentRequest request) = 0;
 };

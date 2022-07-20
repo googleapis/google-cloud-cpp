@@ -238,6 +238,25 @@ VmMigrationAuth::AsyncDeleteDatacenterConnector(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+VmMigrationAuth::AsyncUpgradeAppliance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpgradeAppliance(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCreateMigratingVm(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
