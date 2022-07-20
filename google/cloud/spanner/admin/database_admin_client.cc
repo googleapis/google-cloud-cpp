@@ -381,6 +381,23 @@ DatabaseAdminClient::ListBackupOperations(
   return connection_->ListBackupOperations(std::move(request));
 }
 
+StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+DatabaseAdminClient::ListDatabaseRoles(std::string const& parent,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::database::v1::ListDatabaseRolesRequest request;
+  request.set_parent(parent);
+  return connection_->ListDatabaseRoles(request);
+}
+
+StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+DatabaseAdminClient::ListDatabaseRoles(
+    google::spanner::admin::database::v1::ListDatabaseRolesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDatabaseRoles(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin

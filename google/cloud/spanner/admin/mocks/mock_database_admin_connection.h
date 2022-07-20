@@ -148,6 +148,12 @@ class MockDatabaseAdminConnection
               (google::spanner::admin::database::v1::ListBackupOperationsRequest
                    request),
               (override));
+
+  MOCK_METHOD(
+      StreamRange<google::spanner::admin::database::v1::DatabaseRole>,
+      ListDatabaseRoles,
+      (google::spanner::admin::database::v1::ListDatabaseRolesRequest request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

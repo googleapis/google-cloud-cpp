@@ -185,6 +185,15 @@ DatabaseAdminMetadata::ListBackupOperations(
   return child_->ListBackupOperations(context, request);
 }
 
+StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
+DatabaseAdminMetadata::ListDatabaseRoles(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListDatabaseRoles(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

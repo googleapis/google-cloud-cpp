@@ -267,6 +267,20 @@ DefaultDatabaseAdminStub::ListBackupOperations(
   return response;
 }
 
+StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
+DefaultDatabaseAdminStub::ListDatabaseRoles(
+    grpc::ClientContext& client_context,
+    google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+        request) {
+  google::spanner::admin::database::v1::ListDatabaseRolesResponse response;
+  auto status =
+      grpc_stub_->ListDatabaseRoles(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

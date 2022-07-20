@@ -262,6 +262,19 @@ DatabaseAdminLogging::ListBackupOperations(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
+DatabaseAdminLogging::ListDatabaseRoles(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+              request) { return child_->ListDatabaseRoles(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

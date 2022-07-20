@@ -244,6 +244,16 @@ DatabaseAdminAuth::ListBackupOperations(
   return child_->ListBackupOperations(context, request);
 }
 
+StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
+DatabaseAdminAuth::ListDatabaseRoles(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDatabaseRoles(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -135,6 +135,12 @@ class DatabaseAdminAuth : public DatabaseAdminStub {
       google::spanner::admin::database::v1::ListBackupOperationsRequest const&
           request) override;
 
+  StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
+  ListDatabaseRoles(
+      grpc::ClientContext& context,
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

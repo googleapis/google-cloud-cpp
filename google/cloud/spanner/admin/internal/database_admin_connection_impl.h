@@ -126,6 +126,11 @@ class DatabaseAdminConnectionImpl
       google::spanner::admin::database::v1::ListBackupOperationsRequest request)
       override;
 
+  StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+  ListDatabaseRoles(
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest request)
+      override;
+
  private:
   std::unique_ptr<spanner_admin::DatabaseAdminRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

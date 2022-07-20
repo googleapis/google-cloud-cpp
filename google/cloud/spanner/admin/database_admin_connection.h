@@ -134,6 +134,10 @@ class DatabaseAdminConnection {
   virtual StreamRange<google::longrunning::Operation> ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsRequest
           request);
+
+  virtual StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+  ListDatabaseRoles(
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest request);
 };
 
 /**
