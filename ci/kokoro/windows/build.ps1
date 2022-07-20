@@ -74,7 +74,7 @@ if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $env:VCPKG_TRIPLET = "x86-windows-static"
     $DependencyScript = "build-cmake-dependencies.ps1"
     $BuildScript = "build-cmake.ps1"
-} elseif ($BuildName -like "bazel-*") {
+} elseif ($BuildName -like "bazel*") {
     $DependencyScript = "build-bazel-dependencies.ps1"
     $BuildScript = "build-bazel.ps1"
 } elseif ($BuildName -eq "quickstart-bazel") {
