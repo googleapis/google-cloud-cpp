@@ -127,6 +127,7 @@ future<Status> StreamingSubscriptionBatchSource::BulkNack(
 void StreamingSubscriptionBatchSource::ExtendLeases(
     std::vector<std::string> ack_ids, std::chrono::seconds extension) {
   google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_subscription(subscription_full_name_);
   request.set_ack_deadline_seconds(
       static_cast<std::int32_t>(extension.count()));
   for (auto& a : ack_ids) {
