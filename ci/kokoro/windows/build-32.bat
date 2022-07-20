@@ -24,9 +24,9 @@ REM Change PATH to install the Bazelisk version we just installed
 @REM Before MSVC 2022 the compiler is a 32-bit binary
 REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.
 if %MSVC_VERSION% GEQ 2022 (
-  call "c:\Program Files\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars64.bat"
+  call "c:\Program Files\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars32.bat"
 ) else (
-  call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars64.bat"
+  call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars32.bat"
 )
 
 REM The remaining of the build script is implemented in PowerShell.
