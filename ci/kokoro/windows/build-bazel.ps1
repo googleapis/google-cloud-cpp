@@ -93,11 +93,17 @@ if ((Test-Path env:KOKORO_GFILE_DIR) -and
     $build_flags += @("--experimental_guard_against_concurrent_changes")
 }
 
-if ($BuildName -eq "bazel-release") {
+# TODO(#9531) - enable release builds for MSVC 2017
+if (($BuildName -like "bazel-release*") -and ($BuildName -ne "bazel-release-2017")) {
     $build_flags += ("-c", "opt")
 }
 
-$env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\${env:MSVC_VERSION}\Community\VC"
+# Before MSVC 2022 the compiler is a 32-bit binary
+if ("${env:MSVC_VERSION}" -ge "2022") {
+  $env:BAZEL_VC="C:\Program Files\Microsoft Visual Studio\${env:MSVC_VERSION}\Community\VC"
+} else {
+  $env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\${env:MSVC_VERSION}\Community\VC"
+}
 
 ForEach($_ in (1, 2, 3)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Fetch dependencies [$_]"
