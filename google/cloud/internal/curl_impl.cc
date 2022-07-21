@@ -491,14 +491,14 @@ StatusOr<int> CurlImpl::PerformWork() {
   // not need this loop and curl_multi_perform() blocks until there is no more
   // work, but is it pretty harmless to keep here.
   int running_handles = 0;
-  CURLMcode result;
+  CURLMcode multi_perform_result;
   CURLMcode multi_remove_result;
   do {
-    result = curl_multi_perform(multi_.get(), &running_handles);
-  } while (result == CURLM_CALL_MULTI_PERFORM);
+    multi_perform_result = curl_multi_perform(multi_.get(), &running_handles);
+  } while (multi_perform_result == CURLM_CALL_MULTI_PERFORM);
 
-  if (result != CURLM_OK) {
-    auto status = AsStatus(result, __func__);
+  if (multi_perform_result != CURLM_OK) {
+    auto status = AsStatus(multi_perform_result, __func__);
     TRACE_STATE() << ", status=" << status << "\n";
     return status;
   }
@@ -521,14 +521,14 @@ StatusOr<int> CurlImpl::PerformWork() {
         return Status(StatusCode::kUnknown, std::move(os).str());
       }
 
+      auto multi_info_read_result = msg->data.result;
       TRACE_STATE() << ", status="
-                    << CurlHandle::AsStatus(msg->data.result, __func__)
+                    << CurlHandle::AsStatus(multi_info_read_result, __func__)
                     << ", remaining=" << remaining
                     << ", running_handles=" << running_handles << "\n";
       // Whatever the status is, the transfer is done, we need to remove it
       // from the CURLM* interface.
       curl_closed_ = true;
-      Status multi_remove_status;
       if (in_multi_) {
         // In the extremely unlikely case that removing the handle from CURLM*
         // was an error, return that as a status.
@@ -538,19 +538,22 @@ StatusOr<int> CurlImpl::PerformWork() {
       }
 
       TRACE_STATE() << ", status="
-                    << CurlHandle::AsStatus(msg->data.result, __func__)
+                    << CurlHandle::AsStatus(multi_info_read_result, __func__)
                     << ", remaining=" << remaining
                     << ", running_handles=" << running_handles
-                    << ", multi_remove_status=" << multi_remove_status << "\n";
+                    << ", multi_remove_status="
+                    << AsStatus(multi_remove_result, __func__) << "\n";
 
       // Ignore errors when closing the handle. They are expected because
       // libcurl may have received a block of data, but the WriteCallback()
       // (see above) tells libcurl that it cannot receive more data.
       if (closing_) continue;
-      if (result != CURLM_OK)
-        return CurlHandle::AsStatus(msg->data.result, __func__);
-      if (!multi_remove_status.ok())
+      if (multi_info_read_result != CURLE_OK) {
+        return CurlHandle::AsStatus(multi_info_read_result, __func__);
+      }
+      if (multi_remove_result != CURLM_OK) {
         return AsStatus(multi_remove_result, __func__);
+      }
     }
   }
   TRACE_STATE() << ", running_handles=" << running_handles << "\n";
