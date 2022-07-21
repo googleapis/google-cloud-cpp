@@ -45,7 +45,6 @@ using ::google::cloud::spanner_mocks::MockConnection;
 using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::spanner_testing::SessionNotFoundError;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::ByMove;
@@ -378,41 +377,6 @@ TEST(ClientTest, RollbackError) {
   auto txn = MakeReadWriteTransaction();
   EXPECT_THAT(client.Rollback(txn),
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("oops")));
-}
-
-TEST(ClientTest, MakeConnectionOptionalArguments) {
-  Database db("foo", "bar", "baz");
-  auto conn = MakeConnection(db);
-  EXPECT_NE(conn, nullptr);
-
-  conn = MakeConnection(db, ConnectionOptions());
-  EXPECT_NE(conn, nullptr);
-
-  conn = MakeConnection(db, ConnectionOptions(), SessionPoolOptions());
-  EXPECT_NE(conn, nullptr);
-
-  conn = MakeConnection(db);
-  EXPECT_NE(conn, nullptr);
-
-  conn = MakeConnection(db, Options{});
-  ASSERT_NE(conn, nullptr);
-  ASSERT_TRUE(conn->options().has<EndpointOption>());
-  EXPECT_EQ(conn->options().get<EndpointOption>(),
-            spanner_internal::DefaultOptions().get<EndpointOption>());
-
-  {
-    // Setting `EndpointOption` only has an effect when it is not overridden
-    // from the environment.
-    ScopedEnvironment endpoint("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
-                               absl::nullopt);
-    ScopedEnvironment emulator("SPANNER_EMULATOR_HOST", absl::nullopt);
-    conn = MakeConnection(db, Options{}.set<EndpointOption>("endpoint"));
-    ASSERT_NE(conn, nullptr);
-    ASSERT_TRUE(conn->options().has<EndpointOption>());
-    EXPECT_NE(conn->options().get<EndpointOption>(),
-              spanner_internal::DefaultOptions().get<EndpointOption>());
-    EXPECT_EQ(conn->options().get<EndpointOption>(), "endpoint");
-  }
 }
 
 TEST(ClientTest, CommitMutatorSuccess) {

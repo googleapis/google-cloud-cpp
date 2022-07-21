@@ -1001,6 +1001,17 @@ TEST_F(ClientIntegrationTest, UnifiedCredentials) {
   ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
 }
 
+/// @test Verify backwards compatibility for MakeConnection() arguments.
+TEST_F(ClientIntegrationTest, MakeConnectionOverloads) {
+  MakeConnection(GetDatabase(), ConnectionOptions());
+  MakeConnection(GetDatabase(), ConnectionOptions(), SessionPoolOptions());
+  MakeConnection(GetDatabase(), ConnectionOptions(), SessionPoolOptions(),
+                 LimitedTimeRetryPolicy(std::chrono::minutes(25)).clone(),
+                 ExponentialBackoffPolicy(std::chrono::seconds(2),
+                                          std::chrono::minutes(10), 1.5)
+                     .clone());
+}
+
 /// @test Verify the backwards compatibility `v1` namespace still exists.
 TEST_F(ClientIntegrationTest, BackwardsCompatibility) {
   auto connection = ::google::cloud::spanner::v1::MakeConnection(GetDatabase());
