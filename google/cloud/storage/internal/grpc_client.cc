@@ -602,8 +602,17 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::QueryResumableUpload(
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
-    DeleteResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    DeleteResumableUploadRequest const& request) {
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request, "");
+  auto const timeout = CurrentOptions().get<TransferStallTimeoutOption>();
+  if (timeout.count() != 0) {
+    context.set_deadline(std::chrono::system_clock::now() + timeout);
+  }
+  auto response = stub_->CancelResumableWrite(
+      context, GrpcObjectRequestParser::ToProto(request));
+  if (!response) return std::move(response).status();
+  return EmptyResponse{};
 }
 
 StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(

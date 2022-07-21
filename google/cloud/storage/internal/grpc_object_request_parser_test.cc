@@ -1060,6 +1060,20 @@ TEST(GrpcObjectRequestParser, QueryResumableUploadResponseWithResource) {
   EXPECT_EQ(actual.payload->size(), 123456);
 }
 
+TEST(GrpcObjectRequestParser, DeleteResumableUploadRequest) {
+  google::storage::v2::CancelResumableWriteRequest expected;
+  EXPECT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        upload_id: "test-upload-id"
+      )pb",
+      &expected));
+
+  DeleteResumableUploadRequest req("test-upload-id");
+
+  auto actual = GrpcObjectRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

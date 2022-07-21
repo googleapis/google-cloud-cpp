@@ -697,6 +697,13 @@ QueryResumableUploadResponse GrpcObjectRequestParser::FromProto(
   return result;
 }
 
+google::storage::v2::CancelResumableWriteRequest
+GrpcObjectRequestParser::ToProto(DeleteResumableUploadRequest const& request) {
+  google::storage::v2::CancelResumableWriteRequest result;
+  result.set_upload_id(request.upload_session_url());
+  return result;
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
