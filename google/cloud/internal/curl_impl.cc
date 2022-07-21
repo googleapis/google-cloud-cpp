@@ -777,7 +777,7 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
     status = handle_.SetOption(CURLOPT_UPLOAD, 1L);
     if (!status.ok()) return OnTransferError(std::move(status));
     status = handle_.SetOption(CURLOPT_INFILESIZE_LARGE,
-                               static_cast<long>(writev.size()));
+                               static_cast<long>(writev.size()));  // NOLINT
     if (!status.ok()) return OnTransferError(std::move(status));
 
     return MakeRequestImpl();
