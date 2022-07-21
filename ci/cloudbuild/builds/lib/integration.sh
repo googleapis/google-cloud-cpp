@@ -30,7 +30,7 @@ source module ci/cloudbuild/builds/lib/git.sh
 export PATH="${HOME}/.local/bin:${PATH}"
 python3 -m pip uninstall -y --quiet googleapis-storage-testbench
 python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
-  "git+https://github.com/googleapis/storage-testbench@v0.25.0"
+  "git+https://github.com/googleapis/storage-testbench@v0.27.0"
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
