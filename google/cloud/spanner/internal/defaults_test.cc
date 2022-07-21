@@ -71,7 +71,8 @@ TEST(Options, Defaults) {
               ElementsAre(gcloud_user_agent_matcher()));
   EXPECT_FALSE(opts.has<UserProjectOption>());
 
-  EXPECT_EQ(0, opts.get<SessionPoolMinSessionsOption>());
+  EXPECT_EQ(25 * opts.get<GrpcNumChannelsOption>(),
+            opts.get<SessionPoolMinSessionsOption>());
   EXPECT_EQ(100, opts.get<SessionPoolMaxSessionsPerChannelOption>());
   EXPECT_EQ(0, opts.get<SessionPoolMaxIdleSessionsOption>());
   EXPECT_EQ(ActionOnExhaustion::kBlock,

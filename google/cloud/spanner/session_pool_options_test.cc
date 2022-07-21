@@ -53,7 +53,7 @@ TEST(SessionPoolOptionsTest, MaxMinSessionsConflict) {
 
 TEST(SessionPoolOptionsTest, DefaultOptions) {
   auto const opts = SessionPoolOptions{};
-  EXPECT_EQ(0, opts.min_sessions());
+  EXPECT_EQ(25 * 4, opts.min_sessions());
   EXPECT_EQ(100, opts.max_sessions_per_channel());
   EXPECT_EQ(0, opts.max_idle_sessions());
   EXPECT_EQ(ActionOnExhaustion::kBlock, opts.action_on_exhaustion());

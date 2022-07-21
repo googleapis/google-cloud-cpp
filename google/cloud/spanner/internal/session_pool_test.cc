@@ -96,12 +96,14 @@ TEST(SessionPool, Allocate) {
               grpc::ClientContext&,
               google::spanner::v1::BatchCreateSessionsRequest const& request) {
             EXPECT_EQ(db.FullName(), request.database());
-            EXPECT_EQ(1, request.session_count());
+            EXPECT_EQ(42, request.session_count());
             return MakeSessionsResponse({"session1"});
           });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
+  auto pool = MakeTestSessionPool(
+      db, {mock}, threads.cq(),
+      Options{}.set<spanner::SessionPoolMinSessionsOption>(42));
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -125,12 +127,14 @@ TEST(SessionPool, ReleaseBadSession) {
               grpc::ClientContext&,
               google::spanner::v1::BatchCreateSessionsRequest const& request) {
             EXPECT_EQ(db.FullName(), request.database());
-            EXPECT_EQ(1, request.session_count());
+            EXPECT_EQ(2, request.session_count());
             return MakeSessionsResponse({"session2"});
           });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
+  auto pool = MakeTestSessionPool(
+      db, {mock}, threads.cq(),
+      Options{}.set<spanner::SessionPoolMinSessionsOption>(1));
   {
     auto session = pool->Allocate();
     ASSERT_STATUS_OK(session);
@@ -153,6 +157,7 @@ TEST(SessionPool, CreateError) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions)
+      .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "init failure"))))
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "some failure"))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
@@ -397,7 +402,9 @@ TEST(SessionPool, GetStubForStublessSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
+  auto pool = MakeTestSessionPool(
+      db, {mock}, threads.cq(),
+      Options{}.set<spanner::SessionPoolMinSessionsOption>(0));
   // ensure we get a stub even if we didn't allocate from the pool.
   auto session = MakeDissociatedSessionHolder("session_id");
   EXPECT_EQ(pool->GetStub(*session), mock);
