@@ -494,13 +494,6 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_EQ(restored_database->encryption_config().kms_key_name(),
               encryption_key.FullName());
   }
-  if (restored_database->database_dialect() ==
-      google::spanner::admin::database::v1::DatabaseDialect::
-          DATABASE_DIALECT_UNSPECIFIED) {
-    // TODO(#8573): Remove when RestoreDatabase() returns correct dialect.
-    restored_database->set_database_dialect(
-        google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
-  }
   EXPECT_EQ(restored_database->database_dialect(),
             database->database_dialect());
 
