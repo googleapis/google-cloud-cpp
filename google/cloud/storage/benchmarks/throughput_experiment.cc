@@ -102,6 +102,7 @@ class UploadObject : public ThroughputExperiment {
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
         gcs::DisableMD5Hash(!config.enable_md5), api_selector);
+    std::string upload_id = writer.resumable_session_id();
     for (std::int64_t offset = 0; offset < config.object_size;
          offset += config.app_buffer_size) {
       auto len = config.app_buffer_size;
@@ -113,7 +114,7 @@ class UploadObject : public ThroughputExperiment {
     writer.Close();
     auto const usage = timer.Sample();
     auto notes =
-        bucket_name + ';' + object_name + ';' +
+        bucket_name + ';' + object_name + ';' + upload_id + ';' +
         (writer.metadata() ? std::to_string(writer.metadata()->generation())
                            : std::string{});
 
