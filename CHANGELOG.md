@@ -39,7 +39,7 @@ for example, instead of ~`google::cloud::v1::Status`~ use
 `gcpcxxV1` inline namespace names before 2022-11-01. For more info, see
 [#7463] and [#5976].
 
-[#6463]: https://github.com/googleapis/google-cloud-cpp/issues/7463
+[#7463]: https://github.com/googleapis/google-cloud-cpp/issues/7463
 [#5976]: https://github.com/googleapis/google-cloud-cpp/issues/5976
 </details>
 
@@ -86,7 +86,9 @@ Application developers that read rows by directly constructing a `RowReader`
 object should instead construct a `Table` object and call `Table::ReadRows(...)`
 on it.
 
-For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/8854
+For status on this, see [#8854].
+
+[#8854]: https://github.com/googleapis/google-cloud-cpp/issues/8854
 </details>
 
 <details>
