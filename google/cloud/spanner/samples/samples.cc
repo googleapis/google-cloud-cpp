@@ -3115,22 +3115,21 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
   namespace spanner = ::google::cloud::spanner;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& database_id) {
+    // Use a truncated exponential backoff with jitter to wait between
+    // retries:
+    //   https://en.wikipedia.org/wiki/Exponential_backoff
+    //   https://cloud.google.com/storage/docs/exponential-backoff
     auto client = spanner::Client(spanner::MakeConnection(
         spanner::Database(project_id, instance_id, database_id),
-        spanner::ConnectionOptions{}, spanner::SessionPoolOptions{},
-        // Retry for at most 25 minutes.
-        spanner::LimitedTimeRetryPolicy(
-            /*maximum_duration=*/std::chrono::minutes(25))
-            .clone(),
-        // Use an truncated exponential backoff with jitter to wait between
-        // retries:
-        //   https://en.wikipedia.org/wiki/Exponential_backoff
-        //   https://cloud.google.com/storage/docs/exponential-backoff
-        spanner::ExponentialBackoffPolicy(
-            /*initial_delay=*/std::chrono::seconds(2),
-            /*maximum_delay=*/std::chrono::minutes(10),
-            /*scaling=*/1.5)
-            .clone()));
+        google::cloud::Options{}
+            .set<spanner::SpannerRetryPolicyOption>(
+                std::make_shared<spanner::LimitedTimeRetryPolicy>(
+                    /*maximum_duration=*/std::chrono::minutes(25)))
+            .set<spanner::SpannerBackoffPolicyOption>(
+                std::make_shared<spanner::ExponentialBackoffPolicy>(
+                    /*initial_delay=*/std::chrono::seconds(2),
+                    /*maximum_delay=*/std::chrono::minutes(10),
+                    /*scaling=*/1.5))));
 
     auto rows =
         client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
