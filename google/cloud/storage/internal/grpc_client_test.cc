@@ -39,7 +39,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
 using ::testing::AllOf;
-using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Pair;
@@ -489,9 +488,8 @@ TEST_F(GrpcClientTest, TestBucketIamPermissions) {
 
 TEST_F(GrpcClientTest, InsertObjectMedia) {
   auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, AsyncWriteObject)
-      .WillOnce([this](google::cloud::CompletionQueue const&,
-                       std::unique_ptr<grpc::ClientContext> context) {
+  EXPECT_CALL(*mock, WriteObject)
+      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -500,16 +498,8 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
                         Pair("x-goog-fieldmask", "resource(field1,field2)")));
         ::testing::InSequence sequence;
         auto stream = absl::make_unique<testing::MockInsertStream>();
-        EXPECT_CALL(*stream, Start)
-            .WillOnce(Return(ByMove(make_ready_future(true))));
-        EXPECT_CALL(*stream, Write)
-            .WillOnce([](v2::WriteObjectRequest const&, grpc::WriteOptions) {
-              return make_ready_future(false);
-            });
-        EXPECT_CALL(*stream, Finish)
-            .WillOnce(Return(ByMove(make_ready_future(
-                StatusOr<google::storage::v2::WriteObjectResponse>(
-                    PermanentError())))));
+        EXPECT_CALL(*stream, Write).WillOnce(Return(false));
+        EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
         return stream;
       });
   auto client = CreateTestClient(mock);

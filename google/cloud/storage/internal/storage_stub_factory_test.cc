@@ -30,7 +30,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::storage::testing::MockInsertStream;
+using ::google::cloud::storage::testing::MockAsyncInsertStream;
 using ::google::cloud::storage::testing::MockObjectMediaStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::ScopedLog;
@@ -141,7 +141,7 @@ TEST_F(StorageStubFactory, WriteObject) {
               IsContextMDValid(*context,
                                "google.storage.v2.Storage.WriteObject",
                                google::storage::v2::WriteObjectRequest{});
-              auto stream = absl::make_unique<MockInsertStream>();
+              auto stream = absl::make_unique<MockAsyncInsertStream>();
               EXPECT_CALL(*stream, Start)
                   .WillOnce(Return(ByMove(make_ready_future(true))));
               EXPECT_CALL(*stream, Finish)
