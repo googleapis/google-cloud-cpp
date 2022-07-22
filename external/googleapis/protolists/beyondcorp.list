@@ -1,0 +1,7 @@
+@com_google_googleapis//google/cloud/beyondcorp/appconnections/v1:app_connections_service.proto
+@com_google_googleapis//google/cloud/beyondcorp/appconnectors/v1:app_connector_instance_config.proto
+@com_google_googleapis//google/cloud/beyondcorp/appconnectors/v1:app_connectors_service.proto
+@com_google_googleapis//google/cloud/beyondcorp/appconnectors/v1:resource_info.proto
+@com_google_googleapis//google/cloud/beyondcorp/appgateways/v1:app_gateways_service.proto
+@com_google_googleapis//google/cloud/beyondcorp/clientconnectorservices/v1:client_connector_services_service.proto
+@com_google_googleapis//google/cloud/beyondcorp/clientgateways/v1:client_gateways_service.proto

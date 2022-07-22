@@ -56,6 +56,19 @@
 ./include/google/cloud/batch/internal
 ./include/google/cloud/batch/mocks
 ./include/google/cloud/batch/v1
+./include/google/cloud/beyondcorp
+./include/google/cloud/beyondcorp/appconnections
+./include/google/cloud/beyondcorp/appconnections/v1
+./include/google/cloud/beyondcorp/appconnectors
+./include/google/cloud/beyondcorp/appconnectors/v1
+./include/google/cloud/beyondcorp/appgateways
+./include/google/cloud/beyondcorp/appgateways/v1
+./include/google/cloud/beyondcorp/clientconnectorservices
+./include/google/cloud/beyondcorp/clientconnectorservices/v1
+./include/google/cloud/beyondcorp/clientgateways
+./include/google/cloud/beyondcorp/clientgateways/v1
+./include/google/cloud/beyondcorp/internal
+./include/google/cloud/beyondcorp/mocks
 ./include/google/cloud/bigquery
 ./include/google/cloud/bigquery/connection
 ./include/google/cloud/bigquery/connection/v1
@@ -431,6 +444,7 @@
 ./lib64/cmake/google_cloud_cpp_automl
 ./lib64/cmake/google_cloud_cpp_baremetalsolution
 ./lib64/cmake/google_cloud_cpp_batch
+./lib64/cmake/google_cloud_cpp_beyondcorp
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_bigtable
 ./lib64/cmake/google_cloud_cpp_billing
