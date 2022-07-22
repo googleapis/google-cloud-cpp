@@ -134,6 +134,7 @@ public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(bool, Write, (::google::test::admin::database::v1::WriteObjectRequest const&, grpc::WriteOptions), (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::WriteObjectResponse>, Close, (), (override));
+  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 class MockTailLogEntriesAsyncStreamingReadRpc
