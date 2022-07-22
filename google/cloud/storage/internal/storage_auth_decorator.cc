@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/storage_auth_decorator.h"
 #include "google/cloud/internal/async_streaming_read_rpc_auth.h"
 #include "google/cloud/internal/async_streaming_write_rpc_auth.h"
+#include "google/cloud/internal/streaming_write_rpc_impl.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <memory>
 
