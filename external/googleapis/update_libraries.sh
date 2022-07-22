@@ -36,6 +36,14 @@ declare -A -r LIBRARIES=(
   ["automl"]="@com_google_googleapis//google/cloud/automl/v1:automl_cc_grpc"
   ["baremetalsolution"]="@com_google_googleapis//google/cloud/baremetalsolution/v2:baremetalsolution_cc_grpc"
   ["batch"]="@com_google_googleapis//google/cloud/batch/v1:batch_cc_grpc"
+  ["beyondcorp"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/beyondcorp/appconnections/v1:appconnections_cc_grpc" \
+      "@com_google_googleapis//google/cloud/beyondcorp/appconnectors/v1:appconnectors_cc_grpc" \
+      "@com_google_googleapis//google/cloud/beyondcorp/appgateways/v1:appgateways_cc_grpc" \
+      "@com_google_googleapis//google/cloud/beyondcorp/clientconnectorservices/v1:clientconnectorservices_cc_grpc" \
+      "@com_google_googleapis//google/cloud/beyondcorp/clientgateways/v1:clientgateways_cc_grpc"
+  )"
   ["bigquery"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/bigquery/v2:bigquery_cc_grpc" \
