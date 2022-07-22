@@ -73,6 +73,9 @@ struct GrpcObjectRequestParser {
   static QueryResumableUploadResponse FromProto(
       google::storage::v2::QueryWriteStatusResponse const& response,
       Options const& options);
+
+  static google::storage::v2::CancelResumableWriteRequest ToProto(
+      DeleteResumableUploadRequest const& request);
 };
 
 }  // namespace internal
