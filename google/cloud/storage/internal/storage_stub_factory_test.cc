@@ -90,10 +90,9 @@ TEST_F(StorageStubFactory, ReadObject) {
   EXPECT_CALL(factory, Call)
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockStorageStub>();
-        EXPECT_CALL(*mock, AsyncReadObject)
+        EXPECT_CALL(*mock, ReadObject)
             .WillOnce(
-                [this](google::cloud::CompletionQueue const&,
-                       std::unique_ptr<grpc::ClientContext> context,
+                [this](std::unique_ptr<grpc::ClientContext> context,
                        google::storage::v2::ReadObjectRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context->credentials(), NotNull());
@@ -102,15 +101,9 @@ TEST_F(StorageStubFactory, ReadObject) {
                                    "google.storage.v2.Storage.ReadObject",
                                    request);
                   auto stream = absl::make_unique<MockObjectMediaStream>();
-                  EXPECT_CALL(*stream, Start)
-                      .WillOnce(Return(ByMove(make_ready_future(true))));
                   EXPECT_CALL(*stream, Read)
-                      .WillOnce(Return(ByMove(make_ready_future(
-                          absl::optional<
-                              google::storage::v2::ReadObjectResponse>()))));
-                  EXPECT_CALL(*stream, Finish)
-                      .WillOnce(Return(ByMove(make_ready_future(
-                          Status(StatusCode::kUnavailable, "nothing here")))));
+                      .WillOnce(Return(
+                          Status(StatusCode::kUnavailable, "nothing here")));
                   return stream;
                 });
         return mock;
@@ -124,13 +117,13 @@ TEST_F(StorageStubFactory, ReadObject) {
   ScopedLog log;
   CompletionQueue cq;
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto stream =
-      stub->AsyncReadObject(cq, absl::make_unique<grpc::ClientContext>(),
-                            google::storage::v2::ReadObjectRequest{});
-  ASSERT_TRUE(stream->Start().get());
-  ASSERT_FALSE(stream->Read().get());
-  EXPECT_THAT(stream->Finish().get(), StatusIs(StatusCode::kUnavailable));
-  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("AsyncReadObject")));
+  auto stream = stub->ReadObject(absl::make_unique<grpc::ClientContext>(),
+                                 google::storage::v2::ReadObjectRequest{});
+  auto response = stream->Read();
+  ASSERT_TRUE(absl::holds_alternative<Status>(response));
+  auto status = absl::get<Status>(std::move(response));
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("ReadObject")));
 }
 
 TEST_F(StorageStubFactory, WriteObject) {

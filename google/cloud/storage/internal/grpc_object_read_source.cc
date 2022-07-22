@@ -23,25 +23,10 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-namespace {
 
-std::chrono::milliseconds DefaultDownloadStallTimeout(
-    std::chrono::milliseconds value) {
-  if (value != std::chrono::milliseconds(0)) return value;
-  // We need a large value for `wait_for()`, but not so large that it can easily
-  // overflow.  Fortunately, uploads automatically cancel (server side) after
-  // a few hours, so waiting for 14 days will not create spurious timeouts.
-  return std::chrono::milliseconds(std::chrono::hours(24) * 14);
-}
-
-}  // namespace
-
-GrpcObjectReadSource::GrpcObjectReadSource(
-    std::unique_ptr<StreamingRpc> stream,
-    std::chrono::milliseconds download_stall_timeout)
-    : stream_(std::move(stream)),
-      download_stall_timeout_(
-          DefaultDownloadStallTimeout(download_stall_timeout)) {}
+GrpcObjectReadSource::GrpcObjectReadSource(TimerSource timer_source,
+                                           std::unique_ptr<StreamingRpc> stream)
+    : timer_source_(std::move(timer_source)), stream_(std::move(stream)) {}
 
 StatusOr<HttpResponse> GrpcObjectReadSource::Close() {
   if (stream_) stream_ = nullptr;
@@ -53,98 +38,90 @@ StatusOr<HttpResponse> GrpcObjectReadSource::Close() {
 /// codes.
 StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
                                                       std::size_t n) {
+  using google::storage::v2::ReadObjectResponse;
+
   std::size_t offset = 0;
-  auto update_buf = [&offset, buf, n](absl::string_view source) {
-    if (source.empty()) return source;
+  auto buffer_manager = [&offset, buf, n](absl::string_view source) {
+    if (source.empty()) return std::make_pair(source, offset);
     auto const nbytes = std::min(n - offset, source.size());
     auto const* end = source.data() + nbytes;
     std::copy(source.data(), end, buf + offset);
     offset += nbytes;
-    return absl::string_view(end, source.size() - nbytes);
+    return std::make_pair(absl::string_view(end, source.size() - nbytes),
+                          offset);
   };
 
   ReadSourceResult result;
   result.response.status_code = HttpStatusCode::kContinue;
-  result.bytes_received = 0;
-  auto update_result = [&](google::storage::v2::ReadObjectResponse response) {
-    // The google.storage.v1.Storage documentation says this field can be
-    // empty.
-    if (response.has_checksummed_data()) {
-      // Sometimes protobuf bytes are not strings, but the explicit conversion
-      // always works.
-      spill_ = std::string(
-          std::move(*response.mutable_checksummed_data()->mutable_content()));
-      spill_view_ = update_buf(spill_);
-      result.bytes_received = offset;
-    }
-    if (response.has_object_checksums()) {
-      auto const& checksums = response.object_checksums();
-      if (checksums.has_crc32c()) {
-        result.hashes = Merge(
-            std::move(result.hashes),
-            HashValues{
-                GrpcObjectMetadataParser::Crc32cFromProto(checksums.crc32c()),
-                {}});
-      }
-      if (!checksums.md5_hash().empty()) {
-        result.hashes = Merge(std::move(result.hashes),
-                              HashValues{{},
-                                         GrpcObjectMetadataParser::MD5FromProto(
-                                             checksums.md5_hash())});
-      }
-    }
-    if (response.has_metadata()) {
-      auto const& metadata = response.metadata();
-      result.generation = result.generation.value_or(metadata.generation());
-      result.metageneration =
-          result.metageneration.value_or(metadata.metageneration());
-      result.storage_class =
-          result.storage_class.value_or(metadata.storage_class());
-      result.size = result.size.value_or(metadata.size());
-    }
-  };
+  std::tie(spill_view_, result.bytes_received) = buffer_manager(spill_view_);
 
-  spill_view_ = update_buf(spill_view_);
-  result.bytes_received = offset;
-  while (offset < n && stream_) {
-    auto data_future = stream_->Read();
-    auto state = data_future.wait_for(download_stall_timeout_);
-    if (state != std::future_status::ready) {
+  while (result.bytes_received < n && stream_) {
+    auto watchdog = timer_source_().then([this](auto f) {
+      if (!f.get()) return false;  // timer cancelled, no action needed
+      stream_->Cancel();
+      return true;
+    });
+    auto data = stream_->Read();
+    watchdog.cancel();
+    if (watchdog.get()) {
       status_ = Status(StatusCode::kDeadlineExceeded,
                        "Deadline exceeded waiting for data in ReadObject");
-      stream_->Cancel();
-
-      // Schedule a call to `Finish()` to close the stream.  gRPC requires the
-      // `Read()` call to complete before calling `Finish()`, and we do not
-      // want to block waiting for that here.
-      using ::google::storage::v2::ReadObjectResponse;
-      struct WaitForFinish {
-        std::unique_ptr<StreamingRpc> stream;
-        void operator()(future<Status>) {}
-      };
-      struct WaitForRead {
-        std::unique_ptr<StreamingRpc> stream;
-        void operator()(future<absl::optional<ReadObjectResponse>>) {
-          auto finish = stream->Finish();
-          (void)finish.then(WaitForFinish{std::move(stream)});
-        }
-      };
-      (void)data_future.then(WaitForRead{std::move(stream_)});
+      // The stream is already cancelled, but we need to wait for its status.
+      while (!absl::holds_alternative<Status>(data)) data = stream_->Read();
       return status_;
     }
-    auto data = data_future.get();
-    if (!data.has_value()) {
-      status_ = stream_->Finish().get();
+    if (absl::holds_alternative<Status>(data)) {
+      status_ = absl::get<Status>(std::move(data));
       auto metadata = stream_->GetRequestMetadata();
       result.response.headers.insert(metadata.begin(), metadata.end());
       stream_.reset();
       if (!status_.ok()) return status_;
       return result;
     }
-    update_result(std::move(*data));
+    HandleResponse(result, absl::get<ReadObjectResponse>(std::move(data)),
+                   buffer_manager);
   }
 
   return result;
+}
+
+void GrpcObjectReadSource::HandleResponse(
+    ReadSourceResult& result, google::storage::v2::ReadObjectResponse response,
+    BufferManager buffer_manager) {
+  // The google.storage.v1.Storage documentation says this field can be
+  // empty.
+  if (response.has_checksummed_data()) {
+    // Sometimes protobuf bytes are not strings, but the explicit conversion
+    // always works.
+    spill_ = std::string(
+        std::move(*response.mutable_checksummed_data()->mutable_content()));
+    std::tie(spill_view_, result.bytes_received) = buffer_manager(spill_);
+  }
+  if (response.has_object_checksums()) {
+    auto const& checksums = response.object_checksums();
+    if (checksums.has_crc32c()) {
+      result.hashes = Merge(
+          std::move(result.hashes),
+          HashValues{
+              GrpcObjectMetadataParser::Crc32cFromProto(checksums.crc32c()),
+              {}});
+    }
+    if (!checksums.md5_hash().empty()) {
+      result.hashes = Merge(std::move(result.hashes),
+                            HashValues{{},
+                                       GrpcObjectMetadataParser::MD5FromProto(
+                                           checksums.md5_hash())});
+    }
+  }
+  if (response.has_metadata()) {
+    auto const& metadata = response.metadata();
+    result.generation = result.generation.value_or(metadata.generation());
+    result.metageneration =
+        result.metageneration.value_or(metadata.metageneration());
+    result.storage_class =
+        result.storage_class.value_or(metadata.storage_class());
+    result.size = result.size.value_or(metadata.size());
+  }
 }
 
 }  // namespace internal

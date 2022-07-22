@@ -18,6 +18,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
@@ -33,6 +34,8 @@ namespace {
 using ::google::cloud::storage::testing::MockObjectMediaStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::google::storage::v2::ReadObjectRequest;
 using ::testing::ByMove;
@@ -48,18 +51,23 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
       TextFormat::ParseFromString(kExpectedRequestText, &expected_request));
 
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, AsyncReadObject)
-      .WillOnce([&](google::cloud::CompletionQueue const&,
-                    std::unique_ptr<grpc::ClientContext>,
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([&](std::unique_ptr<grpc::ClientContext>,
                     ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
         auto stream = absl::make_unique<MockObjectMediaStream>();
-        EXPECT_CALL(*stream, Start)
-            .WillOnce(Return(ByMove(make_ready_future(true))));
+        EXPECT_CALL(*stream, Read).WillOnce(Return(Status{}));
+        EXPECT_CALL(*stream, GetRequestMetadata).Times(1);
         return stream;
       });
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).Times(0);
+  auto cq = CompletionQueue(mock_cq);
 
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = GrpcClient::CreateMock(
+      mock, Options{}
+                .set<TransferStallTimeoutOption>(std::chrono::seconds(0))
+                .set<GrpcCompletionQueueOption>(cq));
   // Normally the span is created by `storage::Client`, but we bypass that code
   // in this test.
   google::cloud::internal::OptionsSpan const span(client->options());
@@ -67,9 +75,10 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
       client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);
   ASSERT_THAT(stream->get(), NotNull());
-  auto* reader = dynamic_cast<GrpcObjectReadSource*>(stream->get());
-  ASSERT_THAT(reader, NotNull());
-  EXPECT_GE(reader->download_stall_timeout(), std::chrono::minutes(2));
+  std::vector<char> unused(1024);
+  auto response = (*stream)->Read(unused.data(), unused.size());
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->bytes_received, 0);
 }
 
 /// @test Verify options can configured a non-default timeout.
@@ -83,19 +92,25 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
   auto const configured_timeout = std::chrono::seconds(3);
 
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, AsyncReadObject)
-      .WillOnce([&](google::cloud::CompletionQueue const&,
-                    std::unique_ptr<grpc::ClientContext>,
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([&](std::unique_ptr<grpc::ClientContext>,
                     ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
         auto stream = absl::make_unique<MockObjectMediaStream>();
-        EXPECT_CALL(*stream, Start)
-            .WillOnce(Return(ByMove(make_ready_future(true))));
+        EXPECT_CALL(*stream, Read).WillOnce(Return(Status{}));
+        EXPECT_CALL(*stream, Cancel).Times(1);
         return stream;
       });
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce(Return(ByMove(make_ready_future(
+          make_status_or(std::chrono::system_clock::now())))));
+  auto cq = CompletionQueue(mock_cq);
 
   auto client = GrpcClient::CreateMock(
-      mock, Options{}.set<TransferStallTimeoutOption>(configured_timeout));
+      mock, Options{}
+                .set<TransferStallTimeoutOption>(configured_timeout)
+                .set<GrpcCompletionQueueOption>(cq));
   // Normally the span is created by `storage::Client`, but we bypass that code
   // in this test.
   google::cloud::internal::OptionsSpan const span(client->options());
@@ -103,9 +118,9 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
       client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);
   ASSERT_THAT(stream->get(), NotNull());
-  auto* reader = dynamic_cast<GrpcObjectReadSource*>(stream->get());
-  ASSERT_THAT(reader, NotNull());
-  EXPECT_EQ(reader->download_stall_timeout(), configured_timeout);
+  std::vector<char> unused(1024);
+  auto response = (*stream)->Read(unused.data(), unused.size());
+  EXPECT_THAT(response, StatusIs(StatusCode::kDeadlineExceeded));
 }
 
 }  // namespace
