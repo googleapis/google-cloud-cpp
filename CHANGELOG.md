@@ -8,36 +8,39 @@
 <summary>2022-10-01: retiring legacy Spanner admin APIs</summary>
 <br>
 
-* On 2022-10-01 (or shortly after) we are planning to remove the hand-written
-  versions of the Spanner admin APIs. These have been superseded by versions
-  generated automatically from the service definitions. The new APIs can be
-  found in the [`google/cloud/spanner/admin`](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner/admin)
-  tree and within the `google::cloud::spanner_admin` namespace. Starting with
-  the v1.32.0 release, and depending on your compiler settings, using the old
-  classes/functions may elicit a deprecation warning. See
-  [#7356](https://github.com/googleapis/google-cloud-cpp/issues/7356) for more
-  details.
+On 2022-10-01 (or shortly after) we are planning to remove the hand-written
+versions of the Spanner admin APIs. These have been superseded by versions
+generated automatically from the service definitions. The new APIs can be
+found in the [`google/cloud/spanner/admin`](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner/admin)
+tree and within the `google::cloud::spanner_admin` namespace. Starting with
+the v1.32.0 release, and depending on your compiler settings, using the old
+classes/functions may elicit a deprecation warning. See [#7356] for more
+details.
+
+[#7356]: https://github.com/googleapis/google-cloud-cpp/issues/7356
 </details>
 
 <details>
 <summary>2022-11-01: remove `v1` and `gcpcxxV1` backward compatibility aliases</summary>
 <br>
 
-* On 2022-11-01 (or shortly after) we will remove the inline namespace aliases
-  of `v1` and `gcpcxxV1` that are declared in `google/cloud/version.h`. These
-  aliases exist because we changed the format of our inline namespace name to
-  include the major, minor, and patch numbers for each release, and we didn't
-  want to break users. Our Doxygen documentation was mistakenly recommending
-  that users include the inline namespace names in their code, but this was
-  also fixed to now recommend against doing so. Users should generally omit the
-  name of our versioned inline namespace name because that will tightly couple
-  their code to a specific release, and will make upgrading to newer versions
-  more difficult. Instead, users should simply omit the inline namespace name,
-  for example, instead of ~`google::cloud::v1::Status`~ use
-  `google::cloud::Status`. Please update your code to avoid naming the `v1` and
-  `gcpcxxV1` inline namespace names before 2022-11-01. For more info, see
-  https://github.com/googleapis/google-cloud-cpp/issues/7463 and
-  https://github.com/googleapis/google-cloud-cpp/issues/5976.
+On 2022-11-01 (or shortly after) we will remove the inline namespace aliases
+of `v1` and `gcpcxxV1` that are declared in `google/cloud/version.h`. These
+aliases exist because we changed the format of our inline namespace name to
+include the major, minor, and patch numbers for each release, and we didn't
+want to break users. Our Doxygen documentation was mistakenly recommending
+that users include the inline namespace names in their code, but this was
+also fixed to now recommend against doing so. Users should generally omit the
+name of our versioned inline namespace name because that will tightly couple
+their code to a specific release, and will make upgrading to newer versions
+more difficult. Instead, users should simply omit the inline namespace name,
+for example, instead of ~`google::cloud::v1::Status`~ use
+`google::cloud::Status`. Please update your code to avoid naming the `v1` and
+`gcpcxxV1` inline namespace names before 2022-11-01. For more info, see
+[#7463] and [#5976].
+
+[#6463]: https://github.com/googleapis/google-cloud-cpp/issues/7463
+[#5976]: https://github.com/googleapis/google-cloud-cpp/issues/5976
 </details>
 
 <details>
@@ -45,17 +48,19 @@
 `google::cloud::bigquery` namespace</summary>
 <br>
 
-* On 2023-02-01 (or shortly after) we will remove
+On 2023-02-01 (or shortly after) we will remove
 `BigQueryReadReadRowsStreamingUpdater` from its declaration in
 `google/cloud/bigquery/read_connection.h` and from the `google::cloud::bigquery`
 namespace. The function continues to exist but in an internal file and
-namespace. For status on this see
-https://github.com/googleapis/google-cloud-cpp/issues/8234.
+namespace. For status on this see [#8234].
+
+[#8234]: https://github.com/googleapis/google-cloud-cpp/issues/8234
 </details>
 
 <details>
 <summary>2023-05-01: mark `bigtable::DataClient` as `final`</summary>
 <br>
+
 On 2023-05-01 (or shortly after) we will mark `bigtable::DataClient` as `final`
 and remove the following member functions:
 * `DataClient::Channel()`
@@ -65,14 +70,15 @@ and remove the following member functions:
 Application developers should not need to interact with this class directly.
 Please use `google::cloud::bigtable::MakeDataClient(...)` with the options from
 `google::cloud::GrpcOptionList<>` if you need to configure the gRPC channel or
-background threads.
+background threads. More details can be found in [#8800].
 
-For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/8800
+[#8800]: https://github.com/googleapis/google-cloud-cpp/issues/8800
 </details>
 
 <details>
 <summary>2023-05-01: remove `bigtable::RowReader` constructors</summary>
 <br>
+
 On 2023-05-01 (or shortly after) we will remove `bigtable::RowReader`
 constructors which accept `DataClient` as an argument.
 
@@ -84,15 +90,28 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
 </details>
 
 <details>
+<summary>2023-06-01: remove the Cloud Debugger Library</summary>
+<br>
+
+Sometime after 2023-05-31 the Cloud Debugger service (aka Stackdriver Debugger
+API) will be [shutdown][cloud-debugger-deprecated]. Once the service is shutdown
+the corresponding [library][cloud-debugger-library] cannot be of any use, and we
+plan to remove it without changing the major version number.
+
+[cloud-debugger-library]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/debugger/README.md
+[cloud-debugger-deprecated]: https://cloud.google.com/debugger/docs/deprecations
+</details>
+
+<details>
 <summary>2023-06-01: remove `spanner::MakeTestRow()`</summary>
 <br>
 
-* On 2023-06-01 (or shortly after) we will remove `spanner::MakeTestRow()`,
-  which has been replaced by `spanner_mocks::MakeRow()`. Starting with the
-  v1.41.0 release, and depending on your compiler settings, using
-  `spanner::MakeTestRow()` may elicit a deprecation warning. See
-  [#9086](https://github.com/googleapis/google-cloud-cpp/issues/9086) for more
-  details.
+On 2023-06-01 (or shortly after) we will remove `spanner::MakeTestRow()`, which
+has been replaced by `spanner_mocks::MakeRow()`. Starting with the v1.41.0
+release, and depending on your compiler settings, using `spanner::MakeTestRow()`
+may elicit a deprecation warning. See [#9086] for more details.
+
+[#9086]: https://github.com/googleapis/google-cloud-cpp/issues/9086
 </details>
 
 ## v2.1.0 - TBD
