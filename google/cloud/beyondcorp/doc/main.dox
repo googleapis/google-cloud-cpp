@@ -42,6 +42,27 @@ which should give you a taste of the BeyondCorp API C++ client library API.
 ## Environment Variables
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_APP_CONNECTIONS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "beyondcorp.googleapis.com")
+  used by `MakeAppConnection()`.
+
+- `GOOGLE_CLOUD_CPP_APP_CONNECTORS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "beyondcorp.googleapis.com")
+  used by `MakeAppConnectorsServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_APP_GATEWAYS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "beyondcorp.googleapis.com")
+  used by `MakeAppGatewaysServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_CLIENT_CONNECTOR_SERVICES_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "beyondcorp.googleapis.com")
+  used by `MakeClientConnectorServicesServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_CLIENT_GATEWAYS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "beyondcorp.googleapis.com")
+  used by `MakeClientGatewaysServiceConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
