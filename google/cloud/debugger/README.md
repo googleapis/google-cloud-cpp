@@ -4,8 +4,11 @@ This directory contains an idiomatic C++ client library for the [Stackdriver
 Debugger API][cloud-service-docs], a service to examine the call stack and
 variables of a running application without stopping or slowing it down.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+:warning: The [Stackdriver Debugger API][cloud-service-docs] has been
+[deprecated].  The library will continue to be supported until the service is
+shutdown, at which time we will remove the library.
+
+[deprecated]: https://cloud.google.com/debugger/docs/deprecations
 
 ## Supported Platforms
 
