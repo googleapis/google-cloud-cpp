@@ -213,6 +213,9 @@ Status AuthDecoratorGenerator::GenerateCc() {
       HasAsynchronousStreamingWriteMethod()
           ? "google/cloud/internal/async_streaming_write_rpc_auth.h"
           : "",
+      HasStreamingWriteMethod()
+          ? "google/cloud/internal/streaming_write_rpc_impl.h"
+          : "",
   });
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 

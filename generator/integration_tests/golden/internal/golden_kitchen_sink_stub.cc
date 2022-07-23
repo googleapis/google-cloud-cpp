@@ -22,6 +22,7 @@
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/async_streaming_write_rpc_impl.h"
+#include "google/cloud/internal/streaming_write_rpc_impl.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>

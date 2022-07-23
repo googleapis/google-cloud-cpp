@@ -384,6 +384,9 @@ Status StubGenerator::GenerateCc() {
        HasAsynchronousStreamingWriteMethod()
            ? "google/cloud/internal/async_streaming_write_rpc_impl.h"
            : "",
+       HasStreamingWriteMethod()
+           ? "google/cloud/internal/streaming_write_rpc_impl.h"
+           : "",
        "google/cloud/grpc_error_delegate.h", "google/cloud/status_or.h"});
   CcSystemIncludes(
       {vars("proto_grpc_header_path"),

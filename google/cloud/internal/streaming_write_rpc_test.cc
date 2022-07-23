@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/streaming_write_rpc.h"
+#include "google/cloud/internal/streaming_write_rpc_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
