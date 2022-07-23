@@ -18,6 +18,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/status.h"
+#include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/support/sync_stream.h>
 #include <memory>
@@ -28,7 +29,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-/// Report the errors in a standalone function to minimize includes
+/// Log errors that cannot be handled or reported by other means.
 void StreamingWriteRpcReportUnhandledError(Status const& status,
                                            char const* tname);
 
