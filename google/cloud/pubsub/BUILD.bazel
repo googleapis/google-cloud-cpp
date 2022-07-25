@@ -66,12 +66,12 @@ cc_library(
     deps = [":pubsub_client_testing_private"],
 )
 
-load(":google_cloud_cpp_pubsub_mocks.bzl", "google_cloud_cpp_pubsub_mocks_hdrs", "google_cloud_cpp_pubsub_mocks_srcs")
+load(":google_cloud_cpp_pubsub_mocks.bzl", "google_cloud_cpp_pubsub_mocks_hdrs")
 
 cc_library(
     name = "google_cloud_cpp_pubsub_mocks",
     testonly = True,
-    srcs = google_cloud_cpp_pubsub_mocks_srcs,
+    srcs = [],
     hdrs = google_cloud_cpp_pubsub_mocks_hdrs,
     visibility = [
         ":__subpackages__",

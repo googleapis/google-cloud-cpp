@@ -80,13 +80,13 @@ expected_dirs+=(
   ./include/google/cloud/oslogin/common
   ./include/google/cloud/pubsub
   ./include/google/cloud/pubsub/internal
+  ./include/google/cloud/pubsub/mocks
   # no gRPC services in google/cloud/recommender/logging
   ./include/google/cloud/recommender/logging
   ./include/google/cloud/recommender/logging/v1
   # no gRPC services in google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging/v1
-  ./include/google/cloud/pubsub/mocks
   ./include/google/cloud/spanner/admin/mocks
   ./include/google/cloud/spanner/internal
   ./include/google/cloud/spanner/mocks
