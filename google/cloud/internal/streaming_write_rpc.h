@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_WRITE_RPC_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_WRITE_RPC_H
 
+#include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
@@ -54,6 +55,17 @@ class StreamingWriteRpc {
 
   /// Half-close the stream and wait for a response.
   virtual StatusOr<ResponseType> Close() = 0;
+
+  /**
+   * Return the request metadata.
+   *
+   * Request metadata is useful for troubleshooting, but may be relatively
+   * expensive to extract.  Library developers should avoid this function in
+   * the critical path.
+   *
+   * @note Only call this function once, and only after `Finish()` completes.
+   */
+  virtual StreamingRpcMetadata GetRequestMetadata() const = 0;
 };
 
 }  // namespace internal

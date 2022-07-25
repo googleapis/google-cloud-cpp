@@ -73,6 +73,15 @@ class StreamingWriteRpcLogging
     return result;
   }
 
+  StreamingRpcMetadata GetRequestMetadata() const override {
+    auto prefix = std::string(__func__) + "(" + request_id_ + ")";
+    GCP_LOG(DEBUG) << prefix << " <<";
+    auto metadata = stream_->GetRequestMetadata();
+    GCP_LOG(DEBUG) << prefix << " >> metadata={"
+                   << FormatForLoggingDecorator(metadata) << "}";
+    return metadata;
+  }
+
  private:
   std::unique_ptr<StreamingWriteRpc<RequestType, ResponseType>> stream_;
   TracingOptions tracing_options_;
