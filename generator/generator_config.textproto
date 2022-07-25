@@ -113,6 +113,42 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# BeyondCorp
+service {
+  service_proto_path: "google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto"
+  product_path: "google/cloud/beyondcorp"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto"
+  product_path: "google/cloud/beyondcorp"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto"
+  product_path: "google/cloud/beyondcorp"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto"
+  product_path: "google/cloud/beyondcorp"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto"
+  product_path: "google/cloud/beyondcorp"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # BigQuery
 service {
   service_proto_path: "google/cloud/bigquery/storage/v1/storage.proto"
@@ -169,12 +205,12 @@ service {
   omit_connection: true
   omit_stub_factory: true
   gen_async_rpcs: [
-   "CheckAndMutateRow",
-   "MutateRow",
-   "MutateRows",
-   "ReadModifyWriteRow",
-   "ReadRows",
-   "SampleRowKeys"
+    "CheckAndMutateRow",
+    "MutateRow",
+    "MutateRows",
+    "ReadModifyWriteRow",
+    "ReadRows",
+    "SampleRowKeys"
   ]
 }
 

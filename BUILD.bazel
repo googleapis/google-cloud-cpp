@@ -21,6 +21,8 @@ exports_files([
 ])
 
 EXPERIMENTAL_LIBRARIES = [
+    # Introduced circa 2022-07-22
+    "beyondcorp",
     # Introduced circa 2022-07-12
     "batch",
     "run",
