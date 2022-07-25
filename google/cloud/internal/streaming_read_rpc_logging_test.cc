@@ -85,8 +85,7 @@ TEST_F(StreamingReadRpcLoggingTest, Read) {
   absl::visit(ResultVisitor(), result);
   auto log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("seconds")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("42")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("42s")));
 
   result = reader.Read();
   absl::visit(ResultVisitor(), result);

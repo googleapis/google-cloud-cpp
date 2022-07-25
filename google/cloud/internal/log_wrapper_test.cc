@@ -17,7 +17,9 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <google/protobuf/duration.pb.h>
 #include <google/protobuf/text_format.h>
+#include <google/protobuf/timestamp.pb.h>
 #include <google/rpc/error_details.pb.h>
 #include <google/rpc/status.pb.h>
 #include <google/spanner/v1/mutation.pb.h>
@@ -159,6 +161,27 @@ TEST(LogWrapper, TruncateString) {
   for (auto const& c : cases) {
     EXPECT_EQ(c.expected, DebugString(c.actual, tracing_options));
   }
+}
+
+TEST(LogWrapper, Duration) {
+  google::protobuf::Duration duration;
+  duration.set_seconds((11 * 60 + 22) * 60 + 33);
+  duration.set_nanos(123456789);
+  std::string const expected =
+      R"(google.protobuf.Duration { "11h22m33.123456789s" })";
+  EXPECT_EQ(expected, DebugString(duration, TracingOptions{}.SetOptions(
+                                                "single_line_mode=on")));
+}
+
+TEST(LogWrapper, Timestamp) {
+  google::protobuf::Timestamp timestamp;
+  timestamp.set_seconds(1658470436);
+  timestamp.set_nanos(123456789);
+  std::string const expected = R"(google.protobuf.Timestamp {
+  "2022-07-22T06:13:56.123456789Z"
+})";
+  EXPECT_EQ(expected, DebugString(timestamp, TracingOptions{}.SetOptions(
+                                                 "single_line_mode=off")));
 }
 
 TEST(LogWrapper, FutureStatus) {

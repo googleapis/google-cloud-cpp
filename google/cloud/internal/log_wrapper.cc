@@ -15,7 +15,10 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/status_payload_keys.h"
+#include "absl/time/time.h"
+#include <google/protobuf/duration.pb.h>
 #include <google/protobuf/text_format.h>
+#include <google/protobuf/timestamp.pb.h>
 #include <google/rpc/error_details.pb.h>
 #include <atomic>
 #include <sstream>
@@ -24,6 +27,47 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+namespace {
+
+class DurationMessagePrinter
+    : public google::protobuf::TextFormat::MessagePrinter {
+ public:
+  ~DurationMessagePrinter() override = default;
+  void Print(google::protobuf::Message const& message, bool single_line_mode,
+             google::protobuf::TextFormat::BaseTextGenerator* generator)
+      const override {
+    auto const* reflection = message.GetReflection();
+    auto const* descriptor = message.GetDescriptor();
+    auto seconds = reflection->GetInt64(message, descriptor->field(0));
+    auto nanos = reflection->GetInt32(message, descriptor->field(1));
+    auto d = absl::Seconds(seconds) + absl::Nanoseconds(nanos);
+    generator->PrintLiteral("\"");
+    generator->PrintString(absl::FormatDuration(d));
+    generator->PrintLiteral("\"");
+    generator->PrintLiteral(single_line_mode ? " " : "\n");
+  }
+};
+
+class TimestampMessagePrinter
+    : public google::protobuf::TextFormat::MessagePrinter {
+ public:
+  ~TimestampMessagePrinter() override = default;
+  void Print(google::protobuf::Message const& message, bool single_line_mode,
+             google::protobuf::TextFormat::BaseTextGenerator* generator)
+      const override {
+    auto const* reflection = message.GetReflection();
+    auto const* descriptor = message.GetDescriptor();
+    auto seconds = reflection->GetInt64(message, descriptor->field(0));
+    auto nanos = reflection->GetInt32(message, descriptor->field(1));
+    auto t = absl::FromUnixSeconds(seconds) + absl::Nanoseconds(nanos);
+    auto constexpr kFormat = "\"%E4Y-%m-%dT%H:%M:%E*SZ\"";
+    generator->PrintString(absl::FormatTime(kFormat, t, absl::UTCTimeZone()));
+    generator->PrintLiteral(single_line_mode ? " " : "\n");
+  }
+};
+
+}  // namespace
 
 std::string DebugString(google::protobuf::Message const& m,
                         TracingOptions const& options) {
@@ -36,6 +80,10 @@ std::string DebugString(google::protobuf::Message const& m,
       options.truncate_string_field_longer_than());
   p.SetPrintMessageFieldsInIndexOrder(true);
   p.SetExpandAny(true);
+  p.RegisterMessagePrinter(google::protobuf::Duration::descriptor(),
+                           new DurationMessagePrinter);
+  p.RegisterMessagePrinter(google::protobuf::Timestamp::descriptor(),
+                           new TimestampMessagePrinter);
   p.PrintToString(m, &str);
   return absl::StrCat(m.GetTypeName(), " {",
                       (options.single_line_mode() ? " " : "\n"), str, "}");
