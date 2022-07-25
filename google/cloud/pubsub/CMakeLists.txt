@@ -181,23 +181,23 @@ create_bazel_config(google_cloud_cpp_pubsub YEAR "2020")
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
 add_library(google_cloud_cpp_pubsub_mocks INTERFACE)
-target_sources(
-    google_cloud_cpp_pubsub_mocks
-    INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_exactly_once_ack_handler.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_schema_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscription_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscriber_connection.h)
+set(google_cloud_cpp_pubsub_mocks_hdrs
+    # cmake-format: sort
+    mocks/mock_ack_handler.h
+    mocks/mock_exactly_once_ack_handler.h
+    mocks/mock_publisher_connection.h
+    mocks/mock_schema_admin_connection.h
+    mocks/mock_subscriber_connection.h
+    mocks/mock_subscription_admin_connection.h
+    mocks/mock_topic_admin_connection.h)
+export_list_to_bazel("google_cloud_cpp_pubsub_mocks.bzl"
+                     "google_cloud_cpp_pubsub_mocks_hdrs" YEAR "2020")
 target_link_libraries(
     google_cloud_cpp_pubsub_mocks
     INTERFACE google-cloud-cpp::pubsub GTest::gmock_main GTest::gmock
               GTest::gtest)
 set_target_properties(google_cloud_cpp_pubsub_mocks
                       PROPERTIES EXPORT_NAME google-cloud-cpp::pubsub_mocks)
-create_bazel_config(google_cloud_cpp_pubsub_mocks YEAR "2020")
 target_include_directories(
     google_cloud_cpp_pubsub_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -379,11 +379,17 @@ install(
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
-
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsub"
                                  "include/google/cloud/pubsub")
-google_cloud_cpp_install_headers("google_cloud_cpp_pubsub_mocks"
-                                 "include/google/cloud/pubsub")
+
+install(
+    TARGETS google_cloud_cpp_pubsub_mocks
+    EXPORT pubsub-targets
+    COMPONENT google_cloud_cpp_development)
+install(
+    FILES ${google_cloud_cpp_pubsub_mocks_hdrs}
+    DESTINATION "include/google/cloud/pubsub/mocks"
+    COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_add_pkgconfig(
     pubsub
