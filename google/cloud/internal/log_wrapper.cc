@@ -45,7 +45,7 @@ class DurationMessagePrinter
     generator->PrintLiteral("\"");
     generator->PrintString(absl::FormatDuration(d));
     generator->PrintLiteral("\"");
-    generator->PrintLiteral(single_line_mode ? " " : "\n");
+    generator->Print(single_line_mode ? " " : "\n", 1);
   }
 };
 
@@ -63,7 +63,7 @@ class TimestampMessagePrinter
     auto t = absl::FromUnixSeconds(seconds) + absl::Nanoseconds(nanos);
     auto constexpr kFormat = "\"%E4Y-%m-%dT%H:%M:%E*SZ\"";
     generator->PrintString(absl::FormatTime(kFormat, t, absl::UTCTimeZone()));
-    generator->PrintLiteral(single_line_mode ? " " : "\n");
+    generator->Print(single_line_mode ? " " : "\n", 1);
   }
 };
 
