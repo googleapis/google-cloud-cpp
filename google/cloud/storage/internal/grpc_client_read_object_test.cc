@@ -66,7 +66,7 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
 
   auto client = GrpcClient::CreateMock(
       mock, Options{}
-                .set<TransferStallTimeoutOption>(std::chrono::seconds(0))
+                .set<DownloadStallTimeoutOption>(std::chrono::seconds(0))
                 .set<GrpcCompletionQueueOption>(cq));
   // Normally the span is created by `storage::Client`, but we bypass that code
   // in this test.
@@ -102,14 +102,15 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
         return stream;
       });
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+  EXPECT_CALL(*mock_cq,
+              MakeRelativeTimer(std::chrono::nanoseconds(configured_timeout)))
       .WillOnce(Return(ByMove(make_ready_future(
           make_status_or(std::chrono::system_clock::now())))));
   auto cq = CompletionQueue(mock_cq);
 
   auto client = GrpcClient::CreateMock(
       mock, Options{}
-                .set<TransferStallTimeoutOption>(configured_timeout)
+                .set<DownloadStallTimeoutOption>(configured_timeout)
                 .set<GrpcCompletionQueueOption>(cq));
   // Normally the span is created by `storage::Client`, but we bypass that code
   // in this test.

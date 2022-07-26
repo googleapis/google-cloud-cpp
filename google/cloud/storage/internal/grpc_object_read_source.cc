@@ -40,20 +40,16 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
                                                       std::size_t n) {
   using google::storage::v2::ReadObjectResponse;
 
-  std::size_t offset = 0;
-  auto buffer_manager = [&offset, buf, n](absl::string_view source) {
+  auto buffer_manager = [buf, n](absl::string_view source, std::size_t offset) {
     if (source.empty()) return std::make_pair(source, offset);
     auto const nbytes = std::min(n - offset, source.size());
-    auto const* end = source.data() + nbytes;
-    std::copy(source.data(), end, buf + offset);
-    offset += nbytes;
-    return std::make_pair(absl::string_view(end, source.size() - nbytes),
-                          offset);
+    source.copy(buf + offset, nbytes);
+    return std::make_pair(source.substr(nbytes), offset + nbytes);
   };
 
   ReadSourceResult result;
   result.response.status_code = HttpStatusCode::kContinue;
-  std::tie(spill_view_, result.bytes_received) = buffer_manager(spill_view_);
+  std::tie(spill_view_, result.bytes_received) = buffer_manager(spill_view_, 0);
 
   while (result.bytes_received < n && stream_) {
     auto watchdog = timer_source_().then([this](auto f) {
@@ -95,7 +91,8 @@ void GrpcObjectReadSource::HandleResponse(
     // always works.
     spill_ = std::string(
         std::move(*response.mutable_checksummed_data()->mutable_content()));
-    std::tie(spill_view_, result.bytes_received) = buffer_manager(spill_);
+    std::tie(spill_view_, result.bytes_received) =
+        buffer_manager(spill_, result.bytes_received);
   }
   if (response.has_object_checksums()) {
     auto const& checksums = response.object_checksums();

@@ -66,7 +66,7 @@ class GrpcObjectReadSource : public ObjectReadSource {
  private:
   using BufferManager =
       absl::FunctionRef<std::pair<absl::string_view, std::size_t>(
-          absl::string_view)>;
+          absl::string_view, std::size_t)>;
 
   void HandleResponse(ReadSourceResult& result,
                       google::storage::v2::ReadObjectResponse response,
