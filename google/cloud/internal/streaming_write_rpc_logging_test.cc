@@ -76,7 +76,7 @@ TEST_F(StreamingWriteRpcLoggingTest, Write) {
   stream.Write(request, grpc::WriteOptions{});
   auto const lines = log_.ExtractLines();
   EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Write"), HasSubstr("test-id"),
-                                    HasSubstr("123456"))));
+                                    HasSubstr("1970-01-02T10:17:36Z"))));
   EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Write"), HasSubstr("test-id"),
                                     HasSubstr("true"))));
 }
@@ -94,7 +94,7 @@ TEST_F(StreamingWriteRpcLoggingTest, CloseWithSuccess) {
   EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Close"), HasSubstr("test-id"),
                                     HasSubstr("(void)"))));
   EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Close"), HasSubstr("test-id"),
-                                    HasSubstr("123456"))));
+                                    HasSubstr("34h17m36s"))));
 }
 
 TEST_F(StreamingWriteRpcLoggingTest, CloseWithError) {
