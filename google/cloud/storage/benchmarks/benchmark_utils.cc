@@ -149,6 +149,15 @@ std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen) {
   return storage::testing::MakeRandomBucketName(gen, RandomBucketPrefix());
 }
 
+std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen) {
+  auto constexpr kObjectNameLength = 32;
+  return google::cloud::internal::Sample(gen, kObjectNameLength,
+                                         "abcdefghijklmnopqrstuvwxyz"
+                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                         "0123456789") +
+         ".txt";
+}
+
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google

@@ -33,7 +33,6 @@ namespace storage_benchmarks {
 
 using ::google::cloud::storage::testing::MakeRandomData;
 using ::google::cloud::storage::testing::MakeRandomFileName;
-using ::google::cloud::storage::testing::MakeRandomObjectName;
 using ::google::cloud::testing_util::kGB;
 using ::google::cloud::testing_util::kGiB;
 using ::google::cloud::testing_util::kKB;
@@ -105,6 +104,7 @@ std::string ToString(ExperimentTransport v);
 std::string RandomBucketPrefix();
 
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen);
+std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen);
 
 template <typename Rep, typename Period>
 std::string FormatBandwidthGbPerSecond(
