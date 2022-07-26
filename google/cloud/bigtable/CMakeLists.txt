@@ -35,36 +35,6 @@ include(CTest)
 # Export the version information for Bazel.
 include(CreateBazelConfig)
 
-# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
-# for these, a regular library would not work on macOS (where the library needs
-# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
-# that they need absolute paths for their sources.
-add_library(google_cloud_cpp_bigtable_mocks INTERFACE)
-target_sources(
-    google_cloud_cpp_bigtable_mocks
-    INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_bigtable_instance_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_bigtable_table_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_data_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_row_reader.cc
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_row_reader.h)
-target_link_libraries(
-    google_cloud_cpp_bigtable_mocks
-    INTERFACE google-cloud-cpp::bigtable GTest::gmock_main GTest::gmock
-              GTest::gtest)
-set_target_properties(google_cloud_cpp_bigtable_mocks
-                      PROPERTIES EXPORT_NAME google-cloud-cpp::bigtable_mocks)
-create_bazel_config(google_cloud_cpp_bigtable_mocks YEAR "2021")
-target_include_directories(
-    google_cloud_cpp_bigtable_mocks
-    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-              $<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_bigtable_mocks
-                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-add_library(google-cloud-cpp::bigtable_mocks ALIAS
-            google_cloud_cpp_bigtable_mocks)
-
 # the client library
 add_library(
     google_cloud_cpp_bigtable # cmake-format: sort
@@ -272,6 +242,30 @@ add_library(google-cloud-cpp::bigtable ALIAS google_cloud_cpp_bigtable)
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_bigtable)
+
+add_library(
+    google_cloud_cpp_bigtable_mocks # cmake-format: sort
+    admin/mocks/mock_bigtable_instance_admin_connection.h
+    admin/mocks/mock_bigtable_table_admin_connection.h
+    mocks/mock_data_connection.h
+    mocks/mock_row_reader.cc
+    mocks/mock_row_reader.h)
+target_link_libraries(
+    google_cloud_cpp_bigtable_mocks
+    PUBLIC google-cloud-cpp::bigtable
+    INTERFACE GTest::gmock_main GTest::gmock GTest::gtest)
+set_target_properties(google_cloud_cpp_bigtable_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::bigtable_mocks)
+create_bazel_config(google_cloud_cpp_bigtable_mocks YEAR "2021")
+target_include_directories(
+    google_cloud_cpp_bigtable_mocks
+    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+              $<INSTALL_INTERFACE:include>)
+target_compile_options(google_cloud_cpp_bigtable_mocks
+                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+add_library(google-cloud-cpp::bigtable_mocks ALIAS
+            google_cloud_cpp_bigtable_mocks)
 
 if (BUILD_TESTING)
     add_library(
