@@ -135,6 +135,25 @@ Status ValidateCommittedSize(UploadChunkRequest const& request,
   return {};
 }
 
+// For resumable uploads over gRPC we need to treat some non-retryable errors
+// as retryable.
+bool UploadChunkOnFailure(RetryPolicy& retry_policy, int& count,
+                          Status const& status) {
+  // TODO(#9273) - use ErrorInfo when it becomes available
+  if (status.code() == StatusCode::kAborted &&
+      absl::StartsWith(status.message(), "Concurrent requests received.")) {
+    return retry_policy.OnFailure(Status(
+        StatusCode::kUnavailable, "TODO(#9273) - workaround service problems"));
+  }
+  // TODO(#9563) - kAlreadyExist is sometimes spurious
+  if (status.code() == StatusCode::kAlreadyExists &&
+      status.message() == "Requested entity already exists" && ++count == 1) {
+    return retry_policy.OnFailure(Status(
+        StatusCode::kUnavailable, "TODO(#9563) - workaround service problems"));
+  }
+  return retry_policy.OnFailure(status);
+}
+
 }  // namespace
 
 std::shared_ptr<RetryClient> RetryClient::Create(
@@ -516,6 +535,8 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
   auto const expected_committed_size =
       request.offset() + request.payload_size();
 
+  int count_workaround_9563 = 0;
+
   while (!retry_policy->IsExhausted()) {
     auto result = (*operation)(committed_size);
     if (!result) {
@@ -523,17 +544,8 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
       // retrying.  If so, we backoff, and switch to calling
       // QueryResumableUpload().
       last_status = std::move(result).status();
-      // For resumable uploads over gRPC some kAborted errors are retryable.
-      // TODO(#9273) - use ErrorInfo when it becomes available
-      auto constexpr kConcurrentMessagePrefix = "Concurrent requests received.";
-      auto const is_concurrent_write =
-          last_status.code() == StatusCode::kAborted &&
-          absl::StartsWith(last_status.message(), kConcurrentMessagePrefix);
-      auto const is_retryable =
-          is_concurrent_write
-              ? retry_policy->OnFailure(Status(StatusCode::kUnavailable, ""))
-              : retry_policy->OnFailure(last_status);
-      if (!is_retryable) {
+      if (!UploadChunkOnFailure(*retry_policy, count_workaround_9563,
+                                last_status)) {
         return return_error(std::move(last_status), *retry_policy, __func__);
       }
 

@@ -189,22 +189,10 @@ TEST(RetryClientTest, UploadChunkHandleTransient) {
       .WillOnce(
           Return(QueryResumableUploadResponse{2 * quantum, absl::nullopt}));
 
-  // Repeat the failure with kAborted.  This error code is only retryable for
-  // resumable uploads.
-  EXPECT_CALL(*mock, UploadChunk)
-      .WillOnce(Return(
-          Status(StatusCode::kAborted, "Concurrent requests received.")));
-  EXPECT_CALL(*mock, QueryResumableUpload)
-      .WillOnce(
-          Return(QueryResumableUploadResponse{2 * quantum, absl::nullopt}));
-  EXPECT_CALL(*mock, UploadChunk)
-      .WillOnce(
-          Return(QueryResumableUploadResponse{3 * quantum, absl::nullopt}));
-
   // Even simpler scenario where only the UploadChunk() calls succeeds.
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
-          Return(QueryResumableUploadResponse{4 * quantum, absl::nullopt}));
+          Return(QueryResumableUploadResponse{3 * quantum, absl::nullopt}));
 
   auto response = client->UploadChunk(
       UploadChunkRequest("test-only-session-id", 0, {{payload}}));
@@ -220,11 +208,68 @@ TEST(RetryClientTest, UploadChunkHandleTransient) {
       UploadChunkRequest("test-only-session-id", 2 * quantum, {{payload}}));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(3 * quantum, response->committed_size.value_or(0));
+}
 
-  response = client->UploadChunk(
-      UploadChunkRequest("test-only-session-id", 3 * quantum, {{payload}}));
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(4 * quantum, response->committed_size.value_or(0));
+// TODO(#9293) - fix this test to use ErrorInfo
+Status TransientAbortError() {
+  return Status(StatusCode::kAborted, "Concurrent requests received.");
+}
+
+/// @test Verify that transient failures are handled as expected.
+TEST(RetryClientTest, UploadChunkAbortedMaybeIsTransient) {
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload(quantum, '0');
+
+  // Verify that the workaround for "transients" (as defined in #9563) results
+  // in calls to QueryResumableUpload().
+  EXPECT_CALL(*mock, UploadChunk)
+      .Times(4)
+      .WillRepeatedly(Return(TransientAbortError()));
+  EXPECT_CALL(*mock, QueryResumableUpload)
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+
+  auto response = client->UploadChunk(
+      UploadChunkRequest("test-only-session-id", 0, {{payload}}));
+  EXPECT_THAT(response, StatusIs(StatusCode::kAborted,
+                                 HasSubstr("Concurrent requests received.")));
+}
+
+// TODO(#9563) - remove this test once it is not needed
+Status Error9563() {
+  return Status(StatusCode::kAlreadyExists, "Requested entity already exists");
+}
+
+/// @test Verify that transient failures are handled as expected.
+TEST(RetryClientTest, UploadChunkWorkaround9563) {
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<IdempotencyPolicyOption>(
+          StrictIdempotencyPolicy().clone()));
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload(quantum, '0');
+
+  // Verify that the workaround for "transients" (as defined in #9563) results
+  // in calls to QueryResumableUpload().
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(Error9563()));
+  EXPECT_CALL(*mock, QueryResumableUpload)
+      .WillOnce(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+  // The second error should be a permanent failure
+  EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(Error9563()));
+
+  auto response = client->UploadChunk(
+      UploadChunkRequest("test-only-session-id", 0, {{payload}}));
+  EXPECT_THAT(response, StatusIs(StatusCode::kAlreadyExists,
+                                 HasSubstr("Requested entity already exists")));
 }
 
 /// @test Verify that we can restore a session and continue writing.
