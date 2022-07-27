@@ -17,7 +17,9 @@
 
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/async_streaming_read_rpc.h"
+#include "google/cloud/future.h"
+#include "google/cloud/internal/streaming_read_rpc.h"
+#include "absl/functional/function_ref.h"
 #include <google/storage/v2/storage.pb.h>
 #include <functional>
 #include <string>
@@ -40,12 +42,15 @@ namespace internal {
  */
 class GrpcObjectReadSource : public ObjectReadSource {
  public:
-  using StreamingRpc = ::google::cloud::internal::AsyncStreamingReadRpc<
+  using StreamingRpc = ::google::cloud::internal::StreamingReadRpc<
       google::storage::v2::ReadObjectResponse>;
 
-  explicit GrpcObjectReadSource(
-      std::unique_ptr<StreamingRpc> stream,
-      std::chrono::milliseconds download_stall_timeout);
+  // A function to create timers. These should return a future, satisfied with
+  // `false` if the timer was canceled, and with `true` if the timer triggered.
+  using TimerSource = std::function<future<bool>()>;
+
+  explicit GrpcObjectReadSource(TimerSource timer_source,
+                                std::unique_ptr<StreamingRpc> stream);
 
   ~GrpcObjectReadSource() override = default;
 
@@ -58,13 +63,17 @@ class GrpcObjectReadSource : public ObjectReadSource {
   /// codes.
   StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override;
 
-  std::chrono::milliseconds download_stall_timeout() const {
-    return download_stall_timeout_;
-  }
-
  private:
+  using BufferManager =
+      absl::FunctionRef<std::pair<absl::string_view, std::size_t>(
+          absl::string_view, std::size_t)>;
+
+  void HandleResponse(ReadSourceResult& result,
+                      google::storage::v2::ReadObjectResponse response,
+                      BufferManager buffer_manager);
+
+  TimerSource timer_source_;
   std::unique_ptr<StreamingRpc> stream_;
-  std::chrono::milliseconds download_stall_timeout_;
 
   // In some cases the gRPC response may contain more data than the buffer
   // provided by the application. This buffer stores any excess results.

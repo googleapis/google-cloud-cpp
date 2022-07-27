@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::StreamingRpcMetadata;
-using ::google::cloud::storage::testing::MockObjectMediaStream;
+using ::google::cloud::storage::testing::MockAsyncObjectMediaStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -72,7 +72,7 @@ std::unique_ptr<
     google::cloud::internal::AsyncStreamingReadRpc<ReadObjectResponse>>
 MakeMockStreamPartial(int id, ReadObjectResponse response,
                       StatusCode code = StatusCode::kOk) {
-  auto stream = absl::make_unique<MockObjectMediaStream>();
+  auto stream = absl::make_unique<MockAsyncObjectMediaStream>();
   EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(true))));
   EXPECT_CALL(*stream, Read)
       .WillOnce(Return(
@@ -108,7 +108,7 @@ TEST(AsyncAccumulateReadObjectTest, PartialSimple) {
   ReadObjectResponse r1;
   ASSERT_TRUE(TextFormat::ParseFromString(kText1, &r1));
 
-  auto mock = absl::make_unique<MockObjectMediaStream>();
+  auto mock = absl::make_unique<MockAsyncObjectMediaStream>();
   ::testing::InSequence sequence;
 
   EXPECT_CALL(*mock, Start).WillOnce(Return(ByMove(make_ready_future(true))));
@@ -139,7 +139,7 @@ TEST(AsyncAccumulateReadObjectTest, PartialStartTimeout) {
   AsyncSequencer<bool> async;
   auto cq = MakeMockedCompletionQueue(async);
 
-  auto mock = absl::make_unique<MockObjectMediaStream>();
+  auto mock = absl::make_unique<MockAsyncObjectMediaStream>();
 
   EXPECT_CALL(*mock, Start).WillRepeatedly([&] {
     return async.PushBack("Start").then([](future<bool> f) { return f.get(); });
@@ -189,7 +189,7 @@ TEST(AsyncAccumulateReadObjectTest, PartialReadTimeout) {
   AsyncSequencer<bool> async;
   auto cq = MakeMockedCompletionQueue(async);
 
-  auto mock = absl::make_unique<MockObjectMediaStream>();
+  auto mock = absl::make_unique<MockAsyncObjectMediaStream>();
 
   EXPECT_CALL(*mock, Start).WillRepeatedly([&] {
     return async.PushBack("Start").then([](future<bool> f) { return f.get(); });
@@ -249,7 +249,7 @@ TEST(AsyncAccumulateReadObjectTest, PartialFinishTimeout) {
   AsyncSequencer<bool> async;
   auto cq = MakeMockedCompletionQueue(async);
 
-  auto mock = absl::make_unique<MockObjectMediaStream>();
+  auto mock = absl::make_unique<MockAsyncObjectMediaStream>();
 
   EXPECT_CALL(*mock, Start).WillRepeatedly([&] {
     return async.PushBack("Start").then([](future<bool> f) { return f.get(); });

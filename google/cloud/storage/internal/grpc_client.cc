@@ -494,16 +494,26 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   ApplyQueryParameters(*context, request);
   auto proto_request = GrpcObjectRequestParser::ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
-  auto stream = stub_->AsyncReadObject(background_->cq(), std::move(context),
-                                       *proto_request);
-  auto start = stream->Start().get();
-  if (!start) {
-    return stream->Finish().get();
+  auto stream = stub_->ReadObject(std::move(context), *proto_request);
+
+  // The default timer source is a no-op. It does not set a timer, and always
+  // returns an indication that the timer expired.  The GrpcObjectReadSource
+  // takes no action on expired timers.
+  GrpcObjectReadSource::TimerSource timer_source = [] {
+    return make_ready_future(false);
+  };
+  auto const timeout = CurrentOptions().get<DownloadStallTimeoutOption>();
+  if (timeout != std::chrono::seconds(0)) {
+    // Change to an active timer.
+    timer_source = [timeout, cq = background_->cq()]() mutable {
+      return cq.MakeRelativeTimer(timeout).then(
+          [](auto f) { return f.get().ok(); });
+    };
   }
+
   return std::unique_ptr<ObjectReadSource>(
-      absl::make_unique<GrpcObjectReadSource>(
-          std::move(stream),
-          CurrentOptions().get<DownloadStallTimeoutOption>()));
+      absl::make_unique<GrpcObjectReadSource>(std::move(timer_source),
+                                              std::move(stream)));
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
@@ -1076,10 +1086,10 @@ StatusOr<BucketMetadata> GrpcClient::ModifyDefaultAccessControl(
           .set_option(IfMetagenerationMatch(get->metageneration())));
   // Retry on failed preconditions
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
-    return Status(
-        StatusCode::kUnavailable,
-        "retrying DefaultObjectAccessControl change due to conflict, bucket=" +
-            request.bucket_name());
+    return Status(StatusCode::kUnavailable,
+                  "retrying DefaultObjectAccessControl change due to "
+                  "conflict, bucket=" +
+                      request.bucket_name());
   }
   return patch;
 }

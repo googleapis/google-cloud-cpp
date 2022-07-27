@@ -32,14 +32,13 @@ namespace {
 using ::google::cloud::internal::StreamingRpcMetadata;
 using ::google::cloud::storage::testing::MockObjectMediaStream;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::ByMove;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
 namespace storage_proto = ::google::storage::v2;
 
-future<absl::optional<storage_proto::ReadObjectResponse>> MakeClosingRead() {
-  return make_ready_future(absl::optional<storage_proto::ReadObjectResponse>());
+GrpcObjectReadSource::TimerSource MakeSimpleTimerSource() {
+  return []() { return make_ready_future(false); };
 }
 
 TEST(GrpcObjectReadSource, Simple) {
@@ -49,20 +48,18 @@ TEST(GrpcObjectReadSource, Simple) {
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("0123456789");
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content(
             " The quick brown fox jumps over the lazy dog");
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
-      .WillOnce(Return(ByMove(MakeClosingRead())));
-  EXPECT_CALL(*mock, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+      .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
+  GrpcObjectReadSource tested(MakeSimpleTimerSource(), std::move(mock));
   std::string expected =
       "0123456789 The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
@@ -82,13 +79,11 @@ TEST(GrpcObjectReadSource, EmptyWithError) {
   auto mock = absl::make_unique<MockObjectMediaStream>();
 
   ::testing::InSequence sequence;
-  EXPECT_CALL(*mock, Read).WillOnce(Return(ByMove(MakeClosingRead())));
-  EXPECT_CALL(*mock, Finish)
-      .WillOnce(Return(ByMove(
-          make_ready_future(Status(StatusCode::kPermissionDenied, "uh-oh")))));
+  EXPECT_CALL(*mock, Read)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
+  GrpcObjectReadSource tested(MakeSimpleTimerSource(), std::move(mock));
   std::vector<char> buffer(1024);
   EXPECT_THAT(tested.Read(buffer.data(), buffer.size()),
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
@@ -105,15 +100,12 @@ TEST(GrpcObjectReadSource, DataWithError) {
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("0123456789");
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
-      .WillOnce(Return(ByMove(MakeClosingRead())));
-  EXPECT_CALL(*mock, Finish)
-      .WillOnce(Return(ByMove(
-          make_ready_future(Status(StatusCode::kPermissionDenied, "uh-oh")))));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
+  GrpcObjectReadSource tested(MakeSimpleTimerSource(), std::move(mock));
   std::string expected = "0123456789";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -138,14 +130,12 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
       .WillOnce([&contents]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content(contents);
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
-      .WillOnce(Return(ByMove(MakeClosingRead())));
-  EXPECT_CALL(*mock, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+      .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
+  GrpcObjectReadSource tested(MakeSimpleTimerSource(), std::move(mock));
   std::vector<char> buffer(trailer_size);
   auto response = tested.Read(buffer.data(), expected_1.size());
   ASSERT_STATUS_OK(response);
@@ -176,14 +166,12 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
       .WillOnce([&contents]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content(contents);
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
-      .WillOnce(Return(ByMove(MakeClosingRead())));
-  EXPECT_CALL(*mock, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+      .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
+  GrpcObjectReadSource tested(MakeSimpleTimerSource(), std::move(mock));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), 3);
   ASSERT_STATUS_OK(response);
@@ -227,7 +215,7 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
             GrpcObjectMetadataParser::MD5ToProto(expected_md5).value());
         response.mutable_object_checksums()->set_crc32c(
             GrpcObjectMetadataParser::Crc32cToProto(expected_crc32c).value());
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
       .WillOnce([&] {
         storage_proto::ReadObjectResponse response;
@@ -239,14 +227,12 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
             GrpcObjectMetadataParser::MD5ToProto(expected_md5).value());
         response.mutable_object_checksums()->set_crc32c(
             GrpcObjectMetadataParser::Crc32cToProto(expected_crc32c).value());
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
-      .WillOnce(Return(ByMove(MakeClosingRead())));
-  EXPECT_CALL(*mock, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+      .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
+  GrpcObjectReadSource tested(MakeSimpleTimerSource(), std::move(mock));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
   ASSERT_STATUS_OK(response);
@@ -273,22 +259,20 @@ TEST(GrpcObjectReadSource, CaptureGeneration) {
         storage_proto::ReadObjectResponse response;
         response.mutable_metadata()->set_generation(1234);
         response.mutable_checksummed_data()->set_content("The quick brown");
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
       .WillOnce([&] {
         // The last response, without metadata or generation.
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content(
             " fox jumps over the lazy dog");
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
-      .WillOnce(Return(ByMove(MakeClosingRead())));
-  EXPECT_CALL(*mock, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+      .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
 
-  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
+  GrpcObjectReadSource tested(MakeSimpleTimerSource(), std::move(mock));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
   ASSERT_STATUS_OK(response);
@@ -299,35 +283,30 @@ TEST(GrpcObjectReadSource, CaptureGeneration) {
 
 TEST(GrpcObjectReadSource, HandleEmptyResponses) {
   auto mock = absl::make_unique<MockObjectMediaStream>();
-  auto make_empty_response = [] {
-    return make_ready_future(
-        absl::make_optional(storage_proto::ReadObjectResponse{}));
-  };
+  auto make_empty_response = [] { return storage_proto::ReadObjectResponse{}; };
   EXPECT_CALL(*mock, Read)
       .WillOnce(make_empty_response)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("The quick brown ");
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
       .WillOnce(make_empty_response)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("fox jumps over ");
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
       .WillOnce(make_empty_response)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("the lazy dog");
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
-      .WillOnce(Return(ByMove(MakeClosingRead())));
-  EXPECT_CALL(*mock, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+      .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
+  GrpcObjectReadSource tested(MakeSimpleTimerSource(), std::move(mock));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -349,14 +328,12 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content(
             "The quick brown fox jumps over the lazy dog");
-        return make_ready_future(absl::make_optional(response));
+        return response;
       })
-      .WillOnce(Return(ByMove(MakeClosingRead())));
-  EXPECT_CALL(*mock, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+      .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{}));
-  GrpcObjectReadSource tested(std::move(mock), std::chrono::seconds(5));
+  GrpcObjectReadSource tested(MakeSimpleTimerSource(), std::move(mock));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -378,20 +355,16 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
 
 TEST(GrpcObjectReadSource, StallTimeout) {
   auto mock = absl::make_unique<MockObjectMediaStream>();
-
-  promise<void> hold_response;
+  ::testing::MockFunction<future<bool>()> timer_source;
 
   ::testing::InSequence sequence;
-  EXPECT_CALL(*mock, Read).WillOnce([&] {
-    return hold_response.get_future().then([](future<void>) {
-      return absl::optional<storage_proto::ReadObjectResponse>();
-    });
+  EXPECT_CALL(timer_source, Call).WillOnce([] {
+    return make_ready_future(true);
   });
-  EXPECT_CALL(*mock, Cancel).WillOnce([&] { hold_response.set_value(); });
-  EXPECT_CALL(*mock, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Read).WillOnce(Return(Status{}));
 
-  GrpcObjectReadSource tested(std::move(mock), std::chrono::milliseconds(3));
+  GrpcObjectReadSource tested(timer_source.AsStdFunction(), std::move(mock));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
   EXPECT_THAT(response, StatusIs(StatusCode::kDeadlineExceeded));
