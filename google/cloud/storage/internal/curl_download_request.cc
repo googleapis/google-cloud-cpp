@@ -116,7 +116,8 @@ CurlDownloadRequest::~CurlDownloadRequest() {
   CleanupHandles();
   if (factory_) {
     CurlHandle::ReturnToPool(*factory_, std::move(handle_));
-    factory_->CleanupMultiHandle(std::move(multi_));
+    factory_->CleanupMultiHandle(std::move(multi_),
+                                 rest_internal::HandleDisposition::kKeep);
   }
 }
 
@@ -300,7 +301,8 @@ void CurlDownloadRequest::OnTransferDone() {
   // reused for any other requests.
   if (factory_) {
     CurlHandle::ReturnToPool(*factory_, std::move(handle_));
-    factory_->CleanupMultiHandle(std::move(multi_));
+    factory_->CleanupMultiHandle(std::move(multi_),
+                                 rest_internal::HandleDisposition::kKeep);
   }
 }
 
@@ -309,12 +311,13 @@ Status CurlDownloadRequest::OnTransferError(Status status) {
   // to an invalid host, a host that is slow and trickling data, or otherwise in
   // a bad state. Release the handle, but do not return it to the pool.
   CleanupHandles();
-  auto handle = std::move(handle_);
   if (factory_) {
+    CurlHandle::DiscardFromPool(*factory_, std::move(handle_));
     // While the handle is suspect, there is probably nothing wrong with the
     // CURLM* handle, that just represents a local resource, such as data
     // structures for `epoll(7)` or `select(2)`
-    factory_->CleanupMultiHandle(std::move(multi_));
+    factory_->CleanupMultiHandle(std::move(multi_),
+                                 rest_internal::HandleDisposition::kKeep);
   }
   return status;
 }

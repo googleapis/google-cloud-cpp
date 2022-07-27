@@ -27,6 +27,14 @@ namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+enum class HandleDisposition {
+  /// The handle was used successfully. preserve it if possible.
+  kKeep,
+  /// The handle was used, but returned an error. Discard it from the pool.
+  kDiscard,
+};
+
 /**
  * Implements the Factory Pattern for CURL handles (and multi-handles).
  */
@@ -35,10 +43,10 @@ class CurlHandleFactory {
   virtual ~CurlHandleFactory() = default;
 
   virtual CurlPtr CreateHandle() = 0;
-  virtual void CleanupHandle(CurlPtr) = 0;
+  virtual void CleanupHandle(CurlPtr, HandleDisposition) = 0;
 
   virtual CurlMulti CreateMultiHandle() = 0;
-  virtual void CleanupMultiHandle(CurlMulti) = 0;
+  virtual void CleanupMultiHandle(CurlMulti, HandleDisposition) = 0;
 
   virtual std::string LastClientIpAddress() const = 0;
 
@@ -70,10 +78,10 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
   explicit DefaultCurlHandleFactory(Options const& o);
 
   CurlPtr CreateHandle() override;
-  void CleanupHandle(CurlPtr) override;
+  void CleanupHandle(CurlPtr, HandleDisposition) override;
 
   CurlMulti CreateMultiHandle() override;
-  void CleanupMultiHandle(CurlMulti) override;
+  void CleanupMultiHandle(CurlMulti, HandleDisposition) override;
 
   std::string LastClientIpAddress() const override {
     std::lock_guard<std::mutex> lk(mu_);
@@ -106,10 +114,10 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   ~PooledCurlHandleFactory() override;
 
   CurlPtr CreateHandle() override;
-  void CleanupHandle(CurlPtr) override;
+  void CleanupHandle(CurlPtr, HandleDisposition) override;
 
   CurlMulti CreateMultiHandle() override;
-  void CleanupMultiHandle(CurlMulti) override;
+  void CleanupMultiHandle(CurlMulti, HandleDisposition) override;
 
   std::string LastClientIpAddress() const override {
     std::lock_guard<std::mutex> lk(last_client_ip_address_mu_);
