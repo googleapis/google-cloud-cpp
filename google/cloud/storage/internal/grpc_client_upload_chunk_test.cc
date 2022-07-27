@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::storage::testing::MockInsertStream;
+using ::google::cloud::storage::testing::MockAsyncInsertStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ByMove;
@@ -45,7 +45,7 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutStart) {
       .WillOnce([&](google::cloud::CompletionQueue const&,
                     std::unique_ptr<grpc::ClientContext>) {
         ::testing::InSequence sequence;
-        auto stream = absl::make_unique<MockInsertStream>();
+        auto stream = absl::make_unique<MockAsyncInsertStream>();
         EXPECT_CALL(*stream, Start).WillOnce([&] {
           return hold_response.get_future().then(
               [](future<void>) { return false; });
@@ -79,7 +79,7 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWrite) {
       .WillOnce([&](google::cloud::CompletionQueue const&,
                     std::unique_ptr<grpc::ClientContext>) {
         ::testing::InSequence sequence;
-        auto stream = absl::make_unique<MockInsertStream>();
+        auto stream = absl::make_unique<MockAsyncInsertStream>();
         EXPECT_CALL(*stream, Start)
             .WillOnce(Return(ByMove(make_ready_future(true))));
         EXPECT_CALL(*stream, Write).WillOnce([&] {
@@ -115,7 +115,7 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWritesDone) {
       .WillOnce([&](google::cloud::CompletionQueue const&,
                     std::unique_ptr<grpc::ClientContext>) {
         ::testing::InSequence sequence;
-        auto stream = absl::make_unique<MockInsertStream>();
+        auto stream = absl::make_unique<MockAsyncInsertStream>();
         EXPECT_CALL(*stream, Start)
             .WillOnce(Return(ByMove(make_ready_future(true))));
         EXPECT_CALL(*stream, Write)
@@ -153,7 +153,7 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutFinish) {
       .WillOnce([&](google::cloud::CompletionQueue const&,
                     std::unique_ptr<grpc::ClientContext>) {
         ::testing::InSequence sequence;
-        auto stream = absl::make_unique<MockInsertStream>();
+        auto stream = absl::make_unique<MockAsyncInsertStream>();
         EXPECT_CALL(*stream, Start)
             .WillOnce(Return(ByMove(make_ready_future(true))));
         EXPECT_CALL(*stream, Write)

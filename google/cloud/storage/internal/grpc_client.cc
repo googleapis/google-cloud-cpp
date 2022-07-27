@@ -359,22 +359,15 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   if (!r) return std::move(r).status();
   auto proto_request = *r;
 
-  struct WaitForFinish {
-    std::unique_ptr<WriteObjectStream> stream;
-    void operator()(
-        future<StatusOr<google::storage::v2::WriteObjectResponse>>) {}
-  };
-  struct WaitForIdle {
-    std::unique_ptr<WriteObjectStream> stream;
-    void operator()(future<bool>) {
-      auto finish = stream->Finish();
-      (void)finish.then(WaitForFinish{std::move(stream)});
+  auto timeout = google::cloud::internal::CurrentOptions()
+                     .get<TransferStallTimeoutOption>();
+  auto create_watchdog = [cq = background_->cq(), timeout]() mutable {
+    if (timeout == std::chrono::seconds(0)) {
+      return make_ready_future(false);
     }
+    return cq.MakeRelativeTimer(timeout).then(
+        [](auto f) { return f.get().ok(); });
   };
-
-  auto const timeout =
-      DefaultTransferStallTimeout(google::cloud::internal::CurrentOptions()
-                                      .get<TransferStallTimeoutOption>());
 
   auto context = absl::make_unique<grpc::ClientContext>();
   // The REST response is just the object metadata (aka the "resource"). In the
@@ -382,17 +375,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   // extra prefix to ApplyQueryParameters sends the right filtering instructions
   // to the gRPC API.
   ApplyQueryParameters(*context, request, "resource");
-  auto stream = stub_->AsyncWriteObject(background_->cq(), std::move(context));
-
-  auto pending_start = stream->Start();
-  if (pending_start.wait_for(timeout) == std::future_status::timeout) {
-    stream->Cancel();
-    pending_start.then(WaitForIdle{std::move(stream)});
-    return Status(StatusCode::kDeadlineExceeded,
-                  "timeout [" +
-                      absl::FormatDuration(absl::FromChrono(timeout)) +
-                      "] while waiting for Start()");
-  }
+  auto stream = stub_->WriteObject(std::move(context));
 
   auto const& contents = request.contents();
   auto const contents_size = static_cast<std::int64_t>(contents.size());
@@ -416,34 +399,43 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
       proto_request.set_finish_write(true);
       write_options.set_last_message();
     }
-    auto pending = stream->Write(proto_request, write_options);
-    if (pending.wait_for(timeout) == std::future_status::timeout) {
+    auto watchdog = create_watchdog().then([&stream](auto f) {
+      if (!f.get()) return false;
       stream->Cancel();
-      pending.then(WaitForIdle{std::move(stream)});
+      return true;
+    });
+    auto success = stream->Write(proto_request, write_options);
+    watchdog.cancel();
+    if (watchdog.get()) {
+      // The stream is cancelled, but we need to close it explicitly.
+      stream->Close();
       return Status(StatusCode::kDeadlineExceeded,
                     "timeout [" +
                         absl::FormatDuration(absl::FromChrono(timeout)) +
                         "] while waiting for Write()");
     }
 
-    if (!pending.get() || proto_request.finish_write()) break;
+    if (!success || proto_request.finish_write()) break;
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
     proto_request.clear_write_object_spec();
     proto_request.clear_object_checksums();
   }
 
-  auto pending = stream->Finish();
-  if (pending.wait_for(timeout) == std::future_status::timeout) {
+  auto watchdog = create_watchdog().then([&stream](auto f) {
+    if (!f.get()) return false;
     stream->Cancel();
-    pending.then(WaitForFinish{std::move(stream)});
+    return true;
+  });
+  auto response = stream->Close();
+  watchdog.cancel();
+  if (watchdog.get()) {
     return Status(StatusCode::kDeadlineExceeded,
                   "timeout [" +
                       absl::FormatDuration(absl::FromChrono(timeout)) +
                       "] while waiting for Finish()");
   }
 
-  auto response = pending.get();
   if (!response) return std::move(response).status();
   if (response->has_resource()) {
     return GrpcObjectMetadataParser::FromProto(response->resource(), options());
