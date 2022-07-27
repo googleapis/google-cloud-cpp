@@ -53,7 +53,7 @@ CurlPtr DefaultCurlHandleFactory::CreateHandle() {
   return curl;
 }
 
-void DefaultCurlHandleFactory::CleanupHandle(CurlPtr h) {
+void DefaultCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition) {
   if (!h) return;
   char* ip;
   auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
@@ -68,7 +68,10 @@ CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
   return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
 }
 
-void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti m) { m.reset(); }
+void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
+                                                  HandleDisposition) {
+  m.reset();
+}
 
 void DefaultCurlHandleFactory::SetCurlOptions(CURL* handle) {
   if (cainfo_) {
@@ -103,7 +106,7 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
   return curl;
 }
 
-void PooledCurlHandleFactory::CleanupHandle(CurlPtr h) {
+void PooledCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition d) {
   if (!h) return;
   // Querying the local IP can be expensive, as it may require a DNS lookup.
   // We should not perform such operations while holding a lock.
@@ -113,6 +116,7 @@ void PooledCurlHandleFactory::CleanupHandle(CurlPtr h) {
     std::unique_lock<std::mutex> lk(last_client_ip_address_mu_);
     last_client_ip_address_ = ip;
   }
+  if (d == kDiscard) return;
   // Use a temporary data structure to release any excess handles *after* the
   // lock is released.
   std::vector<CurlPtr> released;
@@ -142,8 +146,9 @@ CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
   return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
 }
 
-void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m) {
-  if (!m) return;
+void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
+                                                 HandleDisposition d) {
+  if (!m || d == kDiscard) return;
   // Use a temporary data structure to release any excess handles *after* the
   // lock is released.
   std::vector<CurlMulti> released;

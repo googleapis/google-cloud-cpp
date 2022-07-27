@@ -135,7 +135,13 @@ CurlHandle CurlHandle::MakeFromPool(CurlHandleFactory& factory) {
 void CurlHandle::ReturnToPool(CurlHandleFactory& factory, CurlHandle h) {
   CurlPtr tmp(nullptr, curl_easy_cleanup);
   h.handle_.swap(tmp);
-  factory.CleanupHandle(std::move(tmp));
+  factory.CleanupHandle(std::move(tmp), CurlHandleFactory::kKeep);
+}
+
+void CurlHandle::DiscardFromPool(CurlHandleFactory& factory, CurlHandle h) {
+  CurlPtr tmp(nullptr, curl_easy_cleanup);
+  h.handle_.swap(tmp);
+  factory.CleanupHandle(std::move(tmp), CurlHandleFactory::kDiscard);
 }
 
 CurlHandle::CurlHandle() : handle_(MakeCurlPtr()) {

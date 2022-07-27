@@ -41,6 +41,7 @@ class CurlHandle {
  public:
   static CurlHandle MakeFromPool(CurlHandleFactory& factory);
   static void ReturnToPool(CurlHandleFactory& factory, CurlHandle h);
+  static void DiscardFromPool(CurlHandleFactory& factory, CurlHandle h);
 
   explicit CurlHandle();
   ~CurlHandle();

@@ -43,6 +43,8 @@ class CurlHandle {
   static CurlHandle MakeFromPool(rest_internal::CurlHandleFactory& factory);
   static void ReturnToPool(rest_internal::CurlHandleFactory& factory,
                            CurlHandle h);
+  static void DiscardFromPool(rest_internal::CurlHandleFactory& factory,
+                              CurlHandle h);
 
   explicit CurlHandle();
   ~CurlHandle();
