@@ -171,21 +171,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace asset_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<asset::AssetServiceConnection> MakeAssetServiceConnection(
-    std::shared_ptr<AssetServiceStub> stub, Options options) {
-  options = AssetServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<asset_internal::AssetServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
-}  // namespace cloud
-}  // namespace google

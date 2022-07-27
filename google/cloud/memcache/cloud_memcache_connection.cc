@@ -105,21 +105,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace memcache_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<memcache::CloudMemcacheConnection> MakeCloudMemcacheConnection(
-    std::shared_ptr<CloudMemcacheStub> stub, Options options) {
-  options = CloudMemcacheDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<memcache_internal::CloudMemcacheConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace memcache_internal
-}  // namespace cloud
-}  // namespace google

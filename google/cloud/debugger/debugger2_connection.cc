@@ -77,21 +77,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace debugger_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<debugger::Debugger2Connection> MakeDebugger2Connection(
-    std::shared_ptr<Debugger2Stub> stub, Options options) {
-  options = Debugger2DefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<debugger_internal::Debugger2ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace debugger_internal
-}  // namespace cloud
-}  // namespace google

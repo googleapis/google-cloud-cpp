@@ -150,18 +150,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-namespace google {
-namespace cloud {
-namespace apigateway_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<apigateway::ApiGatewayServiceConnection>
-MakeApiGatewayServiceConnection(std::shared_ptr<ApiGatewayServiceStub> stub,
-                                Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace apigateway_internal
-}  // namespace cloud
-}  // namespace google
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_API_GATEWAY_CONNECTION_H

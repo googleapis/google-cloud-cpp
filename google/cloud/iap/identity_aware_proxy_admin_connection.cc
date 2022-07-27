@@ -115,23 +115,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace iap_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<iap::IdentityAwareProxyAdminServiceConnection>
-MakeIdentityAwareProxyAdminServiceConnection(
-    std::shared_ptr<IdentityAwareProxyAdminServiceStub> stub, Options options) {
-  options = IdentityAwareProxyAdminServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      iap_internal::IdentityAwareProxyAdminServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iap_internal
-}  // namespace cloud
-}  // namespace google

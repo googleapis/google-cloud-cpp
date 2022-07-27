@@ -195,18 +195,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-namespace google {
-namespace cloud {
-namespace container_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<container::ClusterManagerConnection>
-MakeClusterManagerConnection(std::shared_ptr<ClusterManagerStub> stub,
-                             Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
-}  // namespace cloud
-}  // namespace google
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_CLUSTER_MANAGER_CONNECTION_H

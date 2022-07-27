@@ -231,17 +231,6 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 
   HeaderCloseNamespaces();
 
-  HeaderOpenNamespaces(NamespaceType::kInternal);
-  HeaderPrint(
-      // clang-format off
-      "\n"
-      "std::shared_ptr<$product_namespace$::$connection_class_name$>\n"
-      "Make$connection_class_name$(\n"
-      "    std::shared_ptr<$stub_class_name$> stub,\n"
-      "    Options options);\n");
-  // clang-format on
-  HeaderCloseNamespaces();
-
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -409,21 +398,6 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 
   CcCloseNamespaces();
 
-  CcOpenNamespaces(NamespaceType::kInternal);
-
-  CcPrint(
-      R"""(
-std::shared_ptr<$product_namespace$::$connection_class_name$>
-Make$connection_class_name$(
-    std::shared_ptr<$stub_class_name$> stub, Options options) {
-  options = $service_name$DefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-)""");
-
-  CcCloseNamespaces();
   return {};
 }
 

@@ -100,18 +100,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-namespace google {
-namespace cloud {
-namespace appengine_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<appengine::AuthorizedDomainsConnection>
-MakeAuthorizedDomainsConnection(std::shared_ptr<AuthorizedDomainsStub> stub,
-                                Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace appengine_internal
-}  // namespace cloud
-}  // namespace google
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_AUTHORIZED_DOMAINS_CONNECTION_H

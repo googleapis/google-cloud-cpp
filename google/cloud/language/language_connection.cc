@@ -87,22 +87,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace language_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<language::LanguageServiceConnection>
-MakeLanguageServiceConnection(std::shared_ptr<LanguageServiceStub> stub,
-                              Options options) {
-  options = LanguageServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<language_internal::LanguageServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language_internal
-}  // namespace cloud
-}  // namespace google

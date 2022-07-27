@@ -190,23 +190,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace bigtable_admin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>
-MakeBigtableInstanceAdminConnection(
-    std::shared_ptr<BigtableInstanceAdminStub> stub, Options options) {
-  options = BigtableInstanceAdminDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      bigtable_admin_internal::BigtableInstanceAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin_internal
-}  // namespace cloud
-}  // namespace google

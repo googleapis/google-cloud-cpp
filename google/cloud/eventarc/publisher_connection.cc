@@ -62,21 +62,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace eventarc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<eventarc::PublisherConnection> MakePublisherConnection(
-    std::shared_ptr<PublisherStub> stub, Options options) {
-  options = PublisherDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<eventarc_internal::PublisherConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace eventarc_internal
-}  // namespace cloud
-}  // namespace google

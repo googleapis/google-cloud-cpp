@@ -175,21 +175,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace automl_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<automl::AutoMlConnection> MakeAutoMlConnection(
-    std::shared_ptr<AutoMlStub> stub, Options options) {
-  options = AutoMlDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<automl_internal::AutoMlConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace automl_internal
-}  // namespace cloud
-}  // namespace google

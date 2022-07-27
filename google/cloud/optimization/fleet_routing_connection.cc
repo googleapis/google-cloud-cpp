@@ -65,22 +65,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace optimization_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<optimization::FleetRoutingConnection>
-MakeFleetRoutingConnection(std::shared_ptr<FleetRoutingStub> stub,
-                           Options options) {
-  options = FleetRoutingDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<optimization_internal::FleetRoutingConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace optimization_internal
-}  // namespace cloud
-}  // namespace google

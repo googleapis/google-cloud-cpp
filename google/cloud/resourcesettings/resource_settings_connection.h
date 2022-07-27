@@ -108,18 +108,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-namespace google {
-namespace cloud {
-namespace resourcesettings_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<resourcesettings::ResourceSettingsServiceConnection>
-MakeResourceSettingsServiceConnection(
-    std::shared_ptr<ResourceSettingsServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcesettings_internal
-}  // namespace cloud
-}  // namespace google
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_RESOURCE_SETTINGS_CONNECTION_H

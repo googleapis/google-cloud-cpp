@@ -130,18 +130,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-namespace google {
-namespace cloud {
-namespace iap_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<iap::IdentityAwareProxyOAuthServiceConnection>
-MakeIdentityAwareProxyOAuthServiceConnection(
-    std::shared_ptr<IdentityAwareProxyOAuthServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iap_internal
-}  // namespace cloud
-}  // namespace google
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_IDENTITY_AWARE_PROXY_O_AUTH_CONNECTION_H

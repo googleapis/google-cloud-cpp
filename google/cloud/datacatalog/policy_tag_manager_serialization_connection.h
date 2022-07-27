@@ -109,18 +109,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-namespace google {
-namespace cloud {
-namespace datacatalog_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<datacatalog::PolicyTagManagerSerializationConnection>
-MakePolicyTagManagerSerializationConnection(
-    std::shared_ptr<PolicyTagManagerSerializationStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datacatalog_internal
-}  // namespace cloud
-}  // namespace google
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_POLICY_TAG_MANAGER_SERIALIZATION_CONNECTION_H

@@ -82,21 +82,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace talent_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<talent::CompanyServiceConnection> MakeCompanyServiceConnection(
-    std::shared_ptr<CompanyServiceStub> stub, Options options) {
-  options = CompanyServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<talent_internal::CompanyServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace talent_internal
-}  // namespace cloud
-}  // namespace google

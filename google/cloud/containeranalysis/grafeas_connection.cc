@@ -127,21 +127,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace containeranalysis_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<containeranalysis::GrafeasConnection> MakeGrafeasConnection(
-    std::shared_ptr<GrafeasStub> stub, Options options) {
-  options = GrafeasDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<containeranalysis_internal::GrafeasConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace containeranalysis_internal
-}  // namespace cloud
-}  // namespace google

@@ -102,23 +102,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dataproc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dataproc::WorkflowTemplateServiceConnection>
-MakeWorkflowTemplateServiceConnection(
-    std::shared_ptr<WorkflowTemplateServiceStub> stub, Options options) {
-  options = WorkflowTemplateServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      dataproc_internal::WorkflowTemplateServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc_internal
-}  // namespace cloud
-}  // namespace google

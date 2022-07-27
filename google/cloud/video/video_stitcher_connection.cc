@@ -180,22 +180,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace video_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<video::VideoStitcherServiceConnection>
-MakeVideoStitcherServiceConnection(
-    std::shared_ptr<VideoStitcherServiceStub> stub, Options options) {
-  options = VideoStitcherServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<video_internal::VideoStitcherServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace video_internal
-}  // namespace cloud
-}  // namespace google

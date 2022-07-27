@@ -112,18 +112,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-namespace google {
-namespace cloud {
-namespace documentai_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<documentai::DocumentProcessorServiceConnection>
-MakeDocumentProcessorServiceConnection(
-    std::shared_ptr<DocumentProcessorServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai_internal
-}  // namespace cloud
-}  // namespace google
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_DOCUMENT_PROCESSOR_CONNECTION_H

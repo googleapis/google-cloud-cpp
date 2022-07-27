@@ -144,23 +144,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace secretmanager_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<secretmanager::SecretManagerServiceConnection>
-MakeSecretManagerServiceConnection(
-    std::shared_ptr<SecretManagerServiceStub> stub, Options options) {
-  options = SecretManagerServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      secretmanager_internal::SecretManagerServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace secretmanager_internal
-}  // namespace cloud
-}  // namespace google

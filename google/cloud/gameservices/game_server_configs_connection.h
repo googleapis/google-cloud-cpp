@@ -118,18 +118,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-namespace google {
-namespace cloud {
-namespace gameservices_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<gameservices::GameServerConfigsServiceConnection>
-MakeGameServerConfigsServiceConnection(
-    std::shared_ptr<GameServerConfigsServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gameservices_internal
-}  // namespace cloud
-}  // namespace google
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_CONNECTION_H

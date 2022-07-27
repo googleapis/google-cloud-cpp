@@ -60,23 +60,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace binaryauthorization_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<binaryauthorization::ValidationHelperV1Connection>
-MakeValidationHelperV1Connection(std::shared_ptr<ValidationHelperV1Stub> stub,
-                                 Options options) {
-  options = ValidationHelperV1DefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      binaryauthorization_internal::ValidationHelperV1ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace binaryauthorization_internal
-}  // namespace cloud
-}  // namespace google

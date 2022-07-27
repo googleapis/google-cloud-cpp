@@ -59,21 +59,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::QueryServiceConnection> MakeQueryServiceConnection(
-    std::shared_ptr<QueryServiceStub> stub, Options options) {
-  options = QueryServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<monitoring_internal::QueryServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
-}  // namespace cloud
-}  // namespace google

@@ -88,22 +88,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace shell_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<shell::CloudShellServiceConnection>
-MakeCloudShellServiceConnection(std::shared_ptr<CloudShellServiceStub> stub,
-                                Options options) {
-  options = CloudShellServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<shell_internal::CloudShellServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace shell_internal
-}  // namespace cloud
-}  // namespace google

@@ -153,18 +153,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-namespace google {
-namespace cloud {
-namespace secretmanager_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<secretmanager::SecretManagerServiceConnection>
-MakeSecretManagerServiceConnection(
-    std::shared_ptr<SecretManagerServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace secretmanager_internal
-}  // namespace cloud
-}  // namespace google
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_SECRET_MANAGER_CONNECTION_H

@@ -216,22 +216,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace kms_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<kms::KeyManagementServiceConnection>
-MakeKeyManagementServiceConnection(
-    std::shared_ptr<KeyManagementServiceStub> stub, Options options) {
-  options = KeyManagementServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<kms_internal::KeyManagementServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace kms_internal
-}  // namespace cloud
-}  // namespace google

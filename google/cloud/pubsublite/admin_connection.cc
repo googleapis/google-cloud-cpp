@@ -179,21 +179,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace pubsublite_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<pubsublite::AdminServiceConnection> MakeAdminServiceConnection(
-    std::shared_ptr<AdminServiceStub> stub, Options options) {
-  options = AdminServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<pubsublite_internal::AdminServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite_internal
-}  // namespace cloud
-}  // namespace google

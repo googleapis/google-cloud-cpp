@@ -133,21 +133,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace redis_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<redis::CloudRedisConnection> MakeCloudRedisConnection(
-    std::shared_ptr<CloudRedisStub> stub, Options options) {
-  options = CloudRedisDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<redis_internal::CloudRedisConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace redis_internal
-}  // namespace cloud
-}  // namespace google

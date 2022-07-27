@@ -62,23 +62,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace videointelligence_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<videointelligence::VideoIntelligenceServiceConnection>
-MakeVideoIntelligenceServiceConnection(
-    std::shared_ptr<VideoIntelligenceServiceStub> stub, Options options) {
-  options = VideoIntelligenceServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      videointelligence_internal::VideoIntelligenceServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace videointelligence_internal
-}  // namespace cloud
-}  // namespace google

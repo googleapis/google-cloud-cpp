@@ -370,22 +370,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace channel_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<channel::CloudChannelServiceConnection>
-MakeCloudChannelServiceConnection(std::shared_ptr<CloudChannelServiceStub> stub,
-                                  Options options) {
-  options = CloudChannelServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<channel_internal::CloudChannelServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel_internal
-}  // namespace cloud
-}  // namespace google

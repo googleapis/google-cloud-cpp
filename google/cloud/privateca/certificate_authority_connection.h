@@ -258,18 +258,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-namespace google {
-namespace cloud {
-namespace privateca_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<privateca::CertificateAuthorityServiceConnection>
-MakeCertificateAuthorityServiceConnection(
-    std::shared_ptr<CertificateAuthorityServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace privateca_internal
-}  // namespace cloud
-}  // namespace google
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVATECA_CERTIFICATE_AUTHORITY_CONNECTION_H

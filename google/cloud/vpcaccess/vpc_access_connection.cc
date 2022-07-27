@@ -82,22 +82,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace vpcaccess_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<vpcaccess::VpcAccessServiceConnection>
-MakeVpcAccessServiceConnection(std::shared_ptr<VpcAccessServiceStub> stub,
-                               Options options) {
-  options = VpcAccessServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<vpcaccess_internal::VpcAccessServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace vpcaccess_internal
-}  // namespace cloud
-}  // namespace google

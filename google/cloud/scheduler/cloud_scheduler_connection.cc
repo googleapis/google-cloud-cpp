@@ -95,22 +95,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace scheduler_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<scheduler::CloudSchedulerConnection>
-MakeCloudSchedulerConnection(std::shared_ptr<CloudSchedulerStub> stub,
-                             Options options) {
-  options = CloudSchedulerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<scheduler_internal::CloudSchedulerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace scheduler_internal
-}  // namespace cloud
-}  // namespace google

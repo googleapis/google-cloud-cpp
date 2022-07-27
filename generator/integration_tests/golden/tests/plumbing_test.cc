@@ -12,10 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_thing_admin_client.h"
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_connection_impl.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
@@ -67,7 +70,11 @@ TEST(PlumbingTest, RetryLoopUsesPerCallPolicies) {
   EXPECT_CALL(*stub, GetDatabase)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "fail")));
-  auto conn = golden_internal::MakeGoldenThingAdminConnection(stub, {});
+
+  auto options = golden_internal::GoldenThingAdminDefaultOptions({});
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto conn = std::make_shared<golden_internal::GoldenThingAdminConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options));
   auto client = GoldenThingAdminClient(std::move(conn));
 
   (void)client.GetDatabase("name", std::move(call_options));
@@ -109,7 +116,11 @@ TEST(PlumbingTest, PollingLoopUsesPerCallPolicies) {
         op.set_done(true);
         return make_ready_future(make_status_or(op));
       });
-  auto conn = golden_internal::MakeGoldenThingAdminConnection(stub, {});
+
+  auto options = golden_internal::GoldenThingAdminDefaultOptions({});
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto conn = std::make_shared<golden_internal::GoldenThingAdminConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options));
   auto client = GoldenThingAdminClient(std::move(conn));
 
   (void)client.CreateDatabase({}, std::move(call_options));

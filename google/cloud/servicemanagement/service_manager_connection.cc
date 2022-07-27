@@ -144,23 +144,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace servicemanagement_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<servicemanagement::ServiceManagerConnection>
-MakeServiceManagerConnection(std::shared_ptr<ServiceManagerStub> stub,
-                             Options options) {
-  options = ServiceManagerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      servicemanagement_internal::ServiceManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace servicemanagement_internal
-}  // namespace cloud
-}  // namespace google

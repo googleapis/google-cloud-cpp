@@ -111,21 +111,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dialogflow_es_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dialogflow_es::DocumentsConnection> MakeDocumentsConnection(
-    std::shared_ptr<DocumentsStub> stub, Options options) {
-  options = DocumentsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<dialogflow_es_internal::DocumentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dialogflow_es_internal
-}  // namespace cloud
-}  // namespace google

@@ -74,21 +74,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace webrisk_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<webrisk::WebRiskServiceConnection> MakeWebRiskServiceConnection(
-    std::shared_ptr<WebRiskServiceStub> stub, Options options) {
-  options = WebRiskServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<webrisk_internal::WebRiskServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace webrisk_internal
-}  // namespace cloud
-}  // namespace google

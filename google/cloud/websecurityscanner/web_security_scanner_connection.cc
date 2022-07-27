@@ -138,23 +138,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace websecurityscanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<websecurityscanner::WebSecurityScannerConnection>
-MakeWebSecurityScannerConnection(std::shared_ptr<WebSecurityScannerStub> stub,
-                                 Options options) {
-  options = WebSecurityScannerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      websecurityscanner_internal::WebSecurityScannerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace websecurityscanner_internal
-}  // namespace cloud
-}  // namespace google

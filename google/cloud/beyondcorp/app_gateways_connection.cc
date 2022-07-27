@@ -86,23 +86,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace beyondcorp_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<beyondcorp::AppGatewaysServiceConnection>
-MakeAppGatewaysServiceConnection(std::shared_ptr<AppGatewaysServiceStub> stub,
-                                 Options options) {
-  options = AppGatewaysServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      beyondcorp_internal::AppGatewaysServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace beyondcorp_internal
-}  // namespace cloud
-}  // namespace google
