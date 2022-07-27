@@ -261,23 +261,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace accesscontextmanager_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<accesscontextmanager::AccessContextManagerConnection>
-MakeAccessContextManagerConnection(
-    std::shared_ptr<AccessContextManagerStub> stub, Options options) {
-  options = AccessContextManagerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      accesscontextmanager_internal::AccessContextManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
-}  // namespace cloud
-}  // namespace google

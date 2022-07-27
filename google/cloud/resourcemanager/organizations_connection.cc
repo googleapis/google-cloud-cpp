@@ -83,23 +83,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace resourcemanager_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<resourcemanager::OrganizationsConnection>
-MakeOrganizationsConnection(std::shared_ptr<OrganizationsStub> stub,
-                            Options options) {
-  options = OrganizationsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      resourcemanager_internal::OrganizationsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
-}  // namespace cloud
-}  // namespace google

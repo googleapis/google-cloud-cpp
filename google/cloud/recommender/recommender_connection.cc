@@ -127,21 +127,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace recommender_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<recommender::RecommenderConnection> MakeRecommenderConnection(
-    std::shared_ptr<RecommenderStub> stub, Options options) {
-  options = RecommenderDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<recommender_internal::RecommenderConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace recommender_internal
-}  // namespace cloud
-}  // namespace google

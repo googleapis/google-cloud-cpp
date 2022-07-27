@@ -102,23 +102,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace networkmanagement_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<networkmanagement::ReachabilityServiceConnection>
-MakeReachabilityServiceConnection(std::shared_ptr<ReachabilityServiceStub> stub,
-                                  Options options) {
-  options = ReachabilityServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      networkmanagement_internal::ReachabilityServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace networkmanagement_internal
-}  // namespace cloud
-}  // namespace google

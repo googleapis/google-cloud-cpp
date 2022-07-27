@@ -73,21 +73,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace speech_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<speech::SpeechConnection> MakeSpeechConnection(
-    std::shared_ptr<SpeechStub> stub, Options options) {
-  options = SpeechDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<speech_internal::SpeechConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
-}  // namespace cloud
-}  // namespace google

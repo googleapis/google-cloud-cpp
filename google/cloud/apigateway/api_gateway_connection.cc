@@ -166,22 +166,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace apigateway_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<apigateway::ApiGatewayServiceConnection>
-MakeApiGatewayServiceConnection(std::shared_ptr<ApiGatewayServiceStub> stub,
-                                Options options) {
-  options = ApiGatewayServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<apigateway_internal::ApiGatewayServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace apigateway_internal
-}  // namespace cloud
-}  // namespace google

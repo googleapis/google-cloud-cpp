@@ -70,21 +70,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace run_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<run::RevisionsConnection> MakeRevisionsConnection(
-    std::shared_ptr<RevisionsStub> stub, Options options) {
-  options = RevisionsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<run_internal::RevisionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace run_internal
-}  // namespace cloud
-}  // namespace google

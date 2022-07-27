@@ -98,22 +98,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dataplex_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dataplex::ContentServiceConnection>
-MakeContentServiceConnection(std::shared_ptr<ContentServiceStub> stub,
-                             Options options) {
-  options = ContentServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<dataplex_internal::ContentServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataplex_internal
-}  // namespace cloud
-}  // namespace google

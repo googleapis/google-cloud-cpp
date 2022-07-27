@@ -82,21 +82,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace billing_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<billing::BudgetServiceConnection> MakeBudgetServiceConnection(
-    std::shared_ptr<BudgetServiceStub> stub, Options options) {
-  options = BudgetServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<billing_internal::BudgetServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace billing_internal
-}  // namespace cloud
-}  // namespace google

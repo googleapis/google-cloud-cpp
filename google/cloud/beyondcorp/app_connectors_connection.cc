@@ -105,23 +105,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace beyondcorp_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<beyondcorp::AppConnectorsServiceConnection>
-MakeAppConnectorsServiceConnection(
-    std::shared_ptr<AppConnectorsServiceStub> stub, Options options) {
-  options = AppConnectorsServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      beyondcorp_internal::AppConnectorsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace beyondcorp_internal
-}  // namespace cloud
-}  // namespace google

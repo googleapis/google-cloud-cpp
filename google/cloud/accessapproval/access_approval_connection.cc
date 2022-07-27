@@ -113,23 +113,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace accessapproval_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<accessapproval::AccessApprovalConnection>
-MakeAccessApprovalConnection(std::shared_ptr<AccessApprovalStub> stub,
-                             Options options) {
-  options = AccessApprovalDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      accessapproval_internal::AccessApprovalConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval_internal
-}  // namespace cloud
-}  // namespace google

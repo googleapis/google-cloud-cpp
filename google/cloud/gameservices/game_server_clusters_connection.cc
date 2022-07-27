@@ -110,23 +110,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace gameservices_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<gameservices::GameServerClustersServiceConnection>
-MakeGameServerClustersServiceConnection(
-    std::shared_ptr<GameServerClustersServiceStub> stub, Options options) {
-  options = GameServerClustersServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      gameservices_internal::GameServerClustersServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gameservices_internal
-}  // namespace cloud
-}  // namespace google

@@ -122,22 +122,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace translate_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<translate::TranslationServiceConnection>
-MakeTranslationServiceConnection(std::shared_ptr<TranslationServiceStub> stub,
-                                 Options options) {
-  options = TranslationServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<translate_internal::TranslationServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace translate_internal
-}  // namespace cloud
-}  // namespace google

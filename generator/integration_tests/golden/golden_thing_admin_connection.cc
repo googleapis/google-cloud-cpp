@@ -184,22 +184,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<golden::GoldenThingAdminConnection>
-MakeGoldenThingAdminConnection(
-    std::shared_ptr<GoldenThingAdminStub> stub, Options options) {
-  options = GoldenThingAdminDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<golden_internal::GoldenThingAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
-}  // namespace cloud
-}  // namespace google

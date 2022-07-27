@@ -288,23 +288,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace contactcenterinsights_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<contactcenterinsights::ContactCenterInsightsConnection>
-MakeContactCenterInsightsConnection(
-    std::shared_ptr<ContactCenterInsightsStub> stub, Options options) {
-  options = ContactCenterInsightsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      contactcenterinsights_internal::ContactCenterInsightsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
-}  // namespace cloud
-}  // namespace google

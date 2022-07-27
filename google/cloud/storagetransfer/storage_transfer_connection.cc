@@ -134,23 +134,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace storagetransfer_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<storagetransfer::StorageTransferServiceConnection>
-MakeStorageTransferServiceConnection(
-    std::shared_ptr<StorageTransferServiceStub> stub, Options options) {
-  options = StorageTransferServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      storagetransfer_internal::StorageTransferServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storagetransfer_internal
-}  // namespace cloud
-}  // namespace google

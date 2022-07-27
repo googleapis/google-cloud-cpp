@@ -98,23 +98,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace osconfig_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<osconfig::AgentEndpointServiceConnection>
-MakeAgentEndpointServiceConnection(
-    std::shared_ptr<AgentEndpointServiceStub> stub, Options options) {
-  options = AgentEndpointServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      osconfig_internal::AgentEndpointServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace osconfig_internal
-}  // namespace cloud
-}  // namespace google

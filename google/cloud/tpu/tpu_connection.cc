@@ -123,21 +123,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace tpu_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<tpu::TpuConnection> MakeTpuConnection(
-    std::shared_ptr<TpuStub> stub, Options options) {
-  options = TpuDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<tpu_internal::TpuConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace tpu_internal
-}  // namespace cloud
-}  // namespace google

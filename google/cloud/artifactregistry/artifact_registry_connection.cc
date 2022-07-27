@@ -239,23 +239,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace artifactregistry_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<artifactregistry::ArtifactRegistryConnection>
-MakeArtifactRegistryConnection(std::shared_ptr<ArtifactRegistryStub> stub,
-                               Options options) {
-  options = ArtifactRegistryDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      artifactregistry_internal::ArtifactRegistryConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry_internal
-}  // namespace cloud
-}  // namespace google

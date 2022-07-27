@@ -183,23 +183,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace datamigration_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<datamigration::DataMigrationServiceConnection>
-MakeDataMigrationServiceConnection(
-    std::shared_ptr<DataMigrationServiceStub> stub, Options options) {
-  options = DataMigrationServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      datamigration_internal::DataMigrationServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datamigration_internal
-}  // namespace cloud
-}  // namespace google

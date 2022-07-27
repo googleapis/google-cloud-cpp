@@ -201,23 +201,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace baremetalsolution_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<baremetalsolution::BareMetalSolutionConnection>
-MakeBareMetalSolutionConnection(std::shared_ptr<BareMetalSolutionStub> stub,
-                                Options options) {
-  options = BareMetalSolutionDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      baremetalsolution_internal::BareMetalSolutionConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution_internal
-}  // namespace cloud
-}  // namespace google

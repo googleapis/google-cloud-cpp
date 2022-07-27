@@ -129,23 +129,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace notebooks_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<notebooks::ManagedNotebookServiceConnection>
-MakeManagedNotebookServiceConnection(
-    std::shared_ptr<ManagedNotebookServiceStub> stub, Options options) {
-  options = ManagedNotebookServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      notebooks_internal::ManagedNotebookServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace notebooks_internal
-}  // namespace cloud
-}  // namespace google

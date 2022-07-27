@@ -128,21 +128,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace gkehub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<gkehub::GkeHubConnection> MakeGkeHubConnection(
-    std::shared_ptr<GkeHubStub> stub, Options options) {
-  options = GkeHubDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<gkehub_internal::GkeHubConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub_internal
-}  // namespace cloud
-}  // namespace google

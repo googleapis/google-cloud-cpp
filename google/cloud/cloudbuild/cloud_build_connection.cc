@@ -178,21 +178,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace cloudbuild_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<cloudbuild::CloudBuildConnection> MakeCloudBuildConnection(
-    std::shared_ptr<CloudBuildStub> stub, Options options) {
-  options = CloudBuildDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<cloudbuild_internal::CloudBuildConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild_internal
-}  // namespace cloud
-}  // namespace google

@@ -135,21 +135,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace tasks_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<tasks::CloudTasksConnection> MakeCloudTasksConnection(
-    std::shared_ptr<CloudTasksStub> stub, Options options) {
-  options = CloudTasksDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<tasks_internal::CloudTasksConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace tasks_internal
-}  // namespace cloud
-}  // namespace google
