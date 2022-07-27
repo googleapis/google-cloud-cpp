@@ -13,10 +13,13 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_kitchen_sink_options.h"
+#include "generator/integration_tests/golden/internal/golden_kitchen_sink_connection_impl.h"
+#include "generator/integration_tests/golden/internal/golden_kitchen_sink_option_defaults.h"
 #include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
@@ -27,6 +30,9 @@ namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::golden_internal::GoldenKitchenSinkConnectionImpl;
+using ::google::cloud::golden_internal::GoldenKitchenSinkDefaultOptions;
+using ::google::cloud::golden_internal::GoldenKitchenSinkStub;
 using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
 using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
 using ::google::cloud::testing_util::StatusIs;
@@ -38,7 +44,7 @@ using ::testing::ElementsAre;
 using ::testing::Return;
 
 std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
-    std::shared_ptr<golden_internal::GoldenKitchenSinkStub> mock) {
+    std::shared_ptr<GoldenKitchenSinkStub> mock) {
   golden::GoldenKitchenSinkLimitedErrorCountRetryPolicy retry(
       /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
@@ -48,11 +54,13 @@ std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
   GenericPollingPolicy<golden::GoldenKitchenSinkLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
-  Options options;
-  options.set<golden::GoldenKitchenSinkRetryPolicyOption>(retry.clone());
-  options.set<golden::GoldenKitchenSinkBackoffPolicyOption>(backoff.clone());
-  return golden_internal::MakeGoldenKitchenSinkConnection(std::move(mock),
-                                                          std::move(options));
+  auto options = GoldenKitchenSinkDefaultOptions(
+      Options{}
+          .set<golden::GoldenKitchenSinkRetryPolicyOption>(retry.clone())
+          .set<golden::GoldenKitchenSinkBackoffPolicyOption>(backoff.clone()));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
+  return std::make_shared<golden_internal::GoldenKitchenSinkConnectionImpl>(
+      std::move(background), std::move(mock), std::move(options));
 }
 
 TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenSuccess) {

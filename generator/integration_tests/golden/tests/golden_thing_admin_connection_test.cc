@@ -13,12 +13,15 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/golden_thing_admin_connection.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_connection_impl.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_stub.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -30,6 +33,9 @@ namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::golden_internal::GoldenThingAdminConnectionImpl;
+using ::google::cloud::golden_internal::GoldenThingAdminDefaultOptions;
+using ::google::cloud::golden_internal::GoldenThingAdminStub;
 using ::google::cloud::golden_internal::MockGoldenThingAdminStub;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -43,7 +49,7 @@ using ::testing::HasSubstr;
 using ::testing::Return;
 
 std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
-    std::shared_ptr<golden_internal::GoldenThingAdminStub> mock) {
+    std::shared_ptr<GoldenThingAdminStub> mock) {
   golden::GoldenThingAdminLimitedErrorCountRetryPolicy retry(
       /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
@@ -53,12 +59,14 @@ std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
   GenericPollingPolicy<golden::GoldenThingAdminLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
-  Options options;
-  options.set<golden::GoldenThingAdminRetryPolicyOption>(retry.clone());
-  options.set<golden::GoldenThingAdminBackoffPolicyOption>(backoff.clone());
-  options.set<golden::GoldenThingAdminPollingPolicyOption>(polling.clone());
-  return golden_internal::MakeGoldenThingAdminConnection(std::move(mock),
-                                                         std::move(options));
+  auto options = GoldenThingAdminDefaultOptions(
+      Options{}
+          .set<golden::GoldenThingAdminRetryPolicyOption>(retry.clone())
+          .set<golden::GoldenThingAdminBackoffPolicyOption>(backoff.clone())
+          .set<golden::GoldenThingAdminPollingPolicyOption>(polling.clone()));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
+  return std::make_shared<GoldenThingAdminConnectionImpl>(
+      std::move(background), std::move(mock), std::move(options));
 }
 
 google::longrunning::Operation CreateStartingOperation() {
