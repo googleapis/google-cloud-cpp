@@ -28,18 +28,18 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+enum class HandleDisposition {
+  /// The handle was used successfully. preserve it if possible.
+  kKeep,
+  /// The handle was used, but returned an error. Discard it from the pool.
+  kDiscard,
+};
+
 /**
  * Implements the Factory Pattern for CURL handles (and multi-handles).
  */
 class CurlHandleFactory {
  public:
-  enum HandleDisposition : int {
-    /// The handle was used successfully. preserve it if possible.
-    kKeep,
-    /// The handle was used, but returned an error. Discard it from the pool.
-    kDiscard,
-  };
-
   virtual ~CurlHandleFactory() = default;
 
   virtual CurlPtr CreateHandle() = 0;

@@ -35,8 +35,8 @@ bool CreateAndCleanup(CurlHandleFactory& factory) {
   auto h = factory.CreateHandle();
   auto m = factory.CreateMultiHandle();
   auto const success = h && m;
-  factory.CleanupMultiHandle(std::move(m), CurlHandleFactory::kKeep);
-  factory.CleanupHandle(std::move(h), CurlHandleFactory::kKeep);
+  factory.CleanupMultiHandle(std::move(m), HandleDisposition::kKeep);
+  factory.CleanupHandle(std::move(h), HandleDisposition::kKeep);
   return success;
 }
 

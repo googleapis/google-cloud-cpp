@@ -116,7 +116,7 @@ void PooledCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition d) {
     std::unique_lock<std::mutex> lk(last_client_ip_address_mu_);
     last_client_ip_address_ = ip;
   }
-  if (d == kDiscard) return;
+  if (d == HandleDisposition::kDiscard) return;
   // Use a temporary data structure to release any excess handles *after* the
   // lock is released.
   std::vector<CurlPtr> released;
@@ -148,7 +148,7 @@ CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
 
 void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
                                                  HandleDisposition d) {
-  if (!m || d == kDiscard) return;
+  if (!m || d == HandleDisposition::kDiscard) return;
   // Use a temporary data structure to release any excess handles *after* the
   // lock is released.
   std::vector<CurlMulti> released;

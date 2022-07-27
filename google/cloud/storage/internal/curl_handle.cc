@@ -137,7 +137,7 @@ void CurlHandle::ReturnToPool(rest_internal::CurlHandleFactory& factory,
   rest_internal::CurlPtr tmp(nullptr, curl_easy_cleanup);
   h.handle_.swap(tmp);
   factory.CleanupHandle(std::move(tmp),
-                        rest_internal::CurlHandleFactory::kKeep);
+                        rest_internal::HandleDisposition::kKeep);
 }
 
 void CurlHandle::DiscardFromPool(rest_internal::CurlHandleFactory& factory,
@@ -145,7 +145,7 @@ void CurlHandle::DiscardFromPool(rest_internal::CurlHandleFactory& factory,
   rest_internal::CurlPtr tmp(nullptr, curl_easy_cleanup);
   h.handle_.swap(tmp);
   factory.CleanupHandle(std::move(tmp),
-                        rest_internal::CurlHandleFactory::kDiscard);
+                        rest_internal::HandleDisposition::kDiscard);
 }
 
 CurlHandle::CurlHandle() : handle_(rest_internal::MakeCurlPtr()) {

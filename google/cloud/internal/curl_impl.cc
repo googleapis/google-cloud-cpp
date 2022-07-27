@@ -243,7 +243,7 @@ CurlImpl::~CurlImpl() {
 
   if (factory_) {
     CurlHandle::ReturnToPool(*factory_, std::move(handle_));
-    factory_->CleanupMultiHandle(std::move(multi_), CurlHandleFactory::kKeep);
+    factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
   }
 }
 
@@ -428,7 +428,7 @@ void CurlImpl::OnTransferDone() {
   // reused for any other requests.
   if (factory_) {
     CurlHandle::ReturnToPool(*factory_, std::move(handle_));
-    factory_->CleanupMultiHandle(std::move(multi_), CurlHandleFactory::kKeep);
+    factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
   }
 }
 
@@ -442,7 +442,7 @@ Status CurlImpl::OnTransferError(Status status) {
     // While the handle is suspect, there is probably nothing wrong with the
     // CURLM* handle, that just represents a local resource, such as data
     // structures for `epoll(7)` or `select(2)`
-    factory_->CleanupMultiHandle(std::move(multi_), CurlHandleFactory::kKeep);
+    factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
   }
   return status;
 }

@@ -117,7 +117,7 @@ CurlDownloadRequest::~CurlDownloadRequest() {
   if (factory_) {
     CurlHandle::ReturnToPool(*factory_, std::move(handle_));
     factory_->CleanupMultiHandle(std::move(multi_),
-                                 rest_internal::CurlHandleFactory::kKeep);
+                                 rest_internal::HandleDisposition::kKeep);
   }
 }
 
@@ -302,7 +302,7 @@ void CurlDownloadRequest::OnTransferDone() {
   if (factory_) {
     CurlHandle::ReturnToPool(*factory_, std::move(handle_));
     factory_->CleanupMultiHandle(std::move(multi_),
-                                 rest_internal::CurlHandleFactory::kKeep);
+                                 rest_internal::HandleDisposition::kKeep);
   }
 }
 
@@ -317,7 +317,7 @@ Status CurlDownloadRequest::OnTransferError(Status status) {
     // CURLM* handle, that just represents a local resource, such as data
     // structures for `epoll(7)` or `select(2)`
     factory_->CleanupMultiHandle(std::move(multi_),
-                                 rest_internal::CurlHandleFactory::kKeep);
+                                 rest_internal::HandleDisposition::kKeep);
   }
   return status;
 }
