@@ -251,6 +251,11 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          options.target_api_version_path = val;
        }},
+      {"--grpc-background-threads",
+       "change the default number of gRPC background threads",
+       [&options](std::string const& val) {
+         options.grpc_background_threads = std::stoi(val);
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 
@@ -378,6 +383,12 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
                                   options.maximum_read_size,
                                   options.read_size_quantum);
   if (!status.ok()) return status;
+
+  if (options.grpc_background_threads.value_or(1) <= 0) {
+    std::ostringstream os;
+    os << "Invalid value for --grpc-background-threads";
+    return make_status(os);
+  }
 
   return options;
 }

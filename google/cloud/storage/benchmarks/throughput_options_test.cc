@@ -64,6 +64,7 @@ TEST(ThroughputOptions, Basic) {
       "--maximum-read-size=64KiB",
       "--read-size-quantum=16KiB",
       "--target-api-version-path=vN",
+      "--grpc-background-threads=16",
   });
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
@@ -99,6 +100,7 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ(std::chrono::seconds(86401), options->download_stall_timeout);
   EXPECT_EQ(std::chrono::milliseconds(250), options->minimum_sample_delay);
   EXPECT_EQ("vN", options->target_api_version_path.value_or(""));
+  EXPECT_EQ(16, options->grpc_background_threads.value_or(0));
 }
 
 TEST(ThroughputOptions, Description) {
@@ -290,6 +292,16 @@ TEST(ThroughputOptions, Validate) {
       "--minimum-read-size=4",
       "--maximum-read-size=8",
       "--read-size-quantum=5",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--grpc-background-threads=0",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--grpc-background-threads=-1",
   }));
 }
 
