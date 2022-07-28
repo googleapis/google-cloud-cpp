@@ -59,7 +59,7 @@ TEST(RetryClientTest, NonIdempotentErrorHandling) {
   EXPECT_CALL(*mock, DeleteObject)
       .WillOnce(Return(StatusOr<EmptyResponse>(TransientError())));
 
-  // Use a delete operation because this is idempotent only if the it has
+  // Use a delete operation because this is idempotent only if it has
   // the IfGenerationMatch() and/or Generation() option set.
   StatusOr<EmptyResponse> result =
       client->DeleteObject(DeleteObjectRequest("test-bucket", "test-object"));
@@ -511,7 +511,7 @@ TEST(RetryClientTest, UploadChunkMissingRangeHeaderInUpload) {
   // committed size.
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
-          Return(QueryResumableUploadResponse{/*committed_size=*/absl::nullopt,
+          Return(QueryResumableUploadResponse{/*.committed_size=*/absl::nullopt,
                                               /*.payload=*/absl::nullopt}));
   // This should trigger a QueryResumableUpload(), simulate a good response.
   EXPECT_CALL(*mock, QueryResumableUpload)
@@ -552,7 +552,7 @@ TEST(RetryClientTest, UploadChunkMissingRangeHeaderInQueryResumableUpload) {
   // what bytes got uploaded.
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
-          Return(QueryResumableUploadResponse{/*committed_size=*/absl::nullopt,
+          Return(QueryResumableUploadResponse{/*.committed_size=*/absl::nullopt,
                                               /*.payload=*/absl::nullopt}));
   // This should trigger a `QueryResumableUpload()`, which should also have its
   // Range header missing indicating no bytes were uploaded.
@@ -563,7 +563,7 @@ TEST(RetryClientTest, UploadChunkMissingRangeHeaderInQueryResumableUpload) {
   // This should trigger a second upload, which we will let succeed.
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
-          Return(QueryResumableUploadResponse{/*committed_size=*/quantum,
+          Return(QueryResumableUploadResponse{/*.committed_size=*/quantum,
                                               /*.payload=*/absl::nullopt}));
 
   auto response = client->UploadChunk(

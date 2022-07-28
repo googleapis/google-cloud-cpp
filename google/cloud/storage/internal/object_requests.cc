@@ -505,6 +505,7 @@ StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range) {
 StatusOr<QueryResumableUploadResponse>
 QueryResumableUploadResponse::FromHttpResponse(HttpResponse response) {
   QueryResumableUploadResponse result;
+  result.request_metadata = std::move(response.headers);
   auto done = response.status_code == HttpStatusCode::kOk ||
               response.status_code == HttpStatusCode::kCreated;
 
@@ -515,8 +516,8 @@ QueryResumableUploadResponse::FromHttpResponse(HttpResponse response) {
     if (!contents) return std::move(contents).status();
     result.payload = *std::move(contents);
   }
-  auto r = response.headers.find("range");
-  if (r == response.headers.end()) return result;
+  auto r = result.request_metadata.find("range");
+  if (r == result.request_metadata.end()) return result;
 
   auto last_committed_byte = ParseRangeHeader(r->second);
   if (!last_committed_byte) return std::move(last_committed_byte).status();

@@ -111,6 +111,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   std::string upload_id_;
   std::uint64_t committed_size_ = 0;
   absl::optional<ObjectMetadata> metadata_;
+  std::multimap<std::string, std::string> headers_;
 
   std::vector<char> current_ios_buffer_;
   std::size_t max_buffer_size_;

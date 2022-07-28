@@ -34,6 +34,7 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::ElementsAre;
+using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
 // Use gsutil to obtain the CRC32C checksum (in base64):
@@ -637,7 +638,7 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseSimple) {
       )pb",
       &input));
 
-  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
+  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{}, {});
   EXPECT_EQ(actual.committed_size.value_or(0), 123456);
   EXPECT_FALSE(actual.payload.has_value());
 }
@@ -653,12 +654,16 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseWithResource) {
         })pb",
       &input));
 
-  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
+  auto const actual = GrpcObjectRequestParser::FromProto(
+      input, Options{}, {{"header", "value"}, {"other-header", "other-value"}});
   EXPECT_FALSE(actual.committed_size.has_value());
   ASSERT_TRUE(actual.payload.has_value());
   EXPECT_EQ(actual.payload->name(), "test-object-name");
   EXPECT_EQ(actual.payload->bucket(), "test-bucket-name");
   EXPECT_EQ(actual.payload->size(), 123456);
+  EXPECT_THAT(actual.request_metadata,
+              UnorderedElementsAre(Pair("header", "value"),
+                                   Pair("other-header", "other-value")));
 }
 
 TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {

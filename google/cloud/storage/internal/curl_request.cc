@@ -132,6 +132,7 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   if (logging_enabled_) handle_.FlushDebug(__func__);
   auto code = handle_.GetResponseCode();
   if (!code.ok()) return std::move(code).status();
+  received_headers_.emplace(":curl-peer", handle_.GetPeer());
   return HttpResponse{code.value(), std::move(response_payload_),
                       std::move(received_headers_)};
 }

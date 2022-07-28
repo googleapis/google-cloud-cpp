@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/grpc_request_metadata.h"
 #include <google/storage/v2/storage.pb.h>
 
 namespace google {
@@ -47,8 +48,8 @@ struct GrpcObjectRequestParser {
   static StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
       InsertObjectMediaRequest const& request);
   static QueryResumableUploadResponse FromProto(
-      google::storage::v2::WriteObjectResponse const& p,
-      Options const& options);
+      google::storage::v2::WriteObjectResponse const& p, Options const& options,
+      google::cloud::internal::StreamingRpcMetadata metadata);
 
   static google::storage::v2::ListObjectsRequest ToProto(
       ListObjectsRequest const& request);

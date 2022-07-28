@@ -69,7 +69,7 @@ void ObjectWriteStreambuf::AutoFlushFinal() {
 StatusOr<QueryResumableUploadResponse> ObjectWriteStreambuf::Close() {
   FlushFinal();
   if (!last_status_.ok()) return last_status_;
-  return QueryResumableUploadResponse{committed_size_, metadata_};
+  return QueryResumableUploadResponse{committed_size_, metadata_, headers_};
 }
 
 bool ObjectWriteStreambuf::IsOpen() const {
@@ -159,6 +159,7 @@ void ObjectWriteStreambuf::FlushFinal() {
   } else {
     committed_size_ = response->committed_size.value_or(0);
     metadata_ = std::move(response->payload);
+    headers_ = std::move(response->request_metadata);
   }
 
   // Reset the iostream put area with valid pointers, but empty.

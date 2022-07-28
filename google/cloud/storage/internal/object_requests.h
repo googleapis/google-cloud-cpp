@@ -28,6 +28,7 @@
 #include "google/cloud/storage/well_known_parameters.h"
 #include "absl/types/optional.h"
 #include "absl/types/span.h"
+#include <map>
 #include <numeric>
 #include <string>
 #include <vector>
@@ -501,9 +502,22 @@ StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range);
 struct QueryResumableUploadResponse {
   static StatusOr<QueryResumableUploadResponse> FromHttpResponse(
       HttpResponse response);
+  QueryResumableUploadResponse() = default;
+  QueryResumableUploadResponse(
+      absl::optional<std::uint64_t> cs,
+      absl::optional<google::cloud::storage::ObjectMetadata> p)
+      : committed_size(std::move(cs)), payload(std::move(p)) {}
+  QueryResumableUploadResponse(
+      absl::optional<std::uint64_t> cs,
+      absl::optional<google::cloud::storage::ObjectMetadata> p,
+      std::multimap<std::string, std::string> rm)
+      : committed_size(std::move(cs)),
+        payload(std::move(p)),
+        request_metadata(std::move(rm)) {}
 
   absl::optional<std::uint64_t> committed_size;
   absl::optional<google::cloud::storage::ObjectMetadata> payload;
+  std::multimap<std::string, std::string> request_metadata;
 };
 
 bool operator==(QueryResumableUploadResponse const& lhs,

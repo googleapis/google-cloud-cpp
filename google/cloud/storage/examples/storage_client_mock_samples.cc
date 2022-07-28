@@ -82,9 +82,9 @@ TEST(StorageMockingSamples, MockWriteObject) {
   EXPECT_CALL(*mock, CreateResumableUpload)
       .WillOnce(Return(CreateResumableUploadResponse{"test-only-upload-id"}));
   EXPECT_CALL(*mock, UploadChunk)
-      .WillOnce(Return(
-          QueryResumableUploadResponse{/*committed_size=*/absl::nullopt,
-                                       /*object_metadata=*/expected_metadata}));
+      .WillOnce(Return(QueryResumableUploadResponse{
+          /*.committed_size=*/absl::nullopt,
+          /*.object_metadata=*/expected_metadata}));
 
   auto stream = client.WriteObject("mock-bucket-name", "mock-object-name");
   stream << "Hello World!";

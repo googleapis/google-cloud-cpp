@@ -464,7 +464,8 @@ GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
 }
 
 QueryResumableUploadResponse GrpcObjectRequestParser::FromProto(
-    google::storage::v2::WriteObjectResponse const& p, Options const& options) {
+    google::storage::v2::WriteObjectResponse const& p, Options const& options,
+    google::cloud::internal::StreamingRpcMetadata metadata) {
   QueryResumableUploadResponse response;
   if (p.has_persisted_size()) {
     response.committed_size = static_cast<std::uint64_t>(p.persisted_size());
@@ -473,6 +474,7 @@ QueryResumableUploadResponse GrpcObjectRequestParser::FromProto(
     response.payload =
         GrpcObjectMetadataParser::FromProto(p.resource(), options);
   }
+  response.request_metadata = std::move(metadata);
   return response;
 }
 
