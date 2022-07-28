@@ -151,12 +151,14 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
 
   mutable std::mutex handles_mu_;
   std::deque<CurlPtr> handles_;
+  std::size_t active_handles_ = 0;
+
   mutable std::mutex multi_handles_mu_;
   std::deque<CurlMulti> multi_handles_;
+  std::size_t active_multi_handles_ = 0;
+
   mutable std::mutex last_client_ip_address_mu_;
   std::string last_client_ip_address_;
-  std::atomic<std::size_t> active_handles_;
-  std::atomic<std::size_t> active_multi_handles_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

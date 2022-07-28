@@ -47,19 +47,19 @@ bool CreateAndCleanup(CurlHandleFactory& factory) {
 //  L1 Instruction 32 KiB (x48)
 //  L2 Unified 1024 KiB (x48)
 //  L3 Unified 39424 KiB (x2)
-// Load Average: 7.87, 6.41, 5.61
+// Load Average: 12.07, 5.96, 3.01
 //----------------------------------------------------------------------------------
 // Benchmark                                        Time             CPU Iterations
 //----------------------------------------------------------------------------------
-// PoolFixture/Burst/real_time/threads:1          626 ns          626 ns 1115290
-// PoolFixture/Burst/real_time/threads:2          838 ns         1631 ns 887016
-// PoolFixture/Burst/real_time/threads:4          976 ns         3640 ns 570456
-// PoolFixture/Burst/real_time/threads:8         1172 ns         8115 ns 646784
-// PoolFixture/Burst/real_time/threads:16        1398 ns        19700 ns 594416
-// PoolFixture/Burst/real_time/threads:32        1850 ns        54669 ns 592704
-// PoolFixture/Burst/real_time/threads:64        1877 ns       114773 ns 400960
-// PoolFixture/Burst/real_time/threads:128       2100 ns       198027 ns 335360
-// PoolFixture/Burst/real_time/threads:256       2170 ns       210219 ns 256000
+// PoolFixture/Burst/real_time/threads:1          604 ns          604 ns     1152471
+// PoolFixture/Burst/real_time/threads:2          617 ns         1232 ns     1120720
+// PoolFixture/Burst/real_time/threads:4         1134 ns         4134 ns      699136
+// PoolFixture/Burst/real_time/threads:8         1055 ns         7409 ns      741768
+// PoolFixture/Burst/real_time/threads:16        1084 ns        15405 ns      708912
+// PoolFixture/Burst/real_time/threads:32        1224 ns        36308 ns      633728
+// PoolFixture/Burst/real_time/threads:64        1763 ns       107314 ns      454784
+// PoolFixture/Burst/real_time/threads:128       1838 ns       170508 ns      408704
+// PoolFixture/Burst/real_time/threads:256       1917 ns       179444 ns      319232
 // clang-format on
 BENCHMARK_DEFINE_F(PoolFixture, Burst)(benchmark::State& state) {
   for (auto _ : state) {
@@ -78,22 +78,22 @@ BENCHMARK_REGISTER_F(PoolFixture, Burst)->ThreadRange(1, 1 << 8)->UseRealTime();
 //  L1 Instruction 32 KiB (x48)
 //  L2 Unified 1024 KiB (x48)
 //  L3 Unified 39424 KiB (x2)
-// Load Average: 2.91, 2.31, 3.68
+// Load Average: 8.49, 4.69, 2.41
 //------------------------------------------------------------------
 // Benchmark                        Time             CPU   Iterations
 //------------------------------------------------------------------
-// PoolFixture/Linear/1           602 ns          602 ns      1181239
-// PoolFixture/Linear/2          1269 ns         1269 ns       551564
-// PoolFixture/Linear/4          2535 ns         2535 ns       275365
-// PoolFixture/Linear/8          5071 ns         5069 ns       137769
-// PoolFixture/Linear/16        10146 ns        10143 ns        69062
-// PoolFixture/Linear/32        20283 ns        20280 ns        34552
-// PoolFixture/Linear/64        40571 ns        40566 ns        17277
-// PoolFixture/Linear/128       81125 ns        81114 ns         8640
-// PoolFixture/Linear/256      162330 ns       162304 ns         4316
-// PoolFixture/Linear/512      324911 ns       324844 ns         2159
-// PoolFixture/Linear/1024     650354 ns       650268 ns         1080
-// PoolFixture/Linear_BigO     634.95 N        634.85 N
+// PoolFixture/Linear/1           565 ns          565 ns      1238384
+// PoolFixture/Linear/2          1141 ns         1141 ns       619762
+// PoolFixture/Linear/4          2431 ns         2431 ns       287628
+// PoolFixture/Linear/8          4858 ns         4857 ns       143748
+// PoolFixture/Linear/16         9714 ns         9713 ns        71886
+// PoolFixture/Linear/32        19402 ns        19400 ns        35986
+// PoolFixture/Linear/64        38784 ns        38782 ns        18028
+// PoolFixture/Linear/128       77622 ns        77611 ns         9025
+// PoolFixture/Linear/256      155368 ns       155337 ns         4510
+// PoolFixture/Linear/512      310703 ns       310682 ns         2256
+// PoolFixture/Linear/1024     621968 ns       621804 ns         1125
+// PoolFixture/Linear_BigO     607.25 N        607.11 N
 // PoolFixture/Linear_RMS           0 %             0 %
 // clang-format on
 BENCHMARK_DEFINE_F(PoolFixture, Linear)(benchmark::State& state) {
