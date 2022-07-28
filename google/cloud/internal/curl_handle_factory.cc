@@ -84,7 +84,11 @@ void DefaultCurlHandleFactory::SetCurlOptions(CURL* handle) {
 
 PooledCurlHandleFactory::PooledCurlHandleFactory(std::size_t maximum_size,
                                                  Options const& o)
-    : maximum_size_(maximum_size), cainfo_(CAInfo(o)), capath_(CAPath(o)) {}
+    : maximum_size_(maximum_size),
+      cainfo_(CAInfo(o)),
+      capath_(CAPath(o)),
+      active_handles_(0),
+      active_multi_handles_(0) {}
 
 PooledCurlHandleFactory::~PooledCurlHandleFactory() = default;
 
@@ -103,6 +107,7 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
   lk.unlock();
   auto curl = MakeCurlPtr();
   SetCurlOptions(curl.get());
+  ++active_handles_;
   return curl;
 }
 
@@ -116,7 +121,10 @@ void PooledCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition d) {
     std::unique_lock<std::mutex> lk(last_client_ip_address_mu_);
     last_client_ip_address_ = ip;
   }
-  if (d == HandleDisposition::kDiscard) return;
+  if (d == HandleDisposition::kDiscard) {
+    --active_handles_;
+    return;
+  }
   // Use a temporary data structure to release any excess handles *after* the
   // lock is released.
   std::vector<CurlPtr> released;
@@ -124,14 +132,27 @@ void PooledCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition d) {
   // If needed, release several handles to make room, amortizing the cost when
   // many threads are releasing handles at the same time.
   if (handles_.size() >= maximum_size_) {
-    auto const keep_count = maximum_size_ / 2;
-    auto const release_count = handles_.size() - keep_count;
+    // Sometimes the application may be using a lot more handles than
+    // `maximum_size_`. For example, if many threads demand a handle for
+    // downloads, then each thread will have a handle.
+    // When these handles are returned we want to minimize the locking overhead
+    // (and contention) by removing them in larger blocks. At the same time, we
+    // do not want to empty the pool because other threads may need some handles
+    // from the pool.  Finally, when the number of active handles is close to
+    // the maximum size of the pool, we just want to remove enough handles to
+    // make room.
+    //
+    // Note that active_handles_ >= handles_.size() is a class invariant, and we
+    // just checked that handles_.size() >= maximum_size_ > maximum_size / 2
+    auto const release_count = std::min(handles_.size() - maximum_size_ / 2,
+                                        active_handles_ - maximum_size_);
     released.reserve(release_count);
     auto const end = std::next(handles_.begin(), release_count);
     std::move(handles_.begin(), end, std::back_inserter(released));
     handles_.erase(handles_.begin(), end);
   }
   handles_.push_back(std::move(h));
+  active_handles_ -= released.size();
 }
 
 CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
@@ -143,6 +164,7 @@ CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
     return m;
   }
   lk.unlock();
+  ++active_multi_handles_;
   return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
 }
 
@@ -156,14 +178,16 @@ void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
   // If needed, release several handles to make room, amortizing the cost when
   // many threads are releasing handles at the same time.
   if (multi_handles_.size() >= maximum_size_) {
-    auto const keep_count = maximum_size_ / 2;
-    auto const release_count = multi_handles_.size() - keep_count;
+    // Same idea as is CleanupHandle()
+    auto const release_count = std::min(handles_.size() - maximum_size_ / 2,
+                                        active_multi_handles_ - maximum_size_);
     released.reserve(release_count);
     auto const end = std::next(multi_handles_.begin(), release_count);
     std::move(multi_handles_.begin(), end, std::back_inserter(released));
     multi_handles_.erase(multi_handles_.begin(), end);
   }
   multi_handles_.push_back(std::move(m));
+  active_multi_handles_ -= released.size();
 }
 
 void PooledCurlHandleFactory::SetCurlOptions(CURL* handle) {

@@ -19,6 +19,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
+#include <atomic>
 #include <deque>
 #include <mutex>
 #include <string>
@@ -154,6 +155,8 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   std::deque<CurlMulti> multi_handles_;
   mutable std::mutex last_client_ip_address_mu_;
   std::string last_client_ip_address_;
+  std::atomic<std::size_t> active_handles_;
+  std::atomic<std::size_t> active_multi_handles_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
