@@ -149,7 +149,8 @@ StatusOr<QueryResumableUploadResponse> CloseWriteObjectStream(
   watchdog.cancel();
   if (watchdog.get()) return TimeoutError(timeout, "Close()");
   if (!response) return std::move(response).status();
-  return GrpcObjectRequestParser::FromProto(*std::move(response), options);
+  return GrpcObjectRequestParser::FromProto(*std::move(response), options,
+                                            writer->GetRequestMetadata());
 }
 
 }  // namespace

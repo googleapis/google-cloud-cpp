@@ -32,6 +32,8 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::Pair;
+using ::testing::UnorderedElementsAre;
 
 TEST(ObjectRequestsTest, ParseFailure) {
   auto actual = internal::ObjectMetadataParser::FromString("{123");
@@ -1006,6 +1008,10 @@ TEST(QueryResumableUploadResponseTest, Base) {
   ASSERT_TRUE(actual.payload.has_value());
   EXPECT_EQ("test-object-name", actual.payload->name());
   EXPECT_EQ(2000, actual.committed_size.value_or(0));
+  EXPECT_THAT(actual.request_metadata,
+              UnorderedElementsAre(Pair("ignored-header", "value"),
+                                   Pair("location", "location-value"),
+                                   Pair("range", "bytes=0-1999")));
 
   std::ostringstream os;
   os << actual;

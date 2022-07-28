@@ -90,7 +90,7 @@ void ObjectWriteStream::CloseBuf() {
     setstate(std::ios_base::badbit);
     return;
   }
-  headers_ = {};
+  headers_ = std::move(response->request_metadata);
   if (response->payload.has_value()) {
     metadata_ = *std::move(response->payload);
   }
