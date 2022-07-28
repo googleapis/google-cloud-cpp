@@ -74,9 +74,144 @@ std::vector<ExperimentTransport> ParseTransports(std::string const& val) {
   return {transports.begin(), transports.end()};
 }
 
+std::vector<std::string> ParseUploadFunctions(std::string const& val) {
+  std::set<std::string> functions;  // avoid duplicates
+  for (auto const& token : absl::StrSplit(val, ',')) {
+    if (token != "InsertObject" && token != "WriteObject") return {};
+    functions.insert(std::string{token});
+  }
+  return {functions.begin(), functions.end()};
+}
+
 }  // namespace
 
 using ::google::cloud::testing_util::OptionDescriptor;
+
+google::cloud::StatusOr<ThroughputOptions> ValidateParsedOptions(
+    std::string const& usage, ThroughputOptions options) {
+  auto make_status = [](std::ostringstream& os) {
+    auto const code = google::cloud::StatusCode::kInvalidArgument;
+    return google::cloud::Status{code, std::move(os).str()};
+  };
+
+  if (options.region.empty()) {
+    std::ostringstream os;
+    os << "Missing value for --region option\n" << usage << "\n";
+    return make_status(os);
+  }
+
+  if (options.grpc_channel_count < 0) {
+    std::ostringstream os;
+    os << "Invalid value for --grpc-channel-count ("
+       << options.grpc_channel_count << "), should be >= 0";
+    return make_status(os);
+  }
+
+  if (options.direct_path_channel_count < 0) {
+    std::ostringstream os;
+    os << "Invalid value for --direct-path-channel-count ("
+       << options.direct_path_channel_count << "), should be >= 0";
+    return make_status(os);
+  }
+
+  if (options.minimum_object_size > options.maximum_object_size) {
+    std::ostringstream os;
+    os << "Invalid range for object size [" << options.minimum_object_size
+       << ',' << options.maximum_object_size << "]";
+    return make_status(os);
+  }
+
+  auto status = ValidateQuantizedRange(
+      "write buffer size", options.minimum_write_buffer_size,
+      options.maximum_write_buffer_size, options.write_buffer_quantum);
+  if (!status.ok()) return status;
+
+  status = ValidateQuantizedRange(
+      "read buffer size", options.minimum_read_buffer_size,
+      options.maximum_read_buffer_size, options.read_buffer_quantum);
+  if (!status.ok()) return status;
+
+  if (options.minimum_sample_count > options.maximum_sample_count) {
+    std::ostringstream os;
+    os << "Invalid range for sample range [" << options.minimum_sample_count
+       << ',' << options.maximum_sample_count << "]";
+    return make_status(os);
+  }
+
+  if (options.thread_count <= 0) {
+    std::ostringstream os;
+    os << "Invalid --thread-count value (" << options.thread_count
+       << "), must be > 0";
+    return make_status(os);
+  }
+
+  if (!Timer::SupportsPerThreadUsage() && options.thread_count > 1) {
+    std::cerr <<
+        R"""(
+# WARNING
+# Your platform does not support per-thread usage metrics and you have enabled
+# multiple threads, so the CPU usage results will not be usable. See
+# getrusage(2) for more information.
+# END WARNING
+#
+)""";
+  }
+
+  if (options.libs.empty()) {
+    std::ostringstream os;
+    os << "No libraries configured for benchmark. Maybe an invalid name?";
+    return make_status(os);
+  }
+
+  if (options.transports.empty()) {
+    std::ostringstream os;
+    os << "No transports configured for benchmark. Maybe an invalid name?";
+    return make_status(os);
+  }
+
+  if (options.upload_functions.empty()) {
+    std::ostringstream os;
+    os << "No upload functions configured for benchmark. Maybe an invalid"
+       << " name?";
+    return make_status(os);
+  }
+
+  if (options.enabled_crc32c.empty()) {
+    std::ostringstream os;
+    os << "No CRC32C settings configured for benchmark.";
+    return make_status(os);
+  }
+
+  if (options.enabled_md5.empty()) {
+    std::ostringstream os;
+    os << "No MD5 settings configured for benchmark.";
+    return make_status(os);
+  }
+
+  if (options.minimum_sample_delay < std::chrono::milliseconds(0)) {
+    std::ostringstream os;
+    os << "Invalid value for --minimum-sample-delay";
+    return make_status(os);
+  }
+
+  status = ValidateQuantizedRange("read offset", options.minimum_read_offset,
+                                  options.maximum_read_offset,
+                                  options.read_offset_quantum);
+  if (!status.ok()) return status;
+
+  status = ValidateQuantizedRange("read size", options.minimum_read_size,
+                                  options.maximum_read_size,
+                                  options.read_size_quantum);
+  if (!status.ok()) return status;
+
+  if (options.grpc_background_threads.value_or(1) <= 0) {
+    std::ostringstream os;
+    os << "Invalid value for --grpc-background-threads";
+    return make_status(os);
+  }
+
+  return options;
+}
 
 google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     std::vector<std::string> const& argv, std::string const& description) {
@@ -174,6 +309,11 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          options.transports = ParseTransports(val);
        }},
+      {"--upload-functions",
+       "enable one or more upload functions (InsertObject, WriteObject)",
+       [&options](std::string const& val) {
+         options.upload_functions = ParseUploadFunctions(val);
+       }},
       {"--enabled-crc32c", "run with CRC32C enabled, disabled, or both",
        [&options](std::string const& val) {
          options.enabled_crc32c = ParseChecksums(val);
@@ -268,129 +408,19 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     std::cout << description << "\n";
   }
 
-  auto make_status = [](std::ostringstream& os) {
-    auto const code = google::cloud::StatusCode::kInvalidArgument;
-    return google::cloud::Status{code, std::move(os).str()};
-  };
-
   if (unparsed.size() > 2) {
     std::ostringstream os;
-    os << "Unknown arguments or options\n" << usage << "\n";
-    return make_status(os);
+    os << "Unknown arguments or options:\n";
+    for (auto const& a : unparsed) {
+      os << "  " << a << "\n";
+    }
+    os << usage << "\n";
+    return Status{StatusCode::kInvalidArgument, os.str()};
   }
   if (unparsed.size() == 2) {
     options.region = unparsed[1];
   }
-  if (options.region.empty()) {
-    std::ostringstream os;
-    os << "Missing value for --region option\n" << usage << "\n";
-    return make_status(os);
-  }
-
-  if (options.grpc_channel_count < 0) {
-    std::ostringstream os;
-    os << "Invalid value for --grpc-channel-count ("
-       << options.grpc_channel_count << "), should be >= 0";
-    return make_status(os);
-  }
-
-  if (options.direct_path_channel_count < 0) {
-    std::ostringstream os;
-    os << "Invalid value for --direct-path-channel-count ("
-       << options.direct_path_channel_count << "), should be >= 0";
-    return make_status(os);
-  }
-
-  if (options.minimum_object_size > options.maximum_object_size) {
-    std::ostringstream os;
-    os << "Invalid range for object size [" << options.minimum_object_size
-       << ',' << options.maximum_object_size << "]";
-    return make_status(os);
-  }
-
-  auto status = ValidateQuantizedRange(
-      "write buffer size", options.minimum_write_buffer_size,
-      options.maximum_write_buffer_size, options.write_buffer_quantum);
-  if (!status.ok()) return status;
-
-  status = ValidateQuantizedRange(
-      "read buffer size", options.minimum_read_buffer_size,
-      options.maximum_read_buffer_size, options.read_buffer_quantum);
-  if (!status.ok()) return status;
-
-  if (options.minimum_sample_count > options.maximum_sample_count) {
-    std::ostringstream os;
-    os << "Invalid range for sample range [" << options.minimum_sample_count
-       << ',' << options.maximum_sample_count << "]";
-    return make_status(os);
-  }
-
-  if (options.thread_count <= 0) {
-    std::ostringstream os;
-    os << "Invalid --thread-count value (" << options.thread_count
-       << "), must be > 0";
-    return make_status(os);
-  }
-
-  if (!Timer::SupportsPerThreadUsage() && options.thread_count > 1) {
-    std::cerr <<
-        R"""(
-# WARNING
-# Your platform does not support per-thread usage metrics and you have enabled
-# multiple threads, so the CPU usage results will not be usable. See
-# getrusage(2) for more information.
-# END WARNING
-#
-)""";
-  }
-
-  if (options.libs.empty()) {
-    std::ostringstream os;
-    os << "No libraries configured for benchmark. Maybe an invalid name?";
-    return make_status(os);
-  }
-
-  if (options.transports.empty()) {
-    std::ostringstream os;
-    os << "No transports configured for benchmark. Maybe an invalid name?";
-    return make_status(os);
-  }
-
-  if (options.enabled_crc32c.empty()) {
-    std::ostringstream os;
-    os << "No CRC32C settings configured for benchmark.";
-    return make_status(os);
-  }
-
-  if (options.enabled_md5.empty()) {
-    std::ostringstream os;
-    os << "No MD5 settings configured for benchmark.";
-    return make_status(os);
-  }
-
-  if (options.minimum_sample_delay < std::chrono::milliseconds(0)) {
-    std::ostringstream os;
-    os << "Invalid value for --minimum-sample-delay";
-    return make_status(os);
-  }
-
-  status = ValidateQuantizedRange("read offset", options.minimum_read_offset,
-                                  options.maximum_read_offset,
-                                  options.read_offset_quantum);
-  if (!status.ok()) return status;
-
-  status = ValidateQuantizedRange("read size", options.minimum_read_size,
-                                  options.maximum_read_size,
-                                  options.read_size_quantum);
-  if (!status.ok()) return status;
-
-  if (options.grpc_background_threads.value_or(1) <= 0) {
-    std::ostringstream os;
-    os << "Invalid value for --grpc-background-threads";
-    return make_status(os);
-  }
-
-  return options;
+  return ValidateParsedOptions(usage, options);
 }
 
 }  // namespace storage_benchmarks

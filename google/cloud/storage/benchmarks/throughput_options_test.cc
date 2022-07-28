@@ -48,6 +48,7 @@ TEST(ThroughputOptions, Basic) {
       "--maximum-sample-count=2",
       "--enabled-libs=Raw,CppClient",
       "--enabled-transports=DirectPath,Grpc,Json,Xml",
+      "--upload-functions=WriteObject",
       "--enabled-crc32c=enabled",
       "--enabled-md5=disabled",
       "--client-per-thread=false",
@@ -91,6 +92,7 @@ TEST(ThroughputOptions, Basic) {
               UnorderedElementsAre(
                   ExperimentTransport::kDirectPath, ExperimentTransport::kGrpc,
                   ExperimentTransport::kJson, ExperimentTransport::kXml));
+  EXPECT_THAT(options->upload_functions, UnorderedElementsAre("WriteObject"));
   EXPECT_THAT(options->enabled_crc32c, ElementsAre(true));
   EXPECT_THAT(options->enabled_md5, ElementsAre(false));
   EXPECT_EQ("test-only-rest", options->rest_endpoint);
@@ -164,6 +166,27 @@ TEST(ThroughputOptions, Transports) {
               UnorderedElementsAre(ExperimentTransport::kGrpc,
                                    ExperimentTransport::kDirectPath,
                                    ExperimentTransport::kJson));
+}
+
+TEST(ThroughputOptions, UploadFunctions) {
+  EXPECT_FALSE(ParseThroughputOptions(
+      {"self-test", "--region=r", "--upload-functions="}));
+  EXPECT_FALSE(ParseThroughputOptions(
+      {"self-test", "--region=r", "--upload-functions=InsertObject,Invalid"}));
+  auto options = ParseThroughputOptions(
+      {"self-test", "--region=r", "--upload-functions=InsertObject"});
+  ASSERT_STATUS_OK(options);
+  EXPECT_THAT(options->upload_functions, UnorderedElementsAre("InsertObject"));
+  options = ParseThroughputOptions(
+      {"self-test", "--region=r", "--upload-functions=WriteObject"});
+  ASSERT_STATUS_OK(options);
+  EXPECT_THAT(options->upload_functions, UnorderedElementsAre("WriteObject"));
+  options =
+      ParseThroughputOptions({"self-test", "--region=r",
+                              "--upload-functions=WriteObject,InsertObject"});
+  ASSERT_STATUS_OK(options);
+  EXPECT_THAT(options->upload_functions,
+              UnorderedElementsAre("InsertObject", "WriteObject"));
 }
 
 TEST(ThroughputOptions, Readoffset) {

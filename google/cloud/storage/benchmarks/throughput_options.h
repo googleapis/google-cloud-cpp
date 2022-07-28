@@ -54,6 +54,7 @@ struct ThroughputOptions {
       ExperimentTransport::kXml,   ExperimentTransport::kJsonV2,
       ExperimentTransport::kXmlV2,
   };
+  std::vector<std::string> upload_functions = {"InsertObject", "WriteObject"};
   std::vector<bool> enabled_crc32c = {false, true};
   std::vector<bool> enabled_md5 = {false, true};
   std::string rest_endpoint = "https://storage.googleapis.com";
