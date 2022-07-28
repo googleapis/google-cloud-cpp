@@ -19,7 +19,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
-#include <atomic>
 #include <deque>
 #include <mutex>
 #include <string>

@@ -117,14 +117,14 @@ void PooledCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition d) {
     std::unique_lock<std::mutex> lk(last_client_ip_address_mu_);
     last_client_ip_address_ = ip;
   }
+  // Use a temporary data structure to release any excess handles *after* the
+  // lock is released.
+  std::vector<CurlPtr> released;
   std::unique_lock<std::mutex> lk(handles_mu_);
   if (d == HandleDisposition::kDiscard) {
     --active_handles_;
     return;
   }
-  // Use a temporary data structure to release any excess handles *after* the
-  // lock is released.
-  std::vector<CurlPtr> released;
   // If needed, release several handles to make room, amortizing the cost when
   // many threads are releasing handles at the same time.
   if (handles_.size() >= maximum_size_) {
@@ -167,14 +167,14 @@ CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
 void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
                                                  HandleDisposition d) {
   if (!m) return;
+  // Use a temporary data structure to release any excess handles *after* the
+  // lock is released.
+  std::vector<CurlMulti> released;
   std::unique_lock<std::mutex> lk(multi_handles_mu_);
   if (d == HandleDisposition::kDiscard) {
     --active_multi_handles_;
     return;
   }
-  // Use a temporary data structure to release any excess handles *after* the
-  // lock is released.
-  std::vector<CurlMulti> released;
   // If needed, release several handles to make room, amortizing the cost when
   // many threads are releasing handles at the same time.
   if (multi_handles_.size() >= maximum_size_) {
