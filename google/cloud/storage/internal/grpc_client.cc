@@ -91,15 +91,6 @@ StatusOr<ObjectAccessControl> FindDefaultObjectAccessControl(
                                            "> in object id " + response->id());
 }
 
-std::chrono::milliseconds DefaultTransferStallTimeout(
-    std::chrono::milliseconds value) {
-  if (value != std::chrono::milliseconds(0)) return value;
-  // We need a large value for `wait_for()`, but not so large that it can easily
-  // overflow.  Fortunately, uploads automatically cancel (server side) after
-  // 7 days, so waiting for 14 days will not create spurious timeouts.
-  return std::chrono::milliseconds(std::chrono::hours(24) * 14);
-}
-
 // If this is the last `Write()` call of the last `UploadChunk()` set the flags
 // to finalize the request
 void MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
@@ -129,39 +120,34 @@ Status TimeoutError(std::chrono::milliseconds timeout, std::string const& op) {
                     "] while waiting for " + op);
 }
 
-struct WaitForFinish {
-  std::unique_ptr<GrpcClient::WriteObjectStream> stream;
-  void operator()(future<StatusOr<google::storage::v2::WriteObjectResponse>>) {}
-};
-
-struct WaitForIdle {
-  std::unique_ptr<GrpcClient::WriteObjectStream> stream;
-  void operator()(future<bool>) {
-    auto finish = stream->Finish();
-    (void)finish.then(WaitForFinish{std::move(stream)});
-  }
-};
-
 StatusOr<QueryResumableUploadResponse> CloseWriteObjectStream(
     std::chrono::milliseconds timeout,
+    std::function<future<bool>()> const& create_watchdog,
     std::unique_ptr<GrpcClient::WriteObjectStream> writer,
     bool sent_last_message, google::cloud::Options const& options) {
   if (!writer) return TimeoutError(timeout, "Write()");
   if (!sent_last_message) {
-    auto pending = writer->WritesDone();
-    if (pending.wait_for(timeout) == std::future_status::timeout) {
+    auto watchdog = create_watchdog().then([&writer](auto f) {
+      if (!f.get()) return false;
       writer->Cancel();
-      pending.then(WaitForIdle{std::move(writer)});
+      return true;
+    });
+    (void)writer->Write(google::storage::v2::WriteObjectRequest{},
+                        grpc::WriteOptions().set_last_message());
+    watchdog.cancel();
+    if (watchdog.get()) {
+      writer->Close();
       return TimeoutError(timeout, "WritesDone()");
     }
   }
-  auto pending = writer->Finish();
-  if (pending.wait_for(timeout) == std::future_status::timeout) {
+  auto watchdog = create_watchdog().then([&writer](auto f) {
+    if (!f.get()) return false;
     writer->Cancel();
-    pending.then(WaitForFinish{std::move(writer)});
-    return TimeoutError(timeout, "Finish()");
-  }
-  auto response = pending.get();
+    return true;
+  });
+  auto response = writer->Close();
+  watchdog.cancel();
+  if (watchdog.get()) return TimeoutError(timeout, "Close()");
   if (!response) return std::move(response).status();
   return GrpcObjectRequestParser::FromProto(*std::move(response), options);
 }
@@ -619,20 +605,19 @@ StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
 
 StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
     UploadChunkRequest const& request) {
-  auto const timeout =
-      DefaultTransferStallTimeout(google::cloud::internal::CurrentOptions()
-                                      .get<TransferStallTimeoutOption>());
+  auto const timeout = google::cloud::internal::CurrentOptions()
+                           .get<TransferStallTimeoutOption>();
+  auto create_watchdog = [cq = background_->cq(), timeout]() mutable {
+    if (timeout == std::chrono::seconds(0)) {
+      return make_ready_future(false);
+    }
+    return cq.MakeRelativeTimer(timeout).then(
+        [](auto f) { return f.get().ok(); });
+  };
 
   auto context = absl::make_unique<grpc::ClientContext>();
   ApplyQueryParameters(*context, request, "resource");
-  auto writer = stub_->AsyncWriteObject(background_->cq(), std::move(context));
-
-  auto pending_start = writer->Start();
-  if (pending_start.wait_for(timeout) == std::future_status::timeout) {
-    writer->Cancel();
-    pending_start.then(WaitForIdle{std::move(writer)});
-    return TimeoutError(timeout, "Start()");
-  }
+  auto writer = stub_->WriteObject(std::move(context));
 
   std::size_t const maximum_chunk_size =
       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
@@ -660,15 +645,22 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
     auto options = grpc::WriteOptions();
     MaybeFinalize(write_request, options, request, has_more);
 
-    auto pending = writer->Write(write_request, options);
-    if (pending.wait_for(timeout) == std::future_status::timeout) {
+    auto watchdog = create_watchdog().then([&writer](auto f) {
+      if (!f.get()) return false;
       writer->Cancel();
-      pending.then(WaitForIdle{std::move(writer)});
+      return true;
+    });
+    auto success = writer->Write(write_request, options);
+    watchdog.cancel();
+    if (watchdog.get()) {
+      // The stream is cancelled, but we need to close it explicitly.
+      writer->Close();
+      writer.reset();
       return false;
     }
 
     sent_last_message = options.is_last_message();
-    if (!pending.get()) return false;
+    if (!success) return false;
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
     write_request.clear_write_object_spec();
@@ -679,8 +671,8 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
   };
 
   auto close_writer = [&]() -> StatusOr<QueryResumableUploadResponse> {
-    return CloseWriteObjectStream(timeout, std::move(writer), sent_last_message,
-                                  options());
+    return CloseWriteObjectStream(timeout, create_watchdog, std::move(writer),
+                                  sent_last_message, options());
   };
 
   auto buffers = request.payload();
