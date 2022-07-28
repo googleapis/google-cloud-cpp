@@ -481,7 +481,10 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
             {" set_request;\n"
              "  set_request.set_resource(resource);\n"
              "  auto backoff_policy = internal::CurrentOptions()"
-             ".get<$service_name$BackoffPolicyOption>()->clone();\n"
+             ".get<$service_name$BackoffPolicyOption>();\n"
+             "  if (backoff_policy != nullptr) {\n"
+             "    backoff_policy = backoff_policy->clone();\n"
+             "  }\n"
              "  for (;;) {\n"
              "    auto recent = connection_->"},
             {get_method_name + "(get_request);\n"},
@@ -496,8 +499,9 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
              "    *set_request.mutable_policy() = *std::move(policy);\n"
              "    auto result = connection_->"},
             {set_method_name + "(set_request);\n"},
-            {"    if (result || result.status().code() != StatusCode::kAborted)"
-             " {\n"
+            {"    if (result ||\n"
+             "        result.status().code() != StatusCode::kAborted ||\n"
+             "        backoff_policy == nullptr) {\n"
              "      return result;\n"
              "    }\n"
              "    std::this_thread::sleep_for("
