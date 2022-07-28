@@ -20,6 +20,12 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 
 cd "${PROJECT_ROOT}"
+# TODO(b/239480982) - remove debugging helpers
+io::log_h1 "DEBUG $PWD"
+ls -l || echo "ls -l failed"
+git status || echo "git status failed"
+git ls-files || echo "git ls-files failed"
+echo "DEBUG $PWD END"
 
 export RUN_INTEGRATION_TESTS="no"
 
@@ -107,6 +113,13 @@ readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/${BRANCH}"
 readonly CACHE_NAME="cache-macos-${BUILD_NAME}"
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
+
+# TODO(b/239480982) - remove debugging helpers
+io::log_h1 "DEBUG $PWD"
+ls -l || echo "ls -l failed"
+git status || echo "git status failed"
+git ls-files || echo "git ls-files failed"
+echo "DEBUG $PWD END"
 
 io::log_h1 "Starting Build: ${BUILD_NAME}"
 if "ci/kokoro/macos/builds/${BUILD_NAME}.sh"; then
