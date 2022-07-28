@@ -45,6 +45,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * To create a concrete instance, see `MakeDataConnection()`.
  *
  * For mocking, see `bigtable_mocks::MockDataConnection`.
+ *
+ * @par Connection Pool
+ * This class will open a number of [gRPC Channels] upon its construction.
+ * These channels each initiate a connection to the Cloud Bigtable service. This
+ * is a relatively slow operation that can take milliseconds, so applications
+ * are advised to reuse `DataConnection` objects when possible.
+ *
+ * The exact number of channels can be configured with the
+ * `google::cloud::GrpcNumChannelsOption`. If this option is not set, a default
+ * based on `std::thread::hardware_concurrency` will be used. This default is
+ * capped at 64.
+ *
+ * Each request sent from the client library will cycle through the channels in
+ * the connection pool in a round robin fashion.
+ *
+ * Unused gRPC channels can enter an idle state. Refreshing them during a
+ * request may incur additional latency. To avoid this, the client library keeps
+ * connections open by refreshing the channels in a background thread. Advanced
+ * users can configure the frequency of the refreshes, or disable this feature,
+ * by using `bigtable::MinConnectionRefreshOption` and
+ * `bigtable::MaxConnectionRefreshOption`.
+ *
+ * [gRPC Channels]: https://grpc.io/docs/what-is-grpc/core-concepts/#channels
  */
 class DataConnection {
  public:
