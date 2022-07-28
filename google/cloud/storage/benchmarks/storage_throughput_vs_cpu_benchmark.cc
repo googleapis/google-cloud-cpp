@@ -297,6 +297,10 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
                         options.download_stall_timeout)
                     .set<gcs::TransferStallTimeoutOption>(
                         options.transfer_stall_timeout);
+    if (!options.enable_retry_loop) {
+      opts.set<gcs::RetryPolicyOption>(
+          gcs::LimitedErrorCountRetryPolicy(0).clone());
+    }
     if (options.target_api_version_path.has_value()) {
       opts.set<google::cloud::storage::internal::TargetApiVersionOption>(
           *options.target_api_version_path);

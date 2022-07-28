@@ -396,6 +396,10 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          options.grpc_background_threads = std::stoi(val);
        }},
+      {"--enable-retry-loop", "use the client library retry loop",
+       [&options](std::string const& val) {
+         options.enable_retry_loop = ParseBoolean(val).value_or(true);
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 
