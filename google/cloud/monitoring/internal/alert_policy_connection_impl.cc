@@ -37,9 +37,7 @@ AlertPolicyServiceConnectionImpl::AlertPolicyServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          monitoring_internal::AlertPolicyServiceDefaultOptions(
-              AlertPolicyServiceConnection::options()))) {}
+          std::move(options), AlertPolicyServiceConnection::options())) {}
 
 StreamRange<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceConnectionImpl::ListAlertPolicies(

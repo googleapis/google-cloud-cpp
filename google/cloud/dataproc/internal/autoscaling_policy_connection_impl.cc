@@ -37,9 +37,7 @@ AutoscalingPolicyServiceConnectionImpl::AutoscalingPolicyServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          dataproc_internal::AutoscalingPolicyServiceDefaultOptions(
-              AutoscalingPolicyServiceConnection::options()))) {}
+          std::move(options), AutoscalingPolicyServiceConnection::options())) {}
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceConnectionImpl::CreateAutoscalingPolicy(

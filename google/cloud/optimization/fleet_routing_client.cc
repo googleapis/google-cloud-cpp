@@ -17,7 +17,6 @@
 // source: google/cloud/optimization/v1/fleet_routing.proto
 
 #include "google/cloud/optimization/fleet_routing_client.h"
-#include "google/cloud/optimization/internal/fleet_routing_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FleetRoutingClient::FleetRoutingClient(
     std::shared_ptr<FleetRoutingConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), optimization_internal::FleetRoutingDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FleetRoutingClient::~FleetRoutingClient() = default;
 
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>

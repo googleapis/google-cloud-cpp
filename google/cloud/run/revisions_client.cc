@@ -17,7 +17,6 @@
 // source: google/cloud/run/v2/revision.proto
 
 #include "google/cloud/run/revisions_client.h"
-#include "google/cloud/run/internal/revisions_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RevisionsClient::RevisionsClient(
     std::shared_ptr<RevisionsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          run_internal::RevisionsDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RevisionsClient::~RevisionsClient() = default;
 
 StatusOr<google::cloud::run::v2::Revision> RevisionsClient::GetRevision(

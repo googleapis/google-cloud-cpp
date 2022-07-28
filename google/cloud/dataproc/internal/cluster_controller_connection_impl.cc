@@ -38,9 +38,7 @@ ClusterControllerConnectionImpl::ClusterControllerConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          dataproc_internal::ClusterControllerDefaultOptions(
-              ClusterControllerConnection::options()))) {}
+          std::move(options), ClusterControllerConnection::options())) {}
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::CreateCluster(

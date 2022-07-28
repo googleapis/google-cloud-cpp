@@ -17,7 +17,6 @@
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
 #include "google/cloud/filestore/cloud_filestore_manager_client.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudFilestoreManagerClient::CloudFilestoreManagerClient(
     std::shared_ptr<CloudFilestoreManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          filestore_internal::CloudFilestoreManagerDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudFilestoreManagerClient::~CloudFilestoreManagerClient() = default;
 
 StreamRange<google::cloud::filestore::v1::Instance>

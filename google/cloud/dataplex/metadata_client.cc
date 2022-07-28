@@ -17,7 +17,6 @@
 // source: google/cloud/dataplex/v1/metadata.proto
 
 #include "google/cloud/dataplex/metadata_client.h"
-#include "google/cloud/dataplex/internal/metadata_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MetadataServiceClient::MetadataServiceClient(
     std::shared_ptr<MetadataServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dataplex_internal::MetadataServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MetadataServiceClient::~MetadataServiceClient() = default;
 
 StatusOr<google::cloud::dataplex::v1::Entity>

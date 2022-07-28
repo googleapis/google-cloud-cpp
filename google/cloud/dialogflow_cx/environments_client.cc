@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/environment.proto
 
 #include "google/cloud/dialogflow_cx/environments_client.h"
-#include "google/cloud/dialogflow_cx/internal/environments_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EnvironmentsClient::EnvironmentsClient(
     std::shared_ptr<EnvironmentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_cx_internal::EnvironmentsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 EnvironmentsClient::~EnvironmentsClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::Environment>

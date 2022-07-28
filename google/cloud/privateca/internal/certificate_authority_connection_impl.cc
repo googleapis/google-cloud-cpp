@@ -41,8 +41,7 @@ CertificateAuthorityServiceConnectionImpl::
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
           std::move(options),
-          privateca_internal::CertificateAuthorityServiceDefaultOptions(
-              CertificateAuthorityServiceConnection::options()))) {}
+          CertificateAuthorityServiceConnection::options())) {}
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceConnectionImpl::CreateCertificate(

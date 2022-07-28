@@ -37,8 +37,7 @@ CloudRedisConnectionImpl::CloudRedisConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
-                                      redis_internal::CloudRedisDefaultOptions(
-                                          CloudRedisConnection::options()))) {}
+                                      CloudRedisConnection::options())) {}
 
 StreamRange<google::cloud::redis::v1::Instance>
 CloudRedisConnectionImpl::ListInstances(

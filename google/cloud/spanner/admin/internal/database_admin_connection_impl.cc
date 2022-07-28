@@ -37,10 +37,8 @@ DatabaseAdminConnectionImpl::DatabaseAdminConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          spanner_admin_internal::DatabaseAdminDefaultOptions(
-              DatabaseAdminConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      DatabaseAdminConnection::options())) {}
 
 StreamRange<google::spanner::admin::database::v1::Database>
 DatabaseAdminConnectionImpl::ListDatabases(

@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/experiment.proto
 
 #include "google/cloud/dialogflow_cx/experiments_client.h"
-#include "google/cloud/dialogflow_cx/internal/experiments_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExperimentsClient::ExperimentsClient(
     std::shared_ptr<ExperimentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_cx_internal::ExperimentsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ExperimentsClient::~ExperimentsClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::Experiment>

@@ -36,9 +36,8 @@ OsConfigServiceConnectionImpl::OsConfigServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), osconfig_internal::OsConfigServiceDefaultOptions(
-                                  OsConfigServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      OsConfigServiceConnection::options())) {}
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceConnectionImpl::ExecutePatchJob(

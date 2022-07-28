@@ -37,9 +37,8 @@ TestCasesConnectionImpl::TestCasesConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dialogflow_cx_internal::TestCasesDefaultOptions(
-                                  TestCasesConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      TestCasesConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesConnectionImpl::ListTestCases(

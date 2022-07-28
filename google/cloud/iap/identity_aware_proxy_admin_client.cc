@@ -17,7 +17,6 @@
 // source: google/cloud/iap/v1/service.proto
 
 #include "google/cloud/iap/identity_aware_proxy_admin_client.h"
-#include "google/cloud/iap/internal/identity_aware_proxy_admin_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ IdentityAwareProxyAdminServiceClient::IdentityAwareProxyAdminServiceClient(
     std::shared_ptr<IdentityAwareProxyAdminServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          iap_internal::IdentityAwareProxyAdminServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IdentityAwareProxyAdminServiceClient::~IdentityAwareProxyAdminServiceClient() =
     default;
 

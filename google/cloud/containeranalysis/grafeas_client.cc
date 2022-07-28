@@ -17,7 +17,6 @@
 // source: grafeas/v1/grafeas.proto
 
 #include "google/cloud/containeranalysis/grafeas_client.h"
-#include "google/cloud/containeranalysis/internal/grafeas_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GrafeasClient::GrafeasClient(std::shared_ptr<GrafeasConnection> connection,
                              Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), containeranalysis_internal::GrafeasDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 GrafeasClient::~GrafeasClient() = default;
 
 StatusOr<grafeas::v1::Occurrence> GrafeasClient::GetOccurrence(

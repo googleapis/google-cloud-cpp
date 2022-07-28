@@ -17,7 +17,6 @@
 // source: google/cloud/dataproc/v1/batches.proto
 
 #include "google/cloud/dataproc/batch_controller_client.h"
-#include "google/cloud/dataproc/internal/batch_controller_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BatchControllerClient::BatchControllerClient(
     std::shared_ptr<BatchControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dataproc_internal::BatchControllerDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BatchControllerClient::~BatchControllerClient() = default;
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>

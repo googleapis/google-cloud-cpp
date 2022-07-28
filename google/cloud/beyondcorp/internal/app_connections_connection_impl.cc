@@ -39,9 +39,7 @@ AppConnectionsServiceConnectionImpl::AppConnectionsServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          beyondcorp_internal::AppConnectionsServiceDefaultOptions(
-              AppConnectionsServiceConnection::options()))) {}
+          std::move(options), AppConnectionsServiceConnection::options())) {}
 
 StreamRange<google::cloud::beyondcorp::appconnections::v1::AppConnection>
 AppConnectionsServiceConnectionImpl::ListAppConnections(

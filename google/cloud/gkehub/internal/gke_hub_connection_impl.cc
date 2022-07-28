@@ -36,10 +36,8 @@ GkeHubConnectionImpl::GkeHubConnectionImpl(
     std::shared_ptr<gkehub_internal::GkeHubStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          gkehub_internal::GkeHubDefaultOptions(GkeHubConnection::options()))) {
-}
+      options_(internal::MergeOptions(std::move(options),
+                                      GkeHubConnection::options())) {}
 
 StreamRange<google::cloud::gkehub::v1::Membership>
 GkeHubConnectionImpl::ListMemberships(

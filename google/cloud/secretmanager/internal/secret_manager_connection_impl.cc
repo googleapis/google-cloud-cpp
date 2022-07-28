@@ -37,9 +37,7 @@ SecretManagerServiceConnectionImpl::SecretManagerServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          secretmanager_internal::SecretManagerServiceDefaultOptions(
-              SecretManagerServiceConnection::options()))) {}
+          std::move(options), SecretManagerServiceConnection::options())) {}
 
 StreamRange<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceConnectionImpl::ListSecrets(

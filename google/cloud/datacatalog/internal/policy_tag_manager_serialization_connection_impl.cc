@@ -39,8 +39,7 @@ PolicyTagManagerSerializationConnectionImpl::
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
           std::move(options),
-          datacatalog_internal::PolicyTagManagerSerializationDefaultOptions(
-              PolicyTagManagerSerializationConnection::options()))) {}
+          PolicyTagManagerSerializationConnection::options())) {}
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationConnectionImpl::ReplaceTaxonomy(

@@ -38,9 +38,7 @@ ConversationModelsConnectionImpl::ConversationModelsConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          dialogflow_es_internal::ConversationModelsDefaultOptions(
-              ConversationModelsConnection::options()))) {}
+          std::move(options), ConversationModelsConnection::options())) {}
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
 ConversationModelsConnectionImpl::CreateConversationModel(

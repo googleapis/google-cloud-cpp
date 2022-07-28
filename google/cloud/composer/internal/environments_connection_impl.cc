@@ -36,9 +36,8 @@ EnvironmentsConnectionImpl::EnvironmentsConnectionImpl(
     std::shared_ptr<composer_internal::EnvironmentsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), composer_internal::EnvironmentsDefaultOptions(
-                                  EnvironmentsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      EnvironmentsConnection::options())) {}
 
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>

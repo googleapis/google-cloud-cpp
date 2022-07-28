@@ -36,8 +36,7 @@ EkmServiceConnectionImpl::EkmServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
-                                      kms_internal::EkmServiceDefaultOptions(
-                                          EkmServiceConnection::options()))) {}
+                                      EkmServiceConnection::options())) {}
 
 StreamRange<google::cloud::kms::v1::EkmConnection>
 EkmServiceConnectionImpl::ListEkmConnections(

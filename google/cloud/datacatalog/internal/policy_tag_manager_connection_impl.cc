@@ -36,10 +36,8 @@ PolicyTagManagerConnectionImpl::PolicyTagManagerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          datacatalog_internal::PolicyTagManagerDefaultOptions(
-              PolicyTagManagerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      PolicyTagManagerConnection::options())) {}
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerConnectionImpl::CreateTaxonomy(

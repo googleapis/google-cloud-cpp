@@ -36,9 +36,8 @@ ContentServiceConnectionImpl::ContentServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dataplex_internal::ContentServiceDefaultOptions(
-                                  ContentServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ContentServiceConnection::options())) {}
 
 StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceConnectionImpl::CreateContent(

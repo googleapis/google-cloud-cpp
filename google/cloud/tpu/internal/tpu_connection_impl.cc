@@ -36,9 +36,8 @@ TpuConnectionImpl::TpuConnectionImpl(
     std::shared_ptr<tpu_internal::TpuStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          tpu_internal::TpuDefaultOptions(TpuConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      TpuConnection::options())) {}
 
 StreamRange<google::cloud::tpu::v1::Node> TpuConnectionImpl::ListNodes(
     google::cloud::tpu::v1::ListNodesRequest request) {

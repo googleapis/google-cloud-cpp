@@ -38,9 +38,7 @@ ReachabilityServiceConnectionImpl::ReachabilityServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          networkmanagement_internal::ReachabilityServiceDefaultOptions(
-              ReachabilityServiceConnection::options()))) {}
+          std::move(options), ReachabilityServiceConnection::options())) {}
 
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceConnectionImpl::ListConnectivityTests(

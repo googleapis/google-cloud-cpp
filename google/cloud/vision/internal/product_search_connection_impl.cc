@@ -36,9 +36,8 @@ ProductSearchConnectionImpl::ProductSearchConnectionImpl(
     std::shared_ptr<vision_internal::ProductSearchStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), vision_internal::ProductSearchDefaultOptions(
-                                  ProductSearchConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ProductSearchConnection::options())) {}
 
 StatusOr<google::cloud::vision::v1::ProductSet>
 ProductSearchConnectionImpl::CreateProductSet(

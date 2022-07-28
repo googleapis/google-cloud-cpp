@@ -35,9 +35,8 @@ PagesConnectionImpl::PagesConnectionImpl(
     std::shared_ptr<dialogflow_cx_internal::PagesStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dialogflow_cx_internal::PagesDefaultOptions(
-                                  PagesConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      PagesConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Page>
 PagesConnectionImpl::ListPages(

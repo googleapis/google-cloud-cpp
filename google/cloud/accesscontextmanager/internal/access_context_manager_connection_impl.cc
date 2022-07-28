@@ -39,9 +39,7 @@ AccessContextManagerConnectionImpl::AccessContextManagerConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          accesscontextmanager_internal::AccessContextManagerDefaultOptions(
-              AccessContextManagerConnection::options()))) {}
+          std::move(options), AccessContextManagerConnection::options())) {}
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
 AccessContextManagerConnectionImpl::ListAccessPolicies(

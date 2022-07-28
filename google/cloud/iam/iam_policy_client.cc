@@ -17,7 +17,6 @@
 // source: google/iam/v1/iam_policy.proto
 
 #include "google/cloud/iam/iam_policy_client.h"
-#include "google/cloud/iam/internal/iam_policy_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IAMPolicyClient::IAMPolicyClient(
     std::shared_ptr<IAMPolicyConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          iam_internal::IAMPolicyDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IAMPolicyClient::~IAMPolicyClient() = default;
 
 StatusOr<google::iam::v1::Policy> IAMPolicyClient::SetIamPolicy(

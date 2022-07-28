@@ -38,8 +38,7 @@ LivestreamServiceConnectionImpl::LivestreamServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options), video_internal::LivestreamServiceDefaultOptions(
-                                  LivestreamServiceConnection::options()))) {}
+          std::move(options), LivestreamServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
 LivestreamServiceConnectionImpl::CreateChannel(

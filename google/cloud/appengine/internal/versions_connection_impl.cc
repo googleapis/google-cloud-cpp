@@ -36,9 +36,8 @@ VersionsConnectionImpl::VersionsConnectionImpl(
     std::shared_ptr<appengine_internal::VersionsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), appengine_internal::VersionsDefaultOptions(
-                                  VersionsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      VersionsConnection::options())) {}
 
 StreamRange<google::appengine::v1::Version>
 VersionsConnectionImpl::ListVersions(

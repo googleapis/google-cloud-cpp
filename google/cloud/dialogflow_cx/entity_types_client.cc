@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/entity_type.proto
 
 #include "google/cloud/dialogflow_cx/entity_types_client.h"
-#include "google/cloud/dialogflow_cx/internal/entity_types_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EntityTypesClient::EntityTypesClient(
     std::shared_ptr<EntityTypesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_cx_internal::EntityTypesDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 EntityTypesClient::~EntityTypesClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::EntityType>

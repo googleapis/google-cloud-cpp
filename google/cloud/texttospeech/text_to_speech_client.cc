@@ -17,7 +17,6 @@
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
 #include "google/cloud/texttospeech/text_to_speech_client.h"
-#include "google/cloud/texttospeech/internal/text_to_speech_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TextToSpeechClient::TextToSpeechClient(
     std::shared_ptr<TextToSpeechConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), texttospeech_internal::TextToSpeechDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TextToSpeechClient::~TextToSpeechClient() = default;
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>

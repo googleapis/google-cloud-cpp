@@ -35,9 +35,8 @@ OrgPolicyConnectionImpl::OrgPolicyConnectionImpl(
     std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), orgpolicy_internal::OrgPolicyDefaultOptions(
-                                  OrgPolicyConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      OrgPolicyConnection::options())) {}
 
 StreamRange<google::cloud::orgpolicy::v2::Constraint>
 OrgPolicyConnectionImpl::ListConstraints(

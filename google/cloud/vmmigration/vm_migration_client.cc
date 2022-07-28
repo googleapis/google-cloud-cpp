@@ -17,7 +17,6 @@
 // source: google/cloud/vmmigration/v1/vmmigration.proto
 
 #include "google/cloud/vmmigration/vm_migration_client.h"
-#include "google/cloud/vmmigration/internal/vm_migration_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VmMigrationClient::VmMigrationClient(
     std::shared_ptr<VmMigrationConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), vmmigration_internal::VmMigrationDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 VmMigrationClient::~VmMigrationClient() = default;
 
 StreamRange<google::cloud::vmmigration::v1::Source>

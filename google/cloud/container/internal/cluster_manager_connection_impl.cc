@@ -36,9 +36,8 @@ ClusterManagerConnectionImpl::ClusterManagerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), container_internal::ClusterManagerDefaultOptions(
-                                  ClusterManagerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ClusterManagerConnection::options())) {}
 
 StatusOr<google::container::v1::ListClustersResponse>
 ClusterManagerConnectionImpl::ListClusters(

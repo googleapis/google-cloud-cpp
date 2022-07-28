@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/bigquery_read_client.h"
-#include "google/cloud/bigquery/internal/bigquery_read_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigQueryReadClient::BigQueryReadClient(
     std::shared_ptr<BigQueryReadConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), bigquery_internal::BigQueryReadDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BigQueryReadClient::~BigQueryReadClient() = default;
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>

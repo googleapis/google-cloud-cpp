@@ -35,9 +35,8 @@ ContextsConnectionImpl::ContextsConnectionImpl(
     std::shared_ptr<dialogflow_es_internal::ContextsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dialogflow_es_internal::ContextsDefaultOptions(
-                                  ContextsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ContextsConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::v2::Context>
 ContextsConnectionImpl::ListContexts(

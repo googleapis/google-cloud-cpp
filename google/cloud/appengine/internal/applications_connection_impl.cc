@@ -35,9 +35,8 @@ ApplicationsConnectionImpl::ApplicationsConnectionImpl(
     std::shared_ptr<appengine_internal::ApplicationsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), appengine_internal::ApplicationsDefaultOptions(
-                                  ApplicationsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ApplicationsConnection::options())) {}
 
 StatusOr<google::appengine::v1::Application>
 ApplicationsConnectionImpl::GetApplication(

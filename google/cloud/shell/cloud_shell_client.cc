@@ -17,7 +17,6 @@
 // source: google/cloud/shell/v1/cloudshell.proto
 
 #include "google/cloud/shell/cloud_shell_client.h"
-#include "google/cloud/shell/internal/cloud_shell_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudShellServiceClient::CloudShellServiceClient(
     std::shared_ptr<CloudShellServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), shell_internal::CloudShellServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudShellServiceClient::~CloudShellServiceClient() = default;
 
 StatusOr<google::cloud::shell::v1::Environment>

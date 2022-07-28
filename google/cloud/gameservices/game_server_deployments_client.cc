@@ -17,7 +17,6 @@
 // source: google/cloud/gaming/v1/game_server_deployments_service.proto
 
 #include "google/cloud/gameservices/game_server_deployments_client.h"
-#include "google/cloud/gameservices/internal/game_server_deployments_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ GameServerDeploymentsServiceClient::GameServerDeploymentsServiceClient(
     std::shared_ptr<GameServerDeploymentsServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          gameservices_internal::GameServerDeploymentsServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 GameServerDeploymentsServiceClient::~GameServerDeploymentsServiceClient() =
     default;
 

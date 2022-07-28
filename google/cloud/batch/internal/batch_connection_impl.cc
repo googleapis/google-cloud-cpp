@@ -36,9 +36,8 @@ BatchServiceConnectionImpl::BatchServiceConnectionImpl(
     std::shared_ptr<batch_internal::BatchServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), batch_internal::BatchServiceDefaultOptions(
-                                  BatchServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      BatchServiceConnection::options())) {}
 
 StatusOr<google::cloud::batch::v1::Job> BatchServiceConnectionImpl::CreateJob(
     google::cloud::batch::v1::CreateJobRequest const& request) {

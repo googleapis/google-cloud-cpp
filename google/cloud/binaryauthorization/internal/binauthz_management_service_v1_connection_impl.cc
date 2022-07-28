@@ -41,9 +41,7 @@ BinauthzManagementServiceV1ConnectionImpl::
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
           std::move(options),
-          binaryauthorization_internal::
-              BinauthzManagementServiceV1DefaultOptions(
-                  BinauthzManagementServiceV1Connection::options()))) {}
+          BinauthzManagementServiceV1Connection::options())) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 BinauthzManagementServiceV1ConnectionImpl::GetPolicy(

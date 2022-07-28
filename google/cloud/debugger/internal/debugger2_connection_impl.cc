@@ -34,9 +34,8 @@ Debugger2ConnectionImpl::Debugger2ConnectionImpl(
     std::shared_ptr<debugger_internal::Debugger2Stub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), debugger_internal::Debugger2DefaultOptions(
-                                  Debugger2Connection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      Debugger2Connection::options())) {}
 
 StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>
 Debugger2ConnectionImpl::SetBreakpoint(

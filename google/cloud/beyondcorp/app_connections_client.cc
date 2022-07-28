@@ -18,7 +18,6 @@
 // google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto
 
 #include "google/cloud/beyondcorp/app_connections_client.h"
-#include "google/cloud/beyondcorp/internal/app_connections_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AppConnectionsServiceClient::AppConnectionsServiceClient(
     std::shared_ptr<AppConnectionsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          beyondcorp_internal::AppConnectionsServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AppConnectionsServiceClient::~AppConnectionsServiceClient() = default;
 
 StreamRange<google::cloud::beyondcorp::appconnections::v1::AppConnection>

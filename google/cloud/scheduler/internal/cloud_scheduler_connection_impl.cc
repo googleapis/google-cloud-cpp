@@ -36,9 +36,8 @@ CloudSchedulerConnectionImpl::CloudSchedulerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), scheduler_internal::CloudSchedulerDefaultOptions(
-                                  CloudSchedulerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CloudSchedulerConnection::options())) {}
 
 StreamRange<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnectionImpl::ListJobs(

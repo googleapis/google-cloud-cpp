@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
 #include "google/cloud/bigquery/reservation_client.h"
-#include "google/cloud/bigquery/internal/reservation_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReservationServiceClient::ReservationServiceClient(
     std::shared_ptr<ReservationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), bigquery_internal::ReservationServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ReservationServiceClient::~ReservationServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>

@@ -17,7 +17,6 @@
 // source: google/cloud/dataplex/v1/service.proto
 
 #include "google/cloud/dataplex/dataplex_client.h"
-#include "google/cloud/dataplex/internal/dataplex_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataplexServiceClient::DataplexServiceClient(
     std::shared_ptr<DataplexServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dataplex_internal::DataplexServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DataplexServiceClient::~DataplexServiceClient() = default;
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>

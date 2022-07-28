@@ -37,9 +37,8 @@ DocumentsConnectionImpl::DocumentsConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dialogflow_es_internal::DocumentsDefaultOptions(
-                                  DocumentsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      DocumentsConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::v2::Document>
 DocumentsConnectionImpl::ListDocuments(

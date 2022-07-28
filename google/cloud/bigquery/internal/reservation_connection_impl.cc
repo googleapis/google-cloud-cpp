@@ -37,9 +37,7 @@ ReservationServiceConnectionImpl::ReservationServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          bigquery_internal::ReservationServiceDefaultOptions(
-              ReservationServiceConnection::options()))) {}
+          std::move(options), ReservationServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceConnectionImpl::CreateReservation(

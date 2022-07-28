@@ -17,7 +17,6 @@
 // source: google/api/serviceusage/v1/serviceusage.proto
 
 #include "google/cloud/serviceusage/service_usage_client.h"
-#include "google/cloud/serviceusage/internal/service_usage_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceUsageClient::ServiceUsageClient(
     std::shared_ptr<ServiceUsageConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), serviceusage_internal::ServiceUsageDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ServiceUsageClient::~ServiceUsageClient() = default;
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>

@@ -17,7 +17,6 @@
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
 #include "google/cloud/policytroubleshooter/iam_checker_client.h"
-#include "google/cloud/policytroubleshooter/internal/iam_checker_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IamCheckerClient::IamCheckerClient(
     std::shared_ptr<IamCheckerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          policytroubleshooter_internal::IamCheckerDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IamCheckerClient::~IamCheckerClient() = default;
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>

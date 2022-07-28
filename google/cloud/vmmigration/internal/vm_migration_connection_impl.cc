@@ -37,9 +37,8 @@ VmMigrationConnectionImpl::VmMigrationConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), vmmigration_internal::VmMigrationDefaultOptions(
-                                  VmMigrationConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      VmMigrationConnection::options())) {}
 
 StreamRange<google::cloud::vmmigration::v1::Source>
 VmMigrationConnectionImpl::ListSources(

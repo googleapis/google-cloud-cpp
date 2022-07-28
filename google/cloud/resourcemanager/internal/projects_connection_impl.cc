@@ -37,9 +37,8 @@ ProjectsConnectionImpl::ProjectsConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), resourcemanager_internal::ProjectsDefaultOptions(
-                                  ProjectsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ProjectsConnection::options())) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
 ProjectsConnectionImpl::GetProject(

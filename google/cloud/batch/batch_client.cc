@@ -17,7 +17,6 @@
 // source: google/cloud/batch/v1/batch.proto
 
 #include "google/cloud/batch/batch_client.h"
-#include "google/cloud/batch/internal/batch_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BatchServiceClient::BatchServiceClient(
     std::shared_ptr<BatchServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          batch_internal::BatchServiceDefaultOptions(connection_->options()))) {
-}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BatchServiceClient::~BatchServiceClient() = default;
 
 StatusOr<google::cloud::batch::v1::Job> BatchServiceClient::CreateJob(

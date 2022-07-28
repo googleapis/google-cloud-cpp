@@ -37,8 +37,7 @@ TranscoderServiceConnectionImpl::TranscoderServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options), video_internal::TranscoderServiceDefaultOptions(
-                                  TranscoderServiceConnection::options()))) {}
+          std::move(options), TranscoderServiceConnection::options())) {}
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceConnectionImpl::CreateJob(

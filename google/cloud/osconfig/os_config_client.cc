@@ -17,7 +17,6 @@
 // source: google/cloud/osconfig/v1/osconfig_service.proto
 
 #include "google/cloud/osconfig/os_config_client.h"
-#include "google/cloud/osconfig/internal/os_config_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OsConfigServiceClient::OsConfigServiceClient(
     std::shared_ptr<OsConfigServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), osconfig_internal::OsConfigServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 OsConfigServiceClient::~OsConfigServiceClient() = default;
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>

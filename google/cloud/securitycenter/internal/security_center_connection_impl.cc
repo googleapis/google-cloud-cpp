@@ -37,10 +37,8 @@ SecurityCenterConnectionImpl::SecurityCenterConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          securitycenter_internal::SecurityCenterDefaultOptions(
-              SecurityCenterConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      SecurityCenterConnection::options())) {}
 
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
 SecurityCenterConnectionImpl::BulkMuteFindings(

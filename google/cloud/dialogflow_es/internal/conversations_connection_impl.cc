@@ -36,10 +36,8 @@ ConversationsConnectionImpl::ConversationsConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          dialogflow_es_internal::ConversationsDefaultOptions(
-              ConversationsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ConversationsConnection::options())) {}
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsConnectionImpl::CreateConversation(

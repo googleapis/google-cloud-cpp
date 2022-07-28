@@ -36,8 +36,7 @@ DlpServiceConnectionImpl::DlpServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
-                                      dlp_internal::DlpServiceDefaultOptions(
-                                          DlpServiceConnection::options()))) {}
+                                      DlpServiceConnection::options())) {}
 
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>
 DlpServiceConnectionImpl::InspectContent(

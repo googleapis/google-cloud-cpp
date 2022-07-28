@@ -17,7 +17,6 @@
 // source: google/cloud/managedidentities/v1/managed_identities_service.proto
 
 #include "google/cloud/managedidentities/managed_identities_client.h"
-#include "google/cloud/managedidentities/internal/managed_identities_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ ManagedIdentitiesServiceClient::ManagedIdentitiesServiceClient(
     std::shared_ptr<ManagedIdentitiesServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          managedidentities_internal::ManagedIdentitiesServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ManagedIdentitiesServiceClient::~ManagedIdentitiesServiceClient() = default;
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>

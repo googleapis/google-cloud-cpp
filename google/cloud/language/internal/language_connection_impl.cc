@@ -35,9 +35,8 @@ LanguageServiceConnectionImpl::LanguageServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), language_internal::LanguageServiceDefaultOptions(
-                                  LanguageServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      LanguageServiceConnection::options())) {}
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
 LanguageServiceConnectionImpl::AnalyzeSentiment(

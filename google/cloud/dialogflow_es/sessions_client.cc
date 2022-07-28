@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/session.proto
 
 #include "google/cloud/dialogflow_es/sessions_client.h"
-#include "google/cloud/dialogflow_es/internal/sessions_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SessionsClient::SessionsClient(std::shared_ptr<SessionsConnection> connection,
                                Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_es_internal::SessionsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SessionsClient::~SessionsClient() = default;
 
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>

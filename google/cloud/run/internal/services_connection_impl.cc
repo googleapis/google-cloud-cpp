@@ -37,8 +37,7 @@ ServicesConnectionImpl::ServicesConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
-                                      run_internal::ServicesDefaultOptions(
-                                          ServicesConnection::options()))) {}
+                                      ServicesConnection::options())) {}
 
 future<StatusOr<google::cloud::run::v2::Service>>
 ServicesConnectionImpl::CreateService(

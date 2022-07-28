@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/conversation_profile.proto
 
 #include "google/cloud/dialogflow_es/conversation_profiles_client.h"
-#include "google/cloud/dialogflow_es/internal/conversation_profiles_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConversationProfilesClient::ConversationProfilesClient(
     std::shared_ptr<ConversationProfilesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          dialogflow_es_internal::ConversationProfilesDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ConversationProfilesClient::~ConversationProfilesClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::ConversationProfile>

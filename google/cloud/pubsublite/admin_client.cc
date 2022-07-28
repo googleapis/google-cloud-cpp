@@ -17,7 +17,6 @@
 // source: google/cloud/pubsublite/v1/admin.proto
 
 #include "google/cloud/pubsublite/admin_client.h"
-#include "google/cloud/pubsublite/internal/admin_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AdminServiceClient::AdminServiceClient(
     std::shared_ptr<AdminServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), pubsublite_internal::AdminServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AdminServiceClient::~AdminServiceClient() = default;
 
 StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::CreateTopic(

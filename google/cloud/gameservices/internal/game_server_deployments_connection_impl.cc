@@ -41,8 +41,7 @@ GameServerDeploymentsServiceConnectionImpl::
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
           std::move(options),
-          gameservices_internal::GameServerDeploymentsServiceDefaultOptions(
-              GameServerDeploymentsServiceConnection::options()))) {}
+          GameServerDeploymentsServiceConnection::options())) {}
 
 StreamRange<google::cloud::gaming::v1::GameServerDeployment>
 GameServerDeploymentsServiceConnectionImpl::ListGameServerDeployments(

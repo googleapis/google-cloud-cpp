@@ -17,7 +17,6 @@
 // source: google/iam/credentials/v1/iamcredentials.proto
 
 #include "google/cloud/iam/iam_credentials_client.h"
-#include "google/cloud/iam/internal/iam_credentials_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IAMCredentialsClient::IAMCredentialsClient(
     std::shared_ptr<IAMCredentialsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          iam_internal::IAMCredentialsDefaultOptions(connection_->options()))) {
-}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IAMCredentialsClient::~IAMCredentialsClient() = default;
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>

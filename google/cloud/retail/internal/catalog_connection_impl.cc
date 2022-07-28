@@ -35,9 +35,8 @@ CatalogServiceConnectionImpl::CatalogServiceConnectionImpl(
     std::shared_ptr<retail_internal::CatalogServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), retail_internal::CatalogServiceDefaultOptions(
-                                  CatalogServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CatalogServiceConnection::options())) {}
 
 StreamRange<google::cloud::retail::v2::Catalog>
 CatalogServiceConnectionImpl::ListCatalogs(

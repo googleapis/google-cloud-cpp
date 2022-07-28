@@ -17,7 +17,6 @@
 // source: google/cloud/video/livestream/v1/service.proto
 
 #include "google/cloud/video/livestream_client.h"
-#include "google/cloud/video/internal/livestream_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LivestreamServiceClient::LivestreamServiceClient(
     std::shared_ptr<LivestreamServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), video_internal::LivestreamServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 LivestreamServiceClient::~LivestreamServiceClient() = default;
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>

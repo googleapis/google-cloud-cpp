@@ -17,7 +17,6 @@
 // source: google/cloud/video/stitcher/v1/video_stitcher_service.proto
 
 #include "google/cloud/video/video_stitcher_client.h"
-#include "google/cloud/video/internal/video_stitcher_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VideoStitcherServiceClient::VideoStitcherServiceClient(
     std::shared_ptr<VideoStitcherServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), video_internal::VideoStitcherServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 VideoStitcherServiceClient::~VideoStitcherServiceClient() = default;
 
 StatusOr<google::cloud::video::stitcher::v1::CdnKey>

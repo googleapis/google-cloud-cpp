@@ -38,9 +38,7 @@ VideoIntelligenceServiceConnectionImpl::VideoIntelligenceServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          videointelligence_internal::VideoIntelligenceServiceDefaultOptions(
-              VideoIntelligenceServiceConnection::options()))) {}
+          std::move(options), VideoIntelligenceServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceConnectionImpl::AnnotateVideo(

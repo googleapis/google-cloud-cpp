@@ -17,7 +17,6 @@
 // source: google/cloud/datacatalog/v1/policytagmanagerserialization.proto
 
 #include "google/cloud/datacatalog/policy_tag_manager_serialization_client.h"
-#include "google/cloud/datacatalog/internal/policy_tag_manager_serialization_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ PolicyTagManagerSerializationClient::PolicyTagManagerSerializationClient(
     std::shared_ptr<PolicyTagManagerSerializationConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          datacatalog_internal::PolicyTagManagerSerializationDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 PolicyTagManagerSerializationClient::~PolicyTagManagerSerializationClient() =
     default;
 

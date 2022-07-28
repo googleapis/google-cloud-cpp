@@ -37,9 +37,7 @@ ServiceMonitoringServiceConnectionImpl::ServiceMonitoringServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          monitoring_internal::ServiceMonitoringServiceDefaultOptions(
-              ServiceMonitoringServiceConnection::options()))) {}
+          std::move(options), ServiceMonitoringServiceConnection::options())) {}
 
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceConnectionImpl::CreateService(

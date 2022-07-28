@@ -38,9 +38,7 @@ ConversationDatasetsConnectionImpl::ConversationDatasetsConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          dialogflow_es_internal::ConversationDatasetsDefaultOptions(
-              ConversationDatasetsConnection::options()))) {}
+          std::move(options), ConversationDatasetsConnection::options())) {}
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
 ConversationDatasetsConnectionImpl::CreateConversationDataset(

@@ -17,7 +17,6 @@
 // source: google/cloud/retail/v2/catalog_service.proto
 
 #include "google/cloud/retail/catalog_client.h"
-#include "google/cloud/retail/internal/catalog_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CatalogServiceClient::CatalogServiceClient(
     std::shared_ptr<CatalogServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), retail_internal::CatalogServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CatalogServiceClient::~CatalogServiceClient() = default;
 
 StreamRange<google::cloud::retail::v2::Catalog>

@@ -17,7 +17,6 @@
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
 #include "google/cloud/resourcesettings/resource_settings_client.h"
-#include "google/cloud/resourcesettings/internal/resource_settings_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ResourceSettingsServiceClient::ResourceSettingsServiceClient(
     std::shared_ptr<ResourceSettingsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          resourcesettings_internal::ResourceSettingsServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ResourceSettingsServiceClient::~ResourceSettingsServiceClient() = default;
 
 StreamRange<google::cloud::resourcesettings::v1::Setting>

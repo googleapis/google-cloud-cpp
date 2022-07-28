@@ -34,9 +34,8 @@ SessionsConnectionImpl::SessionsConnectionImpl(
     std::shared_ptr<dialogflow_cx_internal::SessionsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dialogflow_cx_internal::SessionsDefaultOptions(
-                                  SessionsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      SessionsConnection::options())) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsConnectionImpl::DetectIntent(

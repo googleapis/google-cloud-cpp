@@ -39,9 +39,7 @@ ManagedIdentitiesServiceConnectionImpl::ManagedIdentitiesServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          managedidentities_internal::ManagedIdentitiesServiceDefaultOptions(
-              ManagedIdentitiesServiceConnection::options()))) {}
+          std::move(options), ManagedIdentitiesServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(

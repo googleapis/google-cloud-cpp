@@ -37,10 +37,8 @@ ArtifactRegistryConnectionImpl::ArtifactRegistryConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          artifactregistry_internal::ArtifactRegistryDefaultOptions(
-              ArtifactRegistryConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ArtifactRegistryConnection::options())) {}
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryConnectionImpl::ListDockerImages(

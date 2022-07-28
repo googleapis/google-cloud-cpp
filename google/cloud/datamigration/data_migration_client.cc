@@ -17,7 +17,6 @@
 // source: google/cloud/clouddms/v1/clouddms.proto
 
 #include "google/cloud/datamigration/data_migration_client.h"
-#include "google/cloud/datamigration/internal/data_migration_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataMigrationServiceClient::DataMigrationServiceClient(
     std::shared_ptr<DataMigrationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          datamigration_internal::DataMigrationServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DataMigrationServiceClient::~DataMigrationServiceClient() = default;
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>

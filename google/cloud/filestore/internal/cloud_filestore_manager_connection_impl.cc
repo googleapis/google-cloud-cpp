@@ -38,9 +38,7 @@ CloudFilestoreManagerConnectionImpl::CloudFilestoreManagerConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          filestore_internal::CloudFilestoreManagerDefaultOptions(
-              CloudFilestoreManagerConnection::options()))) {}
+          std::move(options), CloudFilestoreManagerConnection::options())) {}
 
 StreamRange<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerConnectionImpl::ListInstances(

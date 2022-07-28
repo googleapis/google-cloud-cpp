@@ -36,9 +36,8 @@ MetadataServiceConnectionImpl::MetadataServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dataplex_internal::MetadataServiceDefaultOptions(
-                                  MetadataServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      MetadataServiceConnection::options())) {}
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceConnectionImpl::CreateEntity(

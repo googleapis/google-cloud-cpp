@@ -35,9 +35,8 @@ CompanyServiceConnectionImpl::CompanyServiceConnectionImpl(
     std::shared_ptr<talent_internal::CompanyServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), talent_internal::CompanyServiceDefaultOptions(
-                                  CompanyServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CompanyServiceConnection::options())) {}
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceConnectionImpl::CreateCompany(

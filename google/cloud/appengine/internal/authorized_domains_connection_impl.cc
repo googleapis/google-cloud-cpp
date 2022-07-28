@@ -37,9 +37,7 @@ AuthorizedDomainsConnectionImpl::AuthorizedDomainsConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          appengine_internal::AuthorizedDomainsDefaultOptions(
-              AuthorizedDomainsConnection::options()))) {}
+          std::move(options), AuthorizedDomainsConnection::options())) {}
 
 StreamRange<google::appengine::v1::AuthorizedDomain>
 AuthorizedDomainsConnectionImpl::ListAuthorizedDomains(

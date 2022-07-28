@@ -17,7 +17,6 @@
 // source: google/cloud/dataproc/v1/workflow_templates.proto
 
 #include "google/cloud/dataproc/workflow_template_client.h"
-#include "google/cloud/dataproc/internal/workflow_template_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WorkflowTemplateServiceClient::WorkflowTemplateServiceClient(
     std::shared_ptr<WorkflowTemplateServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          dataproc_internal::WorkflowTemplateServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 WorkflowTemplateServiceClient::~WorkflowTemplateServiceClient() = default;
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>

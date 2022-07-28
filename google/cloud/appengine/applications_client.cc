@@ -17,7 +17,6 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/applications_client.h"
-#include "google/cloud/appengine/internal/applications_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ApplicationsClient::ApplicationsClient(
     std::shared_ptr<ApplicationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), appengine_internal::ApplicationsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ApplicationsClient::~ApplicationsClient() = default;
 
 StatusOr<google::appengine::v1::Application> ApplicationsClient::GetApplication(

@@ -17,7 +17,6 @@
 // source: google/cloud/asset/v1/asset_service.proto
 
 #include "google/cloud/asset/asset_client.h"
-#include "google/cloud/asset/internal/asset_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AssetServiceClient::AssetServiceClient(
     std::shared_ptr<AssetServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          asset_internal::AssetServiceDefaultOptions(connection_->options()))) {
-}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AssetServiceClient::~AssetServiceClient() = default;
 
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>

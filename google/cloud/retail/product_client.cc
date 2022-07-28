@@ -17,7 +17,6 @@
 // source: google/cloud/retail/v2/product_service.proto
 
 #include "google/cloud/retail/product_client.h"
-#include "google/cloud/retail/internal/product_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProductServiceClient::ProductServiceClient(
     std::shared_ptr<ProductServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), retail_internal::ProductServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ProductServiceClient::~ProductServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::Product>

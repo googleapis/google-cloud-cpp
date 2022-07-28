@@ -42,8 +42,7 @@ ClientConnectorServicesServiceConnectionImpl::
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
           std::move(options),
-          beyondcorp_internal::ClientConnectorServicesServiceDefaultOptions(
-              ClientConnectorServicesServiceConnection::options()))) {}
+          ClientConnectorServicesServiceConnection::options())) {}
 
 StreamRange<google::cloud::beyondcorp::clientconnectorservices::v1::
                 ClientConnectorService>

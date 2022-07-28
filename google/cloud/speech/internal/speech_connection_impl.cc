@@ -35,10 +35,8 @@ SpeechConnectionImpl::SpeechConnectionImpl(
     std::shared_ptr<speech_internal::SpeechStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          speech_internal::SpeechDefaultOptions(SpeechConnection::options()))) {
-}
+      options_(internal::MergeOptions(std::move(options),
+                                      SpeechConnection::options())) {}
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
 SpeechConnectionImpl::Recognize(

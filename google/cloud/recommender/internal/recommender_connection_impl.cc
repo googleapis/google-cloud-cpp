@@ -36,9 +36,8 @@ RecommenderConnectionImpl::RecommenderConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), recommender_internal::RecommenderDefaultOptions(
-                                  RecommenderConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      RecommenderConnection::options())) {}
 
 StreamRange<google::cloud::recommender::v1::Insight>
 RecommenderConnectionImpl::ListInsights(

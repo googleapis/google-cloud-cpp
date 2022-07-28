@@ -37,8 +37,7 @@ RevisionsConnectionImpl::RevisionsConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
-                                      run_internal::RevisionsDefaultOptions(
-                                          RevisionsConnection::options()))) {}
+                                      RevisionsConnection::options())) {}
 
 StatusOr<google::cloud::run::v2::Revision> RevisionsConnectionImpl::GetRevision(
     google::cloud::run::v2::GetRevisionRequest const& request) {

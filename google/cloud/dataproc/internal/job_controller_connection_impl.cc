@@ -36,9 +36,8 @@ JobControllerConnectionImpl::JobControllerConnectionImpl(
     std::shared_ptr<dataproc_internal::JobControllerStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dataproc_internal::JobControllerDefaultOptions(
-                                  JobControllerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      JobControllerConnection::options())) {}
 
 StatusOr<google::cloud::dataproc::v1::Job>
 JobControllerConnectionImpl::SubmitJob(

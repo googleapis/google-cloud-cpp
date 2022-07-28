@@ -40,8 +40,7 @@ NotificationChannelServiceConnectionImpl::
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
           std::move(options),
-          monitoring_internal::NotificationChannelServiceDefaultOptions(
-              NotificationChannelServiceConnection::options()))) {}
+          NotificationChannelServiceConnection::options())) {}
 
 StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
 NotificationChannelServiceConnectionImpl::ListNotificationChannelDescriptors(

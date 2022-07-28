@@ -17,7 +17,6 @@
 // source: google/cloud/video/transcoder/v1/services.proto
 
 #include "google/cloud/video/transcoder_client.h"
-#include "google/cloud/video/internal/transcoder_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TranscoderServiceClient::TranscoderServiceClient(
     std::shared_ptr<TranscoderServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), video_internal::TranscoderServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TranscoderServiceClient::~TranscoderServiceClient() = default;
 
 StatusOr<google::cloud::video::transcoder::v1::Job>

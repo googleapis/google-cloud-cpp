@@ -18,7 +18,6 @@
 
 #include "google/cloud/datacatalog/data_catalog_client.h"
 #include "google/cloud/datacatalog/data_catalog_options.h"
-#include "google/cloud/datacatalog/internal/data_catalog_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,9 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataCatalogClient::DataCatalogClient(
     std::shared_ptr<DataCatalogConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), datacatalog_internal::DataCatalogDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DataCatalogClient::~DataCatalogClient() = default;
 
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>

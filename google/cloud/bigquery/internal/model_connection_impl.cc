@@ -34,9 +34,8 @@ ModelServiceConnectionImpl::ModelServiceConnectionImpl(
     std::shared_ptr<bigquery_internal::ModelServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), bigquery_internal::ModelServiceDefaultOptions(
-                                  ModelServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ModelServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::v2::Model>
 ModelServiceConnectionImpl::GetModel(

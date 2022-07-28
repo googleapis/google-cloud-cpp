@@ -35,9 +35,8 @@ ImageAnnotatorConnectionImpl::ImageAnnotatorConnectionImpl(
     std::shared_ptr<vision_internal::ImageAnnotatorStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), vision_internal::ImageAnnotatorDefaultOptions(
-                                  ImageAnnotatorConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ImageAnnotatorConnection::options())) {}
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorConnectionImpl::BatchAnnotateImages(

@@ -39,8 +39,7 @@ IdentityAwareProxyOAuthServiceConnectionImpl::
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
           std::move(options),
-          iap_internal::IdentityAwareProxyOAuthServiceDefaultOptions(
-              IdentityAwareProxyOAuthServiceConnection::options()))) {}
+          IdentityAwareProxyOAuthServiceConnection::options())) {}
 
 StatusOr<google::cloud::iap::v1::ListBrandsResponse>
 IdentityAwareProxyOAuthServiceConnectionImpl::ListBrands(

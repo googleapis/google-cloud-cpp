@@ -17,7 +17,6 @@
 // source: google/cloud/pubsublite/v1/topic_stats.proto
 
 #include "google/cloud/pubsublite/topic_stats_client.h"
-#include "google/cloud/pubsublite/internal/topic_stats_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TopicStatsServiceClient::TopicStatsServiceClient(
     std::shared_ptr<TopicStatsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), pubsublite_internal::TopicStatsServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TopicStatsServiceClient::~TopicStatsServiceClient() = default;
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>

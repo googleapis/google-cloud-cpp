@@ -17,7 +17,6 @@
 // source: google/monitoring/metricsscope/v1/metrics_scopes.proto
 
 #include "google/cloud/monitoring/metrics_scopes_client.h"
-#include "google/cloud/monitoring/internal/metrics_scopes_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MetricsScopesClient::MetricsScopesClient(
     std::shared_ptr<MetricsScopesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), monitoring_internal::MetricsScopesDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MetricsScopesClient::~MetricsScopesClient() = default;
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>

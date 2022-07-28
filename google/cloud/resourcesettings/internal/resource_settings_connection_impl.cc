@@ -38,9 +38,7 @@ ResourceSettingsServiceConnectionImpl::ResourceSettingsServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          resourcesettings_internal::ResourceSettingsServiceDefaultOptions(
-              ResourceSettingsServiceConnection::options()))) {}
+          std::move(options), ResourceSettingsServiceConnection::options())) {}
 
 StreamRange<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceConnectionImpl::ListSettings(
