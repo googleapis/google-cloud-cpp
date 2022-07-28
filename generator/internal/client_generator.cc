@@ -342,8 +342,7 @@ Status ClientGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes(
-      {vars("client_header_path"), vars("option_defaults_header_path")});
+  CcLocalIncludes({vars("client_header_path")});
   CcSystemIncludes({"memory"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
     CcLocalIncludes({vars("options_header_path")});
@@ -358,7 +357,7 @@ Status ClientGenerator::GenerateCc() {
     "$client_class_name$::$client_class_name$(std::shared_ptr<$connection_class_name$> connection, Options opts)"
     " : connection_(std::move(connection)),"
     " options_(internal::MergeOptions(std::move(opts),"
-    " $product_internal_namespace$::$service_name$DefaultOptions(connection_->options()))) {}\n");
+    " connection_->options())) {}\n");
   // clang-format on
 
   CcPrint(  // clang-format off
