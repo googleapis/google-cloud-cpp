@@ -40,6 +40,7 @@ bool CreateAndCleanup(CurlHandleFactory& factory) {
   return success;
 }
 
+// clang-format off
 // Run on (96 X 2000 MHz CPU s)
 // CPU Caches:
 //  L1 Data 32 KiB (x48)
@@ -48,7 +49,7 @@ bool CreateAndCleanup(CurlHandleFactory& factory) {
 //  L3 Unified 39424 KiB (x2)
 // Load Average: 15.12, 5.10, 1.98
 //----------------------------------------------------------------------------------
-// Benchmark                                        Time             CPU   Iterations
+// Benchmark                                        Time             CPU Iterations
 //----------------------------------------------------------------------------------
 // PoolFixture/Burst/real_time/threads:1          611 ns          611 ns 1138757
 // PoolFixture/Burst/real_time/threads:2          753 ns         1503 ns 931064
@@ -59,6 +60,7 @@ bool CreateAndCleanup(CurlHandleFactory& factory) {
 // PoolFixture/Burst/real_time/threads:64        1665 ns       101765 ns 510976
 // PoolFixture/Burst/real_time/threads:128       1846 ns       172375 ns 388736
 // PoolFixture/Burst/real_time/threads:256       1859 ns       180947 ns 377600
+// clang-format on
 BENCHMARK_DEFINE_F(PoolFixture, Burst)(benchmark::State& state) {
   for (auto _ : state) {
     if (!CreateAndCleanup(pool())) {
@@ -69,12 +71,13 @@ BENCHMARK_DEFINE_F(PoolFixture, Burst)(benchmark::State& state) {
 }
 BENCHMARK_REGISTER_F(PoolFixture, Burst)->ThreadRange(1, 1 << 8)->UseRealTime();
 
+// clang-format off
 // Run on (96 X 2000 MHz CPU s)
 // CPU Caches:
-//   L1 Data 32 KiB (x48)
-//   L1 Instruction 32 KiB (x48)
-//   L2 Unified 1024 KiB (x48)
-//   L3 Unified 39424 KiB (x2)
+//  L1 Data 32 KiB (x48)
+//  L1 Instruction 32 KiB (x48)
+//  L2 Unified 1024 KiB (x48)
+//  L3 Unified 39424 KiB (x2)
 // Load Average: 10.79, 7.87, 3.39
 //------------------------------------------------------------------
 // Benchmark                        Time             CPU   Iterations
@@ -92,6 +95,7 @@ BENCHMARK_REGISTER_F(PoolFixture, Burst)->ThreadRange(1, 1 << 8)->UseRealTime();
 // PoolFixture/Linear/1024     638671 ns       638514 ns         1098
 // PoolFixture/Linear_BigO     623.33 N        623.20 N
 // PoolFixture/Linear_RMS           0 %             0 %
+// clang-format on
 BENCHMARK_DEFINE_F(PoolFixture, Linear)(benchmark::State& state) {
   for (auto _ : state) {
     for (auto i = 0; i != state.range(0); ++i) {
