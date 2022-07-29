@@ -23,6 +23,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/options.h"
 #include <chrono>
+#include <cstdint>
 #include <memory>
 #include <string>
 
@@ -56,7 +57,7 @@ struct HttpVersionOption {
  * then the transfer is aborted.
  */
 struct TransferStallMinimumRateOption {
-  using Type = std::uint32_t;
+  using Type = std::int32_t;
 };
 
 /**
@@ -66,7 +67,7 @@ struct TransferStallMinimumRateOption {
  * then the download is aborted.
  */
 struct DownloadStallMinimumRateOption {
-  using Type = std::uint32_t;
+  using Type = std::int32_t;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

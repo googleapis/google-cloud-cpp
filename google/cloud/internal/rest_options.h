@@ -18,6 +18,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <chrono>
+#include <cstdint>
 #include <memory>
 #include <string>
 
@@ -63,7 +64,7 @@ struct TransferStallTimeoutOption {
  * then the transfer is aborted.
  */
 struct TransferStallMinimumRateOption {
-  using Type = std::uint32_t;
+  using Type = std::int32_t;
 };
 
 /**
@@ -91,7 +92,7 @@ struct DownloadStallTimeoutOption {
  * then the download is aborted.
  */
 struct DownloadStallMinimumRateOption {
-  using Type = std::uint32_t;
+  using Type = std::int32_t;
 };
 
 /**
