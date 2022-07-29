@@ -140,8 +140,8 @@ void PooledCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition d) {
     //
     // Note that active_handles_ >= handles_.size() is a class invariant, and we
     // just checked that handles_.size() >= maximum_size_ > maximum_size / 2
-    auto const release_count = std::min(handles_.size() - maximum_size_ / 2,
-                                        active_handles_ - maximum_size_);
+    auto const release_count = (std::min)(handles_.size() - maximum_size_ / 2,
+                                          active_handles_ - maximum_size_);
     released.reserve(release_count);
     auto const end = std::next(handles_.begin(), release_count);
     std::move(handles_.begin(), end, std::back_inserter(released));
@@ -179,8 +179,9 @@ void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
   // many threads are releasing handles at the same time.
   if (multi_handles_.size() >= maximum_size_) {
     // Same idea as is CleanupHandle()
-    auto const release_count = std::min(handles_.size() - maximum_size_ / 2,
-                                        active_multi_handles_ - maximum_size_);
+    auto const release_count =
+        (std::min)(handles_.size() - maximum_size_ / 2,
+                   active_multi_handles_ - maximum_size_);
     released.reserve(release_count);
     auto const end = std::next(multi_handles_.begin(), release_count);
     std::move(multi_handles_.begin(), end, std::back_inserter(released));
