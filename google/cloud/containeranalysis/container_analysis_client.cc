@@ -55,9 +55,11 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
-  auto backoff_policy = internal::CurrentOptions()
-                            .get<ContainerAnalysisBackoffPolicyOption>()
-                            ->clone();
+  auto backoff_policy =
+      internal::CurrentOptions().get<ContainerAnalysisBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
   for (;;) {
     auto recent = connection_->GetIamPolicy(get_request);
     if (!recent) {
@@ -69,7 +71,8 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted) {
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
       return result;
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());

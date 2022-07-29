@@ -133,7 +133,10 @@ GoldenThingAdminClient::SetIamPolicy(std::string const& resource, IamUpdater con
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
-  auto backoff_policy = internal::CurrentOptions().get<GoldenThingAdminBackoffPolicyOption>()->clone();
+  auto backoff_policy = internal::CurrentOptions().get<GoldenThingAdminBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
   for (;;) {
     auto recent = connection_->GetIamPolicy(get_request);
     if (!recent) {
@@ -145,7 +148,9 @@ GoldenThingAdminClient::SetIamPolicy(std::string const& resource, IamUpdater con
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted) {
+    if (result ||
+        result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
       return result;
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());
