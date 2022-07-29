@@ -66,7 +66,7 @@ TEST(ThroughputOptions, Basic) {
       "--read-size-quantum=16KiB",
       "--target-api-version-path=vN",
       "--grpc-background-threads=16",
-      "--enable-retry-pool=false",
+      "--enable-retry-loop=false",
   });
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
