@@ -135,6 +135,7 @@ class CurlDownloadRequest : public ObjectReadSource {
   bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds download_stall_timeout_;
+  std::uint32_t download_stall_minimum_rate_ = 0;
   CurlHandle handle_;
   rest_internal::CurlMulti multi_;
   std::shared_ptr<rest_internal::CurlHandleFactory> factory_;

@@ -59,6 +59,7 @@ CurlRequest CurlRequestBuilder::BuildRequest() && {
   request.logging_enabled_ = logging_enabled_;
   request.socket_options_ = socket_options_;
   request.transfer_stall_timeout_ = transfer_stall_timeout_;
+  request.transfer_stall_minimum_rate_ = transfer_stall_minimum_rate_;
   return request;
 }
 
@@ -75,6 +76,7 @@ CurlRequestBuilder::BuildDownloadRequest() && {
   request->logging_enabled_ = logging_enabled_;
   request->socket_options_ = socket_options_;
   request->download_stall_timeout_ = download_stall_timeout_;
+  request->download_stall_minimum_rate_ = download_stall_minimum_rate_;
   auto status = request->SetOptions();
   if (!status.ok()) return status;
   return request;
@@ -95,7 +97,11 @@ CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
   http_version_ =
       std::move(options.get<storage_experimental::HttpVersionOption>());
   transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
+  transfer_stall_minimum_rate_ =
+      options.get<storage_experimental::TransferStallMinimumRateOption>();
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
+  download_stall_minimum_rate_ =
+      options.get<storage_experimental::DownloadStallMinimumRateOption>();
   return *this;
 }
 

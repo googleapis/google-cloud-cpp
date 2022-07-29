@@ -120,10 +120,12 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   if (transfer_stall_timeout_.count() != 0) {
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
     auto const timeout = static_cast<long>(transfer_stall_timeout_.count());
+    // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
+    auto const limit = static_cast<long>(transfer_stall_minimum_rate_);
     handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
     // Timeout if the request sends or receives less than 1 byte/second (i.e.
     // effectively no bytes) for `transfer_stall_timeout_` seconds.
-    handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
+    handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);
     handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
   }
   auto status = handle_.EasyPerform();
