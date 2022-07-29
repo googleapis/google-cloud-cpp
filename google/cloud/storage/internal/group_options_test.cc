@@ -60,6 +60,14 @@ TEST(MakeOptionSpanTest, OverridesMixedWithRequestOptions) {
   EXPECT_EQ("test-endpoint", group.get<EndpointOption>());
 }
 
+TEST(MakeOptionSpanTest, Declaration) {
+  auto const g1 = GroupOptions(SimulateRawClientOptions(), 5);
+  EXPECT_EQ("u-p-default", g1.get<UserProjectOption>());
+
+  auto const g2 = GroupOptions(5, SimulateRawClientOptions());
+  EXPECT_EQ("u-p-default", g2.get<UserProjectOption>());
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
