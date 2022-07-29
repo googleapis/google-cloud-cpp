@@ -18,7 +18,6 @@
 
 #include "google/cloud/resourcemanager/folders_client.h"
 #include "google/cloud/resourcemanager/folders_options.h"
-#include "google/cloud/resourcemanager/internal/folders_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,9 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FoldersClient::FoldersClient(std::shared_ptr<FoldersConnection> connection,
                              Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), resourcemanager_internal::FoldersDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FoldersClient::~FoldersClient() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersClient::GetFolder(

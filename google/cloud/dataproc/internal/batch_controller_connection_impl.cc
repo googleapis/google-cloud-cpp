@@ -37,9 +37,8 @@ BatchControllerConnectionImpl::BatchControllerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dataproc_internal::BatchControllerDefaultOptions(
-                                  BatchControllerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      BatchControllerConnection::options())) {}
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerConnectionImpl::CreateBatch(

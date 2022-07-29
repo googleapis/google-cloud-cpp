@@ -17,7 +17,6 @@
 // source: google/cloud/kms/v1/ekm_service.proto
 
 #include "google/cloud/kms/ekm_client.h"
-#include "google/cloud/kms/internal/ekm_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EkmServiceClient::EkmServiceClient(
     std::shared_ptr<EkmServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          kms_internal::EkmServiceDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 EkmServiceClient::~EkmServiceClient() = default;
 
 StreamRange<google::cloud::kms::v1::EkmConnection>

@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/intent.proto
 
 #include "google/cloud/dialogflow_es/intents_client.h"
-#include "google/cloud/dialogflow_es/internal/intents_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IntentsClient::IntentsClient(std::shared_ptr<IntentsConnection> connection,
                              Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_es_internal::IntentsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IntentsClient::~IntentsClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::Intent> IntentsClient::ListIntents(

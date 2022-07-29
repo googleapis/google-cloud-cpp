@@ -39,9 +39,7 @@ BigtableTableAdminConnectionImpl::BigtableTableAdminConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          bigtable_admin_internal::BigtableTableAdminDefaultOptions(
-              BigtableTableAdminConnection::options()))) {}
+          std::move(options), BigtableTableAdminConnection::options())) {}
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminConnectionImpl::CreateTable(

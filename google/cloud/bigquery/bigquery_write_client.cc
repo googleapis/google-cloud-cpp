@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/bigquery_write_client.h"
-#include "google/cloud/bigquery/internal/bigquery_write_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigQueryWriteClient::BigQueryWriteClient(
     std::shared_ptr<BigQueryWriteConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), bigquery_internal::BigQueryWriteDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BigQueryWriteClient::~BigQueryWriteClient() = default;
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>

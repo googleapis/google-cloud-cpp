@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/knowledge_base.proto
 
 #include "google/cloud/dialogflow_es/knowledge_bases_client.h"
-#include "google/cloud/dialogflow_es/internal/knowledge_bases_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 KnowledgeBasesClient::KnowledgeBasesClient(
     std::shared_ptr<KnowledgeBasesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_es_internal::KnowledgeBasesDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 KnowledgeBasesClient::~KnowledgeBasesClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>

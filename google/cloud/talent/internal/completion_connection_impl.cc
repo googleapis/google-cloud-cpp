@@ -35,8 +35,7 @@ CompletionConnectionImpl::CompletionConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
-                                      talent_internal::CompletionDefaultOptions(
-                                          CompletionConnection::options()))) {}
+                                      CompletionConnection::options())) {}
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionConnectionImpl::CompleteQuery(

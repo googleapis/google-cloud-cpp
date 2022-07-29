@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/page.proto
 
 #include "google/cloud/dialogflow_cx/pages_client.h"
-#include "google/cloud/dialogflow_cx/internal/pages_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PagesClient::PagesClient(std::shared_ptr<PagesConnection> connection,
                          Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_cx_internal::PagesDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 PagesClient::~PagesClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::Page> PagesClient::ListPages(

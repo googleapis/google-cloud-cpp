@@ -36,9 +36,8 @@ BigQueryReadConnectionImpl::BigQueryReadConnectionImpl(
     std::shared_ptr<bigquery_internal::BigQueryReadStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), bigquery_internal::BigQueryReadDefaultOptions(
-                                  BigQueryReadConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      BigQueryReadConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadConnectionImpl::CreateReadSession(

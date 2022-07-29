@@ -39,9 +39,7 @@ ClientGatewaysServiceConnectionImpl::ClientGatewaysServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          beyondcorp_internal::ClientGatewaysServiceDefaultOptions(
-              ClientGatewaysServiceConnection::options()))) {}
+          std::move(options), ClientGatewaysServiceConnection::options())) {}
 
 StreamRange<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>
 ClientGatewaysServiceConnectionImpl::ListClientGateways(

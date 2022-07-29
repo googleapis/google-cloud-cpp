@@ -17,7 +17,6 @@
 // source: google/cloud/eventarc/v1/eventarc.proto
 
 #include "google/cloud/eventarc/eventarc_client.h"
-#include "google/cloud/eventarc/internal/eventarc_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EventarcClient::EventarcClient(std::shared_ptr<EventarcConnection> connection,
                                Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          eventarc_internal::EventarcDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 EventarcClient::~EventarcClient() = default;
 
 StatusOr<google::cloud::eventarc::v1::Trigger> EventarcClient::GetTrigger(

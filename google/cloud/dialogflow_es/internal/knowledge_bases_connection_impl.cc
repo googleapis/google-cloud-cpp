@@ -36,10 +36,8 @@ KnowledgeBasesConnectionImpl::KnowledgeBasesConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          dialogflow_es_internal::KnowledgeBasesDefaultOptions(
-              KnowledgeBasesConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      KnowledgeBasesConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesConnectionImpl::ListKnowledgeBases(

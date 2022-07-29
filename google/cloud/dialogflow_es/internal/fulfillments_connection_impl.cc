@@ -35,10 +35,8 @@ FulfillmentsConnectionImpl::FulfillmentsConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          dialogflow_es_internal::FulfillmentsDefaultOptions(
-              FulfillmentsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      FulfillmentsConnection::options())) {}
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsConnectionImpl::GetFulfillment(

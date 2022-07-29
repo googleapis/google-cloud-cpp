@@ -37,9 +37,7 @@ WebSecurityScannerConnectionImpl::WebSecurityScannerConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          websecurityscanner_internal::WebSecurityScannerDefaultOptions(
-              WebSecurityScannerConnection::options()))) {}
+          std::move(options), WebSecurityScannerConnection::options())) {}
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerConnectionImpl::CreateScanConfig(

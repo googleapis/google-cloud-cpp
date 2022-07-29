@@ -37,10 +37,8 @@ ServiceManagerConnectionImpl::ServiceManagerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          servicemanagement_internal::ServiceManagerDefaultOptions(
-              ServiceManagerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ServiceManagerConnection::options())) {}
 
 StreamRange<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerConnectionImpl::ListServices(

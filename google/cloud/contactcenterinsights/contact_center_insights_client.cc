@@ -17,7 +17,6 @@
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
 #include "google/cloud/contactcenterinsights/contact_center_insights_client.h"
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ContactCenterInsightsClient::ContactCenterInsightsClient(
     std::shared_ptr<ContactCenterInsightsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          contactcenterinsights_internal::ContactCenterInsightsDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ContactCenterInsightsClient::~ContactCenterInsightsClient() = default;
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>

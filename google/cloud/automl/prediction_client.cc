@@ -17,7 +17,6 @@
 // source: google/cloud/automl/v1/prediction_service.proto
 
 #include "google/cloud/automl/prediction_client.h"
-#include "google/cloud/automl/internal/prediction_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PredictionServiceClient::PredictionServiceClient(
     std::shared_ptr<PredictionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), automl_internal::PredictionServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 PredictionServiceClient::~PredictionServiceClient() = default;
 
 StatusOr<google::cloud::automl::v1::PredictResponse>

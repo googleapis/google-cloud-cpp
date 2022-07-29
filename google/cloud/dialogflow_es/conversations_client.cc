@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/conversation.proto
 
 #include "google/cloud/dialogflow_es/conversations_client.h"
-#include "google/cloud/dialogflow_es/internal/conversations_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConversationsClient::ConversationsClient(
     std::shared_ptr<ConversationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_es_internal::ConversationsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ConversationsClient::~ConversationsClient() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>

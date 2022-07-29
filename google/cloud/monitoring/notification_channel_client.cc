@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/notification_service.proto
 
 #include "google/cloud/monitoring/notification_channel_client.h"
-#include "google/cloud/monitoring/internal/notification_channel_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ NotificationChannelServiceClient::NotificationChannelServiceClient(
     std::shared_ptr<NotificationChannelServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          monitoring_internal::NotificationChannelServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 NotificationChannelServiceClient::~NotificationChannelServiceClient() = default;
 
 StreamRange<google::monitoring::v3::NotificationChannelDescriptor>

@@ -17,7 +17,6 @@
 // source: google/cloud/security/privateca/v1/service.proto
 
 #include "google/cloud/privateca/certificate_authority_client.h"
-#include "google/cloud/privateca/internal/certificate_authority_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ CertificateAuthorityServiceClient::CertificateAuthorityServiceClient(
     std::shared_ptr<CertificateAuthorityServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          privateca_internal::CertificateAuthorityServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CertificateAuthorityServiceClient::~CertificateAuthorityServiceClient() =
     default;
 

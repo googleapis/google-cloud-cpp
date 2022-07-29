@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/agent.proto
 
 #include "google/cloud/dialogflow_cx/agents_client.h"
-#include "google/cloud/dialogflow_cx/internal/agents_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AgentsClient::AgentsClient(std::shared_ptr<AgentsConnection> connection,
                            Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_cx_internal::AgentsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AgentsClient::~AgentsClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::Agent> AgentsClient::ListAgents(

@@ -18,7 +18,6 @@
 
 #include "google/cloud/iam/iam_client.h"
 #include "google/cloud/iam/iam_options.h"
-#include "google/cloud/iam/internal/iam_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -29,9 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IAMClient::IAMClient(std::shared_ptr<IAMConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          iam_internal::IAMDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IAMClient::~IAMClient() = default;
 
 StreamRange<google::iam::admin::v1::ServiceAccount>

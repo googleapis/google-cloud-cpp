@@ -17,7 +17,6 @@
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
 #include "google/cloud/eventarc/publisher_client.h"
-#include "google/cloud/eventarc/internal/publisher_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PublisherClient::PublisherClient(
     std::shared_ptr<PublisherConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          eventarc_internal::PublisherDefaultOptions(connection_->options()))) {
-}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 PublisherClient::~PublisherClient() = default;
 
 StatusOr<google::cloud::eventarc::publishing::v1::

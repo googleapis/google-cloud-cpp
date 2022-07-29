@@ -17,7 +17,6 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/golden_thing_admin_client.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
 #include <memory>
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
 #include <thread>
@@ -27,7 +26,7 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GoldenThingAdminClient::GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection, Options opts) : connection_(std::move(connection)), options_(internal::MergeOptions(std::move(opts), golden_internal::GoldenThingAdminDefaultOptions(connection_->options()))) {}
+GoldenThingAdminClient::GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection, Options opts) : connection_(std::move(connection)), options_(internal::MergeOptions(std::move(opts), connection_->options())) {}
 GoldenThingAdminClient::~GoldenThingAdminClient() = default;
 
 StreamRange<google::test::admin::database::v1::Database>

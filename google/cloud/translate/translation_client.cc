@@ -17,7 +17,6 @@
 // source: google/cloud/translate/v3/translation_service.proto
 
 #include "google/cloud/translate/translation_client.h"
-#include "google/cloud/translate/internal/translation_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TranslationServiceClient::TranslationServiceClient(
     std::shared_ptr<TranslationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), translate_internal::TranslationServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TranslationServiceClient::~TranslationServiceClient() = default;
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>

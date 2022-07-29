@@ -17,7 +17,6 @@
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
 #include "google/cloud/baremetalsolution/bare_metal_solution_client.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BareMetalSolutionClient::BareMetalSolutionClient(
     std::shared_ptr<BareMetalSolutionConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          baremetalsolution_internal::BareMetalSolutionDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BareMetalSolutionClient::~BareMetalSolutionClient() = default;
 
 StreamRange<google::cloud::baremetalsolution::v2::Instance>

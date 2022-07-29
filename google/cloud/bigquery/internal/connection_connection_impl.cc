@@ -37,9 +37,7 @@ ConnectionServiceConnectionImpl::ConnectionServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          bigquery_internal::ConnectionServiceDefaultOptions(
-              ConnectionServiceConnection::options()))) {}
+          std::move(options), ConnectionServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceConnectionImpl::CreateConnection(

@@ -18,7 +18,6 @@
 
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/admin/database_admin_options.h"
-#include "google/cloud/spanner/admin/internal/database_admin_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,9 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatabaseAdminClient::DatabaseAdminClient(
     std::shared_ptr<DatabaseAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), spanner_admin_internal::DatabaseAdminDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DatabaseAdminClient::~DatabaseAdminClient() = default;
 
 StreamRange<google::spanner::admin::database::v1::Database>

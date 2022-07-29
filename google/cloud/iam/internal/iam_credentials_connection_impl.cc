@@ -34,9 +34,8 @@ IAMCredentialsConnectionImpl::IAMCredentialsConnectionImpl(
     std::shared_ptr<iam_internal::IAMCredentialsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), iam_internal::IAMCredentialsDefaultOptions(
-                                  IAMCredentialsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      IAMCredentialsConnection::options())) {}
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsConnectionImpl::GenerateAccessToken(

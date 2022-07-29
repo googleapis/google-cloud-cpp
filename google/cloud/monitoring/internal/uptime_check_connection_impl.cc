@@ -37,9 +37,7 @@ UptimeCheckServiceConnectionImpl::UptimeCheckServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          monitoring_internal::UptimeCheckServiceDefaultOptions(
-              UptimeCheckServiceConnection::options()))) {}
+          std::move(options), UptimeCheckServiceConnection::options())) {}
 
 StreamRange<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceConnectionImpl::ListUptimeCheckConfigs(

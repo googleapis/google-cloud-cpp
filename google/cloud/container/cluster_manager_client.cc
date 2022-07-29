@@ -17,7 +17,6 @@
 // source: google/container/v1/cluster_service.proto
 
 #include "google/cloud/container/cluster_manager_client.h"
-#include "google/cloud/container/internal/cluster_manager_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ClusterManagerClient::ClusterManagerClient(
     std::shared_ptr<ClusterManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), container_internal::ClusterManagerDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ClusterManagerClient::~ClusterManagerClient() = default;
 
 StatusOr<google::container::v1::ListClustersResponse>

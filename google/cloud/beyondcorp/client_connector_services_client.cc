@@ -18,7 +18,6 @@
 // google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto
 
 #include "google/cloud/beyondcorp/client_connector_services_client.h"
-#include "google/cloud/beyondcorp/internal/client_connector_services_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -30,10 +29,8 @@ ClientConnectorServicesServiceClient::ClientConnectorServicesServiceClient(
     std::shared_ptr<ClientConnectorServicesServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          beyondcorp_internal::ClientConnectorServicesServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ClientConnectorServicesServiceClient::~ClientConnectorServicesServiceClient() =
     default;
 

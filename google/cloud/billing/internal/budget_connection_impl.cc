@@ -35,9 +35,8 @@ BudgetServiceConnectionImpl::BudgetServiceConnectionImpl(
     std::shared_ptr<billing_internal::BudgetServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), billing_internal::BudgetServiceDefaultOptions(
-                                  BudgetServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      BudgetServiceConnection::options())) {}
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceConnectionImpl::CreateBudget(

@@ -36,10 +36,8 @@ ParticipantsConnectionImpl::ParticipantsConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          dialogflow_es_internal::ParticipantsDefaultOptions(
-              ParticipantsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ParticipantsConnection::options())) {}
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsConnectionImpl::CreateParticipant(

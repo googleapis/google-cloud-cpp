@@ -36,9 +36,8 @@ CloudBuildConnectionImpl::CloudBuildConnectionImpl(
     std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), cloudbuild_internal::CloudBuildDefaultOptions(
-                                  CloudBuildConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CloudBuildConnection::options())) {}
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::CreateBuild(

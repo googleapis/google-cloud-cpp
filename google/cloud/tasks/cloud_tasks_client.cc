@@ -18,7 +18,6 @@
 
 #include "google/cloud/tasks/cloud_tasks_client.h"
 #include "google/cloud/tasks/cloud_tasks_options.h"
-#include "google/cloud/tasks/internal/cloud_tasks_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,9 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudTasksClient::CloudTasksClient(
     std::shared_ptr<CloudTasksConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          tasks_internal::CloudTasksDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudTasksClient::~CloudTasksClient() = default;
 
 StreamRange<google::cloud::tasks::v2::Queue> CloudTasksClient::ListQueues(

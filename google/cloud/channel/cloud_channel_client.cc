@@ -17,7 +17,6 @@
 // source: google/cloud/channel/v1/service.proto
 
 #include "google/cloud/channel/cloud_channel_client.h"
-#include "google/cloud/channel/internal/cloud_channel_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudChannelServiceClient::CloudChannelServiceClient(
     std::shared_ptr<CloudChannelServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), channel_internal::CloudChannelServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudChannelServiceClient::~CloudChannelServiceClient() = default;
 
 StreamRange<google::cloud::channel::v1::Customer>

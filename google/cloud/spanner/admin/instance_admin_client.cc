@@ -18,7 +18,6 @@
 
 #include "google/cloud/spanner/admin/instance_admin_client.h"
 #include "google/cloud/spanner/admin/instance_admin_options.h"
-#include "google/cloud/spanner/admin/internal/instance_admin_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,9 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstanceAdminClient::InstanceAdminClient(
     std::shared_ptr<InstanceAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), spanner_admin_internal::InstanceAdminDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 InstanceAdminClient::~InstanceAdminClient() = default;
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>

@@ -36,9 +36,8 @@ GrafeasConnectionImpl::GrafeasConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), containeranalysis_internal::GrafeasDefaultOptions(
-                                  GrafeasConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      GrafeasConnection::options())) {}
 
 StatusOr<grafeas::v1::Occurrence> GrafeasConnectionImpl::GetOccurrence(
     grafeas::v1::GetOccurrenceRequest const& request) {

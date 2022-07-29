@@ -34,9 +34,8 @@ OsLoginServiceConnectionImpl::OsLoginServiceConnectionImpl(
     std::shared_ptr<oslogin_internal::OsLoginServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), oslogin_internal::OsLoginServiceDefaultOptions(
-                                  OsLoginServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      OsLoginServiceConnection::options())) {}
 
 Status OsLoginServiceConnectionImpl::DeletePosixAccount(
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {

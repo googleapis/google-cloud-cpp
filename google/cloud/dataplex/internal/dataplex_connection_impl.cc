@@ -37,9 +37,8 @@ DataplexServiceConnectionImpl::DataplexServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dataplex_internal::DataplexServiceDefaultOptions(
-                                  DataplexServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      DataplexServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
 DataplexServiceConnectionImpl::CreateLake(

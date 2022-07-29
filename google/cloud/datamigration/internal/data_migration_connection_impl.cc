@@ -38,9 +38,7 @@ DataMigrationServiceConnectionImpl::DataMigrationServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          datamigration_internal::DataMigrationServiceDefaultOptions(
-              DataMigrationServiceConnection::options()))) {}
+          std::move(options), DataMigrationServiceConnection::options())) {}
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
 DataMigrationServiceConnectionImpl::ListMigrationJobs(

@@ -17,7 +17,6 @@
 // source: google/cloud/notebooks/v1/managed_service.proto
 
 #include "google/cloud/notebooks/managed_notebook_client.h"
-#include "google/cloud/notebooks/internal/managed_notebook_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ManagedNotebookServiceClient::ManagedNotebookServiceClient(
     std::shared_ptr<ManagedNotebookServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          notebooks_internal::ManagedNotebookServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ManagedNotebookServiceClient::~ManagedNotebookServiceClient() = default;
 
 StreamRange<google::cloud::notebooks::v1::Runtime>

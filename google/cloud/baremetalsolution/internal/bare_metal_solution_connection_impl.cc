@@ -38,9 +38,7 @@ BareMetalSolutionConnectionImpl::BareMetalSolutionConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          baremetalsolution_internal::BareMetalSolutionDefaultOptions(
-              BareMetalSolutionConnection::options()))) {}
+          std::move(options), BareMetalSolutionConnection::options())) {}
 
 StreamRange<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionConnectionImpl::ListInstances(

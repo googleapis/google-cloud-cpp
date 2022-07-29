@@ -38,9 +38,7 @@ ConversationProfilesConnectionImpl::ConversationProfilesConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          dialogflow_es_internal::ConversationProfilesDefaultOptions(
-              ConversationProfilesConnection::options()))) {}
+          std::move(options), ConversationProfilesConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesConnectionImpl::ListConversationProfiles(

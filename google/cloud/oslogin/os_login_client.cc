@@ -17,7 +17,6 @@
 // source: google/cloud/oslogin/v1/oslogin.proto
 
 #include "google/cloud/oslogin/os_login_client.h"
-#include "google/cloud/oslogin/internal/os_login_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OsLoginServiceClient::OsLoginServiceClient(
     std::shared_ptr<OsLoginServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), oslogin_internal::OsLoginServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 OsLoginServiceClient::~OsLoginServiceClient() = default;
 
 Status OsLoginServiceClient::DeletePosixAccount(std::string const& name,

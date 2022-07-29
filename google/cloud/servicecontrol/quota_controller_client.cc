@@ -17,7 +17,6 @@
 // source: google/api/servicecontrol/v1/quota_controller.proto
 
 #include "google/cloud/servicecontrol/quota_controller_client.h"
-#include "google/cloud/servicecontrol/internal/quota_controller_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 QuotaControllerClient::QuotaControllerClient(
     std::shared_ptr<QuotaControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          servicecontrol_internal::QuotaControllerDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 QuotaControllerClient::~QuotaControllerClient() = default;
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>

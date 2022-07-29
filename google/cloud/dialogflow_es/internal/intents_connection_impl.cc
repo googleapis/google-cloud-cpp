@@ -36,9 +36,8 @@ IntentsConnectionImpl::IntentsConnectionImpl(
     std::shared_ptr<dialogflow_es_internal::IntentsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dialogflow_es_internal::IntentsDefaultOptions(
-                                  IntentsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      IntentsConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::v2::Intent>
 IntentsConnectionImpl::ListIntents(

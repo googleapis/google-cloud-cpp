@@ -36,9 +36,8 @@ MetricsScopesConnectionImpl::MetricsScopesConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), monitoring_internal::MetricsScopesDefaultOptions(
-                                  MetricsScopesConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      MetricsScopesConnection::options())) {}
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 MetricsScopesConnectionImpl::GetMetricsScope(

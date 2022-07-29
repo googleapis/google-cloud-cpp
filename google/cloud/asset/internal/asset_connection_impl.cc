@@ -36,9 +36,8 @@ AssetServiceConnectionImpl::AssetServiceConnectionImpl(
     std::shared_ptr<asset_internal::AssetServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), asset_internal::AssetServiceDefaultOptions(
-                                  AssetServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      AssetServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
 AssetServiceConnectionImpl::ExportAssets(

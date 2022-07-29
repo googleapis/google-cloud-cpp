@@ -17,7 +17,6 @@
 // source: google/cloud/securitycenter/v1/securitycenter_service.proto
 
 #include "google/cloud/securitycenter/security_center_client.h"
-#include "google/cloud/securitycenter/internal/security_center_option_defaults.h"
 #include "google/cloud/securitycenter/security_center_options.h"
 #include <memory>
 #include <thread>
@@ -30,10 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecurityCenterClient::SecurityCenterClient(
     std::shared_ptr<SecurityCenterConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          securitycenter_internal::SecurityCenterDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SecurityCenterClient::~SecurityCenterClient() = default;
 
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>

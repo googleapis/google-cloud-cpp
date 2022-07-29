@@ -36,9 +36,8 @@ EntityTypesConnectionImpl::EntityTypesConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dialogflow_cx_internal::EntityTypesDefaultOptions(
-                                  EntityTypesConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      EntityTypesConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesConnectionImpl::ListEntityTypes(

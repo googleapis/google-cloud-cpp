@@ -18,7 +18,6 @@
 
 #include "google/cloud/containeranalysis/container_analysis_client.h"
 #include "google/cloud/containeranalysis/container_analysis_options.h"
-#include "google/cloud/containeranalysis/internal/container_analysis_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,10 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ContainerAnalysisClient::ContainerAnalysisClient(
     std::shared_ptr<ContainerAnalysisConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          containeranalysis_internal::ContainerAnalysisDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ContainerAnalysisClient::~ContainerAnalysisClient() = default;
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(

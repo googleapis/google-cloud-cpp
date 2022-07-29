@@ -17,7 +17,6 @@
 // source: google/cloud/speech/v1/cloud_speech.proto
 
 #include "google/cloud/speech/speech_client.h"
-#include "google/cloud/speech/internal/speech_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SpeechClient::SpeechClient(std::shared_ptr<SpeechConnection> connection,
                            Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          speech_internal::SpeechDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SpeechClient::~SpeechClient() = default;
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse> SpeechClient::Recognize(

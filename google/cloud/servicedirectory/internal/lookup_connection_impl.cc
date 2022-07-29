@@ -35,10 +35,8 @@ LookupServiceConnectionImpl::LookupServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          servicedirectory_internal::LookupServiceDefaultOptions(
-              LookupServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      LookupServiceConnection::options())) {}
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceConnectionImpl::ResolveService(

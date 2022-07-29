@@ -37,9 +37,9 @@ GoldenThingAdminConnectionImpl::GoldenThingAdminConnectionImpl(
     std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
     Options options)
   : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(std::move(options),
-      golden_internal::GoldenThingAdminDefaultOptions(
-        GoldenThingAdminConnection::options()))) {}
+    options_(internal::MergeOptions(
+        std::move(options),
+        GoldenThingAdminConnection::options())) {}
 
 StreamRange<google::test::admin::database::v1::Database>
 GoldenThingAdminConnectionImpl::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request) {

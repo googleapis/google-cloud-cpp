@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/version.proto
 
 #include "google/cloud/dialogflow_es/versions_client.h"
-#include "google/cloud/dialogflow_es/internal/versions_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VersionsClient::VersionsClient(std::shared_ptr<VersionsConnection> connection,
                                Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_es_internal::VersionsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 VersionsClient::~VersionsClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::Version>

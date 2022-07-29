@@ -18,7 +18,6 @@
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
-#include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,10 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigtableTableAdminClient::BigtableTableAdminClient(
     std::shared_ptr<BigtableTableAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          bigtable_admin_internal::BigtableTableAdminDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BigtableTableAdminClient::~BigtableTableAdminClient() = default;
 
 StatusOr<google::bigtable::admin::v2::Table>

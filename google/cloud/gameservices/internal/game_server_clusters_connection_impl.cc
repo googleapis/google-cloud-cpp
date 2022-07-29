@@ -40,9 +40,8 @@ GameServerClustersServiceConnectionImpl::
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          gameservices_internal::GameServerClustersServiceDefaultOptions(
-              GameServerClustersServiceConnection::options()))) {}
+          std::move(options), GameServerClustersServiceConnection::options())) {
+}
 
 StreamRange<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceConnectionImpl::ListGameServerClusters(

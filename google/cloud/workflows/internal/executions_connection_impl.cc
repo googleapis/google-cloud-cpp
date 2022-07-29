@@ -35,9 +35,8 @@ ExecutionsConnectionImpl::ExecutionsConnectionImpl(
     std::shared_ptr<workflows_internal::ExecutionsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), workflows_internal::ExecutionsDefaultOptions(
-                                  ExecutionsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ExecutionsConnection::options())) {}
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
 ExecutionsConnectionImpl::ListExecutions(

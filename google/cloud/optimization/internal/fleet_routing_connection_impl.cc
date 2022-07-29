@@ -36,9 +36,8 @@ FleetRoutingConnectionImpl::FleetRoutingConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), optimization_internal::FleetRoutingDefaultOptions(
-                                  FleetRoutingConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      FleetRoutingConnection::options())) {}
 
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingConnectionImpl::OptimizeTours(

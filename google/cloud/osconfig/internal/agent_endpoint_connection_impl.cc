@@ -38,9 +38,7 @@ AgentEndpointServiceConnectionImpl::AgentEndpointServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          osconfig_internal::AgentEndpointServiceDefaultOptions(
-              AgentEndpointServiceConnection::options()))) {}
+          std::move(options), AgentEndpointServiceConnection::options())) {}
 
 StreamRange<
     google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>

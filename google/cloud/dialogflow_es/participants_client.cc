@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/participant.proto
 
 #include "google/cloud/dialogflow_es/participants_client.h"
-#include "google/cloud/dialogflow_es/internal/participants_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ParticipantsClient::ParticipantsClient(
     std::shared_ptr<ParticipantsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_es_internal::ParticipantsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ParticipantsClient::~ParticipantsClient() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Participant>

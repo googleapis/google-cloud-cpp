@@ -37,9 +37,7 @@ VideoStitcherServiceConnectionImpl::VideoStitcherServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          video_internal::VideoStitcherServiceDefaultOptions(
-              VideoStitcherServiceConnection::options()))) {}
+          std::move(options), VideoStitcherServiceConnection::options())) {}
 
 StatusOr<google::cloud::video::stitcher::v1::CdnKey>
 VideoStitcherServiceConnectionImpl::CreateCdnKey(

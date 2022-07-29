@@ -18,7 +18,6 @@
 // google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto
 
 #include "google/cloud/beyondcorp/client_gateways_client.h"
-#include "google/cloud/beyondcorp/internal/client_gateways_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ClientGatewaysServiceClient::ClientGatewaysServiceClient(
     std::shared_ptr<ClientGatewaysServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          beyondcorp_internal::ClientGatewaysServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ClientGatewaysServiceClient::~ClientGatewaysServiceClient() = default;
 
 StreamRange<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>

@@ -17,7 +17,6 @@
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
 #include "google/cloud/documentai/document_processor_client.h"
-#include "google/cloud/documentai/internal/document_processor_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ DocumentProcessorServiceClient::DocumentProcessorServiceClient(
     std::shared_ptr<DocumentProcessorServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          documentai_internal::DocumentProcessorServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DocumentProcessorServiceClient::~DocumentProcessorServiceClient() = default;
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>

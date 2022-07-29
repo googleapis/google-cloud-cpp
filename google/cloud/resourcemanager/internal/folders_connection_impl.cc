@@ -37,9 +37,8 @@ FoldersConnectionImpl::FoldersConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), resourcemanager_internal::FoldersDefaultOptions(
-                                  FoldersConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      FoldersConnection::options())) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Folder>
 FoldersConnectionImpl::GetFolder(

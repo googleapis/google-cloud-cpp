@@ -37,8 +37,7 @@ EventarcConnectionImpl::EventarcConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
-                                      eventarc_internal::EventarcDefaultOptions(
-                                          EventarcConnection::options()))) {}
+                                      EventarcConnection::options())) {}
 
 StatusOr<google::cloud::eventarc::v1::Trigger>
 EventarcConnectionImpl::GetTrigger(

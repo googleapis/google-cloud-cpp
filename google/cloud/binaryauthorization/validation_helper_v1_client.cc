@@ -17,7 +17,6 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/validation_helper_v1_client.h"
-#include "google/cloud/binaryauthorization/internal/validation_helper_v1_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ValidationHelperV1Client::ValidationHelperV1Client(
     std::shared_ptr<ValidationHelperV1Connection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          binaryauthorization_internal::ValidationHelperV1DefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ValidationHelperV1Client::~ValidationHelperV1Client() = default;
 
 StatusOr<google::cloud::binaryauthorization::v1::

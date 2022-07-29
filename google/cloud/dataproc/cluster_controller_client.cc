@@ -17,7 +17,6 @@
 // source: google/cloud/dataproc/v1/clusters.proto
 
 #include "google/cloud/dataproc/cluster_controller_client.h"
-#include "google/cloud/dataproc/internal/cluster_controller_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ClusterControllerClient::ClusterControllerClient(
     std::shared_ptr<ClusterControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dataproc_internal::ClusterControllerDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ClusterControllerClient::~ClusterControllerClient() = default;
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>

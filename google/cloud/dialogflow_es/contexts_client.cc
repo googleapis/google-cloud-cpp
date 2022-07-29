@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/context.proto
 
 #include "google/cloud/dialogflow_es/contexts_client.h"
-#include "google/cloud/dialogflow_es/internal/contexts_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ContextsClient::ContextsClient(std::shared_ptr<ContextsConnection> connection,
                                Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_es_internal::ContextsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ContextsClient::~ContextsClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::Context>

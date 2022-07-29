@@ -36,9 +36,7 @@ ValidationHelperV1ConnectionImpl::ValidationHelperV1ConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          binaryauthorization_internal::ValidationHelperV1DefaultOptions(
-              ValidationHelperV1Connection::options()))) {}
+          std::move(options), ValidationHelperV1Connection::options())) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::
              ValidateAttestationOccurrenceResponse>

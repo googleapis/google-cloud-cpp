@@ -17,7 +17,6 @@
 // source: google/cloud/run/v2/service.proto
 
 #include "google/cloud/run/services_client.h"
-#include "google/cloud/run/internal/services_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServicesClient::ServicesClient(std::shared_ptr<ServicesConnection> connection,
                                Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          run_internal::ServicesDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ServicesClient::~ServicesClient() = default;
 
 future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::CreateService(

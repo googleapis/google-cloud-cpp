@@ -36,9 +36,8 @@ AgentsConnectionImpl::AgentsConnectionImpl(
     std::shared_ptr<dialogflow_es_internal::AgentsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dialogflow_es_internal::AgentsDefaultOptions(
-                                  AgentsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      AgentsConnection::options())) {}
 
 StatusOr<google::cloud::dialogflow::v2::Agent> AgentsConnectionImpl::GetAgent(
     google::cloud::dialogflow::v2::GetAgentRequest const& request) {

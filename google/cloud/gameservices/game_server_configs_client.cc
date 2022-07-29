@@ -17,7 +17,6 @@
 // source: google/cloud/gaming/v1/game_server_configs_service.proto
 
 #include "google/cloud/gameservices/game_server_configs_client.h"
-#include "google/cloud/gameservices/internal/game_server_configs_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ GameServerConfigsServiceClient::GameServerConfigsServiceClient(
     std::shared_ptr<GameServerConfigsServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          gameservices_internal::GameServerConfigsServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 GameServerConfigsServiceClient::~GameServerConfigsServiceClient() = default;
 
 StreamRange<google::cloud::gaming::v1::GameServerConfig>

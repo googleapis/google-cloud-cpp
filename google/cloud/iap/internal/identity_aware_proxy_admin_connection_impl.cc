@@ -39,8 +39,7 @@ IdentityAwareProxyAdminServiceConnectionImpl::
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
           std::move(options),
-          iap_internal::IdentityAwareProxyAdminServiceDefaultOptions(
-              IdentityAwareProxyAdminServiceConnection::options()))) {}
+          IdentityAwareProxyAdminServiceConnection::options())) {}
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceConnectionImpl::SetIamPolicy(

@@ -35,9 +35,8 @@ SearchServiceConnectionImpl::SearchServiceConnectionImpl(
     std::shared_ptr<retail_internal::SearchServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), retail_internal::SearchServiceDefaultOptions(
-                                  SearchServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      SearchServiceConnection::options())) {}
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
 SearchServiceConnectionImpl::Search(

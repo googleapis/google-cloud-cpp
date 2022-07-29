@@ -17,7 +17,6 @@
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
 #include "google/cloud/assuredworkloads/assured_workloads_client.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AssuredWorkloadsServiceClient::AssuredWorkloadsServiceClient(
     std::shared_ptr<AssuredWorkloadsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          assuredworkloads_internal::AssuredWorkloadsServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AssuredWorkloadsServiceClient::~AssuredWorkloadsServiceClient() = default;
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>

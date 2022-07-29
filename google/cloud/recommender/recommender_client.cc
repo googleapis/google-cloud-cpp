@@ -17,7 +17,6 @@
 // source: google/cloud/recommender/v1/recommender_service.proto
 
 #include "google/cloud/recommender/recommender_client.h"
-#include "google/cloud/recommender/internal/recommender_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RecommenderClient::RecommenderClient(
     std::shared_ptr<RecommenderConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), recommender_internal::RecommenderDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RecommenderClient::~RecommenderClient() = default;
 
 StreamRange<google::cloud::recommender::v1::Insight>

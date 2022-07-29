@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/test_case.proto
 
 #include "google/cloud/dialogflow_cx/test_cases_client.h"
-#include "google/cloud/dialogflow_cx/internal/test_cases_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TestCasesClient::TestCasesClient(
     std::shared_ptr<TestCasesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_cx_internal::TestCasesDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TestCasesClient::~TestCasesClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::TestCase>

@@ -35,8 +35,7 @@ IAMPolicyConnectionImpl::IAMPolicyConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
-                                      iam_internal::IAMPolicyDefaultOptions(
-                                          IAMPolicyConnection::options()))) {}
+                                      IAMPolicyConnection::options())) {}
 
 StatusOr<google::iam::v1::Policy> IAMPolicyConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {

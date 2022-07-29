@@ -17,7 +17,6 @@
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
 #include "google/cloud/profiler/profiler_client.h"
-#include "google/cloud/profiler/internal/profiler_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProfilerServiceClient::ProfilerServiceClient(
     std::shared_ptr<ProfilerServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), profiler_internal::ProfilerServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ProfilerServiceClient::~ProfilerServiceClient() = default;
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>

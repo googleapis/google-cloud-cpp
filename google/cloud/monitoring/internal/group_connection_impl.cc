@@ -36,9 +36,8 @@ GroupServiceConnectionImpl::GroupServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), monitoring_internal::GroupServiceDefaultOptions(
-                                  GroupServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      GroupServiceConnection::options())) {}
 
 StreamRange<google::monitoring::v3::Group>
 GroupServiceConnectionImpl::ListGroups(

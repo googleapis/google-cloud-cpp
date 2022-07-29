@@ -37,9 +37,7 @@ DataTransferServiceConnectionImpl::DataTransferServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          bigquery_internal::DataTransferServiceDefaultOptions(
-              DataTransferServiceConnection::options()))) {}
+          std::move(options), DataTransferServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
 DataTransferServiceConnectionImpl::GetDataSource(

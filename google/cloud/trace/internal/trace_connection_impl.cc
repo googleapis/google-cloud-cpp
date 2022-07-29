@@ -34,9 +34,8 @@ TraceServiceConnectionImpl::TraceServiceConnectionImpl(
     std::shared_ptr<trace_internal::TraceServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), trace_internal::TraceServiceDefaultOptions(
-                                  TraceServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      TraceServiceConnection::options())) {}
 
 Status TraceServiceConnectionImpl::BatchWriteSpans(
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {

@@ -37,9 +37,8 @@ MetricServiceConnectionImpl::MetricServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), monitoring_internal::MetricServiceDefaultOptions(
-                                  MetricServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      MetricServiceConnection::options())) {}
 
 StreamRange<google::api::MonitoredResourceDescriptor>
 MetricServiceConnectionImpl::ListMonitoredResourceDescriptors(

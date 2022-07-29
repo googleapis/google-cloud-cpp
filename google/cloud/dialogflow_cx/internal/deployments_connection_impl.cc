@@ -36,9 +36,8 @@ DeploymentsConnectionImpl::DeploymentsConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dialogflow_cx_internal::DeploymentsDefaultOptions(
-                                  DeploymentsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      DeploymentsConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Deployment>
 DeploymentsConnectionImpl::ListDeployments(

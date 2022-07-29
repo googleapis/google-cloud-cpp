@@ -35,9 +35,8 @@ ProfilerServiceConnectionImpl::ProfilerServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), profiler_internal::ProfilerServiceDefaultOptions(
-                                  ProfilerServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ProfilerServiceConnection::options())) {}
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceConnectionImpl::CreateProfile(

@@ -38,9 +38,7 @@ AppGatewaysServiceConnectionImpl::AppGatewaysServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          beyondcorp_internal::AppGatewaysServiceDefaultOptions(
-              AppGatewaysServiceConnection::options()))) {}
+          std::move(options), AppGatewaysServiceConnection::options())) {}
 
 StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
 AppGatewaysServiceConnectionImpl::ListAppGateways(

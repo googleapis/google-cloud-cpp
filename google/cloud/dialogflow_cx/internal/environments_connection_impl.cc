@@ -37,10 +37,8 @@ EnvironmentsConnectionImpl::EnvironmentsConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          dialogflow_cx_internal::EnvironmentsDefaultOptions(
-              EnvironmentsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      EnvironmentsConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Environment>
 EnvironmentsConnectionImpl::ListEnvironments(

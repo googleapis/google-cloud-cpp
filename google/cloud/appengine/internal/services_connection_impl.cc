@@ -36,9 +36,8 @@ ServicesConnectionImpl::ServicesConnectionImpl(
     std::shared_ptr<appengine_internal::ServicesStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), appengine_internal::ServicesDefaultOptions(
-                                  ServicesConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ServicesConnection::options())) {}
 
 StreamRange<google::appengine::v1::Service>
 ServicesConnectionImpl::ListServices(

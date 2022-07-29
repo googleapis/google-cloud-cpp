@@ -17,7 +17,6 @@
 // source: google/logging/v2/logging.proto
 
 #include "google/cloud/logging/logging_service_v2_client.h"
-#include "google/cloud/logging/internal/logging_service_v2_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LoggingServiceV2Client::LoggingServiceV2Client(
     std::shared_ptr<LoggingServiceV2Connection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), logging_internal::LoggingServiceV2DefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 LoggingServiceV2Client::~LoggingServiceV2Client() = default;
 
 Status LoggingServiceV2Client::DeleteLog(std::string const& log_name,

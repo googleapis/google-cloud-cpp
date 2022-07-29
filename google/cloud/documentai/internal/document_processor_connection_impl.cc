@@ -37,9 +37,7 @@ DocumentProcessorServiceConnectionImpl::DocumentProcessorServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          documentai_internal::DocumentProcessorServiceDefaultOptions(
-              DocumentProcessorServiceConnection::options()))) {}
+          std::move(options), DocumentProcessorServiceConnection::options())) {}
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DocumentProcessorServiceConnectionImpl::ProcessDocument(

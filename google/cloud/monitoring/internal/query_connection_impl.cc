@@ -36,9 +36,8 @@ QueryServiceConnectionImpl::QueryServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), monitoring_internal::QueryServiceDefaultOptions(
-                                  QueryServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      QueryServiceConnection::options())) {}
 
 StreamRange<google::monitoring::v3::TimeSeriesData>
 QueryServiceConnectionImpl::QueryTimeSeries(

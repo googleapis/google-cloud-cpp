@@ -34,9 +34,8 @@ PublisherConnectionImpl::PublisherConnectionImpl(
     std::shared_ptr<eventarc_internal::PublisherStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), eventarc_internal::PublisherDefaultOptions(
-                                  PublisherConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      PublisherConnection::options())) {}
 
 StatusOr<google::cloud::eventarc::publishing::v1::
              PublishChannelConnectionEventsResponse>

@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/webhook.proto
 
 #include "google/cloud/dialogflow_cx/webhooks_client.h"
-#include "google/cloud/dialogflow_cx/internal/webhooks_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WebhooksClient::WebhooksClient(std::shared_ptr<WebhooksConnection> connection,
                                Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_cx_internal::WebhooksDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 WebhooksClient::~WebhooksClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::Webhook>

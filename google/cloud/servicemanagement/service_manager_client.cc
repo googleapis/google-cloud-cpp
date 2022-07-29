@@ -17,7 +17,6 @@
 // source: google/api/servicemanagement/v1/servicemanager.proto
 
 #include "google/cloud/servicemanagement/service_manager_client.h"
-#include "google/cloud/servicemanagement/internal/service_manager_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceManagerClient::ServiceManagerClient(
     std::shared_ptr<ServiceManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          servicemanagement_internal::ServiceManagerDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ServiceManagerClient::~ServiceManagerClient() = default;
 
 StreamRange<google::api::servicemanagement::v1::ManagedService>

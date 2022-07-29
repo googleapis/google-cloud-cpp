@@ -17,7 +17,6 @@
 // source: google/cloud/datacatalog/v1/policytagmanager.proto
 
 #include "google/cloud/datacatalog/policy_tag_manager_client.h"
-#include "google/cloud/datacatalog/internal/policy_tag_manager_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PolicyTagManagerClient::PolicyTagManagerClient(
     std::shared_ptr<PolicyTagManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), datacatalog_internal::PolicyTagManagerDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 PolicyTagManagerClient::~PolicyTagManagerClient() = default;
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>

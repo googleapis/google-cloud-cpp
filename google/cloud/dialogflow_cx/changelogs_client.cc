@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/changelog.proto
 
 #include "google/cloud/dialogflow_cx/changelogs_client.h"
-#include "google/cloud/dialogflow_cx/internal/changelogs_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ChangelogsClient::ChangelogsClient(
     std::shared_ptr<ChangelogsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_cx_internal::ChangelogsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ChangelogsClient::~ChangelogsClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::Changelog>

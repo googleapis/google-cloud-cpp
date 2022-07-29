@@ -38,9 +38,7 @@ ManagedNotebookServiceConnectionImpl::ManagedNotebookServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          notebooks_internal::ManagedNotebookServiceDefaultOptions(
-              ManagedNotebookServiceConnection::options()))) {}
+          std::move(options), ManagedNotebookServiceConnection::options())) {}
 
 StreamRange<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceConnectionImpl::ListRuntimes(

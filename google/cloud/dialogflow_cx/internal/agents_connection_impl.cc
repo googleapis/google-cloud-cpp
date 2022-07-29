@@ -36,9 +36,8 @@ AgentsConnectionImpl::AgentsConnectionImpl(
     std::shared_ptr<dialogflow_cx_internal::AgentsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dialogflow_cx_internal::AgentsDefaultOptions(
-                                  AgentsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      AgentsConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Agent>
 AgentsConnectionImpl::ListAgents(

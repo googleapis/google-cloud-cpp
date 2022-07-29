@@ -37,9 +37,7 @@ AuthorizedCertificatesConnectionImpl::AuthorizedCertificatesConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          appengine_internal::AuthorizedCertificatesDefaultOptions(
-              AuthorizedCertificatesConnection::options()))) {}
+          std::move(options), AuthorizedCertificatesConnection::options())) {}
 
 StreamRange<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesConnectionImpl::ListAuthorizedCertificates(

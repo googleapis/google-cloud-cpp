@@ -36,9 +36,7 @@ ContainerAnalysisConnectionImpl::ContainerAnalysisConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          containeranalysis_internal::ContainerAnalysisDefaultOptions(
-              ContainerAnalysisConnection::options()))) {}
+          std::move(options), ContainerAnalysisConnection::options())) {}
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {

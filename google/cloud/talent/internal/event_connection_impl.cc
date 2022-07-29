@@ -34,9 +34,8 @@ EventServiceConnectionImpl::EventServiceConnectionImpl(
     std::shared_ptr<talent_internal::EventServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), talent_internal::EventServiceDefaultOptions(
-                                  EventServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      EventServiceConnection::options())) {}
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceConnectionImpl::CreateClientEvent(

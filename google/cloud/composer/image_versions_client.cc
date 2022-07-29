@@ -17,7 +17,6 @@
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
 #include "google/cloud/composer/image_versions_client.h"
-#include "google/cloud/composer/internal/image_versions_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ImageVersionsClient::ImageVersionsClient(
     std::shared_ptr<ImageVersionsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), composer_internal::ImageVersionsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ImageVersionsClient::~ImageVersionsClient() = default;
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>

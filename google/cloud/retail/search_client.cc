@@ -17,7 +17,6 @@
 // source: google/cloud/retail/v2/search_service.proto
 
 #include "google/cloud/retail/search_client.h"
-#include "google/cloud/retail/internal/search_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SearchServiceClient::SearchServiceClient(
     std::shared_ptr<SearchServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), retail_internal::SearchServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SearchServiceClient::~SearchServiceClient() = default;
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>

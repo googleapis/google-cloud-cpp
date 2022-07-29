@@ -17,7 +17,6 @@
 // source: google/storagetransfer/v1/transfer.proto
 
 #include "google/cloud/storagetransfer/storage_transfer_client.h"
-#include "google/cloud/storagetransfer/internal/storage_transfer_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StorageTransferServiceClient::StorageTransferServiceClient(
     std::shared_ptr<StorageTransferServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          storagetransfer_internal::StorageTransferServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 StorageTransferServiceClient::~StorageTransferServiceClient() = default;
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>

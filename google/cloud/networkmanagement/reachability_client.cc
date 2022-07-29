@@ -17,7 +17,6 @@
 // source: google/cloud/networkmanagement/v1/reachability.proto
 
 #include "google/cloud/networkmanagement/reachability_client.h"
-#include "google/cloud/networkmanagement/internal/reachability_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReachabilityServiceClient::ReachabilityServiceClient(
     std::shared_ptr<ReachabilityServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          networkmanagement_internal::ReachabilityServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ReachabilityServiceClient::~ReachabilityServiceClient() = default;
 
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>

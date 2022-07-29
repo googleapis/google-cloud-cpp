@@ -37,9 +37,7 @@ SecuritySettingsServiceConnectionImpl::SecuritySettingsServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          dialogflow_cx_internal::SecuritySettingsServiceDefaultOptions(
-              SecuritySettingsServiceConnection::options()))) {}
+          std::move(options), SecuritySettingsServiceConnection::options())) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceConnectionImpl::CreateSecuritySettings(

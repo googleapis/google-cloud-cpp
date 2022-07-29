@@ -114,8 +114,7 @@ class $connection_class_name$Impl
   // `CurrentOptions()` may not have the service default options because we
   // could be running in a test that calls the ConnectionImpl layer directly,
   // and it does not create an `internal::OptionsSpan` like the Client layer.
-  // So, we have to fallback to `options_`, which we know has the service
-  // default options because we added them.
+  // So, we have to fallback to `options_`.
   HeaderPrint(R"""(
  private:
   std::unique_ptr<$product_namespace$::$retry_policy_name$> retry_policy() {
@@ -209,9 +208,9 @@ $connection_class_name$Impl::$connection_class_name$Impl(
     std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,
     Options options)
   : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(std::move(options),
-      $product_internal_namespace$::$service_name$DefaultOptions(
-        $connection_class_name$::options()))) {}
+    options_(internal::MergeOptions(
+        std::move(options),
+        $connection_class_name$::options())) {}
 )""");
 
   for (auto const& method : methods()) {

@@ -39,9 +39,7 @@ ContactCenterInsightsConnectionImpl::ContactCenterInsightsConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          contactcenterinsights_internal::ContactCenterInsightsDefaultOptions(
-              ContactCenterInsightsConnection::options()))) {}
+          std::move(options), ContactCenterInsightsConnection::options())) {}
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsConnectionImpl::CreateConversation(

@@ -36,9 +36,8 @@ DataCatalogConnectionImpl::DataCatalogConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), datacatalog_internal::DataCatalogDefaultOptions(
-                                  DataCatalogConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      DataCatalogConnection::options())) {}
 
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
 DataCatalogConnectionImpl::SearchCatalog(

@@ -36,9 +36,8 @@ CloudMemcacheConnectionImpl::CloudMemcacheConnectionImpl(
     std::shared_ptr<memcache_internal::CloudMemcacheStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), memcache_internal::CloudMemcacheDefaultOptions(
-                                  CloudMemcacheConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CloudMemcacheConnection::options())) {}
 
 StreamRange<google::cloud::memcache::v1::Instance>
 CloudMemcacheConnectionImpl::ListInstances(

@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/answer_record.proto
 
 #include "google/cloud/dialogflow_es/answer_records_client.h"
-#include "google/cloud/dialogflow_es/internal/answer_records_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AnswerRecordsClient::AnswerRecordsClient(
     std::shared_ptr<AnswerRecordsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_es_internal::AnswerRecordsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AnswerRecordsClient::~AnswerRecordsClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::AnswerRecord>

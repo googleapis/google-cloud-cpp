@@ -17,7 +17,6 @@
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
 #include "google/cloud/accesscontextmanager/access_context_manager_client.h"
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AccessContextManagerClient::AccessContextManagerClient(
     std::shared_ptr<AccessContextManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          accesscontextmanager_internal::AccessContextManagerDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AccessContextManagerClient::~AccessContextManagerClient() = default;
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>

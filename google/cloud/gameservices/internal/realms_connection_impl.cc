@@ -37,10 +37,8 @@ RealmsServiceConnectionImpl::RealmsServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          gameservices_internal::RealmsServiceDefaultOptions(
-              RealmsServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      RealmsServiceConnection::options())) {}
 
 StreamRange<google::cloud::gaming::v1::Realm>
 RealmsServiceConnectionImpl::ListRealms(

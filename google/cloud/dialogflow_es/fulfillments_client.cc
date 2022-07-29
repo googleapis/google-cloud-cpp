@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/fulfillment.proto
 
 #include "google/cloud/dialogflow_es/fulfillments_client.h"
-#include "google/cloud/dialogflow_es/internal/fulfillments_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FulfillmentsClient::FulfillmentsClient(
     std::shared_ptr<FulfillmentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dialogflow_es_internal::FulfillmentsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FulfillmentsClient::~FulfillmentsClient() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>

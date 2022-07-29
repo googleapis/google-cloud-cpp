@@ -17,7 +17,6 @@
 // source: google/cloud/ids/v1/ids.proto
 
 #include "google/cloud/ids/ids_client.h"
-#include "google/cloud/ids/internal/ids_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -27,9 +26,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IDSClient::IDSClient(std::shared_ptr<IDSConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          ids_internal::IDSDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IDSClient::~IDSClient() = default;
 
 StreamRange<google::cloud::ids::v1::Endpoint> IDSClient::ListEndpoints(

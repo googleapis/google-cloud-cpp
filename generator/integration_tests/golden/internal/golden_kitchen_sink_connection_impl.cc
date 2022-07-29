@@ -38,9 +38,9 @@ GoldenKitchenSinkConnectionImpl::GoldenKitchenSinkConnectionImpl(
     std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub,
     Options options)
   : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(std::move(options),
-      golden_internal::GoldenKitchenSinkDefaultOptions(
-        GoldenKitchenSinkConnection::options()))) {}
+    options_(internal::MergeOptions(
+        std::move(options),
+        GoldenKitchenSinkConnection::options())) {}
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkConnectionImpl::GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {

@@ -17,7 +17,6 @@
 // source: google/cloud/dataproc/v1/autoscaling_policies.proto
 
 #include "google/cloud/dataproc/autoscaling_policy_client.h"
-#include "google/cloud/dataproc/internal/autoscaling_policy_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ AutoscalingPolicyServiceClient::AutoscalingPolicyServiceClient(
     std::shared_ptr<AutoscalingPolicyServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          dataproc_internal::AutoscalingPolicyServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AutoscalingPolicyServiceClient::~AutoscalingPolicyServiceClient() = default;
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>

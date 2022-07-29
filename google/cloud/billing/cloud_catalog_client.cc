@@ -17,7 +17,6 @@
 // source: google/cloud/billing/v1/cloud_catalog.proto
 
 #include "google/cloud/billing/cloud_catalog_client.h"
-#include "google/cloud/billing/internal/cloud_catalog_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudCatalogClient::CloudCatalogClient(
     std::shared_ptr<CloudCatalogConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), billing_internal::CloudCatalogDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudCatalogClient::~CloudCatalogClient() = default;
 
 StreamRange<google::cloud::billing::v1::Service>
