@@ -178,7 +178,9 @@ void CurlImpl::ApplyOptions(Options const& options) {
   user_agent_ = absl::StrCat(absl::StrJoin(agents, " "), UserAgentSuffix());
   http_version_ = std::move(options.get<HttpVersionOption>());
   transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
+  transfer_stall_minimum_rate_ = options.get<TransferStallMinimumRateOption>();
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
+  transfer_stall_minimum_rate_ = options.get<DownloadStallMinimumRateOption>();
   ignored_http_error_codes_ = options.get<IgnoredHttpErrorCodes>();
 }
 
@@ -726,11 +728,13 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
     if (download_stall_timeout_.count() != 0) {
       // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
       auto const timeout = static_cast<long>(download_stall_timeout_.count());
+      // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
+      auto const limit = static_cast<long>(download_stall_minimum_rate_);
       status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
       if (!status.ok()) return OnTransferError(std::move(status));
       // Timeout if the request sends or receives less than 1 byte/second (i.e.
       // effectively no bytes) for `download_stall_timeout_` seconds.
-      status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
+      status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);
       if (!status.ok()) return OnTransferError(std::move(status));
       status = handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
       if (!status.ok()) return OnTransferError(std::move(status));
@@ -741,11 +745,13 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
   if (transfer_stall_timeout_.count() != 0) {
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
     auto const timeout = static_cast<long>(transfer_stall_timeout_.count());
+    // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
+    auto const limit = static_cast<long>(transfer_stall_minimum_rate_);
     status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
     if (!status.ok()) return OnTransferError(std::move(status));
     // Timeout if the request sends or receives less than 1 byte/second (i.e.
     // effectively no bytes) for `transfer_stall_timeout_` seconds.
-    status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
+    status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);
     if (!status.ok()) return OnTransferError(std::move(status));
     status = handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
     if (!status.ok()) return OnTransferError(std::move(status));

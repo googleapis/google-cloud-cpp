@@ -261,11 +261,13 @@ Status CurlDownloadRequest::SetOptions() {
   if (download_stall_timeout_.count() != 0) {
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
     auto const timeout = static_cast<long>(download_stall_timeout_.count());
+    // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
+    auto const limit = static_cast<long>(download_stall_minimum_rate_);
     status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
     if (!status.ok()) return OnTransferError(std::move(status));
-    // Timeout if the download receives less than 1 byte/second (i.e.
-    // effectively no bytes) for `transfer_stall_timeout_` seconds.
-    status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
+    // Timeout if the download receives less than `limit` bytes in `timeout`
+    // seconds for `transfer_stall_timeout_` seconds.
+    status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);
     if (!status.ok()) return OnTransferError(std::move(status));
     status = handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
     if (!status.ok()) return OnTransferError(std::move(status));

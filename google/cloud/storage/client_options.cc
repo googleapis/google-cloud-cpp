@@ -187,6 +187,8 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
           .set<MaximumCurlSocketSendSizeOption>(0)
           .set<TransferStallTimeoutOption>(std::chrono::seconds(
               GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT))
+          .set<storage_experimental::TransferStallMinimumRateOption>(1)
+          .set<storage_experimental::DownloadStallMinimumRateOption>(1)
           .set<RetryPolicyOption>(
               LimitedTimeRetryPolicy(
                   STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD)
@@ -238,8 +240,12 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
       Options{}
           .set<rest::DownloadStallTimeoutOption>(
               o.get<DownloadStallTimeoutOption>())
+          .set<rest::DownloadStallMinimumRateOption>(
+              o.get<storage_experimental::DownloadStallMinimumRateOption>())
           .set<rest::TransferStallTimeoutOption>(
               o.get<TransferStallTimeoutOption>())
+          .set<rest::TransferStallMinimumRateOption>(
+              o.get<storage_experimental::TransferStallMinimumRateOption>())
           .set<rest::MaximumCurlSocketRecvSizeOption>(
               o.get<MaximumCurlSocketRecvSizeOption>())
           .set<rest::MaximumCurlSocketSendSizeOption>(

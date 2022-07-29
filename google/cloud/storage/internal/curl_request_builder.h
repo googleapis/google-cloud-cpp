@@ -197,7 +197,9 @@ class CurlRequestBuilder {
   bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds transfer_stall_timeout_;
+  std::uint32_t transfer_stall_minimum_rate_ = 0;
   std::chrono::seconds download_stall_timeout_;
+  std::uint32_t download_stall_minimum_rate_ = 0;
   std::string http_version_;
 };
 

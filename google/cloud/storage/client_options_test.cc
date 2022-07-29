@@ -325,6 +325,8 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
   EXPECT_EQ("test-project-id", opts.get<ProjectIdOption>());
   EXPECT_LT(0, opts.get<ConnectionPoolSizeOption>());
   EXPECT_LT(0, opts.get<DownloadBufferSizeOption>());
+  EXPECT_LT(0,
+            opts.get<storage_experimental::DownloadStallMinimumRateOption>());
   EXPECT_LT(0, opts.get<UploadBufferSizeOption>());
   EXPECT_LT(0, opts.get<MaximumSimpleUploadSizeOption>());
   EXPECT_TRUE(opts.has<EnableCurlSslLockingOption>());
@@ -332,6 +334,8 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
   EXPECT_EQ(0, opts.get<MaximumCurlSocketSendSizeOption>());
   EXPECT_EQ(0, opts.get<MaximumCurlSocketRecvSizeOption>());
   EXPECT_LT(0, opts.get<TransferStallTimeoutOption>().count());
+  EXPECT_LT(0,
+            opts.get<storage_experimental::TransferStallMinimumRateOption>());
   EXPECT_THAT(opts.get<CARootsFilePathOption>(), IsEmpty());
 }
 
@@ -360,13 +364,19 @@ TEST_F(ClientOptionsTest, DefaultOptions) {
   EXPECT_EQ(0, o.get<MaximumCurlSocketRecvSizeOption>());
   EXPECT_EQ(0, o.get<MaximumCurlSocketSendSizeOption>());
   EXPECT_LT(std::chrono::seconds(0), o.get<TransferStallTimeoutOption>());
+  EXPECT_LT(0, o.get<storage_experimental::TransferStallMinimumRateOption>());
   EXPECT_LT(std::chrono::seconds(0), o.get<DownloadStallTimeoutOption>());
+  EXPECT_LT(0, o.get<storage_experimental::DownloadStallMinimumRateOption>());
 
   namespace rest = ::google::cloud::rest_internal;
   EXPECT_EQ(o.get<rest::DownloadStallTimeoutOption>(),
             o.get<DownloadStallTimeoutOption>());
+  EXPECT_EQ(o.get<rest::DownloadStallMinimumRateOption>(),
+            o.get<storage_experimental::DownloadStallMinimumRateOption>());
   EXPECT_EQ(o.get<rest::TransferStallTimeoutOption>(),
             o.get<TransferStallTimeoutOption>());
+  EXPECT_EQ(o.get<rest::TransferStallMinimumRateOption>(),
+            o.get<storage_experimental::TransferStallMinimumRateOption>());
   EXPECT_EQ(o.get<rest::MaximumCurlSocketRecvSizeOption>(),
             o.get<MaximumCurlSocketRecvSizeOption>());
   EXPECT_EQ(o.get<rest::MaximumCurlSocketSendSizeOption>(),
