@@ -114,6 +114,14 @@ void MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
   }
 }
 
+std::chrono::milliseconds ScaleStallTimeout(std::chrono::milliseconds timeout,
+                                            std::uint32_t size,
+                                            std::uint32_t quantum) {
+  if (timeout == std::chrono::milliseconds(0)) return timeout;
+  if (quantum <= size || size == 0) return timeout;
+  return timeout * quantum / size;
+}
+
 Status TimeoutError(std::chrono::milliseconds timeout, std::string const& op) {
   return Status(StatusCode::kDeadlineExceeded,
                 "timeout [" + absl::FormatDuration(absl::FromChrono(timeout)) +
@@ -346,8 +354,11 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   if (!r) return std::move(r).status();
   auto proto_request = *r;
 
-  auto timeout = google::cloud::internal::CurrentOptions()
-                     .get<TransferStallTimeoutOption>();
+  auto const& current = google::cloud::internal::CurrentOptions();
+  auto timeout = ScaleStallTimeout(
+      current.get<TransferStallTimeoutOption>(),
+      current.get<storage_experimental::TransferStallMinimumRateOption>(),
+      google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
   auto create_watchdog = [cq = background_->cq(), timeout]() mutable {
     if (timeout == std::chrono::seconds(0)) {
       return make_ready_future(false);
@@ -606,8 +617,12 @@ StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
 
 StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
     UploadChunkRequest const& request) {
-  auto const timeout = google::cloud::internal::CurrentOptions()
-                           .get<TransferStallTimeoutOption>();
+  auto const& current = google::cloud::internal::CurrentOptions();
+  auto const timeout = ScaleStallTimeout(
+      current.get<TransferStallTimeoutOption>(),
+      current.get<storage_experimental::TransferStallMinimumRateOption>(),
+      google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
+
   auto create_watchdog = [cq = background_->cq(), timeout]() mutable {
     if (timeout == std::chrono::seconds(0)) {
       return make_ready_future(false);

@@ -78,6 +78,7 @@ class CurlRequest {
   bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds transfer_stall_timeout_;
+  std::uint32_t transfer_stall_minimum_rate_;
   CurlHandle handle_;
   std::shared_ptr<rest_internal::CurlHandleFactory> factory_;
 };

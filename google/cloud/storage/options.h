@@ -23,6 +23,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/options.h"
 #include <chrono>
+#include <cstdint>
 #include <memory>
 #include <string>
 
@@ -48,6 +49,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct HttpVersionOption {
   using Type = std::string;
 };
+
+/**
+ * The minimum accepted bytes/second transfer rate.
+ *
+ * If the average rate is below this value for the `TransferStallTimeoutOption`
+ * then the transfer is aborted.
+ */
+struct TransferStallMinimumRateOption {
+  using Type = std::int32_t;
+};
+
+/**
+ * The minimum accepted bytes/second download rate.
+ *
+ * If the average rate is below this value for the `DownloadStallTimeoutOption`
+ * then the download is aborted.
+ */
+struct DownloadStallMinimumRateOption {
+  using Type = std::int32_t;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 

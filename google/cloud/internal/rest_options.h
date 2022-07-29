@@ -18,6 +18,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <chrono>
+#include <cstdint>
 #include <memory>
 #include <string>
 
@@ -57,6 +58,16 @@ struct TransferStallTimeoutOption {
 };
 
 /**
+ * The minimum accepted bytes/second transfer rate.
+ *
+ * If the average rate is below this value for the `TransferStallTimeoutOption`
+ * then the transfer is aborted.
+ */
+struct TransferStallMinimumRateOption {
+  using Type = std::int32_t;
+};
+
+/**
  * Sets the download stall timeout.
  *
  * If a download *stalls*, i.e., no bytes are received for a significant period,
@@ -75,6 +86,16 @@ struct DownloadStallTimeoutOption {
 };
 
 /**
+ * The minimum accepted bytes/second download rate.
+ *
+ * If the average rate is below this value for the `DownloadStallTimeoutOption`
+ * then the download is aborted.
+ */
+struct DownloadStallMinimumRateOption {
+  using Type = std::int32_t;
+};
+
+/**
  * Some services appropriate Http error codes for their own use. If any such
  * error codes need to be treated as non-failures, this option can indicate
  * which codes.
@@ -84,10 +105,10 @@ struct IgnoredHttpErrorCodes {
 };
 
 /// The complete list of options accepted by `CurlRestClient`
-using RestOptionList =
-    ::google::cloud::OptionList<UserIpOption, TransferStallTimeoutOption,
-                                DownloadStallTimeoutOption,
-                                IgnoredHttpErrorCodes>;
+using RestOptionList = ::google::cloud::OptionList<
+    UserIpOption, TransferStallTimeoutOption, TransferStallMinimumRateOption,
+    DownloadStallTimeoutOption, DownloadStallMinimumRateOption,
+    IgnoredHttpErrorCodes>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
