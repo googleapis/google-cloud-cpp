@@ -38,17 +38,15 @@ std::string ExtractPeer(
   return p == headers.end() ? std::string{"unknown"} : p->second;
 }
 
-class UploadObject : public ThroughputExperiment {
+class ResumableUpload : public ThroughputExperiment {
  public:
-  explicit UploadObject(google::cloud::storage::Client client,
-                        ExperimentTransport transport,
-                        std::shared_ptr<std::string> random_data,
-                        bool prefer_insert)
+  explicit ResumableUpload(google::cloud::storage::Client client,
+                           ExperimentTransport transport,
+                           std::shared_ptr<std::string> random_data)
       : client_(std::move(client)),
         transport_(transport),
-        random_data_(std::move(random_data)),
-        prefer_insert_(prefer_insert) {}
-  ~UploadObject() override = default;
+        random_data_(std::move(random_data)) {}
+  ~ResumableUpload() override = default;
 
   ThroughputResult Run(std::string const& bucket_name,
                        std::string const& object_name,
@@ -62,40 +60,6 @@ class UploadObject : public ThroughputExperiment {
 
     std::vector<char> buffer(config.app_buffer_size);
 
-    // When the object is relatively small using `ObjectInsert` might be more
-    // efficient. Randomly select about 1/2 of the small writes to use
-    // ObjectInsert()
-    if (static_cast<std::size_t>(config.object_size) < random_data_->size() &&
-        prefer_insert_) {
-      auto const start = std::chrono::system_clock::now();
-      auto timer = Timer::PerThread();
-      std::string data =
-          random_data_->substr(0, static_cast<std::size_t>(config.object_size));
-      auto object_metadata = client_.InsertObject(
-          bucket_name, object_name, std::move(data),
-          gcs::DisableCrc32cChecksum(!config.enable_crc32c),
-          gcs::DisableMD5Hash(!config.enable_md5), api_selector);
-      auto const usage = timer.Sample();
-      auto notes =
-          bucket_name + ';' + object_name + ';' +
-          (object_metadata ? std::to_string(object_metadata->generation())
-                           : std::string{});
-      return ThroughputResult{ExperimentLibrary::kCppClient,
-                              transport_,
-                              kOpInsert,
-                              start,
-                              config.object_size,
-                              /*transfer_offset=*/0,
-                              config.object_size,
-                              config.app_buffer_size,
-                              config.enable_crc32c,
-                              config.enable_md5,
-                              usage.elapsed_time,
-                              usage.cpu_time,
-                              object_metadata.status(),
-                              "[insert-no-peer]",
-                              std::move(notes)};
-    }
     auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     auto writer = client_.WriteObject(
@@ -139,7 +103,69 @@ class UploadObject : public ThroughputExperiment {
   google::cloud::storage::Client client_;
   ExperimentTransport transport_;
   std::shared_ptr<std::string> random_data_;
-  bool prefer_insert_;
+};
+
+class SimpleUpload : public ThroughputExperiment {
+ public:
+  explicit SimpleUpload(google::cloud::storage::Client client,
+                        ExperimentTransport transport,
+                        std::shared_ptr<std::string> random_data)
+      : client_(std::move(client)),
+        transport_(transport),
+        random_data_(std::move(random_data)),
+        fallback_(client_, transport_, random_data_) {}
+  ~SimpleUpload() override = default;
+
+  ThroughputResult Run(std::string const& bucket_name,
+                       std::string const& object_name,
+                       ThroughputExperimentConfig const& config) override {
+    // If the requested object is too large, fall back on resumable uploads.
+    if (static_cast<std::size_t>(config.object_size) > random_data_->size()) {
+      return fallback_.Run(bucket_name, object_name, config);
+    }
+    auto api_selector = gcs::Fields();
+    if (transport_ == ExperimentTransport::kXml) {
+      // The default API is JSON, we force XML by not using features that XML
+      // does not implement:
+      api_selector = gcs::Fields("");
+    }
+
+    // Only relatively small objects can be uploaded using `InsertObject()`, so
+    // truncate the object to the right size.
+    auto const start = std::chrono::system_clock::now();
+    auto timer = Timer::PerThread();
+    std::string data = random_data_->substr(0, config.object_size);
+    auto object_metadata = client_.InsertObject(
+        bucket_name, object_name, std::move(data),
+        gcs::DisableCrc32cChecksum(!config.enable_crc32c),
+        gcs::DisableMD5Hash(!config.enable_md5), api_selector);
+    auto const usage = timer.Sample();
+    auto notes =
+        bucket_name + ';' + object_name + ';' +
+        (object_metadata ? std::to_string(object_metadata->generation())
+                         : std::string{});
+    return ThroughputResult{ExperimentLibrary::kCppClient,
+                            transport_,
+                            kOpInsert,
+                            start,
+                            config.object_size,
+                            /*transfer_offset=*/0,
+                            config.object_size,
+                            config.app_buffer_size,
+                            config.enable_crc32c,
+                            config.enable_md5,
+                            usage.elapsed_time,
+                            usage.cpu_time,
+                            object_metadata.status(),
+                            "[insert-no-peer]",
+                            std::move(notes)};
+  }
+
+ private:
+  google::cloud::storage::Client client_;
+  ExperimentTransport transport_;
+  std::shared_ptr<std::string> random_data_;
+  ResumableUpload fallback_;
 };
 
 /**
@@ -386,10 +412,15 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
   for (auto l : options.libs) {
     if (l == ExperimentLibrary::kRaw) continue;
     for (auto t : options.transports) {
-      result.push_back(
-          absl::make_unique<UploadObject>(provider(t), t, contents, false));
-      result.push_back(
-          absl::make_unique<UploadObject>(provider(t), t, contents, true));
+      for (auto const& function : options.upload_functions) {
+        if (function == "InsertObject") {
+          result.push_back(
+              absl::make_unique<SimpleUpload>(provider(t), t, contents));
+        } else /* if (function == "WriteObject") */ {
+          result.push_back(
+              absl::make_unique<ResumableUpload>(provider(t), t, contents));
+        }
+      }
     }
   }
   return result;
