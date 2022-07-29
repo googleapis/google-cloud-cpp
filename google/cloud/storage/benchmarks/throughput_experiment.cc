@@ -19,6 +19,7 @@
 #include "absl/memory/memory.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <curl/curl.h>
+#include <iterator>
 #include <vector>
 
 namespace google {
@@ -35,7 +36,22 @@ std::string ExtractPeer(
   if (p == headers.end()) {
     p = headers.find(":curl-peer");
   }
-  return p == headers.end() ? std::string{"unknown"} : p->second;
+  return p == headers.end() ? std::string{"[peer-unknown]"} : p->second;
+}
+
+std::string ExtractRetryCount(
+    std::multimap<std::string, std::string> const& headers) {
+  auto const range = headers.equal_range(":retry-count");
+  auto const d = std::distance(range.first, range.second);
+  if (d == 0) return "[retry-count-unknown]";
+  return std::next(range.first, d - 1)->second;
+}
+
+std::string ExtractUploadId(std::string v) {
+  auto constexpr kRestField = "upload_id=";
+  auto const pos = v.find(kRestField);
+  if (pos == std::string::npos) return v;
+  return v.substr(pos + std::strlen(kRestField));
 }
 
 class ResumableUpload : public ThroughputExperiment {
@@ -66,7 +82,7 @@ class ResumableUpload : public ThroughputExperiment {
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
         gcs::DisableMD5Hash(!config.enable_md5), api_selector);
-    std::string upload_id = writer.resumable_session_id();
+    auto upload_id = ExtractUploadId(writer.resumable_session_id());
     for (std::int64_t offset = 0; offset < config.object_size;
          offset += config.app_buffer_size) {
       auto len = config.app_buffer_size;
@@ -77,10 +93,9 @@ class ResumableUpload : public ThroughputExperiment {
     }
     writer.Close();
     auto const usage = timer.Sample();
-    auto notes =
-        bucket_name + ';' + object_name + ';' + upload_id + ';' +
-        (writer.metadata() ? std::to_string(writer.metadata()->generation())
-                           : std::string{});
+    auto generation = writer.metadata()
+                          ? std::to_string(writer.metadata()->generation())
+                          : std::string{};
 
     return ThroughputResult{ExperimentLibrary::kCppClient,
                             transport_,
@@ -96,7 +111,12 @@ class ResumableUpload : public ThroughputExperiment {
                             usage.cpu_time,
                             writer.metadata().status(),
                             ExtractPeer(writer.headers()),
-                            std::move(notes)};
+                            bucket_name,
+                            object_name,
+                            std::move(generation),
+                            std::move(upload_id),
+                            ExtractRetryCount(writer.headers()),
+                            /*notes=*/{}};
   }
 
  private:
@@ -140,10 +160,9 @@ class SimpleUpload : public ThroughputExperiment {
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
         gcs::DisableMD5Hash(!config.enable_md5), api_selector);
     auto const usage = timer.Sample();
-    auto notes =
-        bucket_name + ';' + object_name + ';' +
-        (object_metadata ? std::to_string(object_metadata->generation())
-                         : std::string{});
+    auto generation = object_metadata
+                          ? std::to_string(object_metadata->generation())
+                          : std::string{};
     return ThroughputResult{ExperimentLibrary::kCppClient,
                             transport_,
                             kOpInsert,
@@ -157,8 +176,13 @@ class SimpleUpload : public ThroughputExperiment {
                             usage.elapsed_time,
                             usage.cpu_time,
                             object_metadata.status(),
-                            "[insert-no-peer]",
-                            std::move(notes)};
+                            "[peer-N/A]",
+                            bucket_name,
+                            object_name,
+                            std::move(generation),
+                            "[upload-id-N/A]",
+                            "[retry-count-unknown]",
+                            /*notes=*/{}};
   }
 
  private:
@@ -207,8 +231,6 @@ class DownloadObject : public ThroughputExperiment {
       transfer_size += reader.gcount();
     }
     auto const usage = timer.Sample();
-    auto notes = bucket_name + ';' + object_name + ';' +
-                 std::to_string(reader.generation().value_or(-1));
     return ThroughputResult{ExperimentLibrary::kCppClient,
                             transport_,
                             config.op,
@@ -223,7 +245,12 @@ class DownloadObject : public ThroughputExperiment {
                             usage.cpu_time,
                             reader.status(),
                             ExtractPeer(reader.headers()),
-                            std::move(notes)};
+                            bucket_name,
+                            object_name,
+                            std::to_string(reader.generation().value_or(-1)),
+                            "[upload-id-N/A]",
+                            ExtractRetryCount(reader.headers()),
+                            /*notes=*/{}};
   }
 
  private:
@@ -305,7 +332,6 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     curl_easy_cleanup(hnd);
     curl_slist_free_all(slist1);
     auto const usage = timer.Sample();
-    auto notes = bucket_name + ';' + object_name + ";N/A";
     return ThroughputResult{ExperimentLibrary::kRaw,
                             ExperimentTransport::kXml,
                             config.op,
@@ -320,7 +346,12 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
                             usage.cpu_time,
                             status,
                             std::move(peer),
-                            std::move(notes)};
+                            bucket_name,
+                            object_name,
+                            "[generation-N/A]",
+                            "[upload-id-N/A]",
+                            "[retry-count-N/A]",
+                            /*notes=*/{}};
   }
 
  private:
@@ -364,7 +395,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
     auto stream = stub_->ReadObject(&context, request);
     google::storage::v2::ReadObjectResponse response;
     std::int64_t bytes_received = 0;
-    std::string generation = "N/A";
+    std::string generation = "[generation-N/A]";
     while (stream->Read(&response)) {
       if (response.has_checksummed_data()) {
         bytes_received += response.checksummed_data().content().size();
@@ -377,7 +408,6 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
         ::google::cloud::MakeStatusFromRpcError(stream->Finish());
     auto const usage = timer.Sample();
 
-    auto notes = bucket_name + ';' + object_name + ';' + generation;
     return ThroughputResult{ExperimentLibrary::kRaw,
                             transport_,
                             config.op,
@@ -392,7 +422,12 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
                             usage.cpu_time,
                             status,
                             context.peer(),
-                            std::move(notes)};
+                            bucket_name,
+                            object_name,
+                            generation,
+                            "[upload-id-N/A]",
+                            "[retry-count-N/A]",
+                            /*notes=*/{}};
   }
 
  private:

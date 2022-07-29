@@ -71,15 +71,27 @@ TEST(ThroughputResult, HeaderMatches) {
   EXPECT_TRUE(header_stream);
   auto const header = std::move(header_stream).str();
 
-  auto const line = ToString(ThroughputResult{
-      ExperimentLibrary::kCppClient, ExperimentTransport::kGrpc, kOpInsert,
-      std::chrono::system_clock::now(),
-      /*object_size=*/8 * kMiB, /*transfer_offset=*/4 * kMiB,
-      /*transfer_size=*/3 * kMiB,
-      /*app_buffer_size=*/2 * kMiB,
-      /*crc_enabled=*/true, /*md5_enabled=*/false,
-      std::chrono::microseconds(234000), std::chrono::microseconds(345000),
-      Status{StatusCode::kOutOfRange, "OOR-status-message"}, "peer", "notes"});
+  auto const line = ToString(
+      ThroughputResult{ExperimentLibrary::kCppClient,
+                       ExperimentTransport::kGrpc,
+                       kOpInsert,
+                       std::chrono::system_clock::now(),
+                       /*object_size=*/8 * kMiB,
+                       /*transfer_offset=*/4 * kMiB,
+                       /*transfer_size=*/3 * kMiB,
+                       /*app_buffer_size=*/2 * kMiB,
+                       /*crc_enabled=*/true,
+                       /*md5_enabled=*/false,
+                       std::chrono::microseconds(234000),
+                       std::chrono::microseconds(345000),
+                       Status{StatusCode::kOutOfRange, "OOR-status-message"},
+                       "peer",
+                       "bucket-name",
+                       "object-name",
+                       "generation",
+                       "upload-id",
+                       "retry-count",
+                       "notes"});
   ASSERT_STATUS_OK(line);
   ASSERT_FALSE(header.empty());
   ASSERT_FALSE(line->empty());
@@ -107,6 +119,11 @@ TEST(ThroughputResult, HeaderMatches) {
   EXPECT_THAT(*line, HasSubstr(StatusCodeToString(StatusCode::kOutOfRange)));
   EXPECT_THAT(*line, HasSubstr("OOR-status-message"));
   EXPECT_THAT(*line, HasSubstr("peer"));
+  EXPECT_THAT(*line, HasSubstr(",bucket-name,"));
+  EXPECT_THAT(*line, HasSubstr(",object-name,"));
+  EXPECT_THAT(*line, HasSubstr(",generation,"));
+  EXPECT_THAT(*line, HasSubstr(",upload-id,"));
+  EXPECT_THAT(*line, HasSubstr(",retry-count,"));
   EXPECT_THAT(*line, HasSubstr(",notes,"));
 }
 
