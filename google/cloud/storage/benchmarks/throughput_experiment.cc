@@ -154,7 +154,8 @@ class SimpleUpload : public ThroughputExperiment {
     // truncate the object to the right size.
     auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
-    std::string data = random_data_->substr(0, config.object_size);
+    std::string data =
+        random_data_->substr(0, static_cast<std::size_t>(config.object_size));
     auto object_metadata = client_.InsertObject(
         bucket_name, object_name, std::move(data),
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
