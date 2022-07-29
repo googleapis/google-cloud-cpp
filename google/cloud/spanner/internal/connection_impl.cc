@@ -105,9 +105,7 @@ ConnectionImpl::ConnectionImpl(
     std::vector<std::shared_ptr<SpannerStub>> stubs, Options opts)
     : db_(std::move(db)),
       background_threads_(std::move(background_threads)),
-      opts_(internal::MergeOptions(
-          std::move(opts),
-          spanner_internal::DefaultOptions(Connection::options()))),
+      opts_(internal::MergeOptions(std::move(opts), Connection::options())),
       session_pool_(MakeSessionPool(db_, std::move(stubs),
                                     background_threads_->cq(), opts_)) {}
 
