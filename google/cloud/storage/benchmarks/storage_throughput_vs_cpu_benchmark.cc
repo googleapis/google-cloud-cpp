@@ -301,6 +301,14 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
       opts.set<google::cloud::storage::internal::TargetApiVersionOption>(
           *options.target_api_version_path);
     }
+    if (options.transfer_stall_minimum_rate.has_value()) {
+      opts.set<gcs_ex::TransferStallMinimumRateOption>(
+          *options.transfer_stall_minimum_rate);
+    }
+    if (options.download_stall_minimum_rate.has_value()) {
+      opts.set<gcs_ex::DownloadStallMinimumRateOption>(
+          *options.download_stall_minimum_rate);
+    }
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     using ::google::cloud::storage_experimental::DefaultGrpcClient;
     if (options.grpc_background_threads.has_value()) {

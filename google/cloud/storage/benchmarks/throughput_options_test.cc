@@ -56,7 +56,9 @@ TEST(ThroughputOptions, Basic) {
       "--grpc-endpoint=test-only-grpc",
       "--direct-path-endpoint=test-only-direct-path",
       "--transfer-stall-timeout=86400s",
+      "--transfer-stall-minimum-rate=7KiB",
       "--download-stall-timeout=86401s",
+      "--download-stall-minimum-rate=9KiB",
       "--minimum-sample-delay=250ms",
       "--minimum-read-offset=32KiB",
       "--maximum-read-offset=48KiB",
@@ -99,7 +101,9 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ("test-only-grpc", options->grpc_endpoint);
   EXPECT_EQ("test-only-direct-path", options->direct_path_endpoint);
   EXPECT_EQ(std::chrono::seconds(86400), options->transfer_stall_timeout);
+  EXPECT_EQ(7 * kKiB, options->transfer_stall_minimum_rate);
   EXPECT_EQ(std::chrono::seconds(86401), options->download_stall_timeout);
+  EXPECT_EQ(9 * kKiB, options->download_stall_minimum_rate);
   EXPECT_EQ(std::chrono::milliseconds(250), options->minimum_sample_delay);
   EXPECT_EQ("vN", options->target_api_version_path.value_or(""));
   EXPECT_EQ(16, options->grpc_background_threads.value_or(0));

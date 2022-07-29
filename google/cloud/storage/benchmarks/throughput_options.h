@@ -61,7 +61,9 @@ struct ThroughputOptions {
   std::string grpc_endpoint = "storage.googleapis.com";
   std::string direct_path_endpoint = "google-c2p:///storage.googleapis.com";
   std::chrono::seconds transfer_stall_timeout{};
+  absl::optional<std::uint32_t> transfer_stall_minimum_rate;
   std::chrono::seconds download_stall_timeout{};
+  absl::optional<std::uint32_t> download_stall_minimum_rate;
   std::chrono::milliseconds minimum_sample_delay{};
   std::int64_t minimum_read_offset = 0;
   std::int64_t maximum_read_offset = 0;

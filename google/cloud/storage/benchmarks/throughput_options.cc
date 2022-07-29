@@ -332,13 +332,21 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
          options.direct_path_endpoint = val;
        }},
       {"--transfer-stall-timeout",
-       "configure the storage::TransferStallTimeoutOption: the maximum time"
-       " allowed for data to 'stall' (make no progress) on all operations,"
-       " except for downloads (see --download-stall-timeout)."
+       "configure `storage::TransferStallTimeoutOption`: the maximum time"
+       " allowed for data to 'stall' (make insufficient progress) on all"
+       " operations, except for downloads (see --download-stall-timeout)."
        " This option is intended for troubleshooting, most of the time the"
        " value is not expected to change the library performance.",
        [&options](std::string const& val) {
          options.transfer_stall_timeout = ParseDuration(val);
+       }},
+      {"--transfer-stall-minimum-rate",
+       "configure `storage::TransferStallMinimumRateOption`: the transfer"
+       " is aborted if the average transfer rate is below this limit for"
+       " the period set via `storage::TransferStallTimeoutOption`.",
+       [&options](std::string const& val) {
+         options.transfer_stall_minimum_rate =
+             static_cast<std::uint32_t>(ParseBufferSize(val));
        }},
       {"--download-stall-timeout",
        "configure the storage::DownloadStallTimeoutOption: the maximum time"
@@ -347,6 +355,14 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        " value is not expected to change the library performance.",
        [&options](std::string const& val) {
          options.download_stall_timeout = ParseDuration(val);
+       }},
+      {"--download-stall-minimum-rate",
+       "configure `storage::DownloadStallMinimumRateOption`: the download"
+       " is aborted if the average transfer rate is below this limit for"
+       " the period set via `storage::DownloadStallTimeoutOption`.",
+       [&options](std::string const& val) {
+         options.download_stall_minimum_rate =
+             static_cast<std::uint32_t>(ParseBufferSize(val));
        }},
       {"--minimum-sample-delay",
        "configure the minimum time between samples."
