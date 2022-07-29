@@ -41,31 +41,42 @@ inline google::cloud::Options GroupOptions() {
 }
 
 template <typename... Tail>
-static Options GroupOptions(Options& bundle, Tail&&... t) {
+Options GroupOptions(Options& bundle, Tail&&... t);
+template <typename... Tail>
+Options GroupOptions(Options&& bundle, Tail&&... t);
+template <typename... Tail>
+Options GroupOptions(Options const& bundle, Tail&&... t);
+template <typename... Tail>
+Options GroupOptions(Options const&& bundle, Tail&&... t);
+template <typename Head, typename... Tail>
+Options GroupOptions(Head&&, Tail&&... t);
+
+template <typename... Tail>
+Options GroupOptions(Options& bundle, Tail&&... t) {
   return google::cloud::internal::MergeOptions(
       GroupOptions(std::forward<Tail>(t)...), std::move(bundle));
 }
 
 template <typename... Tail>
-static Options GroupOptions(Options&& bundle, Tail&&... t) {
+Options GroupOptions(Options&& bundle, Tail&&... t) {
   return google::cloud::internal::MergeOptions(
       GroupOptions(std::forward<Tail>(t)...), std::move(bundle));
 }
 
 template <typename... Tail>
-static Options GroupOptions(Options const& bundle, Tail&&... t) {
+Options GroupOptions(Options const& bundle, Tail&&... t) {
   return google::cloud::internal::MergeOptions(
       GroupOptions(std::forward<Tail>(t)...), std::move(bundle));
 }
 
 template <typename... Tail>
-static Options GroupOptions(Options const&& bundle, Tail&&... t) {
+Options GroupOptions(Options const&& bundle, Tail&&... t) {
   return google::cloud::internal::MergeOptions(
       GroupOptions(std::forward<Tail>(t)...), std::move(bundle));
 }
 
 template <typename Head, typename... Tail>
-static Options GroupOptions(Head&&, Tail&&... t) {
+Options GroupOptions(Head&&, Tail&&... t) {
   return GroupOptions(std::forward<Tail>(t)...);
 }
 ///@}
