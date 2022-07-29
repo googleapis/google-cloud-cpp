@@ -51,6 +51,11 @@ void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
      << ',' << r.elapsed_time.count()          //
      << ',' << r.cpu_time.count()              //
      << ',' << CleanupCsv(r.peer)              //
+     << ',' << CleanupCsv(r.bucket_name)       //
+     << ',' << CleanupCsv(r.object_name)       //
+     << ',' << CleanupCsv(r.generation)        //
+     << ',' << CleanupCsv(r.upload_id)         //
+     << ',' << CleanupCsv(r.retry_count)       //
      << ',' << CleanupCsv(r.notes)             //
      << ',' << r.status.code()                 //
      << ',' << CleanupCsv(r.status.message())  //
@@ -60,7 +65,8 @@ void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
 void PrintThroughputResultHeader(std::ostream& os) {
   os << "Library,Transport,Op,Start,ObjectSize,TransferOffset,TransferSize"
      << ",AppBufferSize,Crc32cEnabled,MD5Enabled"
-     << ",ElapsedTimeUs,CpuTimeUs,Peer,Notes,StatusCode,Status\n";
+     << ",ElapsedTimeUs,CpuTimeUs,Peer,BucketName,ObjectName,Generation"
+     << ",UploadId,RetryCount,Notes,StatusCode,Status\n";
 }
 
 char const* ToString(OpType op) {

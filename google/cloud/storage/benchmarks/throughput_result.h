@@ -90,6 +90,16 @@ struct ThroughputResult {
   google::cloud::Status status;
   /// The peer used during the transfer
   std::string peer;
+  /// The bucket name
+  std::string bucket_name;
+  /// The object name
+  std::string object_name;
+  /// The object generation
+  std::string generation;
+  /// The upload id
+  std::string upload_id;
+  /// Retry Count
+  std::string retry_count;
   /// Additional notes
   std::string notes;
 };
