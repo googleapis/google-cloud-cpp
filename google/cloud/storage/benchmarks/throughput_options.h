@@ -71,6 +71,7 @@ struct ThroughputOptions {
   std::int64_t read_size_quantum = 128 * kKiB;
   absl::optional<std::string> target_api_version_path;
   absl::optional<int> grpc_background_threads;
+  bool enable_retry_loop = true;
 };
 
 google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(

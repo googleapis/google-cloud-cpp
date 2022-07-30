@@ -66,6 +66,7 @@ TEST(ThroughputOptions, Basic) {
       "--read-size-quantum=16KiB",
       "--target-api-version-path=vN",
       "--grpc-background-threads=16",
+      "--enable-retry-loop=false",
   });
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
@@ -103,6 +104,7 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ(std::chrono::milliseconds(250), options->minimum_sample_delay);
   EXPECT_EQ("vN", options->target_api_version_path.value_or(""));
   EXPECT_EQ(16, options->grpc_background_threads.value_or(0));
+  EXPECT_FALSE(options->enable_retry_loop);
 }
 
 TEST(ThroughputOptions, Description) {
