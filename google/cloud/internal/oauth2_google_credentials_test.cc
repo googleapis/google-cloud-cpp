@@ -20,7 +20,6 @@
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
-#include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -49,32 +48,20 @@ class GoogleCredentialsTest : public ::testing::Test {
         gcloud_path_override_env_var_(GoogleGcloudAdcFileEnvVar(), {}) {}
 
  protected:
-  std::string CreateRandomFileName() {
-    // When running on the internal Google CI systems we cannot write to the
-    // local directory, GTest has a good temporary directory in that case.
-    return google::cloud::internal::PathAppend(
-        ::testing::TempDir(),
-        google::cloud::internal::Sample(
-            generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789"));
-  }
-
-  google::cloud::internal::DefaultPRNG generator_ =
-      google::cloud::internal::MakeDefaultPRNG();
-
   ScopedEnvironment home_env_var_;
   ScopedEnvironment adc_env_var_;
   ScopedEnvironment gcloud_path_override_env_var_;
 };
 
-std::string const kAuthorizedUserCredFilename = "oauth2-authorized-user.json";
-std::string const kAuthorizedUserCredContents = R"""({
+auto constexpr kAuthorizedUserCredFilename = "oauth2-authorized-user.json";
+auto constexpr kAuthorizedUserCredContents = R"""({
   "client_id": "test-invalid-test-invalid.apps.googleusercontent.com",
   "client_secret": "invalid-invalid-invalid",
   "refresh_token": "1/test-test-test",
   "type": "authorized_user"
 })""";
 
-void SetupAuthorizedUserCredentialsFileForTest(std::string const& filename) {
+void SetUpAuthorizedUserCredentialsFileForTest(std::string const& filename) {
   std::ofstream os(filename);
   os << kAuthorizedUserCredContents;
   os.close();
@@ -93,7 +80,7 @@ void SetupAuthorizedUserCredentialsFileForTest(std::string const& filename) {
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
   std::string filename = google::cloud::internal::PathAppend(
       ::testing::TempDir(), kAuthorizedUserCredFilename);
-  SetupAuthorizedUserCredentialsFileForTest(filename);
+  SetUpAuthorizedUserCredentialsFileForTest(filename);
 
   // Test that the authorized user credentials are loaded as the default when
   // specified via the well known environment variable.
@@ -109,9 +96,9 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
   std::string filename = google::cloud::internal::PathAppend(
       ::testing::TempDir(), kAuthorizedUserCredFilename);
-  SetupAuthorizedUserCredentialsFileForTest(filename);
+  SetUpAuthorizedUserCredentialsFileForTest(filename);
   // Test that the authorized user credentials are loaded as the default when
-  // stored in the the well known gcloud ADC file path.
+  // stored in the well known gcloud ADC file path.
   ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
                                                  filename.c_str());
   auto creds = GoogleDefaultCredentials();
@@ -131,8 +118,7 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
  * make this an integration test.
  */
 
-std::string const kServiceAccountCredFilename = "service-account.json";
-std::string const kServiceAccountCredContents = R"""({
+auto constexpr kServiceAccountCredContents = R"""({
     "type": "service_account",
     "project_id": "foo-project",
     "private_key_id": "a1a111aa1111a11a11a11aa111a111a1a1111111",
@@ -145,20 +131,7 @@ std::string const kServiceAccountCredContents = R"""({
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
 
-std::string const kServiceAccountCredInvalidPrivateKey = R"""({
-    "type": "service_account",
-    "project_id": "foo-project",
-    "private_key_id": "a1a111aa1111a11a11a11aa111a111a1a1111111",
-    "private_key": "an-invalid-private-key",
-    "client_email": "foo-email@foo-project.iam.gserviceaccount.com",
-    "client_id": "100000000000000000001",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://accounts.google.com/o/oauth2/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
-})""";
-
-void SetupServiceAccountCredentialsFileForTest(std::string const& filename) {
+void SetUpServiceAccountCredentialsFileForTest(std::string const& filename) {
   std::ofstream os(filename);
   os << kServiceAccountCredContents;
   os.close();
@@ -167,7 +140,7 @@ void SetupServiceAccountCredentialsFileForTest(std::string const& filename) {
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
   std::string filename = google::cloud::internal::PathAppend(
       ::testing::TempDir(), kAuthorizedUserCredFilename);
-  SetupServiceAccountCredentialsFileForTest(filename);
+  SetUpServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded as the default when
   // specified via the well known environment variable.
@@ -183,10 +156,10 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
   std::string filename = google::cloud::internal::PathAppend(
       ::testing::TempDir(), kAuthorizedUserCredFilename);
-  SetupServiceAccountCredentialsFileForTest(filename);
+  SetUpServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded as the default when
-  // stored in the the well known gcloud ADC file path.
+  // stored in the well known gcloud ADC file path.
   ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
                                                  filename.c_str());
   auto creds = GoogleDefaultCredentials();
