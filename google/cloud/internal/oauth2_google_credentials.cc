@@ -42,10 +42,7 @@ namespace {
 // credential file is found, this function returns nullptr to indicate a service
 // account file wasn't found.
 StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
-    std::string const& path, bool non_service_account_ok,
-    absl::optional<std::set<std::string>> service_account_scopes,
-    absl::optional<std::string> service_account_subject,
-    Options const& options) {
+    std::string const& path, Options const& options) {
   std::ifstream ifs(path);
   if (!ifs.is_open()) {
     // We use kUnknown here because we don't know if the file does not exist, or
@@ -61,26 +58,16 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
   std::string cred_type = cred_json.value("type", "no type given");
   // If non_service_account_ok==false and the cred_type is authorized_user,
   // we'll return "Unsupported credential type (authorized_user)".
-  if (cred_type == "authorized_user" && non_service_account_ok) {
-    if (service_account_scopes || service_account_subject) {
-      // No ptr indicates that the file we found was not a service account file.
-      return StatusOr<std::unique_ptr<Credentials>>(nullptr);
-    }
+  if (cred_type == "authorized_user") {
     auto info = ParseAuthorizedUserCredentials(contents, path);
-    if (!info) {
-      return info.status();
-    }
+    if (!info) return std::move(info).status();
     std::unique_ptr<Credentials> ptr =
         absl::make_unique<AuthorizedUserCredentials>(*info);
     return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
   }
   if (cred_type == "service_account") {
     auto info = ParseServiceAccountCredentials(contents, path);
-    if (!info) {
-      return info.status();
-    }
-    info->subject = std::move(service_account_subject);
-    info->scopes = std::move(service_account_scopes);
+    if (!info) return std::move(info).status();
     std::unique_ptr<Credentials> ptr =
         absl::make_unique<ServiceAccountCredentials>(*info, options);
     return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
@@ -104,9 +91,6 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
 // file is found, this function returns nullptr to indicate a service account
 // file wasn't found.
 StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
-    bool non_service_account_ok,
-    absl::optional<std::set<std::string>> service_account_scopes,
-    absl::optional<std::string> service_account_subject,
     Options const& options = {}) {
   // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
   auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
@@ -128,9 +112,7 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
 
   // If the path was specified, try to load that file; explicitly fail if it
   // doesn't exist or can't be read and parsed.
-  return LoadCredsFromPath(path, non_service_account_ok,
-                           std::move(service_account_scopes),
-                           std::move(service_account_subject), options);
+  return LoadCredsFromPath(path, options);
 }
 
 }  // namespace
@@ -139,17 +121,13 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
     Options const& options) {
   // 1 and 2) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable
   // is set or if the gcloud ADC file exists.
-  auto creds = MaybeLoadCredsFromAdcPaths(true, {}, {}, options);
-  if (!creds) {
-    return StatusOr<std::shared_ptr<Credentials>>(creds.status());
-  }
-  if (*creds) {
-    return StatusOr<std::shared_ptr<Credentials>>(std::move(*creds));
-  }
+  auto creds = MaybeLoadCredsFromAdcPaths(options);
+  if (!creds) return std::move(creds).status();
+  if (*creds) return std::shared_ptr<Credentials>(*std::move(creds));
 
   // 3) Check for implicit environment-based credentials (GCE, GAE Flexible,
   // Cloud Run or GKE Environment).
-  return StatusOr<std::shared_ptr<Credentials>>(
+  return std::shared_ptr<Credentials>(
       std::make_shared<ComputeEngineCredentials>());
 }
 
