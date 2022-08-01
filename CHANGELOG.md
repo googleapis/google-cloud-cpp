@@ -116,16 +116,57 @@ may elicit a deprecation warning. See [#9086] for more details.
 [#9086]: https://github.com/googleapis/google-cloud-cpp/issues/9086
 </details>
 
-## v2.1.0 - TBD
+## v2.2.0 - TBD
+
+## v2.1.0 - 2022-08
 
 ### New Libraries
 
-We are introducing 2 new client libraries for GCP services. While we do not
+We are introducing new client libraries for GCP services. While we do not
 anticipate any API changes to these libraries before declaring them GA, we are
 releasing them early in case they elicit some feedback that requires changes.
 
-* [Batch](/google/cloud/batch/README.md)
-* [Cloud Run](/google/cloud/run/README.md)
+* [Batch](/google/cloud/batch/README.md) ([#9474](https://github.com/googleapis/google-cloud-cpp/pull/9474)) 
+* [Beyond Corp](/google/cloud/beyondcorp/README.md) ([#9555](https://github.com/googleapis/google-cloud-cpp/pull/9555))
+* [Cloud Run](/google/cloud/run/README.md) ([#9460](https://github.com/googleapis/google-cloud-cpp/pull/9460))
+
+### [Assured Workloads](/google/cloud/assuredworkloads/README.md)
+
+* fix(assuredworkloads): reenable on windows ([#9467](https://github.com/googleapis/google-cloud-cpp/pull/9467))
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+* fix(bigtable): the mocks library is no longer header-only ([#9568](https://github.com/googleapis/google-cloud-cpp/pull/9568))
+
+### [Cloud Asset](/google/cloud/asset/README.md)
+
+* fix(asset): reenable on macOS ([#9468](https://github.com/googleapis/google-cloud-cpp/pull/9468))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+* fix(pubsub): missing subscription name in lease extensions ([#9523](https://github.com/googleapis/google-cloud-cpp/pull/9523))
+* feat(pubsub): exactly-once delivery ([#9436](https://github.com/googleapis/google-cloud-cpp/pull/9436))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+* fix(spanner): avoid evaluation-order issue in function arguments ([#9452](https://github.com/googleapis/google-cloud-cpp/pull/9452))
+
+### [Stackdriver Debugger](/google/cloud/debugger/README.md)
+
+* doc(debugger): announce deprecation ([#9552](https://github.com/googleapis/google-cloud-cpp/pull/9552))
+
+### [Storage](/google/cloud/storage/README.md)
+
+* feat(storage): experimental options to tune stall timeouts ([#9593](https://github.com/googleapis/google-cloud-cpp/pull/9593))
+* feat(storage): add debugging headers to `ObjectWriteStream` ([#9580](https://github.com/googleapis/google-cloud-cpp/pull/9580))
+* fix(storage): no char for `std::uniform_int_distribution` ([#9509](https://github.com/googleapis/google-cloud-cpp/pull/9509))
+* feat(storage): support Bucket custom placement config ([#9481](https://github.com/googleapis/google-cloud-cpp/pull/9481))
+
+### [Common Libraries](/google/cloud/README.md)
+
+* feat(common): make the RPC log even more readable ([#9561](https://github.com/googleapis/google-cloud-cpp/pull/9561))
+* feat: improve error messages for access token errors ([#9485](https://github.com/googleapis/google-cloud-cpp/pull/9485))
+* feat(common): make the RPC log even more readable ([#9477](https://github.com/googleapis/google-cloud-cpp/pull/9477))
 
 ## v2.0.0 - 2022-07
 
