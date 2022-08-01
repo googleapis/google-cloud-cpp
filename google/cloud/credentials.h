@@ -39,6 +39,39 @@ class CredentialsVisitor;
  * description to initialize the internal components used in the authentication
  * flows.
  *
+ * A complete overview of authentication and authorization for Google Cloud is
+ * outside the scope of this reference guide. We recommend the [IAM overview]
+ * instead. The following brief introduction may help as you read the reference
+ * documentation for components related to authentication:
+ *
+ * - The `Credentials` class and the factory functions that create
+ *   `std::shared_ptr<Credentials>` objects are related to *authentication*.
+ *   That is they allow you to define what *principal* is making RPCs to GCP.
+ * - The problem of *authorization*, that is, what principals can perform what
+ *   operations, is resolved by the [IAM Service] in GCP. If you need to use
+ *   this service, the [C++ IAM client library] may be useful. Some services
+ *   embed IAM operations in their APIs, in that case, the C++ client library
+ *   for the service may be easier to use.
+ * - There are two types of "principals" in GCP.
+ *   - **Service Accounts**: is an account for an application or compute
+ *     workload instead of an individual end user.
+ *   - **Google Accounts**: represents a developer, an administrator, or any
+ *     other person who interacts with Google Cloud.
+ * - Most applications should use `GoogleDefaultCredentials()`. This allows your
+ *   administrator to configure the service account used in your workload by
+ *   setting the default service account in the GCP environment where your
+ *   application is deployed (e.g. GCE, GKE, or Cloud Run).
+ * - During development, `GoogleDefaultCredentials()` uses the
+ *   `GOOGLE_APPLICATION_CREDENTIALS` environment variable to load an
+ *   alternative service account key. The value of this environment variable is
+ *   the full path of a file which contains the service account key.
+ * - During development, if `GOOGLE_APPLICATION_CREDENTIALS` is not set then
+ *   `GoogleDefaultCredentials()` will use the account configured via
+ *   `gcloud auth application-default login`. This can be either a service
+ *   account or a Google Account, such as the developer's account.
+ * - Neither `google auth application-default` nor
+ *   `GOOGLE_APPLICATION_CREDENTIALS` are recommended for production workloads.
+ *
  * @par Limitations
  * The C++ GUAC library does not allow applications to create their own
  * credential types. It is not possible to extend the GUAC library without
@@ -51,7 +84,12 @@ class CredentialsVisitor;
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
  *
+ * @see https://cloud.google.com/iam for more information on the IAM Service.
+ *
  * [feature request]: https://github.com/googleapis/google-cloud-cpp/issues
+ * [IAM overview]: https://cloud.google.com/iam/docs/overview
+ * [IAM Service]: https://cloud.google.com/iam/docs
+ * [C++ IAM client library]: https://googleapis.dev/cpp/google-cloud-iam/latest/
  */
 class Credentials {
  public:
@@ -159,26 +197,37 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
     std::string target_service_account, Options opts = {});
 
 /**
- * Creates service account credentials from a JSON object in string form.
+ * Creates service account credentials from a service account key.
  *
- * The @p json_object  is expected to be in the format described by [aip/4112].
- * Such an object contains the identity of a service account, as well as a
- * private key that can be used to sign tokens, showing the caller was holding
- * the private key.
+ * A [service account] is an account for an application or compute workload
+ * instead of an individual end user. The recommended practice is to use
+ * Google Default Credentials, which relies on the configuration of the Google
+ * Cloud system hosting your application (GCE, GKE, Cloud Run) to authenticate
+ * your workload or application.  But sometimes you may need to create and
+ * download a [service account key], for example, to use a service account
+ * when running your application on a system that is not part of Google Cloud.
  *
- * In GCP one can create several "keys" for each service account, and these
- * keys are downloaded as a JSON "key file". The contents of such a file are
- * in the format required by this function. Remember that key files and their
- * contents should be treated as any other secret with security implications,
- * think of them as passwords (because they are!), don't store them or output
- * them where unauthorized persons may read them.
+ * Service account credentials are used in this latter case.
+ *
+ * You can create multiple service account keys for a single service account.
+ * When you create a service account key, the key is returned as string, in the
+ * format described by [aip/4112]. This string contains an id for the service
+ * account, as well as the cryptographical materials (a RSA private key)
+ * required to authenticate the caller.
+ *
+ * Therefore, services account keys should be treated as any other secret
+ * with security implications. Think of them as unencrypted passwords. Do not
+ * store them where unauthorized persons or programs may read them.
  *
  * As stated above, most applications should probably use default credentials,
  * maybe pointing them to a file with these contents. Using this function may be
- * useful when the json object is obtained from a Cloud Secret Manager or a
- * similar service.
+ * useful when the service account key is obtained from Cloud Secret Manager or
+ * a similar service.
  *
  * [aip/4112]: https://google.aip.dev/auth/4112
+ * [service account]: https://cloud.google.com/iam/docs/overview#service_account
+ * [service account key]:
+ * https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-cpp
  */
 std::shared_ptr<Credentials> MakeServiceAccountCredentials(
     std::string json_object);
