@@ -48,8 +48,10 @@ class CredentialsVisitor;
  *   `std::shared_ptr<Credentials>` objects are related to *authentication*.
  *   That is they allow you to define what *principal* is making RPCs to GCP.
  * - The problem of *authorization*, that is, what principals can perform what
- *   operations, is resolved by the [IAM Service] in GCP. There is a C++ client
- *   library to access IAM.
+ *   operations, is resolved by the [IAM Service] in GCP. If you need to use
+ *   this service, the [C++ IAM client library] may be useful. Some services
+ *   embed IAM operations in their APIs, in that case, the C++ client library
+ *   for the service may be easier to use.
  * - There are two types of "principals" in GCP.
  *   - **Service Accounts**: is an account for an application or compute
  *     workload instead of an individual end user.
@@ -60,18 +62,15 @@ class CredentialsVisitor;
  *   setting the default service account in the GCP environment where your
  *   application is deployed (e.g. GCE, GKE, or Cloud Run).
  * - During development, `GoogleDefaultCredentials()` uses the
- *   `GOOGLE_APPLICATION_CREDENTIALS` environment variable to load alternative
- *   service account key. The value of this environment variable is the full
- *   path of a file which contains the service account key.
+ *   `GOOGLE_APPLICATION_CREDENTIALS` environment variable to load an
+ *   alternative service account key. The value of this environment variable is
+ *   the full path of a file which contains the service account key.
  * - During development, if `GOOGLE_APPLICATION_CREDENTIALS` is not set then
  *   `GoogleDefaultCredentials()` will use the account configured via
  *   `gcloud auth application-default login`. This can be either a service
- *   account or a google account, such as the developer's account.
+ *   account or a Google Account, such as the developer's account.
  * - Neither `google auth application-default` nor
  *   `GOOGLE_APPLICATION_CREDENTIALS` are recommended for production workloads.
- *
- * [IAM overview]: https://cloud.google.com/iam/docs/overview
- * [IAM Service]: https://cloud.google.com/iam
  *
  * @par Limitations
  * The C++ GUAC library does not allow applications to create their own
@@ -85,10 +84,12 @@ class CredentialsVisitor;
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
  *
- * @see https://cloud.google.com/docs/iam for more information on the IAM
- *     Service.
+ * @see https://cloud.google.com/iam for more information on the IAM Service.
  *
  * [feature request]: https://github.com/googleapis/google-cloud-cpp/issues
+ * [IAM overview]: https://cloud.google.com/iam/docs/overview
+ * [IAM Service]: https://cloud.google.com/iam/docs
+ * [C++ IAM client library]: https://googleapis.dev/cpp/google-cloud-iam/latest/
  */
 class Credentials {
  public:
@@ -211,7 +212,7 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
  * You can create multiple service account keys for a single service account.
  * When you create a service account key, the key is returned as string, in the
  * format described by [aip/4112]. This string contains an id for the service
- * account, as well as a the cryptographical materials (a RSA private key)
+ * account, as well as the cryptographical materials (a RSA private key)
  * required to authenticate the caller.
  *
  * Therefore, services account keys should be treated as any other secret
@@ -225,7 +226,6 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
  *
  * [aip/4112]: https://google.aip.dev/auth/4112
  * [service account]: https://cloud.google.com/iam/docs/overview#service_account
- * [iam-overview]: https://cloud.google.com/iam/docs/overview
  * [service account key]:
  * https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-cpp
  */
