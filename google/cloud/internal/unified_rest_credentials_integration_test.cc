@@ -151,6 +151,25 @@ TEST(UnifiedRestCredentialsIntegrationTest, ServiceAccountCredentials) {
           MakeServiceAccountCredentials(contents))));
 }
 
+TEST(UnifiedRestCredentialsIntegrationTest, StorageGoogleDefaultCredentials) {
+  ASSERT_NO_FATAL_FAILURE(MakeStorageRpcCall(
+      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials())));
+}
+
+TEST(UnifiedRestCredentialsIntegrationTest, StorageServiceAccount) {
+  auto project = internal::GetEnv("GOOGLE_CLOUD_PROJECT");
+  ASSERT_TRUE(project.has_value());
+  auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON");
+  ASSERT_TRUE(env.has_value());
+  std::string key_file = std::move(*env);
+  std::ifstream is(key_file);
+  auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
+
+  ASSERT_NO_FATAL_FAILURE(
+      MakeStorageRpcCall(Options{}.set<UnifiedCredentialsOption>(
+          MakeServiceAccountCredentials(contents))));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
