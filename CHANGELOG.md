@@ -130,9 +130,17 @@ releasing them early in case they elicit some feedback that requires changes.
 * [Beyond Corp](/google/cloud/beyondcorp/README.md) ([#9555](https://github.com/googleapis/google-cloud-cpp/pull/9555))
 * [Cloud Run](/google/cloud/run/README.md) ([#9460](https://github.com/googleapis/google-cloud-cpp/pull/9460))
 
+### [Assured Workloads](/google/cloud/assuredworkloads/README.md)
+
+* fix(assuredworkloads): reenable on windows ([#9467](https://github.com/googleapis/google-cloud-cpp/pull/9467))
+
 ### [Bigtable](/google/cloud/bigtable/README.md)
 
 * fix(bigtable): the mocks library is no longer header-only ([#9568](https://github.com/googleapis/google-cloud-cpp/pull/9568))
+
+### [Cloud Asset](/google/cloud/asset/README.md)
+
+* fix(asset): reenable on macOS ([#9468](https://github.com/googleapis/google-cloud-cpp/pull/9468))
 
 ### [Pub/Sub](/google/cloud/pubsub/README.md)
 
@@ -143,42 +151,22 @@ releasing them early in case they elicit some feedback that requires changes.
 
 * fix(spanner): avoid evaluation-order issue in function arguments ([#9452](https://github.com/googleapis/google-cloud-cpp/pull/9452))
 
+### [Stackdriver Debugger](/google/cloud/debugger/README.md)
+
+* doc(debugger): announce deprecation ([#9552](https://github.com/googleapis/google-cloud-cpp/pull/9552))
+
 ### [Storage](/google/cloud/storage/README.md)
 
 * feat(storage): experimental options to tune stall timeouts ([#9593](https://github.com/googleapis/google-cloud-cpp/pull/9593))
 * feat(storage): add debugging headers to `ObjectWriteStream` ([#9580](https://github.com/googleapis/google-cloud-cpp/pull/9580))
 * fix(storage): no char for `std::uniform_int_distribution` ([#9509](https://github.com/googleapis/google-cloud-cpp/pull/9509))
-* feat: improve error messages for access token errors ([#9485](https://github.com/googleapis/google-cloud-cpp/pull/9485))
-* feat(GCS+gRPC): more efficient `WriteObject()` stall timeouts ([#9576](https://github.com/googleapis/google-cloud-cpp/pull/9576))
-* feat(GCS+gRPC): more efficient `InsertObject()` stall timeouts ([#9573](https://github.com/googleapis/google-cloud-cpp/pull/9573))
-* fix(GCS+gRPC): more efficient `ReadObject()` stall timeouts ([#9554](https://github.com/googleapis/google-cloud-cpp/pull/9554))
-* feat(GCS+gRPC): treat some `kAlreadyExists` errors as transient ([#9564](https://github.com/googleapis/google-cloud-cpp/pull/9564))
-* feat(GCS+gRPC): implement `DeleteResumableUpload()` ([#9550](https://github.com/googleapis/google-cloud-cpp/pull/9550))
-* feat(GCS+gRPC): implement `PatchDefaultObjectAcl()` ([#9487](https://github.com/googleapis/google-cloud-cpp/pull/9487))
-* feat(GCS+gRPC): implement `UpdateDefaultObjectAcl()` ([#9476](https://github.com/googleapis/google-cloud-cpp/pull/9476))
 * feat(storage): support Bucket custom placement config ([#9481](https://github.com/googleapis/google-cloud-cpp/pull/9481))
-* feat(GCS+gRPC): use ETag proto fields ([#9472](https://github.com/googleapis/google-cloud-cpp/pull/9472))
-* feat(GCS+gRPC): implement `DeleteDefaultObjectAcl()` ([#9473](https://github.com/googleapis/google-cloud-cpp/pull/9473))
-* feat(GCS+gRPC): implement `CreateDefaultObjectAcl()` ([#9465](https://github.com/googleapis/google-cloud-cpp/pull/9465))
-* feat(GCS+gRPC): implement `GetDefaultObjectAcl()` ([#9458](https://github.com/googleapis/google-cloud-cpp/pull/9458))
-* feat(GCS+gRPC): implement `ListDefaultObjectAcl()` ([#9455](https://github.com/googleapis/google-cloud-cpp/pull/9455))
-
-### [Stackdriver Debugger](/google/cloud/debugger/README.md)
-
-* doc(debugger): announce deprecation ([#9552](https://github.com/googleapis/google-cloud-cpp/pull/9552))
-
-### [Assured Workloads](/google/cloud/assuredworkloads/README.md)
-
-* fix(assuredworkloads): reenable on windows ([#9467](https://github.com/googleapis/google-cloud-cpp/pull/9467))
 
 ### [Common Libraries](/google/cloud/README.md)
 
-* fix(rest): build failure with MSVC+x86 ([#9586](https://github.com/googleapis/google-cloud-cpp/pull/9586))
 * feat(common): make the RPC log even more readable ([#9561](https://github.com/googleapis/google-cloud-cpp/pull/9561))
-* fix(asset): reenable on macOS ([#9468](https://github.com/googleapis/google-cloud-cpp/pull/9468))
 * feat: improve error messages for access token errors ([#9485](https://github.com/googleapis/google-cloud-cpp/pull/9485))
 * feat(common): make the RPC log even more readable ([#9477](https://github.com/googleapis/google-cloud-cpp/pull/9477))
-* feat(rest): reduce contention in `PooledCurlHandleFactory` ([#9457](https://github.com/googleapis/google-cloud-cpp/pull/9457))
 
 ## v2.0.0 - 2022-07
 
