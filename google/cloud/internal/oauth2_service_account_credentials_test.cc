@@ -495,7 +495,7 @@ TEST(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
         EXPECT_EQ(info->token_uri, payload.value("aud", ""));
       };
 
-  // Set  up the mock request / response for the first Refresh().
+  // Set up the mock request / response for the first Refresh().
   auto const clock_value_1 = 10000;
   auto const clock_value_2 = 20000;
 
