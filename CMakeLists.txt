@@ -25,7 +25,7 @@ if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
 endif ()
 project(
     google-cloud-cpp
-    VERSION 2.1.0
+    VERSION 2.2.0
     LANGUAGES CXX)
 
 if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
