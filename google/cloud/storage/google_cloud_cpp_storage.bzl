@@ -55,7 +55,6 @@ google_cloud_cpp_storage_hdrs = [
     "internal/generate_message_boundary.h",
     "internal/generic_object_request.h",
     "internal/generic_request.h",
-    "internal/group_options.h",
     "internal/hash_function.h",
     "internal/hash_function_impl.h",
     "internal/hash_validator.h",

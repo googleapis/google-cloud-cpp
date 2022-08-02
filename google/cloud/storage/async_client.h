@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CLIENT_H
 
 #include "google/cloud/storage/internal/async_connection.h"
-#include "google/cloud/storage/internal/group_options.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/internal/group_options.h"
 #include "google/cloud/status_or.h"
 
 namespace google {
@@ -199,7 +199,7 @@ class AsyncClient {
 
   template <typename... RequestOptions>
   google::cloud::Options SpanOptions(RequestOptions&&... o) const {
-    return google::cloud::storage::internal::GroupOptions(
+    return google::cloud::internal::GroupOptions(
         connection_->options(), std::forward<RequestOptions>(o)...);
   }
 

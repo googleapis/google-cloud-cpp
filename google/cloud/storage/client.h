@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 
 #include "google/cloud/storage/hmac_key_metadata.h"
-#include "google/cloud/storage/internal/group_options.h"
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/parameter_pack_validation.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
@@ -35,6 +34,7 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/group_options.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
@@ -3293,8 +3293,8 @@ class Client {
 
   template <typename... RequestOptions>
   google::cloud::Options SpanOptions(RequestOptions&&... o) const {
-    return internal::GroupOptions(raw_client_->options(),
-                                  std::forward<RequestOptions>(o)...);
+    return google::cloud::internal::GroupOptions(
+        raw_client_->options(), std::forward<RequestOptions>(o)...);
   }
 
   // The version of UploadFile() where UseResumableUploadSession is one of the

@@ -87,7 +87,6 @@ add_library(
     internal/generate_message_boundary.h
     internal/generic_object_request.h
     internal/generic_request.h
-    internal/group_options.h
     internal/hash_function.cc
     internal/hash_function.h
     internal/hash_function_impl.cc
@@ -449,7 +448,6 @@ if (BUILD_TESTING)
         internal/default_object_acl_requests_test.cc
         internal/generate_message_boundary_test.cc
         internal/generic_request_test.cc
-        internal/group_options_test.cc
         internal/hash_function_impl_test.cc
         internal/hash_validator_test.cc
         internal/hash_values_test.cc
