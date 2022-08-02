@@ -45,6 +45,7 @@ using ::testing::_;
 using ::testing::A;
 using ::testing::ByMove;
 using ::testing::Contains;
+using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
@@ -160,6 +161,96 @@ void CheckInfoYieldsExpectedAssertion(std::unique_ptr<MockRestClient> mock,
   EXPECT_EQ(std::make_pair(std::string{"Authorization"},
                            std::string{"Type access-token-value"}),
             credentials.AuthorizationHeader().value());
+}
+
+TEST(ServiceAccountCredentialsTest, MakeSelfSignedJWT) {
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(info);
+  auto const now = std::chrono::system_clock::now();
+  auto actual = MakeSelfSignedJWT(*info, now);
+  ASSERT_STATUS_OK(actual);
+
+  std::vector<std::string> components = absl::StrSplit(*actual, '.');
+  std::vector<std::string> decoded(components.size());
+  std::transform(components.begin(), components.end(), decoded.begin(),
+                 [](std::string const& e) {
+                   auto v = UrlsafeBase64Decode(e).value();
+                   return std::string{v.begin(), v.end()};
+                 });
+  ASSERT_THAT(3, decoded.size());
+  auto const header = nlohmann::json::parse(decoded[0], nullptr);
+  ASSERT_FALSE(header.is_null()) << "header=" << decoded[0];
+  auto const payload = nlohmann::json::parse(decoded[1], nullptr);
+  ASSERT_FALSE(payload.is_null()) << "payload=" << decoded[1];
+
+  auto const expected_header = nlohmann::json{
+      {"alg", "RS256"}, {"typ", "JWT"}, {"kid", info->private_key_id}};
+
+  auto const iat =
+      std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
+  auto const exp = iat + std::chrono::hours(1);
+  auto const expected_payload = nlohmann::json{
+      {"iss", info->client_email},
+      {"sub", info->client_email},
+      {"iat", iat.count()},
+      {"exp", exp.count()},
+      {"scope", "https://www.googleapis.com/auth/cloud-platform"},
+  };
+
+  ASSERT_EQ(expected_header, header) << "header=" << header;
+  ASSERT_EQ(expected_payload, payload) << "payload=" << payload;
+
+  auto signature = internal::SignUsingSha256(
+      components[0] + '.' + components[1], info->private_key);
+  ASSERT_STATUS_OK(signature);
+  EXPECT_THAT(*signature,
+              ElementsAreArray(decoded[2].begin(), decoded[2].end()));
+}
+
+TEST(ServiceAccountCredentialsTest, MakeSelfSignedJWTWithScopes) {
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(info);
+  info->scopes = std::set<std::string>{"test-only-s1", "test-only-s2"};
+
+  auto const now = std::chrono::system_clock::now();
+  auto actual = MakeSelfSignedJWT(*info, now);
+  ASSERT_STATUS_OK(actual);
+
+  std::vector<std::string> components = absl::StrSplit(*actual, '.');
+  std::vector<std::string> decoded(components.size());
+  std::transform(components.begin(), components.end(), decoded.begin(),
+                 [](std::string const& e) {
+                   auto v = UrlsafeBase64Decode(e).value();
+                   return std::string{v.begin(), v.end()};
+                 });
+  ASSERT_THAT(3, decoded.size());
+  auto const header = nlohmann::json::parse(decoded[0], nullptr);
+  ASSERT_FALSE(header.is_null()) << "header=" << decoded[0];
+  auto const payload = nlohmann::json::parse(decoded[1], nullptr);
+  ASSERT_FALSE(payload.is_null()) << "payload=" << decoded[1];
+
+  auto const expected_header = nlohmann::json{
+      {"alg", "RS256"}, {"typ", "JWT"}, {"kid", info->private_key_id}};
+
+  auto const iat =
+      std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
+  auto const exp = iat + std::chrono::hours(1);
+  auto const expected_payload = nlohmann::json{
+      {"iss", info->client_email},
+      {"sub", info->client_email},
+      {"iat", iat.count()},
+      {"exp", exp.count()},
+      {"scope", "test-only-s1 test-only-s2"},
+  };
+
+  ASSERT_EQ(expected_header, header) << "header=" << header;
+  ASSERT_EQ(expected_payload, payload) << "payload=" << payload;
+
+  auto signature = internal::SignUsingSha256(
+      components[0] + '.' + components[1], info->private_key);
+  ASSERT_STATUS_OK(signature);
+  EXPECT_THAT(*signature,
+              ElementsAreArray(decoded[2].begin(), decoded[2].end()));
 }
 
 /// @test Verify that we can create service account credentials from a keyfile.

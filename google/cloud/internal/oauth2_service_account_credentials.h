@@ -94,6 +94,34 @@ CreateServiceAccountRefreshPayload(ServiceAccountCredentialsInfo const& info,
                                    std::chrono::system_clock::time_point now);
 
 /**
+ * Make a self-signed JWT from the service account.
+ *
+ * [Self-signed JWTs] bypass the intermediate step of exchanging client
+ * assertions for OAuth tokens. The advantages of self-signed JTWs include:
+ *
+ * - They are more efficient, as they require more or less the same amount of
+ *   local work, and save a round-trip to the token endpoint, typically
+ *   https://oauth2.googleapis.com/token.
+ * - While this service is extremely reliable, removing external dependencies in
+ *   the critical path almost always improves reliability.
+ * - They work better in VPC-SC environments and other environments with limited
+ *   Internet access.
+ *
+ * @warning At this time only scope-based self-signed JWTs are supported.
+ *
+ * [Self-signed JWTs]: https://google.aip.dev/auth/4111
+ *
+ * @param info the parsed service account information, see
+ * `ParseServiceAccountCredentials()`
+ * @param tp the current time
+ * @return a bearer token for authentication.  Include this value in the
+ *   `Authorization` header with the "Bearer" type.
+ */
+StatusOr<std::string> MakeSelfSignedJWT(
+    ServiceAccountCredentialsInfo const& info,
+    std::chrono::system_clock::time_point tp);
+
+/**
  * Wrapper class for Google OAuth 2.0 service account credentials.
  *
  * Takes a ServiceAccountCredentialsInfo and obtains access tokens from the

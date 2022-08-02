@@ -16,6 +16,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
+#include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -168,6 +169,46 @@ TEST(UnifiedRestCredentialsIntegrationTest, StorageServiceAccount) {
   ASSERT_NO_FATAL_FAILURE(
       MakeStorageRpcCall(Options{}.set<UnifiedCredentialsOption>(
           MakeServiceAccountCredentials(contents))));
+}
+
+// TODO(#7674) - the service account credentials should create self-signed JWTs
+TEST(UnifiedRestCredentialsIntegrationTest, BigQuerySelfSignedJWT) {
+  // Manually create a self-signed JWT and then use it as an access token
+  auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON");
+  ASSERT_TRUE(env.has_value());
+  std::ifstream is(*env);
+  auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
+  auto info = oauth2_internal::ParseServiceAccountCredentials(contents, *env);
+  ASSERT_STATUS_OK(info);
+
+  auto const now = std::chrono::system_clock::now();
+  auto const expiration =
+      now + oauth2_internal::GoogleOAuthAccessTokenLifetime();
+  auto jwt = oauth2_internal::MakeSelfSignedJWT(*info, now);
+
+  ASSERT_NO_FATAL_FAILURE(
+      MakeBigQueryRpcCall(Options{}.set<UnifiedCredentialsOption>(
+          MakeAccessTokenCredentials(*jwt, expiration))));
+}
+
+// TODO(#7674) - the service account credentials should create self-signed JWTs
+TEST(UnifiedRestCredentialsIntegrationTest, StorageSelfSignedJWT) {
+  // Manually create a self-signed JWT and then use it as an access token
+  auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON");
+  ASSERT_TRUE(env.has_value());
+  std::ifstream is(*env);
+  auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
+  auto info = oauth2_internal::ParseServiceAccountCredentials(contents, *env);
+  ASSERT_STATUS_OK(info);
+
+  auto const now = std::chrono::system_clock::now();
+  auto const expiration =
+      now + oauth2_internal::GoogleOAuthAccessTokenLifetime();
+  auto jwt = oauth2_internal::MakeSelfSignedJWT(*info, now);
+
+  ASSERT_NO_FATAL_FAILURE(
+      MakeStorageRpcCall(Options{}.set<UnifiedCredentialsOption>(
+          MakeAccessTokenCredentials(*jwt, expiration))));
 }
 
 }  // namespace
