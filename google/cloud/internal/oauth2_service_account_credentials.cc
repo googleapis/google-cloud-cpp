@@ -119,18 +119,13 @@ std::string MakeJWTAssertion(std::string const& header,
 }
 
 std::vector<std::pair<std::string, std::string>>
-CreateServiceAccountRefreshPayload(
-    ServiceAccountCredentialsInfo const& info,
-    std::pair<std::string, std::string> grant_type,
-    std::chrono::system_clock::time_point now) {
-  auto assertion_components = AssertionComponentsFromInfo(info, now);
-  std::vector<std::pair<std::string, std::string>> payload = {
-      std::move(grant_type)};
-  payload.emplace_back(
-      "assertion",
-      MakeJWTAssertion(assertion_components.first, assertion_components.second,
-                       info.private_key));
-  return payload;
+CreateServiceAccountRefreshPayload(ServiceAccountCredentialsInfo const& info,
+                                   std::chrono::system_clock::time_point now) {
+  std::string header;
+  std::string payload;
+  std::tie(header, payload) = AssertionComponentsFromInfo(info, now);
+  return {{"grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer"},
+          {"assertion", MakeJWTAssertion(header, payload, info.private_key)}};
 }
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
@@ -169,15 +164,13 @@ ServiceAccountCredentials::ServiceAccountCredentials(
     : info_(std::move(info)),
       current_time_fn_(std::move(current_time_fn)),
       rest_client_(std::move(rest_client)),
-      options_(std::move(options)) {
+      options_(internal::MergeOptions(
+          std::move(options),
+          Options{}.set<ServiceAccountCredentialsTokenUriOption>(
+              info_.token_uri))) {
   if (!rest_client_) {
-    if (options_.has<ServiceAccountCredentialsTokenUriOption>()) {
-      rest_client_ = rest_internal::MakeDefaultRestClient(
-          options_.get<ServiceAccountCredentialsTokenUriOption>(), options_);
-    } else {
-      rest_client_ =
-          rest_internal::MakeDefaultRestClient(info_.token_uri, options_);
-    }
+    rest_client_ = rest_internal::MakeDefaultRestClient(
+        options_.get<ServiceAccountCredentialsTokenUriOption>(), options_);
   }
 }
 
@@ -200,10 +193,7 @@ StatusOr<std::vector<std::uint8_t>> ServiceAccountCredentials::SignBlob(
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ServiceAccountCredentials::Refresh() {
   rest_internal::RestRequest request;
-  std::pair<std::string, std::string> grant_type(
-      "grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer");
-  auto payload =
-      CreateServiceAccountRefreshPayload(info_, grant_type, current_time_fn_());
+  auto payload = CreateServiceAccountRefreshPayload(info_, current_time_fn_());
   StatusOr<std::unique_ptr<rest_internal::RestResponse>> response =
       rest_client_->Post(request, payload);
   if (!response.ok()) return std::move(response).status();
