@@ -199,8 +199,6 @@ TEST(ServiceAccountCredentialsTest, MakeSelfSignedJWT) {
 
   ASSERT_EQ(expected_header, header) << "header=" << header;
   ASSERT_EQ(expected_payload, payload) << "payload=" << payload;
-  ASSERT_EQ(expected_header, header) << "header=" << header;
-  ASSERT_EQ(expected_payload, payload) << "payload=" << payload;
 
   auto signature = internal::SignUsingSha256(
       components[0] + '.' + components[1], info->private_key);

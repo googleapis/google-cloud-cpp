@@ -96,20 +96,20 @@ CreateServiceAccountRefreshPayload(ServiceAccountCredentialsInfo const& info,
 /**
  * Make a self-signed JWT from the service account.
  *
- * Self-signed JWTs bypass the intermediate step of exchanging client assertions
- * for OAuth tokens. The advantages of self-signed JTWs include:
+ * [Self-signed JWTs] bypass the intermediate step of exchanging client
+ * assertions for OAuth tokens. The advantages of self-signed JTWs include:
  *
- * - They are more efficient, they require more or less the same amount of
+ * - They are more efficient, as they require more or less the same amount of
  *   local work, and save a round-trip to the token endpoint, typically
  *   https://oauth2.googleapis.com/token.
  * - While this service is extremely reliable, removing external dependencies in
- *   critical path almost always improves reliability.
+ *   the critical path almost always improves reliability.
  * - They work better in VPC-SC environments and other environments with limited
  *   Internet access.
  *
  * @warning At this time only scope-based self-signed JWTs are supported.
  *
- * [aip/4111]: https://google.aip.dev/auth/4111
+ * [Self-signed JWTs]: https://google.aip.dev/auth/4111
  *
  * @param info the parsed service account information, see
  * `ParseServiceAccountCredentials()`
