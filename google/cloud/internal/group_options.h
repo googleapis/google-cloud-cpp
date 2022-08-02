@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GROUP_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GROUP_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GROUP_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GROUP_OPTIONS_H
 
-#include "google/cloud/storage/version.h"
 #include "google/cloud/options.h"
+#include "google/cloud/version.h"
 #include <utility>
 
 namespace google {
 namespace cloud {
-namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
@@ -83,8 +82,7 @@ Options GroupOptions(Head&&, Tail&&... t) {
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GROUP_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GROUP_OPTIONS_H

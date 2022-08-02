@@ -53,7 +53,6 @@ storage_client_unit_tests = [
     "internal/default_object_acl_requests_test.cc",
     "internal/generate_message_boundary_test.cc",
     "internal/generic_request_test.cc",
-    "internal/group_options_test.cc",
     "internal/hash_function_impl_test.cc",
     "internal/hash_validator_test.cc",
     "internal/hash_values_test.cc",
