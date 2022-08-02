@@ -90,10 +90,8 @@ std::string MakeJWTAssertion(std::string const& header,
 /// JWT assertion. The assertion combined with the grant type is used to create
 /// the refresh payload.
 std::vector<std::pair<std::string, std::string>>
-CreateServiceAccountRefreshPayload(
-    ServiceAccountCredentialsInfo const& info,
-    std::pair<std::string, std::string> grant_type,
-    std::chrono::system_clock::time_point now);
+CreateServiceAccountRefreshPayload(ServiceAccountCredentialsInfo const& info,
+                                   std::chrono::system_clock::time_point now);
 
 /**
  * Wrapper class for Google OAuth 2.0 service account credentials.

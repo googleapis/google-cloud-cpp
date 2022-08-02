@@ -56,8 +56,6 @@ constexpr char kScopeForTest1[] =
 constexpr std::time_t kFixedJwtTimestamp = 1530060324;
 constexpr char kGrantParamUnescaped[] =
     "urn:ietf:params:oauth:grant-type:jwt-bearer";
-constexpr char kGrantParamEscaped[] =
-    "urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer";
 constexpr char kSubjectForGrant[] = "user@foo.bar";
 
 auto constexpr kProjectId = "test-only-project-id";
@@ -709,14 +707,13 @@ TEST(ServiceAccountCredentialsTest, CreateServiceAccountRefreshPayload) {
   auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
   auto assertion =
       MakeJWTAssertion(components.first, components.second, info->private_key);
-  auto actual_payload = CreateServiceAccountRefreshPayload(
-      *info, std::make_pair("grant_type", kGrantParamEscaped),
-      FakeClock::now());
+  auto actual_payload =
+      CreateServiceAccountRefreshPayload(*info, FakeClock::now());
 
   EXPECT_THAT(actual_payload, Contains(std::pair<std::string, std::string>(
                                   "assertion", assertion)));
   EXPECT_THAT(actual_payload, Contains(std::pair<std::string, std::string>(
-                                  "grant_type", kGrantParamEscaped)));
+                                  "grant_type", kGrantParamUnescaped)));
 }
 
 /// @test Parsing a refresh response with missing fields results in failure.
