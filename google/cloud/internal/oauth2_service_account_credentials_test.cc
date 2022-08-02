@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
@@ -40,6 +41,7 @@ using ::google::cloud::testing_util::FakeClock;
 using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::A;
@@ -48,7 +50,9 @@ using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::Pair;
 using ::testing::Return;
+using ::testing::StartsWith;
 
 constexpr char kScopeForTest0[] =
     "https://www.googleapis.com/auth/devstorage.full_control";
@@ -256,6 +260,9 @@ TEST(ServiceAccountCredentialsTest, MakeSelfSignedJWTWithScopes) {
 /// @test Verify that we can create service account credentials from a keyfile.
 TEST(ServiceAccountCredentialsTest,
      RefreshingSendsCorrectRequestBodyAndParsesResponse) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   EXPECT_EQ(info->client_email, kClientEmail);
@@ -282,9 +289,48 @@ TEST(ServiceAccountCredentialsTest,
                                    assertion);
 }
 
+/// @test Verify that ServiceAccountCredentials defaults to self-signed JWTs.
+TEST(ServiceAccountCredentialsTest, RefreshWithSelfSignedJWT) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", absl::nullopt);
+
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(info);
+
+  auto const expected_header =
+      nlohmann::json{{"alg", "RS256"}, {"typ", "JWT"}, {"kid", kPrivateKeyId}};
+
+  std::string response = R"""({
+      "token_type": "Type",
+      "access_token": "access-token-value",
+      "expires_in": 1234
+  })""";
+
+  auto mock = absl::make_unique<MockRestClient>();
+  // Verify the rest client is *not* used.
+  EXPECT_CALL(
+      *mock,
+      Post(_, A<std::vector<std::pair<std::string, std::string>> const&>()))
+      .Times(0);
+
+  ServiceAccountCredentials credentials(*info, Options{}, std::move(mock),
+                                        FakeClock::now);
+  auto header = credentials.AuthorizationHeader();
+  ASSERT_STATUS_OK(header);
+  ASSERT_THAT(*header, Pair("Authorization", StartsWith("Bearer ")));
+
+  auto token = MakeSelfSignedJWT(*info, FakeClock::now());
+  ASSERT_STATUS_OK(token);
+
+  EXPECT_EQ(header->second, "Bearer " + *token);
+}
+
 /// @test Verify that we can create service account credentials from a keyfile.
 TEST(ServiceAccountCredentialsTest,
      RefreshingSendsCorrectRequestBodyAndParsesResponseForNonDefaultVals) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   info->scopes = {kScopeForTest0};
@@ -308,6 +354,9 @@ TEST(ServiceAccountCredentialsTest,
 }
 
 TEST(ServiceAccountCredentialsTest, MultipleScopes) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   auto expected_info = *info;
@@ -329,6 +378,9 @@ TEST(ServiceAccountCredentialsTest, MultipleScopes) {
 /// @test Verify that we refresh service account credentials appropriately.
 TEST(ServiceAccountCredentialsTest,
      RefreshCalledOnlyWhenAccessTokenIsMissingOrInvalid) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
   // Prepare two responses, the first one is used but becomes immediately
   // expired, resulting in another refresh next time the caller tries to get
   // an authorization header.
@@ -543,6 +595,9 @@ TEST(ServiceAccountCredentialsTest, ParseOptionalField) {
 
 /// @test Verify that refreshing a credential updates the timestamps.
 TEST(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
 
@@ -810,6 +865,9 @@ TEST(ServiceAccountCredentialsTest, CreateServiceAccountRefreshPayload) {
 /// @test Parsing a refresh response with missing fields results in failure.
 TEST(ServiceAccountCredentialsTest,
      ParseServiceAccountRefreshResponseMissingFields) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
   std::string r1 = R"""({})""";
   // Does not have access_token.
   std::string r2 = R"""({
@@ -862,6 +920,9 @@ TEST(ServiceAccountCredentialsTest,
 
 /// @test Parsing a refresh response yields a TemporaryToken.
 TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
   std::string r1 = R"""({
     "token_type": "Type",
     "access_token": "access-token-r1",

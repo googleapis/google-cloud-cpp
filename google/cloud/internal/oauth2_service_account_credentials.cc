@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
 #include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/internal/rest_response.h"
@@ -224,8 +225,20 @@ StatusOr<std::vector<std::uint8_t>> ServiceAccountCredentials::SignBlob(
   return internal::SignUsingSha256(blob, info_.private_key);
 }
 
+bool ServiceAccountCredentials::UseOAuth() {
+  auto disable_jwt = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT");
+  return disable_jwt.has_value();
+}
+
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ServiceAccountCredentials::Refresh() {
+  if (UseOAuth()) return RefreshOAuth();
+  return RefreshSelfSigned();
+}
+
+StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
+ServiceAccountCredentials::RefreshOAuth() const {
   rest_internal::RestRequest request;
   auto payload = CreateServiceAccountRefreshPayload(info_, current_time_fn_());
   StatusOr<std::unique_ptr<rest_internal::RestResponse>> response =
@@ -236,6 +249,16 @@ ServiceAccountCredentials::Refresh() {
   if (real_response->StatusCode() >= 300)
     return AsStatus(std::move(*real_response));
   return ParseServiceAccountRefreshResponse(*real_response, current_time_fn_());
+}
+
+StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
+ServiceAccountCredentials::RefreshSelfSigned() const {
+  auto const tp = current_time_fn_();
+  auto token = MakeSelfSignedJWT(info_, tp);
+  if (!token) return std::move(token).status();
+  return RefreshingCredentialsWrapper::TemporaryToken{
+      {"Authorization", "Bearer " + *token},
+      tp + GoogleOAuthAccessTokenLifetime()};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
