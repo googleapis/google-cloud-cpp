@@ -33,6 +33,7 @@ namespace internal {
 Options MergeOptions(Options, Options);
 void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
+bool IsEmpty(Options const&);
 template <typename T>
 inline T const& DefaultValue() {
   static auto const* const kDefaultValue = new T{};
@@ -209,6 +210,7 @@ class Options {
   friend Options internal::MergeOptions(Options, Options);
   friend void internal::CheckExpectedOptionsImpl(
       std::set<std::type_index> const&, Options const&, char const*);
+  friend bool internal::IsEmpty(Options const&);
 
   // The type-erased data holder of all the option values.
   class DataHolder {
