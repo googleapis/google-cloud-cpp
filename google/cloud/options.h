@@ -33,6 +33,7 @@ namespace internal {
 Options MergeOptions(Options, Options);
 void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
+// TODO(#8800) - Remove when bigtable::Table no longer uses bigtable::DataClient
 bool IsEmpty(Options const&);
 template <typename T>
 inline T const& DefaultValue() {
