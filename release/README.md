@@ -31,6 +31,11 @@ release/changes.sh
 to output a summary of the potentially interesting changes since the previous
 release. You paste the output into the relevant section in the `CHANGELOG.md`
 file, and manually tweak as needed.
+- A change in an existing library warrants its own library section.
+- Library sections should be listed in alphabetical order (Update `sections` in `release/changes.sh`).
+- Do not list changes for libraries under development.
+- Do not list changes for internal components.
+- A change that affects all libraries should only be documented in the `Common Libraries` section.
 
 [`CHANGELOG.md`]: /CHANGELOG.md
 

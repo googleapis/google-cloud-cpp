@@ -73,11 +73,17 @@ last_tag="$(git describe --tags --abbrev=0 upstream/main)"
 
 # The format is: <title>,<path>[,<extra path> ...]
 sections=(
+  "Assured Workloads,google/cloud/assuredworkloads"
+  "Batch,google/cloud/batch"
+  "Beyond Corp,google/cloud/beyondcorp"
   "BigQuery,google/cloud/bigquery"
   "Bigtable,google/cloud/bigtable"
+  "Cloud Asset,google/cloud/asset"
+  "Cloud Run,google/cloud/run"
   "IAM,google/cloud/iam"
   "Pub/Sub,google/cloud/pubsub"
   "Spanner,google/cloud/spanner"
+  "Stackdriver Debugger,google/cloud/debugger"
   "Storage,google/cloud/storage"
 )
 
