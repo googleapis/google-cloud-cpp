@@ -122,23 +122,67 @@ StatusOr<std::string> MakeSelfSignedJWT(
     std::chrono::system_clock::time_point tp);
 
 /**
- * Wrapper class for Google OAuth 2.0 service account credentials.
+ * Implements service account credentials for REST clients.
  *
- * Takes a ServiceAccountCredentialsInfo and obtains access tokens from the
- * Google Authorization Service as needed. Instances of this class should
- * usually be created via the convenience methods declared in
- * google/cloud/credentials.h.
+ * This class is not intended for use by application developers. But it is
+ * sufficiently complex that it deserves documentation for library developers.
  *
- * An HTTP Authorization header, with an access token as its value,
- * can be obtained by calling the AuthorizationHeader() method; if the current
- * access token is invalid or nearing expiration, this will class will first
- * obtain a new access token before returning the Authorization header string.
+ * This class description assumes that you are familiar with [service accounts],
+ * and [service account keys].
  *
- * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
- * for an overview of using service accounts with Google's OAuth 2.0 system.
+ * Use `ParseServiceAccountCredentials()` to parse a service account key. If the
+ * key is parsed successfully, you can create an instance of this class using
+ * its result.
+ * The service account key is never sent to Google for authentication. Instead,
+ * this class creates temporary access tokens, either self-signed JWT (as
+ * described in [aip/4111]), or OAuth access tokens (see [aip/4112]).
  *
- * @see https://cloud.google.com/storage/docs/reference/libraries for details on
- * how to obtain and get started with service account credentials.
+ * To understand how these work it is useful to be familiar with [JWTs]. If you
+ * already know what these, feel free to skip this paragraph. JWTs are
+ * (relatively long) strings consisting of three (base64-encoded) components.
+ * The first two are base64 encoded JSON objects. These fields in these objects
+ * are often referred as "claims".  For example, the `iat` (Issued At-Time)
+ * field, asserts or claims that the token was created at a certain time. The
+ * third component in a JWT is a signature created using some secret. In our
+ * case the signature is always created using the [RS256] signing algorithm.
+ * One of the claims is always the
+ * identifier for the service account key. Google Cloud has the public key
+ * associated with each service account key and can use this to verify that the
+ * JWT was actually signed by the service account key claimed by the JWT.
+ *
+ * With self-signed JWT, the token is created locally, the payload contains
+ * either an audience (`"aud"`) or scope (`"scope"`) claim (but not both)
+ * describing the service or services that the token grants access to. Setting
+ * a more restrictive scope or audience allows applications to create tokens
+ * that restrict the access for a service account. This class **only** supports
+ * scope-based self-signed JWTs.
+ *
+ * With OAuth-based access tokens the client library creates a JWT and makes a
+ * HTTP request to convert this JWT into an access token. In general,
+ * self-signed JWTs are preferred over OAuth-based access tokens. On the other
+ * hand, our implementation of OAuth-based access tokens has more flight hours,
+ * and has been tested in more environments (on-prem, VPC-SC with different
+ * restrictions, etc.).
+ *
+ * The `GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT` environment
+ * variable can be used to prefer OAuth-based access tokens.
+ *
+ * Since access tokens are relatively expensive to create this class caches the
+ * access tokens until they are about to expire. Use the `AuthorizationHeader()`
+ * to get the current access token.
+ *
+ * [aip/4111]: https://google.aip.dev/auth/4111
+ * [aip/4112]: https://google.aip.dev/auth/4112
+ * [RS256]: https://datatracker.ietf.org/doc/html/rfc7518
+ * [JWTs]: https://en.wikipedia.org/wiki/JSON_Web_Token
+ * [service accounts]:
+ * https://cloud.google.com/iam/docs/overview#service_account
+ *
+ * [iam-overview]:
+ * https://cloud.google.com/iam/docs/overview
+ *
+ * [service account keys]:
+ * https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-cpp
  */
 class ServiceAccountCredentials : public oauth2_internal::Credentials {
  public:
@@ -184,7 +228,11 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
   std::string KeyId() const override { return info_.private_key_id; }
 
  private:
+  static bool UseOAuth();
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh();
+  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshOAuth() const;
+  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshSelfSigned()
+      const;
 
   ServiceAccountCredentialsInfo info_;
   CurrentTimeFn current_time_fn_;
