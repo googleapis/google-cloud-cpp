@@ -108,7 +108,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/nlohmann-json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
