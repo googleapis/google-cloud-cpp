@@ -112,16 +112,39 @@ Matcher<v2::ReadModifyWriteRule const> MatchRule(
                r.increment_amount()));
 }
 
-struct TestOption {
-  using Type = bool;
+// Set by connection, client, and operation.
+struct TestOption1 {
+  using Type = std::string;
 };
 
+// Set by connection and client.
+struct TestOption2 {
+  using Type = std::string;
+};
+
+// Set by connection.
+struct TestOption3 {
+  using Type = std::string;
+};
+
+Options CallOptions() { return Options{}.set<TestOption1>("call"); }
+
 Options TableOptions() {
-  return Options{}.set<AppProfileIdOption>(kAppProfileId).set<TestOption>(true);
+  return Options{}
+      .set<AppProfileIdOption>(kAppProfileId)
+      .set<TestOption1>("client")
+      .set<TestOption2>("client");
+}
+
+Options ConnectionOptions() {
+  return Options{}
+      .set<TestOption1>("connection")
+      .set<TestOption2>("connection")
+      .set<TestOption3>("connection");
 }
 
 Table TestTable(std::shared_ptr<MockDataConnection> mock) {
-  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(ConnectionOptions()));
   return Table(std::move(mock),
                TableResource(kProjectId, kInstanceId, kTableId),
                TableOptions());
@@ -129,8 +152,10 @@ Table TestTable(std::shared_ptr<MockDataConnection> mock) {
 
 void CheckCurrentOptions() {
   auto const& options = google::cloud::internal::CurrentOptions();
-  EXPECT_TRUE(options.has<TestOption>());
   EXPECT_EQ(kAppProfileId, options.get<AppProfileIdOption>());
+  EXPECT_EQ("call", options.get<TestOption1>());
+  EXPECT_EQ("client", options.get<TestOption2>());
+  EXPECT_EQ("connection", options.get<TestOption3>());
 }
 
 TEST(TableTest, ConnectionConstructor) {
@@ -165,7 +190,7 @@ TEST(TableTest, Apply) {
       });
 
   auto table = TestTable(std::move(mock));
-  auto status = table.Apply(IdempotentMutation());
+  auto status = table.Apply(IdempotentMutation(), CallOptions());
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -181,7 +206,7 @@ TEST(TableTest, AsyncApply) {
       });
 
   auto table = TestTable(std::move(mock));
-  auto status = table.AsyncApply(IdempotentMutation()).get();
+  auto status = table.AsyncApply(IdempotentMutation(), CallOptions()).get();
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -200,7 +225,8 @@ TEST(TableTest, BulkApply) {
 
   auto table = TestTable(std::move(mock));
   auto actual = table.BulkApply(
-      BulkMutation(IdempotentMutation(), NonIdempotentMutation()));
+      BulkMutation(IdempotentMutation(), NonIdempotentMutation()),
+      CallOptions());
   CheckFailedMutations(actual, expected);
 }
 
@@ -219,7 +245,8 @@ TEST(TableTest, AsyncBulkApply) {
 
   auto table = TestTable(std::move(mock));
   auto actual = table.AsyncBulkApply(
-      BulkMutation(IdempotentMutation(), NonIdempotentMutation()));
+      BulkMutation(IdempotentMutation(), NonIdempotentMutation()),
+      CallOptions());
   CheckFailedMutations(actual.get(), expected);
 }
 
@@ -238,7 +265,7 @@ TEST(TableTest, ReadRows) {
       });
 
   auto table = TestTable(std::move(mock));
-  auto reader = table.ReadRows(TestRowSet(), TestFilter());
+  auto reader = table.ReadRows(TestRowSet(), TestFilter(), CallOptions());
   auto it = reader.begin();
   EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
   EXPECT_EQ(++it, reader.end());
@@ -259,7 +286,7 @@ TEST(TableTest, ReadRowsWithRowLimit) {
       });
 
   auto table = TestTable(std::move(mock));
-  auto reader = table.ReadRows(TestRowSet(), 42, TestFilter());
+  auto reader = table.ReadRows(TestRowSet(), 42, TestFilter(), CallOptions());
   auto it = reader.begin();
   EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
   EXPECT_EQ(++it, reader.end());
@@ -278,7 +305,7 @@ TEST(TableTest, ReadRow) {
       });
 
   auto table = TestTable(std::move(mock));
-  auto resp = table.ReadRow("row", TestFilter());
+  auto resp = table.ReadRow("row", TestFilter(), CallOptions());
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -304,7 +331,8 @@ TEST(TableTest, CheckAndMutateRow) {
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
   auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
   auto table = TestTable(std::move(mock));
-  auto row = table.CheckAndMutateRow("row", TestFilter(), {t1}, {f1, f2});
+  auto row = table.CheckAndMutateRow("row", TestFilter(), {t1}, {f1, f2},
+                                     CallOptions());
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -331,9 +359,9 @@ TEST(TableTest, AsyncCheckAndMutateRow) {
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
   auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
   auto table = TestTable(std::move(mock));
-  auto row =
-      table.AsyncCheckAndMutateRow("row", TestFilter(), {t1}, {f1, f2}).get();
-  EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
+  auto row = table.AsyncCheckAndMutateRow("row", TestFilter(), {t1}, {f1, f2},
+                                          CallOptions());
+  EXPECT_THAT(row.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(TableTest, SampleRows) {
@@ -345,7 +373,7 @@ TEST(TableTest, SampleRows) {
   });
 
   auto table = TestTable(std::move(mock));
-  auto samples = table.SampleRows();
+  auto samples = table.SampleRows(CallOptions());
   EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -360,7 +388,7 @@ TEST(TableTest, AsyncSampleRows) {
       });
 
   auto table = TestTable(std::move(mock));
-  auto samples = table.AsyncSampleRows().get();
+  auto samples = table.AsyncSampleRows(CallOptions()).get();
   EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -368,7 +396,7 @@ TEST(TableTest, ReadModifyWriteRow) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, ReadModifyWriteRow)
       .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
-        CheckCurrentOptions();
+        // TODO (#7688) - CheckCurrentOptions();
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.rules(),
                     ElementsAre(MatchRule(TestAppendRule()),
@@ -386,7 +414,7 @@ TEST(TableTest, AsyncReadModifyWriteRow) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
       .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
-        CheckCurrentOptions();
+        // TODO (#7688) - CheckCurrentOptions();
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.rules(),
                     ElementsAre(MatchRule(TestAppendRule()),
@@ -438,7 +466,7 @@ TEST(TableTest, AsyncReadRows) {
 
   auto table = TestTable(std::move(mock));
   table.AsyncReadRows(on_row.AsStdFunction(), on_finish.AsStdFunction(),
-                      TestRowSet(), TestFilter());
+                      TestRowSet(), TestFilter(), CallOptions());
 }
 
 TEST(TableTest, AsyncReadRowsWithRowLimit) {
@@ -479,7 +507,7 @@ TEST(TableTest, AsyncReadRowsWithRowLimit) {
 
   auto table = TestTable(std::move(mock));
   table.AsyncReadRows(on_row.AsStdFunction(), on_finish.AsStdFunction(),
-                      TestRowSet(), 42, TestFilter());
+                      TestRowSet(), 42, TestFilter(), CallOptions());
 }
 
 TEST(TableTest, AsyncReadRowsAcceptsMoveOnlyTypes) {
@@ -530,7 +558,7 @@ TEST(TableTest, AsyncReadRow) {
       });
 
   auto table = TestTable(std::move(mock));
-  auto resp = table.AsyncReadRow("row", TestFilter()).get();
+  auto resp = table.AsyncReadRow("row", TestFilter(), CallOptions()).get();
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 

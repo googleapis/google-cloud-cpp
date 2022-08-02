@@ -30,6 +30,8 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
+using ::google::cloud::internal::MergeOptions;
+using ::google::cloud::internal::OptionsSpan;
 
 namespace {
 template <typename Request>
@@ -46,10 +48,15 @@ using ClientUtils = bigtable::internal::UnaryClientUtils<DataClient>;
 static_assert(std::is_copy_assignable<bigtable::Table>::value,
               "bigtable::Table must be CopyAssignable");
 
-Status Table::Apply(SingleRowMutation mut) {
+Status Table::Apply(SingleRowMutation mut, Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->Apply(table_name_, std::move(mut));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return Status(StatusCode::kFailedPrecondition,
+                  "Per-operation options only apply to `Table`s constructed "
+                  "with a `DataConnection`.");
   }
 
   // Copy the policies in effect for this operation.  Many policy classes change
@@ -93,10 +100,16 @@ Status Table::Apply(SingleRowMutation mut) {
   }
 }
 
-future<Status> Table::AsyncApply(SingleRowMutation mut) {
+future<Status> Table::AsyncApply(SingleRowMutation mut, Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->AsyncApply(table_name_, std::move(mut));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return make_ready_future(
+        Status(StatusCode::kFailedPrecondition,
+               "Per-operation options only apply to `Table`s constructed "
+               "with a `DataConnection`."));
   }
 
   google::bigtable::v2::MutateRowRequest request;
@@ -137,10 +150,17 @@ future<Status> Table::AsyncApply(SingleRowMutation mut) {
       });
 }
 
-std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
+std::vector<FailedMutation> Table::BulkApply(BulkMutation mut, Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->BulkApply(table_name_, std::move(mut));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return bigtable_internal::MakeFailedMutations(
+        Status(StatusCode::kFailedPrecondition,
+               "Per-operation options only apply to `Table`s constructed "
+               "with a `DataConnection`."),
+        mut.size());
   }
 
   if (mut.empty()) return {};
@@ -171,10 +191,18 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   return std::move(mutator).OnRetryDone();
 }
 
-future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
+future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut,
+                                                          Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->AsyncBulkApply(table_name_, std::move(mut));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return make_ready_future(bigtable_internal::MakeFailedMutations(
+        Status(StatusCode::kFailedPrecondition,
+               "Per-operation options only apply to `Table`s constructed "
+               "with a `DataConnection`."),
+        mut.size()));
   }
 
   auto cq = background_threads_->cq();
@@ -185,17 +213,24 @@ future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
       app_profile_id(), table_name_, std::move(mut));
 }
 
-RowReader Table::ReadRows(RowSet row_set, Filter filter) {
+RowReader Table::ReadRows(RowSet row_set, Filter filter, Options opts) {
   return ReadRows(std::move(row_set), RowReader::NO_ROWS_LIMIT,
-                  std::move(filter));
+                  std::move(filter), std::move(opts));
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
-                          Filter filter) {
+                          Filter filter, Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->ReadRows(table_name_, std::move(row_set), rows_limit,
                                  std::move(filter));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return MakeRowReader(
+        std::make_shared<bigtable_internal::StatusOnlyRowReader>(
+            Status(StatusCode::kFailedPrecondition,
+                   "Per-operation options only apply to `Table`s constructed "
+                   "with a `DataConnection`.")));
   }
 
   auto impl = std::make_shared<bigtable_internal::LegacyRowReader>(
@@ -207,11 +242,16 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
 }
 
 StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
-                                              Filter filter) {
+                                              Filter filter, Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->ReadRow(table_name_, std::move(row_key),
                                 std::move(filter));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return Status(StatusCode::kFailedPrecondition,
+                  "Per-operation options only apply to `Table`s constructed "
+                  "with a `DataConnection`.");
   }
 
   RowSet row_set(std::move(row_key));
@@ -237,12 +277,17 @@ StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
 
 StatusOr<MutationBranch> Table::CheckAndMutateRow(
     std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-    std::vector<Mutation> false_mutations) {
+    std::vector<Mutation> false_mutations, Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->CheckAndMutateRow(
         table_name_, std::move(row_key), std::move(filter),
         std::move(true_mutations), std::move(false_mutations));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return Status(StatusCode::kFailedPrecondition,
+                  "Per-operation options only apply to `Table`s constructed "
+                  "with a `DataConnection`.");
   }
 
   grpc::Status status;
@@ -274,12 +319,18 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
 
 future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
     std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-    std::vector<Mutation> false_mutations) {
+    std::vector<Mutation> false_mutations, Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->AsyncCheckAndMutateRow(
         table_name_, std::move(row_key), std::move(filter),
         std::move(true_mutations), std::move(false_mutations));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return make_ready_future<StatusOr<MutationBranch>>(
+        Status(StatusCode::kFailedPrecondition,
+               "Per-operation options only apply to `Table`s constructed "
+               "with a `DataConnection`."));
   }
 
   btproto::CheckAndMutateRowRequest request;
@@ -328,10 +379,15 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
 // as a std::vector<>. If the RPC fails, it will keep retrying until the
 // policies in effect tell us to stop. Note that each retry must clear the
 // samples otherwise the result is an inconsistent set of sample row keys.
-StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
+StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows(Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->SampleRows(table_name_);
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return Status(StatusCode::kFailedPrecondition,
+                  "Per-operation options only apply to `Table`s constructed "
+                  "with a `DataConnection`.");
   }
 
   // Copy the policies in effect for this operation.
@@ -374,10 +430,17 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
   return samples;
 }
 
-future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
+future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows(
+    Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->AsyncSampleRows(table_name_);
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return make_ready_future<StatusOr<std::vector<RowKeySample>>>(
+        Status(StatusCode::kFailedPrecondition,
+               "Per-operation options only apply to `Table`s constructed "
+               "with a `DataConnection`."));
   }
 
   auto cq = background_threads_->cq();
@@ -442,11 +505,18 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
 }
 
 future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(std::string row_key,
-                                                           Filter filter) {
+                                                           Filter filter,
+                                                           Options opts) {
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->AsyncReadRow(table_name_, std::move(row_key),
                                      std::move(filter));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return make_ready_future<StatusOr<std::pair<bool, Row>>>(
+        Status(StatusCode::kFailedPrecondition,
+               "Per-operation options only apply to `Table`s constructed "
+               "with a `DataConnection`."));
   }
 
   class AsyncReadRowHandler {

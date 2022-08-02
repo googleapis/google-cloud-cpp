@@ -36,6 +36,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/group_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -415,6 +416,8 @@ class Table {
    *     then discards) the data in the mutation.  In general, a
    *     `SingleRowMutation` can be used to modify and/or delete multiple cells,
    *     across different columns and column families.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @return status of the operation.
    *
@@ -430,7 +433,7 @@ class Table {
    * @par Example
    * @snippet data_snippets.cc apply
    */
-  Status Apply(SingleRowMutation mut);
+  Status Apply(SingleRowMutation mut, Options opts = {});
 
   /**
    * Makes asynchronous attempts to apply the mutation to a row.
@@ -440,9 +443,11 @@ class Table {
    *     is not subject to any SLA or deprecation policy.
    *
    * @param mut the mutation. Note that this function takes ownership
-   * (and then discards) the data in the mutation.  In general, a
+   *     (and then discards) the data in the mutation.  In general, a
    *     `SingleRowMutation` can be used to modify and/or delete
-   * multiple cells, across different columns and column families.
+   *     multiple cells, across different columns and column families.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @par Idempotency
    * This operation is idempotent if the provided mutations are idempotent. Note
@@ -452,7 +457,7 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc async-apply
    */
-  future<Status> AsyncApply(SingleRowMutation mut);
+  future<Status> AsyncApply(SingleRowMutation mut, Options opts = {});
 
   /**
    * Attempts to apply mutations to multiple rows.
@@ -480,6 +485,8 @@ class Table {
    *     across different columns and column families.
    *
    * @param mut the mutations
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    * @returns a list of failed mutations
    *
    * @par Idempotency
@@ -495,7 +502,7 @@ class Table {
    * @par Example
    * @snippet data_snippets.cc bulk apply
    */
-  std::vector<FailedMutation> BulkApply(BulkMutation mut);
+  std::vector<FailedMutation> BulkApply(BulkMutation mut, Options opts = {});
 
   /**
    * Makes asynchronous attempts to apply mutations to multiple rows.
@@ -523,6 +530,8 @@ class Table {
    *     across different columns and column families.
    *
    * @param mut the mutations
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    * @returns a future to be filled with a list of failed mutations, when the
    *     operation is complete.
    *
@@ -539,13 +548,16 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc bulk async-bulk-apply
    */
-  future<std::vector<FailedMutation>> AsyncBulkApply(BulkMutation mut);
+  future<std::vector<FailedMutation>> AsyncBulkApply(BulkMutation mut,
+                                                     Options opts = {});
 
   /**
    * Reads a set of rows from the table.
    *
    * @param row_set the rows to read from.
    * @param filter is applied on the server-side to data in the rows.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @par Idempotency
    * This is a read-only operation and therefore it is always idempotent.
@@ -560,7 +572,7 @@ class Table {
    * @par Example
    * @snippet read_snippets.cc read rows
    */
-  RowReader ReadRows(RowSet row_set, Filter filter);
+  RowReader ReadRows(RowSet row_set, Filter filter, Options opts = {});
 
   /**
    * Reads a limited set of rows from the table.
@@ -570,6 +582,8 @@ class Table {
    *     number or zero. Use `ReadRows(RowSet, Filter)` to read all matching
    *     rows.
    * @param filter is applied on the server-side to data in the rows.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @par Idempotency
    * This is a read-only operation and therefore it is always idempotent.
@@ -584,7 +598,8 @@ class Table {
    * @par Example
    * @snippet read_snippets.cc read rows with limit
    */
-  RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
+  RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter,
+                     Options opts = {});
 
   /**
    * Read and return a single row from the table.
@@ -592,6 +607,8 @@ class Table {
    * @param row_key the row to read.
    * @param filter a filter expression, can be used to select a subset of the
    *     column families and columns in the row.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    * @returns a tuple, the first element is a boolean, with value `false` if the
    *     row does not exist.  If the first element is `true` the second element
    *     has the contents of the Row.  Note that the contents may be empty
@@ -608,7 +625,8 @@ class Table {
    * @par Example
    * @snippet read_snippets.cc read row
    */
-  StatusOr<std::pair<bool, Row>> ReadRow(std::string row_key, Filter filter);
+  StatusOr<std::pair<bool, Row>> ReadRow(std::string row_key, Filter filter,
+                                         Options opts = {});
 
   /**
    * Atomic test-and-set for a row using filter expressions.
@@ -622,6 +640,8 @@ class Table {
    * @param filter the filter expression.
    * @param true_mutations the mutations for the "filter passed" case.
    * @param false_mutations the mutations for the "filter did not pass" case.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    * @returns true if the filter passed.
    *
    * @par Idempotency
@@ -640,7 +660,7 @@ class Table {
    */
   StatusOr<MutationBranch> CheckAndMutateRow(
       std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-      std::vector<Mutation> false_mutations);
+      std::vector<Mutation> false_mutations, Options opts = {});
 
   /**
    * Make an asynchronous request to conditionally mutate a row.
@@ -657,6 +677,8 @@ class Table {
    *     true
    * @param false_mutations the mutations which will be performed if @p filter
    *     is false
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
@@ -671,7 +693,7 @@ class Table {
    */
   future<StatusOr<MutationBranch>> AsyncCheckAndMutateRow(
       std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-      std::vector<Mutation> false_mutations);
+      std::vector<Mutation> false_mutations, Options opts = {});
 
   /**
    * Sample of the row keys in the table, including approximate data sizes.
@@ -691,7 +713,7 @@ class Table {
    * @par Examples
    * @snippet data_snippets.cc sample row keys
    */
-  StatusOr<std::vector<bigtable::RowKeySample>> SampleRows();
+  StatusOr<std::vector<bigtable::RowKeySample>> SampleRows(Options opts = {});
 
   /**
    * Asynchronously obtains a sample of the row keys in the table, including
@@ -714,7 +736,8 @@ class Table {
    * @par Examples
    * @snippet data_async_snippets.cc async sample row keys
    */
-  future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows();
+  future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows(
+      Options opts = {});
 
   /**
    * Atomically read and modify the row in the server, returning the
@@ -829,6 +852,8 @@ class Table {
    *     results are undefined
    * @param row_set the rows to read from.
    * @param filter is applied on the server-side to data in the rows.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @tparam RowFunctor the type of the @p on_row callback.
    * @tparam FinishFunctor the type of the @p on_finish callback.
@@ -843,9 +868,9 @@ class Table {
    */
   template <typename RowFunctor, typename FinishFunctor>
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
-                     Filter filter) {
+                     Filter filter, Options opts = {}) {
     AsyncReadRows(std::move(on_row), std::move(on_finish), std::move(row_set),
-                  RowReader::NO_ROWS_LIMIT, std::move(filter));
+                  RowReader::NO_ROWS_LIMIT, std::move(filter), std::move(opts));
   }
 
   /**
@@ -869,6 +894,8 @@ class Table {
    *     number or zero. Use `AsyncReadRows(RowSet, Filter)` to
    *     read all matching rows.
    * @param filter is applied on the server-side to data in the rows.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @tparam RowFunctor the type of the @p on_row callback.
    * @tparam FinishFunctor the type of the @p on_finish callback.
@@ -886,7 +913,8 @@ class Table {
   template <typename RowFunctor, typename FinishFunctor>
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish,
                      // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                     RowSet row_set, std::int64_t rows_limit, Filter filter) {
+                     RowSet row_set, std::int64_t rows_limit, Filter filter,
+                     Options opts = {}) {
     static_assert(
         google::cloud::internal::is_invocable<RowFunctor, bigtable::Row>::value,
         "RowFunctor must be invocable with Row.");
@@ -912,10 +940,18 @@ class Table {
     };
 
     if (connection_) {
-      google::cloud::internal::OptionsSpan span(options_);
+      google::cloud::internal::OptionsSpan span(
+          google::cloud::internal::MergeOptions(std::move(opts), options_));
       connection_->AsyncReadRows(table_name_, std::move(on_row_fn),
                                  std::move(on_finish_fn), std::move(row_set),
                                  rows_limit, std::move(filter));
+      return;
+    }
+    if (!google::cloud::internal::IsEmpty(opts)) {
+      on_finish_fn(
+          Status(StatusCode::kFailedPrecondition,
+                 "Per-operation options only apply to `Table`s constructed "
+                 "with a `DataConnection`."));
       return;
     }
 
@@ -937,6 +973,8 @@ class Table {
    * @param row_key the row to read.
    * @param filter a filter expression, can be used to select a subset of the
    *     column families and columns in the row.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    * @returns a future satisfied when the operation completes, fails
    *     permanently or keeps failing transiently, but the retry policy has been
    *     exhausted. The future will return a tuple. The first element is a
@@ -957,7 +995,8 @@ class Table {
    * @snippet data_async_snippets.cc async read row
    */
   future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(std::string row_key,
-                                                      Filter filter);
+                                                      Filter filter,
+                                                      Options opts = {});
 
  private:
   /**
