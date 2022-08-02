@@ -102,16 +102,19 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
       handle_factory_(std::move(factory)),
       x_goog_api_client_header_("x-goog-api-client: " +
                                 google::cloud::internal::ApiClientHeader()),
-      options_(std::move(options)) {}
+      options_(std::move(options)) {
+  if (options_.has<UnifiedCredentialsOption>()) {
+    credentials_ = MapCredentials(options_.get<UnifiedCredentialsOption>());
+  }
+}
 
 StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
     RestRequest const& request) {
   auto handle = CurlHandle::MakeFromPool(*handle_factory_);
   auto impl =
       absl::make_unique<CurlImpl>(std::move(handle), handle_factory_, options_);
-  if (options_.has<UnifiedCredentialsOption>()) {
-    auto credentials = MapCredentials(options_.get<UnifiedCredentialsOption>());
-    auto auth_header = credentials->AuthorizationHeader();
+  if (credentials_) {
+    auto auth_header = credentials_->AuthorizationHeader();
     if (!auth_header.ok()) return std::move(auth_header).status();
     impl->SetHeader(auth_header.value());
   }
