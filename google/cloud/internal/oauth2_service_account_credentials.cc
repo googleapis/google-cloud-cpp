@@ -24,6 +24,8 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::internal::MakeJWTAssertionNoThrow;
+
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {
@@ -155,6 +157,38 @@ ParseServiceAccountRefreshResponse(rest_internal::RestResponse& response,
   auto new_expiration = now + expires_in;
   return RefreshingCredentialsWrapper::TemporaryToken{
       std::make_pair("Authorization", header_value), new_expiration};
+}
+
+StatusOr<std::string> MakeSelfSignedJWT(
+    ServiceAccountCredentialsInfo const& info,
+    std::chrono::system_clock::time_point tp) {
+  auto scope = [&info]() -> std::string {
+    if (!info.scopes.has_value()) return GoogleOAuthScopeCloudPlatform();
+    if (info.scopes->empty()) return GoogleOAuthScopeCloudPlatform();
+    return absl::StrJoin(*info.scopes, " ");
+  };
+
+  auto const header = nlohmann::json{
+      {"alg", "RS256"}, {"typ", "JWT"}, {"kid", info.private_key_id}};
+  // As much as possible, do the time arithmetic using the std::chrono types.
+  // Convert to an integer only when we are dealing with timestamps since the
+  // epoch. Note that we cannot use `time_t` directly because that might be a
+  // floating point.
+  auto const expiration = tp + GoogleOAuthAccessTokenLifetime();
+  auto const iat =
+      static_cast<std::intmax_t>(std::chrono::system_clock::to_time_t(tp));
+  auto const exp = static_cast<std::intmax_t>(
+      std::chrono::system_clock::to_time_t(expiration));
+  auto payload = nlohmann::json{
+      {"iss", info.client_email},
+      {"sub", info.client_email},
+      {"iat", iat},
+      {"exp", exp},
+      {"scope", scope()},
+  };
+
+  return MakeJWTAssertionNoThrow(header.dump(), payload.dump(),
+                                 info.private_key);
 }
 
 ServiceAccountCredentials::ServiceAccountCredentials(
