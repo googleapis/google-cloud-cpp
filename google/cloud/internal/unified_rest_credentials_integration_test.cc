@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
@@ -34,66 +33,76 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
-using ::google::cloud::testing_util::StatusIs;
 
 StatusOr<std::unique_ptr<RestResponse>> RetryRestRequest(
-    std::function<StatusOr<std::unique_ptr<RestResponse>>()> const& request,
-    StatusCode expected_status = StatusCode::kOk) {
+    std::function<StatusOr<std::unique_ptr<RestResponse>>()> const& request) {
   auto delay = std::chrono::seconds(1);
   StatusOr<std::unique_ptr<RestResponse>> response;
   for (auto i = 0; i != 3; ++i) {
     response = request();
-    if (response.status().code() == expected_status) return response;
+    if (response.ok()) return response;
     std::this_thread::sleep_for(delay);
     delay *= 2;
   }
   return response;
 }
 
-void MakeRestRpcCall(StatusCode expected_status, Options options = {}) {
+// BigQuery is a common REST API.
+void MakeBigQueryRpcCall(Options options) {
   std::string bigquery_endpoint = "https://bigquery.googleapis.com";
   auto client = MakePooledRestClient(bigquery_endpoint, std::move(options));
   RestRequest request;
   request.SetPath("bigquery/v2/projects/bigquery-public-data/datasets");
   request.AddQueryParameter({"maxResults", "10"});
   auto response = RetryRestRequest([&] { return client->Get(request); });
-  ASSERT_THAT(response, IsOk());
+  ASSERT_STATUS_OK(response);
+
   auto response_payload = std::move(**response).ExtractPayload();
-  auto response_json = ReadAll(std::move(response_payload));
-  ASSERT_THAT(response_json, StatusIs(expected_status));
-  if (response_json.ok()) {
-    auto parsed_response =
-        nlohmann::json::parse(*response_json, nullptr, false);
-    ASSERT_TRUE(parsed_response.is_object());
-    auto kind = parsed_response.find("kind");
-    ASSERT_NE(kind, parsed_response.end());
-    EXPECT_EQ(std::string(kind.value()), "bigquery#datasetList");
-  }
+  auto payload = ReadAll(std::move(response_payload));
+  ASSERT_STATUS_OK(payload);
+  auto parsed = nlohmann::json::parse(*payload, nullptr, false);
+  ASSERT_TRUE(parsed.is_object());
+  ASSERT_TRUE(parsed.contains("kind"));
+  EXPECT_EQ(parsed.value("kind", ""), "bigquery#datasetList");
+}
+
+// Storage has a fully public bucket which we can use to test insecure
+// credentials.
+void MakeStorageRpcCall(Options options) {
+  std::string endpoint = "https://storage.googleapis.com";
+  auto client = MakePooledRestClient(endpoint, std::move(options));
+  RestRequest request;
+  request.SetPath("storage/v1/b/gcp-public-data-landsat");
+  auto response = RetryRestRequest([&] { return client->Get(request); });
+  ASSERT_STATUS_OK(response);
+
+  auto response_payload = std::move(**response).ExtractPayload();
+  auto payload = ReadAll(std::move(response_payload));
+  ASSERT_STATUS_OK(payload);
+  auto parsed = nlohmann::json::parse(*payload, nullptr, false);
+  ASSERT_TRUE(parsed.is_object());
+  ASSERT_TRUE(parsed.contains("kind"));
+  EXPECT_EQ(parsed.value("kind", ""), "storage#bucket");
 }
 
 TEST(UnifiedRestCredentialsIntegrationTest, InsecureCredentials) {
-  std::string bigquery_endpoint = "https://bigquery.googleapis.com";
-  auto client = MakePooledRestClient(
-      bigquery_endpoint,
-      Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
-  RestRequest request;
-  request.SetPath("bigquery/v2/projects/bigquery-public-data/datasets");
-  request.AddQueryParameter({"maxResults", "10"});
-  auto response = RetryRestRequest([&] { return client->Get(request); });
-  EXPECT_THAT(response, StatusIs(StatusCode::kOk));
-  auto response_payload = std::move(**response).ExtractPayload();
-  auto response_json = ReadAll(std::move(response_payload));
-  ASSERT_THAT(response_json, StatusIs(StatusCode::kUnauthenticated));
+  ASSERT_NO_FATAL_FAILURE(MakeStorageRpcCall(
+      Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials())));
 }
 
 TEST(UnifiedRestCredentialsIntegrationTest, GoogleDefaultCredentials) {
-  MakeRestRpcCall(StatusCode::kOk, Options{}.set<UnifiedCredentialsOption>(
-                                       MakeGoogleDefaultCredentials()));
+  ASSERT_NO_FATAL_FAILURE(MakeStorageRpcCall(
+      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials())));
 }
 
 TEST(UnifiedRestCredentialsIntegrationTest, AccessTokenCredentials) {
   auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON");
   ASSERT_TRUE(env.has_value());
+  auto service_account =
+      internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT");
+  ASSERT_TRUE(service_account.has_value());
+  // Use the IAM service to create an access token, and then make a request
+  // using that access token.
   std::string key_file = std::move(*env);
   ScopedEnvironment google_app_creds_override_env_var(
       "GOOGLE_APPLICATION_CREDENTIALS", key_file);
@@ -103,16 +112,14 @@ TEST(UnifiedRestCredentialsIntegrationTest, AccessTokenCredentials) {
       oauth2_internal::MakeMinimalIamCredentialsRestStub(*default_creds);
   oauth2_internal::GenerateAccessTokenRequest request;
   request.lifetime = std::chrono::hours(1);
-  auto service_account =
-      internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT");
-  ASSERT_TRUE(service_account.has_value());
   request.service_account = std::move(*service_account);
   request.scopes.emplace_back("https://www.googleapis.com/auth/cloud-platform");
   auto token = iam_creds->GenerateAccessToken(request);
-  auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
-  MakeRestRpcCall(StatusCode::kOk,
-                  Options{}.set<UnifiedCredentialsOption>(
-                      MakeAccessTokenCredentials(token->token, expiration)));
+  ASSERT_STATUS_OK(token);
+
+  ASSERT_NO_FATAL_FAILURE(
+      MakeBigQueryRpcCall(Options{}.set<UnifiedCredentialsOption>(
+          MakeAccessTokenCredentials(token->token, token->expiration))));
 }
 
 TEST(UnifiedRestCredentialsIntegrationTest,
@@ -125,10 +132,11 @@ TEST(UnifiedRestCredentialsIntegrationTest,
   auto service_account =
       internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT");
   ASSERT_TRUE(service_account.has_value());
-  MakeRestRpcCall(StatusCode::kOk,
-                  Options{}.set<UnifiedCredentialsOption>(
-                      MakeImpersonateServiceAccountCredentials(
-                          MakeGoogleDefaultCredentials(), *service_account)));
+
+  ASSERT_NO_FATAL_FAILURE(
+      MakeBigQueryRpcCall(Options{}.set<UnifiedCredentialsOption>(
+          MakeImpersonateServiceAccountCredentials(
+              MakeGoogleDefaultCredentials(), *service_account))));
 }
 
 TEST(UnifiedRestCredentialsIntegrationTest, ServiceAccountCredentials) {
@@ -137,9 +145,10 @@ TEST(UnifiedRestCredentialsIntegrationTest, ServiceAccountCredentials) {
   std::string key_file = std::move(*env);
   std::ifstream is(key_file);
   auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
-  MakeRestRpcCall(StatusCode::kOk,
-                  Options{}.set<UnifiedCredentialsOption>(
-                      MakeServiceAccountCredentials(contents)));
+
+  ASSERT_NO_FATAL_FAILURE(
+      MakeBigQueryRpcCall(Options{}.set<UnifiedCredentialsOption>(
+          MakeServiceAccountCredentials(contents))));
 }
 
 }  // namespace
