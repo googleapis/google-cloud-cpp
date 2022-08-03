@@ -21,6 +21,7 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
@@ -107,6 +108,37 @@ std::string CreateServiceAccountRefreshPayload(
     std::chrono::system_clock::time_point now);
 
 /**
+ * Make a self-signed JWT from the service account.
+ *
+ * [Self-signed JWTs] bypass the intermediate step of exchanging client
+ * assertions for OAuth tokens. The advantages of self-signed JTWs include:
+ *
+ * - They are more efficient, as they require more or less the same amount of
+ *   local work, and save a round-trip to the token endpoint, typically
+ *   https://oauth2.googleapis.com/token.
+ * - While this service is extremely reliable, removing external dependencies in
+ *   the critical path almost always improves reliability.
+ * - They work better in VPC-SC environments and other environments with limited
+ *   Internet access.
+ *
+ * @warning At this time only scope-based self-signed JWTs are supported.
+ *
+ * [Self-signed JWTs]: https://google.aip.dev/auth/4111
+ *
+ * @param info the parsed service account information, see
+ * `ParseServiceAccountCredentials()`
+ * @param tp the current time
+ * @return a bearer token for authentication.  Include this value in the
+ *   `Authorization` header with the "Bearer" type.
+ */
+StatusOr<std::string> MakeSelfSignedJWT(
+    ServiceAccountCredentialsInfo const& info,
+    std::chrono::system_clock::time_point tp);
+
+/// Return true if we need to use the OAuth path to create tokens
+bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info);
+
+/**
  * Wrapper class for Google OAuth 2.0 service account credentials.
  *
  * Takes a ServiceAccountCredentialsInfo and obtains access tokens from the
@@ -178,7 +210,14 @@ class ServiceAccountCredentials : public Credentials {
   std::string KeyId() const override { return info_.private_key_id; }
 
  private:
+  bool UseOAuth() const { return ServiceAccountUseOAuth(info_); }
+
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
+    if (UseOAuth()) return RefreshOAuth();
+    return RefreshSelfSigned();
+  }
+
+  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshOAuth() const {
     HttpRequestBuilderType builder(
         info_.token_uri,
         storage::internal::GetDefaultCurlHandleFactory(options_));
@@ -196,6 +235,16 @@ class ServiceAccountCredentials : public Credentials {
     if (!response) return std::move(response).status();
     if (response->status_code >= 300) return AsStatus(*response);
     return ParseServiceAccountRefreshResponse(*response, clock_.now());
+  }
+
+  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshSelfSigned()
+      const {
+    auto const tp = clock_.now();
+    auto token = MakeSelfSignedJWT(info_, tp);
+    if (!token) return std::move(token).status();
+    return RefreshingCredentialsWrapper::TemporaryToken{
+        "Authorization: Bearer " + *token,
+        tp + GoogleOAuthAccessTokenLifetime()};
   }
 
   ServiceAccountCredentialsInfo info_;
