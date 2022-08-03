@@ -51,6 +51,7 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace dialogflow_es = ::google::cloud::dialogflow_es;
+  // TODO(#9626): Use the location-aware MakeAgentsConnection() instead?
   auto client =
       dialogflow_es::AgentsClient(dialogflow_es::MakeAgentsConnection());
 

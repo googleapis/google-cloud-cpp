@@ -55,6 +55,7 @@ int main(int argc, char* argv[]) try {
   namespace gc = ::google::cloud;
 
   // For regional resources Dialogflow requires overriding the Authority option.
+  // TODO(#9626): Use the location-aware MakeAgentsConnection() instead.
   auto options = gc::Options{}.set<gc::AuthorityOption>(
       region + "-dialogflow.googleapis.com");
   auto client = dialogflow_cx::AgentsClient(
