@@ -54,7 +54,7 @@ Status Table::Apply(SingleRowMutation mut, Options opts) {
     return connection_->Apply(table_name_, std::move(mut));
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
-    return Status(StatusCode::kFailedPrecondition,
+    return Status(StatusCode::kInvalidArgument,
                   "Per-operation options only apply to `Table`s constructed "
                   "with a `DataConnection`.");
   }
@@ -107,7 +107,7 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, Options opts) {
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
     return make_ready_future(
-        Status(StatusCode::kFailedPrecondition,
+        Status(StatusCode::kInvalidArgument,
                "Per-operation options only apply to `Table`s constructed "
                "with a `DataConnection`."));
   }
@@ -157,7 +157,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut, Options opts) {
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
     return bigtable_internal::MakeFailedMutations(
-        Status(StatusCode::kFailedPrecondition,
+        Status(StatusCode::kInvalidArgument,
                "Per-operation options only apply to `Table`s constructed "
                "with a `DataConnection`."),
         mut.size());
@@ -199,7 +199,7 @@ future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut,
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
     return make_ready_future(bigtable_internal::MakeFailedMutations(
-        Status(StatusCode::kFailedPrecondition,
+        Status(StatusCode::kInvalidArgument,
                "Per-operation options only apply to `Table`s constructed "
                "with a `DataConnection`."),
         mut.size()));
@@ -228,7 +228,7 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
   if (!google::cloud::internal::IsEmpty(opts)) {
     return MakeRowReader(
         std::make_shared<bigtable_internal::StatusOnlyRowReader>(
-            Status(StatusCode::kFailedPrecondition,
+            Status(StatusCode::kInvalidArgument,
                    "Per-operation options only apply to `Table`s constructed "
                    "with a `DataConnection`.")));
   }
@@ -249,7 +249,7 @@ StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
                                 std::move(filter));
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
-    return Status(StatusCode::kFailedPrecondition,
+    return Status(StatusCode::kInvalidArgument,
                   "Per-operation options only apply to `Table`s constructed "
                   "with a `DataConnection`.");
   }
@@ -285,7 +285,7 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
         std::move(true_mutations), std::move(false_mutations));
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
-    return Status(StatusCode::kFailedPrecondition,
+    return Status(StatusCode::kInvalidArgument,
                   "Per-operation options only apply to `Table`s constructed "
                   "with a `DataConnection`.");
   }
@@ -328,7 +328,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
     return make_ready_future<StatusOr<MutationBranch>>(
-        Status(StatusCode::kFailedPrecondition,
+        Status(StatusCode::kInvalidArgument,
                "Per-operation options only apply to `Table`s constructed "
                "with a `DataConnection`."));
   }
@@ -385,7 +385,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows(Options opts) {
     return connection_->SampleRows(table_name_);
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
-    return Status(StatusCode::kFailedPrecondition,
+    return Status(StatusCode::kInvalidArgument,
                   "Per-operation options only apply to `Table`s constructed "
                   "with a `DataConnection`.");
   }
@@ -438,7 +438,7 @@ future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows(
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
     return make_ready_future<StatusOr<std::vector<RowKeySample>>>(
-        Status(StatusCode::kFailedPrecondition,
+        Status(StatusCode::kInvalidArgument,
                "Per-operation options only apply to `Table`s constructed "
                "with a `DataConnection`."));
   }
@@ -514,7 +514,7 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(std::string row_key,
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
     return make_ready_future<StatusOr<std::pair<bool, Row>>>(
-        Status(StatusCode::kFailedPrecondition,
+        Status(StatusCode::kInvalidArgument,
                "Per-operation options only apply to `Table`s constructed "
                "with a `DataConnection`."));
   }

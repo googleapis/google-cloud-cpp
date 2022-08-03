@@ -270,13 +270,13 @@ TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
 TEST_F(TableTest, ApplyWithOptions) {
   Table table(client_, kTableId);
   auto status = table.Apply(SingleRowMutation("row"), NonEmptyOptions());
-  EXPECT_THAT(status, StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(TableTest, AsyncApplyWithOptions) {
   Table table(client_, kTableId);
   auto status = table.AsyncApply(SingleRowMutation("row"), NonEmptyOptions());
-  EXPECT_THAT(status.get(), StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(status.get(), StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(TableTest, BulkApplyWithOptions) {
@@ -285,9 +285,9 @@ TEST_F(TableTest, BulkApplyWithOptions) {
   auto failed = table.BulkApply(bulk, NonEmptyOptions());
   ASSERT_EQ(2, failed.size());
   EXPECT_EQ(0, failed[0].original_index());
-  EXPECT_THAT(failed[0].status(), StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(failed[0].status(), StatusIs(StatusCode::kInvalidArgument));
   EXPECT_EQ(1, failed[1].original_index());
-  EXPECT_THAT(failed[1].status(), StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(failed[1].status(), StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(TableTest, AsyncBulkApplyWithOptions) {
@@ -296,9 +296,9 @@ TEST_F(TableTest, AsyncBulkApplyWithOptions) {
   auto failed = table.AsyncBulkApply(bulk, NonEmptyOptions()).get();
   ASSERT_EQ(2, failed.size());
   EXPECT_EQ(0, failed[0].original_index());
-  EXPECT_THAT(failed[0].status(), StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(failed[0].status(), StatusIs(StatusCode::kInvalidArgument));
   EXPECT_EQ(1, failed[1].original_index());
-  EXPECT_THAT(failed[1].status(), StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(failed[1].status(), StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(TableTest, ReadRowsWithOptions) {
@@ -307,7 +307,7 @@ TEST_F(TableTest, ReadRowsWithOptions) {
       table.ReadRows(RowSet(), Filter::PassAllFilter(), NonEmptyOptions());
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
-  EXPECT_THAT(*it, StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(*it, StatusIs(StatusCode::kInvalidArgument));
   EXPECT_EQ(++it, reader.end());
 }
 
@@ -317,47 +317,47 @@ TEST_F(TableTest, ReadRowsWithLimitWithOptions) {
       table.ReadRows(RowSet(), 1, Filter::PassAllFilter(), NonEmptyOptions());
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
-  EXPECT_THAT(*it, StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(*it, StatusIs(StatusCode::kInvalidArgument));
   EXPECT_EQ(++it, reader.end());
 }
 
 TEST_F(TableTest, ReadRowWithOptions) {
   Table table(client_, kTableId);
   auto row = table.ReadRow("row", Filter::PassAllFilter(), NonEmptyOptions());
-  EXPECT_THAT(row, StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(TableTest, AsyncReadRowWithOptions) {
   Table table(client_, kTableId);
   auto row =
       table.AsyncReadRow("row", Filter::PassAllFilter(), NonEmptyOptions());
-  EXPECT_THAT(row.get(), StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(row.get(), StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(TableTest, CheckAndMutateRowWithOptions) {
   Table table(client_, kTableId);
   auto branch = table.CheckAndMutateRow("row", Filter::PassAllFilter(), {}, {},
                                         NonEmptyOptions());
-  EXPECT_THAT(branch, StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(branch, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(TableTest, AsyncCheckAndMutateRowWithOptions) {
   Table table(client_, kTableId);
   auto branch = table.AsyncCheckAndMutateRow("row", Filter::PassAllFilter(), {},
                                              {}, NonEmptyOptions());
-  EXPECT_THAT(branch.get(), StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(branch.get(), StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(TableTest, SampleRowsWithOptions) {
   Table table(client_, kTableId);
   auto rows = table.SampleRows(NonEmptyOptions());
-  EXPECT_THAT(rows, StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(rows, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(TableTest, AsyncSampleRowsWithOptions) {
   Table table(client_, kTableId);
   auto rows = table.AsyncSampleRows(NonEmptyOptions());
-  EXPECT_THAT(rows.get(), StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(rows.get(), StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(TableTest, AsyncReadRowsWithOptions) {
@@ -366,7 +366,7 @@ TEST_F(TableTest, AsyncReadRowsWithOptions) {
 
   MockFunction<void(Status)> on_finish;
   EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
-    EXPECT_THAT(status, StatusIs(StatusCode::kFailedPrecondition));
+    EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument));
   });
 
   Table table(client_, kTableId);
@@ -380,7 +380,7 @@ TEST_F(TableTest, AsyncReadRowsWithLimitWithOptions) {
 
   MockFunction<void(Status)> on_finish;
   EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
-    EXPECT_THAT(status, StatusIs(StatusCode::kFailedPrecondition));
+    EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument));
   });
 
   Table table(client_, kTableId);

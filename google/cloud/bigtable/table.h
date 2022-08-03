@@ -949,7 +949,7 @@ class Table {
     }
     if (!google::cloud::internal::IsEmpty(opts)) {
       on_finish_fn(
-          Status(StatusCode::kFailedPrecondition,
+          Status(StatusCode::kInvalidArgument,
                  "Per-operation options only apply to `Table`s constructed "
                  "with a `DataConnection`."));
       return;
