@@ -31,6 +31,7 @@
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -100,9 +101,12 @@ class ConversationDatasetsConnection {
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of
- * ConversationDatasetsClient, and that class used instead.
+ * ConversationDatasetsClient.
  *
- * The optional @p opts argument may be used to configure aspects of the
+ * The @p location argument sets the prefix for the default value of the
+ * `EndpointOption`.
+ *
+ * The optional @p options argument may be used to configure aspects of the
  * returned `ConversationDatasetsConnection`. Expected options are any of the
  * types in the following option lists:
  *
@@ -110,12 +114,22 @@ class ConversationDatasetsConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::dialogflow_es::ConversationDatasetsPolicyOptionList`
  *
- * @note Unrecognized options will be ignored. To debug issues with options set
- *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
- *     options will be logged.
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param options (optional) Configure the `ConversationDatasetsConnection`
  * created by this function.
+ */
+std::shared_ptr<ConversationDatasetsConnection>
+MakeConversationDatasetsConnection(std::string const& location,
+                                   Options options = {});
+
+/**
+ * A backwards-compatible version of the previous factory function. The
+ * default value of the `EndpointOption` is useless in this case, and so
+ * must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
  */
 std::shared_ptr<ConversationDatasetsConnection>
 MakeConversationDatasetsConnection(Options options = {});

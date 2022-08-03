@@ -69,18 +69,24 @@ Status TransitionRouteGroupsConnection::DeleteTransitionRouteGroup(
 }
 
 std::shared_ptr<TransitionRouteGroupsConnection>
-MakeTransitionRouteGroupsConnection(Options options) {
+MakeTransitionRouteGroupsConnection(std::string const& location,
+                                    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  TransitionRouteGroupsPolicyOptionList>(
       options, __func__);
   options = dialogflow_cx_internal::TransitionRouteGroupsDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultTransitionRouteGroupsStub(
       background->cq(), options);
   return std::make_shared<
       dialogflow_cx_internal::TransitionRouteGroupsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<TransitionRouteGroupsConnection>
+MakeTransitionRouteGroupsConnection(Options options) {
+  return MakeTransitionRouteGroupsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

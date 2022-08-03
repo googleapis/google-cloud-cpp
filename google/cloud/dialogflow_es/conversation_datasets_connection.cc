@@ -76,18 +76,24 @@ ConversationDatasetsConnection::ImportConversationData(
 }
 
 std::shared_ptr<ConversationDatasetsConnection>
-MakeConversationDatasetsConnection(Options options) {
+MakeConversationDatasetsConnection(std::string const& location,
+                                   Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  ConversationDatasetsPolicyOptionList>(
       options, __func__);
   options = dialogflow_es_internal::ConversationDatasetsDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultConversationDatasetsStub(
       background->cq(), options);
   return std::make_shared<
       dialogflow_es_internal::ConversationDatasetsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<ConversationDatasetsConnection>
+MakeConversationDatasetsConnection(Options options) {
+  return MakeConversationDatasetsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

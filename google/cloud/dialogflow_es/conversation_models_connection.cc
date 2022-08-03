@@ -109,18 +109,23 @@ ConversationModelsConnection::CreateConversationModelEvaluation(
 }
 
 std::shared_ptr<ConversationModelsConnection> MakeConversationModelsConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  ConversationModelsPolicyOptionList>(options,
                                                                      __func__);
   options = dialogflow_es_internal::ConversationModelsDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultConversationModelsStub(
       background->cq(), options);
   return std::make_shared<
       dialogflow_es_internal::ConversationModelsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<ConversationModelsConnection> MakeConversationModelsConnection(
+    Options options) {
+  return MakeConversationModelsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

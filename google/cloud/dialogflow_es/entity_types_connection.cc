@@ -102,17 +102,22 @@ EntityTypesConnection::BatchDeleteEntities(
 }
 
 std::shared_ptr<EntityTypesConnection> MakeEntityTypesConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  EntityTypesPolicyOptionList>(options,
                                                               __func__);
-  options =
-      dialogflow_es_internal::EntityTypesDefaultOptions(std::move(options));
+  options = dialogflow_es_internal::EntityTypesDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultEntityTypesStub(
       background->cq(), options);
   return std::make_shared<dialogflow_es_internal::EntityTypesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<EntityTypesConnection> MakeEntityTypesConnection(
+    Options options) {
+  return MakeEntityTypesConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -77,15 +77,21 @@ IntentsConnection::BatchDeleteIntents(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<IntentsConnection> MakeIntentsConnection(Options options) {
+std::shared_ptr<IntentsConnection> MakeIntentsConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  IntentsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::IntentsDefaultOptions(std::move(options));
+  options = dialogflow_es_internal::IntentsDefaultOptions(location,
+                                                          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultIntentsStub(background->cq(),
                                                                options);
   return std::make_shared<dialogflow_es_internal::IntentsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<IntentsConnection> MakeIntentsConnection(Options options) {
+  return MakeIntentsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -46,17 +46,22 @@ FulfillmentsConnection::UpdateFulfillment(
 }
 
 std::shared_ptr<FulfillmentsConnection> MakeFulfillmentsConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  FulfillmentsPolicyOptionList>(options,
                                                                __func__);
-  options =
-      dialogflow_es_internal::FulfillmentsDefaultOptions(std::move(options));
+  options = dialogflow_es_internal::FulfillmentsDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultFulfillmentsStub(
       background->cq(), options);
   return std::make_shared<dialogflow_es_internal::FulfillmentsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<FulfillmentsConnection> MakeFulfillmentsConnection(
+    Options options) {
+  return MakeFulfillmentsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

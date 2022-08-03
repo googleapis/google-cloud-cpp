@@ -82,18 +82,24 @@ ConversationProfilesConnection::ClearSuggestionFeatureConfig(
 }
 
 std::shared_ptr<ConversationProfilesConnection>
-MakeConversationProfilesConnection(Options options) {
+MakeConversationProfilesConnection(std::string const& location,
+                                   Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  ConversationProfilesPolicyOptionList>(
       options, __func__);
   options = dialogflow_es_internal::ConversationProfilesDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultConversationProfilesStub(
       background->cq(), options);
   return std::make_shared<
       dialogflow_es_internal::ConversationProfilesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<ConversationProfilesConnection>
+MakeConversationProfilesConnection(Options options) {
+  return MakeConversationProfilesConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

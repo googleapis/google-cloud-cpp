@@ -28,6 +28,7 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -88,10 +89,12 @@ class ConversationsConnection {
  * A factory function to construct an object of type `ConversationsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ConversationsClient,
- * and that class used instead.
+ * should be passed as an argument to the constructor of ConversationsClient.
  *
- * The optional @p opts argument may be used to configure aspects of the
+ * The @p location argument sets the prefix for the default value of the
+ * `EndpointOption`.
+ *
+ * The optional @p options argument may be used to configure aspects of the
  * returned `ConversationsConnection`. Expected options are any of the types in
  * the following option lists:
  *
@@ -99,12 +102,21 @@ class ConversationsConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::dialogflow_es::ConversationsPolicyOptionList`
  *
- * @note Unrecognized options will be ignored. To debug issues with options set
- *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
- *     options will be logged.
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param options (optional) Configure the `ConversationsConnection` created by
  * this function.
+ */
+std::shared_ptr<ConversationsConnection> MakeConversationsConnection(
+    std::string const& location, Options options = {});
+
+/**
+ * A backwards-compatible version of the previous factory function. The
+ * default value of the `EndpointOption` is useless in this case, and so
+ * must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
  */
 std::shared_ptr<ConversationsConnection> MakeConversationsConnection(
     Options options = {});
