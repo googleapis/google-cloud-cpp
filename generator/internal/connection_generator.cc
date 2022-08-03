@@ -45,6 +45,8 @@ Status ConnectionGenerator::GenerateHeader() {
     "#define $header_include_guard$\n");
   // clang-format on
 
+  auto endpoint_location_style = EndpointLocationStyle();
+
   // includes
   HeaderPrint("\n");
   HeaderLocalIncludes(
@@ -65,6 +67,14 @@ Status ConnectionGenerator::GenerateHeader() {
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "memory"});
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderSystemIncludes({"string"});
+      break;
+    default:
+      break;
+  }
 
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
@@ -207,10 +217,9 @@ class $connection_class_name$ {
  * A factory function to construct an object of type `$connection_class_name$`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of $client_class_name$,
- * and that class used instead.
+ * should be passed as an argument to the constructor of $client_class_name$.
  *
- * The optional @p opts argument may be used to configure aspects of the
+ * The optional @p options argument may be used to configure aspects of the
  * returned `$connection_class_name$`. Expected options are any of the types in
  * the following option lists:
  *
@@ -218,16 +227,52 @@ class $connection_class_name$ {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::$product_namespace$::$service_name$PolicyOptionList`
  *
- * @note Unrecognized options will be ignored. To debug issues with options set
- *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
- *     options will be logged.
- *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *)""");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderPrint(R"""(
+ * @param location Sets the prefix for the default `EndpointOption` value.)""");
+      break;
+    default:
+      break;
+  }
+  HeaderPrint(R"""(
  * @param options (optional) Configure the `$connection_class_name$` created by
  * this function.
  */
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
+)""");
+  HeaderPrint("    ");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderPrint("std::string const& location, ");
+      break;
+    default:
+      break;
+  }
+  HeaderPrint("Options options = {});\n");
+
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderPrint(R"""(
+/**
+ * A backwards-compatible version of the previous factory function. The
+ * default value of the `EndpointOption` is useless in this case, and so
+ * must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
+ */
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
     Options options = {});
 )""");
+      break;
+    default:
+      break;
+  }
 
   HeaderCloseNamespaces();
 
@@ -381,13 +426,37 @@ $connection_class_name$::Async$method_name$(
         __FILE__, __LINE__);
   }
 
+  auto endpoint_location_style = EndpointLocationStyle();
+
   CcPrint(R"""(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
-    Options options) {
+)""");
+  CcPrint("    ");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcPrint("std::string const& location, ");
+      break;
+    default:
+      break;
+  }
+  CcPrint("Options options) {");
+  CcPrint(R"""(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
       $service_name$PolicyOptionList>(options, __func__);
   options = $product_internal_namespace$::$service_name$DefaultOptions(
-      std::move(options));
+)""");
+  CcPrint("      ");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcPrint("location, ");
+      break;
+    default:
+      break;
+  }
+  CcPrint("std::move(options));");
+  CcPrint(R"""(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = $product_internal_namespace$::CreateDefault$stub_class_name$(
     background->cq(), options);
@@ -395,6 +464,19 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
       std::move(background), std::move(stub), std::move(options));
 }
 )""");
+
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcPrint(R"""(
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
+    Options options) {
+  return Make$connection_class_name$(std::string{}, std::move(options));
+}
+)""");
+      break;
+    default:
+      break;
+  }
 
   CcCloseNamespaces();
 

@@ -76,6 +76,22 @@ message ServiceConfiguration {
   // decorators, for example, Storage requires a round-robin decorator to get
   // good performance.
   bool omit_stub_factory = 14;
+
+  // Control the overloads generated for `Make*Connection()`.
+  enum EndpointLocationStyle {
+    // Default. `Make*Connection(Options options = {})`.
+    LOCATION_INDEPENDENT = 0;
+
+    // `Make*Connection(std::string const& location, Options options = {})`.
+    LOCATION_DEPENDENT = 1;
+
+    // Both of the above, for services that were initially released as
+    // "LOCATION_INDEPENDENT" (probably with a useless default endpoint),
+    // but were subsequently acknowledged to be "LOCATION_DEPENDENT".
+    // Do not use for new services.
+    LOCATION_DEPENDENT_COMPAT = 2;
+  }
+  EndpointLocationStyle endpoint_location_style = 15;
 }
 
 message GeneratorConfiguration {

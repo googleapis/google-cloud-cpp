@@ -43,6 +43,7 @@ ABSL_FLAG(std::string, scaffold, "",
 ABSL_FLAG(bool, update_ci, true, "Update the CI support files.");
 
 namespace {
+
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
 GetConfig(std::string const& filepath) {
   std::ifstream input(filepath);
@@ -234,6 +235,10 @@ int main(int argc, char** argv) {
                       service.service_endpoint_env_var());
     args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
                       service.emulator_endpoint_env_var());
+    args.emplace_back(
+        "--cpp_codegen_opt=endpoint_location_style=" +
+        google::cloud::cpp::generator::ServiceConfiguration::
+            EndpointLocationStyle_Name(service.endpoint_location_style()));
     for (auto const& gen_async_rpc : service.gen_async_rpcs()) {
       args.emplace_back("--cpp_codegen_opt=gen_async_rpc=" + gen_async_rpc);
     }

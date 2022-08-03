@@ -43,21 +43,38 @@ Status OptionDefaultsGenerator::GenerateHeader() {
     "#define $header_include_guard$\n");
   // clang-format on
 
+  auto endpoint_location_style = EndpointLocationStyle();
+
   // includes
   HeaderPrint("\n");
   HeaderLocalIncludes({"google/cloud/options.h", "google/cloud/version.h"});
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderSystemIncludes({"string"});
+      break;
+    default:
+      break;
+  }
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
-  HeaderPrint(  // clang-format off
-    "\nOptions $service_name$DefaultOptions(Options options);\n");
-  //clang-format on
+  HeaderPrint("\nOptions $service_name$DefaultOptions(");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderPrint("std::string const& location, ");
+      break;
+    default:
+      break;
+  }
+  HeaderPrint("Options options);\n");
 
   HeaderCloseNamespaces();
+
   // close header guard
-  HeaderPrint(
-    "\n#endif  // $header_include_guard$\n");
+  HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
 }
 
@@ -70,12 +87,22 @@ Status OptionDefaultsGenerator::GenerateCc() {
     "// source: $proto_file_name$\n");
   // clang-format on
 
+  auto endpoint_location_style = EndpointLocationStyle();
+
   // includes
   CcPrint("\n");
   CcLocalIncludes({vars("option_defaults_header_path"),
                    vars("connection_header_path"), vars("options_header_path"),
                    "google/cloud/internal/populate_common_options.h",
                    "google/cloud/internal/populate_grpc_options.h"});
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcLocalIncludes({"google/cloud/internal/absl_str_cat_quiet.h"});
+      break;
+    default:
+      break;
+  }
   CcSystemIncludes({"memory"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
@@ -86,20 +113,39 @@ Status OptionDefaultsGenerator::GenerateCc() {
     "namespace {\n"
     "auto constexpr kBackoffScaling = 2.0;\n"
     "}  // namespace\n"
-  );
-  //  clang-format on
+  ); //  clang-format on
 
-  CcPrint(  // clang-format off
-  {{R"""(
-Options $service_name$DefaultOptions(Options options) {
+  CcPrint("\nOptions $service_name$DefaultOptions(");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcPrint("std::string const& location, ");
+      break;
+    default:
+      break;
+  }
+  CcPrint("Options options) {");
+  CcPrint(R"""(
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "$service_endpoint_env_var$",
       "$emulator_endpoint_env_var$", "$service_authority_env_var$",
-      "$service_endpoint$");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "$emulator_endpoint_env_var$");
-)"""
-    },
+      )""");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+      CcPrint(R"""(absl::StrCat(location, "-", "$service_endpoint$"))""");
+      break;
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcPrint(R"""(absl::StrCat(location, )"""
+              R"""(location.empty() ? "" : "-", "$service_endpoint$"))""");
+      break;
+    default:
+      CcPrint(R"""("$service_endpoint$")""");
+      break;
+  }
+  CcPrint({  // clang-format off
+   {");\n"
+    "  options = google::cloud::internal::PopulateGrpcOptions(\n"
+    "      std::move(options), \"$emulator_endpoint_env_var$\");\n"},
    {"  if (!options.has<$product_namespace$::$retry_policy_name$Option>()) {\n"
     "    options.set<$product_namespace$::$retry_policy_name$Option>(\n"
     "        $product_namespace$::$limited_time_retry_policy_name$(\n"
