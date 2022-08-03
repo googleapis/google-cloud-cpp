@@ -66,17 +66,22 @@ KnowledgeBasesConnection::UpdateKnowledgeBase(
 }
 
 std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  KnowledgeBasesPolicyOptionList>(options,
                                                                  __func__);
-  options =
-      dialogflow_es_internal::KnowledgeBasesDefaultOptions(std::move(options));
+  options = dialogflow_es_internal::KnowledgeBasesDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultKnowledgeBasesStub(
       background->cq(), options);
   return std::make_shared<dialogflow_es_internal::KnowledgeBasesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(
+    Options options) {
+  return MakeKnowledgeBasesConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -65,15 +65,21 @@ Status WebhooksConnection::DeleteWebhook(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(Options options) {
+std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  WebhooksPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::WebhooksDefaultOptions(std::move(options));
+  options = dialogflow_cx_internal::WebhooksDefaultOptions(location,
+                                                           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultWebhooksStub(
       background->cq(), options);
   return std::make_shared<dialogflow_cx_internal::WebhooksConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(Options options) {
+  return MakeWebhooksConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

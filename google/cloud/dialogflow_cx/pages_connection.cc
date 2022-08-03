@@ -61,15 +61,21 @@ Status PagesConnection::DeletePage(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<PagesConnection> MakePagesConnection(Options options) {
+std::shared_ptr<PagesConnection> MakePagesConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  PagesPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::PagesDefaultOptions(std::move(options));
+  options =
+      dialogflow_cx_internal::PagesDefaultOptions(location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       dialogflow_cx_internal::CreateDefaultPagesStub(background->cq(), options);
   return std::make_shared<dialogflow_cx_internal::PagesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<PagesConnection> MakePagesConnection(Options options) {
+  return MakePagesConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

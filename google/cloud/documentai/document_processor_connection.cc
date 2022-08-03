@@ -57,18 +57,25 @@ DocumentProcessorServiceConnection::ReviewDocument(
 }
 
 std::shared_ptr<DocumentProcessorServiceConnection>
-MakeDocumentProcessorServiceConnection(Options options) {
+MakeDocumentProcessorServiceConnection(std::string const& location,
+                                       Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  DocumentProcessorServicePolicyOptionList>(
       options, __func__);
   options = documentai_internal::DocumentProcessorServiceDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = documentai_internal::CreateDefaultDocumentProcessorServiceStub(
       background->cq(), options);
   return std::make_shared<
       documentai_internal::DocumentProcessorServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<DocumentProcessorServiceConnection>
+MakeDocumentProcessorServiceConnection(Options options) {
+  return MakeDocumentProcessorServiceConnection(std::string{},
+                                                std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

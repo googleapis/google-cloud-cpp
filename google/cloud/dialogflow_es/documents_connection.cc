@@ -96,15 +96,21 @@ DocumentsConnection::ExportDocument(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<DocumentsConnection> MakeDocumentsConnection(Options options) {
+std::shared_ptr<DocumentsConnection> MakeDocumentsConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  DocumentsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::DocumentsDefaultOptions(std::move(options));
+  options = dialogflow_es_internal::DocumentsDefaultOptions(location,
+                                                            std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultDocumentsStub(
       background->cq(), options);
   return std::make_shared<dialogflow_es_internal::DocumentsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<DocumentsConnection> MakeDocumentsConnection(Options options) {
+  return MakeDocumentsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

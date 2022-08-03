@@ -64,15 +64,21 @@ Status VersionsConnection::DeleteVersion(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<VersionsConnection> MakeVersionsConnection(Options options) {
+std::shared_ptr<VersionsConnection> MakeVersionsConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  VersionsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::VersionsDefaultOptions(std::move(options));
+  options = dialogflow_es_internal::VersionsDefaultOptions(location,
+                                                           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultVersionsStub(
       background->cq(), options);
   return std::make_shared<dialogflow_es_internal::VersionsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<VersionsConnection> MakeVersionsConnection(Options options) {
+  return MakeVersionsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_cx/internal/security_settings_option_defaults.h"
 #include "google/cloud/dialogflow_cx/security_settings_connection.h"
 #include "google/cloud/dialogflow_cx/security_settings_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
@@ -32,11 +33,13 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options SecuritySettingsServiceDefaultOptions(Options options) {
+Options SecuritySettingsServiceDefaultOptions(std::string const& location,
+                                              Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SECURITY_SETTINGS_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_SECURITY_SETTINGS_SERVICE_AUTHORITY",
-      "dialogflow.googleapis.com");
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dialogflow.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<dialogflow_cx::SecuritySettingsServiceRetryPolicyOption>()) {

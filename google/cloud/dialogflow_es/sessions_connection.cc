@@ -50,15 +50,21 @@ SessionsConnection::AsyncStreamingDetectIntent(ExperimentalTag) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<SessionsConnection> MakeSessionsConnection(Options options) {
+std::shared_ptr<SessionsConnection> MakeSessionsConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  SessionsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::SessionsDefaultOptions(std::move(options));
+  options = dialogflow_es_internal::SessionsDefaultOptions(location,
+                                                           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultSessionsStub(
       background->cq(), options);
   return std::make_shared<dialogflow_es_internal::SessionsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<SessionsConnection> MakeSessionsConnection(Options options) {
+  return MakeSessionsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

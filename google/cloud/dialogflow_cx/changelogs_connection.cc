@@ -49,16 +49,21 @@ ChangelogsConnection::GetChangelog(
 }
 
 std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  ChangelogsPolicyOptionList>(options, __func__);
-  options =
-      dialogflow_cx_internal::ChangelogsDefaultOptions(std::move(options));
+  options = dialogflow_cx_internal::ChangelogsDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultChangelogsStub(
       background->cq(), options);
   return std::make_shared<dialogflow_cx_internal::ChangelogsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
+    Options options) {
+  return MakeChangelogsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

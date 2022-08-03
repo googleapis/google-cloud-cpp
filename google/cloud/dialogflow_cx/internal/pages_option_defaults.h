@@ -21,13 +21,14 @@
 
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options PagesDefaultOptions(Options options);
+Options PagesDefaultOptions(std::string const& location, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

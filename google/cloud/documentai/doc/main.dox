@@ -42,7 +42,7 @@ which should give you a taste of the Cloud Document AI API C++ client library AP
 <!-- inject-endpoint-env-vars-start -->
 
 - `GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "documentai.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-documentai.googleapis.com")
   used by `MakeDocumentProcessorServiceConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->

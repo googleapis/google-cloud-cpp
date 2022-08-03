@@ -31,6 +31,7 @@
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -108,10 +109,9 @@ class FlowsConnection {
  * A factory function to construct an object of type `FlowsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of FlowsClient,
- * and that class used instead.
+ * should be passed as an argument to the constructor of FlowsClient.
  *
- * The optional @p opts argument may be used to configure aspects of the
+ * The optional @p options argument may be used to configure aspects of the
  * returned `FlowsConnection`. Expected options are any of the types in
  * the following option lists:
  *
@@ -119,12 +119,22 @@ class FlowsConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::dialogflow_cx::FlowsPolicyOptionList`
  *
- * @note Unrecognized options will be ignored. To debug issues with options set
- *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
- *     options will be logged.
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param options (optional) Configure the `FlowsConnection` created by
  * this function.
+ */
+std::shared_ptr<FlowsConnection> MakeFlowsConnection(
+    std::string const& location, Options options = {});
+
+/**
+ * A backwards-compatible version of the previous factory function. The
+ * default value of the `EndpointOption` is useless in this case, and so
+ * must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
  */
 std::shared_ptr<FlowsConnection> MakeFlowsConnection(Options options = {});
 
