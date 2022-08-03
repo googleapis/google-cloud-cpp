@@ -72,10 +72,9 @@ class SearchServiceConnection {
  * A factory function to construct an object of type `SearchServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of SearchServiceClient,
- * and that class used instead.
+ * should be passed as an argument to the constructor of SearchServiceClient.
  *
- * The optional @p opts argument may be used to configure aspects of the
+ * The optional @p options argument may be used to configure aspects of the
  * returned `SearchServiceConnection`. Expected options are any of the types in
  * the following option lists:
  *
@@ -83,9 +82,8 @@ class SearchServiceConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::retail::SearchServicePolicyOptionList`
  *
- * @note Unrecognized options will be ignored. To debug issues with options set
- *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
- *     options will be logged.
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param options (optional) Configure the `SearchServiceConnection` created by
  * this function.

@@ -93,9 +93,9 @@ class UptimeCheckServiceConnection {
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of
- * UptimeCheckServiceClient, and that class used instead.
+ * UptimeCheckServiceClient.
  *
- * The optional @p opts argument may be used to configure aspects of the
+ * The optional @p options argument may be used to configure aspects of the
  * returned `UptimeCheckServiceConnection`. Expected options are any of the
  * types in the following option lists:
  *
@@ -103,9 +103,8 @@ class UptimeCheckServiceConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::monitoring::UptimeCheckServicePolicyOptionList`
  *
- * @note Unrecognized options will be ignored. To debug issues with options set
- *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
- *     options will be logged.
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param options (optional) Configure the `UptimeCheckServiceConnection`
  * created by this function.
