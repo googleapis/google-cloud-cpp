@@ -260,9 +260,9 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
       HeaderPrint(R"""(
 /**
- * A backwards-compatible version of the previous factory function. The
- * default value of the `EndpointOption` is useless in this case, and so
- * must be overridden.
+ * A backwards-compatible version of the previous factory function.  Unless
+ * the service also offers a global endpoint, the default value of the
+ * `EndpointOption` may be useless, in which case it must be overridden.
  *
  * @deprecated Please use the `location` overload instead.
  */

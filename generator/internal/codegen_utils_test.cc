@@ -312,6 +312,15 @@ TEST(ProcessCommandLineArgs, ProcessOmitStubFactory) {
   EXPECT_THAT(*result, Contains(Pair("omit_stub_factory", "true")));
 }
 
+TEST(ProcessCommandLineArgs, ProcessEndpointLocationStyle) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/"
+      ",endpoint_location_style=LOCATION_DEPENDENT_COMPAT");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("endpoint_location_style",
+                                     "LOCATION_DEPENDENT_COMPAT")));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
