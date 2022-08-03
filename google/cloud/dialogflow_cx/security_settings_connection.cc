@@ -67,18 +67,25 @@ Status SecuritySettingsServiceConnection::DeleteSecuritySettings(
 }
 
 std::shared_ptr<SecuritySettingsServiceConnection>
-MakeSecuritySettingsServiceConnection(Options options) {
+MakeSecuritySettingsServiceConnection(std::string const& location,
+                                      Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  SecuritySettingsServicePolicyOptionList>(
       options, __func__);
   options = dialogflow_cx_internal::SecuritySettingsServiceDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultSecuritySettingsServiceStub(
       background->cq(), options);
   return std::make_shared<
       dialogflow_cx_internal::SecuritySettingsServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<SecuritySettingsServiceConnection>
+MakeSecuritySettingsServiceConnection(Options options) {
+  return MakeSecuritySettingsServiceConnection(std::string{},
+                                               std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

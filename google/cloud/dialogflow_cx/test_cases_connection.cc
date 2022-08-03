@@ -117,15 +117,21 @@ TestCasesConnection::GetTestCaseResult(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(Options options) {
+std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  TestCasesPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::TestCasesDefaultOptions(std::move(options));
+  options = dialogflow_cx_internal::TestCasesDefaultOptions(location,
+                                                            std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultTestCasesStub(
       background->cq(), options);
   return std::make_shared<dialogflow_cx_internal::TestCasesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(Options options) {
+  return MakeTestCasesConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -85,17 +85,22 @@ ParticipantsConnection::SuggestSmartReplies(
 }
 
 std::shared_ptr<ParticipantsConnection> MakeParticipantsConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  ParticipantsPolicyOptionList>(options,
                                                                __func__);
-  options =
-      dialogflow_es_internal::ParticipantsDefaultOptions(std::move(options));
+  options = dialogflow_es_internal::ParticipantsDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultParticipantsStub(
       background->cq(), options);
   return std::make_shared<dialogflow_es_internal::ParticipantsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<ParticipantsConnection> MakeParticipantsConnection(
+    Options options) {
+  return MakeParticipantsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

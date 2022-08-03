@@ -28,6 +28,7 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -86,10 +87,9 @@ class ContextsConnection {
  * A factory function to construct an object of type `ContextsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ContextsClient,
- * and that class used instead.
+ * should be passed as an argument to the constructor of ContextsClient.
  *
- * The optional @p opts argument may be used to configure aspects of the
+ * The optional @p options argument may be used to configure aspects of the
  * returned `ContextsConnection`. Expected options are any of the types in
  * the following option lists:
  *
@@ -97,12 +97,22 @@ class ContextsConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::dialogflow_es::ContextsPolicyOptionList`
  *
- * @note Unrecognized options will be ignored. To debug issues with options set
- *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
- *     options will be logged.
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param options (optional) Configure the `ContextsConnection` created by
  * this function.
+ */
+std::shared_ptr<ContextsConnection> MakeContextsConnection(
+    std::string const& location, Options options = {});
+
+/**
+ * A backwards-compatible version of the previous factory function.  Unless
+ * the service also offers a global endpoint, the default value of the
+ * `EndpointOption` may be useless, in which case it must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
  */
 std::shared_ptr<ContextsConnection> MakeContextsConnection(
     Options options = {});

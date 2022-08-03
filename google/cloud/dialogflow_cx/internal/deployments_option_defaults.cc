@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_cx/internal/deployments_option_defaults.h"
 #include "google/cloud/dialogflow_cx/deployments_connection.h"
 #include "google/cloud/dialogflow_cx/deployments_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
@@ -32,10 +33,13 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options DeploymentsDefaultOptions(Options options) {
+Options DeploymentsDefaultOptions(std::string const& location,
+                                  Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DEPLOYMENTS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DEPLOYMENTS_AUTHORITY", "dialogflow.googleapis.com");
+      "GOOGLE_CLOUD_CPP_DEPLOYMENTS_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dialogflow.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<dialogflow_cx::DeploymentsRetryPolicyOption>()) {

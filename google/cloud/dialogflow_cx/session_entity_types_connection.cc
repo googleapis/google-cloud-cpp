@@ -66,18 +66,23 @@ Status SessionEntityTypesConnection::DeleteSessionEntityType(
 }
 
 std::shared_ptr<SessionEntityTypesConnection> MakeSessionEntityTypesConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  SessionEntityTypesPolicyOptionList>(options,
                                                                      __func__);
   options = dialogflow_cx_internal::SessionEntityTypesDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultSessionEntityTypesStub(
       background->cq(), options);
   return std::make_shared<
       dialogflow_cx_internal::SessionEntityTypesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<SessionEntityTypesConnection> MakeSessionEntityTypesConnection(
+    Options options) {
+  return MakeSessionEntityTypesConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

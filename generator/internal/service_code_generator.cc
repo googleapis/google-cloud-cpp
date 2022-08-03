@@ -87,6 +87,14 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   SetMethods();
 }
 
+ServiceCodeGenerator::ServiceConfiguration::EndpointLocationStyle
+ServiceCodeGenerator::EndpointLocationStyle() const {
+  auto endpoint_location_style = ServiceConfiguration::LOCATION_INDEPENDENT;
+  ServiceConfiguration::EndpointLocationStyle_Parse(
+      vars("endpoint_location_style"), &endpoint_location_style);
+  return endpoint_location_style;
+}
+
 bool ServiceCodeGenerator::HasLongrunningMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {

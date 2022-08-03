@@ -69,15 +69,21 @@ Status ContextsConnection::DeleteAllContexts(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ContextsConnection> MakeContextsConnection(Options options) {
+std::shared_ptr<ContextsConnection> MakeContextsConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  ContextsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::ContextsDefaultOptions(std::move(options));
+  options = dialogflow_es_internal::ContextsDefaultOptions(location,
+                                                           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultContextsStub(
       background->cq(), options);
   return std::make_shared<dialogflow_es_internal::ContextsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<ContextsConnection> MakeContextsConnection(Options options) {
+  return MakeContextsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

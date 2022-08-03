@@ -70,10 +70,9 @@ class CompletionConnection {
  * A factory function to construct an object of type `CompletionConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CompletionClient,
- * and that class used instead.
+ * should be passed as an argument to the constructor of CompletionClient.
  *
- * The optional @p opts argument may be used to configure aspects of the
+ * The optional @p options argument may be used to configure aspects of the
  * returned `CompletionConnection`. Expected options are any of the types in
  * the following option lists:
  *
@@ -81,9 +80,8 @@ class CompletionConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::talent::CompletionPolicyOptionList`
  *
- * @note Unrecognized options will be ignored. To debug issues with options set
- *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
- *     options will be logged.
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param options (optional) Configure the `CompletionConnection` created by
  * this function.
