@@ -26,15 +26,22 @@ namespace {
 
 namespace btproto = ::google::bigtable::v2;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::MockFunction;
+
+Options NonEmptyOptions() {
+  struct TestOption {
+    using Type = bool;
+  };
+  return Options{}.set<TestOption>(true);
+}
 
 /// Define types and functions used in the tests.
-namespace {
 class TableTest : public ::google::cloud::bigtable::testing::TableTestFixture {
  public:
   TableTest() : TableTestFixture(CompletionQueue{}) {}
 };
-}  // anonymous namespace
 
 TEST_F(TableTest, ClientProjectId) {
   EXPECT_EQ(kProjectId, client_->project_id());
@@ -258,6 +265,127 @@ TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
   FinishTest(table_->AsyncReadModifyWriteRow(
       "row_key", ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
       ReadModifyWriteRule::AppendValue("fam", "list", ";element")));
+}
+
+TEST_F(TableTest, ApplyWithOptions) {
+  Table table(client_, kTableId);
+  auto status = table.Apply(SingleRowMutation("row"), NonEmptyOptions());
+  EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, AsyncApplyWithOptions) {
+  Table table(client_, kTableId);
+  auto status = table.AsyncApply(SingleRowMutation("row"), NonEmptyOptions());
+  EXPECT_THAT(status.get(), StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, BulkApplyWithOptions) {
+  Table table(client_, kTableId);
+  auto bulk = BulkMutation(SingleRowMutation("r1"), SingleRowMutation("r2"));
+  auto failed = table.BulkApply(bulk, NonEmptyOptions());
+  ASSERT_EQ(2, failed.size());
+  EXPECT_EQ(0, failed[0].original_index());
+  EXPECT_THAT(failed[0].status(), StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_EQ(1, failed[1].original_index());
+  EXPECT_THAT(failed[1].status(), StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, AsyncBulkApplyWithOptions) {
+  Table table(client_, kTableId);
+  auto bulk = BulkMutation(SingleRowMutation("r1"), SingleRowMutation("r2"));
+  auto failed = table.AsyncBulkApply(bulk, NonEmptyOptions()).get();
+  ASSERT_EQ(2, failed.size());
+  EXPECT_EQ(0, failed[0].original_index());
+  EXPECT_THAT(failed[0].status(), StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_EQ(1, failed[1].original_index());
+  EXPECT_THAT(failed[1].status(), StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, ReadRowsWithOptions) {
+  Table table(client_, kTableId);
+  auto reader =
+      table.ReadRows(RowSet(), Filter::PassAllFilter(), NonEmptyOptions());
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_THAT(*it, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST_F(TableTest, ReadRowsWithLimitWithOptions) {
+  Table table(client_, kTableId);
+  auto reader =
+      table.ReadRows(RowSet(), 1, Filter::PassAllFilter(), NonEmptyOptions());
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_THAT(*it, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST_F(TableTest, ReadRowWithOptions) {
+  Table table(client_, kTableId);
+  auto row = table.ReadRow("row", Filter::PassAllFilter(), NonEmptyOptions());
+  EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, AsyncReadRowWithOptions) {
+  Table table(client_, kTableId);
+  auto row =
+      table.AsyncReadRow("row", Filter::PassAllFilter(), NonEmptyOptions());
+  EXPECT_THAT(row.get(), StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, CheckAndMutateRowWithOptions) {
+  Table table(client_, kTableId);
+  auto branch = table.CheckAndMutateRow("row", Filter::PassAllFilter(), {}, {},
+                                        NonEmptyOptions());
+  EXPECT_THAT(branch, StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, AsyncCheckAndMutateRowWithOptions) {
+  Table table(client_, kTableId);
+  auto branch = table.AsyncCheckAndMutateRow("row", Filter::PassAllFilter(), {},
+                                             {}, NonEmptyOptions());
+  EXPECT_THAT(branch.get(), StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, SampleRowsWithOptions) {
+  Table table(client_, kTableId);
+  auto rows = table.SampleRows(NonEmptyOptions());
+  EXPECT_THAT(rows, StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, AsyncSampleRowsWithOptions) {
+  Table table(client_, kTableId);
+  auto rows = table.AsyncSampleRows(NonEmptyOptions());
+  EXPECT_THAT(rows.get(), StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, AsyncReadRowsWithOptions) {
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).Times(0);
+
+  MockFunction<void(Status)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument));
+  });
+
+  Table table(client_, kTableId);
+  table.AsyncReadRows(on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                      RowSet(), Filter::PassAllFilter(), NonEmptyOptions());
+}
+
+TEST_F(TableTest, AsyncReadRowsWithLimitWithOptions) {
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).Times(0);
+
+  MockFunction<void(Status)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument));
+  });
+
+  Table table(client_, kTableId);
+  table.AsyncReadRows(on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                      RowSet(), 1, Filter::PassAllFilter(), NonEmptyOptions());
 }
 
 }  // namespace

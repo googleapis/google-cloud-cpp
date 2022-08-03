@@ -25,21 +25,23 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
 
-std::vector<FailedMutation> MakeUnimplementedFailedMutations(std::size_t n) {
-  std::vector<FailedMutation> mutations;
+std::vector<bigtable::FailedMutation> MakeFailedMutations(Status const& status,
+                                                          std::size_t n) {
+  std::vector<bigtable::FailedMutation> mutations;
   mutations.reserve(n);
   for (int i = 0; i != static_cast<int>(n); ++i) {
-    mutations.emplace_back(FailedMutation(
-        Status(StatusCode::kUnimplemented, "not implemented"), i));
+    mutations.emplace_back(bigtable::FailedMutation(status, i));
   }
   return mutations;
 }
 
-}  // namespace
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+namespace bigtable {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataConnection::~DataConnection() = default;
 
@@ -58,13 +60,15 @@ future<Status> DataConnection::AsyncApply(
 std::vector<FailedMutation> DataConnection::BulkApply(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::string const&, BulkMutation mut) {
-  return MakeUnimplementedFailedMutations(mut.size());
+  return bigtable_internal::MakeFailedMutations(
+      Status(StatusCode::kUnimplemented, "not-implemented"), mut.size());
 }
 
 future<std::vector<FailedMutation>> DataConnection::AsyncBulkApply(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::string const&, BulkMutation mut) {
-  return make_ready_future(MakeUnimplementedFailedMutations(mut.size()));
+  return make_ready_future(bigtable_internal::MakeFailedMutations(
+      Status(StatusCode::kUnimplemented, "not-implemented"), mut.size()));
 }
 
 RowReader DataConnection::ReadRows(
