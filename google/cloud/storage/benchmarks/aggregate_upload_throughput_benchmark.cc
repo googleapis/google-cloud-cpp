@@ -388,8 +388,6 @@ google::cloud::StatusOr<AggregateUploadThroughputOptions> SelfTest(
           "--thread-count=1",
           "--iteration-count=1",
           "--api=JSON",
-          "--grpc-channel-count=1",
-          "--grpc-plugin-config=dp",
       },
       kDescription);
 }
