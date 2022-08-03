@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SERVICE_CODE_GENERATOR_H
 
 #include "google/cloud/status.h"
+#include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/generator_interface.h"
@@ -54,6 +55,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
  protected:
   using MethodDescriptorList = std::vector<
       std::reference_wrapper<google::protobuf::MethodDescriptor const>>;
+  using ServiceConfiguration =
+      google::cloud::cpp::generator::ServiceConfiguration;
 
   virtual Status GenerateHeader() = 0;
   virtual Status GenerateCc() = 0;
@@ -91,6 +94,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
                        char const* file, int line);
   void CcPrintMethod(google::protobuf::MethodDescriptor const& method,
                      char const* file, int line, std::string const& text);
+
+  /**
+   * How the endpoint for the service might depend upon its location.
+   */
+  ServiceConfiguration::EndpointLocationStyle EndpointLocationStyle() const;
 
   /**
    * Determines if the service contains at least one method that returns a

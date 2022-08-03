@@ -123,6 +123,19 @@ void ProcessArgEmulatorEndpointEnvVar(
   }
 }
 
+void ProcessArgEndpointLocationStyle(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  auto endpoint_location_style =
+      std::find_if(command_line_args.begin(), command_line_args.end(),
+                   [](std::pair<std::string, std::string> const& p) {
+                     return p.first == "endpoint_location_style";
+                   });
+  if (endpoint_location_style == command_line_args.end()) {
+    command_line_args.emplace_back("endpoint_location_style",
+                                   "LOCATION_INDEPENDENT");
+  }
+}
+
 void ProcessArgGenerateAsyncRpc(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   ProcessRepeated("gen_async_rpc", "gen_async_rpcs", command_line_args);
@@ -230,6 +243,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgOmitRpc(command_line_args);
   ProcessArgServiceEndpointEnvVar(command_line_args);
   ProcessArgEmulatorEndpointEnvVar(command_line_args);
+  ProcessArgEndpointLocationStyle(command_line_args);
   ProcessArgGenerateAsyncRpc(command_line_args);
   ProcessArgRetryGrpcStatusCode(command_line_args);
   ProcessArgAdditionalProtoFiles(command_line_args);

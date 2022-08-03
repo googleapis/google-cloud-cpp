@@ -449,6 +449,7 @@ service {
   initial_copyright_year: "2022"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENT_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -456,6 +457,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -463,6 +465,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -472,6 +475,7 @@ service {
   initial_copyright_year: "2022"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -479,6 +483,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -486,6 +491,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -493,6 +499,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -501,6 +508,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -508,6 +516,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -516,6 +525,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -523,6 +533,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -530,6 +541,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -537,6 +549,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -544,6 +557,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -551,6 +565,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -558,6 +573,7 @@ service {
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 # Dialogflow ES
@@ -566,6 +582,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -574,6 +591,7 @@ service {
   initial_copyright_year: "2022"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENTS_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -581,6 +599,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -589,6 +608,7 @@ service {
   initial_copyright_year: "2022"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -596,6 +616,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -603,6 +624,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -610,6 +632,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -617,6 +640,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -624,6 +648,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -631,6 +656,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -639,6 +665,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -647,6 +674,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -654,6 +682,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -661,6 +690,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -668,6 +698,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -676,6 +707,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 service {
@@ -683,6 +715,7 @@ service {
   product_path: "google/cloud/dialogflow_es"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 
@@ -692,6 +725,7 @@ service {
   product_path: "google/cloud/documentai"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
 # Eventarc
