@@ -22,8 +22,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-NotificationMetadata GrpcNotificationMetadataParser::FromProto(
-    google::storage::v2::Notification const& rhs) {
+NotificationMetadata FromProto(google::storage::v2::Notification const& rhs) {
   std::vector<absl::string_view> components = absl::StrSplit(rhs.name(), '/');
   auto id = components.empty() ? std::string{} : std::string{components.back()};
 
@@ -42,8 +41,8 @@ NotificationMetadata GrpcNotificationMetadataParser::FromProto(
   return result;
 }
 
-google::storage::v2::Notification GrpcNotificationMetadataParser::ToProto(
-    NotificationMetadata const& rhs, std::string const& bucket_name) {
+google::storage::v2::Notification ToProto(NotificationMetadata const& rhs,
+                                          std::string const& bucket_name) {
   google::storage::v2::Notification result;
   result.set_name("projects/_/buckets/" + bucket_name +
                   "/notificationConfigs/" + rhs.id());

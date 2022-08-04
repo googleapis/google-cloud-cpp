@@ -48,7 +48,7 @@ TEST(GrpcNotificationMetadataParser, Roundtrip) {
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kProtoText, &input));
 
-  auto const actual = GrpcNotificationMetadataParser::FromProto(input);
+  auto const actual = FromProto(input);
   EXPECT_EQ(actual.id(), "test-notification-id");
   EXPECT_EQ(actual.topic(), "projects/test-project-id/topics/test-topic-id");
   EXPECT_EQ(actual.etag(), "test-etag");
@@ -61,8 +61,7 @@ TEST(GrpcNotificationMetadataParser, Roundtrip) {
   EXPECT_EQ(actual.object_name_prefix(), "test-object-name-prefix/");
   EXPECT_EQ(actual.payload_format(), "JSON_API_V1");
 
-  auto const output =
-      GrpcNotificationMetadataParser::ToProto(actual, "test-bucket-name");
+  auto const output = ToProto(actual, "test-bucket-name");
   EXPECT_THAT(output, IsProtoEqual(input));
 }
 
