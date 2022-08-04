@@ -496,7 +496,6 @@ StatusOr<int> CurlImpl::PerformWork() {
   // work, but is it pretty harmless to keep here.
   int running_handles = 0;
   CURLMcode multi_perform_result;
-  CURLMcode multi_remove_result;
   do {
     multi_perform_result = curl_multi_perform(multi_.get(), &running_handles);
   } while (multi_perform_result == CURLM_CALL_MULTI_PERFORM);
@@ -515,7 +514,7 @@ StatusOr<int> CurlImpl::PerformWork() {
     while (auto* msg = curl_multi_info_read(multi_.get(), &remaining)) {
       if (msg->easy_handle != handle_.handle_.get()) {
         // Return an error if this is the wrong handle. This should never
-        // happen, if it does we are using the libcurl API incorrectly. But it
+        // happen. If it does, we are using the libcurl API incorrectly. But it
         // is better to give a meaningful error message in this case.
         std::ostringstream os;
         os << __func__ << " unknown handle returned by curl_multi_info_read()"
@@ -533,6 +532,7 @@ StatusOr<int> CurlImpl::PerformWork() {
       // Whatever the status is, the transfer is done, we need to remove it
       // from the CURLM* interface.
       curl_closed_ = true;
+      CURLMcode multi_remove_result = CURLM_OK;
       if (in_multi_) {
         // In the extremely unlikely case that removing the handle from CURLM*
         // was an error, return that as a status.
