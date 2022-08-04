@@ -55,9 +55,8 @@ DataConnectionImpl::DataConnectionImpl(
     std::shared_ptr<BigtableStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          bigtable::internal::DefaultDataOptions(DataConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      DataConnection::options())) {}
 
 Status DataConnectionImpl::Apply(std::string const& table_name,
                                  bigtable::SingleRowMutation mut) {
