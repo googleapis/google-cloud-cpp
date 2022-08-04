@@ -35,6 +35,7 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
     Options const& options, int channel_id) {
   auto args = internal::MakeChannelArguments(options);
   args.SetInt("grpc.channel_id", channel_id);
+  args.SetInt("grpc.use_local_subchannel_pool", 1);
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
