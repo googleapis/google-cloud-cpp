@@ -450,13 +450,18 @@ future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows(
 }
 
 StatusOr<Row> Table::ReadModifyWriteRowImpl(
-    btproto::ReadModifyWriteRowRequest request) {
+    btproto::ReadModifyWriteRowRequest request, Options opts) {
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
       request, app_profile_id(), table_name_);
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->ReadModifyWriteRow(std::move(request));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return Status(StatusCode::kInvalidArgument,
+                  "Per-operation options only apply to `Table`s constructed "
+                  "with a `DataConnection`.");
   }
 
   grpc::Status status;
@@ -472,13 +477,19 @@ StatusOr<Row> Table::ReadModifyWriteRowImpl(
 }
 
 future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
-    ::google::bigtable::v2::ReadModifyWriteRowRequest request) {
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request, Options opts) {
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
       request, app_profile_id(), table_name_);
   if (connection_) {
-    google::cloud::internal::OptionsSpan span(options_);
+    OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->AsyncReadModifyWriteRow(std::move(request));
+  }
+  if (!google::cloud::internal::IsEmpty(opts)) {
+    return make_ready_future<StatusOr<Row>>(
+        Status(StatusCode::kInvalidArgument,
+               "Per-operation options only apply to `Table`s constructed "
+               "with a `DataConnection`."));
   }
 
   auto cq = background_threads_->cq();

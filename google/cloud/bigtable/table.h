@@ -743,7 +743,9 @@ class Table {
    * Atomically read and modify the row in the server, returning the
    * resulting row
    *
-   * @tparam Args this is zero or more ReadModifyWriteRules to apply on a row
+   * @tparam Args this is zero or more ReadModifyWriteRules to apply on a row.
+   *     Options to override the class-level options, such as retry, backoff,
+   *     and idempotency policies are also be passed via this parameter pack.
    * @param row_key the row to read
    * @param rule to modify the row. Two types of rules are applied here
    *     AppendValue which will read the existing value and append the
@@ -751,7 +753,10 @@ class Table {
    *     IncrementAmount which will read the existing uint64 big-endian-int
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
-   * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
+   * @param rules_and_options is the zero or more ReadModifyWriteRules to apply
+   *     on a row. Options to override the class-level options, such as retry,
+   *     backoff, and idempotency policies are also be passed via this parameter
+   *     pack.
    * @returns the new contents of all modified cells.
    *
    * @par Idempotency
@@ -768,21 +773,25 @@ class Table {
   template <typename... Args>
   StatusOr<Row> ReadModifyWriteRow(std::string row_key,
                                    bigtable::ReadModifyWriteRule rule,
-                                   Args&&... rules) {
+                                   Args&&... rules_and_options) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
 
     // Generate a better compile time error message than the default one
     // if the types do not match
     static_assert(
-        absl::conjunction<
-            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+        absl::conjunction<absl::disjunction<
+            std::is_convertible<Args, bigtable::ReadModifyWriteRule>,
+            std::is_same<typename std::decay<Args>::type, Options>>...>::value,
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
-        "convertible to bigtable::ReadModifyWriteRule");
+        "convertible to bigtable::ReadModifyWriteRule, or of type "
+        "google::cloud::Options");
 
     *request.add_rules() = std::move(rule).as_proto();
-    AddRules(request, std::forward<Args>(rules)...);
-    return ReadModifyWriteRowImpl(std::move(request));
+    AddRules(request, std::forward<Args>(rules_and_options)...);
+    auto opts = google::cloud::internal::GroupOptions(
+        std::forward<Args>(rules_and_options)...);
+    return ReadModifyWriteRowImpl(std::move(request), std::move(opts));
   }
 
   /**
@@ -792,15 +801,20 @@ class Table {
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
    *     is not subject to any SLA or deprecation policy.
    *
+   * @tparam Args this is zero or more ReadModifyWriteRules to apply on a row.
+   *     Options to override the class-level options, such as retry, backoff,
+   *     and idempotency policies are also be passed via this parameter pack.
    * @param row_key the row key on which modification will be performed
-   *
    * @param rule to modify the row. Two types of rules are applied here
    *     AppendValue which will read the existing value and append the
    *     text provided to the value.
    *     IncrementAmount which will read the existing uint64 big-endian-int
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
-   * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
+   * @param rules_and_options is the zero or more ReadModifyWriteRules to apply
+   *     on a row. Options to override the class-level options, such as retry,
+   *     backoff, and idempotency policies are also be passed via this parameter
+   *     pack.
    * @returns a future, that becomes satisfied when the operation completes,
    *     at that point the future has the contents of all modified cells.
    *
@@ -817,21 +831,25 @@ class Table {
   template <typename... Args>
   future<StatusOr<Row>> AsyncReadModifyWriteRow(
       std::string row_key, bigtable::ReadModifyWriteRule rule,
-      Args&&... rules) {
+      Args&&... rules_and_options) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
 
     // Generate a better compile time error message than the default one
     // if the types do not match
     static_assert(
-        absl::conjunction<
-            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+        absl::conjunction<absl::disjunction<
+            std::is_convertible<Args, bigtable::ReadModifyWriteRule>,
+            std::is_same<typename std::decay<Args>::type, Options>>...>::value,
         "The arguments passed to AsyncReadModifyWriteRow(row_key,...) must be "
-        "convertible to bigtable::ReadModifyWriteRule");
+        "convertible to bigtable::ReadModifyWriteRule, or of type "
+        "google::cloud::Options");
 
     *request.add_rules() = std::move(rule).as_proto();
-    AddRules(request, std::forward<Args>(rules)...);
-    return AsyncReadModifyWriteRowImpl(std::move(request));
+    AddRules(request, std::forward<Args>(rules_and_options)...);
+    auto opts = google::cloud::internal::GroupOptions(
+        std::forward<Args>(rules_and_options)...);
+    return AsyncReadModifyWriteRowImpl(std::move(request), std::move(opts));
   }
 
   /**
@@ -1003,10 +1021,10 @@ class Table {
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
   StatusOr<Row> ReadModifyWriteRowImpl(
-      ::google::bigtable::v2::ReadModifyWriteRowRequest request);
+      ::google::bigtable::v2::ReadModifyWriteRowRequest request, Options opts);
 
   future<StatusOr<Row>> AsyncReadModifyWriteRowImpl(
-      ::google::bigtable::v2::ReadModifyWriteRowRequest request);
+      ::google::bigtable::v2::ReadModifyWriteRowRequest request, Options opts);
 
   void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest&) {
     // no-op for empty list
@@ -1016,6 +1034,12 @@ class Table {
   void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request,
                 bigtable::ReadModifyWriteRule rule, Args&&... args) {
     *request.add_rules() = std::move(rule).as_proto();
+    AddRules(request, std::forward<Args>(args)...);
+  }
+
+  template <typename... Args>
+  void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request,
+                Options const&, Args&&... args) {
     AddRules(request, std::forward<Args>(args)...);
   }
 

@@ -396,7 +396,7 @@ TEST(TableTest, ReadModifyWriteRow) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, ReadModifyWriteRow)
       .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
-        // TODO (#7688) - CheckCurrentOptions();
+        CheckCurrentOptions();
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.rules(),
                     ElementsAre(MatchRule(TestAppendRule()),
@@ -405,16 +405,38 @@ TEST(TableTest, ReadModifyWriteRow) {
       });
 
   auto table = TestTable(std::move(mock));
-  auto row =
-      table.ReadModifyWriteRow("row", TestAppendRule(), TestIncrementRule());
+  auto row = table.ReadModifyWriteRow("row", TestAppendRule(),
+                                      TestIncrementRule(), CallOptions());
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, ReadModifyWriteRowOptionsMerge) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadModifyWriteRow)
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        auto const& options = google::cloud::internal::CurrentOptions();
+        EXPECT_EQ("latter", options.get<TestOption1>());
+        EXPECT_EQ("former", options.get<TestOption2>());
+        EXPECT_EQ("latter", options.get<TestOption3>());
+        EXPECT_THAT(request.rules(),
+                    ElementsAre(MatchRule(TestAppendRule()),
+                                MatchRule(TestIncrementRule())));
+        return PermanentError();
+      });
+
+  auto former = Options{}.set<TestOption1>("former").set<TestOption2>("former");
+  auto latter = Options{}.set<TestOption1>("latter").set<TestOption3>("latter");
+
+  auto table = TestTable(std::move(mock));
+  (void)table.ReadModifyWriteRow("row", TestAppendRule(), former,
+                                 TestIncrementRule(), latter);
 }
 
 TEST(TableTest, AsyncReadModifyWriteRow) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
       .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
-        // TODO (#7688) - CheckCurrentOptions();
+        CheckCurrentOptions();
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.rules(),
                     ElementsAre(MatchRule(TestAppendRule()),
@@ -424,8 +446,32 @@ TEST(TableTest, AsyncReadModifyWriteRow) {
 
   auto table = TestTable(std::move(mock));
   auto row = table.AsyncReadModifyWriteRow("row", TestAppendRule(),
-                                           TestIncrementRule());
+                                           TestIncrementRule(), CallOptions());
   EXPECT_THAT(row.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, AsyncReadModifyWriteRowOptionsMerge) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        auto const& options = google::cloud::internal::CurrentOptions();
+        EXPECT_EQ("latter", options.get<TestOption1>());
+        EXPECT_EQ("former", options.get<TestOption2>());
+        EXPECT_EQ("latter", options.get<TestOption3>());
+        EXPECT_THAT(request.rules(),
+                    ElementsAre(MatchRule(TestAppendRule()),
+                                MatchRule(TestIncrementRule())));
+        return make_ready_future<StatusOr<Row>>(PermanentError());
+      });
+
+  auto former = Options{}.set<TestOption1>("former").set<TestOption2>("former");
+  auto latter = Options{}.set<TestOption1>("latter").set<TestOption3>("latter");
+
+  auto table = TestTable(std::move(mock));
+  (void)table
+      .AsyncReadModifyWriteRow("row", TestAppendRule(), former,
+                               TestIncrementRule(), latter)
+      .get();
 }
 
 TEST(TableTest, AsyncReadRows) {

@@ -360,6 +360,20 @@ TEST_F(TableTest, AsyncSampleRowsWithOptions) {
   EXPECT_THAT(rows.get(), StatusIs(StatusCode::kInvalidArgument));
 }
 
+TEST_F(TableTest, ReadModifyWriteRowWithOptions) {
+  Table table(client_, kTableId);
+  auto r = ReadModifyWriteRule::AppendValue("cf", "cq", "v");
+  auto row = table.ReadModifyWriteRow("row", r, r, NonEmptyOptions(), r);
+  EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(TableTest, AsyncReadModifyWriteRowWithOptions) {
+  Table table(client_, kTableId);
+  auto r = ReadModifyWriteRule::AppendValue("cf", "cq", "v");
+  auto row = table.AsyncReadModifyWriteRow("row", r, r, NonEmptyOptions(), r);
+  EXPECT_THAT(row.get(), StatusIs(StatusCode::kInvalidArgument));
+}
+
 TEST_F(TableTest, AsyncReadRowsWithOptions) {
   MockFunction<future<bool>(bigtable::Row const&)> on_row;
   EXPECT_CALL(on_row, Call).Times(0);
