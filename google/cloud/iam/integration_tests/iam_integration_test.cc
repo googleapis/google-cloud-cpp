@@ -20,6 +20,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -514,6 +515,19 @@ TEST_F(IamIntegrationTest, GetServiceAccountProtoFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetServiceAccount")));
 }
 
+template <typename Functor>
+google::cloud::internal::invoke_result_t<Functor> StatusRetryLoop(
+    Functor&& operation) {
+  using ReturnType = google::cloud::internal::invoke_result_t<Functor>;
+  ReturnType status;
+  for (auto delay : {10, 30, 60, 60}) {
+    status = operation();
+    if (status.ok()) break;
+    std::this_thread::sleep_for(std::chrono::seconds(delay));
+  }
+  return status;
+}
+
 TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
   auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
@@ -543,17 +557,14 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
 
   ::google::iam::admin::v1::DisableServiceAccountRequest disable_request;
   disable_request.set_name(service_account_inferred_name);
-  auto disable_response = client.DisableServiceAccount(disable_request);
   // Service Account may not be usable for up to 60s after creation.
-  if (disable_response.code() == StatusCode::kNotFound) {
-    std::this_thread::sleep_for(std::chrono::seconds(61));
-    disable_response = client.DisableServiceAccount(disable_request);
-  }
+  auto disable_response = StatusRetryLoop(
+      [&] { return client.DisableServiceAccount(disable_request); });
   EXPECT_STATUS_OK(disable_response);
 
   ::google::iam::admin::v1::EnableServiceAccountRequest enable_request;
   enable_request.set_name(service_account_inferred_name);
-  auto enable_response = client.DisableServiceAccount(disable_request);
+  auto enable_response = client.EnableServiceAccount(enable_request);
   EXPECT_STATUS_OK(enable_response);
 
   ::google::iam::admin::v1::PatchServiceAccountRequest patch_request;
@@ -564,9 +575,10 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   google::protobuf::FieldMask update_mask;
   *update_mask.add_paths() = "description";
   *patch_request.mutable_update_mask() = update_mask;
-  auto patch_response = client.PatchServiceAccount(patch_request);
-  // TODO(#6475): Determine how to make this call successful.
-  EXPECT_THAT(patch_response, StatusIs(StatusCode::kFailedPrecondition));
+  // Give the service time to enable the service account.
+  auto patch_response = StatusRetryLoop(
+      [&] { return client.PatchServiceAccount(patch_request); });
+  EXPECT_STATUS_OK(patch_response);
 
   ::google::iam::admin::v1::DeleteServiceAccountRequest delete_request;
   delete_request.set_name(service_account_inferred_name);
@@ -581,12 +593,8 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
 
   // Retry this operation a few times to give the service time to update
   // permissions on the undeleted account.
-  Status really_delete_response;
-  for (auto delay : {10, 30, 60, 60}) {
-    really_delete_response = client.DeleteServiceAccount(delete_request);
-    if (really_delete_response.code() == StatusCode::kOk) break;
-    std::this_thread::sleep_for(std::chrono::seconds(delay));
-  }
+  auto really_delete_response = StatusRetryLoop(
+      [&] { return client.DeleteServiceAccount(delete_request); });
   EXPECT_STATUS_OK(really_delete_response);
 }
 
