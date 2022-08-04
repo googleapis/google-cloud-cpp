@@ -13,9 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/data_connection.h"
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
@@ -184,11 +187,11 @@ ExponentialBackoffPolicy TestBackoffPolicy() {
 
 std::shared_ptr<DataConnectionImpl> TestConnection(
     std::shared_ptr<BigtableStub> mock) {
-  auto options =
+  auto options = bigtable::internal::DefaultDataOptions(
       Options{}
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<DataRetryPolicyOption>(TestRetryPolicy().clone())
-          .set<DataBackoffPolicyOption>(TestBackoffPolicy().clone());
+          .set<DataBackoffPolicyOption>(TestBackoffPolicy().clone()));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<DataConnectionImpl>(
       std::move(background), std::move(mock), std::move(options));
@@ -230,14 +233,6 @@ TEST(TransformReadModifyWriteRowResponse, Basic) {
   auto c4 = bigtable::Cell("row", "cf2", "cq3", 0, "with-labels", {"l1", "l2"});
   EXPECT_THAT(row.cells(), ElementsAre(MatchCell(c1), MatchCell(c2),
                                        MatchCell(c3), MatchCell(c4)));
-}
-
-TEST(DataConnectionTest, Options) {
-  auto mock = std::make_shared<MockBigtableStub>();
-  auto conn = TestConnection(std::move(mock));
-  auto options = conn->options();
-  EXPECT_TRUE(options.has<GrpcCredentialOption>());
-  ASSERT_TRUE(options.has<EndpointOption>());
 }
 
 /**
@@ -1634,6 +1629,16 @@ TEST(DataConnectionTest, AsyncReadRowFailure) {
   auto conn = TestConnection(std::move(mock));
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(MakeDataConnection, DefaultsOptions) {
+  auto conn = bigtable::MakeDataConnection(
+      Options{}
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+          .set<GrpcNumChannelsOption>(1));
+  auto options = conn->options();
+  EXPECT_EQ(options.get<AuthorityOption>(), "bigtable.googleapis.com");
+  EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
 }
 
 }  // namespace

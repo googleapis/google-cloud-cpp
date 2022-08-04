@@ -156,21 +156,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
-
-namespace google {
-namespace cloud {
-namespace bigtable_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<bigtable::DataConnection> MakeDataConnection(
-    std::shared_ptr<BigtableStub> stub, Options options) {
-  options = bigtable::internal::DefaultDataOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<DataConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_internal
-}  // namespace cloud
-}  // namespace google
