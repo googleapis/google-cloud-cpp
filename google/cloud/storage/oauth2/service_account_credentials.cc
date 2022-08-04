@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/make_jwt_assertion.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include <nlohmann/json.hpp>
 #include <openssl/err.h>
 #include <openssl/pem.h>
@@ -28,6 +29,8 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
+
+auto constexpr kP12PrivateKeyIdMarker = "--unknown--";
 
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
@@ -178,7 +181,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   std::string private_key(buf_mem->data, buf_mem->length);
 
   return ServiceAccountCredentialsInfo{std::move(service_account_id),
-                                       "--unknown--",
+                                       kP12PrivateKeyIdMarker,
                                        std::move(private_key),
                                        default_token_uri,
                                        /*scopes*/ {},
@@ -269,6 +272,28 @@ ParseServiceAccountRefreshResponse(
 
   return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
                                                       new_expiration};
+}
+
+StatusOr<std::string> MakeSelfSignedJWT(
+    ServiceAccountCredentialsInfo const& info,
+    std::chrono::system_clock::time_point tp) {
+  // This only runs about once an hour, the copies are ugly, but should be
+  // harmless.
+  oauth2_internal::ServiceAccountCredentialsInfo mapped;
+  mapped.client_email = info.client_email;
+  mapped.private_key_id = info.private_key_id;
+  mapped.private_key = info.private_key;
+  mapped.token_uri = info.token_uri;
+  mapped.scopes = info.scopes;
+  mapped.subject = info.subject;
+  return ::google::cloud::oauth2_internal::MakeSelfSignedJWT(mapped, tp);
+}
+
+bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
+  if (info.private_key_id == kP12PrivateKeyIdMarker) return true;
+  auto disable_jwt = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT");
+  return disable_jwt.has_value();
 }
 
 }  // namespace oauth2
