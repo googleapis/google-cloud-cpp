@@ -20,6 +20,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -514,9 +515,11 @@ TEST_F(IamIntegrationTest, GetServiceAccountProtoFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetServiceAccount")));
 }
 
-template <typename T>
-T StatusRetryLoop(std::function<T(void)> const& operation) {
-  T status;
+template <typename Functor>
+google::cloud::internal::invoke_result_t<Functor> StatusRetryLoop(
+    Functor&& operation) {
+  using ReturnType = google::cloud::internal::invoke_result_t<Functor>;
+  ReturnType status;
   for (auto delay : {10, 30, 60, 60}) {
     status = operation();
     if (status.ok()) break;
@@ -555,7 +558,7 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   ::google::iam::admin::v1::DisableServiceAccountRequest disable_request;
   disable_request.set_name(service_account_inferred_name);
   // Service Account may not be usable for up to 60s after creation.
-  auto disable_response = StatusRetryLoop<Status>(
+  auto disable_response = StatusRetryLoop(
       [&] { return client.DisableServiceAccount(disable_request); });
   EXPECT_STATUS_OK(disable_response);
 
@@ -573,9 +576,8 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   *update_mask.add_paths() = "description";
   *patch_request.mutable_update_mask() = update_mask;
   // Give the service time to enable the service account.
-  auto patch_response =
-      StatusRetryLoop<StatusOr<::google::iam::admin::v1::ServiceAccount>>(
-          [&] { return client.PatchServiceAccount(patch_request); });
+  auto patch_response = StatusRetryLoop(
+      [&] { return client.PatchServiceAccount(patch_request); });
   EXPECT_STATUS_OK(patch_response);
 
   ::google::iam::admin::v1::DeleteServiceAccountRequest delete_request;
@@ -591,7 +593,7 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
 
   // Retry this operation a few times to give the service time to update
   // permissions on the undeleted account.
-  auto really_delete_response = StatusRetryLoop<Status>(
+  auto really_delete_response = StatusRetryLoop(
       [&] { return client.DeleteServiceAccount(delete_request); });
   EXPECT_STATUS_OK(really_delete_response);
 }
