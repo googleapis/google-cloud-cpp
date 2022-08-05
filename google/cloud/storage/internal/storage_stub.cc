@@ -137,6 +137,19 @@ StatusOr<google::storage::v2::Bucket> DefaultStorageStub::UpdateBucket(
   return response;
 }
 
+StatusOr<google::storage::v2::Notification>
+DefaultStorageStub::CreateNotification(
+    grpc::ClientContext& client_context,
+    google::storage::v2::CreateNotificationRequest const& request) {
+  google::storage::v2::Notification response;
+  auto status =
+      grpc_stub_->CreateNotification(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::storage::v2::Object> DefaultStorageStub::ComposeObject(
     grpc::ClientContext& client_context,
     google::storage::v2::ComposeObjectRequest const& request) {

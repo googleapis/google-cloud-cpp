@@ -19,6 +19,8 @@
 #include "google/cloud/storage/internal/grpc_configure_client_context.h"
 #include "google/cloud/storage/internal/grpc_hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_hmac_key_request_parser.h"
+#include "google/cloud/storage/internal/grpc_notification_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc_notification_request_parser.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
@@ -1018,8 +1020,13 @@ StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(
 }
 
 StatusOr<NotificationMetadata> GrpcClient::CreateNotification(
-    CreateNotificationRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    CreateNotificationRequest const& request) {
+  auto proto = ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->CreateNotification(context, proto);
+  if (!response) return std::move(response).status();
+  return FromProto(*response);
 }
 
 StatusOr<NotificationMetadata> GrpcClient::GetNotification(

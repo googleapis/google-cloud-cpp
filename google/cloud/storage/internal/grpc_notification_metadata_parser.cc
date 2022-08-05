@@ -41,11 +41,8 @@ NotificationMetadata FromProto(google::storage::v2::Notification const& rhs) {
   return result;
 }
 
-google::storage::v2::Notification ToProto(NotificationMetadata const& rhs,
-                                          std::string const& bucket_name) {
+google::storage::v2::Notification ToProto(NotificationMetadata const& rhs) {
   google::storage::v2::Notification result;
-  result.set_name("projects/_/buckets/" + bucket_name +
-                  "/notificationConfigs/" + rhs.id());
   result.set_topic("//pubsub.googleapis.com/" + rhs.topic());
   result.set_etag(rhs.etag());
   for (auto const& e : rhs.event_types()) {
@@ -56,6 +53,14 @@ google::storage::v2::Notification ToProto(NotificationMetadata const& rhs,
   }
   result.set_object_name_prefix(rhs.object_name_prefix());
   result.set_payload_format(rhs.payload_format());
+  return result;
+}
+
+google::storage::v2::Notification ToProto(NotificationMetadata const& rhs,
+                                          std::string const& bucket_name) {
+  auto result = ToProto(rhs);
+  result.set_name("projects/_/buckets/" + bucket_name +
+                  "/notificationConfigs/" + rhs.id());
   return result;
 }
 
