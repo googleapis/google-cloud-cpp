@@ -31,6 +31,7 @@ set(storage_client_integration_tests
     grpc_default_object_acl_integration_test.cc
     grpc_hmac_key_integration_test.cc
     grpc_integration_test.cc
+    grpc_notification_integration_test.cc
     grpc_object_acl_integration_test.cc
     grpc_object_media_integration_test.cc
     grpc_object_metadata_integration_test.cc
