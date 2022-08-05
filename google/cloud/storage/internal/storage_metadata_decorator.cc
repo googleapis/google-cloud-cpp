@@ -213,6 +213,24 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::UpdateBucket(
   return child_->UpdateBucket(context, request);
 }
 
+StatusOr<google::storage::v2::Notification> StorageMetadata::CreateNotification(
+    grpc::ClientContext& context,
+    google::storage::v2::CreateNotificationRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.parent().empty()) {
+    params.push_back("bucket=" + request.parent());
+  }
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
+  return child_->CreateNotification(context, request);
+}
+
 StatusOr<google::storage::v2::Object> StorageMetadata::ComposeObject(
     grpc::ClientContext& context,
     google::storage::v2::ComposeObjectRequest const& request) {
