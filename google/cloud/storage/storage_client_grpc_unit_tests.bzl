@@ -32,6 +32,7 @@ storage_client_grpc_unit_tests = [
     "internal/grpc_hmac_key_metadata_parser_test.cc",
     "internal/grpc_hmac_key_request_parser_test.cc",
     "internal/grpc_notification_metadata_parser_test.cc",
+    "internal/grpc_notification_request_parser_test.cc",
     "internal/grpc_object_access_control_parser_test.cc",
     "internal/grpc_object_metadata_parser_test.cc",
     "internal/grpc_object_read_source_test.cc",

@@ -12,12 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_NOTIFICATION_METADATA_PARSER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_NOTIFICATION_METADATA_PARSER_H
-
-#include "google/cloud/storage/notification_metadata.h"
-#include "google/cloud/storage/version.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/cloud/storage/internal/grpc_notification_request_parser.h"
+#include "google/cloud/storage/internal/grpc_notification_metadata_parser.h"
 
 namespace google {
 namespace cloud {
@@ -25,15 +21,16 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-NotificationMetadata FromProto(google::storage::v2::Notification const& rhs);
-google::storage::v2::Notification ToProto(NotificationMetadata const& rhs);
-google::storage::v2::Notification ToProto(NotificationMetadata const& rhs,
-                                          std::string const& bucket_name);
+google::storage::v2::CreateNotificationRequest ToProto(
+    CreateNotificationRequest const& rhs) {
+  google::storage::v2::CreateNotificationRequest request;
+  request.set_parent("projects/_/buckets/" + rhs.bucket_name());
+  *request.mutable_notification() = ToProto(rhs.metadata());
+  return request;
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_NOTIFICATION_METADATA_PARSER_H

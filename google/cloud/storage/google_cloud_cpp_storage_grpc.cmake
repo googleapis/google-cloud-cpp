@@ -51,6 +51,8 @@ else ()
         internal/grpc_hmac_key_request_parser.h
         internal/grpc_notification_metadata_parser.cc
         internal/grpc_notification_metadata_parser.h
+        internal/grpc_notification_request_parser.cc
+        internal/grpc_notification_request_parser.h
         internal/grpc_object_access_control_parser.cc
         internal/grpc_object_access_control_parser.h
         internal/grpc_object_metadata_parser.cc
@@ -174,6 +176,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_hmac_key_metadata_parser_test.cc
         internal/grpc_hmac_key_request_parser_test.cc
         internal/grpc_notification_metadata_parser_test.cc
+        internal/grpc_notification_request_parser_test.cc
         internal/grpc_object_access_control_parser_test.cc
         internal/grpc_object_metadata_parser_test.cc
         internal/grpc_object_read_source_test.cc
