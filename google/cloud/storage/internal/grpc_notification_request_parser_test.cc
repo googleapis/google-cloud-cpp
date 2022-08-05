@@ -27,10 +27,6 @@ namespace {
 
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::testing::AllOf;
-using ::testing::ElementsAre;
-using ::testing::Property;
-using ::testing::ResultOf;
 
 TEST(GrpcNotificationRequestParser, CreateNotification) {
   v2::CreateNotificationRequest expected;
