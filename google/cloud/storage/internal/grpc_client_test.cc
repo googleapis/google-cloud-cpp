@@ -1883,6 +1883,26 @@ TEST_F(GrpcClientTest, UpdateHmacKey) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
+TEST_F(GrpcClientTest, ListNotifications) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, ListNotifications)
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::ListNotificationsRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.parent(), "projects/_/buckets/test-bucket-name");
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto response = client->ListNotifications(
+      ListNotificationsRequest("test-bucket-name")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
 TEST_F(GrpcClientTest, CreateNotification) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, CreateNotification)
