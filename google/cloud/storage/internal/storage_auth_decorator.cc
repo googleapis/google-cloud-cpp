@@ -106,6 +106,14 @@ StatusOr<google::storage::v2::Bucket> StorageAuth::UpdateBucket(
   return child_->UpdateBucket(context, request);
 }
 
+StatusOr<google::storage::v2::Notification> StorageAuth::GetNotification(
+    grpc::ClientContext& context,
+    google::storage::v2::GetNotificationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetNotification(context, request);
+}
+
 StatusOr<google::storage::v2::Notification> StorageAuth::CreateNotification(
     grpc::ClientContext& context,
     google::storage::v2::CreateNotificationRequest const& request) {

@@ -75,6 +75,10 @@ class StorageLogging : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateBucketRequest const& request) override;
 
+  StatusOr<google::storage::v2::Notification> GetNotification(
+      grpc::ClientContext& context,
+      google::storage::v2::GetNotificationRequest const& request) override;
+
   StatusOr<google::storage::v2::Notification> CreateNotification(
       grpc::ClientContext& context,
       google::storage::v2::CreateNotificationRequest const& request) override;

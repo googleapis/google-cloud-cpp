@@ -139,6 +139,17 @@ StatusOr<google::storage::v2::Bucket> StorageLogging::UpdateBucket(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::Notification> StorageLogging::GetNotification(
+    grpc::ClientContext& context,
+    google::storage::v2::GetNotificationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::GetNotificationRequest const& request) {
+        return child_->GetNotification(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::v2::Notification> StorageLogging::CreateNotification(
     grpc::ClientContext& context,
     google::storage::v2::CreateNotificationRequest const& request) {

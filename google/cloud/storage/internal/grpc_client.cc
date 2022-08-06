@@ -1030,8 +1030,13 @@ StatusOr<NotificationMetadata> GrpcClient::CreateNotification(
 }
 
 StatusOr<NotificationMetadata> GrpcClient::GetNotification(
-    GetNotificationRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetNotificationRequest const& request) {
+  auto proto = ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->GetNotification(context, proto);
+  if (!response) return std::move(response).status();
+  return FromProto(*response);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteNotification(

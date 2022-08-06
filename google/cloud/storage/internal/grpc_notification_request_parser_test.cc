@@ -28,6 +28,20 @@ namespace {
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
 
+TEST(GrpcNotificationRequestParser, GetNotification) {
+  v2::GetNotificationRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        name: "projects/_/buckets/test-bucket-name/notificationConfigs/test-notification-id"
+      )pb",
+      &expected));
+
+  GetNotificationRequest req("test-bucket-name", "test-notification-id");
+
+  auto const actual = ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcNotificationRequestParser, CreateNotification) {
   v2::CreateNotificationRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(

@@ -1298,7 +1298,6 @@ service {
   ]
   omitted_rpcs: [
     "DeleteNotification",
-    "GetNotification",
     "ListNotifications"
   ]
 }
