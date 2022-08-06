@@ -52,6 +52,15 @@ google::storage::v2::ListNotificationsRequest ToProto(
   return request;
 }
 
+ListNotificationsResponse FromProto(
+    google::storage::v2::ListNotificationsResponse const& rhs) {
+  ListNotificationsResponse response;
+  for (auto const& i : rhs.notifications()) {
+    response.items.push_back(FromProto(i));
+  }
+  return response;
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
