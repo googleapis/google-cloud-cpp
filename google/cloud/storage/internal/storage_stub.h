@@ -88,6 +88,11 @@ class StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::CreateNotificationRequest const& request) = 0;
 
+  virtual StatusOr<google::storage::v2::ListNotificationsResponse>
+  ListNotifications(
+      grpc::ClientContext& context,
+      google::storage::v2::ListNotificationsRequest const& request) = 0;
+
   virtual StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& context,
       google::storage::v2::ComposeObjectRequest const& request) = 0;
@@ -233,6 +238,10 @@ class DefaultStorageStub : public StorageStub {
   StatusOr<google::storage::v2::Notification> CreateNotification(
       grpc::ClientContext& client_context,
       google::storage::v2::CreateNotificationRequest const& request) override;
+
+  StatusOr<google::storage::v2::ListNotificationsResponse> ListNotifications(
+      grpc::ClientContext& client_context,
+      google::storage::v2::ListNotificationsRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& client_context,
