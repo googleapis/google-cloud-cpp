@@ -25,6 +25,8 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+google::storage::v2::GetNotificationRequest ToProto(
+    GetNotificationRequest const& rhs);
 google::storage::v2::CreateNotificationRequest ToProto(
     CreateNotificationRequest const& rhs);
 
