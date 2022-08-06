@@ -28,6 +28,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -69,6 +70,12 @@ TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
   auto get = client->GetNotification(bucket_name, create->id());
   ASSERT_STATUS_OK(get);
   EXPECT_EQ(*create, *get);
+
+  auto delete_status = client->DeleteNotification(bucket_name, create->id());
+  ASSERT_STATUS_OK(delete_status);
+
+  auto not_found = client->GetNotification(bucket_name, create->id());
+  EXPECT_THAT(not_found, StatusIs(StatusCode::kNotFound));
 }
 
 }  // namespace

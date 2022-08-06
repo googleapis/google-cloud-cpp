@@ -1040,8 +1040,13 @@ StatusOr<NotificationMetadata> GrpcClient::GetNotification(
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteNotification(
-    DeleteNotificationRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    DeleteNotificationRequest const& request) {
+  auto proto = ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->DeleteNotification(context, proto);
+  if (!response.ok()) return response;
+  return EmptyResponse{};
 }
 
 StatusOr<BucketMetadata> GrpcClient::ModifyBucketAccessControl(
