@@ -62,6 +62,10 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::UpdateBucketRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::Notification>, GetNotification,
+              (grpc::ClientContext&,
+               google::storage::v2::GetNotificationRequest const&),
+              (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Notification>, CreateNotification,
               (grpc::ClientContext&,
                google::storage::v2::CreateNotificationRequest const&),
