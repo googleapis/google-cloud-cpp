@@ -76,6 +76,12 @@ StatusOr<google::storage::v2::Bucket> StorageRoundRobin::UpdateBucket(
   return Child()->UpdateBucket(context, request);
 }
 
+Status StorageRoundRobin::DeleteNotification(
+    grpc::ClientContext& context,
+    google::storage::v2::DeleteNotificationRequest const& request) {
+  return Child()->DeleteNotification(context, request);
+}
+
 StatusOr<google::storage::v2::Notification> StorageRoundRobin::GetNotification(
     grpc::ClientContext& context,
     google::storage::v2::GetNotificationRequest const& request) {
