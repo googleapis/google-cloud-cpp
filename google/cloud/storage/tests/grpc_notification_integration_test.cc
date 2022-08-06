@@ -65,6 +65,10 @@ TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
       NotificationMetadata().upsert_custom_attributes("test-key", marker));
   ASSERT_STATUS_OK(create);
   EXPECT_THAT(create->custom_attributes(), Contains(Pair("test-key", marker)));
+
+  auto get = client->GetNotification(bucket_name, create->id());
+  ASSERT_STATUS_OK(get);
+  EXPECT_EQ(*create, *get);
 }
 
 }  // namespace
