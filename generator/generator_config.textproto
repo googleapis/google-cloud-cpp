@@ -1296,9 +1296,6 @@ service {
     "ReadObject",
     "WriteObject"
   ]
-  omitted_rpcs: [
-    "ListNotifications"
-  ]
 }
 
 # Storage Transfer Service
