@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/async_retry_loop.h"
@@ -29,6 +30,32 @@ namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::string const& app_profile_id() {
+  return internal::CurrentOptions().get<bigtable::AppProfileIdOption>();
+}
+
+inline std::unique_ptr<bigtable::DataRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<bigtable::DataRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<bigtable::DataBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<bigtable::IdempotentMutationPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<bigtable::IdempotentMutationPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
     google::bigtable::v2::ReadModifyWriteRowResponse response) {

@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -95,34 +94,6 @@ class DataConnectionImpl : public bigtable::DataConnection {
       bigtable::Filter filter) override;
 
  private:
-  static std::string const& app_profile_id() {
-    return internal::CurrentOptions().get<bigtable::AppProfileIdOption>();
-  }
-
-  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigtable::DataRetryPolicyOption>()) {
-      return options.get<bigtable::DataRetryPolicyOption>()->clone();
-    }
-    return options_.get<bigtable::DataRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigtable::DataBackoffPolicyOption>()) {
-      return options.get<bigtable::DataBackoffPolicyOption>()->clone();
-    }
-    return options_.get<bigtable::DataBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<bigtable::IdempotentMutationPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigtable::IdempotentMutationPolicyOption>()) {
-      return options.get<bigtable::IdempotentMutationPolicyOption>()->clone();
-    }
-    return options_.get<bigtable::IdempotentMutationPolicyOption>()->clone();
-  }
-
   std::unique_ptr<BackgroundThreads> background_;
   std::shared_ptr<BigtableStub> stub_;
   Options options_;
