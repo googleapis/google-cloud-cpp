@@ -95,6 +95,13 @@ StorageRoundRobin::CreateNotification(
   return Child()->CreateNotification(context, request);
 }
 
+StatusOr<google::storage::v2::ListNotificationsResponse>
+StorageRoundRobin::ListNotifications(
+    grpc::ClientContext& context,
+    google::storage::v2::ListNotificationsRequest const& request) {
+  return Child()->ListNotifications(context, request);
+}
+
 StatusOr<google::storage::v2::Object> StorageRoundRobin::ComposeObject(
     grpc::ClientContext& context,
     google::storage::v2::ComposeObjectRequest const& request) {
