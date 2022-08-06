@@ -89,6 +89,20 @@ TEST(GrpcNotificationRequestParser, CreateNotification) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcNotificationRequestParser, ListNotifications) {
+  v2::ListNotificationsRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        parent: "projects/_/buckets/test-bucket-name"
+      )pb",
+      &expected));
+
+  ListNotificationsRequest req("test-bucket-name");
+
+  auto const actual = ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -31,6 +31,8 @@ google::storage::v2::GetNotificationRequest ToProto(
     GetNotificationRequest const& rhs);
 google::storage::v2::CreateNotificationRequest ToProto(
     CreateNotificationRequest const& rhs);
+google::storage::v2::ListNotificationsRequest ToProto(
+    ListNotificationsRequest const& rhs);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
