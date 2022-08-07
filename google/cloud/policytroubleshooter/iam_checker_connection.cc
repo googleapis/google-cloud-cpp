@@ -23,6 +23,7 @@
 #include "google/cloud/policytroubleshooter/internal/iam_checker_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -43,6 +44,7 @@ IamCheckerConnection::TroubleshootIamPolicy(
 std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  IamCheckerPolicyOptionList>(options, __func__);
   options = policytroubleshooter_internal::IamCheckerDefaultOptions(
       std::move(options));

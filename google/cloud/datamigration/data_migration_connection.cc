@@ -23,6 +23,7 @@
 #include "google/cloud/datamigration/internal/data_migration_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -167,6 +168,7 @@ DataMigrationServiceConnection::DeleteConnectionProfile(
 std::shared_ptr<DataMigrationServiceConnection>
 MakeDataMigrationServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DataMigrationServicePolicyOptionList>(
       options, __func__);
   options = datamigration_internal::DataMigrationServiceDefaultOptions(

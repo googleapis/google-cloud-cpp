@@ -23,6 +23,7 @@
 #include "google/cloud/debugger/internal/debugger2_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -64,6 +65,7 @@ Debugger2Connection::ListDebuggees(
 
 std::shared_ptr<Debugger2Connection> MakeDebugger2Connection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  Debugger2PolicyOptionList>(options, __func__);
   options = debugger_internal::Debugger2DefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

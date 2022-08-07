@@ -23,6 +23,7 @@
 #include "google/cloud/webrisk/web_risk_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -60,6 +61,7 @@ WebRiskServiceConnection::CreateSubmission(
 std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  WebRiskServicePolicyOptionList>(options,
                                                                  __func__);
   options = webrisk_internal::WebRiskServiceDefaultOptions(std::move(options));

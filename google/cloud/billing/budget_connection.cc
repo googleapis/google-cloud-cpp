@@ -23,6 +23,7 @@
 #include "google/cloud/billing/internal/budget_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -68,6 +69,7 @@ Status BudgetServiceConnection::DeleteBudget(
 std::shared_ptr<BudgetServiceConnection> MakeBudgetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BudgetServicePolicyOptionList>(options,
                                                                 __func__);
   options = billing_internal::BudgetServiceDefaultOptions(std::move(options));

@@ -24,6 +24,7 @@
 #include "google/cloud/beyondcorp/internal/app_connections_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -92,6 +93,7 @@ AppConnectionsServiceConnection::ResolveAppConnections(
 std::shared_ptr<AppConnectionsServiceConnection>
 MakeAppConnectionsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AppConnectionsServicePolicyOptionList>(
       options, __func__);
   options = beyondcorp_internal::AppConnectionsServiceDefaultOptions(

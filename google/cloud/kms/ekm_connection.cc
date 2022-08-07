@@ -23,6 +23,7 @@
 #include "google/cloud/kms/internal/ekm_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -63,6 +64,7 @@ EkmServiceConnection::UpdateEkmConnection(
 std::shared_ptr<EkmServiceConnection> MakeEkmServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  EkmServicePolicyOptionList>(options, __func__);
   options = kms_internal::EkmServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

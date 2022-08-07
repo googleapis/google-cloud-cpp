@@ -24,6 +24,7 @@
 #include "google/cloud/beyondcorp/internal/client_connector_services_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -90,7 +91,7 @@ ClientConnectorServicesServiceConnection::DeleteClientConnectorService(
 std::shared_ptr<ClientConnectorServicesServiceConnection>
 MakeClientConnectorServicesServiceConnection(Options options) {
   internal::CheckExpectedOptions<
-      CommonOptionList, GrpcOptionList,
+      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
       ClientConnectorServicesServicePolicyOptionList>(options, __func__);
   options = beyondcorp_internal::ClientConnectorServicesServiceDefaultOptions(
       std::move(options));

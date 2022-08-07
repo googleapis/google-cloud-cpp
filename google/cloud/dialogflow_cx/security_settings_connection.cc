@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_cx/security_settings_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -70,6 +71,7 @@ std::shared_ptr<SecuritySettingsServiceConnection>
 MakeSecuritySettingsServiceConnection(std::string const& location,
                                       Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  SecuritySettingsServicePolicyOptionList>(
       options, __func__);
   options = dialogflow_cx_internal::SecuritySettingsServiceDefaultOptions(

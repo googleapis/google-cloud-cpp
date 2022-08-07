@@ -23,6 +23,7 @@
 #include "google/cloud/osconfig/os_config_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -114,6 +115,7 @@ OsConfigServiceConnection::ResumePatchDeployment(
 std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  OsConfigServicePolicyOptionList>(options,
                                                                   __func__);
   options =

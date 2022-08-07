@@ -23,6 +23,7 @@
 #include "google/cloud/managedidentities/managed_identities_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -115,6 +116,7 @@ ManagedIdentitiesServiceConnection::ValidateTrust(
 std::shared_ptr<ManagedIdentitiesServiceConnection>
 MakeManagedIdentitiesServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ManagedIdentitiesServicePolicyOptionList>(
       options, __func__);
   options = managedidentities_internal::ManagedIdentitiesServiceDefaultOptions(

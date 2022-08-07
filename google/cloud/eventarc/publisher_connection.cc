@@ -23,6 +23,7 @@
 #include "google/cloud/eventarc/publisher_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -49,6 +50,7 @@ PublisherConnection::PublishEvents(
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PublisherPolicyOptionList>(options, __func__);
   options = eventarc_internal::PublisherDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

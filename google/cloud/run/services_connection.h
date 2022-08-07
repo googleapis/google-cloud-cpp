@@ -103,6 +103,7 @@ class ServicesConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::run::ServicesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

@@ -23,6 +23,7 @@
 #include "google/cloud/securitycenter/security_center_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -273,6 +274,7 @@ SecurityCenterConnection::ListBigQueryExports(
 std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  SecurityCenterPolicyOptionList>(options,
                                                                  __func__);
   options =

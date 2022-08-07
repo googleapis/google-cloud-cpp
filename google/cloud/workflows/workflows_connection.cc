@@ -23,6 +23,7 @@
 #include "google/cloud/workflows/workflows_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -74,6 +75,7 @@ WorkflowsConnection::UpdateWorkflow(
 
 std::shared_ptr<WorkflowsConnection> MakeWorkflowsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  WorkflowsPolicyOptionList>(options, __func__);
   options = workflows_internal::WorkflowsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

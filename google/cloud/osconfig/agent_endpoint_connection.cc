@@ -23,6 +23,7 @@
 #include "google/cloud/osconfig/internal/agent_endpoint_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -82,6 +83,7 @@ AgentEndpointServiceConnection::ReportInventory(
 std::shared_ptr<AgentEndpointServiceConnection>
 MakeAgentEndpointServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AgentEndpointServicePolicyOptionList>(
       options, __func__);
   options =

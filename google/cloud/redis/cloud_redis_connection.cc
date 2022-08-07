@@ -23,6 +23,7 @@
 #include "google/cloud/redis/internal/cloud_redis_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -120,6 +121,7 @@ CloudRedisConnection::RescheduleMaintenance(
 std::shared_ptr<CloudRedisConnection> MakeCloudRedisConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudRedisPolicyOptionList>(options, __func__);
   options = redis_internal::CloudRedisDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

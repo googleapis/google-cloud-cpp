@@ -23,6 +23,7 @@
 #include "google/cloud/retail/product_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -116,6 +117,7 @@ ProductServiceConnection::RemoveLocalInventories(
 std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ProductServicePolicyOptionList>(options,
                                                                  __func__);
   options = retail_internal::ProductServiceDefaultOptions(std::move(options));

@@ -23,6 +23,7 @@
 #include "google/cloud/vision/internal/image_annotator_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -64,6 +65,7 @@ ImageAnnotatorConnection::AsyncBatchAnnotateFiles(
 std::shared_ptr<ImageAnnotatorConnection> MakeImageAnnotatorConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ImageAnnotatorPolicyOptionList>(options,
                                                                  __func__);
   options = vision_internal::ImageAnnotatorDefaultOptions(std::move(options));

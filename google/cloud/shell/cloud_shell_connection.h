@@ -100,6 +100,7 @@ class CloudShellServiceConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::shell::CloudShellServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

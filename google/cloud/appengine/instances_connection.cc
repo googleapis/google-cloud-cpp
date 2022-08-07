@@ -23,6 +23,7 @@
 #include "google/cloud/appengine/internal/instances_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -64,6 +65,7 @@ InstancesConnection::DebugInstance(
 
 std::shared_ptr<InstancesConnection> MakeInstancesConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  InstancesPolicyOptionList>(options, __func__);
   options = appengine_internal::InstancesDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

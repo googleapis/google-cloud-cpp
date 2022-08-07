@@ -23,6 +23,7 @@
 #include "google/cloud/texttospeech/text_to_speech_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -48,6 +49,7 @@ TextToSpeechConnection::SynthesizeSpeech(
 std::shared_ptr<TextToSpeechConnection> MakeTextToSpeechConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  TextToSpeechPolicyOptionList>(options,
                                                                __func__);
   options =

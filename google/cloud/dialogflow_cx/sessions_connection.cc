@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_cx/sessions_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -65,6 +66,7 @@ SessionsConnection::FulfillIntent(
 std::shared_ptr<SessionsConnection> MakeSessionsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  SessionsPolicyOptionList>(options, __func__);
   options = dialogflow_cx_internal::SessionsDefaultOptions(location,
                                                            std::move(options));

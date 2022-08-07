@@ -111,6 +111,7 @@ class BinauthzManagementServiceV1Connection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * -
  * `google::cloud::binaryauthorization::BinauthzManagementServiceV1PolicyOptionList`
  *

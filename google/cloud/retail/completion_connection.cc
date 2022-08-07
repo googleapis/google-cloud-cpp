@@ -23,6 +23,7 @@
 #include "google/cloud/retail/internal/completion_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -50,6 +51,7 @@ CompletionServiceConnection::ImportCompletionData(
 std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CompletionServicePolicyOptionList>(options,
                                                                     __func__);
   options =

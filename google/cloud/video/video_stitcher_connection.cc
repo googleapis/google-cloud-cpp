@@ -23,6 +23,7 @@
 #include "google/cloud/video/video_stitcher_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -165,6 +166,7 @@ VideoStitcherServiceConnection::GetLiveSession(
 std::shared_ptr<VideoStitcherServiceConnection>
 MakeVideoStitcherServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  VideoStitcherServicePolicyOptionList>(
       options, __func__);
   options =

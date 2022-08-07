@@ -23,6 +23,7 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -158,6 +159,7 @@ BigtableTableAdminConnection::AsyncCheckConsistency(
 std::shared_ptr<BigtableTableAdminConnection> MakeBigtableTableAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BigtableTableAdminPolicyOptionList>(options,
                                                                      __func__);
   options = bigtable_admin_internal::BigtableTableAdminDefaultOptions(

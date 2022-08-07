@@ -23,6 +23,7 @@
 #include "google/cloud/spanner/admin/internal/instance_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -102,6 +103,7 @@ InstanceAdminConnection::TestIamPermissions(
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  InstanceAdminPolicyOptionList>(options,
                                                                 __func__);
   options =

@@ -97,6 +97,7 @@ class OrgPolicyConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::orgpolicy::OrgPolicyPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

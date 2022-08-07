@@ -23,6 +23,7 @@
 #include "google/cloud/dataproc/workflow_template_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -86,6 +87,7 @@ Status WorkflowTemplateServiceConnection::DeleteWorkflowTemplate(
 std::shared_ptr<WorkflowTemplateServiceConnection>
 MakeWorkflowTemplateServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  WorkflowTemplateServicePolicyOptionList>(
       options, __func__);
   options = dataproc_internal::WorkflowTemplateServiceDefaultOptions(

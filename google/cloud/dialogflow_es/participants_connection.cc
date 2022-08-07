@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_es/participants_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -87,6 +88,7 @@ ParticipantsConnection::SuggestSmartReplies(
 std::shared_ptr<ParticipantsConnection> MakeParticipantsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ParticipantsPolicyOptionList>(options,
                                                                __func__);
   options = dialogflow_es_internal::ParticipantsDefaultOptions(

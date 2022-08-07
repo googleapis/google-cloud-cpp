@@ -243,6 +243,7 @@ class ContactCenterInsightsConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * -
  * `google::cloud::contactcenterinsights::ContactCenterInsightsPolicyOptionList`
  *

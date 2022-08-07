@@ -23,6 +23,7 @@
 #include "google/cloud/appengine/internal/applications_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -66,6 +67,7 @@ ApplicationsConnection::RepairApplication(
 std::shared_ptr<ApplicationsConnection> MakeApplicationsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ApplicationsPolicyOptionList>(options,
                                                                __func__);
   options = appengine_internal::ApplicationsDefaultOptions(std::move(options));

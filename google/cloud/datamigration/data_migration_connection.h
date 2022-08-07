@@ -151,6 +151,7 @@ class DataMigrationServiceConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::datamigration::DataMigrationServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

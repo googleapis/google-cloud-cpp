@@ -91,6 +91,7 @@ class IDSConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::ids::IDSPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

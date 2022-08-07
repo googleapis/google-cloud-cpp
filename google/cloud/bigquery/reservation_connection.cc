@@ -23,6 +23,7 @@
 #include "google/cloud/bigquery/reservation_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -178,6 +179,7 @@ ReservationServiceConnection::UpdateBiReservation(
 std::shared_ptr<ReservationServiceConnection> MakeReservationServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ReservationServicePolicyOptionList>(options,
                                                                      __func__);
   options =

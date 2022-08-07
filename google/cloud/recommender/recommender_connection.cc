@@ -23,6 +23,7 @@
 #include "google/cloud/recommender/recommender_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -113,6 +114,7 @@ RecommenderConnection::UpdateInsightTypeConfig(
 std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  RecommenderPolicyOptionList>(options,
                                                               __func__);
   options = recommender_internal::RecommenderDefaultOptions(std::move(options));

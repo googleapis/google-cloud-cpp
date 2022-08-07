@@ -23,6 +23,7 @@
 #include "google/cloud/documentai/internal/document_processor_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -60,6 +61,7 @@ std::shared_ptr<DocumentProcessorServiceConnection>
 MakeDocumentProcessorServiceConnection(std::string const& location,
                                        Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DocumentProcessorServicePolicyOptionList>(
       options, __func__);
   options = documentai_internal::DocumentProcessorServiceDefaultOptions(

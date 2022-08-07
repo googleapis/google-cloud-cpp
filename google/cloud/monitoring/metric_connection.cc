@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/metric_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -100,6 +101,7 @@ future<Status> MetricServiceConnection::AsyncCreateTimeSeries(
 std::shared_ptr<MetricServiceConnection> MakeMetricServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  MetricServicePolicyOptionList>(options,
                                                                 __func__);
   options =

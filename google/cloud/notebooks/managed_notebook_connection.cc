@@ -23,6 +23,7 @@
 #include "google/cloud/notebooks/managed_notebook_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -113,6 +114,7 @@ ManagedNotebookServiceConnection::RefreshRuntimeTokenInternal(
 std::shared_ptr<ManagedNotebookServiceConnection>
 MakeManagedNotebookServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ManagedNotebookServicePolicyOptionList>(
       options, __func__);
   options = notebooks_internal::ManagedNotebookServiceDefaultOptions(

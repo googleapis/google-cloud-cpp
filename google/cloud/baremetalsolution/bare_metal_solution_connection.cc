@@ -23,6 +23,7 @@
 #include "google/cloud/baremetalsolution/internal/bare_metal_solution_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -185,6 +186,7 @@ BareMetalSolutionConnection::UpdateNfsShare(
 std::shared_ptr<BareMetalSolutionConnection> MakeBareMetalSolutionConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BareMetalSolutionPolicyOptionList>(options,
                                                                     __func__);
   options = baremetalsolution_internal::BareMetalSolutionDefaultOptions(

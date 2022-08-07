@@ -83,6 +83,7 @@ class AuthorizedDomainsConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::appengine::AuthorizedDomainsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

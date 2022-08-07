@@ -23,6 +23,7 @@
 #include "google/cloud/profiler/profiler_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -54,6 +55,7 @@ ProfilerServiceConnection::UpdateProfile(
 std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ProfilerServicePolicyOptionList>(options,
                                                                   __func__);
   options =

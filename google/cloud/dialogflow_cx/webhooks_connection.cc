@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_cx/webhooks_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -68,6 +69,7 @@ Status WebhooksConnection::DeleteWebhook(
 std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  WebhooksPolicyOptionList>(options, __func__);
   options = dialogflow_cx_internal::WebhooksDefaultOptions(location,
                                                            std::move(options));

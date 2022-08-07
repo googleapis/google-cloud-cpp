@@ -101,6 +101,7 @@ class LoggingServiceV2Connection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::logging::LoggingServiceV2PolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

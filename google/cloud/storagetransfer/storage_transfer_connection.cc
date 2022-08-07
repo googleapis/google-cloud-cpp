@@ -23,6 +23,7 @@
 #include "google/cloud/storagetransfer/storage_transfer_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -118,6 +119,7 @@ Status StorageTransferServiceConnection::DeleteAgentPool(
 std::shared_ptr<StorageTransferServiceConnection>
 MakeStorageTransferServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  StorageTransferServicePolicyOptionList>(
       options, __func__);
   options = storagetransfer_internal::StorageTransferServiceDefaultOptions(

@@ -90,6 +90,7 @@ class VideoIntelligenceServiceConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * -
  * `google::cloud::videointelligence::VideoIntelligenceServicePolicyOptionList`
  *

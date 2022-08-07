@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/notification_channel_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -103,6 +104,7 @@ NotificationChannelServiceConnection::VerifyNotificationChannel(
 std::shared_ptr<NotificationChannelServiceConnection>
 MakeNotificationChannelServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  NotificationChannelServicePolicyOptionList>(
       options, __func__);
   options = monitoring_internal::NotificationChannelServiceDefaultOptions(

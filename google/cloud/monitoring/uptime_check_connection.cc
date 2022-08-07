@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/uptime_check_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -76,6 +77,7 @@ UptimeCheckServiceConnection::ListUptimeCheckIps(
 std::shared_ptr<UptimeCheckServiceConnection> MakeUptimeCheckServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  UptimeCheckServicePolicyOptionList>(options,
                                                                      __func__);
   options =

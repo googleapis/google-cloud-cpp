@@ -23,6 +23,7 @@
 #include "google/cloud/functions/internal/cloud_functions_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -109,6 +110,7 @@ CloudFunctionsServiceConnection::TestIamPermissions(
 std::shared_ptr<CloudFunctionsServiceConnection>
 MakeCloudFunctionsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudFunctionsServicePolicyOptionList>(
       options, __func__);
   options = functions_internal::CloudFunctionsServiceDefaultOptions(

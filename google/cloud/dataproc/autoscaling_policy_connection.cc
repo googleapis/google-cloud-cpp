@@ -23,6 +23,7 @@
 #include "google/cloud/dataproc/internal/autoscaling_policy_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -69,6 +70,7 @@ Status AutoscalingPolicyServiceConnection::DeleteAutoscalingPolicy(
 std::shared_ptr<AutoscalingPolicyServiceConnection>
 MakeAutoscalingPolicyServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AutoscalingPolicyServicePolicyOptionList>(
       options, __func__);
   options = dataproc_internal::AutoscalingPolicyServiceDefaultOptions(

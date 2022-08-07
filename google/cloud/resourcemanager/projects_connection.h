@@ -119,6 +119,7 @@ class ProjectsConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::resourcemanager::ProjectsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

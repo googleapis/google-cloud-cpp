@@ -23,6 +23,7 @@
 #include "google/cloud/servicecontrol/quota_controller_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -42,6 +43,7 @@ QuotaControllerConnection::AllocateQuota(
 std::shared_ptr<QuotaControllerConnection> MakeQuotaControllerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  QuotaControllerPolicyOptionList>(options,
                                                                   __func__);
   options = servicecontrol_internal::QuotaControllerDefaultOptions(

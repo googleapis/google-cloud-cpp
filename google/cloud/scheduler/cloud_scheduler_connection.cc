@@ -23,6 +23,7 @@
 #include "google/cloud/scheduler/internal/cloud_scheduler_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -80,6 +81,7 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::RunJob(
 std::shared_ptr<CloudSchedulerConnection> MakeCloudSchedulerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudSchedulerPolicyOptionList>(options,
                                                                  __func__);
   options =

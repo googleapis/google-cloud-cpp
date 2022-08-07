@@ -23,6 +23,7 @@
 #include "google/cloud/oslogin/os_login_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -70,6 +71,7 @@ OsLoginServiceConnection::UpdateSshPublicKey(
 std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  OsLoginServicePolicyOptionList>(options,
                                                                  __func__);
   options = oslogin_internal::OsLoginServiceDefaultOptions(std::move(options));

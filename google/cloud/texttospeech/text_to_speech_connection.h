@@ -83,6 +83,7 @@ class TextToSpeechConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::texttospeech::TextToSpeechPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

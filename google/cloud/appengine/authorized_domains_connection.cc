@@ -23,6 +23,7 @@
 #include "google/cloud/appengine/internal/authorized_domains_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -45,6 +46,7 @@ AuthorizedDomainsConnection::ListAuthorizedDomains(
 std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AuthorizedDomainsPolicyOptionList>(options,
                                                                     __func__);
   options =

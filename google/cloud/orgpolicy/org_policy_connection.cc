@@ -23,6 +23,7 @@
 #include "google/cloud/orgpolicy/org_policy_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -80,6 +81,7 @@ Status OrgPolicyConnection::DeletePolicy(
 
 std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  OrgPolicyPolicyOptionList>(options, __func__);
   options = orgpolicy_internal::OrgPolicyDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

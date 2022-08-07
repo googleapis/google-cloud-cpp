@@ -23,6 +23,7 @@
 #include "google/cloud/automl/internal/auto_ml_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -162,6 +163,7 @@ AutoMlConnection::ListModelEvaluations(
 
 std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AutoMlPolicyOptionList>(options, __func__);
   options = automl_internal::AutoMlDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

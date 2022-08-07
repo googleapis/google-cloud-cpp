@@ -23,6 +23,7 @@
 #include "google/cloud/retail/internal/catalog_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -62,6 +63,7 @@ CatalogServiceConnection::GetDefaultBranch(
 std::shared_ptr<CatalogServiceConnection> MakeCatalogServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CatalogServicePolicyOptionList>(options,
                                                                  __func__);
   options = retail_internal::CatalogServiceDefaultOptions(std::move(options));

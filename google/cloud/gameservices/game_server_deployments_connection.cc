@@ -23,6 +23,7 @@
 #include "google/cloud/gameservices/internal/game_server_deployments_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -104,6 +105,7 @@ GameServerDeploymentsServiceConnection::FetchDeploymentState(
 std::shared_ptr<GameServerDeploymentsServiceConnection>
 MakeGameServerDeploymentsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  GameServerDeploymentsServicePolicyOptionList>(
       options, __func__);
   options = gameservices_internal::GameServerDeploymentsServiceDefaultOptions(

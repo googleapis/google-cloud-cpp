@@ -23,6 +23,7 @@
 #include "google/cloud/bigquery/model_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -57,6 +58,7 @@ Status ModelServiceConnection::DeleteModel(
 std::shared_ptr<ModelServiceConnection> MakeModelServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ModelServicePolicyOptionList>(options,
                                                                __func__);
   options = bigquery_internal::ModelServiceDefaultOptions(std::move(options));

@@ -23,6 +23,7 @@
 #include "google/cloud/datacatalog/policy_tag_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -115,6 +116,7 @@ PolicyTagManagerConnection::TestIamPermissions(
 std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PolicyTagManagerPolicyOptionList>(options,
                                                                    __func__);
   options =

@@ -23,6 +23,7 @@
 #include "google/cloud/video/transcoder_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -87,6 +88,7 @@ Status TranscoderServiceConnection::DeleteJobTemplate(
 std::shared_ptr<TranscoderServiceConnection> MakeTranscoderServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  TranscoderServicePolicyOptionList>(options,
                                                                     __func__);
   options = video_internal::TranscoderServiceDefaultOptions(std::move(options));

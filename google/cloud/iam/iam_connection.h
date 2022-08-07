@@ -162,6 +162,7 @@ class IAMConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::iam::IAMPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

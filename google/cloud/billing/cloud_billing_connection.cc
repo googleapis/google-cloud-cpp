@@ -23,6 +23,7 @@
 #include "google/cloud/billing/internal/cloud_billing_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -99,6 +100,7 @@ CloudBillingConnection::TestIamPermissions(
 std::shared_ptr<CloudBillingConnection> MakeCloudBillingConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudBillingPolicyOptionList>(options,
                                                                __func__);
   options = billing_internal::CloudBillingDefaultOptions(std::move(options));
