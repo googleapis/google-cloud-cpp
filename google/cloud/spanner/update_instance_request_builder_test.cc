@@ -42,6 +42,15 @@ TEST(UpdateInstanceRequestBuilder, Constructors) {
   EXPECT_EQ(expected_name, req.instance().name());
 }
 
+TEST(UpdateInstanceRequestBuilder, Equality) {
+  UpdateInstanceRequestBuilder b1("i1");
+  UpdateInstanceRequestBuilder b2("i2");
+  EXPECT_NE(b1, b2);
+
+  b2 = b1;
+  EXPECT_EQ(b1, b2);
+}
+
 TEST(UpdateInstanceRequestBuilder, AddLabels) {
   Instance in(Project("test-project"), "test-instance");
   std::string expected_name = in.FullName();
