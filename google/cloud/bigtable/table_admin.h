@@ -115,6 +115,12 @@ enum class Consistency {
  *
  * [backoff-link]: https://cloud.google.com/storage/docs/exponential-backoff
  *
+ * @par Equality
+ * `TableAdmin` objects will compare equal iff they were created with the
+ * same `DataClient` and target the same Instance resource. Note that
+ * `TableAdmin` objects can compare equal with different retry/backoff/polling
+ * policies.
+ *
  * @see https://cloud.google.com/bigtable/ for an overview of Cloud Bigtable.
  *
  * @see https://cloud.google.com/bigtable/docs/overview for an overview of the
@@ -212,6 +218,14 @@ class TableAdmin {
 
   TableAdmin(TableAdmin const&) = default;
   TableAdmin& operator=(TableAdmin const&) = default;
+
+  friend bool operator==(TableAdmin const& a, TableAdmin const& b) noexcept {
+    return a.connection_ == b.connection_ &&
+           a.instance_name_ == b.instance_name_;
+  }
+  friend bool operator!=(TableAdmin const& a, TableAdmin const& b) noexcept {
+    return !(a == b);
+  }
 
   //@{
   /// @name Convenience shorthands for the schema views.

@@ -29,6 +29,15 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _s;   // NOLINT
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
 using ::google::cloud::testing_util::chrono_literals::operator"" _ns;  // NOLINT
 
+TEST(GcRule, Equality) {
+  auto gc1 = GcRule::MaxNumVersions(3);
+  auto gc2 = GcRule::MaxAge(1_h);
+  EXPECT_NE(gc1, gc2);
+
+  gc2 = gc1;
+  EXPECT_EQ(gc1, gc2);
+}
+
 TEST(GcRule, MaxNumVersions) {
   auto proto = GcRule::MaxNumVersions(3).as_proto();
   EXPECT_EQ(3, proto.max_num_versions());
@@ -120,6 +129,16 @@ TEST(GcRule, UnionNone) {
   auto proto = GC::Union().as_proto();
   EXPECT_TRUE(proto.has_union_());
   EXPECT_EQ(0, proto.union_().rules_size());
+}
+
+TEST(ColumnFamilyModification, Equality) {
+  using M = ColumnFamilyModification;
+  auto m1 = M::Drop("m1");
+  auto m2 = M::Drop("m2");
+  EXPECT_NE(m1, m2);
+
+  m2 = m1;
+  EXPECT_EQ(m1, m2);
 }
 
 TEST(ColumnFamilyModification, Create) {

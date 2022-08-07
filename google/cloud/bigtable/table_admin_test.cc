@@ -24,6 +24,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <chrono>
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -134,6 +135,20 @@ class TableAdminTest : public ::testing::Test {
   std::shared_ptr<MockConnection> connection_ =
       std::make_shared<MockConnection>();
 };
+
+TEST_F(TableAdminTest, Equality) {
+  auto client1 = MakeAdminClient(kProjectId, TestOptions());
+  auto client2 = MakeAdminClient(kProjectId, TestOptions());
+  auto ta1 = TableAdmin(client1, "i1");
+  auto ta2 = TableAdmin(client1, "i2");
+  auto ta3 = TableAdmin(client2, "i1");
+  EXPECT_NE(ta1, ta2);
+  EXPECT_NE(ta1, ta3);
+  EXPECT_NE(ta2, ta3);
+
+  ta2 = ta1;
+  EXPECT_EQ(ta1, ta2);
+}
 
 TEST_F(TableAdminTest, ResourceNames) {
   auto admin = DefaultTableAdmin();

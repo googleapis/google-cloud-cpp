@@ -27,6 +27,15 @@ TEST(RowSetTest, DefaultConstructor) {
   EXPECT_EQ(0, proto.row_ranges_size());
 }
 
+TEST(RowSetTest, Equality) {
+  auto rs1 = RowSet("rs1");
+  auto rs2 = RowSet("rs2");
+  EXPECT_NE(rs1, rs2);
+
+  rs2 = rs1;
+  EXPECT_EQ(rs1, rs2);
+}
+
 TEST(RowSetTest, AppendRange) {
   RowSet row_set;
   row_set.Append(RowRange::Range("a", "b"));
