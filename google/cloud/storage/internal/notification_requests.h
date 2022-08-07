@@ -29,7 +29,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-/// Represents a request to call the `BucketAccessControls: list` API.
+/// Represents a request to call the `Notifications: list` API.
 class ListNotificationsRequest
     : public GenericRequest<ListNotificationsRequest, UserProject> {
  public:
@@ -45,7 +45,7 @@ class ListNotificationsRequest
 
 std::ostream& operator<<(std::ostream& os, ListNotificationsRequest const& r);
 
-/// Represents a response to the `Notification: list` API.
+/// Represents a response to the `Notifications: list` API.
 struct ListNotificationsResponse {
   static StatusOr<ListNotificationsResponse> FromHttpResponse(
       std::string const& payload);
