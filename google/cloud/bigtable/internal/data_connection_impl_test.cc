@@ -1638,7 +1638,7 @@ TEST(MakeDataConnection, DefaultsOptions) {
 
   auto conn = bigtable::MakeDataConnection(
       Options{}
-          .set<UserProjectOption>("user-supplied")
+          .set<bigtable::AppProfileIdOption>("user-supplied")
           // Disable channel refreshing, which is not under test.
           .set<bigtable::MaxConnectionRefreshOption>(ms(0))
           // Create the minimum number of stubs.
@@ -1646,7 +1646,7 @@ TEST(MakeDataConnection, DefaultsOptions) {
   auto options = conn->options();
   EXPECT_TRUE(options.has<bigtable::DataRetryPolicyOption>())
       << "Options are not defaulted in MakeDataConnection()";
-  EXPECT_EQ(options.get<UserProjectOption>(), "user-supplied")
+  EXPECT_EQ(options.get<bigtable::AppProfileIdOption>(), "user-supplied")
       << "User supplied Options are overridden in MakeDataConnection()";
 }
 
