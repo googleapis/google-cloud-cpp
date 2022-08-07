@@ -30,6 +30,7 @@ using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::Pair;
@@ -71,11 +72,19 @@ TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
   ASSERT_STATUS_OK(get);
   EXPECT_EQ(*create, *get);
 
+  auto list = client->ListNotifications(bucket_name);
+  ASSERT_STATUS_OK(list);
+  EXPECT_THAT(*list, ElementsAre(*get));
+
   auto delete_status = client->DeleteNotification(bucket_name, create->id());
   ASSERT_STATUS_OK(delete_status);
 
   auto not_found = client->GetNotification(bucket_name, create->id());
   EXPECT_THAT(not_found, StatusIs(StatusCode::kNotFound));
+
+  auto empty_list = client->ListNotifications(bucket_name);
+  ASSERT_STATUS_OK(empty_list);
+  EXPECT_THAT(*empty_list, IsEmpty());
 }
 
 }  // namespace

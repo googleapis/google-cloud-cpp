@@ -1015,8 +1015,13 @@ StatusOr<SignBlobResponse> GrpcClient::SignBlob(SignBlobRequest const&) {
 }
 
 StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(
-    ListNotificationsRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ListNotificationsRequest const& request) {
+  auto proto = ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->ListNotifications(context, proto);
+  if (!response) return std::move(response).status();
+  return FromProto(*response);
 }
 
 StatusOr<NotificationMetadata> GrpcClient::CreateNotification(

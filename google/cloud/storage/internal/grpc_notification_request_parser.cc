@@ -45,6 +45,22 @@ google::storage::v2::CreateNotificationRequest ToProto(
   return request;
 }
 
+google::storage::v2::ListNotificationsRequest ToProto(
+    ListNotificationsRequest const& rhs) {
+  google::storage::v2::ListNotificationsRequest request;
+  request.set_parent("projects/_/buckets/" + rhs.bucket_name());
+  return request;
+}
+
+ListNotificationsResponse FromProto(
+    google::storage::v2::ListNotificationsResponse const& rhs) {
+  ListNotificationsResponse response;
+  for (auto const& i : rhs.notifications()) {
+    response.items.push_back(FromProto(i));
+  }
+  return response;
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
