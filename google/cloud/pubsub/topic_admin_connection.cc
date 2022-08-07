@@ -20,6 +20,7 @@
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
@@ -303,6 +304,7 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
 
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PolicyOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
 

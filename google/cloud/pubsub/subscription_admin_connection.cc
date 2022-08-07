@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/internal/subscriber_metadata.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include <memory>
@@ -351,6 +352,7 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PolicyOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
   auto background = internal::MakeBackgroundThreadsFactory(opts)();

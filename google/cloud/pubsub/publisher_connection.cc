@@ -28,6 +28,7 @@
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
 #include "google/cloud/pubsub/internal/sequential_batch_sink.h"
 #include "google/cloud/pubsub/options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/future_void.h"
 #include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/log.h"
@@ -117,8 +118,8 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
 std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
                                                              Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 PolicyOptionList, PublisherOptionList>(
-      opts, __func__);
+                                 UnifiedCredentialsOptionList, PolicyOptionList,
+                                 PublisherOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultPublisherOptions(std::move(opts));
 
   auto background = internal::MakeBackgroundThreadsFactory(opts)();

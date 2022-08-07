@@ -22,6 +22,7 @@
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include <algorithm>
@@ -122,8 +123,8 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription, Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 PolicyOptionList, SubscriberOptionList>(
-      opts, __func__);
+                                 UnifiedCredentialsOptionList, PolicyOptionList,
+                                 SubscriberOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultSubscriberOptions(std::move(opts));
 
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
