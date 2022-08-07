@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
@@ -332,9 +333,9 @@ StatusOr<PartitionedDmlResult> Client::ExecutePartitionedDml(
 std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
                                                     Options opts) {
   internal::CheckExpectedOptions<
-      CommonOptionList, GrpcOptionList, SessionPoolOptionList,
-      spanner_internal::SessionPoolClockOption, SpannerPolicyOptionList>(
-      opts, __func__);
+      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
+      SessionPoolOptionList, spanner_internal::SessionPoolClockOption,
+      SpannerPolicyOptionList>(opts, __func__);
   opts = spanner_internal::DefaultOptions(std::move(opts));
 
   auto background = internal::MakeBackgroundThreadsFactory(opts)();

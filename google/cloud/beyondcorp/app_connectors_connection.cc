@@ -23,6 +23,7 @@
 #include "google/cloud/beyondcorp/internal/app_connectors_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -89,6 +90,7 @@ AppConnectorsServiceConnection::ReportStatus(
 std::shared_ptr<AppConnectorsServiceConnection>
 MakeAppConnectorsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AppConnectorsServicePolicyOptionList>(
       options, __func__);
   options = beyondcorp_internal::AppConnectorsServiceDefaultOptions(

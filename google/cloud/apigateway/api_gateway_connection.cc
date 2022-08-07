@@ -23,6 +23,7 @@
 #include "google/cloud/apigateway/internal/api_gateway_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -151,6 +152,7 @@ ApiGatewayServiceConnection::DeleteApiConfig(
 std::shared_ptr<ApiGatewayServiceConnection> MakeApiGatewayServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ApiGatewayServicePolicyOptionList>(options,
                                                                     __func__);
   options =

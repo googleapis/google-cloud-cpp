@@ -23,6 +23,7 @@
 #include "google/cloud/pubsublite/internal/admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -165,6 +166,7 @@ AdminServiceConnection::AsyncGetTopicPartitions(
 std::shared_ptr<AdminServiceConnection> MakeAdminServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AdminServicePolicyOptionList>(options,
                                                                __func__);
   options = pubsublite_internal::AdminServiceDefaultOptions(std::move(options));

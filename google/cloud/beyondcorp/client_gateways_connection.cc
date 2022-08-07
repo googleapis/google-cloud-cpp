@@ -24,6 +24,7 @@
 #include "google/cloud/beyondcorp/internal/client_gateways_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -73,6 +74,7 @@ ClientGatewaysServiceConnection::DeleteClientGateway(
 std::shared_ptr<ClientGatewaysServiceConnection>
 MakeClientGatewaysServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ClientGatewaysServicePolicyOptionList>(
       options, __func__);
   options = beyondcorp_internal::ClientGatewaysServiceDefaultOptions(

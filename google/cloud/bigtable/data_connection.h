@@ -141,11 +141,13 @@ class DataConnection {
  * `Table`.
  *
  * The optional @p opts argument may be used to configure aspects of the
- * returned `DataConnection`. Expected options are any of the types in the
- * following option lists.
+ * returned `DataConnection`. Expected options are any of the following options
+ * or types in the option lists.
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::bigtable::AppProfileIdOption`
  * - `google::cloud::bigtable::ClientOptionsList`
  * - `google::cloud::bigtable::DataPolicyOptionList`
  *

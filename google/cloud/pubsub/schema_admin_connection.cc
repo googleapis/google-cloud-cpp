@@ -20,6 +20,7 @@
 #include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include <memory>
@@ -181,6 +182,7 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
 
 std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PolicyOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
 

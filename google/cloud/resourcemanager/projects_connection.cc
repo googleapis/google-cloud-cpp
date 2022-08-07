@@ -23,6 +23,7 @@
 #include "google/cloud/resourcemanager/projects_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -114,6 +115,7 @@ ProjectsConnection::TestIamPermissions(
 
 std::shared_ptr<ProjectsConnection> MakeProjectsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ProjectsPolicyOptionList>(options, __func__);
   options =
       resourcemanager_internal::ProjectsDefaultOptions(std::move(options));

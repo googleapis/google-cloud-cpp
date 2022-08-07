@@ -23,6 +23,7 @@
 #include "google/cloud/asset/internal/asset_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -157,6 +158,7 @@ AssetServiceConnection::BatchGetEffectiveIamPolicies(
 std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AssetServicePolicyOptionList>(options,
                                                                __func__);
   options = asset_internal::AssetServiceDefaultOptions(std::move(options));

@@ -23,6 +23,7 @@
 #include "google/cloud/vision/product_search_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -158,6 +159,7 @@ ProductSearchConnection::PurgeProducts(
 std::shared_ptr<ProductSearchConnection> MakeProductSearchConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ProductSearchPolicyOptionList>(options,
                                                                 __func__);
   options = vision_internal::ProductSearchDefaultOptions(std::move(options));

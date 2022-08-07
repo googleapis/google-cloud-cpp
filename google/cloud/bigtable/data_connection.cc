@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -140,8 +141,9 @@ future<StatusOr<std::pair<bool, Row>>> DataConnection::AsyncReadRow(
 
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   google::cloud::internal::CheckExpectedOptions<
-      CommonOptionList, GrpcOptionList, DataPolicyOptionList>(options,
-                                                              __func__);
+      AppProfileIdOption, CommonOptionList, GrpcOptionList,
+      UnifiedCredentialsOptionList, ClientOptionList, DataPolicyOptionList>(
+      options, __func__);
   options = bigtable::internal::DefaultDataOptions(std::move(options));
   auto background =
       google::cloud::internal::MakeBackgroundThreadsFactory(options)();

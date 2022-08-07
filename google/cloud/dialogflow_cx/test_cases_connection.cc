@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_cx/test_cases_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -120,6 +121,7 @@ TestCasesConnection::GetTestCaseResult(
 std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  TestCasesPolicyOptionList>(options, __func__);
   options = dialogflow_cx_internal::TestCasesDefaultOptions(location,
                                                             std::move(options));

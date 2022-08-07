@@ -23,6 +23,7 @@
 #include "google/cloud/workflows/internal/executions_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -63,6 +64,7 @@ ExecutionsConnection::CancelExecution(
 std::shared_ptr<ExecutionsConnection> MakeExecutionsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ExecutionsPolicyOptionList>(options, __func__);
   options = workflows_internal::ExecutionsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

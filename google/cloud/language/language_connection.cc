@@ -23,6 +23,7 @@
 #include "google/cloud/language/language_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -72,6 +73,7 @@ LanguageServiceConnection::AnnotateText(
 std::shared_ptr<LanguageServiceConnection> MakeLanguageServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  LanguageServicePolicyOptionList>(options,
                                                                   __func__);
   options =

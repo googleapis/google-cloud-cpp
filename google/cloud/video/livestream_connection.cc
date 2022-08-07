@@ -23,6 +23,7 @@
 #include "google/cloud/video/livestream_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -154,6 +155,7 @@ Status LivestreamServiceConnection::DeleteEvent(
 std::shared_ptr<LivestreamServiceConnection> MakeLivestreamServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  LivestreamServicePolicyOptionList>(options,
                                                                     __func__);
   options = video_internal::LivestreamServiceDefaultOptions(std::move(options));

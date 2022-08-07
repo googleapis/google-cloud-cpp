@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_es/knowledge_bases_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -68,6 +69,7 @@ KnowledgeBasesConnection::UpdateKnowledgeBase(
 std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  KnowledgeBasesPolicyOptionList>(options,
                                                                  __func__);
   options = dialogflow_es_internal::KnowledgeBasesDefaultOptions(

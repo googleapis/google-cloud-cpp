@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_es/internal/intents_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -80,6 +81,7 @@ IntentsConnection::BatchDeleteIntents(
 std::shared_ptr<IntentsConnection> MakeIntentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  IntentsPolicyOptionList>(options, __func__);
   options = dialogflow_es_internal::IntentsDefaultOptions(location,
                                                           std::move(options));

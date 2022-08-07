@@ -23,6 +23,7 @@
 #include "google/cloud/talent/internal/completion_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -42,6 +43,7 @@ CompletionConnection::CompleteQuery(
 std::shared_ptr<CompletionConnection> MakeCompletionConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CompletionPolicyOptionList>(options, __func__);
   options = talent_internal::CompletionDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_es/internal/fulfillments_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -48,6 +49,7 @@ FulfillmentsConnection::UpdateFulfillment(
 std::shared_ptr<FulfillmentsConnection> MakeFulfillmentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  FulfillmentsPolicyOptionList>(options,
                                                                __func__);
   options = dialogflow_es_internal::FulfillmentsDefaultOptions(

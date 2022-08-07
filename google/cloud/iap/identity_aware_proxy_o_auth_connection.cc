@@ -23,6 +23,7 @@
 #include "google/cloud/iap/internal/identity_aware_proxy_o_auth_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -87,7 +88,7 @@ Status IdentityAwareProxyOAuthServiceConnection::DeleteIdentityAwareProxyClient(
 std::shared_ptr<IdentityAwareProxyOAuthServiceConnection>
 MakeIdentityAwareProxyOAuthServiceConnection(Options options) {
   internal::CheckExpectedOptions<
-      CommonOptionList, GrpcOptionList,
+      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
       IdentityAwareProxyOAuthServicePolicyOptionList>(options, __func__);
   options = iap_internal::IdentityAwareProxyOAuthServiceDefaultOptions(
       std::move(options));

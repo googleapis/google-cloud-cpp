@@ -23,6 +23,7 @@
 #include "google/cloud/logging/logging_service_v2_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -82,6 +83,7 @@ LoggingServiceV2Connection::AsyncTailLogEntries(ExperimentalTag) {
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  LoggingServiceV2PolicyOptionList>(options,
                                                                    __func__);
   options =

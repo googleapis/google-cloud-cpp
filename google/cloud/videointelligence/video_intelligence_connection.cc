@@ -23,6 +23,7 @@
 #include "google/cloud/videointelligence/video_intelligence_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -45,6 +46,7 @@ VideoIntelligenceServiceConnection::AnnotateVideo(
 std::shared_ptr<VideoIntelligenceServiceConnection>
 MakeVideoIntelligenceServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  VideoIntelligenceServicePolicyOptionList>(
       options, __func__);
   options = videointelligence_internal::VideoIntelligenceServiceDefaultOptions(

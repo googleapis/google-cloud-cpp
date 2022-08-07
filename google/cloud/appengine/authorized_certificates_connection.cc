@@ -23,6 +23,7 @@
 #include "google/cloud/appengine/internal/authorized_certificates_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -68,6 +69,7 @@ Status AuthorizedCertificatesConnection::DeleteAuthorizedCertificate(
 std::shared_ptr<AuthorizedCertificatesConnection>
 MakeAuthorizedCertificatesConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AuthorizedCertificatesPolicyOptionList>(
       options, __func__);
   options = appengine_internal::AuthorizedCertificatesDefaultOptions(

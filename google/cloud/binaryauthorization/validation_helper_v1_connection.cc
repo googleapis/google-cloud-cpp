@@ -23,6 +23,7 @@
 #include "google/cloud/binaryauthorization/validation_helper_v1_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -44,6 +45,7 @@ ValidationHelperV1Connection::ValidateAttestationOccurrence(
 std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ValidationHelperV1PolicyOptionList>(options,
                                                                      __func__);
   options = binaryauthorization_internal::ValidationHelperV1DefaultOptions(

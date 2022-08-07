@@ -23,6 +23,7 @@
 #include "google/cloud/shell/internal/cloud_shell_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -74,6 +75,7 @@ CloudShellServiceConnection::RemovePublicKey(
 std::shared_ptr<CloudShellServiceConnection> MakeCloudShellServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudShellServicePolicyOptionList>(options,
                                                                     __func__);
   options = shell_internal::CloudShellServiceDefaultOptions(std::move(options));

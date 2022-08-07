@@ -23,6 +23,7 @@
 #include "google/cloud/gkehub/internal/gke_hub_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -115,6 +116,7 @@ GkeHubConnection::GenerateConnectManifest(
 
 std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  GkeHubPolicyOptionList>(options, __func__);
   options = gkehub_internal::GkeHubDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

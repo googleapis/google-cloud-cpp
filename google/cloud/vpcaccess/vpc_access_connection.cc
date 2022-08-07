@@ -23,6 +23,7 @@
 #include "google/cloud/vpcaccess/vpc_access_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -67,6 +68,7 @@ VpcAccessServiceConnection::DeleteConnector(
 std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  VpcAccessServicePolicyOptionList>(options,
                                                                    __func__);
   options =

@@ -23,6 +23,7 @@
 #include "google/cloud/retail/prediction_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -42,6 +43,7 @@ PredictionServiceConnection::Predict(
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PredictionServicePolicyOptionList>(options,
                                                                     __func__);
   options =

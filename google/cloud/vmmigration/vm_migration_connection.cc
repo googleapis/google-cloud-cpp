@@ -23,6 +23,7 @@
 #include "google/cloud/vmmigration/vm_migration_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -370,6 +371,7 @@ VmMigrationConnection::DeleteTargetProject(
 std::shared_ptr<VmMigrationConnection> MakeVmMigrationConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  VmMigrationPolicyOptionList>(options,
                                                               __func__);
   options = vmmigration_internal::VmMigrationDefaultOptions(std::move(options));

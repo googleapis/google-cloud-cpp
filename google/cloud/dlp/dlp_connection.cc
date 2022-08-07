@@ -23,6 +23,7 @@
 #include "google/cloud/dlp/internal/dlp_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -241,6 +242,7 @@ Status DlpServiceConnection::FinishDlpJob(
 std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DlpServicePolicyOptionList>(options, __func__);
   options = dlp_internal::DlpServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

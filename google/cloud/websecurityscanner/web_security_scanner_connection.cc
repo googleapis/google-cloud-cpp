@@ -23,6 +23,7 @@
 #include "google/cloud/websecurityscanner/web_security_scanner_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -122,6 +123,7 @@ WebSecurityScannerConnection::ListFindingTypeStats(
 std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  WebSecurityScannerPolicyOptionList>(options,
                                                                      __func__);
   options = websecurityscanner_internal::WebSecurityScannerDefaultOptions(

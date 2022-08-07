@@ -23,6 +23,7 @@
 #include "google/cloud/retail/search_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -45,6 +46,7 @@ SearchServiceConnection::Search(
 std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  SearchServicePolicyOptionList>(options,
                                                                 __func__);
   options = retail_internal::SearchServiceDefaultOptions(std::move(options));

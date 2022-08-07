@@ -91,6 +91,7 @@ class InstancesConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::appengine::InstancesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

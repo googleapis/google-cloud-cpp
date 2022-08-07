@@ -23,6 +23,7 @@
 #include "google/cloud/bigquery/internal/bigquery_read_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -66,6 +67,7 @@ BigQueryReadConnection::SplitReadStream(
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BigQueryReadPolicyOptionList>(options,
                                                                __func__);
   options = bigquery_internal::BigQueryReadDefaultOptions(std::move(options));

@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_cx/pages_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -64,6 +65,7 @@ Status PagesConnection::DeletePage(
 std::shared_ptr<PagesConnection> MakePagesConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PagesPolicyOptionList>(options, __func__);
   options =
       dialogflow_cx_internal::PagesDefaultOptions(location, std::move(options));

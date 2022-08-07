@@ -23,6 +23,7 @@
 #include "google/cloud/gameservices/realms_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -80,6 +81,7 @@ RealmsServiceConnection::PreviewRealmUpdate(
 std::shared_ptr<RealmsServiceConnection> MakeRealmsServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  RealmsServicePolicyOptionList>(options,
                                                                 __func__);
   options =

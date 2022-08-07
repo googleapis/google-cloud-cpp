@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_es/internal/answer_records_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -51,6 +52,7 @@ AnswerRecordsConnection::UpdateAnswerRecord(
 std::shared_ptr<AnswerRecordsConnection> MakeAnswerRecordsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AnswerRecordsPolicyOptionList>(options,
                                                                 __func__);
   options = dialogflow_es_internal::AnswerRecordsDefaultOptions(

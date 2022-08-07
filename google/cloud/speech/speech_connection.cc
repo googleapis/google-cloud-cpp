@@ -23,6 +23,7 @@
 #include "google/cloud/speech/speech_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -60,6 +61,7 @@ SpeechConnection::AsyncStreamingRecognize(ExperimentalTag) {
 
 std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  SpeechPolicyOptionList>(options, __func__);
   options = speech_internal::SpeechDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

@@ -23,6 +23,7 @@
 #include "google/cloud/ids/internal/ids_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -64,6 +65,7 @@ IDSConnection::DeleteEndpoint(
 
 std::shared_ptr<IDSConnection> MakeIDSConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  IDSPolicyOptionList>(options, __func__);
   options = ids_internal::IDSDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

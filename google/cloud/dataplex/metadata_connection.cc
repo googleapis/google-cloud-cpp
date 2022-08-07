@@ -23,6 +23,7 @@
 #include "google/cloud/dataplex/metadata_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -93,6 +94,7 @@ MetadataServiceConnection::ListPartitions(
 std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  MetadataServicePolicyOptionList>(options,
                                                                   __func__);
   options =

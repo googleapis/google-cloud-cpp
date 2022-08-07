@@ -23,6 +23,7 @@
 #include "google/cloud/retail/user_event_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -71,6 +72,7 @@ UserEventServiceConnection::RejoinUserEvents(
 std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  UserEventServicePolicyOptionList>(options,
                                                                    __func__);
   options = retail_internal::UserEventServiceDefaultOptions(std::move(options));

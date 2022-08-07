@@ -23,6 +23,7 @@
 #include "google/cloud/servicecontrol/service_controller_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -48,6 +49,7 @@ ServiceControllerConnection::Report(
 std::shared_ptr<ServiceControllerConnection> MakeServiceControllerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ServiceControllerPolicyOptionList>(options,
                                                                     __func__);
   options = servicecontrol_internal::ServiceControllerDefaultOptions(

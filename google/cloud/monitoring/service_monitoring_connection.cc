@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/service_monitoring_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -100,6 +101,7 @@ Status ServiceMonitoringServiceConnection::DeleteServiceLevelObjective(
 std::shared_ptr<ServiceMonitoringServiceConnection>
 MakeServiceMonitoringServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ServiceMonitoringServicePolicyOptionList>(
       options, __func__);
   options = monitoring_internal::ServiceMonitoringServiceDefaultOptions(

@@ -23,6 +23,7 @@
 #include "google/cloud/resourcemanager/internal/folders_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -114,6 +115,7 @@ FoldersConnection::TestIamPermissions(
 
 std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  FoldersPolicyOptionList>(options, __func__);
   options = resourcemanager_internal::FoldersDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

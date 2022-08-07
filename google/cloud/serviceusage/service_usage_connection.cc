@@ -23,6 +23,7 @@
 #include "google/cloud/serviceusage/service_usage_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -81,6 +82,7 @@ ServiceUsageConnection::BatchGetServices(
 std::shared_ptr<ServiceUsageConnection> MakeServiceUsageConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ServiceUsagePolicyOptionList>(options,
                                                                __func__);
   options =

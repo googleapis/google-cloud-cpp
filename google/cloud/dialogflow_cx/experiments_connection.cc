@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_cx/internal/experiments_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -80,6 +81,7 @@ ExperimentsConnection::StopExperiment(
 std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ExperimentsPolicyOptionList>(options,
                                                               __func__);
   options = dialogflow_cx_internal::ExperimentsDefaultOptions(

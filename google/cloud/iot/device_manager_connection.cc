@@ -23,6 +23,7 @@
 #include "google/cloud/iot/internal/device_manager_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -148,6 +149,7 @@ DeviceManagerConnection::UnbindDeviceFromGateway(
 std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DeviceManagerPolicyOptionList>(options,
                                                                 __func__);
   options = iot_internal::DeviceManagerDefaultOptions(std::move(options));

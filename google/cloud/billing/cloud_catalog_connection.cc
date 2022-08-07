@@ -23,6 +23,7 @@
 #include "google/cloud/billing/internal/cloud_catalog_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -52,6 +53,7 @@ StreamRange<google::cloud::billing::v1::Sku> CloudCatalogConnection::ListSkus(
 std::shared_ptr<CloudCatalogConnection> MakeCloudCatalogConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudCatalogPolicyOptionList>(options,
                                                                __func__);
   options = billing_internal::CloudCatalogDefaultOptions(std::move(options));

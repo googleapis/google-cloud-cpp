@@ -127,6 +127,7 @@ class ManagedIdentitiesServiceConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * -
  * `google::cloud::managedidentities::ManagedIdentitiesServicePolicyOptionList`
  *

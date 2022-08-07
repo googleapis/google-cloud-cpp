@@ -23,6 +23,7 @@
 #include "google/cloud/containeranalysis/internal/grafeas_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -113,6 +114,7 @@ StreamRange<grafeas::v1::Occurrence> GrafeasConnection::ListNoteOccurrences(
 
 std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  GrafeasPolicyOptionList>(options, __func__);
   options =
       containeranalysis_internal::GrafeasDefaultOptions(std::move(options));

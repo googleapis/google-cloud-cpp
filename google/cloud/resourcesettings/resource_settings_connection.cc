@@ -23,6 +23,7 @@
 #include "google/cloud/resourcesettings/resource_settings_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -58,6 +59,7 @@ ResourceSettingsServiceConnection::UpdateSetting(
 std::shared_ptr<ResourceSettingsServiceConnection>
 MakeResourceSettingsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ResourceSettingsServicePolicyOptionList>(
       options, __func__);
   options = resourcesettings_internal::ResourceSettingsServiceDefaultOptions(

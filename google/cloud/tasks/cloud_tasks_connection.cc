@@ -23,6 +23,7 @@
 #include "google/cloud/tasks/internal/cloud_tasks_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -122,6 +123,7 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnection::RunTask(
 std::shared_ptr<CloudTasksConnection> MakeCloudTasksConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudTasksPolicyOptionList>(options, __func__);
   options = tasks_internal::CloudTasksDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

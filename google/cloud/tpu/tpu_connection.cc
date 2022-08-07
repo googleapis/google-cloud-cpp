@@ -23,6 +23,7 @@
 #include "google/cloud/tpu/tpu_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -111,6 +112,7 @@ TpuConnection::GetAcceleratorType(
 
 std::shared_ptr<TpuConnection> MakeTpuConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  TpuPolicyOptionList>(options, __func__);
   options = tpu_internal::TpuDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/metrics_scopes_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -68,6 +69,7 @@ MetricsScopesConnection::DeleteMonitoredProject(
 std::shared_ptr<MetricsScopesConnection> MakeMetricsScopesConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  MetricsScopesPolicyOptionList>(options,
                                                                 __func__);
   options =

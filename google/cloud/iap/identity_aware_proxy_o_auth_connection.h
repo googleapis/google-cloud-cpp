@@ -113,6 +113,7 @@ class IdentityAwareProxyOAuthServiceConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::iap::IdentityAwareProxyOAuthServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

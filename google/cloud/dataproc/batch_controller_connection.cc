@@ -23,6 +23,7 @@
 #include "google/cloud/dataproc/internal/batch_controller_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -64,6 +65,7 @@ Status BatchControllerConnection::DeleteBatch(
 std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BatchControllerPolicyOptionList>(options,
                                                                   __func__);
   options =

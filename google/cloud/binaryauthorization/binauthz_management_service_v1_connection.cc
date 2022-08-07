@@ -23,6 +23,7 @@
 #include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -81,6 +82,7 @@ Status BinauthzManagementServiceV1Connection::DeleteAttestor(
 std::shared_ptr<BinauthzManagementServiceV1Connection>
 MakeBinauthzManagementServiceV1Connection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BinauthzManagementServiceV1PolicyOptionList>(
       options, __func__);
   options =

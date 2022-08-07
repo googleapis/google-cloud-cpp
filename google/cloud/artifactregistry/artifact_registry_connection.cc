@@ -23,6 +23,7 @@
 #include "google/cloud/artifactregistry/internal/artifact_registry_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -223,6 +224,7 @@ ArtifactRegistryConnection::UpdateProjectSettings(
 std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ArtifactRegistryPolicyOptionList>(options,
                                                                    __func__);
   options = artifactregistry_internal::ArtifactRegistryDefaultOptions(

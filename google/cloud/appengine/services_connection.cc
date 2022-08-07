@@ -23,6 +23,7 @@
 #include "google/cloud/appengine/services_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -64,6 +65,7 @@ ServicesConnection::DeleteService(
 
 std::shared_ptr<ServicesConnection> MakeServicesConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ServicesPolicyOptionList>(options, __func__);
   options = appengine_internal::ServicesDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

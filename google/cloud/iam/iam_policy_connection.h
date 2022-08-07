@@ -84,6 +84,7 @@ class IAMPolicyConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::iam::IAMPolicyPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

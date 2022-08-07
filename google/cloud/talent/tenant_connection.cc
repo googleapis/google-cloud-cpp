@@ -23,6 +23,7 @@
 #include "google/cloud/talent/tenant_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -67,6 +68,7 @@ TenantServiceConnection::ListTenants(
 std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  TenantServicePolicyOptionList>(options,
                                                                 __func__);
   options = talent_internal::TenantServiceDefaultOptions(std::move(options));

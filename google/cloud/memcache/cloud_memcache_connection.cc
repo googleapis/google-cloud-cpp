@@ -23,6 +23,7 @@
 #include "google/cloud/memcache/internal/cloud_memcache_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -91,6 +92,7 @@ CloudMemcacheConnection::ApplyParameters(
 std::shared_ptr<CloudMemcacheConnection> MakeCloudMemcacheConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudMemcachePolicyOptionList>(options,
                                                                 __func__);
   options = memcache_internal::CloudMemcacheDefaultOptions(std::move(options));

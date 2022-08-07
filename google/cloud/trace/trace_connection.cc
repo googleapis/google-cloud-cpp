@@ -23,6 +23,7 @@
 #include "google/cloud/trace/trace_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -47,6 +48,7 @@ TraceServiceConnection::CreateSpan(
 std::shared_ptr<TraceServiceConnection> MakeTraceServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  TraceServicePolicyOptionList>(options,
                                                                __func__);
   options = trace_internal::TraceServiceDefaultOptions(std::move(options));

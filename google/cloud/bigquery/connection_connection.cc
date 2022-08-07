@@ -23,6 +23,7 @@
 #include "google/cloud/bigquery/internal/connection_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -84,6 +85,7 @@ ConnectionServiceConnection::TestIamPermissions(
 std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ConnectionServicePolicyOptionList>(options,
                                                                     __func__);
   options =

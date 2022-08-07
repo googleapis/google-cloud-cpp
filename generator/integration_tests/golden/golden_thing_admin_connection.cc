@@ -23,6 +23,7 @@
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -170,6 +171,7 @@ GoldenThingAdminConnection::AsyncDropDatabase(
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+      UnifiedCredentialsOptionList,
       GoldenThingAdminPolicyOptionList>(options, __func__);
   options = golden_internal::GoldenThingAdminDefaultOptions(
       std::move(options));

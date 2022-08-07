@@ -23,6 +23,7 @@
 #include "google/cloud/optimization/internal/fleet_routing_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -50,6 +51,7 @@ FleetRoutingConnection::BatchOptimizeTours(
 std::shared_ptr<FleetRoutingConnection> MakeFleetRoutingConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  FleetRoutingPolicyOptionList>(options,
                                                                __func__);
   options =

@@ -23,6 +23,7 @@
 #include "google/cloud/iam/internal/iam_credentials_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -60,6 +61,7 @@ IAMCredentialsConnection::SignJwt(
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  IAMCredentialsPolicyOptionList>(options,
                                                                  __func__);
   options = iam_internal::IAMCredentialsDefaultOptions(std::move(options));

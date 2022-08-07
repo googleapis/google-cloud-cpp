@@ -23,6 +23,7 @@
 #include "google/cloud/pubsublite/topic_stats_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -54,6 +55,7 @@ TopicStatsServiceConnection::ComputeTimeCursor(
 std::shared_ptr<TopicStatsServiceConnection> MakeTopicStatsServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  TopicStatsServicePolicyOptionList>(options,
                                                                     __func__);
   options =

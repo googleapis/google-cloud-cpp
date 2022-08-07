@@ -23,6 +23,7 @@
 #include "google/cloud/containeranalysis/internal/container_analysis_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -60,6 +61,7 @@ ContainerAnalysisConnection::GetVulnerabilityOccurrencesSummary(
 std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ContainerAnalysisPolicyOptionList>(options,
                                                                     __func__);
   options = containeranalysis_internal::ContainerAnalysisDefaultOptions(

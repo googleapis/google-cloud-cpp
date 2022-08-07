@@ -23,6 +23,7 @@
 #include "google/cloud/cloudbuild/internal/cloud_build_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -165,6 +166,7 @@ CloudBuildConnection::ListWorkerPools(
 std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudBuildPolicyOptionList>(options, __func__);
   options = cloudbuild_internal::CloudBuildDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

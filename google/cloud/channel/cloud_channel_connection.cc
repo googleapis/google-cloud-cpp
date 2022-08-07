@@ -23,6 +23,7 @@
 #include "google/cloud/channel/internal/cloud_channel_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -355,6 +356,7 @@ StreamRange<std::string> CloudChannelServiceConnection::ListSubscribers(
 std::shared_ptr<CloudChannelServiceConnection>
 MakeCloudChannelServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudChannelServicePolicyOptionList>(options,
                                                                       __func__);
   options =

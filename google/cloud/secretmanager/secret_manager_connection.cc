@@ -23,6 +23,7 @@
 #include "google/cloud/secretmanager/secret_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -128,6 +129,7 @@ SecretManagerServiceConnection::TestIamPermissions(
 std::shared_ptr<SecretManagerServiceConnection>
 MakeSecretManagerServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  SecretManagerServicePolicyOptionList>(
       options, __func__);
   options = secretmanager_internal::SecretManagerServiceDefaultOptions(

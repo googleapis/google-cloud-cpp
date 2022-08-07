@@ -23,6 +23,7 @@
 #include "google/cloud/composer/internal/environments_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -82,6 +83,7 @@ EnvironmentsConnection::DeleteEnvironment(
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  EnvironmentsPolicyOptionList>(options,
                                                                __func__);
   options = composer_internal::EnvironmentsDefaultOptions(std::move(options));

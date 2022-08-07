@@ -23,6 +23,7 @@
 #include "google/cloud/servicemanagement/service_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -128,6 +129,7 @@ ServiceManagerConnection::GenerateConfigReport(
 std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ServiceManagerPolicyOptionList>(options,
                                                                  __func__);
   options = servicemanagement_internal::ServiceManagerDefaultOptions(

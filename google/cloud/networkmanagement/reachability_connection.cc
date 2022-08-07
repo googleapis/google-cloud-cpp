@@ -23,6 +23,7 @@
 #include "google/cloud/networkmanagement/reachability_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -86,6 +87,7 @@ ReachabilityServiceConnection::DeleteConnectivityTest(
 std::shared_ptr<ReachabilityServiceConnection>
 MakeReachabilityServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ReachabilityServicePolicyOptionList>(options,
                                                                       __func__);
   options = networkmanagement_internal::ReachabilityServiceDefaultOptions(

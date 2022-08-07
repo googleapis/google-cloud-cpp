@@ -23,6 +23,7 @@
 #include "google/cloud/iap/internal/identity_aware_proxy_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -99,7 +100,7 @@ IdentityAwareProxyAdminServiceConnection::UpdateTunnelDestGroup(
 std::shared_ptr<IdentityAwareProxyAdminServiceConnection>
 MakeIdentityAwareProxyAdminServiceConnection(Options options) {
   internal::CheckExpectedOptions<
-      CommonOptionList, GrpcOptionList,
+      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
       IdentityAwareProxyAdminServicePolicyOptionList>(options, __func__);
   options = iap_internal::IdentityAwareProxyAdminServiceDefaultOptions(
       std::move(options));

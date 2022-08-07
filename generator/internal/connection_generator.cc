@@ -225,6 +225,7 @@ class $connection_class_name$ {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::$product_namespace$::$service_name$PolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
@@ -296,7 +297,8 @@ Status ConnectionGenerator::GenerateCc() {
       {vars("connection_header_path"), vars("options_header_path"),
        vars("connection_impl_header_path"), vars("option_defaults_header_path"),
        vars("stub_factory_header_path"), "google/cloud/background_threads.h",
-       "google/cloud/common_options.h", "google/cloud/grpc_options.h",
+       "google/cloud/common_options.h", "google/cloud/credentials.h",
+       "google/cloud/grpc_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : ""});
   CcSystemIncludes({"memory"});
 
@@ -443,6 +445,7 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
   CcPrint("Options options) {");
   CcPrint(R"""(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+      UnifiedCredentialsOptionList,
       $service_name$PolicyOptionList>(options, __func__);
   options = $product_internal_namespace$::$service_name$DefaultOptions(
 )""");

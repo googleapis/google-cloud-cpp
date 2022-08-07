@@ -23,6 +23,7 @@
 #include "google/cloud/kms/key_management_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -201,6 +202,7 @@ KeyManagementServiceConnection::GenerateRandomBytes(
 std::shared_ptr<KeyManagementServiceConnection>
 MakeKeyManagementServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  KeyManagementServicePolicyOptionList>(
       options, __func__);
   options =

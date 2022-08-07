@@ -119,6 +119,7 @@ class InstanceAdminConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::spanner_admin::InstanceAdminPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

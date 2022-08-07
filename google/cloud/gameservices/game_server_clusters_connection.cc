@@ -23,6 +23,7 @@
 #include "google/cloud/gameservices/internal/game_server_clusters_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -94,6 +95,7 @@ GameServerClustersServiceConnection::PreviewUpdateGameServerCluster(
 std::shared_ptr<GameServerClustersServiceConnection>
 MakeGameServerClustersServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  GameServerClustersServicePolicyOptionList>(
       options, __func__);
   options = gameservices_internal::GameServerClustersServiceDefaultOptions(

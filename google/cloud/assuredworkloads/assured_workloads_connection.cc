@@ -23,6 +23,7 @@
 #include "google/cloud/assuredworkloads/internal/assured_workloads_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -71,6 +72,7 @@ AssuredWorkloadsServiceConnection::ListWorkloads(
 std::shared_ptr<AssuredWorkloadsServiceConnection>
 MakeAssuredWorkloadsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AssuredWorkloadsServicePolicyOptionList>(
       options, __func__);
   options = assuredworkloads_internal::AssuredWorkloadsServiceDefaultOptions(

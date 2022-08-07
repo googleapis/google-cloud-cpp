@@ -23,6 +23,7 @@
 #include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -271,6 +272,7 @@ Status ContactCenterInsightsConnection::DeleteView(
 std::shared_ptr<ContactCenterInsightsConnection>
 MakeContactCenterInsightsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ContactCenterInsightsPolicyOptionList>(
       options, __func__);
   options = contactcenterinsights_internal::ContactCenterInsightsDefaultOptions(

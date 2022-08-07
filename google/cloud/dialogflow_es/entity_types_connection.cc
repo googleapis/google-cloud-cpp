@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_es/internal/entity_types_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -104,6 +105,7 @@ EntityTypesConnection::BatchDeleteEntities(
 std::shared_ptr<EntityTypesConnection> MakeEntityTypesConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  EntityTypesPolicyOptionList>(options,
                                                               __func__);
   options = dialogflow_es_internal::EntityTypesDefaultOptions(

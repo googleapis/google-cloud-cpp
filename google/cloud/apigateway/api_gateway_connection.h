@@ -133,6 +133,7 @@ class ApiGatewayServiceConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::apigateway::ApiGatewayServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,

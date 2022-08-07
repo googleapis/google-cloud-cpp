@@ -23,6 +23,7 @@
 #include "google/cloud/batch/internal/batch_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -74,6 +75,7 @@ StreamRange<google::cloud::batch::v1::Task> BatchServiceConnection::ListTasks(
 std::shared_ptr<BatchServiceConnection> MakeBatchServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BatchServicePolicyOptionList>(options,
                                                                __func__);
   options = batch_internal::BatchServiceDefaultOptions(std::move(options));

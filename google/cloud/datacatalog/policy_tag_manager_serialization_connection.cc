@@ -23,6 +23,7 @@
 #include "google/cloud/datacatalog/policy_tag_manager_serialization_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -55,6 +56,7 @@ PolicyTagManagerSerializationConnection::ExportTaxonomies(
 std::shared_ptr<PolicyTagManagerSerializationConnection>
 MakePolicyTagManagerSerializationConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PolicyTagManagerSerializationPolicyOptionList>(
       options, __func__);
   options = datacatalog_internal::PolicyTagManagerSerializationDefaultOptions(

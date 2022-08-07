@@ -23,6 +23,7 @@
 #include "google/cloud/run/revisions_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -57,6 +58,7 @@ RevisionsConnection::DeleteRevision(
 
 std::shared_ptr<RevisionsConnection> MakeRevisionsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  RevisionsPolicyOptionList>(options, __func__);
   options = run_internal::RevisionsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

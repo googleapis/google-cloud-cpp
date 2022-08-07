@@ -23,6 +23,7 @@
 #include "google/cloud/datacatalog/internal/data_catalog_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -228,6 +229,7 @@ DataCatalogConnection::TestIamPermissions(
 std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DataCatalogPolicyOptionList>(options,
                                                               __func__);
   options = datacatalog_internal::DataCatalogDefaultOptions(std::move(options));

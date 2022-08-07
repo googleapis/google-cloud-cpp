@@ -23,6 +23,7 @@
 #include "google/cloud/dialogflow_cx/versions_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -82,6 +83,7 @@ VersionsConnection::CompareVersions(
 std::shared_ptr<VersionsConnection> MakeVersionsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  VersionsPolicyOptionList>(options, __func__);
   options = dialogflow_cx_internal::VersionsDefaultOptions(location,
                                                            std::move(options));

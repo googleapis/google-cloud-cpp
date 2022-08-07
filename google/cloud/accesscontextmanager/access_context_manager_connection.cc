@@ -23,6 +23,7 @@
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -244,6 +245,7 @@ AccessContextManagerConnection::DeleteGcpUserAccessBinding(
 std::shared_ptr<AccessContextManagerConnection>
 MakeAccessContextManagerConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AccessContextManagerPolicyOptionList>(
       options, __func__);
   options = accesscontextmanager_internal::AccessContextManagerDefaultOptions(
