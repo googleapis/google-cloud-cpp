@@ -76,6 +76,10 @@ class StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateBucketRequest const& request) = 0;
 
+  virtual Status DeleteNotification(
+      grpc::ClientContext& context,
+      google::storage::v2::DeleteNotificationRequest const& request) = 0;
+
   virtual StatusOr<google::storage::v2::Notification> GetNotification(
       grpc::ClientContext& context,
       google::storage::v2::GetNotificationRequest const& request) = 0;
@@ -217,6 +221,10 @@ class DefaultStorageStub : public StorageStub {
   StatusOr<google::storage::v2::Bucket> UpdateBucket(
       grpc::ClientContext& client_context,
       google::storage::v2::UpdateBucketRequest const& request) override;
+
+  Status DeleteNotification(
+      grpc::ClientContext& client_context,
+      google::storage::v2::DeleteNotificationRequest const& request) override;
 
   StatusOr<google::storage::v2::Notification> GetNotification(
       grpc::ClientContext& client_context,

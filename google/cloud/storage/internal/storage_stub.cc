@@ -137,6 +137,18 @@ StatusOr<google::storage::v2::Bucket> DefaultStorageStub::UpdateBucket(
   return response;
 }
 
+Status DefaultStorageStub::DeleteNotification(
+    grpc::ClientContext& client_context,
+    google::storage::v2::DeleteNotificationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteNotification(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::storage::v2::Notification> DefaultStorageStub::GetNotification(
     grpc::ClientContext& client_context,
     google::storage::v2::GetNotificationRequest const& request) {

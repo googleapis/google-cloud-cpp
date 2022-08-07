@@ -21,6 +21,14 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+google::storage::v2::DeleteNotificationRequest ToProto(
+    DeleteNotificationRequest const& rhs) {
+  google::storage::v2::DeleteNotificationRequest request;
+  request.set_name("projects/_/buckets/" + rhs.bucket_name() +
+                   "/notificationConfigs/" + rhs.notification_id());
+  return request;
+}
+
 google::storage::v2::GetNotificationRequest ToProto(
     GetNotificationRequest const& rhs) {
   google::storage::v2::GetNotificationRequest request;

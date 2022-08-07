@@ -1297,7 +1297,6 @@ service {
     "WriteObject"
   ]
   omitted_rpcs: [
-    "DeleteNotification",
     "ListNotifications"
   ]
 }
