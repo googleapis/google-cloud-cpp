@@ -295,6 +295,11 @@ struct CARootsFilePathOption {
   using Type = std::string;
 };
 
+/// A list of GUAC options.
+using UnifiedCredentialsOptionList =
+    OptionList<AccessTokenLifetimeOption, CARootsFilePathOption,
+               DelegatesOption, ScopesOption, UnifiedCredentialsOption>;
+
 namespace internal {
 
 /**
