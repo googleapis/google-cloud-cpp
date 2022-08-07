@@ -29,6 +29,15 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
 
+TEST(FiltersTest, Equality) {
+  auto f1 = Filter::PassAllFilter();
+  auto f2 = Filter::Latest(10);
+  EXPECT_NE(f1, f2);
+
+  f2 = f1;
+  EXPECT_EQ(f1, f2);
+}
+
 TEST(FiltersTest, PassAllFilter) {
   auto proto = Filter::PassAllFilter().as_proto();
   EXPECT_TRUE(proto.pass_all_filter());
