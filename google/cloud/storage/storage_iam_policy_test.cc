@@ -77,6 +77,15 @@ TEST(NativeIamExpression, CtorAndAccessors) {
   EXPECT_EQ("loc3", const_expr.location());
 }
 
+TEST(NativeIamExpression, Equality) {
+  NativeExpression e1("expr", "title", "descr", "loc");
+  NativeExpression e2("expr");
+  EXPECT_NE(e1, e2);
+
+  e2 = e1;
+  EXPECT_EQ(e1, e2);
+}
+
 TEST(NativeIamExpression, Printing) {
   NativeExpression expr("expr");
   NativeExpression const& const_expr = expr;
@@ -135,6 +144,19 @@ TEST(NativeIamBinding, CtorAndAccessors) {
   ASSERT_FALSE(binding.has_condition());
 }
 
+TEST(NativeIamBinding, Equality) {
+  NativeIamBinding b1("role1", {"member1"}, NativeExpression("expr1"));
+  NativeIamBinding b2("role2", {"member1"}, NativeExpression("expr1"));
+  NativeIamBinding b3("role1", {"member2"}, NativeExpression("expr1"));
+  NativeIamBinding b4("role1", {"member1"}, NativeExpression("expr2"));
+  EXPECT_NE(b1, b2);
+  EXPECT_NE(b1, b3);
+  EXPECT_NE(b1, b4);
+
+  b2 = b1;
+  EXPECT_EQ(b1, b2);
+}
+
 TEST(NativeIamBinding, Printing) {
   NativeIamBinding binding("role", {"member1", "member2"});
   NativeIamBinding const& const_binding = binding;
@@ -169,6 +191,18 @@ TEST(NativeIamPolicy, CtorAndAccessors) {
   ASSERT_EQ(2U, const_policy.bindings().size());
   ASSERT_EQ("role1", const_policy.bindings()[0].role());
   ASSERT_EQ("role2", const_policy.bindings()[1].role());
+}
+
+TEST(NativeIamPolicy, Equality) {
+  NativeIamPolicy p1({NativeIamBinding("role1", {"member"})});
+  NativeIamPolicy p2({NativeIamBinding("role2", {"member"})});
+  NativeIamPolicy p3({NativeIamBinding("role1", {"member"})}, "etag");
+
+  EXPECT_NE(p1, p2);
+  EXPECT_NE(p1, p3);
+
+  p2 = p1;
+  EXPECT_EQ(p1, p2);
 }
 
 TEST(NativeIamPolicy, Json) {

@@ -142,6 +142,14 @@ PatchBuilder& PatchBuilder::operator=(PatchBuilder&& rhs) noexcept {
   return *this;
 }
 
+bool operator==(PatchBuilder const& a, PatchBuilder const& b) noexcept {
+  return a.pimpl_->patch_ == b.pimpl_->patch_;
+}
+
+bool operator!=(PatchBuilder const& a, PatchBuilder const& b) noexcept {
+  return !(a == b);
+}
+
 std::string PatchBuilder::ToString() const { return pimpl_->ToString(); }
 
 bool PatchBuilder::empty() const { return pimpl_->empty(); }
