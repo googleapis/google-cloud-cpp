@@ -144,8 +144,10 @@ class InstanceAdmin {
             DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
         polling_prototype_(
             DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)),
-        policies_(bigtable_internal::MakeInstanceAdminOptions(
-            retry_prototype_, backoff_prototype_, polling_prototype_)) {}
+        options_(google::cloud::internal::MergeOptions(
+            bigtable_internal::MakeInstanceAdminOptions(
+                retry_prototype_, backoff_prototype_, polling_prototype_),
+            connection_->options())) {}
 
   /**
    * @param client the interface to create grpc stubs, report errors, etc.
@@ -191,8 +193,10 @@ class InstanceAdmin {
         polling_prototype_(
             DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)) {
     ChangePolicies(std::forward<Policies>(policies)...);
-    policies_ = bigtable_internal::MakeInstanceAdminOptions(
-        retry_prototype_, backoff_prototype_, polling_prototype_);
+    options_ = google::cloud::internal::MergeOptions(
+        bigtable_internal::MakeInstanceAdminOptions(
+            retry_prototype_, backoff_prototype_, polling_prototype_),
+        connection_->options());
   }
 
   /// The full name (`projects/<project_id>`) of the project.
@@ -712,12 +716,12 @@ class InstanceAdmin {
   std::string project_name_;
   //@{
   /// These prototypes are only used as temporary storage during construction of
-  /// the class, where they are consolidated as `policies_`.
+  /// the class, where they are consolidated as common policies in `options_`.
   std::shared_ptr<RPCRetryPolicy> retry_prototype_;
   std::shared_ptr<RPCBackoffPolicy> backoff_prototype_;
   std::shared_ptr<PollingPolicy> polling_prototype_;
   //}
-  Options policies_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
