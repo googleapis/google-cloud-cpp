@@ -120,11 +120,11 @@ gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
 io::log_h1 "DEBUG $PWD"
 troubleshoot_sleep() {
   io::log_h1 "DEBUG File status at exit"
-  ls -l /usr/bin/sleep || echo "ls -l /usr/bin/sleep failed"
   git status || echo "git status failed"
   git ls-files || echo "git ls-files failed"
+  ls -l /bin/sleep || echo "ls -l /bin/sleep failed"
   io::log_h1 "DEBUG Sleeping to troubleshoot problems"
-  /usr/bin/sleep 3600
+  /bin/sleep 3600
 }
 trap troubleshoot_sleep EXIT
 ls -l || echo "ls -l failed"
