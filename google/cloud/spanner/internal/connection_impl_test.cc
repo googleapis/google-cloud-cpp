@@ -334,8 +334,8 @@ TEST(ConnectionImplTest, ReadCreateSessionFailure) {
       .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
                                     "uh-oh in BatchCreateSessions")));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto rows = conn->Read(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        "table",
@@ -358,8 +358,8 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto rows = conn->Read(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        "table",
@@ -439,8 +439,8 @@ TEST(ConnectionImplTest, ReadSuccess) {
         return MakeReader({responses[1], responses[2]});
       });
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::ReadOptions read_options;
   read_options.request_priority = spanner::RequestPriority::kLow;
   auto rows = conn->Read(
@@ -473,8 +473,8 @@ TEST(ConnectionImplTest, ReadPermanentFailure) {
       .WillOnce(Return(ByMove(
           MakeReader({}, {grpc::StatusCode::PERMISSION_DENIED, "uh-oh"}))));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto rows = conn->Read(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        "table",
@@ -499,8 +499,8 @@ TEST(ConnectionImplTest, ReadTooManyTransientFailures) {
         return MakeReader({}, {grpc::StatusCode::UNAVAILABLE, "try-again"});
       });
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto rows = conn->Read(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        "table",
@@ -526,8 +526,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   auto rows = conn->Read(
@@ -579,8 +579,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(ok_reader))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   auto rows = conn->Read(
@@ -645,8 +645,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(ok_reader))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   auto rows = conn->Read(
@@ -694,8 +694,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(reader2))));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   spanner::Transaction txn =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   auto rows = conn->Read(
@@ -715,8 +715,8 @@ TEST(ConnectionImplTest, ExecuteQueryCreateSessionFailure) {
       .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
                                     "uh-oh in BatchCreateSessions")));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
@@ -737,8 +737,8 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
           Return(ByMove(MakeReader({}, {grpc::StatusCode::PERMISSION_DENIED,
                                         "uh-oh in GrpcReader::Finish"}))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
@@ -781,8 +781,8 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
@@ -828,8 +828,8 @@ TEST(ConnectionImplTest, ExecuteQueryPgNumericResult) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
@@ -907,8 +907,8 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
         return MakeReader({kResponsePgNumeric});
       });
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   for (auto const& value : {spanner::MakeNumeric(998)}) {
     auto rows = conn->ExecuteQuery(
         {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
@@ -948,8 +948,8 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   auto rows =
@@ -1202,8 +1202,8 @@ TEST(ConnectionImplTest, QueryOptions) {
           .RetiresOnSaturation();
     }
 
-    internal::OptionsSpan span(MakeLimitedTimeOptions());
     auto conn = MakeConnectionImpl(db, mock);
+    internal::OptionsSpan span(MakeLimitedTimeOptions());
     (void)conn->ExecuteQuery(sql_params);
     (void)conn->ProfileQuery(sql_params);
     (void)conn->ExecutePartitionedDml(execute_partitioned_dml_params);
@@ -1225,8 +1225,8 @@ TEST(ConnectionImplTest, ExecuteDmlCreateSessionFailure) {
       .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
                                     "uh-oh in BatchCreateSessions")));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1252,8 +1252,8 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1278,8 +1278,8 @@ TEST(ConnectionImplTest, ExecuteDmlDeletePermanentFailure) {
     EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(status));
   }
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1307,8 +1307,8 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteTooManyTransientFailures) {
         .WillRepeatedly(Return(status));
   }
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1338,8 +1338,8 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionAtomicity) {
     EXPECT_CALL(*mock, BeginTransaction).WillOnce(Return(begin_status));
   }
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   // The first operation fails with the status of the operation's RPC
@@ -1366,8 +1366,8 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionMissing) {
   ASSERT_TRUE(TextFormat::ParseFromString("metadata: {}", &response));
   EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(response));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   EXPECT_THAT(
@@ -1413,8 +1413,8 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
@@ -1457,8 +1457,8 @@ TEST(ConnectionImplTest, ProfileQueryCreateSessionFailure) {
       .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
                                     "uh-oh in BatchCreateSessions")));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
@@ -1480,8 +1480,8 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
@@ -1500,8 +1500,8 @@ TEST(ConnectionImplTest, ProfileDmlCreateSessionFailure) {
       .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
                                     "uh-oh in BatchCreateSessions")));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1535,8 +1535,8 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1577,8 +1577,8 @@ TEST(ConnectionImplTest, ProfileDmlDeletePermanentFailure) {
     EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(status));
   }
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1606,8 +1606,8 @@ TEST(ConnectionImplTest, ProfileDmlDeleteTooManyTransientFailures) {
         .WillRepeatedly(Return(status));
   }
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1633,8 +1633,8 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(ByMove(std::move(response))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto result = conn->AnalyzeSql(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
@@ -1658,8 +1658,8 @@ TEST(ConnectionImplTest, AnalyzeSqlCreateSessionFailure) {
       .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
                                     "uh-oh in BatchCreateSessions")));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1683,8 +1683,8 @@ TEST(ConnectionImplTest, AnalyzeSqlDeletePermanentFailure) {
     EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(status));
   }
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1712,8 +1712,8 @@ TEST(ConnectionImplTest, AnalyzeSqlDeleteTooManyTransientFailures) {
         .WillRepeatedly(Return(status));
   }
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
@@ -1751,8 +1751,8 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
       spanner::SqlStatement("UPDATE ..."),
   };
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto txn = spanner::MakeReadWriteTransaction(
       spanner::Transaction::ReadWriteOptions().WithTag("tag"));
   auto result =
@@ -1794,8 +1794,8 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
       spanner::SqlStatement("UPDATE ..."),
   };
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto txn = spanner::MakeReadWriteTransaction(
       spanner::Transaction::ReadWriteOptions().WithTag("tag"));
   auto result = conn->ExecuteBatchDml({txn, request});
@@ -1831,8 +1831,8 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPermanentFailure) {
       spanner::SqlStatement("UPDATE ..."),
   };
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   auto result = conn->ExecuteBatchDml({txn, request});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
@@ -1865,8 +1865,8 @@ TEST(ConnectionImplTest, ExecuteBatchDmlTooManyTransientFailures) {
       spanner::SqlStatement("UPDATE ..."),
   };
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   auto result = conn->ExecuteBatchDml({txn, request});
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable,
@@ -1900,8 +1900,8 @@ TEST(ConnectionImplTest, ExecuteBatchDmlNoResultSets) {
 
   auto request = {spanner::SqlStatement("UPDATE ...")};
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   auto result = conn->ExecuteBatchDml({txn, request});
   EXPECT_STATUS_OK(result);
@@ -1929,8 +1929,8 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
                                  "try-again in ExecutePartitionedDml"}))))
       .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto result = conn->ExecutePartitionedDml(
       {spanner::SqlStatement("DELETE * FROM Table"),
        spanner::QueryOptions().set_request_tag("tag")});
@@ -1947,8 +1947,8 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlCreateSessionFailure) {
       .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
                                     "uh-oh in BatchCreateSessions")));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto result = conn->ExecutePartitionedDml(
       {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
@@ -1971,8 +1971,8 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
       .WillOnce(Return(ByMove(
           MakeReader({}, {grpc::StatusCode::INTERNAL, "permanent failure"}))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto result = conn->ExecutePartitionedDml(
       {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result,
@@ -1996,8 +1996,8 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
                                "try-again in ExecutePartitionedDml"});
       });
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto result = conn->ExecutePartitionedDml(
       {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result,
@@ -2030,8 +2030,8 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
                "HTTP/2 error code: INTERNAL_ERROR\nReceived Rst Stream"}))))
       .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto result = conn->ExecutePartitionedDml(
       {spanner::SqlStatement("DELETE * FROM Table")});
   ASSERT_STATUS_OK(result);
@@ -2049,8 +2049,8 @@ TEST(ConnectionImplTest,
       .WillOnce(Return(Status(StatusCode::kPermissionDenied,
                               "uh-oh in ExecutePartitionedDml")));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto result = conn->ExecutePartitionedDml(
       {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
@@ -2069,8 +2069,8 @@ TEST(ConnectionImplTest,
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable,
                                     "try-again in ExecutePartitionedDml")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto result = conn->ExecutePartitionedDml(
       {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result,
@@ -2087,8 +2087,8 @@ TEST(ConnectionImplTest, CommitCreateSessionPermanentFailure) {
       .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
                                     "uh-oh in BatchCreateSessions")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction()});
   EXPECT_THAT(commit, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in BatchCreateSessions")));
@@ -2103,8 +2103,8 @@ TEST(ConnectionImplTest, CommitCreateSessionTooManyTransientFailures) {
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable,
                                     "try-again in BatchCreateSessions")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction()});
   EXPECT_THAT(commit, StatusIs(StatusCode::kUnavailable,
                                HasSubstr("try-again in BatchCreateSessions")));
@@ -2125,8 +2125,8 @@ TEST(ConnectionImplTest, CommitCreateSessionRetry) {
       .WillOnce(
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in Commit")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction()});
   EXPECT_THAT(commit, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in Commit")));
@@ -2149,8 +2149,8 @@ TEST(ConnectionImplTest, CommitBeginTransactionRetry) {
                                      HasNakedTransactionId(txn.id()))))
       .WillOnce(Return(MakeCommitResponse(commit_timestamp)));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction()});
   EXPECT_STATUS_OK(commit);
   EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
@@ -2165,8 +2165,8 @@ TEST(ConnectionImplTest, CommitBeginTransactionSessionNotFound) {
   EXPECT_CALL(*mock, BeginTransaction)
       .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   auto commit = conn->Commit({txn});
   EXPECT_THAT(commit, Not(IsOk()));
@@ -2185,8 +2185,8 @@ TEST(ConnectionImplTest, CommitBeginTransactionPermanentFailure) {
       .WillOnce(Return(
           Status(StatusCode::kInvalidArgument, "BeginTransaction failed")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   EXPECT_THAT(conn->Commit({txn}),
               StatusIs(StatusCode::kInvalidArgument,
@@ -2212,8 +2212,8 @@ TEST(ConnectionImplTest, CommitCommitPermanentFailure) {
       .WillOnce(
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in Commit")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction()});
   EXPECT_THAT(commit, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in Commit")));
@@ -2232,8 +2232,8 @@ TEST(ConnectionImplTest, CommitCommitTooManyTransientFailures) {
       .WillOnce(
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in Commit")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction()});
   EXPECT_THAT(commit, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in Commit")));
@@ -2253,8 +2253,8 @@ TEST(ConnectionImplTest, CommitCommitInvalidatedTransaction) {
   SetTransactionInvalid(txn,
                         Status(StatusCode::kAlreadyExists, "constraint error"));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({txn});
   EXPECT_THAT(commit, Not(IsOk()));
   EXPECT_THAT(commit, StatusIs(StatusCode::kAlreadyExists,
@@ -2279,8 +2279,8 @@ TEST(ConnectionImplTest, CommitCommitIdempotentTransientSuccess) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({txn});
   EXPECT_STATUS_OK(commit);
   EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
@@ -2306,8 +2306,8 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({txn,
                               {},
                               spanner::CommitOptions{}.set_request_priority(
@@ -2330,8 +2330,8 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
               .value(),
           spanner::CommitStats{42})));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction(),
                               {},
                               spanner::CommitOptions{}.set_return_stats(true)});
@@ -2349,8 +2349,8 @@ TEST(ConnectionImplTest, RollbackCreateSessionFailure) {
                                     "uh-oh in BatchCreateSessions")));
   EXPECT_CALL(*mock, Rollback).Times(0);
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto rollback = conn->Rollback({txn});
@@ -2371,8 +2371,8 @@ TEST(ConnectionImplTest, RollbackBeginTransaction) {
                                        HasNakedTransactionId(transaction_id))))
       .WillOnce(Return(Status()));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   auto rollback = conn->Rollback({txn});
   EXPECT_STATUS_OK(rollback);
@@ -2385,8 +2385,8 @@ TEST(ConnectionImplTest, RollbackSingleUseTransaction) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, Rollback).Times(0);
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto txn = spanner_internal::MakeSingleUseTransaction(
       spanner::Transaction::SingleUseOptions{
           spanner::Transaction::ReadOnlyOptions{}});
@@ -2407,8 +2407,8 @@ TEST(ConnectionImplTest, RollbackPermanentFailure) {
       .WillOnce(
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in Rollback")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, transaction_id);
   auto rollback = conn->Rollback({txn});
@@ -2429,8 +2429,8 @@ TEST(ConnectionImplTest, RollbackTooManyTransientFailures) {
       .WillRepeatedly(
           Return(Status(StatusCode::kUnavailable, "try-again in Rollback")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, transaction_id);
   auto rollback = conn->Rollback({txn});
@@ -2450,8 +2450,8 @@ TEST(ConnectionImplTest, RollbackSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(Status()));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, transaction_id);
   auto rollback = conn->Rollback({txn});
@@ -2471,8 +2471,8 @@ TEST(ConnectionImplTest, RollbackInvalidatedTransaction) {
   SetTransactionInvalid(txn,
                         Status(StatusCode::kAlreadyExists, "constraint error"));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto rollback_status = conn->Rollback({txn});
   EXPECT_THAT(rollback_status, StatusIs(StatusCode::kAlreadyExists,
                                         HasSubstr("constraint error")));
@@ -2513,8 +2513,8 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(partition_response));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   spanner::ReadOptions read_options;
@@ -2557,8 +2557,8 @@ TEST(ConnectionImplTest, PartitionReadPermanentFailure) {
     EXPECT_CALL(*mock, PartitionRead).WillOnce(Return(status));
   }
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   StatusOr<std::vector<spanner::ReadPartition>> result = conn->PartitionRead(
       {{MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
         "table",
@@ -2587,8 +2587,8 @@ TEST(ConnectionImplTest, PartitionReadTooManyTransientFailures) {
         .WillRepeatedly(Return(status));
   }
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   StatusOr<std::vector<spanner::ReadPartition>> result = conn->PartitionRead(
       {{MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
         "table",
@@ -2629,8 +2629,8 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(partition_response));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::SqlStatement sql_statement("SELECT * FROM Table");
   StatusOr<std::vector<spanner::QueryPartition>> result = conn->PartitionQuery(
       {MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
@@ -2661,8 +2661,8 @@ TEST(ConnectionImplTest, PartitionQueryPermanentFailure) {
     EXPECT_CALL(*mock, PartitionQuery).WillOnce(Return(failed_status));
   }
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   StatusOr<std::vector<spanner::QueryPartition>> result = conn->PartitionQuery(
       {MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table"),
@@ -2691,8 +2691,8 @@ TEST(ConnectionImplTest, PartitionQueryTooManyTransientFailures) {
         .WillRepeatedly(Return(failed_status));
   }
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   StatusOr<std::vector<spanner::QueryPartition>> result = conn->PartitionQuery(
       {MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table"),
@@ -2735,8 +2735,8 @@ TEST(ConnectionImplTest, MultipleThreads) {
   }();
 
   auto runner = [](int thread_id, int iterations, spanner::Connection* conn) {
-    internal::OptionsSpan span(MakeLimitedTimeOptions());
     for (int i = 0; i != iterations; ++i) {
+      internal::OptionsSpan span(MakeLimitedTimeOptions());
       auto txn = spanner::MakeReadWriteTransaction();
       SetTransactionId(
           txn, "txn-" + std::to_string(thread_id) + ":" + std::to_string(i));
@@ -2820,8 +2820,8 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   }
 
   // Now do the actual reads and verify the results.
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
 
   spanner::Transaction txn1 =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
@@ -2875,8 +2875,8 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   auto rows = conn->Read(
@@ -2900,8 +2900,8 @@ TEST(ConnectionImplTest, ReadSessionNotFound) {
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto params = spanner::Connection::ReadParams{txn};
@@ -2920,8 +2920,8 @@ TEST(ConnectionImplTest, PartitionReadSessionNotFound) {
   EXPECT_CALL(*mock, PartitionRead)
       .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto params = spanner::Connection::ReadParams{txn};
@@ -2941,8 +2941,8 @@ TEST(ConnectionImplTest, ExecuteQuerySessionNotFound) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = GetSingularRow(conn->ExecuteQuery({txn}));
@@ -2961,8 +2961,8 @@ TEST(ConnectionImplTest, ProfileQuerySessionNotFound) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = GetSingularRow(conn->ProfileQuery({txn}));
@@ -2980,8 +2980,8 @@ TEST(ConnectionImplTest, ExecuteDmlSessionNotFound) {
   EXPECT_CALL(*mock, ExecuteSql)
       .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->ExecuteDml({txn});
@@ -2999,8 +2999,8 @@ TEST(ConnectionImplTest, ProfileDmlSessionNotFound) {
   EXPECT_CALL(*mock, ExecuteSql)
       .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->ProfileDml({txn});
@@ -3018,8 +3018,8 @@ TEST(ConnectionImplTest, AnalyzeSqlSessionNotFound) {
   EXPECT_CALL(*mock, ExecuteSql)
       .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->AnalyzeSql({txn});
@@ -3037,8 +3037,8 @@ TEST(ConnectionImplTest, PartitionQuerySessionNotFound) {
   EXPECT_CALL(*mock, PartitionQuery)
       .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->PartitionQuery({txn});
@@ -3056,8 +3056,8 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSessionNotFound) {
   EXPECT_CALL(*mock, ExecuteBatchDml)
       .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->ExecuteBatchDml({txn});
@@ -3082,8 +3082,8 @@ TEST(ConnectionImplTest, CommitSessionNotFound) {
   EXPECT_CALL(*mock, Commit)
       .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->Commit({txn});
@@ -3101,8 +3101,8 @@ TEST(ConnectionImplTest, RollbackSessionNotFound) {
   EXPECT_CALL(*mock, Rollback)
       .WillOnce(Return(SessionNotFoundError("test-session-name")));
 
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto const& status = conn->Rollback({txn});
@@ -3117,8 +3117,8 @@ TEST(ConnectionImplTest, OperationsFailOnInvalidatedTransaction) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
 
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
 
   // Committing an invalidated transaction is a unilateral error.
   auto txn = spanner::MakeReadWriteTransaction();
