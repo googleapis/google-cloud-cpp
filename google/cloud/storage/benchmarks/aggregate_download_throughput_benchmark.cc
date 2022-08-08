@@ -39,10 +39,9 @@ using ::google::cloud::storage_experimental::DefaultGrpcClient;
 using ::google::cloud::testing_util::FormatSize;
 using ::google::cloud::testing_util::Timer;
 namespace gcs = ::google::cloud::storage;
-namespace gcs_experimental = ::google::cloud::storage_experimental;
+namespace gcs_ex = ::google::cloud::storage_experimental;
 namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::AggregateDownloadThroughputOptions;
-using gcs_bm::ApiName;
 using gcs_bm::FormatBandwidthGbPerSecond;
 
 char const kDescription[] = R"""(A benchmark for aggregated throughput.
@@ -120,21 +119,17 @@ class Iteration {
 };
 
 gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
-  auto client_options =
-      google::cloud::Options{}
-          .set<gcs_experimental::HttpVersionOption>(options.rest_http_version)
-          .set<gcs::TransferStallTimeoutOption>(options.download_stall_timeout);
+  auto opts = google::cloud::Options{options.client_options}
+                  // Make the upload buffer size small, the library will flush
+                  // on almost all `.write()` requests.
+                  .set<gcs::UploadBufferSizeOption>(256 * gcs_bm::kKiB);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  if (options.api == ApiName::kApiGrpc) {
-    auto channels = options.grpc_channel_count;
-    if (channels == 0) channels = (std::max)(options.thread_count / 4, 4);
-    client_options.set<google::cloud::GrpcNumChannelsOption>(channels)
-        .set<google::cloud::storage_experimental::GrpcPluginOption>(
-            options.grpc_plugin_config);
-    return DefaultGrpcClient(std::move(client_options));
+  if (options.api == "GRPC") {
+    return DefaultGrpcClient(
+        std::move(opts).set<gcs_ex::GrpcPluginOption>("media"));
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  return gcs::Client(std::move(client_options));
+  return gcs::Client(std::move(opts));
 }
 
 std::string CurrentTime() {
@@ -189,14 +184,9 @@ int main(int argc, char* argv[]) {
             << "\n# Repeats Per Iteration: " << options->repeats_per_iteration
             << "\n# Read Size: " << options->read_size
             << "\n# Read Buffer Size: " << options->read_buffer_size
-            << "\n# API: " << gcs_bm::ToString(options->api)
-            << "\n# gRPC Channel Count: " << options->grpc_channel_count
-            << "\n# gRPC Plugin Config: " << options->grpc_plugin_config
-            << "\n# HTTP Version: " << options->rest_http_version
+            << "\n# API: " << options->api
             << "\n# Client Per Thread: " << std::boolalpha
-            << options->client_per_thread << "\n# Download Stall Timeout: "
-            << absl::FromChrono(options->download_stall_timeout)
-            << "\n# Build Info: " << notes
+            << options->client_per_thread << "\n# Build Info: " << notes
             << "\n# Object Count: " << dataset.size()
             << "\n# Dataset size: " << FormatSize(dataset_size) << std::endl;
 
@@ -231,7 +221,7 @@ int main(int argc, char* argv[]) {
   // require a header even for empty files.
   std::cout << "Labels,Iteration,ObjectCount,DatasetSize,ThreadCount"
             << ",RepeatsPerIteration,ReadSize,ReadBufferSize,Api"
-            << ",GrpcChannelCount,GrpcPluginConfig,ClientPerThread"
+            << ",ClientPerThread"
             << ",StatusCode,Peer,BytesDownloaded,ElapsedMicroseconds"
             << ",IterationBytes,IterationElapsedMicroseconds"
             << ",IterationCpuMicroseconds" << std::endl;
@@ -284,9 +274,8 @@ DownloadDetail DownloadOneObject(
   // Using IfGenerationNotMatch(0) triggers JSON, as this feature is not
   // supported by XML.  Using IfGenerationNotMatch() -- without a value -- has
   // no effect.
-  auto xml_hack = options.api == ApiName::kApiJson
-                      ? gcs::IfGenerationNotMatch(0)
-                      : gcs::IfGenerationNotMatch();
+  auto xml_hack = options.api == "JSON" ? gcs::IfGenerationNotMatch(0)
+                                        : gcs::IfGenerationNotMatch();
   auto const object_start = clock::now();
   auto object_bytes = std::uint64_t{0};
   auto const object_size = static_cast<std::int64_t>(object.size());
@@ -365,8 +354,6 @@ google::cloud::StatusOr<AggregateDownloadThroughputOptions> SelfTest(
           "--read-size=32KiB",
           "--read-buffer-size=16KiB",
           "--api=JSON",
-          "--grpc-channel-count=1",
-          "--grpc-plugin-config=dp",
       },
       kDescription);
 }
@@ -399,7 +386,8 @@ void PrintResults(AggregateDownloadThroughputOptions const& options,
     return v;
   };
   auto const labels = clean_csv_field(options.labels);
-  auto const grpc_plugin_config = clean_csv_field(options.grpc_plugin_config);
+  auto const grpc_plugin_config =
+      clean_csv_field(options.client_options.get<gcs_ex::GrpcPluginOption>());
   auto const* client_per_thread = options.client_per_thread ? "true" : "false";
   // Print the results after each iteration. Makes it possible to interrupt
   // the benchmark in the middle and still get some data.
@@ -415,9 +403,7 @@ void PrintResults(AggregateDownloadThroughputOptions const& options,
                 << ',' << options.repeats_per_iteration  //
                 << ',' << options.read_size              //
                 << ',' << options.read_buffer_size       //
-                << ',' << ToString(options.api)          //
-                << ',' << options.grpc_channel_count     //
-                << ',' << grpc_plugin_config             //
+                << ',' << options.api                    //
                 << ',' << client_per_thread              //
                 << ',' << d.status.code()                //
                 << ',' << d.peer                         //

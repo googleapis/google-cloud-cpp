@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/aggregate_download_throughput_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <thread>
@@ -21,6 +22,9 @@ namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 namespace {
+
+namespace gcs = ::google::cloud::storage;
+namespace gcs_ex = ::google::cloud::storage_experimental;
 
 TEST(AggregateDownloadThroughputOptions, Basic) {
   auto options = ParseAggregateDownloadThroughputOptions(
@@ -35,11 +39,14 @@ TEST(AggregateDownloadThroughputOptions, Basic) {
           "--read-size=4MiB",
           "--read-buffer-size=1MiB",
           "--api=XML",
-          "--grpc-channel-count=16",
-          "--grpc-plugin-config=default",
-          "--rest-http-version=1.1",
           "--client-per-thread",
-          "--download-stall-timeout=120s",
+          "--grpc-channel-count=16",
+          "--rest-http-version=1.1",
+          "--rest-endpoint=https://us-central-storage.googleapis.com",
+          "--grpc-endpoint=google-c2p:///storage.googleapis.com",
+          "--download-stall-timeout=10s",
+          "--download-stall-minimum-rate=100KiB",
+          "--grpc-background-threads=4",
       },
       "");
   ASSERT_STATUS_OK(options);
@@ -52,12 +59,21 @@ TEST(AggregateDownloadThroughputOptions, Basic) {
   EXPECT_EQ(2, options->repeats_per_iteration);
   EXPECT_EQ(4 * kMiB, options->read_size);
   EXPECT_EQ(1 * kMiB, options->read_buffer_size);
-  EXPECT_EQ(ApiName::kApiXml, options->api);
-  EXPECT_EQ(16, options->grpc_channel_count);
-  EXPECT_EQ("default", options->grpc_plugin_config);
-  EXPECT_EQ("1.1", options->rest_http_version);
+  EXPECT_EQ("XML", options->api);
   EXPECT_EQ(true, options->client_per_thread);
-  EXPECT_EQ(std::chrono::seconds(120), options->download_stall_timeout);
+  EXPECT_EQ(16, options->client_options.get<GrpcNumChannelsOption>());
+  EXPECT_EQ("1.1", options->client_options.get<gcs_ex::HttpVersionOption>());
+  EXPECT_EQ("https://us-central-storage.googleapis.com",
+            options->client_options.get<gcs::RestEndpointOption>());
+  EXPECT_EQ("google-c2p:///storage.googleapis.com",
+            options->client_options.get<EndpointOption>());
+  EXPECT_EQ(std::chrono::seconds(10),
+            options->client_options.get<gcs::DownloadStallTimeoutOption>());
+  EXPECT_EQ(
+      100 * kKiB,
+      options->client_options.get<gcs_ex::DownloadStallMinimumRateOption>());
+  EXPECT_EQ(4,
+            options->client_options.get<GrpcBackgroundThreadPoolSizeOption>());
 }
 
 TEST(AggregateDownloadThroughputOptions, Description) {
