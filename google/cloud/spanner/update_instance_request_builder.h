@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/version.h"
 #include <google/protobuf/util/field_mask_util.h>
+#include <google/protobuf/util/message_differencer.h>
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
 #include <map>
 #include <string>
@@ -51,6 +52,16 @@ class UpdateInstanceRequestBuilder {
       default;
   UpdateInstanceRequestBuilder& operator=(UpdateInstanceRequestBuilder&&) =
       default;
+
+  friend bool operator==(UpdateInstanceRequestBuilder const& a,
+                         UpdateInstanceRequestBuilder const& b) noexcept {
+    return google::protobuf::util::MessageDifferencer::Equivalent(a.request_,
+                                                                  b.request_);
+  }
+  friend bool operator!=(UpdateInstanceRequestBuilder const& a,
+                         UpdateInstanceRequestBuilder const& b) noexcept {
+    return !(a == b);
+  }
 
   explicit UpdateInstanceRequestBuilder(std::string instance_name) {
     request_.mutable_instance()->set_name(std::move(instance_name));
