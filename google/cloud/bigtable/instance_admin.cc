@@ -28,7 +28,7 @@ static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
 StatusOr<InstanceList> InstanceAdmin::ListInstances() {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   InstanceList result;
 
   // Build the RPC request, try to minimize copying.
@@ -48,7 +48,7 @@ StatusOr<InstanceList> InstanceAdmin::ListInstances() {
 
 future<StatusOr<btadmin::Instance>> InstanceAdmin::CreateInstance(
     InstanceConfig instance_config) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   auto request = std::move(instance_config).as_proto();
   request.set_parent(project_name());
   for (auto& kv : *request.mutable_clusters()) {
@@ -61,7 +61,7 @@ future<StatusOr<btadmin::Instance>> InstanceAdmin::CreateInstance(
 future<StatusOr<btadmin::Cluster>> InstanceAdmin::CreateCluster(
     ClusterConfig cluster_config, std::string const& instance_id,
     std::string const& cluster_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   auto cluster = std::move(cluster_config).as_proto();
   cluster.set_location(project_name() + "/locations/" + cluster.location());
   btadmin::CreateClusterRequest request;
@@ -73,21 +73,21 @@ future<StatusOr<btadmin::Cluster>> InstanceAdmin::CreateCluster(
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 InstanceAdmin::UpdateInstance(InstanceUpdateConfig instance_update_config) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   auto request = std::move(instance_update_config).as_proto();
   return connection_->PartialUpdateInstance(request);
 }
 
 StatusOr<btadmin::Instance> InstanceAdmin::GetInstance(
     std::string const& instance_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::GetInstanceRequest request;
   request.set_name(InstanceName(instance_id));
   return connection_->GetInstance(request);
 }
 
 Status InstanceAdmin::DeleteInstance(std::string const& instance_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::DeleteInstanceRequest request;
   request.set_name(InstanceName(instance_id));
   return connection_->DeleteInstance(request);
@@ -95,7 +95,7 @@ Status InstanceAdmin::DeleteInstance(std::string const& instance_id) {
 
 StatusOr<btadmin::Cluster> InstanceAdmin::GetCluster(
     std::string const& instance_id, std::string const& cluster_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::GetClusterRequest request;
   request.set_name(ClusterName(instance_id, cluster_id));
   return connection_->GetCluster(request);
@@ -107,7 +107,7 @@ StatusOr<ClusterList> InstanceAdmin::ListClusters() {
 
 StatusOr<ClusterList> InstanceAdmin::ListClusters(
     std::string const& instance_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   ClusterList result;
 
   btadmin::ListClustersRequest request;
@@ -126,14 +126,14 @@ StatusOr<ClusterList> InstanceAdmin::ListClusters(
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 InstanceAdmin::UpdateCluster(ClusterConfig cluster_config) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   auto request = std::move(cluster_config).as_proto();
   return connection_->UpdateCluster(request);
 }
 
 Status InstanceAdmin::DeleteCluster(std::string const& instance_id,
                                     std::string const& cluster_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::DeleteClusterRequest request;
   request.set_name(ClusterName(instance_id, cluster_id));
   return connection_->DeleteCluster(request);
@@ -141,7 +141,7 @@ Status InstanceAdmin::DeleteCluster(std::string const& instance_id,
 
 StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
     std::string const& instance_id, AppProfileConfig config) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   auto request = std::move(config).as_proto();
   request.set_parent(InstanceName(instance_id));
   return connection_->CreateAppProfile(request);
@@ -149,7 +149,7 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
 
 StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
     std::string const& instance_id, std::string const& profile_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::GetAppProfileRequest request;
   request.set_name(AppProfileName(instance_id, profile_id));
   return connection_->GetAppProfile(request);
@@ -158,7 +158,7 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
 future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
     std::string const& instance_id, std::string const& profile_id,
     AppProfileUpdateConfig config) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   auto request = std::move(config).as_proto();
   request.mutable_app_profile()->set_name(
       AppProfileName(instance_id, profile_id));
@@ -167,7 +167,7 @@ future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
 
 StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   std::vector<btadmin::AppProfile> result;
 
   btadmin::ListAppProfilesRequest request;
@@ -183,7 +183,7 @@ StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
 Status InstanceAdmin::DeleteAppProfile(std::string const& instance_id,
                                        std::string const& profile_id,
                                        bool ignore_warnings) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::DeleteAppProfileRequest request;
   request.set_name(AppProfileName(instance_id, profile_id));
   request.set_ignore_warnings(ignore_warnings);
@@ -192,7 +192,7 @@ Status InstanceAdmin::DeleteAppProfile(std::string const& instance_id,
 
 StatusOr<google::iam::v1::Policy> InstanceAdmin::GetNativeIamPolicy(
     std::string const& instance_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(InstanceName(instance_id));
   return connection_->GetIamPolicy(request);
@@ -200,7 +200,7 @@ StatusOr<google::iam::v1::Policy> InstanceAdmin::GetNativeIamPolicy(
 
 StatusOr<google::iam::v1::Policy> InstanceAdmin::SetIamPolicy(
     std::string const& instance_id, google::iam::v1::Policy const& iam_policy) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(InstanceName(instance_id));
   *request.mutable_policy() = iam_policy;
@@ -210,7 +210,7 @@ StatusOr<google::iam::v1::Policy> InstanceAdmin::SetIamPolicy(
 StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
     std::string const& instance_id,
     std::vector<std::string> const& permissions) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(InstanceName(instance_id));
   for (auto const& permission : permissions) {

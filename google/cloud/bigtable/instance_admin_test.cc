@@ -31,8 +31,8 @@ class InstanceAdminTester {
     return admin.connection_;
   }
 
-  static Options Policies(bigtable::InstanceAdmin const& admin) {
-    return admin.policies_;
+  static Options Opts(bigtable::InstanceAdmin const& admin) {
+    return admin.options_;
   }
 };
 
@@ -77,6 +77,16 @@ std::string LocationName(std::string const& location) {
 
 Status FailingStatus() { return Status(StatusCode::kPermissionDenied, "fail"); }
 
+struct TestOption {
+  using Type = int;
+};
+
+Options TestOptions() {
+  return Options{}
+      .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+      .set<TestOption>(1);
+}
+
 void CheckPolicies(Options const& options) {
   EXPECT_TRUE(
       options.has<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>());
@@ -86,17 +96,24 @@ void CheckPolicies(Options const& options) {
       options.has<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>());
   EXPECT_TRUE(options.has<google::cloud::internal::GrpcSetupOption>());
   EXPECT_TRUE(options.has<google::cloud::internal::GrpcSetupPollOption>());
+  EXPECT_TRUE(options.has<TestOption>());
 }
 
 /// A fixture for the bigtable::InstanceAdmin tests.
 class InstanceAdminTest : public ::testing::Test {
  protected:
+  InstanceAdmin DefaultInstanceAdmin() {
+    EXPECT_CALL(*connection_, options())
+        .WillRepeatedly(Return(Options{}.set<TestOption>(1)));
+    return InstanceAdmin(connection_, kProjectId);
+  }
+
   std::shared_ptr<MockConnection> connection_ =
       std::make_shared<MockConnection>();
 };
 
 TEST_F(InstanceAdminTest, Project) {
-  InstanceAdmin tested(MakeInstanceAdminClient(kProjectId));
+  InstanceAdmin tested(MakeInstanceAdminClient(kProjectId, TestOptions()));
   EXPECT_EQ(kProjectId, tested.project_id());
   EXPECT_EQ(kProjectName, tested.project_name());
 }
@@ -148,7 +165,7 @@ TEST_F(InstanceAdminTest, WithNewTarget) {
 }
 
 TEST_F(InstanceAdminTest, LegacyConstructorSharesConnection) {
-  auto admin_client = MakeInstanceAdminClient("test-project");
+  auto admin_client = MakeInstanceAdminClient("test-project", TestOptions());
   auto admin_1 = InstanceAdmin(admin_client);
   auto admin_2 = InstanceAdmin(admin_client);
   auto conn_1 = InstanceAdminTester::Connection(admin_1);
@@ -159,9 +176,9 @@ TEST_F(InstanceAdminTest, LegacyConstructorSharesConnection) {
 }
 
 TEST_F(InstanceAdminTest, LegacyConstructorDefaultsPolicies) {
-  auto admin_client = MakeInstanceAdminClient("test-project");
+  auto admin_client = MakeInstanceAdminClient("test-project", TestOptions());
   auto admin = InstanceAdmin(std::move(admin_client));
-  auto policies = InstanceAdminTester::Policies(admin);
+  auto policies = InstanceAdminTester::Opts(admin);
   CheckPolicies(policies);
 }
 
@@ -209,10 +226,10 @@ TEST_F(InstanceAdminTest, LegacyConstructorWithPolicies) {
     return clone_1;
   });
 
-  auto admin_client = MakeInstanceAdminClient("test-project");
+  auto admin_client = MakeInstanceAdminClient("test-project", TestOptions());
   auto admin =
       InstanceAdmin(std::move(admin_client), *mock_r, *mock_b, *mock_p);
-  auto policies = InstanceAdminTester::Policies(admin);
+  auto policies = InstanceAdminTester::Opts(admin);
   CheckPolicies(policies);
 
   auto const& common_retry =
@@ -229,7 +246,7 @@ TEST_F(InstanceAdminTest, LegacyConstructorWithPolicies) {
 }
 
 TEST_F(InstanceAdminTest, ListInstancesSuccess) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   std::vector<std::string> const expected_names = {
       InstanceName(kProjectId, "i0"), InstanceName(kProjectId, "i1")};
   std::vector<std::string> const expected_fails = {"l0", "l1"};
@@ -263,7 +280,7 @@ TEST_F(InstanceAdminTest, ListInstancesSuccess) {
 }
 
 TEST_F(InstanceAdminTest, ListInstancesFailure) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
 
   EXPECT_CALL(*connection_, ListInstances).WillOnce(Return(FailingStatus()));
 
@@ -271,7 +288,7 @@ TEST_F(InstanceAdminTest, ListInstancesFailure) {
 }
 
 TEST_F(InstanceAdminTest, CreateInstance) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   auto constexpr kDisplayName = "display name";
   std::vector<std::string> const expected_location_names = {LocationName("l0"),
                                                             LocationName("l1")};
@@ -300,7 +317,7 @@ TEST_F(InstanceAdminTest, CreateInstance) {
 }
 
 TEST_F(InstanceAdminTest, CreateCluster) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   auto const location_name = LocationName("the-location");
   auto config = ClusterConfig("the-location", 3, btadmin::HDD);
 
@@ -320,7 +337,7 @@ TEST_F(InstanceAdminTest, CreateCluster) {
 }
 
 TEST_F(InstanceAdminTest, UpdateInstance) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   auto constexpr kDisplayName = "updated display name";
   InstanceUpdateConfig config({});
   config.set_display_name(kDisplayName);
@@ -338,7 +355,7 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
 }
 
 TEST_F(InstanceAdminTest, GetInstance) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
 
   EXPECT_CALL(*connection_, GetInstance)
       .WillOnce([&](btadmin::GetInstanceRequest const& request) {
@@ -352,7 +369,7 @@ TEST_F(InstanceAdminTest, GetInstance) {
 }
 
 TEST_F(InstanceAdminTest, DeleteInstance) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
 
   EXPECT_CALL(*connection_, DeleteInstance)
       .WillOnce([&](btadmin::DeleteInstanceRequest const& request) {
@@ -365,7 +382,7 @@ TEST_F(InstanceAdminTest, DeleteInstance) {
 }
 
 TEST_F(InstanceAdminTest, GetCluster) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
 
   EXPECT_CALL(*connection_, GetCluster)
       .WillOnce([&](btadmin::GetClusterRequest const& request) {
@@ -379,7 +396,7 @@ TEST_F(InstanceAdminTest, GetCluster) {
 }
 
 TEST_F(InstanceAdminTest, ListClustersSuccess) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   std::vector<std::string> const expected_names = {
       ClusterName(kProjectId, kInstanceId, "c0"),
       ClusterName(kProjectId, kInstanceId, "c1")};
@@ -413,7 +430,7 @@ TEST_F(InstanceAdminTest, ListClustersSuccess) {
 }
 
 TEST_F(InstanceAdminTest, ListClustersFailure) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
 
   EXPECT_CALL(*connection_, ListClusters)
       .WillOnce([&](btadmin::ListClustersRequest const& request) {
@@ -429,7 +446,7 @@ TEST_F(InstanceAdminTest, ListClustersFailure) {
 }
 
 TEST_F(InstanceAdminTest, UpdateCluster) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   auto const location_name = LocationName("the-location");
   btadmin::Cluster c;
   c.set_name(kClusterName);
@@ -453,7 +470,7 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
 }
 
 TEST_F(InstanceAdminTest, DeleteCluster) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
 
   EXPECT_CALL(*connection_, DeleteCluster)
       .WillOnce([&](btadmin::DeleteClusterRequest const& request) {
@@ -466,7 +483,7 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
 }
 
 TEST_F(InstanceAdminTest, CreateAppProfile) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   auto config = AppProfileConfig::MultiClusterUseAny(kProfileId);
 
   EXPECT_CALL(*connection_, CreateAppProfile)
@@ -482,7 +499,7 @@ TEST_F(InstanceAdminTest, CreateAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, GetAppProfile) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
 
   EXPECT_CALL(*connection_, GetAppProfile)
       .WillOnce([&](btadmin::GetAppProfileRequest const& request) {
@@ -496,7 +513,7 @@ TEST_F(InstanceAdminTest, GetAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, UpdateAppProfile) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   auto constexpr kDescription = "description";
   auto config = AppProfileUpdateConfig().set_description(kDescription);
 
@@ -514,7 +531,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, ListAppProfilesSuccess) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   std::vector<std::string> const expected_names = {
       AppProfileName(kProjectId, kInstanceId, "p0"),
       AppProfileName(kProjectId, kInstanceId, "p1")};
@@ -551,7 +568,7 @@ TEST_F(InstanceAdminTest, ListAppProfilesSuccess) {
 }
 
 TEST_F(InstanceAdminTest, ListAppProfilesFailure) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
 
   EXPECT_CALL(*connection_, ListAppProfiles)
       .WillOnce([&](btadmin::ListAppProfilesRequest const& request) {
@@ -568,7 +585,7 @@ TEST_F(InstanceAdminTest, ListAppProfilesFailure) {
 }
 
 TEST_F(InstanceAdminTest, DeleteAppProfile) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
 
   EXPECT_CALL(*connection_, DeleteAppProfile)
       .WillOnce([&](btadmin::DeleteAppProfileRequest const& request) {
@@ -582,7 +599,7 @@ TEST_F(InstanceAdminTest, DeleteAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
 
   EXPECT_CALL(*connection_, GetIamPolicy)
       .WillOnce([&](iamproto::GetIamPolicyRequest const& request) {
@@ -596,7 +613,7 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
 }
 
 TEST_F(InstanceAdminTest, SetNativeIamPolicy) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   iamproto::Policy policy;
   policy.set_etag("tag");
   policy.set_version(3);
@@ -615,7 +632,7 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicy) {
 }
 
 TEST_F(InstanceAdminTest, TestIamPermissionsSuccess) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   std::vector<std::string> const expected_permissions = {"writer", "reader"};
   std::vector<std::string> const returned_permissions = {"reader"};
 
@@ -641,7 +658,7 @@ TEST_F(InstanceAdminTest, TestIamPermissionsSuccess) {
 }
 
 TEST_F(InstanceAdminTest, TestIamPermissionsFailure) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
+  auto tested = DefaultInstanceAdmin();
   std::vector<std::string> const expected_permissions = {"writer", "reader"};
 
   EXPECT_CALL(*connection_, TestIamPermissions)
