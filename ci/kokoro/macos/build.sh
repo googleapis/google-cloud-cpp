@@ -118,6 +118,15 @@ gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
 
 # TODO(b/239480982) - remove debugging helpers
 io::log_h1 "DEBUG $PWD"
+troubleshoot_sleep() {
+  io::log_h1 "DEBUG File status at exit"
+  ls -l /usr/bin/sleep || echo "ls -l /usr/bin/sleep failed"
+  git status || echo "git status failed"
+  git ls-files || echo "git ls-files failed"
+  io::log_h1 "DEBUG Sleeping to troubleshoot problems"
+  /usr/bin/sleep 3600
+}
+trap troubleshoot_sleep EXIT
 ls -l || echo "ls -l failed"
 git status || echo "git status failed"
 git ls-files || echo "git ls-files failed"
@@ -145,6 +154,10 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; the
     xargs -0 -t rm -rf || true
 else
   io::log_yellow "Not a CI build; skipping artifact cleanup"
+fi
+
+if [[ "${exit_status}" == "0" ]]; then
+  trap - EXIT
 fi
 
 exit "${exit_status}"
