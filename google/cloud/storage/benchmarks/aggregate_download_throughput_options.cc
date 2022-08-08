@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/aggregate_download_throughput_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include <iterator>
 #include <sstream>
@@ -21,7 +22,50 @@ namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 
+namespace gcs = ::google::cloud::storage;
+namespace gcs_ex = ::google::cloud::storage_experimental;
 using ::google::cloud::testing_util::OptionDescriptor;
+
+StatusOr<AggregateDownloadThroughputOptions> ValidateOptions(
+    std::string const& usage, AggregateDownloadThroughputOptions options) {
+  auto make_status = [](std::ostringstream& os) {
+    return Status{StatusCode::kInvalidArgument, std::move(os).str()};
+  };
+
+  if (options.bucket_name.empty()) {
+    std::ostringstream os;
+    os << "Missing --bucket-name option\n" << usage << "\n";
+    return make_status(os);
+  }
+  if (options.thread_count <= 0) {
+    std::ostringstream os;
+    os << "Invalid number of threads (" << options.thread_count
+       << "), check your --thread-count option\n";
+    return make_status(os);
+  }
+  if (options.iteration_count <= 0) {
+    std::ostringstream os;
+    os << "Invalid number of iterations (" << options.iteration_count
+       << "), check your --iteration-count option\n";
+    return make_status(os);
+  }
+  if (options.repeats_per_iteration <= 0) {
+    std::ostringstream os;
+    os << "Invalid number of repeats per iteration ("
+       << options.repeats_per_iteration
+       << "), check your --repeats-per-iteration option\n";
+    return make_status(os);
+  }
+  if (options.client_options.get<GrpcNumChannelsOption>() < 0) {
+    std::ostringstream os;
+    os << "Invalid number of gRPC channels ("
+       << options.client_options.get<GrpcNumChannelsOption>()
+       << "), check your --grpc-channel-count option\n";
+    return make_status(os);
+  }
+
+  return options;
+}
 
 google::cloud::StatusOr<AggregateDownloadThroughputOptions>
 ParseAggregateDownloadThroughputOptions(std::vector<std::string> const& argv,
@@ -63,30 +107,51 @@ ParseAggregateDownloadThroughputOptions(std::vector<std::string> const& argv,
          options.read_buffer_size = ParseBufferSize(val);
        }},
       {"--api", "select the API (JSON, XML, or GRPC) for the benchmark",
-       [&options](std::string const& val) {
-         options.api = ParseApiName(val).value();
-       }},
-      {"--grpc-channel-count", "controls the number of gRPC channels",
-       [&options](std::string const& val) {
-         options.grpc_channel_count = std::stoi(val);
-       }},
-      {"--grpc-plugin-config",
-       "low-level experimental settings for the GCS+gRPC plugin",
-       [&options](std::string const& val) {
-         options.grpc_plugin_config = val;
-       }},
-      {"--rest-http-version", "change the preferred HTTP version",
-       [&options](std::string const& val) { options.rest_http_version = val; }},
+       [&options](std::string const& val) { options.api = val; }},
       {"--client-per-thread",
        "use a different storage::Client object in each thread",
        [&options](std::string const& val) {
          options.client_per_thread =
              testing_util::ParseBoolean(val).value_or("true");
        }},
-      {"--download-stall-timeout",
-       "abort downloads stalled for more than this time",
+      {"--grpc-channel-count", "controls the number of gRPC channels",
        [&options](std::string const& val) {
-         options.download_stall_timeout = testing_util::ParseDuration(val);
+         options.client_options.set<GrpcNumChannelsOption>(std::stoi(val));
+       }},
+      {"--rest-http-version", "change the preferred HTTP version",
+       [&options](std::string const& val) {
+         options.client_options.set<gcs_ex::HttpVersionOption>(val);
+       }},
+      {"--rest-endpoint", "change the REST endpoint",
+       [&options](std::string const& val) {
+         options.client_options.set<gcs::RestEndpointOption>(val);
+       }},
+      {"--grpc-endpoint", "change the gRPC endpoint",
+       [&options](std::string const& val) {
+         options.client_options.set<EndpointOption>(val);
+       }},
+      {"--download-stall-timeout",
+       "configure `storage::DownloadStallTimeoutOption`: the maximum time"
+       " allowed for data to 'stall' (make insufficient progress) on downloads."
+       " This option is intended for troubleshooting. Most of the time the"
+       " value is not expected to change the library performance.",
+       [&options](std::string const& val) {
+         options.client_options.set<gcs::DownloadStallTimeoutOption>(
+             ParseDuration(val));
+       }},
+      {"--download-stall-minimum-rate",
+       "configure `storage::DownloadStallMinimumRateOption`: the transfer"
+       " is aborted if the average transfer rate is below this limit for"
+       " the period set via `storage::DownloadStallTimeoutOption`.",
+       [&options](std::string const& val) {
+         options.client_options.set<gcs_ex::DownloadStallMinimumRateOption>(
+             static_cast<std::uint32_t>(ParseBufferSize(val)));
+       }},
+      {"--grpc-background-threads",
+       "change the default number of gRPC background threads",
+       [&options](std::string const& val) {
+         options.client_options.set<GrpcBackgroundThreadPoolSizeOption>(
+             std::stoi(val));
        }},
   };
   auto usage = BuildUsage(desc, argv[0]);
@@ -97,58 +162,20 @@ ParseAggregateDownloadThroughputOptions(std::vector<std::string> const& argv,
     options.exit_after_parse = true;
     return options;
   }
-
   if (wants_description) {
     std::cout << description << "\n";
     options.exit_after_parse = true;
     return options;
   }
-
-  auto make_status = [](std::ostringstream& os) {
-    auto const code = google::cloud::StatusCode::kInvalidArgument;
-    return google::cloud::Status{code, std::move(os).str()};
-  };
-
   if (unparsed.size() != 1) {
     std::ostringstream os;
     os << "Unknown arguments or options: "
        << absl::StrJoin(std::next(unparsed.begin()), unparsed.end(), ", ")
        << "\n"
        << usage << "\n";
-    return make_status(os);
+    return Status{StatusCode::kInvalidArgument, std::move(os).str()};
   }
-  if (options.bucket_name.empty()) {
-    std::ostringstream os;
-    os << "Missing --bucket option\n" << usage << "\n";
-    return make_status(os);
-  }
-  if (options.thread_count <= 0) {
-    std::ostringstream os;
-    os << "Invalid number of threads (" << options.thread_count
-       << "), check your --thread-count option\n";
-    return make_status(os);
-  }
-  if (options.iteration_count <= 0) {
-    std::ostringstream os;
-    os << "Invalid number of iterations (" << options.iteration_count
-       << "), check your --iteration-count option\n";
-    return make_status(os);
-  }
-  if (options.repeats_per_iteration <= 0) {
-    std::ostringstream os;
-    os << "Invalid number of repeats per iteration ("
-       << options.repeats_per_iteration
-       << "), check your --repeats-per-iteration option\n";
-    return make_status(os);
-  }
-  if (options.grpc_channel_count < 0) {
-    std::ostringstream os;
-    os << "Invalid number of gRPC channels (" << options.grpc_channel_count
-       << "), check your --grpc-channel-count option\n";
-    return make_status(os);
-  }
-
-  return options;
+  return ValidateOptions(usage, std::move(options));
 }
 
 }  // namespace storage_benchmarks
