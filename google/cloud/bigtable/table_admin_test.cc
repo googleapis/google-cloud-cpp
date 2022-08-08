@@ -56,8 +56,8 @@ class TableAdminTester {
     return admin.background_threads_;
   }
 
-  static Options Policies(bigtable::TableAdmin const& admin) {
-    return admin.policies_;
+  static Options Opts(bigtable::TableAdmin const& admin) {
+    return admin.options_;
   }
 };
 
@@ -84,6 +84,7 @@ using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::IsNull;
 using ::testing::NotNull;
+using ::testing::Return;
 using ::testing::UnorderedElementsAreArray;
 using MockConnection =
     ::google::cloud::bigtable_admin_mocks::MockBigtableTableAdminConnection;
@@ -102,9 +103,14 @@ auto const* const kBackupName =
     "projects/the-project/instances/the-instance/clusters/the-cluster/backups/"
     "the-backup";
 
+struct TestOption {
+  using Type = int;
+};
+
 Options TestOptions() {
-  return Options{}.set<GrpcCredentialOption>(
-      grpc::InsecureChannelCredentials());
+  return Options{}
+      .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+      .set<TestOption>(1);
 }
 
 Status FailingStatus() { return Status(StatusCode::kPermissionDenied, "fail"); }
@@ -123,11 +129,14 @@ void CheckPolicies(Options const& options) {
       options.has<bigtable_admin::BigtableTableAdminPollingPolicyOption>());
   EXPECT_TRUE(options.has<google::cloud::internal::GrpcSetupOption>());
   EXPECT_TRUE(options.has<google::cloud::internal::GrpcSetupPollOption>());
+  EXPECT_TRUE(options.has<TestOption>());
 }
 
 class TableAdminTest : public ::testing::Test {
  protected:
   TableAdmin DefaultTableAdmin() {
+    EXPECT_CALL(*connection_, options())
+        .WillRepeatedly(Return(Options{}.set<TestOption>(1)));
     return TableAdminTester::MakeTestTableAdmin(connection_, {}, kProjectId,
                                                 kInstanceId);
   }
@@ -207,7 +216,7 @@ TEST_F(TableAdminTest, LegacyConstructorSetsCustomCQ) {
 TEST_F(TableAdminTest, LegacyConstructorDefaultsPolicies) {
   auto admin_client = MakeAdminClient(kProjectId, TestOptions());
   auto admin = TableAdmin(std::move(admin_client), kInstanceId);
-  auto policies = TableAdminTester::Policies(admin);
+  auto policies = TableAdminTester::Opts(admin);
   CheckPolicies(policies);
 }
 
@@ -258,7 +267,7 @@ TEST_F(TableAdminTest, LegacyConstructorWithPolicies) {
   auto admin_client = MakeAdminClient(kProjectId, TestOptions());
   auto admin = TableAdmin(std::move(admin_client), kInstanceId, *mock_r,
                           *mock_b, *mock_p);
-  auto policies = TableAdminTester::Policies(admin);
+  auto policies = TableAdminTester::Opts(admin);
   CheckPolicies(policies);
 
   auto const& common_retry =
