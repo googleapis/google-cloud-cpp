@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H
 
-#include "google/cloud/storage/internal/complex_option.h"
+#include "google/cloud/storage/user_ip_option.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/storage/well_known_parameters.h"
@@ -33,25 +33,6 @@ class Options;
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-/**
- * Sets the user IP on an operation for quota enforcement purposes.
- *
- * This parameter lets you enforce per-user quotas when calling the API from a
- * server-side application. This parameter is overridden by `UserQuota` if both
- * are set.
- *
- * If you set this parameter to an empty string, the client library will
- * automatically select one of the user IP addresses of your server to include
- * in the request.
- *
- * @see https://cloud.google.com/apis/docs/capping-api-usage for an introduction
- *     to quotas in Google Cloud Platform.
- */
-struct UserIp : public internal::ComplexOption<UserIp, std::string> {
-  using ComplexOption<UserIp, std::string>::ComplexOption;
-  static char const* name() { return "userIp"; }
-};
-
 namespace internal {
 // Forward declare the template so we can specialize it first. Defining the
 // specialization first, which is the base class, should be more readable.

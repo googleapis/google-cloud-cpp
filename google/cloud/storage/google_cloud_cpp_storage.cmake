@@ -219,6 +219,7 @@ add_library(
     signed_url_options.h
     storage_class.h
     upload_options.h
+    user_ip_option.h
     version.cc
     version.h
     version_info.h
