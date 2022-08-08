@@ -25,6 +25,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Represents a google::type::Expr.
  *
@@ -54,10 +55,15 @@ class NativeExpression {
   NativeExpression(NativeExpression const& other);
   NativeExpression& operator=(NativeExpression const& other);
 
-  // This have to be declared explicitly and defined out of line because `Impl`
+  // These have to be declared explicitly and defined out of line because `Impl`
   // is incomplete at this point.
   NativeExpression(NativeExpression&&) noexcept;
   NativeExpression& operator=(NativeExpression&&) noexcept;
+
+  friend bool operator==(NativeExpression const& a,
+                         NativeExpression const& b) noexcept;
+  friend bool operator!=(NativeExpression const& a,
+                         NativeExpression const& b) noexcept;
 
   std::string expression() const;
   void set_expression(std::string expression);
@@ -100,6 +106,11 @@ class NativeIamBinding {
   // is incomplete at this point.
   NativeIamBinding(NativeIamBinding&&) noexcept;
   NativeIamBinding& operator=(NativeIamBinding&&) noexcept;
+
+  friend bool operator==(NativeIamBinding const& a,
+                         NativeIamBinding const& b) noexcept;
+  friend bool operator!=(NativeIamBinding const& a,
+                         NativeIamBinding const& b) noexcept;
 
   std::string role() const;
   void set_role(std::string role);
@@ -146,6 +157,11 @@ class NativeIamPolicy {
   std::string ToJson() const;
 
   NativeIamPolicy& operator=(NativeIamPolicy const& other);
+
+  friend bool operator==(NativeIamPolicy const& a,
+                         NativeIamPolicy const& b) noexcept;
+  friend bool operator!=(NativeIamPolicy const& a,
+                         NativeIamPolicy const& b) noexcept;
 
   std::int32_t version() const;
   void set_version(std::int32_t version);

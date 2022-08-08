@@ -25,6 +25,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
 /**
  * Prepares a patch for the '<Resource Type>: patch' APIs in Google Cloud
  * Storage.
@@ -49,6 +50,9 @@ class PatchBuilder {
   // is incomplete at this point.
   PatchBuilder(PatchBuilder&&) noexcept;
   PatchBuilder& operator=(PatchBuilder&&) noexcept;
+
+  friend bool operator==(PatchBuilder const& a, PatchBuilder const& b) noexcept;
+  friend bool operator!=(PatchBuilder const& a, PatchBuilder const& b) noexcept;
 
   /// Return the patch as a string.
   std::string ToString() const;

@@ -143,6 +143,14 @@ NativeExpression& NativeExpression::operator=(NativeExpression&& rhs) noexcept {
   return *this;
 }
 
+bool operator==(NativeExpression const& a, NativeExpression const& b) noexcept {
+  return a.pimpl_->native_json == b.pimpl_->native_json;
+}
+
+bool operator!=(NativeExpression const& a, NativeExpression const& b) noexcept {
+  return !(a == b);
+}
+
 std::string NativeExpression::expression() const {
   return pimpl_->native_json.value("expression", "");
 }
@@ -292,6 +300,16 @@ NativeIamBinding& NativeIamBinding::operator=(NativeIamBinding&& rhs) noexcept {
   return *this;
 }
 
+bool operator==(NativeIamBinding const& a, NativeIamBinding const& b) noexcept {
+  return a.pimpl_->native_json == b.pimpl_->native_json &&
+         a.members() == b.members() &&
+         a.pimpl_->condition == b.pimpl_->condition;
+}
+
+bool operator!=(NativeIamBinding const& a, NativeIamBinding const& b) noexcept {
+  return !(a == b);
+}
+
 std::string NativeIamBinding::role() const {
   return pimpl_->native_json.value("role", "");
 }
@@ -426,6 +444,15 @@ std::string NativeIamPolicy::ToJson() const { return pimpl_->ToJson().dump(); }
 NativeIamPolicy& NativeIamPolicy::operator=(NativeIamPolicy const& other) {
   *pimpl_ = *other.pimpl_;
   return *this;
+}
+
+bool operator==(NativeIamPolicy const& a, NativeIamPolicy const& b) noexcept {
+  return a.pimpl_->native_json == b.pimpl_->native_json &&
+         a.bindings() == b.bindings();
+}
+
+bool operator!=(NativeIamPolicy const& a, NativeIamPolicy const& b) noexcept {
+  return !(a == b);
 }
 
 std::int32_t NativeIamPolicy::version() const {

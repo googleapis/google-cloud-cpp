@@ -24,6 +24,16 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
+
+TEST(PatchBuilderTest, Equality) {
+  auto b1 = PatchBuilder{}.AddStringField("field1", "lhs", "rhs");
+  auto b2 = PatchBuilder{};
+  EXPECT_NE(b1, b2);
+
+  b2 = b1;
+  EXPECT_EQ(b1, b2);
+}
+
 TEST(PatchBuilderTest, Empty) {
   PatchBuilder builder;
   EXPECT_TRUE(builder.empty());
