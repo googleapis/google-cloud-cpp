@@ -120,7 +120,7 @@ class Iteration {
 
 gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
   auto opts = google::cloud::Options{options.client_options}
-                  // Make the upload buffer size small, the library will flush
+                  // Make the upload buffer size small so the library will flush
                   // on almost all `.write()` requests.
                   .set<gcs::UploadBufferSizeOption>(256 * gcs_bm::kKiB);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC

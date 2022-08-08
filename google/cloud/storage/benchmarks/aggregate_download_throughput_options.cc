@@ -133,7 +133,7 @@ ParseAggregateDownloadThroughputOptions(std::vector<std::string> const& argv,
       {"--download-stall-timeout",
        "configure `storage::DownloadStallTimeoutOption`: the maximum time"
        " allowed for data to 'stall' (make insufficient progress) on downloads."
-       " This option is intended for troubleshooting, most of the time the"
+       " This option is intended for troubleshooting. Most of the time the"
        " value is not expected to change the library performance.",
        [&options](std::string const& val) {
          options.client_options.set<gcs::DownloadStallTimeoutOption>(
