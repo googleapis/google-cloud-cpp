@@ -274,12 +274,16 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
  public:
   explicit DownloadObjectLibcurl(ThroughputOptions const& options,
                                  ExperimentTransport transport)
-      : endpoint_(options.rest_endpoint),
+      : endpoint_(options.rest_options.get<gcs::RestEndpointOption>()),
         target_api_version_path_(
-            options.target_api_version_path.value_or("v1")),
+            options.rest_options.get<gcs::internal::TargetApiVersionOption>()),
         creds_(
             google::cloud::storage::oauth2::GoogleDefaultCredentials().value()),
-        transport_(transport) {}
+        transport_(transport) {
+    if (target_api_version_path_.empty()) {
+      target_api_version_path_ = "v1";
+    }
+  }
   ~DownloadObjectLibcurl() override = default;
 
   ThroughputResult Run(std::string const& bucket_name,
@@ -368,11 +372,12 @@ std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel(
   grpc::ChannelArguments args;
   args.SetInt("grpc.channel_id", thread_id);
   if (transport == ExperimentTransport::kGrpc) {
-    return grpc::CreateCustomChannel(options.grpc_endpoint,
+    return grpc::CreateCustomChannel(options.grpc_options.get<EndpointOption>(),
                                      grpc::GoogleDefaultCredentials(), args);
   }
-  return grpc::CreateCustomChannel(options.direct_path_endpoint,
-                                   grpc::GoogleDefaultCredentials(), args);
+  return grpc::CreateCustomChannel(
+      options.direct_path_options.get<EndpointOption>(),
+      grpc::GoogleDefaultCredentials(), args);
 }
 
 class DownloadObjectRawGrpc : public ThroughputExperiment {

@@ -125,16 +125,13 @@ int main(int argc, char* argv[]) {
     std::cerr << options.status() << "\n";
     return 1;
   }
+  if (options->exit_after_parse) return 0;
 
   auto client_options =
-      google::cloud::Options{}
-          .set<gcs::ProjectIdOption>(options->project_id)
-          .set<gcs::RestEndpointOption>(options->rest_endpoint);
-  if (options->target_api_version_path.has_value()) {
-    client_options
-        .set<google::cloud::storage::internal::TargetApiVersionOption>(
-            *options->target_api_version_path);
-  }
+      google::cloud::Options{options->client_options}.set<gcs::ProjectIdOption>(
+          options->project_id);
+  client_options = google::cloud::internal::MergeOptions(
+      options->rest_options, std::move(client_options));
   auto client = gcs::Client(client_options);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
@@ -176,10 +173,7 @@ int main(int argc, char* argv[]) {
             << "\n# Region: " << options->region << "\n# Duration: "
             << absl::FormatDuration(absl::FromChrono(options->duration))
             << "\n# Thread Count: " << options->thread_count
-            << "\n# Client Per Thread: " << options->client_per_thread
-            << "\n# gRPC Channel Count: " << options->grpc_channel_count
-            << "\n# DirectPath Channel Count: "
-            << options->direct_path_channel_count;
+            << "\n# Client Per Thread: " << options->client_per_thread;
 
   output_size_range("Object Size", options->minimum_object_size,
                     options->maximum_object_size);
@@ -190,25 +184,24 @@ int main(int argc, char* argv[]) {
                          options->maximum_read_buffer_size,
                          options->read_buffer_quantum);
 
-  std::cout
-      << "\n# Minimum Sample Count: " << options->minimum_sample_count
-      << "\n# Maximum Sample Count: " << options->maximum_sample_count
-      << "\n# Enabled Libs: " << absl::StrJoin(options->libs, ",", Formatter{})
-      << "\n# Enabled Transports: "
-      << absl::StrJoin(options->transports, ",", Formatter{})
-      << "\n# Enabled CRC32C: "
-      << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
-      << "\n# Enabled MD5: "
-      << absl::StrJoin(options->enabled_md5, ",", Formatter{})
-      << "\n# REST Endpoint: " << options->rest_endpoint
-      << "\n# Grpc Endpoint: " << options->grpc_endpoint
-      << "\n# Direct Path Endpoint: " << options->direct_path_endpoint
-      << "\n# Transfer Stall Timeout: "
-      << absl::FormatDuration(absl::FromChrono(options->transfer_stall_timeout))
-      << "\n# Download Stall Timeout: "
-      << absl::FormatDuration(absl::FromChrono(options->download_stall_timeout))
-      << "\n# Minimum Sample Delay: "
-      << absl::FormatDuration(absl::FromChrono(options->minimum_sample_delay));
+  std::cout << "\n# Minimum Sample Count: " << options->minimum_sample_count
+            << "\n# Maximum Sample Count: " << options->maximum_sample_count
+            << "\n# Enabled Libs: "
+            << absl::StrJoin(options->libs, ",", Formatter{})
+            << "\n# Enabled Transports: "
+            << absl::StrJoin(options->transports, ",", Formatter{})
+            << "\n# Enabled CRC32C: "
+            << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
+            << "\n# Enabled MD5: "
+            << absl::StrJoin(options->enabled_md5, ",", Formatter{})
+            << "\n# Minimum Sample Delay: "
+            << absl::FormatDuration(
+                   absl::FromChrono(options->minimum_sample_delay));
+
+  gcs_bm::PrintOptions(std::cout, "Common", options->client_options);
+  gcs_bm::PrintOptions(std::cout, "Rest", options->rest_options);
+  gcs_bm::PrintOptions(std::cout, "Grpc", options->grpc_options);
+  gcs_bm::PrintOptions(std::cout, "Direct Path", options->direct_path_options);
 
   output_quantized_range("Read Offset", options->minimum_read_offset,
                          options->maximum_read_offset,
@@ -217,14 +210,6 @@ int main(int argc, char* argv[]) {
                          options->maximum_read_size,
                          options->read_size_quantum);
 
-  std::cout << "\n# Api Version Path: "
-            << options->target_api_version_path.value_or("[default]")
-            << "\n# Grpc Background Threads: ";
-  if (options->grpc_background_threads.has_value()) {
-    std::cout << *options->grpc_background_threads;
-  } else {
-    std::cout << "[default]";
-  }
   std::cout << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
@@ -291,56 +276,27 @@ gcs_bm::ClientProvider PerTransport(gcs_bm::ClientProvider const& provider) {
 
 gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
   return [=](ExperimentTransport t) {
-    auto opts = google::cloud::Options{}
-                    .set<gcs::ProjectIdOption>(options.project_id)
-                    .set<gcs::DownloadStallTimeoutOption>(
-                        options.download_stall_timeout)
-                    .set<gcs::TransferStallTimeoutOption>(
-                        options.transfer_stall_timeout);
-    if (!options.enable_retry_loop) {
-      opts.set<gcs::RetryPolicyOption>(
-          gcs::LimitedErrorCountRetryPolicy(0).clone());
-    }
-    if (options.target_api_version_path.has_value()) {
-      opts.set<google::cloud::storage::internal::TargetApiVersionOption>(
-          *options.target_api_version_path);
-    }
-    if (options.transfer_stall_minimum_rate.has_value()) {
-      opts.set<gcs_ex::TransferStallMinimumRateOption>(
-          *options.transfer_stall_minimum_rate);
-    }
-    if (options.download_stall_minimum_rate.has_value()) {
-      opts.set<gcs_ex::DownloadStallMinimumRateOption>(
-          *options.download_stall_minimum_rate);
-    }
+    auto opts = google::cloud::Options{options.client_options}
+                    .set<gcs::ProjectIdOption>(options.project_id);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     using ::google::cloud::storage_experimental::DefaultGrpcClient;
-    if (options.grpc_background_threads.has_value()) {
-      opts.set<google::cloud::GrpcBackgroundThreadPoolSizeOption>(
-          *options.grpc_background_threads);
-    }
     if (t == ExperimentTransport::kDirectPath) {
-      if (options.direct_path_channel_count > 0) {
-        opts.set<google::cloud::GrpcNumChannelsOption>(
-            options.direct_path_channel_count);
-      }
-      return DefaultGrpcClient(opts.set<gcs_ex::GrpcPluginOption>("media")
-                                   .set<google::cloud::EndpointOption>(
-                                       options.direct_path_endpoint));
+      opts = google::cloud::internal::MergeOptions(options.direct_path_options,
+                                                   std::move(opts));
+      opts.set<gcs_ex::GrpcPluginOption>("media");
+      return DefaultGrpcClient(std::move(opts));
     }
     if (t == ExperimentTransport::kGrpc) {
-      if (options.grpc_channel_count > 0) {
-        opts.set<google::cloud::GrpcNumChannelsOption>(
-            options.grpc_channel_count);
-      }
-      return DefaultGrpcClient(
-          opts.set<gcs_ex::GrpcPluginOption>("media")
-              .set<google::cloud::EndpointOption>(options.grpc_endpoint));
+      opts = google::cloud::internal::MergeOptions(options.grpc_options,
+                                                   std::move(opts));
+      opts.set<gcs_ex::GrpcPluginOption>("media");
+      return DefaultGrpcClient(std::move(opts));
     }
 #else
     (void)t;  // disable unused parameter warning
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-    opts.set<gcs::RestEndpointOption>(options.rest_endpoint);
+    opts = google::cloud::internal::MergeOptions(options.rest_options,
+                                                 std::move(opts));
     if (t == ExperimentTransport::kJsonV2 || t == ExperimentTransport::kXmlV2) {
       opts.set<gcs::internal::UseRestClientOption>(true);
     }

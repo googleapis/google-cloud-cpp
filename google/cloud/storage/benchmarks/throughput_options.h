@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_THROUGHPUT_OPTIONS_H
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
-#include "absl/types/optional.h"
+#include "google/cloud/options.h"
 #include <chrono>
 #include <string>
 #include <vector>
@@ -33,8 +33,6 @@ struct ThroughputOptions {
       std::chrono::seconds(std::chrono::minutes(15));
   int thread_count = 1;
   bool client_per_thread = false;
-  int grpc_channel_count = 0;
-  int direct_path_channel_count = 0;
   std::int64_t minimum_object_size = 32 * kMiB;
   std::int64_t maximum_object_size = 256 * kMiB;
   // Control the size of the read and write buffers in the application.
@@ -57,13 +55,6 @@ struct ThroughputOptions {
   std::vector<std::string> upload_functions = {"InsertObject", "WriteObject"};
   std::vector<bool> enabled_crc32c = {false, true};
   std::vector<bool> enabled_md5 = {false, true};
-  std::string rest_endpoint = "https://storage.googleapis.com";
-  std::string grpc_endpoint = "storage.googleapis.com";
-  std::string direct_path_endpoint = "google-c2p:///storage.googleapis.com";
-  std::chrono::seconds transfer_stall_timeout{};
-  absl::optional<std::uint32_t> transfer_stall_minimum_rate;
-  std::chrono::seconds download_stall_timeout{};
-  absl::optional<std::uint32_t> download_stall_minimum_rate;
   std::chrono::milliseconds minimum_sample_delay{};
   std::int64_t minimum_read_offset = 0;
   std::int64_t maximum_read_offset = 0;
@@ -71,9 +62,12 @@ struct ThroughputOptions {
   std::int64_t minimum_read_size = 0;
   std::int64_t maximum_read_size = 0;
   std::int64_t read_size_quantum = 128 * kKiB;
-  absl::optional<std::string> target_api_version_path;
-  absl::optional<int> grpc_background_threads;
-  bool enable_retry_loop = true;
+  Options client_options;
+  Options rest_options;
+  Options grpc_options;
+  Options direct_path_options =
+      Options{}.set<EndpointOption>("google-c2p:///storage.googleapis.com");
+  bool exit_after_parse = false;
 };
 
 google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(

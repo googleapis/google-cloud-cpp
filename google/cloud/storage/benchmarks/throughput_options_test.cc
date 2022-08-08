@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <thread>
@@ -23,6 +25,8 @@ namespace cloud {
 namespace storage_benchmarks {
 namespace {
 
+namespace gcs = ::google::cloud::storage;
+namespace gcs_ex = ::google::cloud::storage_experimental;
 using ::testing::ElementsAre;
 using ::testing::UnorderedElementsAre;
 
@@ -75,8 +79,6 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ("test-region", options->region);
   EXPECT_EQ("custom-prefix", options->bucket_prefix);
   EXPECT_EQ(42, options->thread_count);
-  EXPECT_EQ(8, options->grpc_channel_count);
-  EXPECT_EQ(2, options->direct_path_channel_count);
   EXPECT_EQ(16 * kKiB, options->minimum_object_size);
   EXPECT_EQ(32 * kKiB, options->maximum_object_size);
   EXPECT_EQ(16 * kKiB, options->minimum_write_buffer_size);
@@ -98,17 +100,29 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_THAT(options->upload_functions, UnorderedElementsAre("WriteObject"));
   EXPECT_THAT(options->enabled_crc32c, ElementsAre(true));
   EXPECT_THAT(options->enabled_md5, ElementsAre(false));
-  EXPECT_EQ("test-only-rest", options->rest_endpoint);
-  EXPECT_EQ("test-only-grpc", options->grpc_endpoint);
-  EXPECT_EQ("test-only-direct-path", options->direct_path_endpoint);
-  EXPECT_EQ(std::chrono::seconds(86400), options->transfer_stall_timeout);
-  EXPECT_EQ(7 * kKiB, options->transfer_stall_minimum_rate);
-  EXPECT_EQ(std::chrono::seconds(86401), options->download_stall_timeout);
-  EXPECT_EQ(9 * kKiB, options->download_stall_minimum_rate);
   EXPECT_EQ(std::chrono::milliseconds(250), options->minimum_sample_delay);
-  EXPECT_EQ("vN", options->target_api_version_path.value_or(""));
-  EXPECT_EQ(16, options->grpc_background_threads.value_or(0));
-  EXPECT_FALSE(options->enable_retry_loop);
+  EXPECT_EQ(8, options->grpc_options.get<GrpcNumChannelsOption>());
+  EXPECT_EQ(2, options->direct_path_options.get<GrpcNumChannelsOption>());
+  EXPECT_EQ("test-only-rest",
+            options->rest_options.get<gcs::RestEndpointOption>());
+  EXPECT_EQ("test-only-grpc", options->grpc_options.get<EndpointOption>());
+  EXPECT_EQ("test-only-direct-path",
+            options->direct_path_options.get<EndpointOption>());
+  EXPECT_EQ(std::chrono::seconds(86400),
+            options->client_options.get<gcs::TransferStallTimeoutOption>());
+  EXPECT_EQ(
+      7 * kKiB,
+      options->client_options.get<gcs_ex::TransferStallMinimumRateOption>());
+  EXPECT_EQ(std::chrono::seconds(86401),
+            options->client_options.get<gcs::DownloadStallTimeoutOption>());
+  EXPECT_EQ(
+      9 * kKiB,
+      options->client_options.get<gcs_ex::DownloadStallMinimumRateOption>());
+  EXPECT_EQ("vN",
+            options->rest_options.get<gcs::internal::TargetApiVersionOption>());
+  EXPECT_EQ(16,
+            options->grpc_options.get<GrpcBackgroundThreadPoolSizeOption>());
+  EXPECT_TRUE(options->client_options.has<gcs::RetryPolicyOption>());
 }
 
 TEST(ThroughputOptions, Description) {
