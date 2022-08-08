@@ -208,9 +208,8 @@ class Table {
       : table_(std::move(tr)),
         table_name_(table_.FullName()),
         connection_(std::move(conn)),
-        options_(google::cloud::internal::MergeOptions(
-            std::move(options),
-            internal::DefaultDataOptions(connection_->options()))),
+        options_(google::cloud::internal::MergeOptions(std::move(options),
+                                                       connection_->options())),
         metadata_update_policy_(bigtable_internal::MakeMetadataUpdatePolicy(
             table_name_, app_profile_id())) {}
 
