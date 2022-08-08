@@ -70,10 +70,11 @@ class ConnectionImpl : public spanner::Connection {
   Status Rollback(RollbackParams) override;
 
  private:
-  std::shared_ptr<spanner::RetryPolicy> const& RetryPolicyPrototype() const;
-  std::shared_ptr<spanner::BackoffPolicy> const& BackoffPolicyPrototype() const;
-  bool RpcStreamTracingEnabled() const;
-  TracingOptions const& RpcTracingOptions() const;
+  static std::shared_ptr<spanner::RetryPolicy> const& RetryPolicyPrototype();
+  static std::shared_ptr<spanner::BackoffPolicy> const&
+  BackoffPolicyPrototype();
+  static bool RpcStreamTracingEnabled();
+  static TracingOptions const& RpcTracingOptions();
 
   Status PrepareSession(SessionHolder& session,
                         bool dissociate_from_pool = false);
