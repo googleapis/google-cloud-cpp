@@ -63,14 +63,14 @@ cmake_flags=(
 # The downloads can fail, therefore require a retry loop.
 io::log_h2 "Download and compile dependencies using vcpkg"
 ci/retry-command.sh 3 120 \
-  "${vcpkg_dir}/vcpkg" install --x-install-root="${BINARY_DIR}/vcpkg_installed"
+  "${vcpkg_dir}/vcpkg" --debug install --x-install-root="${BINARY_DIR}/vcpkg_installed"
 
 io::log_h2 "Configure CMake"
 export NINJA_STATUS="T+%es [%f/%t] "
 cmake -GNinja -S "${SOURCE_DIR}" -B "${BINARY_DIR}" "${cmake_flags[@]}"
 
 io::log_h2 "Compiling using all CPUs"
-cmake --build "${BINARY_DIR}"
+cmake --build "${BINARY_DIR}" --verbose
 
 io::log_h2 "Running unit tests"
 ctest_args=(

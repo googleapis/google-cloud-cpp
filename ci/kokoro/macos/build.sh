@@ -143,7 +143,7 @@ else
   exit_status=1
 fi
 
-if /bin/false; then # DEBUG [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
+if false; then # DEBUG [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
   # Our CI system (Kokoro) syncs the data in this directory to somewhere after
   # the build completes. Removing the cmake-out/ dir shaves minutes off this
   # process. This is safe as long as we don't wish to save any build artifacts.
