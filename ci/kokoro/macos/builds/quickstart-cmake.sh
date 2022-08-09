@@ -42,7 +42,7 @@ install_vcpkg "${vcpkg_dir}"
 (
   cd "${vcpkg_dir}"
   "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
-    "${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" install google-cloud-cpp
+    "${vcpkg_dir}/vcpkg" --debug "--feature-flags=-manifests" install google-cloud-cpp
 )
 
 export NINJA_STATUS="T+%es [%f/%t] "
