@@ -40,7 +40,7 @@ while (((retries--) > 0)); do
   # apply +/- 50% jitter to min_wait
   period=$((min_wait * (50 + (RANDOM % 100)) / 100))
   echo "${PROGRAM} failed; trying again in ${period} seconds."
-  sleep ${period}s
+  sleep ${period}
   min_wait=$((min_wait * 2))
   "${PROGRAM}" "$@" && exit 0
   status=${?}
