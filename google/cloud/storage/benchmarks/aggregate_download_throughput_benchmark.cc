@@ -148,7 +148,7 @@ int main(int argc, char* argv[]) {
     std::cerr << options.status() << "\n";
     return 1;
   }
-  if (options->exit_after_parse) return 1;
+  if (options->exit_after_parse) return 0;
 
   auto client = MakeClient(*options);
   std::vector<gcs::ObjectMetadata> dataset;
@@ -183,9 +183,11 @@ int main(int argc, char* argv[]) {
             << "\n# Read Buffer Size: " << options->read_buffer_size
             << "\n# API: " << options->api
             << "\n# Client Per Thread: " << std::boolalpha
-            << options->client_per_thread << "\n# Build Info: " << notes
+            << options->client_per_thread
             << "\n# Object Count: " << dataset.size()
-            << "\n# Dataset size: " << FormatSize(dataset_size) << std::endl;
+            << "\n# Dataset size: " << FormatSize(dataset_size);
+  gcs_bm::PrintOptions(std::cout, "Client Options", options->client_options);
+  std::cout << "\n# Build Info: " << notes << std::endl;
 
   auto configs = [](AggregateDownloadThroughputOptions const& options,
                     gcs::Client const& default_client) {

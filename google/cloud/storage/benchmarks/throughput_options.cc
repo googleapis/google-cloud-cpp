@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/throughput_options.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/grpc_options.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"
 #include <sstream>
@@ -21,6 +23,9 @@ namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 namespace {
+
+namespace gcs = ::google::cloud::storage;
+namespace gcs_ex = ::google::cloud::storage_experimental;
 
 Status ValidateQuantizedRange(std::string const& name, std::int64_t minimum,
                               std::int64_t maximum, std::int64_t quantum) {
@@ -100,17 +105,19 @@ google::cloud::StatusOr<ThroughputOptions> ValidateParsedOptions(
     return make_status(os);
   }
 
-  if (options.grpc_channel_count < 0) {
+  if (options.grpc_options.get<GrpcNumChannelsOption>() < 0) {
     std::ostringstream os;
     os << "Invalid value for --grpc-channel-count ("
-       << options.grpc_channel_count << "), should be >= 0";
+       << options.grpc_options.get<GrpcNumChannelsOption>()
+       << "), should be >= 0";
     return make_status(os);
   }
 
-  if (options.direct_path_channel_count < 0) {
+  if (options.direct_path_options.get<GrpcNumChannelsOption>() < 0) {
     std::ostringstream os;
     os << "Invalid value for --direct-path-channel-count ("
-       << options.direct_path_channel_count << "), should be >= 0";
+       << options.direct_path_options.get<GrpcNumChannelsOption>()
+       << "), should be >= 0";
     return make_status(os);
   }
 
@@ -204,7 +211,8 @@ google::cloud::StatusOr<ThroughputOptions> ValidateParsedOptions(
                                   options.read_size_quantum);
   if (!status.ok()) return status;
 
-  if (options.grpc_background_threads.value_or(1) <= 0) {
+  if (options.grpc_options.has<GrpcBackgroundThreadPoolSizeOption>() &&
+      options.grpc_options.get<GrpcBackgroundThreadPoolSizeOption>() == 0) {
     std::ostringstream os;
     os << "Invalid value for --grpc-background-threads";
     return make_status(os);
@@ -242,13 +250,13 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        "number of gRPC channels created by the client library, use 0 for the "
        "default",
        [&options](std::string const& val) {
-         options.grpc_channel_count = std::stoi(val);
+         options.grpc_options.set<GrpcNumChannelsOption>(std::stoi(val));
        }},
       {"--direct-path-channel-count",
        "number of DirectPath gRPC channels created by the client library, use "
        "0 for the default",
        [&options](std::string const& val) {
-         options.direct_path_channel_count = std::stoi(val);
+         options.direct_path_options.set<GrpcNumChannelsOption>(std::stoi(val));
        }},
       {"--minimum-object-size", "configure the minimum object size",
        [&options](std::string const& val) {
@@ -323,13 +331,17 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
          options.enabled_md5 = ParseChecksums(val);
        }},
       {"--rest-endpoint", "sets the endpoint for REST-based benchmarks",
-       [&options](std::string const& val) { options.rest_endpoint = val; }},
+       [&options](std::string const& val) {
+         options.rest_options.set<gcs::RestEndpointOption>(val);
+       }},
       {"--grpc-endpoint", "sets the endpoint for gRPC-based benchmarks",
-       [&options](std::string const& val) { options.grpc_endpoint = val; }},
+       [&options](std::string const& val) {
+         options.grpc_options.set<EndpointOption>(val);
+       }},
       {"--direct-path-endpoint",
        "sets the endpoint for gRPC+DirectPath-based benchmarks",
        [&options](std::string const& val) {
-         options.direct_path_endpoint = val;
+         options.direct_path_options.set<EndpointOption>(val);
        }},
       {"--transfer-stall-timeout",
        "configure `storage::TransferStallTimeoutOption`: the maximum time"
@@ -338,15 +350,16 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        " This option is intended for troubleshooting, most of the time the"
        " value is not expected to change the library performance.",
        [&options](std::string const& val) {
-         options.transfer_stall_timeout = ParseDuration(val);
+         options.client_options.set<gcs::TransferStallTimeoutOption>(
+             ParseDuration(val));
        }},
       {"--transfer-stall-minimum-rate",
        "configure `storage::TransferStallMinimumRateOption`: the transfer"
        " is aborted if the average transfer rate is below this limit for"
        " the period set via `storage::TransferStallTimeoutOption`.",
        [&options](std::string const& val) {
-         options.transfer_stall_minimum_rate =
-             static_cast<std::uint32_t>(ParseBufferSize(val));
+         options.client_options.set<gcs_ex::TransferStallMinimumRateOption>(
+             static_cast<std::uint32_t>(ParseBufferSize(val)));
        }},
       {"--download-stall-timeout",
        "configure the storage::DownloadStallTimeoutOption: the maximum time"
@@ -354,15 +367,16 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        " This option is intended for troubleshooting, most of the time the"
        " value is not expected to change the library performance.",
        [&options](std::string const& val) {
-         options.download_stall_timeout = ParseDuration(val);
+         options.client_options.set<gcs::DownloadStallTimeoutOption>(
+             ParseDuration(val));
        }},
       {"--download-stall-minimum-rate",
        "configure `storage::DownloadStallMinimumRateOption`: the download"
        " is aborted if the average transfer rate is below this limit for"
        " the period set via `storage::DownloadStallTimeoutOption`.",
        [&options](std::string const& val) {
-         options.download_stall_minimum_rate =
-             static_cast<std::uint32_t>(ParseBufferSize(val));
+         options.client_options.set<gcs_ex::DownloadStallMinimumRateOption>(
+             static_cast<std::uint32_t>(ParseBufferSize(val)));
        }},
       {"--minimum-sample-delay",
        "configure the minimum time between samples."
@@ -405,16 +419,24 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        }},
       {"--target-api-version-path", "change the API version path for REST",
        [&options](std::string const& val) {
-         options.target_api_version_path = val;
+         options.rest_options
+             .set<google::cloud::storage::internal::TargetApiVersionOption>(
+                 val);
        }},
       {"--grpc-background-threads",
        "change the default number of gRPC background threads",
        [&options](std::string const& val) {
-         options.grpc_background_threads = std::stoi(val);
+         auto v = std::stoi(val);
+         options.grpc_options.set<GrpcBackgroundThreadPoolSizeOption>(
+             std::max(0, v));
        }},
       {"--enable-retry-loop", "use the client library retry loop",
        [&options](std::string const& val) {
-         options.enable_retry_loop = ParseBoolean(val).value_or(true);
+         auto const enabled = ParseBoolean(val).value_or(true);
+         if (!enabled) {
+           options.client_options.set<gcs::RetryPolicyOption>(
+               gcs::LimitedErrorCountRetryPolicy(0).clone());
+         }
        }},
   };
   auto usage = BuildUsage(desc, argv[0]);
@@ -422,10 +444,14 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
   auto unparsed = OptionsParse(desc, argv);
   if (wants_help) {
     std::cout << usage << "\n";
+    options.exit_after_parse = true;
+    return options;
   }
 
   if (wants_description) {
     std::cout << description << "\n";
+    options.exit_after_parse = true;
+    return options;
   }
 
   if (unparsed.size() > 2) {

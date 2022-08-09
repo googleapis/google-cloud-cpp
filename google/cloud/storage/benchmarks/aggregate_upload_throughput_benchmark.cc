@@ -161,8 +161,9 @@ int main(int argc, char* argv[]) {
             << "\n# Iterations: " << options->iteration_count
             << "\n# API: " << options->api
             << "\n# Client Per Thread: " << std::boolalpha
-            << options->client_per_thread << "\n# Build Info: " << notes
-            << std::endl;
+            << options->client_per_thread;
+  gcs_bm::PrintOptions(std::cout, "Client Options", options->client_options);
+  std::cout << "\n# Build Info: " << notes << std::endl;
 
   auto configs = [](AggregateUploadThroughputOptions const& options,
                     gcs::Client const& default_client) {

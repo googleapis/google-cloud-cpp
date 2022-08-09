@@ -14,17 +14,22 @@
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/bounded_queue.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/options.h"
+#include "absl/time/time.h"
 #include "absl/types/optional.h"
-#include <cctype>
 #include <future>
-#include <limits>
 #include <sstream>
 #include <stdexcept>
 
 namespace google {
 namespace cloud {
 namespace storage_benchmarks {
+
+namespace gcs = ::google::cloud::storage;
+namespace gcs_ex = ::google::cloud::storage_experimental;
 
 void DeleteAllObjects(google::cloud::storage::Client client,
                       std::string const& bucket_name, int thread_count) {
@@ -156,6 +161,52 @@ std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen) {
                                          "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                          "0123456789") +
          ".txt";
+}
+
+void PrintOptions(std::ostream& os, std::string const& prefix,
+                  Options const& options) {
+  if (options.has<GrpcBackgroundThreadPoolSizeOption>()) {
+    os << "\n# " << prefix << " Grpc Background Threads: "
+       << options.get<GrpcBackgroundThreadPoolSizeOption>();
+  }
+  if (options.has<GrpcNumChannelsOption>()) {
+    os << "\n# " << prefix
+       << " gRPC Channel Count: " << options.get<GrpcNumChannelsOption>();
+  }
+  if (options.has<EndpointOption>()) {
+    os << "\n# " << prefix
+       << " Grpc Endpoint: " << options.get<EndpointOption>();
+  }
+  if (options.has<gcs::RestEndpointOption>()) {
+    os << "\n# " << prefix
+       << "REST Endpoint: " << options.get<gcs::RestEndpointOption>();
+  }
+  if (options.has<gcs::TransferStallTimeoutOption>()) {
+    os << "\n# " << prefix << " Transfer Stall Timeout: "
+       << absl::FormatDuration(
+              absl::FromChrono(options.get<gcs::TransferStallTimeoutOption>()));
+  }
+  if (options.has<gcs_ex::TransferStallMinimumRateOption>()) {
+    os << "\n# " << prefix << " Transfer Stall Minimum Rate: "
+       << testing_util::FormatSize(
+              options.get<gcs_ex::TransferStallMinimumRateOption>());
+  }
+  if (options.has<gcs::DownloadStallTimeoutOption>()) {
+    os << "\n# " << prefix << " Download Stall Timeout: "
+       << absl::FormatDuration(
+              absl::FromChrono(options.get<gcs::DownloadStallTimeoutOption>()));
+  }
+  if (options.has<gcs_ex::DownloadStallMinimumRateOption>()) {
+    os << "\n# " << prefix << " Download Stall Minimum Rate: "
+       << testing_util::FormatSize(
+              options.get<gcs_ex::DownloadStallMinimumRateOption>());
+  }
+
+  if (options.has<google::cloud::storage::internal::TargetApiVersionOption>()) {
+    os << "\n# " << prefix << " Api Version Path: "
+       << options
+              .has<google::cloud::storage::internal::TargetApiVersionOption>();
+  }
 }
 
 }  // namespace storage_benchmarks

@@ -18,12 +18,14 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "google/cloud/testing_util/timer.h"
 #include <chrono>
 #include <cstdint>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -119,6 +121,10 @@ std::string FormatBandwidthGbPerSecond(
   os << std::fixed << std::setprecision(2) << bandwidth;
   return std::move(os).str();
 }
+
+// Print any well-known options.
+void PrintOptions(std::ostream& os, std::string const& prefix,
+                  Options const& options);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud
