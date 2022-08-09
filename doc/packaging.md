@@ -346,7 +346,7 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.4.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -463,7 +463,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.4.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -628,7 +628,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.4.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -778,7 +778,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.4.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -927,7 +927,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.4.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1125,7 +1125,7 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.4.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1273,7 +1273,7 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.4.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1407,7 +1407,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.4.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1596,7 +1596,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.4.tar.gz | \
+curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
