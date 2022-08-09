@@ -414,6 +414,15 @@ class AssetServiceClient {
   ///  * `labels.env:*` to find Cloud resources that have a label "env".
   ///  * `kmsKey:key` to find Cloud resources encrypted with a customer-managed
   ///    encryption key whose name contains the word "key".
+  ///  * `relationships:instance-group-1` to find Cloud resources that have
+  ///    relationships with "instance-group-1" in the related resource name.
+  ///  * `relationships:INSTANCE_TO_INSTANCEGROUP` to find compute instances
+  ///  that
+  ///    have relationships of type "INSTANCE_TO_INSTANCEGROUP".
+  ///  * `relationships.INSTANCE_TO_INSTANCEGROUP:instance-group-1` to find
+  ///    compute instances that have relationships with "instance-group-1" in
+  ///    the compute instance group resource name, for relationship type
+  ///    "INSTANCE_TO_INSTANCEGROUP".
   ///  * `state:ACTIVE` to find Cloud resources whose state contains "ACTIVE" as
   ///  a
   ///    word.
@@ -451,12 +460,12 @@ class AssetServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::ResourceSearchResult,google/cloud/asset/v1/assets.proto#L310}
+  /// @googleapis_link{google::cloud::asset::v1::ResourceSearchResult,google/cloud/asset/v1/assets.proto#L311}
   ///
   /// [google.cloud.asset.v1.SearchAllResourcesRequest]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L822}
   /// [google.cloud.asset.v1.ResourceSearchResult]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L310}
+  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L311}
   ///
   StreamRange<google::cloud::asset::v1::ResourceSearchResult>
   SearchAllResources(std::string const& scope, std::string const& query,
@@ -474,12 +483,12 @@ class AssetServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::ResourceSearchResult,google/cloud/asset/v1/assets.proto#L310}
+  /// @googleapis_link{google::cloud::asset::v1::ResourceSearchResult,google/cloud/asset/v1/assets.proto#L311}
   ///
   /// [google.cloud.asset.v1.SearchAllResourcesRequest]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L822}
   /// [google.cloud.asset.v1.ResourceSearchResult]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L310}
+  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L311}
   ///
   StreamRange<google::cloud::asset::v1::ResourceSearchResult>
   SearchAllResources(
@@ -510,8 +519,8 @@ class AssetServiceClient {
   ///  compared against each Cloud IAM policy binding, including its principals,
   ///  roles, and Cloud IAM conditions. The returned Cloud IAM policies will
   ///  only contain the bindings that match your query. To learn more about the
-  ///  IAM policy structure, see [IAM policy
-  ///  doc](https://cloud.google.com/iam/docs/policies#structure).
+  ///  IAM policy structure, see the [IAM policy
+  ///  documentation](https://cloud.google.com/iam/help/allow-policies/structure).
   ///  Examples:
   ///  * `policy:amy@gmail.com` to find IAM policy bindings that specify user
   ///    "amy@gmail.com".
@@ -548,12 +557,12 @@ class AssetServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::IamPolicySearchResult,google/cloud/asset/v1/assets.proto#L645}
+  /// @googleapis_link{google::cloud::asset::v1::IamPolicySearchResult,google/cloud/asset/v1/assets.proto#L646}
   ///
   /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L980}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L988}
   /// [google.cloud.asset.v1.IamPolicySearchResult]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L645}
+  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L646}
   ///
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
   SearchAllIamPolicies(std::string const& scope, std::string const& query,
@@ -566,16 +575,16 @@ class AssetServiceClient {
   /// otherwise the request will be rejected.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::SearchAllIamPoliciesRequest,google/cloud/asset/v1/asset_service.proto#L980}
+  /// @googleapis_link{google::cloud::asset::v1::SearchAllIamPoliciesRequest,google/cloud/asset/v1/asset_service.proto#L988}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::IamPolicySearchResult,google/cloud/asset/v1/assets.proto#L645}
+  /// @googleapis_link{google::cloud::asset::v1::IamPolicySearchResult,google/cloud/asset/v1/assets.proto#L646}
   ///
   /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L980}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L988}
   /// [google.cloud.asset.v1.IamPolicySearchResult]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L645}
+  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L646}
   ///
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
   SearchAllIamPolicies(
@@ -587,16 +596,16 @@ class AssetServiceClient {
   /// which resources.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyRequest,google/cloud/asset/v1/asset_service.proto#L1289}
+  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyRequest,google/cloud/asset/v1/asset_service.proto#L1297}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyResponse,google/cloud/asset/v1/asset_service.proto#L1329}
+  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyResponse,google/cloud/asset/v1/asset_service.proto#L1337}
   ///
   /// [google.cloud.asset.v1.AnalyzeIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1289}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1297}
   /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1329}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1337}
   ///
   StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse> AnalyzeIamPolicy(
       google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request,
@@ -615,16 +624,16 @@ class AssetServiceClient {
   /// metadata contains the metadata for the long-running operation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest,google/cloud/asset/v1/asset_service.proto#L1445}
+  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest,google/cloud/asset/v1/asset_service.proto#L1453}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse,google/cloud/asset/v1/asset_service.proto#L1476}
+  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse,google/cloud/asset/v1/asset_service.proto#L1484}
   ///
   /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1445}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1453}
   /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1476}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1484}
   ///
   future<
       StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
@@ -641,16 +650,16 @@ class AssetServiceClient {
   /// resource migration takes place.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeMoveRequest,google/cloud/asset/v1/asset_service.proto#L1659}
+  /// @googleapis_link{google::cloud::asset::v1::AnalyzeMoveRequest,google/cloud/asset/v1/asset_service.proto#L1667}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeMoveResponse,google/cloud/asset/v1/asset_service.proto#L1694}
+  /// @googleapis_link{google::cloud::asset::v1::AnalyzeMoveResponse,google/cloud/asset/v1/asset_service.proto#L1702}
   ///
   /// [google.cloud.asset.v1.AnalyzeMoveRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1659}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1667}
   /// [google.cloud.asset.v1.AnalyzeMoveResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1694}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1702}
   ///
   StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
       google::cloud::asset::v1::AnalyzeMoveRequest const& request,
@@ -679,12 +688,12 @@ class AssetServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   /// [google.cloud.asset.v1.CreateSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1536}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1544}
   /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
       std::string const& parent,
@@ -695,16 +704,16 @@ class AssetServiceClient {
   /// Creates a saved query in a parent project/folder/organization.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::CreateSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1536}
+  /// @googleapis_link{google::cloud::asset::v1::CreateSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1544}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   /// [google.cloud.asset.v1.CreateSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1536}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1544}
   /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
       google::cloud::asset::v1::CreateSavedQueryRequest const& request,
@@ -721,12 +730,12 @@ class AssetServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   /// [google.cloud.asset.v1.GetSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1566}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1574}
   /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
       std::string const& name, Options opts = {});
@@ -735,16 +744,16 @@ class AssetServiceClient {
   /// Gets details about a saved query.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::GetSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1566}
+  /// @googleapis_link{google::cloud::asset::v1::GetSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1574}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   /// [google.cloud.asset.v1.GetSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1566}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1574}
   /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
       google::cloud::asset::v1::GetSavedQueryRequest const& request,
@@ -760,12 +769,12 @@ class AssetServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   /// [google.cloud.asset.v1.ListSavedQueriesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1581}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1589}
   /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
       std::string const& parent, Options opts = {});
@@ -774,16 +783,16 @@ class AssetServiceClient {
   /// Lists all saved queries in a parent project/folder/organization.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::ListSavedQueriesRequest,google/cloud/asset/v1/asset_service.proto#L1581}
+  /// @googleapis_link{google::cloud::asset::v1::ListSavedQueriesRequest,google/cloud/asset/v1/asset_service.proto#L1589}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   /// [google.cloud.asset.v1.ListSavedQueriesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1581}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1589}
   /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
       google::cloud::asset::v1::ListSavedQueriesRequest request,
@@ -802,12 +811,12 @@ class AssetServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   /// [google.cloud.asset.v1.UpdateSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1626}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1634}
   /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
       google::cloud::asset::v1::SavedQuery const& saved_query,
@@ -817,16 +826,16 @@ class AssetServiceClient {
   /// Updates a saved query.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::UpdateSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1626}
+  /// @googleapis_link{google::cloud::asset::v1::UpdateSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1634}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   /// [google.cloud.asset.v1.UpdateSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1626}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1634}
   /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1479}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1487}
   ///
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
       google::cloud::asset::v1::UpdateSavedQueryRequest const& request,
@@ -845,7 +854,7 @@ class AssetServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.asset.v1.DeleteSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1643}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1651}
   ///
   Status DeleteSavedQuery(std::string const& name, Options opts = {});
 
@@ -853,12 +862,12 @@ class AssetServiceClient {
   /// Deletes a saved query.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::DeleteSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1643}
+  /// @googleapis_link{google::cloud::asset::v1::DeleteSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1651}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.asset.v1.DeleteSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1643}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1651}
   ///
   Status DeleteSavedQuery(
       google::cloud::asset::v1::DeleteSavedQueryRequest const& request,
@@ -868,16 +877,16 @@ class AssetServiceClient {
   /// Gets effective IAM policies for a batch of resources.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest,google/cloud/asset/v1/asset_service.proto#L1759}
+  /// @googleapis_link{google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest,google/cloud/asset/v1/asset_service.proto#L1743}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse,google/cloud/asset/v1/asset_service.proto#L1789}
+  /// @googleapis_link{google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse,google/cloud/asset/v1/asset_service.proto#L1773}
   ///
   /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1759}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1743}
   /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1789}
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1773}
   ///
   StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
   BatchGetEffectiveIamPolicies(

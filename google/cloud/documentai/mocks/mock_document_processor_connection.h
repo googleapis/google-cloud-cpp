@@ -59,6 +59,96 @@ class MockDocumentProcessorServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>,
+      FetchProcessorTypes,
+      (google::cloud::documentai::v1::FetchProcessorTypesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::documentai::v1::ProcessorType>,
+      ListProcessorTypes,
+      (google::cloud::documentai::v1::ListProcessorTypesRequest request),
+      (override));
+
+  MOCK_METHOD(StreamRange<google::cloud::documentai::v1::Processor>,
+              ListProcessors,
+              (google::cloud::documentai::v1::ListProcessorsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::documentai::v1::Processor>, GetProcessor,
+      (google::cloud::documentai::v1::GetProcessorRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::documentai::v1::ProcessorVersion>,
+              GetProcessorVersion,
+              (google::cloud::documentai::v1::GetProcessorVersionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::documentai::v1::ProcessorVersion>,
+      ListProcessorVersions,
+      (google::cloud::documentai::v1::ListProcessorVersionsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>,
+      DeleteProcessorVersion,
+      (google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::documentai::v1::DeployProcessorVersionResponse>>,
+      DeployProcessorVersion,
+      (google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::documentai::v1::UndeployProcessorVersionResponse>>,
+      UndeployProcessorVersion,
+      (google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::documentai::v1::Processor>, CreateProcessor,
+      (google::cloud::documentai::v1::CreateProcessorRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>,
+      DeleteProcessor,
+      (google::cloud::documentai::v1::DeleteProcessorRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>,
+      EnableProcessor,
+      (google::cloud::documentai::v1::EnableProcessorRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>,
+      DisableProcessor,
+      (google::cloud::documentai::v1::DisableProcessorRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>,
+      SetDefaultProcessorVersion,
+      (google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>,
       ReviewDocument,
       (google::cloud::documentai::v1::ReviewDocumentRequest const& request),

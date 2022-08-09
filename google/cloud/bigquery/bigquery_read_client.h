@@ -190,12 +190,12 @@ class BigQueryReadClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L312}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L322}
   ///
   /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L262}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L272}
   /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L312}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L322}
   ///
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
       std::string const& read_stream, std::int64_t offset, Options opts = {});
@@ -210,16 +210,16 @@ class BigQueryReadClient {
   /// current state of the stream.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L262}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L272}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L312}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L322}
   ///
   /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L262}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L272}
   /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L312}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L322}
   ///
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
       google::cloud::bigquery::storage::v1::ReadRowsRequest const& request,
@@ -240,16 +240,16 @@ class BigQueryReadClient {
   /// completion.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L347}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L357}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamResponse,google/cloud/bigquery/storage/v1/storage.proto#L367}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamResponse,google/cloud/bigquery/storage/v1/storage.proto#L377}
   ///
   /// [google.cloud.bigquery.storage.v1.SplitReadStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L347}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L357}
   /// [google.cloud.bigquery.storage.v1.SplitReadStreamResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L367}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L377}
   ///
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(

@@ -54,6 +54,82 @@ class DefaultDocumentProcessorServiceConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency FetchProcessorTypes(
+      google::cloud::documentai::v1::FetchProcessorTypesRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListProcessorTypes(
+      google::cloud::documentai::v1::ListProcessorTypesRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListProcessors(
+      google::cloud::documentai::v1::ListProcessorsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency GetProcessor(
+      google::cloud::documentai::v1::GetProcessorRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency GetProcessorVersion(
+      google::cloud::documentai::v1::GetProcessorVersionRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListProcessorVersions(
+      google::cloud::documentai::v1::ListProcessorVersionsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency DeleteProcessorVersion(
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeployProcessorVersion(
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UndeployProcessorVersion(
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency CreateProcessor(
+      google::cloud::documentai::v1::CreateProcessorRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeleteProcessor(
+      google::cloud::documentai::v1::DeleteProcessorRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency EnableProcessor(
+      google::cloud::documentai::v1::EnableProcessorRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DisableProcessor(
+      google::cloud::documentai::v1::DisableProcessorRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency SetDefaultProcessorVersion(
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency ReviewDocument(
       google::cloud::documentai::v1::ReviewDocumentRequest const&) override {
     return Idempotency::kNonIdempotent;

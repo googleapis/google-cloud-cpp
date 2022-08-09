@@ -195,14 +195,14 @@ class SessionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentRequest,google/cloud/dialogflow/v2/session.proto#L411}
+  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentRequest,google/cloud/dialogflow/v2/session.proto#L412}
   /// and response (read) type:
-  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L491}
+  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L492}
   ///
   /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L411}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L412}
   /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L491}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L492}
   ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,

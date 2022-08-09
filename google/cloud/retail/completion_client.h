@@ -100,12 +100,12 @@ class CompletionServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::CompleteQueryResponse,google/cloud/retail/v2/completion_service.proto#L150}
+  /// @googleapis_link{google::cloud::retail::v2::CompleteQueryResponse,google/cloud/retail/v2/completion_service.proto#L153}
   ///
   /// [google.cloud.retail.v2.CompleteQueryRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L78}
   /// [google.cloud.retail.v2.CompleteQueryResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L150}
+  /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L153}
   ///
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
       google::cloud::retail::v2::CompleteQueryRequest const& request,

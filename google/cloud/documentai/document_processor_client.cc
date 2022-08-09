@@ -66,6 +66,224 @@ DocumentProcessorServiceClient::BatchProcessDocuments(
   return connection_->BatchProcessDocuments(request);
 }
 
+StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
+DocumentProcessorServiceClient::FetchProcessorTypes(std::string const& parent,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::FetchProcessorTypesRequest request;
+  request.set_parent(parent);
+  return connection_->FetchProcessorTypes(request);
+}
+
+StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
+DocumentProcessorServiceClient::FetchProcessorTypes(
+    google::cloud::documentai::v1::FetchProcessorTypesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchProcessorTypes(request);
+}
+
+StreamRange<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceClient::ListProcessorTypes(std::string const& parent,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::ListProcessorTypesRequest request;
+  request.set_parent(parent);
+  return connection_->ListProcessorTypes(request);
+}
+
+StreamRange<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceClient::ListProcessorTypes(
+    google::cloud::documentai::v1::ListProcessorTypesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListProcessorTypes(std::move(request));
+}
+
+StreamRange<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceClient::ListProcessors(std::string const& parent,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::ListProcessorsRequest request;
+  request.set_parent(parent);
+  return connection_->ListProcessors(request);
+}
+
+StreamRange<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceClient::ListProcessors(
+    google::cloud::documentai::v1::ListProcessorsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListProcessors(std::move(request));
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceClient::GetProcessor(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::GetProcessorRequest request;
+  request.set_name(name);
+  return connection_->GetProcessor(request);
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceClient::GetProcessor(
+    google::cloud::documentai::v1::GetProcessorRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetProcessor(request);
+}
+
+StatusOr<google::cloud::documentai::v1::ProcessorVersion>
+DocumentProcessorServiceClient::GetProcessorVersion(std::string const& name,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::GetProcessorVersionRequest request;
+  request.set_name(name);
+  return connection_->GetProcessorVersion(request);
+}
+
+StatusOr<google::cloud::documentai::v1::ProcessorVersion>
+DocumentProcessorServiceClient::GetProcessorVersion(
+    google::cloud::documentai::v1::GetProcessorVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetProcessorVersion(request);
+}
+
+StreamRange<google::cloud::documentai::v1::ProcessorVersion>
+DocumentProcessorServiceClient::ListProcessorVersions(std::string const& parent,
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::ListProcessorVersionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListProcessorVersions(request);
+}
+
+StreamRange<google::cloud::documentai::v1::ProcessorVersion>
+DocumentProcessorServiceClient::ListProcessorVersions(
+    google::cloud::documentai::v1::ListProcessorVersionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListProcessorVersions(std::move(request));
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+DocumentProcessorServiceClient::DeleteProcessorVersion(std::string const& name,
+                                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::DeleteProcessorVersionRequest request;
+  request.set_name(name);
+  return connection_->DeleteProcessorVersion(request);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+DocumentProcessorServiceClient::DeleteProcessorVersion(
+    google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteProcessorVersion(request);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+DocumentProcessorServiceClient::DeployProcessorVersion(std::string const& name,
+                                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::DeployProcessorVersionRequest request;
+  request.set_name(name);
+  return connection_->DeployProcessorVersion(request);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+DocumentProcessorServiceClient::DeployProcessorVersion(
+    google::cloud::documentai::v1::DeployProcessorVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeployProcessorVersion(request);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+DocumentProcessorServiceClient::UndeployProcessorVersion(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::UndeployProcessorVersionRequest request;
+  request.set_name(name);
+  return connection_->UndeployProcessorVersion(request);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+DocumentProcessorServiceClient::UndeployProcessorVersion(
+    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UndeployProcessorVersion(request);
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceClient::CreateProcessor(
+    std::string const& parent,
+    google::cloud::documentai::v1::Processor const& processor, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::CreateProcessorRequest request;
+  request.set_parent(parent);
+  *request.mutable_processor() = processor;
+  return connection_->CreateProcessor(request);
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceClient::CreateProcessor(
+    google::cloud::documentai::v1::CreateProcessorRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateProcessor(request);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
+DocumentProcessorServiceClient::DeleteProcessor(std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::DeleteProcessorRequest request;
+  request.set_name(name);
+  return connection_->DeleteProcessor(request);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
+DocumentProcessorServiceClient::DeleteProcessor(
+    google::cloud::documentai::v1::DeleteProcessorRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteProcessor(request);
+}
+
+future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
+DocumentProcessorServiceClient::EnableProcessor(
+    google::cloud::documentai::v1::EnableProcessorRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EnableProcessor(request);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
+DocumentProcessorServiceClient::DisableProcessor(
+    google::cloud::documentai::v1::DisableProcessorRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableProcessor(request);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+DocumentProcessorServiceClient::SetDefaultProcessorVersion(
+    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetDefaultProcessorVersion(request);
+}
+
 future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
 DocumentProcessorServiceClient::ReviewDocument(
     std::string const& human_review_config, Options opts) {
