@@ -43,7 +43,6 @@ using ::google::cloud::bigtable::DataRetryPolicyOption;
 using ::google::cloud::bigtable::IdempotentMutationPolicyOption;
 using ::google::cloud::bigtable::testing::MockAsyncReadRowsStream;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
-using ::google::cloud::bigtable::testing::MockDataRetryPolicy;
 using ::google::cloud::bigtable::testing::MockIdempotentMutationPolicy;
 using ::google::cloud::bigtable::testing::MockMutateRowsStream;
 using ::google::cloud::bigtable::testing::MockReadRowsStream;
@@ -51,7 +50,6 @@ using ::google::cloud::bigtable::testing::MockSampleRowKeysStream;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
-using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
@@ -186,16 +184,19 @@ ExponentialBackoffPolicy TestBackoffPolicy() {
   return ExponentialBackoffPolicy(ms(0), ms(0), 2.0);
 }
 
-std::shared_ptr<DataConnectionImpl> TestConnection(
-    std::shared_ptr<BigtableStub> mock) {
-  auto options = bigtable::internal::DefaultDataOptions(
+Options CallOptions() {
+  return bigtable::internal::DefaultDataOptions(
       Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<bigtable::AppProfileIdOption>(kAppProfile)
           .set<DataRetryPolicyOption>(TestRetryPolicy().clone())
           .set<DataBackoffPolicyOption>(TestBackoffPolicy().clone()));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<DataConnectionImpl>(
-      std::move(background), std::move(mock), std::move(options));
+}
+
+std::shared_ptr<DataConnectionImpl> TestConnection(
+    std::shared_ptr<BigtableStub> mock) {
+  auto background = internal::MakeBackgroundThreadsFactory()();
+  return std::make_shared<DataConnectionImpl>(std::move(background),
+                                              std::move(mock), Options{});
 }
 
 TEST(TransformReadModifyWriteRowResponse, Basic) {
@@ -236,83 +237,6 @@ TEST(TransformReadModifyWriteRowResponse, Basic) {
                                        MatchCell(c3), MatchCell(c4)));
 }
 
-/**
- * Verify that call options (provided via an OptionsSpan) take precedence over
- * connection options (provided to the DataConnection constructor). We will only
- * test this for Apply() and assume it holds true for all RPCs.
- *
- * This is testing the private `retry_policy()`, `backoff_policy()`,
- * `idempotency_policy()` member functions.
- */
-TEST(DataConnectionTest, CallOptionsOverrideConnectionOptions) {
-  auto mock = std::make_shared<MockBigtableStub>();
-  EXPECT_CALL(*mock, MutateRow).WillOnce(Return(PermanentError()));
-
-  auto call_r = std::make_shared<MockDataRetryPolicy>();
-  auto call_b = std::make_shared<MockBackoffPolicy>();
-  auto call_i = std::make_shared<MockIdempotentMutationPolicy>();
-  auto call_opts = Options{}
-                       .set<DataRetryPolicyOption>(call_r)
-                       .set<DataBackoffPolicyOption>(call_b)
-                       .set<IdempotentMutationPolicyOption>(call_i);
-
-  EXPECT_CALL(*call_r, clone)
-      .WillOnce(Return(ByMove(TestRetryPolicy().clone())));
-  EXPECT_CALL(*call_b, clone)
-      .WillOnce(Return(ByMove(TestBackoffPolicy().clone())));
-  EXPECT_CALL(*call_i, clone)
-      .WillOnce(Return(ByMove(bigtable::DefaultIdempotentMutationPolicy())));
-
-  auto conn_r = std::make_shared<MockDataRetryPolicy>();
-  auto conn_b = std::make_shared<MockBackoffPolicy>();
-  auto conn_i = std::make_shared<MockIdempotentMutationPolicy>();
-  auto conn_opts = Options{}
-                       .set<DataRetryPolicyOption>(conn_r)
-                       .set<DataBackoffPolicyOption>(conn_b)
-                       .set<IdempotentMutationPolicyOption>(conn_i);
-
-  EXPECT_CALL(*conn_r, clone).Times(0);
-  EXPECT_CALL(*conn_b, clone).Times(0);
-  EXPECT_CALL(*conn_i, clone).Times(0);
-
-  auto conn =
-      std::make_shared<DataConnectionImpl>(nullptr, mock, std::move(conn_opts));
-  internal::OptionsSpan span(call_opts);
-  (void)conn->Apply(kTableName, IdempotentMutation("row"));
-}
-
-/**
- * Verify that connection options (provided to the DataConnection constructor)
- * take affect. We will only test this for Apply() and assume it holds true for
- * all RPCs.
- *
- * This is testing the private `retry_policy()`, `backoff_policy()`,
- * `idempotency_policy()` member functions.
- */
-TEST(DataConnectionTest, UseConnectionOptionsIfNoCallOptions) {
-  auto mock = std::make_shared<MockBigtableStub>();
-  EXPECT_CALL(*mock, MutateRow).WillOnce(Return(PermanentError()));
-
-  auto conn_r = std::make_shared<MockDataRetryPolicy>();
-  auto conn_b = std::make_shared<MockBackoffPolicy>();
-  auto conn_i = std::make_shared<MockIdempotentMutationPolicy>();
-  auto conn_opts = Options{}
-                       .set<DataRetryPolicyOption>(conn_r)
-                       .set<DataBackoffPolicyOption>(conn_b)
-                       .set<IdempotentMutationPolicyOption>(conn_i);
-
-  EXPECT_CALL(*conn_r, clone)
-      .WillOnce(Return(ByMove(TestRetryPolicy().clone())));
-  EXPECT_CALL(*conn_b, clone)
-      .WillOnce(Return(ByMove(TestBackoffPolicy().clone())));
-  EXPECT_CALL(*conn_i, clone)
-      .WillOnce(Return(ByMove(bigtable::DefaultIdempotentMutationPolicy())));
-
-  auto conn =
-      std::make_shared<DataConnectionImpl>(nullptr, mock, std::move(conn_opts));
-  (void)conn->Apply(kTableName, IdempotentMutation("row"));
-}
-
 TEST(DataConnectionTest, ApplySuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
@@ -323,8 +247,8 @@ TEST(DataConnectionTest, ApplySuccess) {
         return v2::MutateRowResponse{};
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status);
 }
@@ -339,8 +263,8 @@ TEST(DataConnectionTest, ApplyPermanentFailure) {
         return PermanentError();
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -361,8 +285,8 @@ TEST(DataConnectionTest, ApplyRetryThenSuccess) {
         return v2::MutateRowResponse{};
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status);
 }
@@ -386,11 +310,9 @@ TEST(DataConnectionTest, ApplyRetryExhausted) {
     return clone;
   });
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<DataBackoffPolicyOption>(std::move(mock_b))
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
@@ -413,11 +335,9 @@ TEST(DataConnectionTest, ApplyRetryIdempotency) {
     return clone;
   });
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<IdempotentMutationPolicyOption>(std::move(mock_i))
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<IdempotentMutationPolicyOption>(std::move(mock_i)));
   auto status = conn->Apply(kTableName, NonIdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
@@ -434,8 +354,8 @@ TEST(DataConnectionTest, AsyncApplySuccess) {
         return make_ready_future(make_status_or(v2::MutateRowResponse{}));
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto status = conn->AsyncApply(kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status.get());
 }
@@ -453,8 +373,8 @@ TEST(DataConnectionTest, AsyncApplyPermanentFailure) {
             PermanentError());
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto status = conn->AsyncApply(kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied));
 }
@@ -480,11 +400,9 @@ TEST(DataConnectionTest, AsyncApplyRetryExhausted) {
     return clone;
   });
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<DataBackoffPolicyOption>(std::move(mock_b))
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto status = conn->AsyncApply(kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
@@ -510,11 +428,9 @@ TEST(DataConnectionTest, AsyncApplyRetryIdempotency) {
     return clone;
   });
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<IdempotentMutationPolicyOption>(std::move(mock_i))
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<IdempotentMutationPolicyOption>(std::move(mock_i)));
   auto status = conn->AsyncApply(kTableName, NonIdempotentMutation("row"));
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
@@ -545,8 +461,8 @@ TEST(DataConnectionTest, BulkApplySuccess) {
         return stream;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, {});
 }
@@ -590,8 +506,8 @@ TEST(DataConnectionTest, BulkApplyRetryMutationPolicy) {
         return stream;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
 }
@@ -626,8 +542,8 @@ TEST(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
         return stream;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, {});
 }
@@ -656,11 +572,9 @@ TEST(DataConnectionTest, BulkApplyStreamRetryExhausted) {
     return clone;
   });
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<DataBackoffPolicyOption>(std::move(mock_b))
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
 }
@@ -680,8 +594,8 @@ TEST(DataConnectionTest, BulkApplyStreamPermanentError) {
         return stream;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
 }
@@ -708,11 +622,9 @@ TEST(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
   auto mock_b = absl::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).Times(0);
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<DataBackoffPolicyOption>(std::move(mock_b))
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
   (void)conn->BulkApply(kTableName, std::move(mut));
 }
 
@@ -733,8 +645,8 @@ TEST(DataConnectionTest, AsyncBulkApply) {
         return absl::make_unique<ErrorStream>(PermanentError());
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto actual = conn->AsyncBulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual.get(), expected);
 }
@@ -757,8 +669,8 @@ TEST(DataConnectionTest, ReadRows) {
         return stream;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto reader = conn->ReadRows(kTableName, TestRowSet(), 42, TestFilter());
   EXPECT_EQ(reader.begin(), reader.end());
 }
@@ -779,8 +691,8 @@ TEST(DataConnectionTest, ReadRowEmpty) {
         return stream;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto resp = conn->ReadRow(kTableName, "row", TestFilter());
   ASSERT_STATUS_OK(resp);
   EXPECT_FALSE(resp->first);
@@ -812,8 +724,8 @@ TEST(DataConnectionTest, ReadRowSuccess) {
         return stream;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto resp = conn->ReadRow(kTableName, "row", TestFilter());
   ASSERT_STATUS_OK(resp);
   EXPECT_TRUE(resp->first);
@@ -836,8 +748,8 @@ TEST(DataConnectionTest, ReadRowFailure) {
         return stream;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto resp = conn->ReadRow(kTableName, "row", TestFilter());
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -881,8 +793,8 @@ TEST(DataConnectionTest, CheckAndMutateRowSuccess) {
         return resp;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto predicate = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
                                            {t1, t2}, {f1, f2});
   ASSERT_STATUS_OK(predicate);
@@ -924,11 +836,9 @@ TEST(DataConnectionTest, CheckAndMutateRowIdempotency) {
     return clone;
   });
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<IdempotentMutationPolicyOption>(std::move(mock_i))
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<IdempotentMutationPolicyOption>(std::move(mock_i)));
   auto status = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
                                         {t1, t2}, {f1, f2});
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
@@ -955,8 +865,8 @@ TEST(DataConnectionTest, CheckAndMutateRowPermanentError) {
         return PermanentError();
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto status = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
                                         {t1, t2}, {f1, f2});
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
@@ -991,13 +901,12 @@ TEST(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
     return clone;
   });
 
+  auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(
-      Options{}
+      CallOptions()
           .set<DataBackoffPolicyOption>(std::move(mock_b))
           .set<IdempotentMutationPolicyOption>(
-              bigtable::AlwaysRetryMutationPolicy().clone())
-          .set<AppProfileIdOption>(kAppProfile));
-  auto conn = TestConnection(std::move(mock));
+              bigtable::AlwaysRetryMutationPolicy().clone()));
   auto status = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
                                         {t1, t2}, {f1, f2});
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
@@ -1044,8 +953,8 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
         return make_ready_future(make_status_or(resp));
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto predicate = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
                                                 {t1, t2}, {f1, f2})
                        .get();
@@ -1091,11 +1000,9 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowIdempotency) {
     return clone;
   });
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<IdempotentMutationPolicyOption>(std::move(mock_i))
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<IdempotentMutationPolicyOption>(std::move(mock_i)));
   auto status = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
                                              {t1, t2}, {f1, f2});
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
@@ -1124,8 +1031,8 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
             PermanentError());
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto status = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
                                              {t1, t2}, {f1, f2});
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied));
@@ -1162,13 +1069,12 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
     return clone;
   });
 
+  auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(
-      Options{}
+      CallOptions()
           .set<DataBackoffPolicyOption>(std::move(mock_b))
           .set<IdempotentMutationPolicyOption>(
-              bigtable::AlwaysRetryMutationPolicy().clone())
-          .set<AppProfileIdOption>(kAppProfile));
-  auto conn = TestConnection(std::move(mock));
+              bigtable::AlwaysRetryMutationPolicy().clone()));
   auto status = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
                                              {t1, t2}, {f1, f2});
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
@@ -1192,11 +1098,9 @@ TEST(DataConnectionTest, SampleRowsSuccess) {
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(1);
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
   auto samples = conn->SampleRows(kTableName);
   ASSERT_STATUS_OK(samples);
   auto actual = RowKeySampleVectors(*samples);
@@ -1231,11 +1135,9 @@ TEST(DataConnectionTest, SampleRowsRetryResetsSamples) {
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(2);
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
   auto samples = conn->SampleRows(kTableName);
   ASSERT_STATUS_OK(samples);
   auto actual = RowKeySampleVectors(*samples);
@@ -1265,12 +1167,11 @@ TEST(DataConnectionTest, SampleRowsRetryExhausted) {
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(kNumRetries + 1);
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<DataBackoffPolicyOption>(std::move(mock_b))
-          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions()
+          .set<DataBackoffPolicyOption>(std::move(mock_b))
+          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
   auto samples = conn->SampleRows(kTableName);
   EXPECT_THAT(samples, StatusIs(StatusCode::kUnavailable));
 }
@@ -1290,11 +1191,9 @@ TEST(DataConnectionTest, SampleRowsPermanentError) {
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(1);
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
-          .set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
   auto samples = conn->SampleRows(kTableName);
   EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -1313,8 +1212,8 @@ TEST(DataConnectionTest, AsyncSampleRows) {
         return absl::make_unique<ErrorStream>(PermanentError());
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto samples = conn->AsyncSampleRows(kTableName).get();
   EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -1350,6 +1249,7 @@ TEST(DataConnectionTest, ReadModifyWriteRowSuccess) {
   req.set_row_key("row");
 
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto row = conn->ReadModifyWriteRow(req);
   ASSERT_STATUS_OK(row);
   EXPECT_EQ("row", row->row_key());
@@ -1375,6 +1275,7 @@ TEST(DataConnectionTest, ReadModifyWriteRowPermanentError) {
   req.set_row_key("row");
 
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto row = conn->ReadModifyWriteRow(req);
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -1402,9 +1303,9 @@ TEST(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
     return clone;
   });
 
-  internal::OptionsSpan span(
-      Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto row = conn->ReadModifyWriteRow(req);
   EXPECT_THAT(row, StatusIs(StatusCode::kUnavailable));
 }
@@ -1441,6 +1342,7 @@ TEST(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
   req.set_row_key("row");
 
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto row = conn->AsyncReadModifyWriteRow(req).get();
   ASSERT_STATUS_OK(row);
   EXPECT_EQ("row", row->row_key());
@@ -1468,6 +1370,7 @@ TEST(DataConnectionTest, AsyncReadModifyWriteRowPermanentError) {
   req.set_row_key("row");
 
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto row = conn->AsyncReadModifyWriteRow(req).get();
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -1497,9 +1400,9 @@ TEST(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
     return clone;
   });
 
-  internal::OptionsSpan span(
-      Options{}.set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto row = conn->AsyncReadModifyWriteRow(req).get();
   EXPECT_THAT(row, StatusIs(StatusCode::kUnavailable));
 }
@@ -1529,8 +1432,8 @@ TEST(DataConnectionTest, AsyncReadRows) {
     EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
   });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   conn->AsyncReadRows(kTableName, on_row.AsStdFunction(),
                       on_finish.AsStdFunction(), TestRowSet(), 42,
                       TestFilter());
@@ -1560,8 +1463,8 @@ TEST(DataConnectionTest, AsyncReadRowEmpty) {
         return stream;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   ASSERT_STATUS_OK(resp);
   EXPECT_FALSE(resp->first);
@@ -1602,8 +1505,8 @@ TEST(DataConnectionTest, AsyncReadRowSuccess) {
         return stream;
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   ASSERT_STATUS_OK(resp);
   EXPECT_TRUE(resp->first);
@@ -1626,8 +1529,8 @@ TEST(DataConnectionTest, AsyncReadRowFailure) {
         return absl::make_unique<ErrorStream>(PermanentError());
       });
 
-  internal::OptionsSpan span(Options{}.set<AppProfileIdOption>(kAppProfile));
   auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
