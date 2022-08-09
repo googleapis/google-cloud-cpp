@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -34,6 +35,26 @@ namespace google {
 namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::shared_ptr<spanner::RetryPolicy> const& RetryPolicyPrototype() {
+  return internal::CurrentOptions().get<spanner::SpannerRetryPolicyOption>();
+}
+
+inline std::shared_ptr<spanner::BackoffPolicy> const& BackoffPolicyPrototype() {
+  return internal::CurrentOptions().get<spanner::SpannerBackoffPolicyOption>();
+}
+
+inline bool RpcStreamTracingEnabled() {
+  return internal::Contains(
+      internal::CurrentOptions().get<TracingComponentsOption>(), "rpc-streams");
+}
+
+inline TracingOptions const& RpcTracingOptions() {
+  return internal::CurrentOptions().get<GrpcTracingOptionsOption>();
+}
+
+}  // namespace
 
 using ::google::cloud::Idempotency;
 
@@ -330,45 +351,6 @@ class StreamingPartitionedDmlResult {
  private:
   std::unique_ptr<ResultSourceInterface> source_;
 };
-
-std::shared_ptr<spanner::RetryPolicy> const&
-ConnectionImpl::RetryPolicyPrototype() const {
-  // TODO(#4528): Support per-operation defaults for retry policies.
-  auto const& options = internal::CurrentOptions();
-  if (options.has<spanner::SpannerRetryPolicyOption>()) {
-    return options.get<spanner::SpannerRetryPolicyOption>();
-  }
-  return opts_.get<spanner::SpannerRetryPolicyOption>();
-}
-
-std::shared_ptr<spanner::BackoffPolicy> const&
-ConnectionImpl::BackoffPolicyPrototype() const {
-  // TODO(#4528): Support per-operation defaults for backoff policies.
-  auto const& options = internal::CurrentOptions();
-  if (options.has<spanner::SpannerBackoffPolicyOption>()) {
-    return options.get<spanner::SpannerBackoffPolicyOption>();
-  }
-  return opts_.get<spanner::SpannerBackoffPolicyOption>();
-}
-
-bool ConnectionImpl::RpcStreamTracingEnabled() const {
-  std::string const rpc_streams = "rpc-streams";
-  auto const& options = internal::CurrentOptions();
-  auto const& tracing_components = options.get<TracingComponentsOption>();
-  if (!internal::Contains(tracing_components, rpc_streams)) {
-    auto const& tracing_components = opts_.get<TracingComponentsOption>();
-    if (!internal::Contains(tracing_components, rpc_streams)) return false;
-  }
-  return true;
-}
-
-TracingOptions const& ConnectionImpl::RpcTracingOptions() const {
-  auto const& options = internal::CurrentOptions();
-  if (options.has<GrpcTracingOptionsOption>()) {
-    return options.get<GrpcTracingOptionsOption>();
-  }
-  return opts_.get<GrpcTracingOptionsOption>();
-}
 
 /**
  * Helper function that ensures `session` holds a valid `Session`, or returns
