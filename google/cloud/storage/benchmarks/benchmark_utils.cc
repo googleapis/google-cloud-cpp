@@ -166,7 +166,7 @@ std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen) {
 void PrintOptions(std::ostream& os, std::string const& prefix,
                   Options const& options) {
   if (options.has<GrpcBackgroundThreadPoolSizeOption>()) {
-    os << "#\n " << prefix << " Grpc Background Threads: "
+    os << "\n# " << prefix << " Grpc Background Threads: "
        << options.get<GrpcBackgroundThreadPoolSizeOption>();
   }
   if (options.has<GrpcNumChannelsOption>()) {
@@ -203,7 +203,7 @@ void PrintOptions(std::ostream& os, std::string const& prefix,
   }
 
   if (options.has<google::cloud::storage::internal::TargetApiVersionOption>()) {
-    os << "#\n " << prefix << " Api Version Path: "
+    os << "\n# " << prefix << " Api Version Path: "
        << options
               .has<google::cloud::storage::internal::TargetApiVersionOption>();
   }

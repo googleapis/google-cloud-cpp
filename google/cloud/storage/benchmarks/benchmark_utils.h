@@ -122,7 +122,7 @@ std::string FormatBandwidthGbPerSecond(
   return std::move(os).str();
 }
 
-// Print any well known options.
+// Print any well-known options.
 void PrintOptions(std::ostream& os, std::string const& prefix,
                   Options const& options);
 
