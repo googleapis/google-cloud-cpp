@@ -121,7 +121,6 @@ io::log_h1 "DEBUG $PWD"
 troubleshoot_sleep() {
   io::log_h1 "DEBUG File status at exit"
   git status || echo "git status failed"
-  git ls-files || echo "git ls-files failed"
   ls -l /bin/sleep || echo "ls -l /bin/sleep failed"
   io::log_h1 "DEBUG Sleeping to troubleshoot problems"
   /bin/sleep 3600
@@ -129,7 +128,6 @@ troubleshoot_sleep() {
 trap troubleshoot_sleep EXIT
 ls -l || echo "ls -l failed"
 git status || echo "git status failed"
-git ls-files || echo "git ls-files failed"
 echo "DEBUG $PWD END"
 
 io::log_h1 "Starting Build: ${BUILD_NAME}"
@@ -145,7 +143,7 @@ else
   exit_status=1
 fi
 
-if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
+if /bin/false; then # DEBUG [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
   # Our CI system (Kokoro) syncs the data in this directory to somewhere after
   # the build completes. Removing the cmake-out/ dir shaves minutes off this
   # process. This is safe as long as we don't wish to save any build artifacts.
