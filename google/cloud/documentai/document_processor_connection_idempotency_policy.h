@@ -44,6 +44,55 @@ class DocumentProcessorServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency BatchProcessDocuments(
       google::cloud::documentai::v1::BatchProcessRequest const& request) = 0;
 
+  virtual google::cloud::Idempotency FetchProcessorTypes(
+      google::cloud::documentai::v1::FetchProcessorTypesRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListProcessorTypes(
+      google::cloud::documentai::v1::ListProcessorTypesRequest request) = 0;
+
+  virtual google::cloud::Idempotency ListProcessors(
+      google::cloud::documentai::v1::ListProcessorsRequest request) = 0;
+
+  virtual google::cloud::Idempotency GetProcessor(
+      google::cloud::documentai::v1::GetProcessorRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency GetProcessorVersion(
+      google::cloud::documentai::v1::GetProcessorVersionRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListProcessorVersions(
+      google::cloud::documentai::v1::ListProcessorVersionsRequest request) = 0;
+
+  virtual google::cloud::Idempotency DeleteProcessorVersion(
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency DeployProcessorVersion(
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency UndeployProcessorVersion(
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency CreateProcessor(
+      google::cloud::documentai::v1::CreateProcessorRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency DeleteProcessor(
+      google::cloud::documentai::v1::DeleteProcessorRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency EnableProcessor(
+      google::cloud::documentai::v1::EnableProcessorRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency DisableProcessor(
+      google::cloud::documentai::v1::DisableProcessorRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency SetDefaultProcessorVersion(
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency ReviewDocument(
       google::cloud::documentai::v1::ReviewDocumentRequest const& request) = 0;
 };

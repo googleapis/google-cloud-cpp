@@ -22,6 +22,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
@@ -81,6 +82,385 @@ DocumentProcessorServiceConnectionImpl::BatchProcessDocuments(
       retry_policy(), backoff_policy(),
       idempotency_policy()->BatchProcessDocuments(request), polling_policy(),
       __func__);
+}
+
+StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
+DocumentProcessorServiceConnectionImpl::FetchProcessorTypes(
+    google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->FetchProcessorTypes(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::FetchProcessorTypesRequest const&
+                 request) {
+        return stub_->FetchProcessorTypes(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceConnectionImpl::ListProcessorTypes(
+    google::cloud::documentai::v1::ListProcessorTypesRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<documentai::DocumentProcessorServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListProcessorTypes(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::documentai::v1::ProcessorType>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::documentai::v1::ListProcessorTypesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::documentai::v1::ListProcessorTypesRequest const&
+                    request) {
+              return stub->ListProcessorTypes(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::documentai::v1::ListProcessorTypesResponse r) {
+        std::vector<google::cloud::documentai::v1::ProcessorType> result(
+            r.processor_types().size());
+        auto& messages = *r.mutable_processor_types();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceConnectionImpl::ListProcessors(
+    google::cloud::documentai::v1::ListProcessorsRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<documentai::DocumentProcessorServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListProcessors(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::documentai::v1::Processor>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::documentai::v1::ListProcessorsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::documentai::v1::ListProcessorsRequest const&
+                       request) {
+              return stub->ListProcessors(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::documentai::v1::ListProcessorsResponse r) {
+        std::vector<google::cloud::documentai::v1::Processor> result(
+            r.processors().size());
+        auto& messages = *r.mutable_processors();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceConnectionImpl::GetProcessor(
+    google::cloud::documentai::v1::GetProcessorRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetProcessor(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::documentai::v1::GetProcessorRequest const& request) {
+        return stub_->GetProcessor(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::documentai::v1::ProcessorVersion>
+DocumentProcessorServiceConnectionImpl::GetProcessorVersion(
+    google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetProcessorVersion(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::GetProcessorVersionRequest const&
+                 request) {
+        return stub_->GetProcessorVersion(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::documentai::v1::ProcessorVersion>
+DocumentProcessorServiceConnectionImpl::ListProcessorVersions(
+    google::cloud::documentai::v1::ListProcessorVersionsRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<documentai::DocumentProcessorServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListProcessorVersions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::documentai::v1::ProcessorVersion>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::documentai::v1::ListProcessorVersionsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::documentai::v1::
+                       ListProcessorVersionsRequest const& request) {
+              return stub->ListProcessorVersions(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::documentai::v1::ListProcessorVersionsResponse r) {
+        std::vector<google::cloud::documentai::v1::ProcessorVersion> result(
+            r.processor_versions().size());
+        auto& messages = *r.mutable_processor_versions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+DocumentProcessorServiceConnectionImpl::DeleteProcessorVersion(
+    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::documentai::v1::DeleteProcessorVersionMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+                 request) {
+        return stub->AsyncDeleteProcessorVersion(cq, std::move(context),
+                                                 request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::documentai::v1::DeleteProcessorVersionMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteProcessorVersion(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+DocumentProcessorServiceConnectionImpl::DeployProcessorVersion(
+    google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::documentai::v1::DeployProcessorVersionResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+                 request) {
+        return stub->AsyncDeployProcessorVersion(cq, std::move(context),
+                                                 request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::DeployProcessorVersionResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeployProcessorVersion(request), polling_policy(),
+      __func__);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+DocumentProcessorServiceConnectionImpl::UndeployProcessorVersion(
+    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::documentai::v1::UndeployProcessorVersionResponse>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<grpc::ClientContext> context,
+          google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+              request) {
+        return stub->AsyncUndeployProcessorVersion(cq, std::move(context),
+                                                   request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::UndeployProcessorVersionResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UndeployProcessorVersion(request), polling_policy(),
+      __func__);
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceConnectionImpl::CreateProcessor(
+    google::cloud::documentai::v1::CreateProcessorRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateProcessor(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::CreateProcessorRequest const&
+                 request) { return stub_->CreateProcessor(context, request); },
+      request, __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
+DocumentProcessorServiceConnectionImpl::DeleteProcessor(
+    google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::documentai::v1::DeleteProcessorMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::DeleteProcessorRequest const&
+                 request) {
+        return stub->AsyncDeleteProcessor(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::documentai::v1::DeleteProcessorMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteProcessor(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
+DocumentProcessorServiceConnectionImpl::EnableProcessor(
+    google::cloud::documentai::v1::EnableProcessorRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::documentai::v1::EnableProcessorResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::EnableProcessorRequest const&
+                 request) {
+        return stub->AsyncEnableProcessor(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::EnableProcessorResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->EnableProcessor(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
+DocumentProcessorServiceConnectionImpl::DisableProcessor(
+    google::cloud::documentai::v1::DisableProcessorRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::documentai::v1::DisableProcessorResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::DisableProcessorRequest const&
+                 request) {
+        return stub->AsyncDisableProcessor(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::DisableProcessorResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DisableProcessor(request), polling_policy(),
+      __func__);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+DocumentProcessorServiceConnectionImpl::SetDefaultProcessorVersion(
+    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::
+                 SetDefaultProcessorVersionRequest const& request) {
+        return stub->AsyncSetDefaultProcessorVersion(cq, std::move(context),
+                                                     request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->SetDefaultProcessorVersion(request),
+      polling_policy(), __func__);
 }
 
 future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>

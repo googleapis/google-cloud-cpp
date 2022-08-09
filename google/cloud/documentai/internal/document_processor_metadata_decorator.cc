@@ -51,6 +51,131 @@ DocumentProcessorServiceMetadata::AsyncBatchProcessDocuments(
   return child_->AsyncBatchProcessDocuments(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
+DocumentProcessorServiceMetadata::FetchProcessorTypes(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->FetchProcessorTypes(context, request);
+}
+
+StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
+DocumentProcessorServiceMetadata::ListProcessorTypes(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::ListProcessorTypesRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListProcessorTypes(context, request);
+}
+
+StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
+DocumentProcessorServiceMetadata::ListProcessors(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::ListProcessorsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListProcessors(context, request);
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceMetadata::GetProcessor(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetProcessorRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetProcessor(context, request);
+}
+
+StatusOr<google::cloud::documentai::v1::ProcessorVersion>
+DocumentProcessorServiceMetadata::GetProcessorVersion(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetProcessorVersion(context, request);
+}
+
+StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
+DocumentProcessorServiceMetadata::ListProcessorVersions(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::ListProcessorVersionsRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListProcessorVersions(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceMetadata::AsyncDeleteProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteProcessorVersion(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceMetadata::AsyncDeployProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeployProcessorVersion(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceMetadata::AsyncUndeployProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncUndeployProcessorVersion(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceMetadata::CreateProcessor(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::CreateProcessorRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateProcessor(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceMetadata::AsyncDeleteProcessor(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteProcessor(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceMetadata::AsyncEnableProcessor(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::EnableProcessorRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncEnableProcessor(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceMetadata::AsyncDisableProcessor(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::DisableProcessorRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDisableProcessor(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceMetadata::AsyncSetDefaultProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+        request) {
+  SetMetadata(*context, "processor=" + request.processor());
+  return child_->AsyncSetDefaultProcessorVersion(cq, std::move(context),
+                                                 request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceMetadata::AsyncReviewDocument(
     google::cloud::CompletionQueue& cq,

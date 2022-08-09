@@ -25,6 +25,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include <memory>
 
 namespace google {
@@ -46,6 +47,112 @@ DocumentProcessorServiceConnection::BatchProcessDocuments(
     google::cloud::documentai::v1::BatchProcessRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
+DocumentProcessorServiceConnection::FetchProcessorTypes(
+    google::cloud::documentai::v1::FetchProcessorTypesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceConnection::ListProcessorTypes(
+    google::cloud::documentai::v1::
+        ListProcessorTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::documentai::v1::ProcessorType>>();
+}
+
+StreamRange<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceConnection::ListProcessors(
+    google::cloud::documentai::v1::
+        ListProcessorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::documentai::v1::Processor>>();
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceConnection::GetProcessor(
+    google::cloud::documentai::v1::GetProcessorRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::documentai::v1::ProcessorVersion>
+DocumentProcessorServiceConnection::GetProcessorVersion(
+    google::cloud::documentai::v1::GetProcessorVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::documentai::v1::ProcessorVersion>
+DocumentProcessorServiceConnection::ListProcessorVersions(
+    google::cloud::documentai::v1::
+        ListProcessorVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::documentai::v1::ProcessorVersion>>();
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+DocumentProcessorServiceConnection::DeleteProcessorVersion(
+    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+DocumentProcessorServiceConnection::DeployProcessorVersion(
+    google::cloud::documentai::v1::DeployProcessorVersionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+DocumentProcessorServiceConnection::UndeployProcessorVersion(
+    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::documentai::v1::UndeployProcessorVersionResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceConnection::CreateProcessor(
+    google::cloud::documentai::v1::CreateProcessorRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
+DocumentProcessorServiceConnection::DeleteProcessor(
+    google::cloud::documentai::v1::DeleteProcessorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
+DocumentProcessorServiceConnection::EnableProcessor(
+    google::cloud::documentai::v1::EnableProcessorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
+DocumentProcessorServiceConnection::DisableProcessor(
+    google::cloud::documentai::v1::DisableProcessorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+DocumentProcessorServiceConnection::SetDefaultProcessorVersion(
+    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
