@@ -43,24 +43,24 @@ using ::testing::ContainsRegex;
 using ::testing::ElementsAre;
 using ::testing::Return;
 
-std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
-    std::shared_ptr<GoldenKitchenSinkStub> mock) {
+Options CallOptions() {
   golden::GoldenKitchenSinkLimitedErrorCountRetryPolicy retry(
       /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
       /*initial_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
-  GenericPollingPolicy<golden::GoldenKitchenSinkLimitedErrorCountRetryPolicy,
-                       ExponentialBackoffPolicy>
-      polling(retry, backoff);
-  auto options = GoldenKitchenSinkDefaultOptions(
+  return GoldenKitchenSinkDefaultOptions(
       Options{}
           .set<golden::GoldenKitchenSinkRetryPolicyOption>(retry.clone())
           .set<golden::GoldenKitchenSinkBackoffPolicyOption>(backoff.clone()));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
+}
+
+std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
+    std::shared_ptr<GoldenKitchenSinkStub> mock) {
+  auto background = internal::MakeBackgroundThreadsFactory()();
   return std::make_shared<golden_internal::GoldenKitchenSinkConnectionImpl>(
-      std::move(background), std::move(mock), std::move(options));
+      std::move(background), std::move(mock), Options{});
 }
 
 TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenSuccess) {
@@ -74,6 +74,7 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenSuccess) {
         return response;
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GenerateAccessTokenRequest request;
   auto response = conn->GenerateAccessToken(request);
   EXPECT_STATUS_OK(response);
@@ -84,6 +85,7 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenPermanentError) {
   EXPECT_CALL(*mock, GenerateAccessToken)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GenerateAccessTokenRequest request;
   auto response = conn->GenerateAccessToken(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
@@ -96,6 +98,7 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenTooManyTransients) {
       .Times(AtLeast(1))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GenerateAccessTokenRequest request;
   auto response = conn->GenerateAccessToken(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
@@ -110,6 +113,7 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateIdTokenSuccess) {
         return response;
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GenerateIdTokenRequest request;
   auto response = conn->GenerateIdToken(request);
   EXPECT_STATUS_OK(response);
@@ -120,6 +124,7 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateIdTokenPermanentError) {
   EXPECT_CALL(*mock, GenerateIdToken)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GenerateIdTokenRequest request;
   auto response = conn->GenerateIdToken(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
@@ -132,6 +137,7 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateIdTokenTooManyTransients) {
       .Times(AtLeast(1))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GenerateIdTokenRequest request;
   auto response = conn->GenerateIdToken(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
@@ -146,6 +152,7 @@ TEST(GoldenKitchenSinkConnectionTest, WriteLogEntriesSuccess) {
         return response;
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::WriteLogEntriesRequest request;
   auto response = conn->WriteLogEntries(request);
   EXPECT_STATUS_OK(response);
@@ -156,6 +163,7 @@ TEST(GoldenKitchenSinkConnectionTest, WriteLogEntriesPermanentError) {
   EXPECT_CALL(*mock, WriteLogEntries)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::WriteLogEntriesRequest request;
   auto response = conn->WriteLogEntries(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
@@ -168,6 +176,7 @@ TEST(GoldenKitchenSinkConnectionTest, WriteLogEntriesTooManyTransients) {
       .Times(AtLeast(1))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::WriteLogEntriesRequest request;
   auto response = conn->WriteLogEntries(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
@@ -211,6 +220,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsSuccess) {
         return make_status_or(page);
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   std::vector<std::string> actual_log_names;
   ::google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent("projects/my-project");
@@ -226,6 +236,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsPermanentError) {
   EXPECT_CALL(*mock, ListLogs)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent("projects/my-project");
   auto range = conn->ListLogs(request);
@@ -240,6 +251,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsTooManyTransients) {
       .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent("projects/my-project");
   auto range = conn->ListLogs(request);
@@ -261,6 +273,7 @@ TEST(GoldenKitchenSinkConnectionTest, TailLogEntriesPermanentError) {
       .WillOnce(Return(ByMove(MakeFailingReader(
           Status(StatusCode::kPermissionDenied, "Permission Denied.")))));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::TailLogEntriesRequest request;
   auto range = conn->TailLogEntries(request);
   auto begin = range.begin();
@@ -280,6 +293,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysSuccess) {
         return response;
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
   auto response = conn->ListServiceAccountKeys(request);
   EXPECT_STATUS_OK(response);
@@ -291,6 +305,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysTooManyTransients) {
       .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
   auto response = conn->ListServiceAccountKeys(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
@@ -301,6 +316,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysPermanentError) {
   EXPECT_CALL(*mock, ListServiceAccountKeys)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
   auto response = conn->ListServiceAccountKeys(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
@@ -317,6 +333,7 @@ TEST(GoldenKitchenSinkConnectionTest, AppendRowsError) {
         Status{StatusCode::kUnavailable, "try-again"});
   });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   auto stream = conn->AsyncAppendRows(ExperimentalTag{});
   ASSERT_FALSE(stream->Start().get());
   auto status = stream->Finish().get();

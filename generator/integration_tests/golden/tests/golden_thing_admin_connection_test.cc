@@ -48,8 +48,7 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
-    std::shared_ptr<GoldenThingAdminStub> mock) {
+Options CallOptions() {
   golden::GoldenThingAdminLimitedErrorCountRetryPolicy retry(
       /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
@@ -59,14 +58,18 @@ std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
   GenericPollingPolicy<golden::GoldenThingAdminLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
-  auto options = GoldenThingAdminDefaultOptions(
+  return GoldenThingAdminDefaultOptions(
       Options{}
           .set<golden::GoldenThingAdminRetryPolicyOption>(retry.clone())
           .set<golden::GoldenThingAdminBackoffPolicyOption>(backoff.clone())
           .set<golden::GoldenThingAdminPollingPolicyOption>(polling.clone()));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<GoldenThingAdminConnectionImpl>(
-      std::move(background), std::move(mock), std::move(options));
+}
+
+std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
+    std::shared_ptr<GoldenThingAdminStub> mock) {
+  auto background = internal::MakeBackgroundThreadsFactory()();
+  return std::make_shared<golden_internal::GoldenThingAdminConnectionImpl>(
+      std::move(background), std::move(mock), Options{});
 }
 
 google::longrunning::Operation CreateStartingOperation() {
@@ -127,6 +130,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
             return make_status_or(page);
           });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   std::vector<std::string> actual_names;
   ::google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
@@ -143,6 +147,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabasesPermanentFailure) {
   EXPECT_CALL(*mock, ListDatabases)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListDatabases(request);
@@ -158,6 +163,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabasesTooManyFailures) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListDatabases(request);
@@ -191,6 +197,7 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseSuccess) {
         return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::CreateDatabaseRequest dbase;
   auto fut = conn->CreateDatabase(dbase);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
@@ -225,6 +232,7 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseCancel) {
         return make_ready_future(Status{});
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::CreateDatabaseRequest request;
   auto fut = conn->CreateDatabase(request);
   get.PopFront().set_value(op);
@@ -255,6 +263,7 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseSuccess) {
             return response;
           });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -271,6 +280,7 @@ TEST(GoldenThingAdminConnectionTest, GetDatabasePermanentError) {
   EXPECT_CALL(*mock, GetDatabase)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -286,6 +296,7 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseTooManyTransients) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -320,6 +331,7 @@ TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlSuccess) {
         return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -358,6 +370,7 @@ TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlCancel) {
         return make_ready_future(Status{});
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   auto fut = conn->UpdateDatabaseDdl(request);
   get.PopFront().set_value(op);
@@ -384,6 +397,7 @@ TEST(GoldenThingAdminConnectionTest, DropDatabaseSuccess) {
           });
 
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -397,6 +411,7 @@ TEST(GoldenThingAdminConnectionTest, DropDatabasePermanentError) {
   EXPECT_CALL(*mock, DropDatabase)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -420,6 +435,7 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlSuccess) {
         return response;
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -435,6 +451,7 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlPermanentError) {
   EXPECT_CALL(*mock, GetDatabaseDdl)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -450,6 +467,7 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlTooManyTransients) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -484,6 +502,7 @@ TEST(GoldenThingAdminConnectionTest, SetIamPolicySuccess) {
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -500,6 +519,7 @@ TEST(GoldenThingAdminConnectionTest, SetIamPolicyPermanentError) {
   EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::iam::v1::Policy policy;
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(
@@ -516,6 +536,7 @@ TEST(GoldenThingAdminConnectionTest, SetIamPolicyNonIdempotent) {
   EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::iam::v1::Policy policy;
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(
@@ -544,6 +565,7 @@ TEST(GoldenThingAdminConnectionTest, GetIamPolicySuccess) {
         return response;
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -561,6 +583,7 @@ TEST(GoldenThingAdminConnectionTest, GetIamPolicyPermanentError) {
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -575,6 +598,7 @@ TEST(GoldenThingAdminConnectionTest, GetIamPolicyTooManyTransients) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -600,6 +624,7 @@ TEST(GoldenThingAdminConnectionTest, TestIamPermissionsSuccess) {
         return response;
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -616,6 +641,7 @@ TEST(GoldenThingAdminConnectionTest, TestIamPermissionsPermanentError) {
   EXPECT_CALL(*mock, TestIamPermissions)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -630,6 +656,7 @@ TEST(GoldenThingAdminConnectionTest, TestIamPermissionsTooManyTransients) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -662,6 +689,7 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupSuccess) {
         return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   request.set_backup_id("test-backup");
@@ -699,6 +727,7 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupCancel) {
         return make_ready_future(Status{});
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::CreateBackupRequest request;
   auto fut = conn->CreateBackup(request);
   get.PopFront().set_value(op);
@@ -727,6 +756,7 @@ TEST(GoldenThingAdminConnectionTest, GetBackupSuccess) {
         return response;
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetBackupRequest request;
   request.set_name(expected_name);
   auto response = conn->GetBackup(request);
@@ -742,6 +772,7 @@ TEST(GoldenThingAdminConnectionTest, GetBackupPermanentError) {
   EXPECT_CALL(*mock, GetBackup)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetBackupRequest request;
   auto response = conn->GetBackup(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
@@ -755,6 +786,7 @@ TEST(GoldenThingAdminConnectionTest, GetBackupTooManyTransients) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetBackupRequest request;
   auto response = conn->GetBackup(request);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
@@ -779,6 +811,7 @@ TEST(GoldenThingAdminConnectionTest, UpdateBackupSuccess) {
             return response;
           });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::test::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(
       "projects/test-project/instances/test-instance/backups/test-backup");
@@ -795,6 +828,7 @@ TEST(GoldenThingAdminConnectionTest, UpdateBackupPermanentError) {
   EXPECT_CALL(*mock, UpdateBackup)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::test::admin::database::v1::UpdateBackupRequest request;
   auto response = conn->UpdateBackup(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
@@ -807,6 +841,7 @@ TEST(GoldenThingAdminConnectionTest, UpdateBackupTooManyTransients) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   google::test::admin::database::v1::UpdateBackupRequest request;
   auto response = conn->UpdateBackup(request);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
@@ -827,6 +862,7 @@ TEST(GoldenThingAdminConnectionTest, DeleteBackupSuccess) {
             return google::cloud::Status();
           });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(expected_name);
   auto status = conn->DeleteBackup(request);
@@ -839,6 +875,7 @@ TEST(GoldenThingAdminConnectionTest, DeleteBackupPermanentError) {
   EXPECT_CALL(*mock, DeleteBackup)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/backups/test-backup");
@@ -853,6 +890,7 @@ TEST(GoldenThingAdminConnectionTest, DeleteBackupTooManyTransients) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/backups/test-backup");
@@ -905,6 +943,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackups) {
             return make_status_or(page);
           });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   std::vector<std::string> actual_names;
@@ -921,6 +960,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackupsPermanentFailure) {
   EXPECT_CALL(*mock, ListBackups)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListBackups(request);
@@ -936,6 +976,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackupsTooManyFailures) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListBackups(request);
@@ -969,6 +1010,7 @@ TEST(GoldenThingAdminConnectionTest, RestoreDatabaseSuccess) {
         return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   request.set_database_id(
@@ -1008,6 +1050,7 @@ TEST(GoldenThingAdminConnectionTest, RestoreBackupCancel) {
         return make_ready_future(Status{});
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::RestoreDatabaseRequest request;
   auto fut = conn->RestoreDatabase(request);
   get.PopFront().set_value(op);
@@ -1066,6 +1109,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperations) {
             return make_status_or(page);
           });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   std::vector<std::string> actual_names;
@@ -1082,6 +1126,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperationsPermanentFailure) {
   EXPECT_CALL(*mock, ListDatabaseOperations)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListDatabaseOperations(request);
@@ -1097,6 +1142,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperationsTooManyFailures) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListDatabaseOperations(request);
@@ -1148,6 +1194,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperations) {
         return make_status_or(page);
       });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   std::vector<std::string> actual_names;
@@ -1164,6 +1211,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperationsPermanentFailure) {
   EXPECT_CALL(*mock, ListBackupOperations)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListBackupOperations(request);
@@ -1179,6 +1227,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperationsTooManyFailures) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListBackupOperations(request);
@@ -1198,6 +1247,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseSuccess) {
             return make_ready_future(make_status_or(db));
           });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetDatabaseRequest dbase;
   auto fut = conn->AsyncGetDatabase(dbase);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
@@ -1219,6 +1269,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseTooManyFailures) {
           });
 
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetDatabaseRequest dbase;
   auto fut = conn->AsyncGetDatabase(dbase);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
@@ -1247,6 +1298,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
           });
 
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::GetDatabaseRequest dbase;
   auto fut = conn->AsyncGetDatabase(dbase);
   ASSERT_EQ(std::future_status::timeout,
@@ -1275,6 +1327,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseSuccess) {
             return make_ready_future(Status());
           });
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -1300,6 +1353,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
           });
 
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
@@ -1334,6 +1388,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
           });
 
   auto conn = CreateTestingConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
