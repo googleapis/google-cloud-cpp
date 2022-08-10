@@ -24,7 +24,9 @@ using the C++ client library.
    - [Configure a service account][gcloud-authorizing],
    - or [login with your personal account][gcloud-authorizing]
 
-### Setting up your repo
+@tableofcontents{HTML:2}
+
+## Setting up your repo
 
 In order to use the Cloud Pub/Sub C++ client library from your own code, you'll
 need to configure your build system how to fetch and compile the Cloud C++
@@ -78,7 +80,7 @@ behaviors in the library.
   actually print anything until the application sets a backend or they set this
   environment variable.
 
-### Error Handling
+## Error Handling
 
 This library never throws exceptions to signal error. In general, the library
 returns a [`StatusOr<T>`][status-or-header] if an error is possible. Some
