@@ -25,6 +25,25 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<storage::RetryPolicy> retry_policy() {
+  return internal::CurrentOptions().get<storage::RetryPolicyOption>()->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<storage::BackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<storage::IdempotencyPolicy> idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<storage::IdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AsyncConnectionImpl::AsyncConnectionImpl(CompletionQueue cq,
                                          std::shared_ptr<StorageStub> stub,
