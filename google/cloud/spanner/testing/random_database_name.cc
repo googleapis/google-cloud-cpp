@@ -21,8 +21,7 @@ namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string RandomDatabasePrefixRegex() {
-  // Temporarily, we match both styles of separators.
-  return R"re(^db[-_]\d{4}[-_]\d{2}[-_]\d{2}[-_])re";
+  return R"re(^db-\d{4,}-\d{2}-\d{2}-)re";
 }
 
 std::string RandomDatabasePrefix(std::chrono::system_clock::time_point tp) {
