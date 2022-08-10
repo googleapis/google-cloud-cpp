@@ -68,7 +68,8 @@ class ResumableUpload : public ThroughputExperiment {
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
     auto api_selector = gcs::Fields();
-    if (transport_ == ExperimentTransport::kXml) {
+    if (transport_ == ExperimentTransport::kXml ||
+        transport_ == ExperimentTransport::kXmlV2) {
       // The default API is JSON, we force XML by not using features that XML
       // does not implement:
       api_selector = gcs::Fields("");
@@ -144,7 +145,8 @@ class SimpleUpload : public ThroughputExperiment {
       return fallback_.Run(bucket_name, object_name, config);
     }
     auto api_selector = gcs::Fields();
-    if (transport_ == ExperimentTransport::kXml) {
+    if (transport_ == ExperimentTransport::kXml ||
+        transport_ == ExperimentTransport::kXmlV2) {
       // The default API is JSON, we force XML by not using features that XML
       // does not implement:
       api_selector = gcs::Fields("");
