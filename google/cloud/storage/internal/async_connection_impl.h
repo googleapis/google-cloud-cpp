@@ -47,30 +47,6 @@ class AsyncConnectionImpl : public AsyncConnection {
       storage::internal::DeleteObjectRequest const& request) override;
 
  private:
-  std::unique_ptr<storage::RetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<storage::RetryPolicyOption>()) {
-      return options.get<storage::RetryPolicyOption>()->clone();
-    }
-    return options_.get<storage::RetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<storage::BackoffPolicyOption>()) {
-      return options.get<storage::BackoffPolicyOption>()->clone();
-    }
-    return options_.get<storage::BackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<storage::IdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<storage::IdempotencyPolicyOption>()) {
-      return options.get<storage::IdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<storage::IdempotencyPolicyOption>()->clone();
-  }
-
   CompletionQueue cq_;
   std::shared_ptr<StorageStub> stub_;
   Options options_;
