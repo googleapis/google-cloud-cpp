@@ -166,8 +166,10 @@ class TableAdmin {
             DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
         polling_prototype_(
             DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
-        policies_(bigtable_internal::MakeTableAdminOptions(
-            retry_prototype_, backoff_prototype_, polling_prototype_)) {}
+        options_(google::cloud::internal::MergeOptions(
+            bigtable_internal::MakeTableAdminOptions(
+                retry_prototype_, backoff_prototype_, polling_prototype_),
+            connection_->options())) {}
 
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.
@@ -212,8 +214,10 @@ class TableAdmin {
         polling_prototype_(
             DefaultPollingPolicy(internal::kBigtableTableAdminLimits)) {
     ChangePolicies(std::forward<Policies>(policies)...);
-    policies_ = bigtable_internal::MakeTableAdminOptions(
-        retry_prototype_, backoff_prototype_, polling_prototype_);
+    options_ = google::cloud::internal::MergeOptions(
+        bigtable_internal::MakeTableAdminOptions(
+            retry_prototype_, backoff_prototype_, polling_prototype_),
+        connection_->options());
   }
 
   TableAdmin(TableAdmin const&) = default;
@@ -1073,8 +1077,10 @@ class TableAdmin {
             DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
         polling_prototype_(
             DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
-        policies_(bigtable_internal::MakeTableAdminOptions(
-            retry_prototype_, backoff_prototype_, polling_prototype_)) {}
+        options_(google::cloud::internal::MergeOptions(
+            bigtable_internal::MakeTableAdminOptions(
+                retry_prototype_, backoff_prototype_, polling_prototype_),
+            connection_->options())) {}
 
   //@{
   /// @name Helper functions to implement constructors with changed policies.
@@ -1115,10 +1121,14 @@ class TableAdmin {
   std::string project_id_;
   std::string instance_id_;
   std::string instance_name_;
+  //@{
+  /// These prototypes are only used as temporary storage during construction of
+  /// the class, where they are consolidated as common policies in `options_`.
   std::shared_ptr<RPCRetryPolicy> retry_prototype_;
   std::shared_ptr<RPCBackoffPolicy> backoff_prototype_;
   std::shared_ptr<PollingPolicy> polling_prototype_;
-  Options policies_;
+  //}
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
