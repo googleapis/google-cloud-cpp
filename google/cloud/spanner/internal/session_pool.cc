@@ -243,18 +243,20 @@ Status SessionPool::CreateSessions(
     std::vector<CreateCount> const& create_counts,
     WaitForSessionAllocation wait) {
   Status return_status;
+  auto const& labels = opts_.get<spanner::SessionPoolLabelsOption>();
+  auto const& role = opts_.get<spanner::SessionCreatorRoleOption>();
   for (auto const& op : create_counts) {
-    auto const& labels = opts_.get<spanner::SessionPoolLabelsOption>();
     switch (wait) {
       case WaitForSessionAllocation::kWait: {
-        auto status = CreateSessionsSync(op.channel, labels, op.session_count);
+        auto status =
+            CreateSessionsSync(op.channel, labels, role, op.session_count);
         if (!status.ok()) {
           return_status = status;
         }
         break;
       }
       case WaitForSessionAllocation::kNoWait:
-        CreateSessionsAsync(op.channel, labels, op.session_count);
+        CreateSessionsAsync(op.channel, labels, role, op.session_count);
         break;
     }
   }
@@ -355,11 +357,17 @@ void SessionPool::Release(std::unique_ptr<Session> session) {
 // Creates `num_sessions` on `channel` and adds them to the pool.
 Status SessionPool::CreateSessionsSync(
     std::shared_ptr<Channel> const& channel,
-    std::map<std::string, std::string> const& labels, int num_sessions) {
+    std::map<std::string, std::string> const& labels, std::string const& role,
+    int num_sessions) {
   google::spanner::v1::BatchCreateSessionsRequest request;
   request.set_database(db_.FullName());
-  request.mutable_session_template()->mutable_labels()->insert(labels.begin(),
-                                                               labels.end());
+  if (!labels.empty()) {
+    request.mutable_session_template()->mutable_labels()->insert(labels.begin(),
+                                                                 labels.end());
+  }
+  if (!role.empty()) {
+    request.mutable_session_template()->set_creator_role(role);
+  }
   request.set_session_count(std::int32_t{num_sessions});
   auto const& stub = channel->stub;
   auto response = RetryLoop(
@@ -375,9 +383,10 @@ Status SessionPool::CreateSessionsSync(
 
 void SessionPool::CreateSessionsAsync(
     std::shared_ptr<Channel> const& channel,
-    std::map<std::string, std::string> const& labels, int num_sessions) {
+    std::map<std::string, std::string> const& labels, std::string const& role,
+    int num_sessions) {
   std::weak_ptr<SessionPool> pool = shared_from_this();
-  AsyncBatchCreateSessions(cq_, channel->stub, labels, num_sessions)
+  AsyncBatchCreateSessions(cq_, channel->stub, labels, role, num_sessions)
       .then(
           [pool, channel](
               future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
@@ -408,11 +417,17 @@ SessionHolder SessionPool::MakeSessionHolder(std::unique_ptr<Session> session,
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SessionPool::AsyncBatchCreateSessions(
     CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
-    std::map<std::string, std::string> const& labels, int num_sessions) {
+    std::map<std::string, std::string> const& labels, std::string const& role,
+    int num_sessions) {
   google::spanner::v1::BatchCreateSessionsRequest request;
   request.set_database(db_.FullName());
-  request.mutable_session_template()->mutable_labels()->insert(labels.begin(),
-                                                               labels.end());
+  if (!labels.empty()) {
+    request.mutable_session_template()->mutable_labels()->insert(labels.begin(),
+                                                                 labels.end());
+  }
+  if (!role.empty()) {
+    request.mutable_session_template()->set_creator_role(role);
+  }
   request.set_session_count(std::int32_t{num_sessions});
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),

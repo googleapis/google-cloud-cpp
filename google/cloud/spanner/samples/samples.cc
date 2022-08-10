@@ -666,6 +666,110 @@ void GetDatabaseDdl(google::cloud::spanner_admin::DatabaseAdminClient client,
 }
 //! [END spanner_get_database_ddl] [get-database-ddl]
 
+//! [START spanner_add_and_drop_database_roles]
+void AddAndDropDatabaseRoles(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& role_parent,
+    std::string const& role_child) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> grant_statements = {
+      "CREATE ROLE " + role_parent,
+      "GRANT SELECT ON TABLE Singers TO ROLE " + role_parent,
+      "CREATE ROLE " + role_child,
+      "GRANT ROLE " + role_parent + " TO ROLE " + role_child,
+  };
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), grant_statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "Created roles " << role_parent << " and " << role_child
+            << " and granted privileges\n";
+
+  std::vector<std::string> revoke_statements = {
+      "REVOKE ROLE " + role_parent + " FROM ROLE " + role_child,
+      "DROP ROLE " + role_child,
+  };
+  metadata =
+      client.UpdateDatabaseDdl(database.FullName(), revoke_statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "Revoked privileges and dropped role " << role_child << "\n";
+}
+//! [END spanner_add_and_drop_database_roles]
+
+//! [START spanner_read_data_with_database_role]
+void ReadDataWithDatabaseRole(std::string const& project_id,
+                              std::string const& instance_id,
+                              std::string const& database_id,
+                              std::string const& role) {
+  namespace spanner = ::google::cloud::spanner;
+  auto client = spanner::Client(spanner::MakeConnection(
+      spanner::Database(project_id, instance_id, database_id),
+      google::cloud::Options{}.set<spanner::SessionCreatorRoleOption>(role)));
+  spanner::SqlStatement select_star("SELECT * FROM Singers");
+  auto rows = client.ExecuteQuery(std::move(select_star));
+  using RowType =
+      std::tuple<std::int64_t, std::string, std::string, spanner::Bytes>;
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "SingerId: " << std::get<0>(*row) << ", "
+              << "FirstName: " << std::get<1>(*row) << ", "
+              << "LastName: " << std::get<2>(*row) << "\n";
+  }
+}
+//! [END spanner_read_data_with_database_role]
+
+//! [START spanner_list_database_roles]
+void ListDatabaseRoles(google::cloud::spanner_admin::DatabaseAdminClient client,
+                       std::string const& project_id,
+                       std::string const& instance_id,
+                       std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::cout << "Database Roles are:\n";
+  for (auto const& role : client.ListDatabaseRoles(database.FullName())) {
+    if (!role) throw std::runtime_error(role.status().message());
+    std::cout << role->name() << "\n";
+  }
+}
+//! [END spanner_list_database_roles]
+
+//! [START spanner_enable_fine_grained_access]
+void EnableFineGrainedAccess(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& iam_member,
+    std::string const& database_role, std::string const& title) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+
+  google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(database.FullName());
+  request.mutable_options()->set_requested_policy_version(3);
+  auto policy = client.GetIamPolicy(request);
+  if (!policy) throw std::runtime_error(policy.status().message());
+  if (policy->version() < 3) policy->set_version(3);
+
+  auto& binding = *policy->add_bindings();
+  binding.set_role("roles/spanner.fineGrainedAccessUser");
+  binding.add_members(iam_member);
+  auto& condition = *binding.mutable_condition();
+  condition.set_expression("resource.name.endsWith(\"/databaseRoles/" +
+                           database_role + "\")");
+  condition.set_title(title);
+
+  auto new_policy =
+      client.SetIamPolicy(database.FullName(), *std::move(policy));
+  if (!new_policy) throw std::runtime_error(new_policy.status().message());
+  std::cout << "Enabled fine-grained access in IAM. New policy has version "
+            << new_policy->version() << "\n";
+}
+//! [END spanner_enable_fine_grained_access]
+
 //! [update-database] [START spanner_add_column]
 void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
                std::string const& project_id, std::string const& instance_id,
@@ -3551,6 +3655,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_database_command_entry("add-storing-index", AddStoringIndex),
       make_database_command_entry("get-database", GetDatabase),
       make_database_command_entry("get-database-ddl", GetDatabaseDdl),
+      make_database_command_entry("list-database-roles", ListDatabaseRoles),
       make_database_command_entry("add-column", AddColumn),
       make_database_command_entry("add-timestamp-column", AddTimestampColumn),
       {"list-databases", ListDatabasesCommand},
@@ -4047,6 +4152,26 @@ void RunAll(bool emulator) {
 
   SampleBanner("spanner_get_database_ddl");
   GetDatabaseDdl(database_admin_client, project_id, instance_id, database_id);
+
+  if (!emulator) {
+    SampleBanner("spanner_add_and_drop_database_roles");
+    AddAndDropDatabaseRoles(database_admin_client, project_id, instance_id,
+                            database_id, "new_parent", "new_child");
+
+    SampleBanner("spanner_read_data_with_database_role");
+    ReadDataWithDatabaseRole(project_id, instance_id, database_id,
+                             "new_parent");
+
+    SampleBanner("spanner_list_database_roles");
+    ListDatabaseRoles(database_admin_client, project_id, instance_id,
+                      database_id);
+
+    SampleBanner("spanner_enable_fine_grained_access");
+    EnableFineGrainedAccess(database_admin_client, project_id, instance_id,
+                            database_id,
+                            "serviceAccount:" + test_iam_service_account,
+                            "new_parent", "condition title");
+  }
 
   SampleBanner("spanner_list_databases");
   ListDatabases(database_admin_client, project_id, instance_id);

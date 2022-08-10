@@ -142,8 +142,12 @@ MATCHER(HasBeginTransaction, "request has begin TransactionSelector set") {
   return arg.transaction().has_begin();
 }
 
-MATCHER_P(HasDatabase, database, "Request has expected database") {
+MATCHER_P(HasDatabase, database, "request has expected database") {
   return arg.database() == database.FullName();
+}
+
+MATCHER_P(HasCreatorRole, role, "request has expected creator role") {
+  return arg.session_template().creator_role() == role;
 }
 
 // Matches a `spanner::Transaction` that is bound to a "bad" session.
@@ -265,11 +269,11 @@ Options MakeLimitedRetryOptions() {
 
 std::shared_ptr<ConnectionImpl> MakeConnectionImpl(
     spanner::Database db,
-    std::shared_ptr<spanner_testing::MockSpannerStub> mock) {
-  auto opts = MakeLimitedRetryOptions();
+    std::shared_ptr<spanner_testing::MockSpannerStub> mock, Options opts = {}) {
   // No actual credential needed for unit tests
   opts.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  opts = DefaultOptions(std::move(opts));
+  opts = DefaultOptions(
+      internal::MergeOptions(std::move(opts), MakeLimitedRetryOptions()));
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   std::vector<std::shared_ptr<SpannerStub>> stubs = {std::move(mock)};
   return std::make_shared<ConnectionImpl>(std::move(db), std::move(background),
@@ -2705,8 +2709,10 @@ TEST(ConnectionImplTest, MultipleThreads) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
   std::string const session_prefix = "test-session-prefix-";
+  std::string const role = "TestRole";
   std::atomic<int> session_counter(0);
-  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+  EXPECT_CALL(*mock, BatchCreateSessions(
+                         _, AllOf(HasDatabase(db), HasCreatorRole(role))))
       .WillRepeatedly(
           [&session_prefix, &session_counter](
               grpc::ClientContext&,
@@ -2745,7 +2751,8 @@ TEST(ConnectionImplTest, MultipleThreads) {
     }
   };
 
-  auto conn = MakeConnectionImpl(db, mock);
+  auto conn = MakeConnectionImpl(
+      db, mock, Options{}.set<spanner::SessionCreatorRoleOption>(role));
   std::vector<std::future<void>> tasks;
   for (unsigned i = 0; i != thread_count; ++i) {
     tasks.push_back(std::async(std::launch::async, runner, i,

@@ -44,6 +44,7 @@ using ::testing::EndsWith;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::StartsWith;
 
 // Constants used to identify the encryption key.
 auto constexpr kKeyRing = "spanner-cmek";
@@ -275,6 +276,26 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
                                  AllOf(HasSubstr("Key has type JSON"),
                                        HasSubstr("part of the primary key"))));
+
+  // Verify that a new role can be created and returned.
+  statements.clear();
+  statements.emplace_back(R"""(
+        CREATE ROLE test_role
+      )""");
+  metadata = client_.UpdateDatabaseDdl(database_.FullName(), statements).get();
+  if (emulator_) {
+    EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument));
+  } else {
+    EXPECT_THAT(metadata, IsOk());
+    std::vector<std::string> roles;
+    for (auto const& role : client_.ListDatabaseRoles(database_.FullName())) {
+      EXPECT_THAT(role->name(),
+                  StartsWith(database_.FullName() + "/databaseRoles/"));
+      roles.push_back(role->name());
+    }
+    EXPECT_THAT(roles, AllOf(Contains(EndsWith("/public")),
+                             Contains(EndsWith("/test_role"))));
+  }
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
   auto drop_status = client_.DropDatabase(database_.FullName());
