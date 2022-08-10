@@ -14,7 +14,9 @@ Linux distributions, as well as Windows and macOS. The
 instructions to install the necessary dependencies, as well as how to compile
 the client library.
 
-### Setting up your repo
+@tableofcontents{HTML:2}
+
+## Setting up your repo
 
 In order to use the Web Risk API C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
@@ -66,7 +68,7 @@ which should give you a taste of the Web Risk API C++ client library API.
   actually print anything until the application sets a backend or it sets this
   environment variable.
 
-### Error Handling
+## Error Handling
 
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
@@ -85,7 +87,7 @@ It will return the `T` value or throw on error.
 For operations that do not return a value the library simply returns
 `google::cloud::Status`.
 
-### Retry, Backoff, and Idempotency Policies.
+## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
