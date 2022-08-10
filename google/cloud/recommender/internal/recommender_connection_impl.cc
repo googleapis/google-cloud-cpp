@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace recommender_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<recommender::RecommenderRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<recommender::RecommenderRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<recommender::RecommenderBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<recommender::RecommenderConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<recommender::RecommenderConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 RecommenderConnectionImpl::RecommenderConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

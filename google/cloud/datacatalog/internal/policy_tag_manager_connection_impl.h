@@ -97,40 +97,6 @@ class PolicyTagManagerConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<datacatalog::PolicyTagManagerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog::PolicyTagManagerRetryPolicyOption>()) {
-      return options.get<datacatalog::PolicyTagManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog::PolicyTagManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog::PolicyTagManagerBackoffPolicyOption>()) {
-      return options.get<datacatalog::PolicyTagManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog::PolicyTagManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<datacatalog::PolicyTagManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            datacatalog::PolicyTagManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datacatalog::PolicyTagManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datacatalog::PolicyTagManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datacatalog_internal::PolicyTagManagerStub> stub_;
   Options options_;

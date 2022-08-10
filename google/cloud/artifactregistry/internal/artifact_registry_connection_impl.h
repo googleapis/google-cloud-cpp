@@ -169,57 +169,6 @@ class ArtifactRegistryConnectionImpl
           UpdateProjectSettingsRequest const& request) override;
 
  private:
-  std::unique_ptr<artifactregistry::ArtifactRegistryRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::ArtifactRegistryRetryPolicyOption>()) {
-      return options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::ArtifactRegistryBackoffPolicyOption>()) {
-      return options
-          .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<artifactregistry::ArtifactRegistryConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::
-                        ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<artifactregistry::
-                   ArtifactRegistryConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<artifactregistry::
-                 ArtifactRegistryConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::ArtifactRegistryPollingPolicyOption>()) {
-      return options
-          .get<artifactregistry::ArtifactRegistryPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<artifactregistry::ArtifactRegistryPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub_;
   Options options_;

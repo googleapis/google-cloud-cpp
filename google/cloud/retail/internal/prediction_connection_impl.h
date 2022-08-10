@@ -52,38 +52,6 @@ class PredictionServiceConnectionImpl
       google::cloud::retail::v2::PredictRequest const& request) override;
 
  private:
-  std::unique_ptr<retail::PredictionServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail::PredictionServiceRetryPolicyOption>()) {
-      return options.get<retail::PredictionServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<retail::PredictionServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail::PredictionServiceBackoffPolicyOption>()) {
-      return options.get<retail::PredictionServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail::PredictionServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<retail::PredictionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            retail::PredictionServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<retail::PredictionServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<retail::PredictionServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::PredictionServiceStub> stub_;
   Options options_;

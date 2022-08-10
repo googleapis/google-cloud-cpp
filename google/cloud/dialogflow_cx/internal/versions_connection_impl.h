@@ -80,44 +80,6 @@ class VersionsConnectionImpl : public dialogflow_cx::VersionsConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_cx::VersionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::VersionsRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::VersionsRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::VersionsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::VersionsBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::VersionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::VersionsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dialogflow_cx::VersionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_cx::VersionsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::VersionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::VersionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::VersionsPollingPolicyOption>()) {
-      return options.get<dialogflow_cx::VersionsPollingPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::VersionsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::VersionsStub> stub_;
   Options options_;

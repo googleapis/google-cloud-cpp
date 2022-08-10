@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace scheduler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<scheduler::CloudSchedulerRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<scheduler::CloudSchedulerRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<scheduler::CloudSchedulerBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<scheduler::CloudSchedulerConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<scheduler::CloudSchedulerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CloudSchedulerConnectionImpl::CloudSchedulerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

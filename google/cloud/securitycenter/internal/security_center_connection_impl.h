@@ -206,51 +206,6 @@ class SecurityCenterConnectionImpl
       override;
 
  private:
-  std::unique_ptr<securitycenter::SecurityCenterRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter::SecurityCenterRetryPolicyOption>()) {
-      return options.get<securitycenter::SecurityCenterRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<securitycenter::SecurityCenterRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter::SecurityCenterBackoffPolicyOption>()) {
-      return options.get<securitycenter::SecurityCenterBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<securitycenter::SecurityCenterBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<securitycenter::SecurityCenterConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter::
-                        SecurityCenterConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              securitycenter::SecurityCenterConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<securitycenter::SecurityCenterConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter::SecurityCenterPollingPolicyOption>()) {
-      return options.get<securitycenter::SecurityCenterPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<securitycenter::SecurityCenterPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<securitycenter_internal::SecurityCenterStub> stub_;
   Options options_;

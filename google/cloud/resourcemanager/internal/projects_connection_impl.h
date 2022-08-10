@@ -92,48 +92,6 @@ class ProjectsConnectionImpl : public resourcemanager::ProjectsConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<resourcemanager::ProjectsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::ProjectsRetryPolicyOption>()) {
-      return options.get<resourcemanager::ProjectsRetryPolicyOption>()->clone();
-    }
-    return options_.get<resourcemanager::ProjectsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::ProjectsBackoffPolicyOption>()) {
-      return options.get<resourcemanager::ProjectsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager::ProjectsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<resourcemanager::ProjectsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::ProjectsPollingPolicyOption>()) {
-      return options.get<resourcemanager::ProjectsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager::ProjectsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_internal::ProjectsStub> stub_;
   Options options_;

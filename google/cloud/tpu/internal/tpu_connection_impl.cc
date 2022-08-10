@@ -30,6 +30,28 @@ namespace google {
 namespace cloud {
 namespace tpu_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<tpu::TpuRetryPolicy> retry_policy() {
+  return internal::CurrentOptions().get<tpu::TpuRetryPolicyOption>()->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions().get<tpu::TpuBackoffPolicyOption>()->clone();
+}
+
+inline std::unique_ptr<tpu::TpuConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<tpu::TpuConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions().get<tpu::TpuPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 TpuConnectionImpl::TpuConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

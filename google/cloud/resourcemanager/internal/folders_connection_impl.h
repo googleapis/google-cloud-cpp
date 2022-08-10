@@ -92,46 +92,6 @@ class FoldersConnectionImpl : public resourcemanager::FoldersConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<resourcemanager::FoldersRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::FoldersRetryPolicyOption>()) {
-      return options.get<resourcemanager::FoldersRetryPolicyOption>()->clone();
-    }
-    return options_.get<resourcemanager::FoldersRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::FoldersBackoffPolicyOption>()) {
-      return options.get<resourcemanager::FoldersBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager::FoldersBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<resourcemanager::FoldersConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::FoldersPollingPolicyOption>()) {
-      return options.get<resourcemanager::FoldersPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager::FoldersPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_internal::FoldersStub> stub_;
   Options options_;

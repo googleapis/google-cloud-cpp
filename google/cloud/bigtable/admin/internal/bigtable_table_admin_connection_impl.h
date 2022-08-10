@@ -117,58 +117,6 @@ class BigtableTableAdminConnectionImpl
       override;
 
  private:
-  std::unique_ptr<bigtable_admin::BigtableTableAdminRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigtable_admin::BigtableTableAdminRetryPolicyOption>()) {
-      return options.get<bigtable_admin::BigtableTableAdminRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<bigtable_admin::BigtableTableAdminRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigtable_admin::BigtableTableAdminBackoffPolicyOption>()) {
-      return options
-          .get<bigtable_admin::BigtableTableAdminBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigtable_admin::BigtableTableAdminBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<bigtable_admin::BigtableTableAdminConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigtable_admin::
-                     BigtableTableAdminConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigtable_admin::
-                   BigtableTableAdminConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigtable_admin::
-                 BigtableTableAdminConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigtable_admin::BigtableTableAdminPollingPolicyOption>()) {
-      return options
-          .get<bigtable_admin::BigtableTableAdminPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigtable_admin::BigtableTableAdminPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigtable_admin_internal::BigtableTableAdminStub> stub_;
   Options options_;

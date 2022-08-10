@@ -28,6 +28,31 @@ namespace google {
 namespace cloud {
 namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<containeranalysis::ContainerAnalysisRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<containeranalysis::ContainerAnalysisRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<containeranalysis::ContainerAnalysisBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    containeranalysis::ContainerAnalysisConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<containeranalysis::
+               ContainerAnalysisConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ContainerAnalysisConnectionImpl::ContainerAnalysisConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

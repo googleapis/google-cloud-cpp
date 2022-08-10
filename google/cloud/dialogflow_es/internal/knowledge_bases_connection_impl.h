@@ -70,40 +70,6 @@ class KnowledgeBasesConnectionImpl
       override;
 
  private:
-  std::unique_ptr<dialogflow_es::KnowledgeBasesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::KnowledgeBasesRetryPolicyOption>()) {
-      return options.get<dialogflow_es::KnowledgeBasesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::KnowledgeBasesRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::KnowledgeBasesBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::KnowledgeBasesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::KnowledgeBasesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dialogflow_es::KnowledgeBasesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_es::KnowledgeBasesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::KnowledgeBasesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_es::KnowledgeBasesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::KnowledgeBasesStub> stub_;
   Options options_;

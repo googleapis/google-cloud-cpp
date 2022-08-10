@@ -68,50 +68,6 @@ class VpcAccessServiceConnectionImpl
                       request) override;
 
  private:
-  std::unique_ptr<vpcaccess::VpcAccessServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess::VpcAccessServiceRetryPolicyOption>()) {
-      return options.get<vpcaccess::VpcAccessServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vpcaccess::VpcAccessServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess::VpcAccessServiceBackoffPolicyOption>()) {
-      return options.get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess::VpcAccessServicePollingPolicyOption>()) {
-      return options.get<vpcaccess::VpcAccessServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vpcaccess::VpcAccessServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub_;
   Options options_;

@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace tasks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<tasks::CloudTasksRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<tasks::CloudTasksRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<tasks::CloudTasksBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<tasks::CloudTasksConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<tasks::CloudTasksConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CloudTasksConnectionImpl::CloudTasksConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

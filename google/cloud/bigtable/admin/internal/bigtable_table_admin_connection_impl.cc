@@ -31,6 +31,37 @@ namespace google {
 namespace cloud {
 namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<bigtable_admin::BigtableTableAdminRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<bigtable_admin::BigtableTableAdminRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<bigtable_admin::BigtableTableAdminBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    bigtable_admin::BigtableTableAdminConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<
+          bigtable_admin::BigtableTableAdminConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<bigtable_admin::BigtableTableAdminPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 BigtableTableAdminConnectionImpl::BigtableTableAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

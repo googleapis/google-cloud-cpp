@@ -84,50 +84,6 @@ class IdentityAwareProxyAdminServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<iap::IdentityAwareProxyAdminServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iap::IdentityAwareProxyAdminServiceRetryPolicyOption>()) {
-      return options
-          .get<iap::IdentityAwareProxyAdminServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<iap::IdentityAwareProxyAdminServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iap::IdentityAwareProxyAdminServiceBackoffPolicyOption>()) {
-      return options
-          .get<iap::IdentityAwareProxyAdminServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<iap::IdentityAwareProxyAdminServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      iap::IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            iap::
-                IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              iap::
-                  IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<
-            iap::
-                IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iap_internal::IdentityAwareProxyAdminServiceStub> stub_;
   Options options_;

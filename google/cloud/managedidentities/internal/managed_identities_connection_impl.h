@@ -97,64 +97,6 @@ class ManagedIdentitiesServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<managedidentities::ManagedIdentitiesServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            managedidentities::ManagedIdentitiesServiceRetryPolicyOption>()) {
-      return options
-          .get<managedidentities::ManagedIdentitiesServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<managedidentities::ManagedIdentitiesServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            managedidentities::ManagedIdentitiesServiceBackoffPolicyOption>()) {
-      return options
-          .get<managedidentities::ManagedIdentitiesServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<managedidentities::ManagedIdentitiesServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      managedidentities::ManagedIdentitiesServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            managedidentities::
-                ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<managedidentities::
-                   ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<managedidentities::
-                 ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            managedidentities::ManagedIdentitiesServicePollingPolicyOption>()) {
-      return options
-          .get<managedidentities::ManagedIdentitiesServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<managedidentities::ManagedIdentitiesServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<managedidentities_internal::ManagedIdentitiesServiceStub>
       stub_;

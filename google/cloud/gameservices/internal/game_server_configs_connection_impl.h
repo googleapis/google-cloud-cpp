@@ -71,64 +71,6 @@ class GameServerConfigsServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<gameservices::GameServerConfigsServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<gameservices::GameServerConfigsServiceRetryPolicyOption>()) {
-      return options
-          .get<gameservices::GameServerConfigsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<gameservices::GameServerConfigsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<gameservices::GameServerConfigsServiceBackoffPolicyOption>()) {
-      return options
-          .get<gameservices::GameServerConfigsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<gameservices::GameServerConfigsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      gameservices::GameServerConfigsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            gameservices::
-                GameServerConfigsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<gameservices::
-                   GameServerConfigsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<gameservices::
-                 GameServerConfigsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<gameservices::GameServerConfigsServicePollingPolicyOption>()) {
-      return options
-          .get<gameservices::GameServerConfigsServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<gameservices::GameServerConfigsServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gameservices_internal::GameServerConfigsServiceStub> stub_;
   Options options_;

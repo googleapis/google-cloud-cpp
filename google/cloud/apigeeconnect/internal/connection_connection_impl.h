@@ -54,42 +54,6 @@ class ConnectionServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<apigeeconnect::ConnectionServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<apigeeconnect::ConnectionServiceRetryPolicyOption>()) {
-      return options.get<apigeeconnect::ConnectionServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<apigeeconnect::ConnectionServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<apigeeconnect::ConnectionServiceBackoffPolicyOption>()) {
-      return options.get<apigeeconnect::ConnectionServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<apigeeconnect::ConnectionServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<apigeeconnect::ConnectionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<apigeeconnect::
-                        ConnectionServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<apigeeconnect::
-                   ConnectionServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<
-            apigeeconnect::ConnectionServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<apigeeconnect_internal::ConnectionServiceStub> stub_;
   Options options_;

@@ -29,6 +29,30 @@ namespace google {
 namespace cloud {
 namespace apigeeconnect_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<apigeeconnect::ConnectionServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<apigeeconnect::ConnectionServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<apigeeconnect::ConnectionServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    apigeeconnect::ConnectionServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<apigeeconnect::ConnectionServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ConnectionServiceConnectionImpl::ConnectionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

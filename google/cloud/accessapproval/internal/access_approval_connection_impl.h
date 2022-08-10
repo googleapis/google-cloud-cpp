@@ -94,41 +94,6 @@ class AccessApprovalConnectionImpl
           GetAccessApprovalServiceAccountMessage const& request) override;
 
  private:
-  std::unique_ptr<accessapproval::AccessApprovalRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<accessapproval::AccessApprovalRetryPolicyOption>()) {
-      return options.get<accessapproval::AccessApprovalRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<accessapproval::AccessApprovalRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<accessapproval::AccessApprovalBackoffPolicyOption>()) {
-      return options.get<accessapproval::AccessApprovalBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<accessapproval::AccessApprovalBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<accessapproval::AccessApprovalConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<accessapproval::
-                        AccessApprovalConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              accessapproval::AccessApprovalConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<accessapproval::AccessApprovalConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub_;
   Options options_;

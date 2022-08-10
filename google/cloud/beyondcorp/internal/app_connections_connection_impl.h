@@ -81,55 +81,6 @@ class AppConnectionsServiceConnectionImpl
                             ResolveAppConnectionsRequest request) override;
 
  private:
-  std::unique_ptr<beyondcorp::AppConnectionsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::AppConnectionsServiceRetryPolicyOption>()) {
-      return options.get<beyondcorp::AppConnectionsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<beyondcorp::AppConnectionsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::AppConnectionsServiceBackoffPolicyOption>()) {
-      return options
-          .get<beyondcorp::AppConnectionsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<beyondcorp::AppConnectionsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<beyondcorp::AppConnectionsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp::
-                AppConnectionsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<beyondcorp::
-                   AppConnectionsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<beyondcorp::
-                 AppConnectionsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::AppConnectionsServicePollingPolicyOption>()) {
-      return options
-          .get<beyondcorp::AppConnectionsServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<beyondcorp::AppConnectionsServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<beyondcorp_internal::AppConnectionsServiceStub> stub_;
   Options options_;

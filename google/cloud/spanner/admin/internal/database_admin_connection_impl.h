@@ -132,50 +132,6 @@ class DatabaseAdminConnectionImpl
       override;
 
  private:
-  std::unique_ptr<spanner_admin::DatabaseAdminRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::DatabaseAdminRetryPolicyOption>()) {
-      return options.get<spanner_admin::DatabaseAdminRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<spanner_admin::DatabaseAdminRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::DatabaseAdminBackoffPolicyOption>()) {
-      return options.get<spanner_admin::DatabaseAdminBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<spanner_admin::DatabaseAdminBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<spanner_admin::DatabaseAdminConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::DatabaseAdminPollingPolicyOption>()) {
-      return options.get<spanner_admin::DatabaseAdminPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<spanner_admin::DatabaseAdminPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<spanner_admin_internal::DatabaseAdminStub> stub_;
   Options options_;

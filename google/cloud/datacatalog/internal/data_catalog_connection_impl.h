@@ -169,37 +169,6 @@ class DataCatalogConnectionImpl : public datacatalog::DataCatalogConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<datacatalog::DataCatalogRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog::DataCatalogRetryPolicyOption>()) {
-      return options.get<datacatalog::DataCatalogRetryPolicyOption>()->clone();
-    }
-    return options_.get<datacatalog::DataCatalogRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog::DataCatalogBackoffPolicyOption>()) {
-      return options.get<datacatalog::DataCatalogBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog::DataCatalogBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<datacatalog::DataCatalogConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<datacatalog::DataCatalogConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datacatalog::DataCatalogConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datacatalog::DataCatalogConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datacatalog_internal::DataCatalogStub> stub_;
   Options options_;

@@ -72,50 +72,6 @@ class RealmsServiceConnectionImpl
                          request) override;
 
  private:
-  std::unique_ptr<gameservices::RealmsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::RealmsServiceRetryPolicyOption>()) {
-      return options.get<gameservices::RealmsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gameservices::RealmsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::RealmsServiceBackoffPolicyOption>()) {
-      return options.get<gameservices::RealmsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gameservices::RealmsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<gameservices::RealmsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::RealmsServicePollingPolicyOption>()) {
-      return options.get<gameservices::RealmsServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gameservices::RealmsServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gameservices_internal::RealmsServiceStub> stub_;
   Options options_;

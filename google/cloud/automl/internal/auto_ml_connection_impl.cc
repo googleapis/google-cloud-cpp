@@ -30,6 +30,34 @@ namespace google {
 namespace cloud {
 namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<automl::AutoMlRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<automl::AutoMlRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<automl::AutoMlBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<automl::AutoMlConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<automl::AutoMlConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<automl::AutoMlPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AutoMlConnectionImpl::AutoMlConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

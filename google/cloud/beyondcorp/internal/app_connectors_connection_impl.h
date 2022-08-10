@@ -80,53 +80,6 @@ class AppConnectorsServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<beyondcorp::AppConnectorsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::AppConnectorsServiceRetryPolicyOption>()) {
-      return options.get<beyondcorp::AppConnectorsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<beyondcorp::AppConnectorsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::AppConnectorsServiceBackoffPolicyOption>()) {
-      return options.get<beyondcorp::AppConnectorsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<beyondcorp::AppConnectorsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<beyondcorp::AppConnectorsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<beyondcorp::
-                     AppConnectorsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<beyondcorp::
-                   AppConnectorsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<
-            beyondcorp::AppConnectorsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::AppConnectorsServicePollingPolicyOption>()) {
-      return options.get<beyondcorp::AppConnectorsServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<beyondcorp::AppConnectorsServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<beyondcorp_internal::AppConnectorsServiceStub> stub_;
   Options options_;

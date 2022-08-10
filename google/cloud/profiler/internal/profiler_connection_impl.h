@@ -61,38 +61,6 @@ class ProfilerServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<profiler::ProfilerServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<profiler::ProfilerServiceRetryPolicyOption>()) {
-      return options.get<profiler::ProfilerServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<profiler::ProfilerServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<profiler::ProfilerServiceBackoffPolicyOption>()) {
-      return options.get<profiler::ProfilerServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<profiler::ProfilerServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<profiler::ProfilerServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            profiler::ProfilerServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<profiler::ProfilerServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<profiler::ProfilerServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<profiler_internal::ProfilerServiceStub> stub_;
   Options options_;

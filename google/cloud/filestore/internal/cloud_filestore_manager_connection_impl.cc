@@ -30,6 +30,36 @@ namespace google {
 namespace cloud {
 namespace filestore_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<filestore::CloudFilestoreManagerRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<filestore::CloudFilestoreManagerRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<filestore::CloudFilestoreManagerBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    filestore::CloudFilestoreManagerConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<filestore::CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<filestore::CloudFilestoreManagerPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CloudFilestoreManagerConnectionImpl::CloudFilestoreManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

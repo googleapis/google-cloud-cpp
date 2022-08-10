@@ -83,64 +83,6 @@ class ReachabilityServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<networkmanagement::ReachabilityServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<networkmanagement::ReachabilityServiceRetryPolicyOption>()) {
-      return options
-          .get<networkmanagement::ReachabilityServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<networkmanagement::ReachabilityServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<networkmanagement::ReachabilityServiceBackoffPolicyOption>()) {
-      return options
-          .get<networkmanagement::ReachabilityServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<networkmanagement::ReachabilityServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      networkmanagement::ReachabilityServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<networkmanagement::
-                     ReachabilityServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<networkmanagement::
-                   ReachabilityServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<networkmanagement::
-                 ReachabilityServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<networkmanagement::ReachabilityServicePollingPolicyOption>()) {
-      return options
-          .get<networkmanagement::ReachabilityServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<networkmanagement::ReachabilityServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<networkmanagement_internal::ReachabilityServiceStub> stub_;
   Options options_;

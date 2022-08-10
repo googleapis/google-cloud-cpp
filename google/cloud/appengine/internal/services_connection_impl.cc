@@ -30,6 +30,34 @@ namespace google {
 namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<appengine::ServicesRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<appengine::ServicesRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<appengine::ServicesBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<appengine::ServicesConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<appengine::ServicesConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<appengine::ServicesPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ServicesConnectionImpl::ServicesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

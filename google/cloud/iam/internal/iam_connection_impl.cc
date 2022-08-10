@@ -29,6 +29,24 @@ namespace google {
 namespace cloud {
 namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<iam::IAMRetryPolicy> retry_policy() {
+  return internal::CurrentOptions().get<iam::IAMRetryPolicyOption>()->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions().get<iam::IAMBackoffPolicyOption>()->clone();
+}
+
+inline std::unique_ptr<iam::IAMConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<iam::IAMConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 IAMConnectionImpl::IAMConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

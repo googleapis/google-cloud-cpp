@@ -29,6 +29,34 @@ namespace google {
 namespace cloud {
 namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<vision::ImageAnnotatorRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<vision::ImageAnnotatorRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<vision::ImageAnnotatorBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<vision::ImageAnnotatorConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<vision::ImageAnnotatorPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ImageAnnotatorConnectionImpl::ImageAnnotatorConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

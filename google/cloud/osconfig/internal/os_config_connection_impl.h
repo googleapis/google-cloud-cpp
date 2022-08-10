@@ -97,38 +97,6 @@ class OsConfigServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<osconfig::OsConfigServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig::OsConfigServiceRetryPolicyOption>()) {
-      return options.get<osconfig::OsConfigServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<osconfig::OsConfigServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig::OsConfigServiceBackoffPolicyOption>()) {
-      return options.get<osconfig::OsConfigServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<osconfig::OsConfigServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<osconfig::OsConfigServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<osconfig_internal::OsConfigServiceStub> stub_;
   Options options_;

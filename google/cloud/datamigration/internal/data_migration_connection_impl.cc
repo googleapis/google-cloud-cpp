@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace datamigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<datamigration::DataMigrationServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<datamigration::DataMigrationServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<datamigration::DataMigrationServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    datamigration::DataMigrationServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<datamigration::
+               DataMigrationServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<datamigration::DataMigrationServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DataMigrationServiceConnectionImpl::DataMigrationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

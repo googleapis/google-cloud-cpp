@@ -58,34 +58,6 @@ class PublisherConnectionImpl : public eventarc::PublisherConnection {
           request) override;
 
  private:
-  std::unique_ptr<eventarc::PublisherRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc::PublisherRetryPolicyOption>()) {
-      return options.get<eventarc::PublisherRetryPolicyOption>()->clone();
-    }
-    return options_.get<eventarc::PublisherRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc::PublisherBackoffPolicyOption>()) {
-      return options.get<eventarc::PublisherBackoffPolicyOption>()->clone();
-    }
-    return options_.get<eventarc::PublisherBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<eventarc::PublisherConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc::PublisherConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<eventarc::PublisherConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<eventarc::PublisherConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<eventarc_internal::PublisherStub> stub_;
   Options options_;

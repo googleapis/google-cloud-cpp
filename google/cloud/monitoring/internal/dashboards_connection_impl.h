@@ -70,40 +70,6 @@ class DashboardsServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<monitoring::DashboardsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::DashboardsServiceRetryPolicyOption>()) {
-      return options.get<monitoring::DashboardsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::DashboardsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::DashboardsServiceBackoffPolicyOption>()) {
-      return options.get<monitoring::DashboardsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::DashboardsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<monitoring::DashboardsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring::DashboardsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring::DashboardsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::DashboardsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_internal::DashboardsServiceStub> stub_;
   Options options_;

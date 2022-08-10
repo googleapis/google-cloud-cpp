@@ -195,65 +195,6 @@ class CertificateAuthorityServiceConnectionImpl
           UpdateCertificateTemplateRequest const& request) override;
 
  private:
-  std::unique_ptr<privateca::CertificateAuthorityServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<privateca::CertificateAuthorityServiceRetryPolicyOption>()) {
-      return options
-          .get<privateca::CertificateAuthorityServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<privateca::CertificateAuthorityServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<privateca::CertificateAuthorityServiceBackoffPolicyOption>()) {
-      return options
-          .get<privateca::CertificateAuthorityServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<privateca::CertificateAuthorityServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      privateca::CertificateAuthorityServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            privateca::
-                CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              privateca::
-                  CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<privateca::
-                 CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<privateca::CertificateAuthorityServicePollingPolicyOption>()) {
-      return options
-          .get<privateca::CertificateAuthorityServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<privateca::CertificateAuthorityServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub> stub_;
   Options options_;

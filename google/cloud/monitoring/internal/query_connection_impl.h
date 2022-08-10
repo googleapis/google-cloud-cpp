@@ -52,37 +52,6 @@ class QueryServiceConnectionImpl : public monitoring::QueryServiceConnection {
       google::monitoring::v3::QueryTimeSeriesRequest request) override;
 
  private:
-  std::unique_ptr<monitoring::QueryServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::QueryServiceRetryPolicyOption>()) {
-      return options.get<monitoring::QueryServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<monitoring::QueryServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::QueryServiceBackoffPolicyOption>()) {
-      return options.get<monitoring::QueryServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::QueryServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<monitoring::QueryServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<monitoring::QueryServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring::QueryServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::QueryServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_internal::QueryServiceStub> stub_;
   Options options_;

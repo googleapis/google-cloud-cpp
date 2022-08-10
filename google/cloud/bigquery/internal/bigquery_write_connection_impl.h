@@ -77,36 +77,6 @@ class BigQueryWriteConnectionImpl : public bigquery::BigQueryWriteConnection {
       override;
 
  private:
-  std::unique_ptr<bigquery::BigQueryWriteRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::BigQueryWriteRetryPolicyOption>()) {
-      return options.get<bigquery::BigQueryWriteRetryPolicyOption>()->clone();
-    }
-    return options_.get<bigquery::BigQueryWriteRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::BigQueryWriteBackoffPolicyOption>()) {
-      return options.get<bigquery::BigQueryWriteBackoffPolicyOption>()->clone();
-    }
-    return options_.get<bigquery::BigQueryWriteBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<bigquery::BigQueryWriteConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigquery::BigQueryWriteConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery::BigQueryWriteConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery::BigQueryWriteConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_internal::BigQueryWriteStub> stub_;
   Options options_;

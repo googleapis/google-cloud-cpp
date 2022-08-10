@@ -30,6 +30,34 @@ namespace google {
 namespace cloud {
 namespace redis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<redis::CloudRedisRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<redis::CloudRedisRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<redis::CloudRedisBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<redis::CloudRedisConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<redis::CloudRedisConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<redis::CloudRedisPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CloudRedisConnectionImpl::CloudRedisConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

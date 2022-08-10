@@ -55,35 +55,6 @@ class CloudCatalogConnectionImpl : public billing::CloudCatalogConnection {
       google::cloud::billing::v1::ListSkusRequest request) override;
 
  private:
-  std::unique_ptr<billing::CloudCatalogRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing::CloudCatalogRetryPolicyOption>()) {
-      return options.get<billing::CloudCatalogRetryPolicyOption>()->clone();
-    }
-    return options_.get<billing::CloudCatalogRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing::CloudCatalogBackoffPolicyOption>()) {
-      return options.get<billing::CloudCatalogBackoffPolicyOption>()->clone();
-    }
-    return options_.get<billing::CloudCatalogBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<billing::CloudCatalogConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing::CloudCatalogConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<billing::CloudCatalogConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<billing::CloudCatalogConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_internal::CloudCatalogStub> stub_;
   Options options_;

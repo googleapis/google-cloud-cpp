@@ -28,6 +28,29 @@ namespace google {
 namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<pubsublite::TopicStatsServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<pubsublite::TopicStatsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<pubsublite::TopicStatsServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 TopicStatsServiceConnectionImpl::TopicStatsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

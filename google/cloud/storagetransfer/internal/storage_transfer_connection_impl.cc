@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace storagetransfer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<storagetransfer::StorageTransferServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<storagetransfer::StorageTransferServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<storagetransfer::StorageTransferServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    storagetransfer::StorageTransferServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<storagetransfer::
+               StorageTransferServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<storagetransfer::StorageTransferServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 StorageTransferServiceConnectionImpl::StorageTransferServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

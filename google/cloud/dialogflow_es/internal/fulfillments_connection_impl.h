@@ -57,40 +57,6 @@ class FulfillmentsConnectionImpl
       override;
 
  private:
-  std::unique_ptr<dialogflow_es::FulfillmentsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::FulfillmentsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::FulfillmentsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::FulfillmentsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::FulfillmentsBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::FulfillmentsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::FulfillmentsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dialogflow_es::FulfillmentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_es::FulfillmentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::FulfillmentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_es::FulfillmentsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::FulfillmentsStub> stub_;
   Options options_;

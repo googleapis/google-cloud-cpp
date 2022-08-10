@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace accesscontextmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<accesscontextmanager::AccessContextManagerRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<accesscontextmanager::
+               AccessContextManagerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AccessContextManagerConnectionImpl::AccessContextManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -75,64 +75,6 @@ class AssuredWorkloadsServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<assuredworkloads::AssuredWorkloadsServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()) {
-      return options
-          .get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()) {
-      return options
-          .get<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      assuredworkloads::AssuredWorkloadsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            assuredworkloads::
-                AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<assuredworkloads::
-                   AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<assuredworkloads::
-                 AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()) {
-      return options
-          .get<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub> stub_;
   Options options_;

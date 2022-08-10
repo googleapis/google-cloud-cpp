@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace logging_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<logging::LoggingServiceV2RetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<logging::LoggingServiceV2RetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<logging::LoggingServiceV2BackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<logging::LoggingServiceV2ConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 LoggingServiceV2ConnectionImpl::LoggingServiceV2ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

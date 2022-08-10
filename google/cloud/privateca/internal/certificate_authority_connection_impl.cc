@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace privateca_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<privateca::CertificateAuthorityServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<privateca::CertificateAuthorityServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<privateca::CertificateAuthorityServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    privateca::CertificateAuthorityServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<privateca::
+               CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<privateca::CertificateAuthorityServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CertificateAuthorityServiceConnectionImpl::
     CertificateAuthorityServiceConnectionImpl(

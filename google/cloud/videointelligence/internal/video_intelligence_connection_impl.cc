@@ -29,6 +29,37 @@ namespace google {
 namespace cloud {
 namespace videointelligence_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<videointelligence::VideoIntelligenceServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<videointelligence::VideoIntelligenceServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    videointelligence::VideoIntelligenceServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<videointelligence::
+               VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<videointelligence::VideoIntelligenceServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 VideoIntelligenceServiceConnectionImpl::VideoIntelligenceServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -105,50 +105,6 @@ class ApiGatewayServiceConnectionImpl
                       request) override;
 
  private:
-  std::unique_ptr<apigateway::ApiGatewayServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway::ApiGatewayServiceRetryPolicyOption>()) {
-      return options.get<apigateway::ApiGatewayServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<apigateway::ApiGatewayServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway::ApiGatewayServiceBackoffPolicyOption>()) {
-      return options.get<apigateway::ApiGatewayServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<apigateway::ApiGatewayServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<apigateway::ApiGatewayServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway::ApiGatewayServicePollingPolicyOption>()) {
-      return options.get<apigateway::ApiGatewayServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<apigateway::ApiGatewayServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub_;
   Options options_;

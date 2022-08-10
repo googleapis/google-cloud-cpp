@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<containeranalysis::GrafeasRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<containeranalysis::GrafeasRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<containeranalysis::GrafeasBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<containeranalysis::GrafeasConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<containeranalysis::GrafeasConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 GrafeasConnectionImpl::GrafeasConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

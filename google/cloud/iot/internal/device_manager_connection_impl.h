@@ -115,33 +115,6 @@ class DeviceManagerConnectionImpl : public iot::DeviceManagerConnection {
       override;
 
  private:
-  std::unique_ptr<iot::DeviceManagerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iot::DeviceManagerRetryPolicyOption>()) {
-      return options.get<iot::DeviceManagerRetryPolicyOption>()->clone();
-    }
-    return options_.get<iot::DeviceManagerRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iot::DeviceManagerBackoffPolicyOption>()) {
-      return options.get<iot::DeviceManagerBackoffPolicyOption>()->clone();
-    }
-    return options_.get<iot::DeviceManagerBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<iot::DeviceManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iot::DeviceManagerConnectionIdempotencyPolicyOption>()) {
-      return options.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iot_internal::DeviceManagerStub> stub_;
   Options options_;

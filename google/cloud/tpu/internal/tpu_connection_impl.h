@@ -86,38 +86,6 @@ class TpuConnectionImpl : public tpu::TpuConnection {
       override;
 
  private:
-  std::unique_ptr<tpu::TpuRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tpu::TpuRetryPolicyOption>()) {
-      return options.get<tpu::TpuRetryPolicyOption>()->clone();
-    }
-    return options_.get<tpu::TpuRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tpu::TpuBackoffPolicyOption>()) {
-      return options.get<tpu::TpuBackoffPolicyOption>()->clone();
-    }
-    return options_.get<tpu::TpuBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<tpu::TpuConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tpu::TpuConnectionIdempotencyPolicyOption>()) {
-      return options.get<tpu::TpuConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<tpu::TpuConnectionIdempotencyPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tpu::TpuPollingPolicyOption>()) {
-      return options.get<tpu::TpuPollingPolicyOption>()->clone();
-    }
-    return options_.get<tpu::TpuPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<tpu_internal::TpuStub> stub_;
   Options options_;

@@ -29,6 +29,30 @@ namespace google {
 namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<appengine::AuthorizedCertificatesRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<appengine::AuthorizedCertificatesRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<appengine::AuthorizedCertificatesBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    appengine::AuthorizedCertificatesConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<appengine::AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AuthorizedCertificatesConnectionImpl::AuthorizedCertificatesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

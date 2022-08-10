@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<dataplex::MetadataServiceRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<dataplex::MetadataServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<dataplex::MetadataServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<dataplex::MetadataServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<dataplex::MetadataServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 MetadataServiceConnectionImpl::MetadataServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -155,38 +155,6 @@ class ClusterManagerConnectionImpl
       google::container::v1::ListUsableSubnetworksRequest request) override;
 
  private:
-  std::unique_ptr<container::ClusterManagerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<container::ClusterManagerRetryPolicyOption>()) {
-      return options.get<container::ClusterManagerRetryPolicyOption>()->clone();
-    }
-    return options_.get<container::ClusterManagerRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<container::ClusterManagerBackoffPolicyOption>()) {
-      return options.get<container::ClusterManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<container::ClusterManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<container::ClusterManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            container::ClusterManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<container::ClusterManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<container::ClusterManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<container_internal::ClusterManagerStub> stub_;
   Options options_;

@@ -73,44 +73,6 @@ class JobControllerConnectionImpl : public dataproc::JobControllerConnection {
       google::cloud::dataproc::v1::DeleteJobRequest const& request) override;
 
  private:
-  std::unique_ptr<dataproc::JobControllerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::JobControllerRetryPolicyOption>()) {
-      return options.get<dataproc::JobControllerRetryPolicyOption>()->clone();
-    }
-    return options_.get<dataproc::JobControllerRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::JobControllerBackoffPolicyOption>()) {
-      return options.get<dataproc::JobControllerBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dataproc::JobControllerBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dataproc::JobControllerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dataproc::JobControllerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataproc::JobControllerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataproc::JobControllerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::JobControllerPollingPolicyOption>()) {
-      return options.get<dataproc::JobControllerPollingPolicyOption>()->clone();
-    }
-    return options_.get<dataproc::JobControllerPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataproc_internal::JobControllerStub> stub_;
   Options options_;

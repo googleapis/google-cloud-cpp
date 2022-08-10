@@ -93,53 +93,6 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
  private:
-  std::unique_ptr<filestore::CloudFilestoreManagerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<filestore::CloudFilestoreManagerRetryPolicyOption>()) {
-      return options.get<filestore::CloudFilestoreManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<filestore::CloudFilestoreManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<filestore::CloudFilestoreManagerBackoffPolicyOption>()) {
-      return options.get<filestore::CloudFilestoreManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<filestore::CloudFilestoreManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<filestore::CloudFilestoreManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            filestore::
-                CloudFilestoreManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<filestore::
-                   CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<
-            filestore::CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<filestore::CloudFilestoreManagerPollingPolicyOption>()) {
-      return options.get<filestore::CloudFilestoreManagerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<filestore::CloudFilestoreManagerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<filestore_internal::CloudFilestoreManagerStub> stub_;
   Options options_;

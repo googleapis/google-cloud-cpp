@@ -69,42 +69,6 @@ class BatchServiceConnectionImpl : public batch::BatchServiceConnection {
       google::cloud::batch::v1::ListTasksRequest request) override;
 
  private:
-  std::unique_ptr<batch::BatchServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<batch::BatchServiceRetryPolicyOption>()) {
-      return options.get<batch::BatchServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<batch::BatchServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<batch::BatchServiceBackoffPolicyOption>()) {
-      return options.get<batch::BatchServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<batch::BatchServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<batch::BatchServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<batch::BatchServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<batch::BatchServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<batch::BatchServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<batch::BatchServicePollingPolicyOption>()) {
-      return options.get<batch::BatchServicePollingPolicyOption>()->clone();
-    }
-    return options_.get<batch::BatchServicePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<batch_internal::BatchServiceStub> stub_;
   Options options_;

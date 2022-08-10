@@ -86,38 +86,6 @@ class MetricServiceConnectionImpl : public monitoring::MetricServiceConnection {
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
  private:
-  std::unique_ptr<monitoring::MetricServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::MetricServiceRetryPolicyOption>()) {
-      return options.get<monitoring::MetricServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<monitoring::MetricServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::MetricServiceBackoffPolicyOption>()) {
-      return options.get<monitoring::MetricServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::MetricServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<monitoring::MetricServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring::MetricServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring::MetricServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::MetricServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_internal::MetricServiceStub> stub_;
   Options options_;

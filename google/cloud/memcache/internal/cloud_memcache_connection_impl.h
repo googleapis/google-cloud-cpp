@@ -78,44 +78,6 @@ class CloudMemcacheConnectionImpl : public memcache::CloudMemcacheConnection {
       override;
 
  private:
-  std::unique_ptr<memcache::CloudMemcacheRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<memcache::CloudMemcacheRetryPolicyOption>()) {
-      return options.get<memcache::CloudMemcacheRetryPolicyOption>()->clone();
-    }
-    return options_.get<memcache::CloudMemcacheRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<memcache::CloudMemcacheBackoffPolicyOption>()) {
-      return options.get<memcache::CloudMemcacheBackoffPolicyOption>()->clone();
-    }
-    return options_.get<memcache::CloudMemcacheBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<memcache::CloudMemcacheConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<memcache::CloudMemcachePollingPolicyOption>()) {
-      return options.get<memcache::CloudMemcachePollingPolicyOption>()->clone();
-    }
-    return options_.get<memcache::CloudMemcachePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<memcache_internal::CloudMemcacheStub> stub_;
   Options options_;

@@ -134,40 +134,6 @@ class VideoStitcherServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<video::VideoStitcherServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<video::VideoStitcherServiceRetryPolicyOption>()) {
-      return options.get<video::VideoStitcherServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<video::VideoStitcherServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<video::VideoStitcherServiceBackoffPolicyOption>()) {
-      return options.get<video::VideoStitcherServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<video::VideoStitcherServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<video::VideoStitcherServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            video::VideoStitcherServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<video::VideoStitcherServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<video::VideoStitcherServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<video_internal::VideoStitcherServiceStub> stub_;
   Options options_;

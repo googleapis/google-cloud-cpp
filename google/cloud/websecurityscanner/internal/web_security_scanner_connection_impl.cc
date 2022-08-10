@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace websecurityscanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<websecurityscanner::WebSecurityScannerRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<websecurityscanner::WebSecurityScannerRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    websecurityscanner::WebSecurityScannerConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<websecurityscanner::
+               WebSecurityScannerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 WebSecurityScannerConnectionImpl::WebSecurityScannerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace resourcesettings_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<resourcesettings::ResourceSettingsServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<resourcesettings::ResourceSettingsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<resourcesettings::ResourceSettingsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    resourcesettings::ResourceSettingsServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<resourcesettings::
+               ResourceSettingsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ResourceSettingsServiceConnectionImpl::ResourceSettingsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

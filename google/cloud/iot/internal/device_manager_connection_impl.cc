@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace iot_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<iot::DeviceManagerRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<iot::DeviceManagerRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<iot::DeviceManagerBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<iot::DeviceManagerConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DeviceManagerConnectionImpl::DeviceManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

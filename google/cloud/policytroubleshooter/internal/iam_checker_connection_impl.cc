@@ -28,6 +28,30 @@ namespace google {
 namespace cloud {
 namespace policytroubleshooter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<policytroubleshooter::IamCheckerRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<policytroubleshooter::IamCheckerRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<policytroubleshooter::IamCheckerBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    policytroubleshooter::IamCheckerConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<policytroubleshooter::IamCheckerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 IamCheckerConnectionImpl::IamCheckerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -56,33 +56,6 @@ class IAMPolicyConnectionImpl : public iam::IAMPolicyConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<iam::IAMPolicyRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam::IAMPolicyRetryPolicyOption>()) {
-      return options.get<iam::IAMPolicyRetryPolicyOption>()->clone();
-    }
-    return options_.get<iam::IAMPolicyRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam::IAMPolicyBackoffPolicyOption>()) {
-      return options.get<iam::IAMPolicyBackoffPolicyOption>()->clone();
-    }
-    return options_.get<iam::IAMPolicyBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<iam::IAMPolicyConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam::IAMPolicyConnectionIdempotencyPolicyOption>()) {
-      return options.get<iam::IAMPolicyConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<iam::IAMPolicyConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMPolicyStub> stub_;
   Options options_;

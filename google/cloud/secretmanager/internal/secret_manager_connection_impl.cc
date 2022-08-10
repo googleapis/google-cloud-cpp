@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace secretmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<secretmanager::SecretManagerServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<secretmanager::SecretManagerServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<secretmanager::SecretManagerServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    secretmanager::SecretManagerServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<secretmanager::
+               SecretManagerServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 SecretManagerServiceConnectionImpl::SecretManagerServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

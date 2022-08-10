@@ -151,40 +151,6 @@ class ReservationServiceConnectionImpl
                           UpdateBiReservationRequest const& request) override;
 
  private:
-  std::unique_ptr<bigquery::ReservationServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::ReservationServiceRetryPolicyOption>()) {
-      return options.get<bigquery::ReservationServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<bigquery::ReservationServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::ReservationServiceBackoffPolicyOption>()) {
-      return options.get<bigquery::ReservationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<bigquery::ReservationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<bigquery::ReservationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigquery::ReservationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery::ReservationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery::ReservationServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_internal::ReservationServiceStub> stub_;
   Options options_;

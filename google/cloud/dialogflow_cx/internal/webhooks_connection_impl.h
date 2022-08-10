@@ -68,36 +68,6 @@ class WebhooksConnectionImpl : public dialogflow_cx::WebhooksConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_cx::WebhooksRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::WebhooksRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::WebhooksRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::WebhooksRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::WebhooksBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::WebhooksBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::WebhooksBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dialogflow_cx::WebhooksConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_cx::WebhooksConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::WebhooksConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::WebhooksConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::WebhooksStub> stub_;
   Options options_;

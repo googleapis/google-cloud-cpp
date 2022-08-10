@@ -63,35 +63,6 @@ class Controller2ConnectionImpl : public debugger::Controller2Connection {
           request) override;
 
  private:
-  std::unique_ptr<debugger::Controller2RetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<debugger::Controller2RetryPolicyOption>()) {
-      return options.get<debugger::Controller2RetryPolicyOption>()->clone();
-    }
-    return options_.get<debugger::Controller2RetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<debugger::Controller2BackoffPolicyOption>()) {
-      return options.get<debugger::Controller2BackoffPolicyOption>()->clone();
-    }
-    return options_.get<debugger::Controller2BackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<debugger::Controller2ConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<debugger::Controller2ConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<debugger::Controller2ConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<debugger::Controller2ConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<debugger_internal::Controller2Stub> stub_;
   Options options_;

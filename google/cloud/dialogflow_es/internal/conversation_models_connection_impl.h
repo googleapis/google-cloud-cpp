@@ -101,55 +101,6 @@ class ConversationModelsConnectionImpl
           CreateConversationModelEvaluationRequest const& request) override;
 
  private:
-  std::unique_ptr<dialogflow_es::ConversationModelsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationModelsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::ConversationModelsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::ConversationModelsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationModelsBackoffPolicyOption>()) {
-      return options
-          .get<dialogflow_es::ConversationModelsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::ConversationModelsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dialogflow_es::ConversationModelsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_es::
-                     ConversationModelsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::
-                   ConversationModelsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_es::
-                 ConversationModelsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationModelsPollingPolicyOption>()) {
-      return options
-          .get<dialogflow_es::ConversationModelsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::ConversationModelsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::ConversationModelsStub> stub_;
   Options options_;

@@ -53,36 +53,6 @@ class ImageVersionsConnectionImpl : public composer::ImageVersionsConnection {
                         ListImageVersionsRequest request) override;
 
  private:
-  std::unique_ptr<composer::ImageVersionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<composer::ImageVersionsRetryPolicyOption>()) {
-      return options.get<composer::ImageVersionsRetryPolicyOption>()->clone();
-    }
-    return options_.get<composer::ImageVersionsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<composer::ImageVersionsBackoffPolicyOption>()) {
-      return options.get<composer::ImageVersionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<composer::ImageVersionsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<composer::ImageVersionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<composer::ImageVersionsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<composer::ImageVersionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<composer::ImageVersionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<composer_internal::ImageVersionsStub> stub_;
   Options options_;

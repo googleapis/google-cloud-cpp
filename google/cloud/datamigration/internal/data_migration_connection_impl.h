@@ -131,60 +131,6 @@ class DataMigrationServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<datamigration::DataMigrationServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datamigration::DataMigrationServiceRetryPolicyOption>()) {
-      return options
-          .get<datamigration::DataMigrationServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datamigration::DataMigrationServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datamigration::DataMigrationServiceBackoffPolicyOption>()) {
-      return options
-          .get<datamigration::DataMigrationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datamigration::DataMigrationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      datamigration::DataMigrationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<datamigration::
-                     DataMigrationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datamigration::
-                   DataMigrationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datamigration::
-                 DataMigrationServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datamigration::DataMigrationServicePollingPolicyOption>()) {
-      return options
-          .get<datamigration::DataMigrationServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datamigration::DataMigrationServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub_;
   Options options_;

@@ -171,64 +171,6 @@ class AccessContextManagerConnectionImpl
           DeleteGcpUserAccessBindingRequest const& request) override;
 
  private:
-  std::unique_ptr<accesscontextmanager::AccessContextManagerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            accesscontextmanager::AccessContextManagerRetryPolicyOption>()) {
-      return options
-          .get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            accesscontextmanager::AccessContextManagerBackoffPolicyOption>()) {
-      return options
-          .get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<accesscontextmanager::
-                     AccessContextManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<accesscontextmanager::
-                   AccessContextManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<accesscontextmanager::
-                 AccessContextManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            accesscontextmanager::AccessContextManagerPollingPolicyOption>()) {
-      return options
-          .get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
       stub_;

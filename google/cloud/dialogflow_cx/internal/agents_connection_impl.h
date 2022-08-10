@@ -88,43 +88,6 @@ class AgentsConnectionImpl : public dialogflow_cx::AgentsConnection {
           request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::AgentsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::AgentsRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::AgentsRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::AgentsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::AgentsBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::AgentsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::AgentsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dialogflow_cx::AgentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::AgentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::AgentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::AgentsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::AgentsPollingPolicyOption>()) {
-      return options.get<dialogflow_cx::AgentsPollingPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::AgentsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::AgentsStub> stub_;
   Options options_;

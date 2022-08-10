@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace networkmanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<networkmanagement::ReachabilityServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<networkmanagement::ReachabilityServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<networkmanagement::ReachabilityServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    networkmanagement::ReachabilityServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<networkmanagement::
+               ReachabilityServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<networkmanagement::ReachabilityServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ReachabilityServiceConnectionImpl::ReachabilityServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

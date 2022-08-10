@@ -73,38 +73,6 @@ class LoggingServiceV2ConnectionImpl
       AsyncTailLogEntries(ExperimentalTag) override;
 
  private:
-  std::unique_ptr<logging::LoggingServiceV2RetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<logging::LoggingServiceV2RetryPolicyOption>()) {
-      return options.get<logging::LoggingServiceV2RetryPolicyOption>()->clone();
-    }
-    return options_.get<logging::LoggingServiceV2RetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<logging::LoggingServiceV2BackoffPolicyOption>()) {
-      return options.get<logging::LoggingServiceV2BackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<logging::LoggingServiceV2BackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<logging::LoggingServiceV2ConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub_;
   Options options_;

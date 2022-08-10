@@ -30,6 +30,34 @@ namespace google {
 namespace cloud {
 namespace vpcaccess_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<vpcaccess::VpcAccessServiceRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<vpcaccess::VpcAccessServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<vpcaccess::VpcAccessServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 VpcAccessServiceConnectionImpl::VpcAccessServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

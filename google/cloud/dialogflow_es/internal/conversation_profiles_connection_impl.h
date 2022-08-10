@@ -87,60 +87,6 @@ class ConversationProfilesConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<dialogflow_es::ConversationProfilesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationProfilesRetryPolicyOption>()) {
-      return options
-          .get<dialogflow_es::ConversationProfilesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationProfilesBackoffPolicyOption>()) {
-      return options
-          .get<dialogflow_es::ConversationProfilesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_es::ConversationProfilesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      dialogflow_es::ConversationProfilesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_es::
-                     ConversationProfilesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::
-                   ConversationProfilesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_es::
-                 ConversationProfilesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationProfilesPollingPolicyOption>()) {
-      return options
-          .get<dialogflow_es::ConversationProfilesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_es::ConversationProfilesPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::ConversationProfilesStub> stub_;
   Options options_;

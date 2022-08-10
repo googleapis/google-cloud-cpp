@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<talent::TenantServiceRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<talent::TenantServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<talent::TenantServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<talent::TenantServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<talent::TenantServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 TenantServiceConnectionImpl::TenantServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

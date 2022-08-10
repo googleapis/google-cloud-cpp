@@ -87,41 +87,6 @@ class CloudRedisConnectionImpl : public redis::CloudRedisConnection {
       override;
 
  private:
-  std::unique_ptr<redis::CloudRedisRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<redis::CloudRedisRetryPolicyOption>()) {
-      return options.get<redis::CloudRedisRetryPolicyOption>()->clone();
-    }
-    return options_.get<redis::CloudRedisRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<redis::CloudRedisBackoffPolicyOption>()) {
-      return options.get<redis::CloudRedisBackoffPolicyOption>()->clone();
-    }
-    return options_.get<redis::CloudRedisBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<redis::CloudRedisConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<redis::CloudRedisConnectionIdempotencyPolicyOption>()) {
-      return options.get<redis::CloudRedisConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<redis::CloudRedisConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<redis::CloudRedisPollingPolicyOption>()) {
-      return options.get<redis::CloudRedisPollingPolicyOption>()->clone();
-    }
-    return options_.get<redis::CloudRedisPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<redis_internal::CloudRedisStub> stub_;
   Options options_;

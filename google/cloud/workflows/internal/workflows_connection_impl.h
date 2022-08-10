@@ -69,43 +69,6 @@ class WorkflowsConnectionImpl : public workflows::WorkflowsConnection {
       override;
 
  private:
-  std::unique_ptr<workflows::WorkflowsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<workflows::WorkflowsRetryPolicyOption>()) {
-      return options.get<workflows::WorkflowsRetryPolicyOption>()->clone();
-    }
-    return options_.get<workflows::WorkflowsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<workflows::WorkflowsBackoffPolicyOption>()) {
-      return options.get<workflows::WorkflowsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<workflows::WorkflowsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<workflows::WorkflowsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<workflows::WorkflowsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<workflows::WorkflowsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<workflows::WorkflowsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<workflows::WorkflowsPollingPolicyOption>()) {
-      return options.get<workflows::WorkflowsPollingPolicyOption>()->clone();
-    }
-    return options_.get<workflows::WorkflowsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<workflows_internal::WorkflowsStub> stub_;
   Options options_;

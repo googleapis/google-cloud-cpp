@@ -121,42 +121,6 @@ class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
           request) override;
 
  private:
-  std::unique_ptr<asset::AssetServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServiceRetryPolicyOption>()) {
-      return options.get<asset::AssetServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<asset::AssetServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServiceBackoffPolicyOption>()) {
-      return options.get<asset::AssetServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<asset::AssetServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<asset::AssetServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<asset::AssetServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<asset::AssetServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServicePollingPolicyOption>()) {
-      return options.get<asset::AssetServicePollingPolicyOption>()->clone();
-    }
-    return options_.get<asset::AssetServicePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<asset_internal::AssetServiceStub> stub_;
   Options options_;

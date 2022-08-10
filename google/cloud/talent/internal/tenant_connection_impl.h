@@ -64,35 +64,6 @@ class TenantServiceConnectionImpl : public talent::TenantServiceConnection {
       google::cloud::talent::v4::ListTenantsRequest request) override;
 
  private:
-  std::unique_ptr<talent::TenantServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent::TenantServiceRetryPolicyOption>()) {
-      return options.get<talent::TenantServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<talent::TenantServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent::TenantServiceBackoffPolicyOption>()) {
-      return options.get<talent::TenantServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<talent::TenantServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<talent::TenantServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent::TenantServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<talent::TenantServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<talent::TenantServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_internal::TenantServiceStub> stub_;
   Options options_;

@@ -85,66 +85,6 @@ class ClientConnectorServicesServiceConnectionImpl
           DeleteClientConnectorServiceRequest const& request) override;
 
  private:
-  std::unique_ptr<beyondcorp::ClientConnectorServicesServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp::ClientConnectorServicesServiceRetryPolicyOption>()) {
-      return options
-          .get<beyondcorp::ClientConnectorServicesServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<beyondcorp::ClientConnectorServicesServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp::ClientConnectorServicesServiceBackoffPolicyOption>()) {
-      return options
-          .get<beyondcorp::ClientConnectorServicesServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<beyondcorp::ClientConnectorServicesServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      beyondcorp::ClientConnectorServicesServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp::
-                ClientConnectorServicesServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              beyondcorp::
-                  ClientConnectorServicesServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<
-            beyondcorp::
-                ClientConnectorServicesServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp::ClientConnectorServicesServicePollingPolicyOption>()) {
-      return options
-          .get<beyondcorp::ClientConnectorServicesServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<beyondcorp::ClientConnectorServicesServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<beyondcorp_internal::ClientConnectorServicesServiceStub>
       stub_;

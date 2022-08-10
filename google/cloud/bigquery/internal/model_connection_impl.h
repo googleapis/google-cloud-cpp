@@ -60,36 +60,6 @@ class ModelServiceConnectionImpl : public bigquery::ModelServiceConnection {
       google::cloud::bigquery::v2::DeleteModelRequest const& request) override;
 
  private:
-  std::unique_ptr<bigquery::ModelServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::ModelServiceRetryPolicyOption>()) {
-      return options.get<bigquery::ModelServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<bigquery::ModelServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::ModelServiceBackoffPolicyOption>()) {
-      return options.get<bigquery::ModelServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<bigquery::ModelServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<bigquery::ModelServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigquery::ModelServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery::ModelServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery::ModelServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_internal::ModelServiceStub> stub_;
   Options options_;

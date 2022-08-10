@@ -120,40 +120,6 @@ class DataTransferServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<bigquery::DataTransferServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::DataTransferServiceRetryPolicyOption>()) {
-      return options.get<bigquery::DataTransferServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<bigquery::DataTransferServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::DataTransferServiceBackoffPolicyOption>()) {
-      return options.get<bigquery::DataTransferServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<bigquery::DataTransferServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<bigquery::DataTransferServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigquery::DataTransferServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery::DataTransferServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery::DataTransferServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_internal::DataTransferServiceStub> stub_;
   Options options_;

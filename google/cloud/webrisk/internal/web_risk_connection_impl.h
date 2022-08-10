@@ -63,36 +63,6 @@ class WebRiskServiceConnectionImpl : public webrisk::WebRiskServiceConnection {
       override;
 
  private:
-  std::unique_ptr<webrisk::WebRiskServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<webrisk::WebRiskServiceRetryPolicyOption>()) {
-      return options.get<webrisk::WebRiskServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<webrisk::WebRiskServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<webrisk::WebRiskServiceBackoffPolicyOption>()) {
-      return options.get<webrisk::WebRiskServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<webrisk::WebRiskServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<webrisk::WebRiskServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub_;
   Options options_;

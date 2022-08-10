@@ -62,33 +62,6 @@ class EkmServiceConnectionImpl : public kms::EkmServiceConnection {
       override;
 
  private:
-  std::unique_ptr<kms::EkmServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms::EkmServiceRetryPolicyOption>()) {
-      return options.get<kms::EkmServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<kms::EkmServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms::EkmServiceBackoffPolicyOption>()) {
-      return options.get<kms::EkmServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<kms::EkmServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<kms::EkmServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms::EkmServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<kms::EkmServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<kms::EkmServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<kms_internal::EkmServiceStub> stub_;
   Options options_;

@@ -57,39 +57,6 @@ class TextToSpeechConnectionImpl : public texttospeech::TextToSpeechConnection {
       override;
 
  private:
-  std::unique_ptr<texttospeech::TextToSpeechRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<texttospeech::TextToSpeechRetryPolicyOption>()) {
-      return options.get<texttospeech::TextToSpeechRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<texttospeech::TextToSpeechRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<texttospeech::TextToSpeechBackoffPolicyOption>()) {
-      return options.get<texttospeech::TextToSpeechBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<texttospeech::TextToSpeechBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<texttospeech::TextToSpeechConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub_;
   Options options_;

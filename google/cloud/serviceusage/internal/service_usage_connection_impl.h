@@ -75,49 +75,6 @@ class ServiceUsageConnectionImpl : public serviceusage::ServiceUsageConnection {
                        request) override;
 
  private:
-  std::unique_ptr<serviceusage::ServiceUsageRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<serviceusage::ServiceUsageRetryPolicyOption>()) {
-      return options.get<serviceusage::ServiceUsageRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<serviceusage::ServiceUsageRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<serviceusage::ServiceUsageBackoffPolicyOption>()) {
-      return options.get<serviceusage::ServiceUsageBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<serviceusage::ServiceUsageBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<serviceusage::ServiceUsageConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<serviceusage::ServiceUsagePollingPolicyOption>()) {
-      return options.get<serviceusage::ServiceUsagePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<serviceusage::ServiceUsagePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub_;
   Options options_;

@@ -30,6 +30,34 @@ namespace google {
 namespace cloud {
 namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<vision::ProductSearchRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<vision::ProductSearchRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<vision::ProductSearchBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<vision::ProductSearchConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<vision::ProductSearchConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<vision::ProductSearchPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ProductSearchConnectionImpl::ProductSearchConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -62,34 +62,6 @@ class IAMCredentialsConnectionImpl : public iam::IAMCredentialsConnection {
       google::iam::credentials::v1::SignJwtRequest const& request) override;
 
  private:
-  std::unique_ptr<iam::IAMCredentialsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam::IAMCredentialsRetryPolicyOption>()) {
-      return options.get<iam::IAMCredentialsRetryPolicyOption>()->clone();
-    }
-    return options_.get<iam::IAMCredentialsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam::IAMCredentialsBackoffPolicyOption>()) {
-      return options.get<iam::IAMCredentialsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<iam::IAMCredentialsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<iam::IAMCredentialsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMCredentialsStub> stub_;
   Options options_;

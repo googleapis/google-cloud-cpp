@@ -28,6 +28,28 @@ namespace google {
 namespace cloud {
 namespace webrisk_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<webrisk::WebRiskServiceRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<webrisk::WebRiskServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<webrisk::WebRiskServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<webrisk::WebRiskServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 WebRiskServiceConnectionImpl::WebRiskServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

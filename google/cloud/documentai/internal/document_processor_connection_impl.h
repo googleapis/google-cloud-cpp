@@ -130,63 +130,6 @@ class DocumentProcessorServiceConnectionImpl
                      request) override;
 
  private:
-  std::unique_ptr<documentai::DocumentProcessorServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<documentai::DocumentProcessorServiceRetryPolicyOption>()) {
-      return options
-          .get<documentai::DocumentProcessorServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<documentai::DocumentProcessorServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<documentai::DocumentProcessorServiceBackoffPolicyOption>()) {
-      return options
-          .get<documentai::DocumentProcessorServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<documentai::DocumentProcessorServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      documentai::DocumentProcessorServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            documentai::
-                DocumentProcessorServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<documentai::
-                   DocumentProcessorServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<documentai::
-                 DocumentProcessorServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<documentai::DocumentProcessorServicePollingPolicyOption>()) {
-      return options
-          .get<documentai::DocumentProcessorServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<documentai::DocumentProcessorServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<documentai_internal::DocumentProcessorServiceStub> stub_;
   Options options_;

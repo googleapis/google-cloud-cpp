@@ -99,52 +99,6 @@ class NotificationChannelServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<monitoring::NotificationChannelServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<monitoring::NotificationChannelServiceRetryPolicyOption>()) {
-      return options
-          .get<monitoring::NotificationChannelServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::NotificationChannelServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<monitoring::NotificationChannelServiceBackoffPolicyOption>()) {
-      return options
-          .get<monitoring::NotificationChannelServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::NotificationChannelServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      monitoring::NotificationChannelServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring::
-                NotificationChannelServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              monitoring::
-                  NotificationChannelServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::
-                 NotificationChannelServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_internal::NotificationChannelServiceStub> stub_;
   Options options_;

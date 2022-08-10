@@ -136,38 +136,6 @@ class KeyManagementServiceConnectionImpl
                           request) override;
 
  private:
-  std::unique_ptr<kms::KeyManagementServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms::KeyManagementServiceRetryPolicyOption>()) {
-      return options.get<kms::KeyManagementServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<kms::KeyManagementServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms::KeyManagementServiceBackoffPolicyOption>()) {
-      return options.get<kms::KeyManagementServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<kms::KeyManagementServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<kms::KeyManagementServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<kms_internal::KeyManagementServiceStub> stub_;
   Options options_;

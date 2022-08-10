@@ -75,37 +75,6 @@ class ContentServiceConnectionImpl : public dataplex::ContentServiceConnection {
       google::cloud::dataplex::v1::ListContentRequest request) override;
 
  private:
-  std::unique_ptr<dataplex::ContentServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex::ContentServiceRetryPolicyOption>()) {
-      return options.get<dataplex::ContentServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<dataplex::ContentServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex::ContentServiceBackoffPolicyOption>()) {
-      return options.get<dataplex::ContentServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataplex::ContentServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dataplex::ContentServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dataplex::ContentServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataplex::ContentServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataplex::ContentServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataplex_internal::ContentServiceStub> stub_;
   Options options_;

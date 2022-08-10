@@ -28,6 +28,30 @@ namespace google {
 namespace cloud {
 namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<servicecontrol::QuotaControllerRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<servicecontrol::QuotaControllerRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<servicecontrol::QuotaControllerBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    servicecontrol::QuotaControllerConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<servicecontrol::QuotaControllerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 QuotaControllerConnectionImpl::QuotaControllerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -119,50 +119,6 @@ class RegistrationServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<servicedirectory::RegistrationServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicedirectory::RegistrationServiceRetryPolicyOption>()) {
-      return options
-          .get<servicedirectory::RegistrationServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<servicedirectory::RegistrationServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<servicedirectory::RegistrationServiceBackoffPolicyOption>()) {
-      return options
-          .get<servicedirectory::RegistrationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<servicedirectory::RegistrationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      servicedirectory::RegistrationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<servicedirectory::
-                     RegistrationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<servicedirectory::
-                   RegistrationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<servicedirectory::
-                 RegistrationServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicedirectory_internal::RegistrationServiceStub> stub_;
   Options options_;

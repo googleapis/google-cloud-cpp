@@ -52,35 +52,6 @@ class SearchServiceConnectionImpl : public retail::SearchServiceConnection {
       google::cloud::retail::v2::SearchRequest request) override;
 
  private:
-  std::unique_ptr<retail::SearchServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail::SearchServiceRetryPolicyOption>()) {
-      return options.get<retail::SearchServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<retail::SearchServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail::SearchServiceBackoffPolicyOption>()) {
-      return options.get<retail::SearchServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<retail::SearchServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<retail::SearchServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail::SearchServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<retail::SearchServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<retail::SearchServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::SearchServiceStub> stub_;
   Options options_;

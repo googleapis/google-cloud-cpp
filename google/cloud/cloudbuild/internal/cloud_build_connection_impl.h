@@ -128,44 +128,6 @@ class CloudBuildConnectionImpl : public cloudbuild::CloudBuildConnection {
       override;
 
  private:
-  std::unique_ptr<cloudbuild::CloudBuildRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild::CloudBuildRetryPolicyOption>()) {
-      return options.get<cloudbuild::CloudBuildRetryPolicyOption>()->clone();
-    }
-    return options_.get<cloudbuild::CloudBuildRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild::CloudBuildBackoffPolicyOption>()) {
-      return options.get<cloudbuild::CloudBuildBackoffPolicyOption>()->clone();
-    }
-    return options_.get<cloudbuild::CloudBuildBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<cloudbuild::CloudBuildConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild::CloudBuildPollingPolicyOption>()) {
-      return options.get<cloudbuild::CloudBuildPollingPolicyOption>()->clone();
-    }
-    return options_.get<cloudbuild::CloudBuildPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub_;
   Options options_;

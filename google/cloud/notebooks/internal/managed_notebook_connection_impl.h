@@ -91,55 +91,6 @@ class ManagedNotebookServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<notebooks::ManagedNotebookServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks::ManagedNotebookServiceRetryPolicyOption>()) {
-      return options.get<notebooks::ManagedNotebookServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<notebooks::ManagedNotebookServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks::ManagedNotebookServiceBackoffPolicyOption>()) {
-      return options
-          .get<notebooks::ManagedNotebookServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<notebooks::ManagedNotebookServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<notebooks::ManagedNotebookServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            notebooks::
-                ManagedNotebookServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<notebooks::
-                   ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<notebooks::
-                 ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks::ManagedNotebookServicePollingPolicyOption>()) {
-      return options
-          .get<notebooks::ManagedNotebookServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<notebooks::ManagedNotebookServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<notebooks_internal::ManagedNotebookServiceStub> stub_;
   Options options_;

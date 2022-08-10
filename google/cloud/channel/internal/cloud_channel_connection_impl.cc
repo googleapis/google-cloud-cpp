@@ -30,6 +30,34 @@ namespace google {
 namespace cloud {
 namespace channel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<channel::CloudChannelServiceRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<channel::CloudChannelServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<channel::CloudChannelServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<channel::CloudChannelServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<channel::CloudChannelServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<channel::CloudChannelServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CloudChannelServiceConnectionImpl::CloudChannelServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -103,51 +103,6 @@ class WebSecurityScannerConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<websecurityscanner::WebSecurityScannerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<websecurityscanner::WebSecurityScannerRetryPolicyOption>()) {
-      return options
-          .get<websecurityscanner::WebSecurityScannerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<websecurityscanner::WebSecurityScannerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()) {
-      return options
-          .get<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      websecurityscanner::WebSecurityScannerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<websecurityscanner::
-                     WebSecurityScannerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<websecurityscanner::
-                   WebSecurityScannerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<websecurityscanner::
-                 WebSecurityScannerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<websecurityscanner_internal::WebSecurityScannerStub> stub_;
   Options options_;

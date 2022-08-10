@@ -29,6 +29,32 @@ namespace google {
 namespace cloud {
 namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<iap::IdentityAwareProxyAdminServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<iap::IdentityAwareProxyAdminServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<iap::IdentityAwareProxyAdminServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    iap::IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<
+          iap::
+              IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 IdentityAwareProxyAdminServiceConnectionImpl::
     IdentityAwareProxyAdminServiceConnectionImpl(

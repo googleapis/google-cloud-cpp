@@ -29,6 +29,30 @@ namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<dialogflow_es::SessionEntityTypesRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<dialogflow_es::SessionEntityTypesRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<dialogflow_es::SessionEntityTypesBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    dialogflow_es::SessionEntityTypesConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<dialogflow_es::SessionEntityTypesConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 SessionEntityTypesConnectionImpl::SessionEntityTypesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

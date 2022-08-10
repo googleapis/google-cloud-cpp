@@ -66,42 +66,6 @@ class VersionsConnectionImpl : public appengine::VersionsConnection {
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
  private:
-  std::unique_ptr<appengine::VersionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::VersionsRetryPolicyOption>()) {
-      return options.get<appengine::VersionsRetryPolicyOption>()->clone();
-    }
-    return options_.get<appengine::VersionsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::VersionsBackoffPolicyOption>()) {
-      return options.get<appengine::VersionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<appengine::VersionsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<appengine::VersionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::VersionsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine::VersionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine::VersionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::VersionsPollingPolicyOption>()) {
-      return options.get<appengine::VersionsPollingPolicyOption>()->clone();
-    }
-    return options_.get<appengine::VersionsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::VersionsStub> stub_;
   Options options_;

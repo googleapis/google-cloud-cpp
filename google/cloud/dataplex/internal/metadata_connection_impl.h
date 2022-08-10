@@ -79,38 +79,6 @@ class MetadataServiceConnectionImpl
       google::cloud::dataplex::v1::ListPartitionsRequest request) override;
 
  private:
-  std::unique_ptr<dataplex::MetadataServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex::MetadataServiceRetryPolicyOption>()) {
-      return options.get<dataplex::MetadataServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<dataplex::MetadataServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex::MetadataServiceBackoffPolicyOption>()) {
-      return options.get<dataplex::MetadataServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataplex::MetadataServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dataplex::MetadataServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataplex::MetadataServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataplex::MetadataServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataplex::MetadataServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataplex_internal::MetadataServiceStub> stub_;
   Options options_;

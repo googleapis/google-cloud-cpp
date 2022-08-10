@@ -68,41 +68,6 @@ class OrganizationsConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<resourcemanager::OrganizationsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::OrganizationsRetryPolicyOption>()) {
-      return options.get<resourcemanager::OrganizationsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager::OrganizationsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::OrganizationsBackoffPolicyOption>()) {
-      return options.get<resourcemanager::OrganizationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager::OrganizationsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<resourcemanager::OrganizationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::
-                        OrganizationsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_internal::OrganizationsStub> stub_;
   Options options_;

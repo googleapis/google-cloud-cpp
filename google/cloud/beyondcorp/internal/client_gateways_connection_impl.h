@@ -72,55 +72,6 @@ class ClientGatewaysServiceConnectionImpl
                           DeleteClientGatewayRequest const& request) override;
 
  private:
-  std::unique_ptr<beyondcorp::ClientGatewaysServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::ClientGatewaysServiceRetryPolicyOption>()) {
-      return options.get<beyondcorp::ClientGatewaysServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<beyondcorp::ClientGatewaysServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::ClientGatewaysServiceBackoffPolicyOption>()) {
-      return options
-          .get<beyondcorp::ClientGatewaysServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<beyondcorp::ClientGatewaysServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<beyondcorp::ClientGatewaysServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp::
-                ClientGatewaysServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<beyondcorp::
-                   ClientGatewaysServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<beyondcorp::
-                 ClientGatewaysServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::ClientGatewaysServicePollingPolicyOption>()) {
-      return options
-          .get<beyondcorp::ClientGatewaysServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<beyondcorp::ClientGatewaysServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<beyondcorp_internal::ClientGatewaysServiceStub> stub_;
   Options options_;

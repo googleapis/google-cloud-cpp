@@ -30,6 +30,34 @@ namespace google {
 namespace cloud {
 namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<composer::EnvironmentsRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<composer::EnvironmentsRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<composer::EnvironmentsBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<composer::EnvironmentsConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<composer::EnvironmentsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<composer::EnvironmentsPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 EnvironmentsConnectionImpl::EnvironmentsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

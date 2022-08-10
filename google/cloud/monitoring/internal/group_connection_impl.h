@@ -67,37 +67,6 @@ class GroupServiceConnectionImpl : public monitoring::GroupServiceConnection {
       google::monitoring::v3::ListGroupMembersRequest request) override;
 
  private:
-  std::unique_ptr<monitoring::GroupServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::GroupServiceRetryPolicyOption>()) {
-      return options.get<monitoring::GroupServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<monitoring::GroupServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::GroupServiceBackoffPolicyOption>()) {
-      return options.get<monitoring::GroupServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::GroupServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<monitoring::GroupServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<monitoring::GroupServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring::GroupServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::GroupServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_internal::GroupServiceStub> stub_;
   Options options_;

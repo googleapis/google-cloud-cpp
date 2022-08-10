@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<retail::SearchServiceRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<retail::SearchServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<retail::SearchServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<retail::SearchServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<retail::SearchServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 SearchServiceConnectionImpl::SearchServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

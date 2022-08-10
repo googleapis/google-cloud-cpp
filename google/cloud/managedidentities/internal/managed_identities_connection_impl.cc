@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace managedidentities_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<managedidentities::ManagedIdentitiesServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<managedidentities::ManagedIdentitiesServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<managedidentities::ManagedIdentitiesServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    managedidentities::ManagedIdentitiesServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<managedidentities::
+               ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<managedidentities::ManagedIdentitiesServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ManagedIdentitiesServiceConnectionImpl::ManagedIdentitiesServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

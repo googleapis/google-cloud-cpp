@@ -66,35 +66,6 @@ class PagesConnectionImpl : public dialogflow_cx::PagesConnection {
                         request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::PagesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::PagesRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::PagesRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::PagesRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::PagesBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::PagesBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::PagesBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dialogflow_cx::PagesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::PagesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::PagesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::PagesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::PagesStub> stub_;
   Options options_;

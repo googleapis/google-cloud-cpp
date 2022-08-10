@@ -30,6 +30,36 @@ namespace google {
 namespace cloud {
 namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<dataproc::WorkflowTemplateServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<dataproc::WorkflowTemplateServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<dataproc::WorkflowTemplateServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    dataproc::WorkflowTemplateServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<dataproc::WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<dataproc::WorkflowTemplateServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 WorkflowTemplateServiceConnectionImpl::WorkflowTemplateServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

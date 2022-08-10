@@ -65,48 +65,6 @@ class BatchControllerConnectionImpl
       google::cloud::dataproc::v1::DeleteBatchRequest const& request) override;
 
  private:
-  std::unique_ptr<dataproc::BatchControllerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::BatchControllerRetryPolicyOption>()) {
-      return options.get<dataproc::BatchControllerRetryPolicyOption>()->clone();
-    }
-    return options_.get<dataproc::BatchControllerRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::BatchControllerBackoffPolicyOption>()) {
-      return options.get<dataproc::BatchControllerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::BatchControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dataproc::BatchControllerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataproc::BatchControllerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataproc::BatchControllerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataproc::BatchControllerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::BatchControllerPollingPolicyOption>()) {
-      return options.get<dataproc::BatchControllerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::BatchControllerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataproc_internal::BatchControllerStub> stub_;
   Options options_;

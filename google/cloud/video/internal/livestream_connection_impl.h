@@ -118,46 +118,6 @@ class LivestreamServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<video::LivestreamServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<video::LivestreamServiceRetryPolicyOption>()) {
-      return options.get<video::LivestreamServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<video::LivestreamServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<video::LivestreamServiceBackoffPolicyOption>()) {
-      return options.get<video::LivestreamServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<video::LivestreamServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<video::LivestreamServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<video::LivestreamServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<video::LivestreamServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<video::LivestreamServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<video::LivestreamServicePollingPolicyOption>()) {
-      return options.get<video::LivestreamServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<video::LivestreamServicePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<video_internal::LivestreamServiceStub> stub_;
   Options options_;

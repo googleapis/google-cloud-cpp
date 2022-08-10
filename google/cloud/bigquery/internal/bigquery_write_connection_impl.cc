@@ -28,6 +28,28 @@ namespace google {
 namespace cloud {
 namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<bigquery::BigQueryWriteRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<bigquery::BigQueryWriteRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<bigquery::BigQueryWriteBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<bigquery::BigQueryWriteConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<bigquery::BigQueryWriteConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 BigQueryWriteConnectionImpl::BigQueryWriteConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

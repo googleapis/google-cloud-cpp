@@ -211,66 +211,6 @@ class ContactCenterInsightsConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<contactcenterinsights::ContactCenterInsightsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contactcenterinsights::ContactCenterInsightsRetryPolicyOption>()) {
-      return options
-          .get<contactcenterinsights::ContactCenterInsightsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contactcenterinsights::ContactCenterInsightsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contactcenterinsights::
-                        ContactCenterInsightsBackoffPolicyOption>()) {
-      return options
-          .get<
-              contactcenterinsights::ContactCenterInsightsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contactcenterinsights::ContactCenterInsightsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      contactcenterinsights::ContactCenterInsightsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contactcenterinsights::
-                ContactCenterInsightsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<contactcenterinsights::
-                   ContactCenterInsightsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contactcenterinsights::
-                 ContactCenterInsightsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contactcenterinsights::
-                        ContactCenterInsightsPollingPolicyOption>()) {
-      return options
-          .get<
-              contactcenterinsights::ContactCenterInsightsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contactcenterinsights::ContactCenterInsightsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<contactcenterinsights_internal::ContactCenterInsightsStub>
       stub_;

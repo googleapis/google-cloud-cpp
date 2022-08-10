@@ -28,6 +28,28 @@ namespace google {
 namespace cloud {
 namespace trace_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<trace::TraceServiceRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<trace::TraceServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<trace::TraceServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<trace::TraceServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<trace::TraceServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 TraceServiceConnectionImpl::TraceServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -240,50 +240,6 @@ class CloudChannelServiceConnectionImpl
       google::cloud::channel::v1::ListSubscribersRequest request) override;
 
  private:
-  std::unique_ptr<channel::CloudChannelServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<channel::CloudChannelServiceRetryPolicyOption>()) {
-      return options.get<channel::CloudChannelServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<channel::CloudChannelServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<channel::CloudChannelServiceBackoffPolicyOption>()) {
-      return options.get<channel::CloudChannelServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<channel::CloudChannelServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<channel::CloudChannelServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            channel::CloudChannelServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<channel::CloudChannelServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<channel::CloudChannelServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<channel::CloudChannelServicePollingPolicyOption>()) {
-      return options.get<channel::CloudChannelServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<channel::CloudChannelServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<channel_internal::CloudChannelServiceStub> stub_;
   Options options_;

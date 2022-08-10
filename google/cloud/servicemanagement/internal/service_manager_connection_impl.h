@@ -109,54 +109,6 @@ class ServiceManagerConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<servicemanagement::ServiceManagerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicemanagement::ServiceManagerRetryPolicyOption>()) {
-      return options.get<servicemanagement::ServiceManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<servicemanagement::ServiceManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicemanagement::ServiceManagerBackoffPolicyOption>()) {
-      return options
-          .get<servicemanagement::ServiceManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<servicemanagement::ServiceManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<servicemanagement::ServiceManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicemanagement::
-                        ServiceManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<servicemanagement::
-                   ServiceManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<servicemanagement::
-                 ServiceManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicemanagement::ServiceManagerPollingPolicyOption>()) {
-      return options
-          .get<servicemanagement::ServiceManagerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<servicemanagement::ServiceManagerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicemanagement_internal::ServiceManagerStub> stub_;
   Options options_;

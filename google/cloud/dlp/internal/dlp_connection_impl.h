@@ -175,33 +175,6 @@ class DlpServiceConnectionImpl : public dlp::DlpServiceConnection {
       google::privacy::dlp::v2::FinishDlpJobRequest const& request) override;
 
  private:
-  std::unique_ptr<dlp::DlpServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dlp::DlpServiceRetryPolicyOption>()) {
-      return options.get<dlp::DlpServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<dlp::DlpServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dlp::DlpServiceBackoffPolicyOption>()) {
-      return options.get<dlp::DlpServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dlp::DlpServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dlp::DlpServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dlp::DlpServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<dlp::DlpServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dlp::DlpServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dlp_internal::DlpServiceStub> stub_;
   Options options_;

@@ -30,6 +30,28 @@ namespace google {
 namespace cloud {
 namespace ids_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<ids::IDSRetryPolicy> retry_policy() {
+  return internal::CurrentOptions().get<ids::IDSRetryPolicyOption>()->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions().get<ids::IDSBackoffPolicyOption>()->clone();
+}
+
+inline std::unique_ptr<ids::IDSConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<ids::IDSConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions().get<ids::IDSPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 IDSConnectionImpl::IDSConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

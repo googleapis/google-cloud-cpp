@@ -54,41 +54,6 @@ class LookupServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<servicedirectory::LookupServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicedirectory::LookupServiceRetryPolicyOption>()) {
-      return options.get<servicedirectory::LookupServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<servicedirectory::LookupServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicedirectory::LookupServiceBackoffPolicyOption>()) {
-      return options.get<servicedirectory::LookupServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<servicedirectory::LookupServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<servicedirectory::LookupServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicedirectory::
-                        LookupServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<servicedirectory::
-                   LookupServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<servicedirectory::LookupServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicedirectory_internal::LookupServiceStub> stub_;
   Options options_;

@@ -70,44 +70,6 @@ class ImageAnnotatorConnectionImpl : public vision::ImageAnnotatorConnection {
       override;
 
  private:
-  std::unique_ptr<vision::ImageAnnotatorRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vision::ImageAnnotatorRetryPolicyOption>()) {
-      return options.get<vision::ImageAnnotatorRetryPolicyOption>()->clone();
-    }
-    return options_.get<vision::ImageAnnotatorRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vision::ImageAnnotatorBackoffPolicyOption>()) {
-      return options.get<vision::ImageAnnotatorBackoffPolicyOption>()->clone();
-    }
-    return options_.get<vision::ImageAnnotatorBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<vision::ImageAnnotatorConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vision::ImageAnnotatorPollingPolicyOption>()) {
-      return options.get<vision::ImageAnnotatorPollingPolicyOption>()->clone();
-    }
-    return options_.get<vision::ImageAnnotatorPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vision_internal::ImageAnnotatorStub> stub_;
   Options options_;

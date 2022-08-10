@@ -63,43 +63,6 @@ class InstancesConnectionImpl : public appengine::InstancesConnection {
       google::appengine::v1::DebugInstanceRequest const& request) override;
 
  private:
-  std::unique_ptr<appengine::InstancesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::InstancesRetryPolicyOption>()) {
-      return options.get<appengine::InstancesRetryPolicyOption>()->clone();
-    }
-    return options_.get<appengine::InstancesRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::InstancesBackoffPolicyOption>()) {
-      return options.get<appengine::InstancesBackoffPolicyOption>()->clone();
-    }
-    return options_.get<appengine::InstancesBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<appengine::InstancesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::InstancesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine::InstancesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<appengine::InstancesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::InstancesPollingPolicyOption>()) {
-      return options.get<appengine::InstancesPollingPolicyOption>()->clone();
-    }
-    return options_.get<appengine::InstancesPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::InstancesStub> stub_;
   Options options_;

@@ -71,48 +71,6 @@ class MetricsScopesConnectionImpl : public monitoring::MetricsScopesConnection {
           request) override;
 
  private:
-  std::unique_ptr<monitoring::MetricsScopesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::MetricsScopesRetryPolicyOption>()) {
-      return options.get<monitoring::MetricsScopesRetryPolicyOption>()->clone();
-    }
-    return options_.get<monitoring::MetricsScopesRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::MetricsScopesBackoffPolicyOption>()) {
-      return options.get<monitoring::MetricsScopesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::MetricsScopesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<monitoring::MetricsScopesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring::MetricsScopesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring::MetricsScopesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::MetricsScopesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::MetricsScopesPollingPolicyOption>()) {
-      return options.get<monitoring::MetricsScopesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::MetricsScopesPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_internal::MetricsScopesStub> stub_;
   Options options_;

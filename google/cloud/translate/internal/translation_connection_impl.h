@@ -97,50 +97,6 @@ class TranslationServiceConnectionImpl
                      request) override;
 
  private:
-  std::unique_ptr<translate::TranslationServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<translate::TranslationServiceRetryPolicyOption>()) {
-      return options.get<translate::TranslationServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<translate::TranslationServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<translate::TranslationServiceBackoffPolicyOption>()) {
-      return options.get<translate::TranslationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<translate::TranslationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<translate::TranslationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            translate::TranslationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<translate::TranslationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<translate::TranslationServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<translate::TranslationServicePollingPolicyOption>()) {
-      return options.get<translate::TranslationServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<translate::TranslationServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<translate_internal::TranslationServiceStub> stub_;
   Options options_;

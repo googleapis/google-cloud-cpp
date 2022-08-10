@@ -86,55 +86,6 @@ class WorkflowTemplateServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<dataproc::WorkflowTemplateServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::WorkflowTemplateServiceRetryPolicyOption>()) {
-      return options.get<dataproc::WorkflowTemplateServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::WorkflowTemplateServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::WorkflowTemplateServiceBackoffPolicyOption>()) {
-      return options
-          .get<dataproc::WorkflowTemplateServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::WorkflowTemplateServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dataproc::WorkflowTemplateServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataproc::
-                WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataproc::
-                   WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataproc::
-                 WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::WorkflowTemplateServicePollingPolicyOption>()) {
-      return options
-          .get<dataproc::WorkflowTemplateServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::WorkflowTemplateServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataproc_internal::WorkflowTemplateServiceStub> stub_;
   Options options_;

@@ -64,49 +64,6 @@ class ContainerAnalysisConnectionImpl
           GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
  private:
-  std::unique_ptr<containeranalysis::ContainerAnalysisRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis::ContainerAnalysisRetryPolicyOption>()) {
-      return options
-          .get<containeranalysis::ContainerAnalysisRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<containeranalysis::ContainerAnalysisRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<containeranalysis::ContainerAnalysisBackoffPolicyOption>()) {
-      return options
-          .get<containeranalysis::ContainerAnalysisBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<containeranalysis::ContainerAnalysisBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      containeranalysis::ContainerAnalysisConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis::
-                        ContainerAnalysisConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<containeranalysis::
-                   ContainerAnalysisConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<containeranalysis::
-                 ContainerAnalysisConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<containeranalysis_internal::ContainerAnalysisStub> stub_;
   Options options_;

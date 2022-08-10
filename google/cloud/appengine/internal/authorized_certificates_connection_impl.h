@@ -74,44 +74,6 @@ class AuthorizedCertificatesConnectionImpl
       override;
 
  private:
-  std::unique_ptr<appengine::AuthorizedCertificatesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::AuthorizedCertificatesRetryPolicyOption>()) {
-      return options.get<appengine::AuthorizedCertificatesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine::AuthorizedCertificatesRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::AuthorizedCertificatesBackoffPolicyOption>()) {
-      return options
-          .get<appengine::AuthorizedCertificatesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine::AuthorizedCertificatesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<appengine::AuthorizedCertificatesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            appengine::
-                AuthorizedCertificatesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine::
-                   AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<appengine::
-                 AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::AuthorizedCertificatesStub> stub_;
   Options options_;

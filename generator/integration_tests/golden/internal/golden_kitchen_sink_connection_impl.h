@@ -87,31 +87,6 @@ class GoldenKitchenSinkConnectionImpl
   ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
  private:
-  std::unique_ptr<golden::GoldenKitchenSinkRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenKitchenSinkRetryPolicyOption>()) {
-      return options.get<golden::GoldenKitchenSinkRetryPolicyOption>()->clone();
-    }
-    return options_.get<golden::GoldenKitchenSinkRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenKitchenSinkBackoffPolicyOption>()) {
-      return options.get<golden::GoldenKitchenSinkBackoffPolicyOption>()->clone();
-    }
-    return options_.get<golden::GoldenKitchenSinkBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<golden::GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
-      return options.get<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->
-clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub_;
   Options options_;

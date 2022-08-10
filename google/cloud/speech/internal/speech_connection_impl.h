@@ -64,41 +64,6 @@ class SpeechConnectionImpl : public speech::SpeechConnection {
       AsyncStreamingRecognize(ExperimentalTag) override;
 
  private:
-  std::unique_ptr<speech::SpeechRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech::SpeechRetryPolicyOption>()) {
-      return options.get<speech::SpeechRetryPolicyOption>()->clone();
-    }
-    return options_.get<speech::SpeechRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech::SpeechBackoffPolicyOption>()) {
-      return options.get<speech::SpeechBackoffPolicyOption>()->clone();
-    }
-    return options_.get<speech::SpeechBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<speech::SpeechConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech::SpeechConnectionIdempotencyPolicyOption>()) {
-      return options.get<speech::SpeechConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<speech::SpeechConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech::SpeechPollingPolicyOption>()) {
-      return options.get<speech::SpeechPollingPolicyOption>()->clone();
-    }
-    return options_.get<speech::SpeechPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<speech_internal::SpeechStub> stub_;
   Options options_;

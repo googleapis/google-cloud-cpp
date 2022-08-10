@@ -30,6 +30,34 @@ namespace google {
 namespace cloud {
 namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<memcache::CloudMemcacheRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<memcache::CloudMemcacheRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<memcache::CloudMemcacheBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<memcache::CloudMemcacheConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<memcache::CloudMemcachePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CloudMemcacheConnectionImpl::CloudMemcacheConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

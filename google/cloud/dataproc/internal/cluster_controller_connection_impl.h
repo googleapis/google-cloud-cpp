@@ -81,50 +81,6 @@ class ClusterControllerConnectionImpl
                       request) override;
 
  private:
-  std::unique_ptr<dataproc::ClusterControllerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::ClusterControllerRetryPolicyOption>()) {
-      return options.get<dataproc::ClusterControllerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::ClusterControllerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::ClusterControllerBackoffPolicyOption>()) {
-      return options.get<dataproc::ClusterControllerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::ClusterControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dataproc::ClusterControllerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataproc::ClusterControllerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataproc::ClusterControllerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataproc::ClusterControllerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::ClusterControllerPollingPolicyOption>()) {
-      return options.get<dataproc::ClusterControllerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::ClusterControllerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataproc_internal::ClusterControllerStub> stub_;
   Options options_;

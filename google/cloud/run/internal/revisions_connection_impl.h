@@ -60,41 +60,6 @@ class RevisionsConnectionImpl : public run::RevisionsConnection {
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
  private:
-  std::unique_ptr<run::RevisionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run::RevisionsRetryPolicyOption>()) {
-      return options.get<run::RevisionsRetryPolicyOption>()->clone();
-    }
-    return options_.get<run::RevisionsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run::RevisionsBackoffPolicyOption>()) {
-      return options.get<run::RevisionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<run::RevisionsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<run::RevisionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run::RevisionsConnectionIdempotencyPolicyOption>()) {
-      return options.get<run::RevisionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<run::RevisionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run::RevisionsPollingPolicyOption>()) {
-      return options.get<run::RevisionsPollingPolicyOption>()->clone();
-    }
-    return options_.get<run::RevisionsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<run_internal::RevisionsStub> stub_;
   Options options_;

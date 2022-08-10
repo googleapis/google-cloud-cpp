@@ -72,35 +72,6 @@ class OrgPolicyConnectionImpl : public orgpolicy::OrgPolicyConnection {
                           request) override;
 
  private:
-  std::unique_ptr<orgpolicy::OrgPolicyRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<orgpolicy::OrgPolicyRetryPolicyOption>()) {
-      return options.get<orgpolicy::OrgPolicyRetryPolicyOption>()->clone();
-    }
-    return options_.get<orgpolicy::OrgPolicyRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<orgpolicy::OrgPolicyBackoffPolicyOption>()) {
-      return options.get<orgpolicy::OrgPolicyBackoffPolicyOption>()->clone();
-    }
-    return options_.get<orgpolicy::OrgPolicyBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<orgpolicy::OrgPolicyConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub_;
   Options options_;

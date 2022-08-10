@@ -28,6 +28,28 @@ namespace google {
 namespace cloud {
 namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<debugger::Debugger2RetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<debugger::Debugger2RetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<debugger::Debugger2BackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<debugger::Debugger2ConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<debugger::Debugger2ConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 Debugger2ConnectionImpl::Debugger2ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

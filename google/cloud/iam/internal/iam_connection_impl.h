@@ -141,30 +141,6 @@ class IAMConnectionImpl : public iam::IAMConnection {
       google::iam::admin::v1::LintPolicyRequest const& request) override;
 
  private:
-  std::unique_ptr<iam::IAMRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam::IAMRetryPolicyOption>()) {
-      return options.get<iam::IAMRetryPolicyOption>()->clone();
-    }
-    return options_.get<iam::IAMRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam::IAMBackoffPolicyOption>()) {
-      return options.get<iam::IAMBackoffPolicyOption>()->clone();
-    }
-    return options_.get<iam::IAMBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<iam::IAMConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam::IAMConnectionIdempotencyPolicyOption>()) {
-      return options.get<iam::IAMConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<iam::IAMConnectionIdempotencyPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMStub> stub_;
   Options options_;

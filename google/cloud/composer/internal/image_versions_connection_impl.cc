@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<composer::ImageVersionsRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<composer::ImageVersionsRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<composer::ImageVersionsBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<composer::ImageVersionsConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<composer::ImageVersionsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ImageVersionsConnectionImpl::ImageVersionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

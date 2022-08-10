@@ -73,46 +73,6 @@ class AutoscalingPolicyServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<dataproc::AutoscalingPolicyServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::AutoscalingPolicyServiceRetryPolicyOption>()) {
-      return options.get<dataproc::AutoscalingPolicyServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::AutoscalingPolicyServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::AutoscalingPolicyServiceBackoffPolicyOption>()) {
-      return options
-          .get<dataproc::AutoscalingPolicyServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataproc::AutoscalingPolicyServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dataproc::AutoscalingPolicyServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataproc::
-                AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataproc::
-                   AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataproc::
-                 AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataproc_internal::AutoscalingPolicyServiceStub> stub_;
   Options options_;

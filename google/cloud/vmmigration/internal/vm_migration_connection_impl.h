@@ -240,46 +240,6 @@ class VmMigrationConnectionImpl : public vmmigration::VmMigrationConnection {
       override;
 
  private:
-  std::unique_ptr<vmmigration::VmMigrationRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vmmigration::VmMigrationRetryPolicyOption>()) {
-      return options.get<vmmigration::VmMigrationRetryPolicyOption>()->clone();
-    }
-    return options_.get<vmmigration::VmMigrationRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vmmigration::VmMigrationBackoffPolicyOption>()) {
-      return options.get<vmmigration::VmMigrationBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vmmigration::VmMigrationBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<vmmigration::VmMigrationConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<vmmigration::VmMigrationConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<vmmigration::VmMigrationConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<vmmigration::VmMigrationConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vmmigration::VmMigrationPollingPolicyOption>()) {
-      return options.get<vmmigration::VmMigrationPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vmmigration::VmMigrationPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vmmigration_internal::VmMigrationStub> stub_;
   Options options_;

@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<gameservices::GameServerDeploymentsServiceRetryPolicy>
+retry_policy() {
+  return internal::CurrentOptions()
+      .get<gameservices::GameServerDeploymentsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<gameservices::GameServerDeploymentsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<
+    gameservices::GameServerDeploymentsServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<gameservices::
+               GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<gameservices::GameServerDeploymentsServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 GameServerDeploymentsServiceConnectionImpl::
     GameServerDeploymentsServiceConnectionImpl(

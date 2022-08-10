@@ -71,46 +71,6 @@ class UserEventServiceConnectionImpl
                        request) override;
 
  private:
-  std::unique_ptr<retail::UserEventServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail::UserEventServiceRetryPolicyOption>()) {
-      return options.get<retail::UserEventServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<retail::UserEventServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail::UserEventServiceBackoffPolicyOption>()) {
-      return options.get<retail::UserEventServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail::UserEventServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<retail::UserEventServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<retail::UserEventServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<retail::UserEventServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<retail::UserEventServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail::UserEventServicePollingPolicyOption>()) {
-      return options.get<retail::UserEventServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail::UserEventServicePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::UserEventServiceStub> stub_;
   Options options_;

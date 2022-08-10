@@ -89,50 +89,6 @@ class ServiceMonitoringServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<monitoring::ServiceMonitoringServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::ServiceMonitoringServiceRetryPolicyOption>()) {
-      return options
-          .get<monitoring::ServiceMonitoringServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::ServiceMonitoringServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<monitoring::ServiceMonitoringServiceBackoffPolicyOption>()) {
-      return options
-          .get<monitoring::ServiceMonitoringServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::ServiceMonitoringServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      monitoring::ServiceMonitoringServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring::
-                ServiceMonitoringServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring::
-                   ServiceMonitoringServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring::
-                 ServiceMonitoringServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_internal::ServiceMonitoringServiceStub> stub_;
   Options options_;

@@ -58,48 +58,6 @@ class PredictionServiceConnectionImpl
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
  private:
-  std::unique_ptr<automl::PredictionServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<automl::PredictionServiceRetryPolicyOption>()) {
-      return options.get<automl::PredictionServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<automl::PredictionServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<automl::PredictionServiceBackoffPolicyOption>()) {
-      return options.get<automl::PredictionServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<automl::PredictionServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<automl::PredictionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            automl::PredictionServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<automl::PredictionServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<automl::PredictionServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<automl::PredictionServicePollingPolicyOption>()) {
-      return options.get<automl::PredictionServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<automl::PredictionServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<automl_internal::PredictionServiceStub> stub_;
   Options options_;

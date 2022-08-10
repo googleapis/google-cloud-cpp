@@ -29,6 +29,34 @@ namespace google {
 namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<retail::CompletionServiceRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<retail::CompletionServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<retail::CompletionServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<retail::CompletionServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<retail::CompletionServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<PollingPolicy> polling_policy() {
+  return internal::CurrentOptions()
+      .get<retail::CompletionServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CompletionServiceConnectionImpl::CompletionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

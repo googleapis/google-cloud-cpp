@@ -187,49 +187,6 @@ class NotebookServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<notebooks::NotebookServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks::NotebookServiceRetryPolicyOption>()) {
-      return options.get<notebooks::NotebookServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<notebooks::NotebookServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks::NotebookServiceBackoffPolicyOption>()) {
-      return options.get<notebooks::NotebookServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<notebooks::NotebookServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<notebooks::NotebookServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            notebooks::NotebookServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<notebooks::NotebookServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<notebooks::NotebookServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks::NotebookServicePollingPolicyOption>()) {
-      return options.get<notebooks::NotebookServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<notebooks::NotebookServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<notebooks_internal::NotebookServiceStub> stub_;
   Options options_;

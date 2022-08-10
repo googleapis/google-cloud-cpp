@@ -53,40 +53,6 @@ class AuthorizedDomainsConnectionImpl
       google::appengine::v1::ListAuthorizedDomainsRequest request) override;
 
  private:
-  std::unique_ptr<appengine::AuthorizedDomainsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::AuthorizedDomainsRetryPolicyOption>()) {
-      return options.get<appengine::AuthorizedDomainsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine::AuthorizedDomainsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::AuthorizedDomainsBackoffPolicyOption>()) {
-      return options.get<appengine::AuthorizedDomainsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine::AuthorizedDomainsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<appengine::AuthorizedDomainsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            appengine::AuthorizedDomainsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine::AuthorizedDomainsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<appengine::AuthorizedDomainsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::AuthorizedDomainsStub> stub_;
   Options options_;

@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+inline std::unique_ptr<billing::BudgetServiceRetryPolicy> retry_policy() {
+  return internal::CurrentOptions()
+      .get<billing::BudgetServiceRetryPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<BackoffPolicy> backoff_policy() {
+  return internal::CurrentOptions()
+      .get<billing::BudgetServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+inline std::unique_ptr<billing::BudgetServiceConnectionIdempotencyPolicy>
+idempotency_policy() {
+  return internal::CurrentOptions()
+      .get<billing::BudgetServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 BudgetServiceConnectionImpl::BudgetServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

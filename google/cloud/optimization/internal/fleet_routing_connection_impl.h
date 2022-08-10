@@ -60,49 +60,6 @@ class FleetRoutingConnectionImpl : public optimization::FleetRoutingConnection {
       override;
 
  private:
-  std::unique_ptr<optimization::FleetRoutingRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<optimization::FleetRoutingRetryPolicyOption>()) {
-      return options.get<optimization::FleetRoutingRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<optimization::FleetRoutingRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<optimization::FleetRoutingBackoffPolicyOption>()) {
-      return options.get<optimization::FleetRoutingBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<optimization::FleetRoutingBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<optimization::FleetRoutingConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            optimization::FleetRoutingConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<optimization::FleetRoutingConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<optimization::FleetRoutingConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<optimization::FleetRoutingPollingPolicyOption>()) {
-      return options.get<optimization::FleetRoutingPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<optimization::FleetRoutingPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<optimization_internal::FleetRoutingStub> stub_;
   Options options_;
