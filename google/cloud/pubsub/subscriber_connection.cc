@@ -126,7 +126,6 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
                                  UnifiedCredentialsOptionList, PolicyOptionList,
                                  SubscriberOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultSubscriberOptions(std::move(opts));
-
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       background->cq(), opts);

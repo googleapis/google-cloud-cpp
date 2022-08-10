@@ -23,9 +23,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SchemaAdminClient::SchemaAdminClient(
     std::shared_ptr<SchemaAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          pubsub_internal::DefaultCommonOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 
 StatusOr<google::pubsub::v1::Schema> SchemaAdminClient::CreateAvroSchema(
     Schema const& schema, std::string schema_definition, Options opts) {
