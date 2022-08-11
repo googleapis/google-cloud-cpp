@@ -153,6 +153,11 @@ ParseAggregateDownloadThroughputOptions(std::vector<std::string> const& argv,
          options.client_options.set<GrpcBackgroundThreadPoolSizeOption>(
              std::stoi(val));
        }},
+      {"--rest-pool-size", "set the size of the REST connection pools",
+       [&options](std::string const& val) {
+         options.client_options.set<gcs::ConnectionPoolSizeOption>(
+             std::stoi(val));
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 
