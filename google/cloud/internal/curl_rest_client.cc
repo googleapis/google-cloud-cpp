@@ -52,7 +52,9 @@ Status MakeRequestWithPayload(
     }
     encoded_payload = impl.MakeEscapedString(concatenated_payload);
     if (!encoded_payload.empty()) {
-      impl.SetHeader(absl::StrCat("content-length: ", encoded_payload.size()));
+      impl.SetHeader(absl::StrCat("Content-Length: ", encoded_payload.size()));
+    } else {
+      impl.SetHeader("Content-Length: 0");
     }
     return impl.MakeRequest(http_method,
                             {{encoded_payload.data(), encoded_payload.size()}});
@@ -62,9 +64,8 @@ Status MakeRequestWithPayload(
   for (auto const& p : payload) {
     content_length += p.size();
   }
-  if (content_length > 0) {
-    impl.SetHeader(absl::StrCat("content-length: ", content_length));
-  }
+
+  impl.SetHeader(absl::StrCat("Content-Length: ", content_length));
   return impl.MakeRequest(http_method, payload);
 }
 
