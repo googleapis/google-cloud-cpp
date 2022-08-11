@@ -178,7 +178,7 @@ void PrintOptions(std::ostream& os, std::string const& prefix,
        << " Grpc Endpoint: " << options.get<EndpointOption>();
   }
   if (options.has<gcs::ConnectionPoolSizeOption>()) {
-    os << "\n# " << prefix << " Connection Pool Size: "
+    os << "\n# " << prefix << " REST Connection Pool Size: "
        << options.get<gcs::ConnectionPoolSizeOption>();
   }
   if (options.has<gcs::RestEndpointOption>()) {
