@@ -438,6 +438,11 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
                gcs::LimitedErrorCountRetryPolicy(0).clone());
          }
        }},
+      {"--rest-pool-size", "set the size of the REST connection pools",
+       [&options](std::string const& val) {
+         options.client_options.set<gcs::ConnectionPoolSizeOption>(
+             std::stoi(val));
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 
