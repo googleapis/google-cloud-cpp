@@ -121,7 +121,6 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
                                  UnifiedCredentialsOptionList, PolicyOptionList,
                                  PublisherOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultPublisherOptions(std::move(opts));
-
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       background->cq(), opts);
