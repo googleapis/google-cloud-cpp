@@ -85,6 +85,14 @@ using SpannerPolicyOptionList =
                SpannerPollingPolicyOption>;
 
 /**
+ * Option for `google::cloud::Options` to set the database role used for
+ * session creation.
+ */
+struct SessionCreatorRoleOption {
+  using Type = std::string;
+};
+
+/**
  * Option for `google::cloud::Options` to set the minimum number of sessions to
  * keep in the pool.
  *
@@ -151,12 +159,14 @@ struct SessionPoolLabelsOption {
 };
 
 /**
- * List of all SessionPool options.
+ * List of all SessionPool options. Pass to `spanner::MakeConnection()`.
  */
-using SessionPoolOptionList = OptionList<
-    SessionPoolMinSessionsOption, SessionPoolMaxSessionsPerChannelOption,
-    SessionPoolMaxIdleSessionsOption, SessionPoolActionOnExhaustionOption,
-    SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption>;
+using SessionPoolOptionList =
+    OptionList<SessionCreatorRoleOption, SessionPoolMinSessionsOption,
+               SessionPoolMaxSessionsPerChannelOption,
+               SessionPoolMaxIdleSessionsOption,
+               SessionPoolActionOnExhaustionOption,
+               SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption>;
 
 /**
  * Option for `google::cloud::Options` to set the optimizer version used in an

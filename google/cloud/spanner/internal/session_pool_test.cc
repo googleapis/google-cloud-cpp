@@ -19,12 +19,14 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/fake_clock.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
+#include "absl/time/clock.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
@@ -45,16 +47,17 @@ using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::StrictMock;
 using ::testing::UnorderedElementsAre;
 
-// Matches a BatchCreateSessionsRequest with the specified `session_count`.
-MATCHER_P(SessionCountIs, session_count,
-          "BatchCreateSessionsRequest has expected session_count") {
-  return arg.session_count() == session_count;
+// Matches a BatchCreateSessionsRequest with the specified `database_name`.
+MATCHER_P(DatabaseIs, database_name,
+          "BatchCreateSessionsRequest has expected database name") {
+  return arg.database() == database_name;
 }
 
 // Matches a BatchCreateSessionsRequest with the specified `labels`.
@@ -63,12 +66,33 @@ MATCHER_P(LabelsAre, labels, "BatchCreateSessionsRequest has expected labels") {
   return labels_type(arg_labels.begin(), arg_labels.end()) == labels;
 }
 
+// Matches a BatchCreateSessionsRequest with the specified `role`.
+MATCHER_P(CreatorRoleIs, role,
+          "BatchCreateSessionsRequest has expected creator role") {
+  return arg.session_template().creator_role() == role;
+}
+
+// Matches a BatchCreateSessionsRequest with the specified `session_count`.
+MATCHER_P(SessionCountIs, session_count,
+          "BatchCreateSessionsRequest has expected session count") {
+  return arg.session_count() == session_count;
+}
+
+google::protobuf::Timestamp Now() {
+  auto now = spanner::MakeTimestamp(absl::Now()).value();
+  return now.get<google::protobuf::Timestamp>().value();
+}
+
 // Create a response with the given `sessions`
 google::spanner::v1::BatchCreateSessionsResponse MakeSessionsResponse(
-    std::vector<std::string> sessions) {
+    std::vector<std::string> sessions, std::string role = "") {
   google::spanner::v1::BatchCreateSessionsResponse response;
   for (auto& session : sessions) {
-    response.add_session()->set_name(std::move(session));
+    auto* s = response.add_session();
+    s->set_name(std::move(session));
+    *s->mutable_create_time() = Now();
+    *s->mutable_approximate_last_use_time() = Now();
+    if (!role.empty()) s->set_creator_role(role);
   }
   return response;
 }
@@ -90,15 +114,9 @@ std::shared_ptr<SessionPool> MakeTestSessionPool(
 TEST(SessionPool, Allocate) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions)
-      .WillOnce(
-          [&db](
-              grpc::ClientContext&,
-              google::spanner::v1::BatchCreateSessionsRequest const& request) {
-            EXPECT_EQ(db.FullName(), request.database());
-            EXPECT_EQ(42, request.session_count());
-            return MakeSessionsResponse({"session1"});
-          });
+  EXPECT_CALL(*mock, BatchCreateSessions(_, AllOf(DatabaseIs(db.FullName()),
+                                                  SessionCountIs(42))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -113,23 +131,12 @@ TEST(SessionPool, Allocate) {
 TEST(SessionPool, ReleaseBadSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions)
-      .WillOnce(
-          [&db](
-              grpc::ClientContext&,
-              google::spanner::v1::BatchCreateSessionsRequest const& request) {
-            EXPECT_EQ(db.FullName(), request.database());
-            EXPECT_EQ(1, request.session_count());
-            return MakeSessionsResponse({"session1"});
-          })
-      .WillOnce(
-          [&db](
-              grpc::ClientContext&,
-              google::spanner::v1::BatchCreateSessionsRequest const& request) {
-            EXPECT_EQ(db.FullName(), request.database());
-            EXPECT_EQ(2, request.session_count());
-            return MakeSessionsResponse({"session2"});
-          });
+  EXPECT_CALL(*mock, BatchCreateSessions(_, AllOf(DatabaseIs(db.FullName()),
+                                                  SessionCountIs(1))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
+  EXPECT_CALL(*mock, BatchCreateSessions(_, AllOf(DatabaseIs(db.FullName()),
+                                                  SessionCountIs(2))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"session2"}))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -220,13 +227,13 @@ TEST(SessionPool, MinSessionsEagerAllocation) {
   int const min_sessions = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions)
+  EXPECT_CALL(*mock, BatchCreateSessions(_, SessionCountIs(min_sessions)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3", "s2", "s1"}))));
 
-  Options opts;
-  opts.set<spanner::SessionPoolMinSessionsOption>(min_sessions);
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), std::move(opts));
+  auto pool = MakeTestSessionPool(
+      db, {mock}, threads.cq(),
+      Options{}.set<spanner::SessionPoolMinSessionsOption>(min_sessions));
   auto session = pool->Allocate();
 }
 
@@ -237,15 +244,14 @@ TEST(SessionPool, MinSessionsMultipleAllocations) {
   // The constructor will make this call.
   EXPECT_CALL(*mock, BatchCreateSessions(_, SessionCountIs(min_sessions)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3", "s2", "s1"}))));
-
-  Options opts;
-  opts.set<spanner::SessionPoolMinSessionsOption>(min_sessions);
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), std::move(opts));
-
   // When we run out of sessions it will make this call.
   EXPECT_CALL(*mock, BatchCreateSessions(_, SessionCountIs(min_sessions + 1)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s7", "s6", "s5", "s4"}))));
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
+  auto pool = MakeTestSessionPool(
+      db, {mock}, threads.cq(),
+      Options{}.set<spanner::SessionPoolMinSessionsOption>(min_sessions));
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
   for (int i = 1; i <= 7; ++i) {
@@ -267,13 +273,14 @@ TEST(SessionPool, MaxSessionsFailOnExhaustion) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
 
-  Options opts;
-  opts.set<spanner::SessionPoolMaxSessionsPerChannelOption>(
-      max_sessions_per_channel);
-  opts.set<spanner::SessionPoolActionOnExhaustionOption>(
-      spanner::ActionOnExhaustion::kFail);
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), std::move(opts));
+  auto pool = MakeTestSessionPool(
+      db, {mock}, threads.cq(),
+      Options{}
+          .set<spanner::SessionPoolMaxSessionsPerChannelOption>(
+              max_sessions_per_channel)
+          .set<spanner::SessionPoolActionOnExhaustionOption>(
+              spanner::ActionOnExhaustion::kFail));
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
   for (int i = 1; i <= 3; ++i) {
@@ -295,13 +302,14 @@ TEST(SessionPool, MaxSessionsBlockUntilRelease) {
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))));
 
-  Options opts;
-  opts.set<spanner::SessionPoolMaxSessionsPerChannelOption>(
-      max_sessions_per_channel);
-  opts.set<spanner::SessionPoolActionOnExhaustionOption>(
-      spanner::ActionOnExhaustion::kBlock);
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), std::move(opts));
+  auto pool = MakeTestSessionPool(
+      db, {mock}, threads.cq(),
+      Options{}
+          .set<spanner::SessionPoolMaxSessionsPerChannelOption>(
+              max_sessions_per_channel)
+          .set<spanner::SessionPoolActionOnExhaustionOption>(
+              spanner::ActionOnExhaustion::kBlock));
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "s1");
@@ -325,10 +333,27 @@ TEST(SessionPool, Labels) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, LabelsAre(labels)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
 
-  Options opts;
-  opts.set<spanner::SessionPoolLabelsOption>(std::move(labels));
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), std::move(opts));
+  auto pool = MakeTestSessionPool(
+      db, {mock}, threads.cq(),
+      Options{}.set<spanner::SessionPoolLabelsOption>(std::move(labels)));
+  auto session = pool->Allocate();
+  ASSERT_STATUS_OK(session);
+  EXPECT_EQ((*session)->session_name(), "session1");
+}
+
+TEST(SessionPool, CreatorRole) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  std::string const role = "public";
+  EXPECT_CALL(*mock, BatchCreateSessions(_, AllOf(DatabaseIs(db.FullName()),
+                                                  CreatorRoleIs(role))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}, role))));
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
+  auto pool = MakeTestSessionPool(
+      db, {mock}, threads.cq(),
+      Options{}.set<spanner::SessionCreatorRoleOption>(role));
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -373,15 +398,15 @@ TEST(SessionPool, MultipleChannelsPreAllocation) {
   EXPECT_CALL(*mock3, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c3s1", "c3s2", "c3s3"}))));
 
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   // note that min_sessions will effectively be reduced to 9
   // (max_sessions_per_channel * num_channels).
-  Options opts;
-  opts.set<spanner::SessionPoolMaxSessionsPerChannelOption>(3);
-  opts.set<spanner::SessionPoolActionOnExhaustionOption>(
-      spanner::ActionOnExhaustion::kFail);
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(db, {mock1, mock2, mock3}, threads.cq(),
-                                  std::move(opts));
+  auto pool = MakeTestSessionPool(
+      db, {mock1, mock2, mock3}, threads.cq(),
+      Options{}
+          .set<spanner::SessionPoolMaxSessionsPerChannelOption>(3)
+          .set<spanner::SessionPoolActionOnExhaustionOption>(
+              spanner::ActionOnExhaustion::kFail));
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
   for (int i = 1; i <= 9; ++i) {
@@ -436,12 +461,13 @@ TEST(SessionPool, SessionRefresh) {
 
   auto db = spanner::Database("project", "instance", "database");
   auto impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto keep_alive_interval = std::chrono::seconds(1);
   auto clock = std::make_shared<FakeSteadyClock>();
-  auto opts = Options{}
-                  .set<spanner::SessionPoolKeepAliveIntervalOption>(
-                      std::chrono::seconds(1))
-                  .set<SessionPoolClockOption>(clock);
-  auto pool = MakeTestSessionPool(db, {mock}, CompletionQueue(impl), opts);
+  auto pool = MakeTestSessionPool(
+      db, {mock}, CompletionQueue(impl),
+      Options{}
+          .set<spanner::SessionPoolKeepAliveIntervalOption>(keep_alive_interval)
+          .set<SessionPoolClockOption>(clock));
 
   // Allocate and release two session, "s1" and "s2". This will satisfy the
   // BatchCreateSessions() expectations.
@@ -455,8 +481,7 @@ TEST(SessionPool, SessionRefresh) {
       EXPECT_EQ("s2", (*s2)->session_name());
     }
     // Wait for "s2" to need refreshing before releasing "s1".
-    clock->AdvanceTime(opts.get<spanner::SessionPoolKeepAliveIntervalOption>() *
-                       2);
+    clock->AdvanceTime(keep_alive_interval * 2);
   }
 
   // Simulate completion of pending operations, which will result in
