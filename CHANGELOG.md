@@ -44,6 +44,14 @@ for example, instead of ~`google::cloud::v1::Status`~ use
 </details>
 
 <details>
+<summary>2022-12-01: remove the `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` env var and the `UseRestClientOption` option.</summary>
+<br>
+Support for both the `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` env var and the
+`UseRestClientOption` option are scheduled to be removed ([9659](https://github.com/googleapis/google-cloud-cpp/issues/9659)).
+The legacy http implementation will also be removed.
+</details>
+
+<details>
 <summary>2023-02-01: remove `BigQueryReadReadRowsStreamingUpdater` from
 `google::cloud::bigquery` namespace</summary>
 <br>
@@ -117,6 +125,18 @@ may elicit a deprecation warning. See [#9086] for more details.
 </details>
 
 ## v2.2.0 - TBD
+
+### [Storage](/google/cloud/storage/README.md)
+
+* The internal http implementation has changed and provides comparable download
+  performance with improved upload performance (see attached benchmark results
+  in issue). If necessary, an escape hatch back to the legacy implementation has
+  been added and can be enabled by setting the
+  `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` environment variable. Support for
+  both the `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` env var and the
+  `UseRestClientOption` option are scheduled to be removed in the 2022-12
+  release ([9659](https://github.com/googleapis/google-cloud-cpp/issues/9659)).
+
 
 ## v2.1.0 - 2022-08
 

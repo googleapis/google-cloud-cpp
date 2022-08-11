@@ -37,8 +37,8 @@ using ::testing::NotNull;
 
 TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
   // Explicitly disable the RestClient, which may be enabled by our CI builds.
-  auto rest = ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
-                                absl::nullopt);
+  auto rest =
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
@@ -55,8 +55,8 @@ TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
 
 TEST(GrpcPluginTest, EnvironmentOverrides) {
   // Explicitly disable the RestClient, which may be enabled by our CI builds.
-  auto rest = ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
-                                absl::nullopt);
+  auto rest =
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
@@ -72,8 +72,8 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
 
 TEST(GrpcPluginTest, UnsetConfigCreatesCurl) {
   // Explicitly disable the RestClient, which may be enabled by our CI builds.
-  auto rest = ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
-                                absl::nullopt);
+  auto rest =
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
@@ -89,8 +89,8 @@ TEST(GrpcPluginTest, UnsetConfigCreatesCurl) {
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
   // Explicitly disable the RestClient, which may be enabled by our CI builds.
-  auto rest = ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
-                                absl::nullopt);
+  auto rest =
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
@@ -106,8 +106,8 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
 
 TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
   // Explicitly disable the RestClient, which may be enabled by our CI builds.
-  auto rest = ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
-                                absl::nullopt);
+  auto rest =
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);

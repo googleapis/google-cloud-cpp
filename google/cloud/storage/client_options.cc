@@ -229,8 +229,12 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
     o.set<ProjectIdOption>(std::move(*project_id));
   }
 
-  auto use_rest = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT");
-  if (use_rest.has_value()) o.set<UseRestClientOption>(true);
+  auto use_legacy_http = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP");
+  if (use_legacy_http.has_value()) {
+    o.set<UseRestClientOption>(false);
+  } else {
+    o.set<UseRestClientOption>(true);
+  }
 
   // Always apply the RestClient defaults, even if it is not in use. Now that we
   // use the low-level initialization code in
