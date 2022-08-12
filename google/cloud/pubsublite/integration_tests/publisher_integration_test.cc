@@ -79,11 +79,16 @@ void GarbageCollect(AdminServiceClient client, std::string const& parent) {
 
 class PublisherIntegrationTest : public testing_util::IntegrationTest {
  protected:
+  ~PublisherIntegrationTest() override {
+    auto client = AdminServiceClient(admin_connection_);
+    (void)client.DeleteTopic(topic_name_);
+  }
+
   void SetUp() override {
     auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    ASSERT_FALSE(project_id.empty());
+    ASSERT_FALSE(project_id.empty()) << "GOOGLE_CLOUD_PROJECT is unset";
     auto const location_id = GetEnv("GOOGLE_CLOUD_CPP_TEST_ZONE").value_or("");
-    ASSERT_FALSE(location_id.empty());
+    ASSERT_FALSE(location_id.empty()) << "GOOGLE_CLOUD_CPP_TEST_ZONE is unset";
     auto const parent =
         std::string{"projects/"} + project_id + "/locations/" + location_id;
     auto ep = EndpointFromZone(location_id);
@@ -113,17 +118,12 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     publisher_connection_ = *std::move(publisher_connection);
   }
 
-  void TearDown() override {
-    auto client = AdminServiceClient(admin_connection_);
-    (void)client.DeleteTopic(topic_name_);
-  }
-
   std::string topic_name_;
   std::shared_ptr<AdminServiceConnection> admin_connection_;
   std::shared_ptr<PublisherConnection> publisher_connection_;
 };
 
-TEST_F(PublisherIntegrationTest, BasicGoodWithoutKey) {
+TEST_F(PublisherIntegrationTest, WithoutOrderingKey) {
   auto publisher = Publisher(publisher_connection_);
   std::vector<future<StatusOr<std::string>>> results;
   for (int i = 0; i != kNumMessages; ++i) {
@@ -135,7 +135,7 @@ TEST_F(PublisherIntegrationTest, BasicGoodWithoutKey) {
   }
 }
 
-TEST_F(PublisherIntegrationTest, BasicGoodWithKey) {
+TEST_F(PublisherIntegrationTest, WithOrderingKey) {
   auto publisher = Publisher(publisher_connection_);
   std::vector<future<StatusOr<std::string>>> results;
   for (int i = 0; i != kNumMessages; ++i) {
