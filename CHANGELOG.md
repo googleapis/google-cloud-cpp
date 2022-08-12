@@ -44,10 +44,10 @@ for example, instead of ~`google::cloud::v1::Status`~ use
 </details>
 
 <details>
-<summary>2022-12-01: remove the `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` env var and the `UseRestClientOption` option.</summary>
+<summary>2022-12-01: remove the `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` env var.</summary>
 <br>
-Support for both the `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` env var and the
-`UseRestClientOption` option are scheduled to be removed ([9659](https://github.com/googleapis/google-cloud-cpp/issues/9659)).
+Support for the `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` env var is scheduled
+to be removed ([9659](https://github.com/googleapis/google-cloud-cpp/issues/9659)).
 The legacy http implementation will also be removed.
 </details>
 
@@ -133,9 +133,8 @@ may elicit a deprecation warning. See [#9086] for more details.
   in issue). If necessary, an escape hatch back to the legacy implementation has
   been added and can be enabled by setting the
   `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` environment variable. Support for
-  both the `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` env var and the
-  `UseRestClientOption` option are scheduled to be removed in the 2022-12
-  release ([9659](https://github.com/googleapis/google-cloud-cpp/issues/9659)).
+  the `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` env var is scheduled to be
+  removed in the 2022-12 release ([9659](https://github.com/googleapis/google-cloud-cpp/issues/9659)).
 
 
 ## v2.1.0 - 2022-08

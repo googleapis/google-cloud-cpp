@@ -230,9 +230,10 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
   }
 
   auto use_legacy_http = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP");
+  // The environment variable overrides values from the code.
   if (use_legacy_http.has_value()) {
     o.set<UseRestClientOption>(false);
-  } else {
+  } else if (!o.has<UseRestClientOption>()) {
     o.set<UseRestClientOption>(true);
   }
 
