@@ -49,6 +49,7 @@ TEST(AggregateUploadThroughputOptions, Basic) {
           "--transfer-stall-timeout=10s",
           "--transfer-stall-minimum-rate=100KiB",
           "--grpc-background-threads=4",
+          "--rest-pool-size=123",
       },
       "");
   ASSERT_STATUS_OK(options);
@@ -76,6 +77,7 @@ TEST(AggregateUploadThroughputOptions, Basic) {
       options->client_options.get<gcs_ex::TransferStallMinimumRateOption>());
   EXPECT_EQ(4,
             options->client_options.get<GrpcBackgroundThreadPoolSizeOption>());
+  EXPECT_EQ(123, options->client_options.get<gcs::ConnectionPoolSizeOption>());
 }
 
 TEST(AggregateUploadThroughputOptions, Description) {
