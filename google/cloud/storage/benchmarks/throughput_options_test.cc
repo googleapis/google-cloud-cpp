@@ -73,6 +73,7 @@ TEST(ThroughputOptions, Basic) {
       "--target-api-version-path=vN",
       "--grpc-background-threads=16",
       "--enable-retry-loop=false",
+      "--rest-pool-size=123",
   });
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
@@ -123,6 +124,7 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ(16,
             options->grpc_options.get<GrpcBackgroundThreadPoolSizeOption>());
   EXPECT_TRUE(options->client_options.has<gcs::RetryPolicyOption>());
+  EXPECT_EQ(123, options->client_options.get<gcs::ConnectionPoolSizeOption>());
 }
 
 TEST(ThroughputOptions, Description) {

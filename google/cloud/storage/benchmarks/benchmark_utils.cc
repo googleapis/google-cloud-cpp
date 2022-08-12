@@ -177,9 +177,13 @@ void PrintOptions(std::ostream& os, std::string const& prefix,
     os << "\n# " << prefix
        << " Grpc Endpoint: " << options.get<EndpointOption>();
   }
+  if (options.has<gcs::ConnectionPoolSizeOption>()) {
+    os << "\n# " << prefix << " REST Connection Pool Size: "
+       << options.get<gcs::ConnectionPoolSizeOption>();
+  }
   if (options.has<gcs::RestEndpointOption>()) {
     os << "\n# " << prefix
-       << "REST Endpoint: " << options.get<gcs::RestEndpointOption>();
+       << " REST Endpoint: " << options.get<gcs::RestEndpointOption>();
   }
   if (options.has<gcs::TransferStallTimeoutOption>()) {
     os << "\n# " << prefix << " Transfer Stall Timeout: "

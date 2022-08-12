@@ -47,6 +47,7 @@ TEST(AggregateDownloadThroughputOptions, Basic) {
           "--download-stall-timeout=10s",
           "--download-stall-minimum-rate=100KiB",
           "--grpc-background-threads=4",
+          "--rest-pool-size=123",
       },
       "");
   ASSERT_STATUS_OK(options);
@@ -74,6 +75,7 @@ TEST(AggregateDownloadThroughputOptions, Basic) {
       options->client_options.get<gcs_ex::DownloadStallMinimumRateOption>());
   EXPECT_EQ(4,
             options->client_options.get<GrpcBackgroundThreadPoolSizeOption>());
+  EXPECT_EQ(123, options->client_options.get<gcs::ConnectionPoolSizeOption>());
 }
 
 TEST(AggregateDownloadThroughputOptions, Description) {
