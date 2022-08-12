@@ -65,12 +65,13 @@ std::string RandomTopicId() {
 }
 
 void GarbageCollect(AdminServiceClient client, std::string const& parent) {
-  auto stale_prefix =
+  auto const stale_prefix =
       parent + "/topics/" + TestTopicPrefix(system_clock::now() - hours(48));
+  auto const re = std::regex{kTopicRegex};
   auto topics = client.ListTopics(parent);
   for (auto const& topic : topics) {
     ASSERT_STATUS_OK(topic);
-    if (!std::regex_search(topic->name(), std::regex{kTopicRegex})) continue;
+    if (!std::regex_search(topic->name(), re)) continue;
     if (topic->name() < stale_prefix) {
       client.DeleteTopic(topic->name());
     }
