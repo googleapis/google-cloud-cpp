@@ -36,6 +36,7 @@ namespace gcs_ex = ::google::cloud::storage_experimental;
 namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::AggregateUploadThroughputOptions;
 using gcs_bm::FormatBandwidthGbPerSecond;
+using gcs_bm::FormatTimestamp;
 
 char const kDescription[] = R"""(A benchmark for aggregated upload throughput.
 
@@ -75,6 +76,7 @@ using Counters = std::map<std::string, std::int64_t>;
 
 struct UploadDetail {
   int iteration;
+  std::chrono::system_clock::time_point start_time;
   std::string bucket_name;
   std::string object_name;
   std::string upload_id;
@@ -141,9 +143,7 @@ int main(int argc, char* argv[]) {
                  [](char c) { return c == '\n' ? ';' : c; });
 
   auto current_time = [] {
-    auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
-    auto const t = absl::FromChrono(std::chrono::system_clock::now());
-    return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
+    return FormatTimestamp(std::chrono::system_clock::now());
   };
 
   std::cout << "# Start time: " << current_time()
@@ -210,8 +210,8 @@ int main(int argc, char* argv[]) {
   // header because sometimes we interrupt the benchmark and these tools
   // require a header even for empty files.
   std::cout
-      << "Iteration,Labels,ObjectCount,ResumableUploadChunkSize,ThreadCount,Api"
-      << ",ClientPerThread"
+      << "Iteration,Start,Labels,ObjectCount,ResumableUploadChunkSize"
+      << ",ThreadCount,Api,ClientPerThread"
       << ",BucketName,ObjectName,UploadId,Peer,StatusCode"
       << ",BytesUploaded,ElapsedMicroseconds"
       << ",IterationBytes,IterationElapsedMicroseconds,IterationCpuMicroseconds"
@@ -251,6 +251,7 @@ int main(int argc, char* argv[]) {
         // Join the iteration details with the per-upload details. That makes
         // it easier to analyze the data in external scripts.
         std::cout << d.iteration                                  //
+                  << ',' << FormatTimestamp(d.start_time)         //
                   << ',' << labels                                //
                   << ',' << options->object_count                 //
                   << ',' << options->resumable_upload_chunk_size  //
@@ -321,6 +322,7 @@ UploadDetail UploadOneObject(gcs::Client& client,
   // prefers XML in that case. Using gcs::Fields() has no effect.
   auto xml_hack = options.api == "XML" ? gcs::Fields("") : gcs::Fields();
   auto const object_start = clock::now();
+  auto const start = std::chrono::system_clock::now();
 
   auto stream =
       client.WriteObject(options.bucket_name, upload.object_name, xml_hack);
@@ -338,10 +340,15 @@ UploadDetail UploadOneObject(gcs::Client& client,
       duration_cast<microseconds>(clock::now() - object_start);
   auto peer = ExtractPeer(stream.headers());
   auto upload_id = ExtractUploadId(stream.resumable_session_id());
-  return UploadDetail{iteration,          options.bucket_name,
-                      upload.object_name, std::move(upload_id),
-                      std::move(peer),    object_bytes,
-                      object_elapsed,     stream.metadata().status()};
+  return UploadDetail{iteration,
+                      start,
+                      options.bucket_name,
+                      upload.object_name,
+                      std::move(upload_id),
+                      std::move(peer),
+                      object_bytes,
+                      object_elapsed,
+                      stream.metadata().status()};
 }
 
 TaskResult UploadIteration::UploadTask(TaskConfig const& config,

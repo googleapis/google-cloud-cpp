@@ -19,7 +19,6 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/options.h"
 #include "absl/time/time.h"
-#include "absl/types/optional.h"
 #include <future>
 #include <sstream>
 #include <stdexcept>
@@ -211,6 +210,12 @@ void PrintOptions(std::ostream& os, std::string const& prefix,
        << options
               .has<google::cloud::storage::internal::TargetApiVersionOption>();
   }
+}
+// Format a timestamp
+std::string FormatTimestamp(std::chrono::system_clock::time_point tp) {
+  auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
+  auto const t = absl::FromChrono(tp);
+  return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
 }
 
 }  // namespace storage_benchmarks
