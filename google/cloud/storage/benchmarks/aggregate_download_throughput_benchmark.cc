@@ -43,6 +43,7 @@ namespace gcs_ex = ::google::cloud::storage_experimental;
 namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::AggregateDownloadThroughputOptions;
 using gcs_bm::FormatBandwidthGbPerSecond;
+using gcs_bm::FormatTimestamp;
 
 char const kDescription[] = R"""(A benchmark for aggregated throughput.
 
@@ -89,6 +90,7 @@ using Counters = std::map<std::string, std::int64_t>;
 
 struct DownloadDetail {
   int iteration;
+  std::chrono::system_clock::time_point start_time;
   std::string peer;
   std::uint64_t bytes_downloaded;
   std::chrono::microseconds elapsed_time;
@@ -130,9 +132,7 @@ gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
 }
 
 std::string CurrentTime() {
-  auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
-  auto const t = absl::FromChrono(std::chrono::system_clock::now());
-  return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
+  return FormatTimestamp(std::chrono::system_clock::now());
 };
 
 void PrintResults(AggregateDownloadThroughputOptions const& options,
@@ -218,7 +218,7 @@ int main(int argc, char* argv[]) {
   // our analysis tools (typically Python pandas, but could be R). Flush the
   // header because sometimes we interrupt the benchmark and these tools
   // require a header even for empty files.
-  std::cout << "Labels,Iteration,ObjectCount,DatasetSize,ThreadCount"
+  std::cout << "Iteration,Start,Labels,ObjectCount,DatasetSize,ThreadCount"
             << ",RepeatsPerIteration,ReadSize,ReadBufferSize,Api"
             << ",ClientPerThread"
             << ",StatusCode,Peer,BytesDownloaded,ElapsedMicroseconds"
@@ -276,6 +276,7 @@ DownloadDetail DownloadOneObject(
   auto xml_hack = options.api == "JSON" ? gcs::IfGenerationNotMatch(0)
                                         : gcs::IfGenerationNotMatch();
   auto const object_start = clock::now();
+  auto const start = std::chrono::system_clock::now();
   auto object_bytes = std::uint64_t{0};
   auto const object_size = static_cast<std::int64_t>(object.size());
   auto range = gcs::ReadRange();
@@ -301,8 +302,8 @@ DownloadDetail DownloadOneObject(
   }
   auto const& peer =
       p == stream.headers().end() ? std::string{"unknown"} : p->second;
-  return DownloadDetail{iteration, peer, object_bytes, object_elapsed,
-                        stream.status()};
+  return DownloadDetail{iteration,    start,          peer,
+                        object_bytes, object_elapsed, stream.status()};
 }
 
 TaskResult Iteration::DownloadTask(TaskConfig const& config) {
@@ -394,8 +395,9 @@ void PrintResults(AggregateDownloadThroughputOptions const& options,
     for (auto const& d : r.details) {
       // Join the iteration details with the per-download details. That makes
       // it easier to analyze the data in external scripts.
-      std::cout << labels                                //
-                << ',' << d.iteration                    //
+      std::cout << ',' << d.iteration                    //
+                << ',' << FormatTimestamp(d.start_time)  //
+                << labels                                //
                 << ',' << object_count                   //
                 << ',' << dataset_size                   //
                 << ',' << options.thread_count           //

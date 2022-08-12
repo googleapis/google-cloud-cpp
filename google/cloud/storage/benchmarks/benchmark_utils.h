@@ -126,6 +126,9 @@ std::string FormatBandwidthGbPerSecond(
 void PrintOptions(std::ostream& os, std::string const& prefix,
                   Options const& options);
 
+// Format a timestamp
+std::string FormatTimestamp(std::chrono::system_clock::time_point tp);
+
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google
