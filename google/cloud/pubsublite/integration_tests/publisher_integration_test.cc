@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsublite/admin_connection.h"
-#include "google/cloud/pubsublite/internal/location.h"
+#include "google/cloud/pubsub/publisher.h"
+#include "google/cloud/pubsublite/admin_client.h"
+#include "google/cloud/pubsublite/endpoint.h"
 #include "google/cloud/pubsublite/options.h"
 #include "google/cloud/pubsublite/publisher_connection.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -34,12 +33,10 @@ namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::GetEnv;
 using ::google::cloud::pubsub::MessageBuilder;
+using ::google::cloud::pubsub::Publisher;
 using ::google::cloud::pubsub::PublisherConnection;
-using ::google::cloud::pubsublite::v1::CreateTopicRequest;
-using ::google::cloud::pubsublite::v1::DeleteTopicRequest;
-using ::google::cloud::pubsublite::v1::ListTopicsRequest;
-using ::google::cloud::pubsublite_internal::MakeLocation;
 using ::std::chrono::hours;
 using ::std::chrono::system_clock;
 
@@ -48,104 +45,90 @@ auto constexpr kThroughputCapacityMiB = 4;
 auto constexpr kGiB = static_cast<std::int64_t>(1024 * 1024 * 1024LL);
 auto constexpr kPartitionStorage = 30 * kGiB;
 auto constexpr kMaxNumMessagesPerBatch = 25;
+auto constexpr kTopicRegex =
+    R"re(^projects\/\d*\/locations\/[a-z0-9\-]*\/topics\/pub-int-test[-_]\d{4}[-_]\d{2}[-_]\d{2}[-_])re";
 
 std::string TestTopicPrefix(system_clock::time_point tp) {
   return "pub-int-test-" + google::cloud::internal::FormatUtcDate(tp) + "-";
 }
 
-class PublisherIntegrationTest : public testing_util::IntegrationTest {
- protected:
-  PublisherIntegrationTest()
-      : topic_prefix_{TestTopicPrefix(system_clock::now())},
-        project_id_{google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT")
-                        .value_or("")},
-        location_id_{
-            google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TEST_ZONE")
-                .value_or("")},
-        admin_connection_{MakeAdminServiceConnection(
-            google::cloud::internal::PopulateCommonOptions(
-                google::cloud::internal::PopulateGrpcOptions(
-                    Options{}.set<EndpointOption>(MakeLocation(location_id_)
-                                                      ->GetCloudRegion()
-                                                      .ToString() +
-                                                  "-pubsublite.googleapis.com"),
-                    ""),
-                /*endpoint_env_var=*/{}, /*emulator_env_var=*/{},
-                /*authority_env_var=*/{}, "pubsublite.googleapis.com"))} {
-    auto topic_id = RandomTopicName();
+std::string RandomTopicId() {
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  std::size_t const max_topic_size = 70;
+  auto const topic_prefix = TestTopicPrefix(system_clock::now());
+  auto size = static_cast<int>(max_topic_size - 1 - topic_prefix.size());
+  return topic_prefix +
+         google::cloud::internal::Sample(
+             generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
+         google::cloud::internal::Sample(
+             generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
+}
 
-    GarbageCollect();
-
-    CreateTopicRequest req;
-    req.set_parent("projects/" + project_id_ + "/locations/" + location_id_);
-    req.set_topic_id(topic_id);
-    req.mutable_topic()->mutable_partition_config()->set_count(3);
-    req.mutable_topic()
-        ->mutable_partition_config()
-        ->mutable_capacity()
-        ->set_publish_mib_per_sec(kThroughputCapacityMiB);
-    req.mutable_topic()
-        ->mutable_partition_config()
-        ->mutable_capacity()
-        ->set_subscribe_mib_per_sec(kThroughputCapacityMiB);
-    req.mutable_topic()->mutable_retention_config()->set_per_partition_bytes(
-        kPartitionStorage);
-    EXPECT_STATUS_OK(admin_connection_->CreateTopic(std::move(req)));
-    auto topic = Topic{project_id_, location_id_, topic_id};
-    topic_name_ = topic.FullName();
-    publisher_ = *MakePublisherConnection(
-        topic, Options{}.set<MaxBatchMessagesOption>(kMaxNumMessagesPerBatch));
-  }
-
-  ~PublisherIntegrationTest() override {
-    DeleteTopicRequest req;
-    req.set_name(topic_name_);
-    admin_connection_->DeleteTopic(std::move(req));
-  }
-
-  void GarbageCollect() {
-    ListTopicsRequest req;
-    req.set_parent("projects/" + project_id_ + "/locations/" + location_id_);
-    auto topics = admin_connection_->ListTopics(std::move(req));
-    std::string full_topic_prefix =
-        "projects/" + project_id_ + "/locations/" + location_id_ + "/topics/" +
-        TestTopicPrefix(system_clock::now() - hours(48));
-    for (auto const& topic : topics) {
-      if (!std::regex_search(topic->name(), topic_regex_)) continue;
-      if (topic->name() < full_topic_prefix) {
-        DeleteTopicRequest delete_req;
-        delete_req.set_name(topic->name());
-        admin_connection_->DeleteTopic(std::move(delete_req));
-      }
+void GarbageCollect(AdminServiceClient client, std::string const& parent) {
+  auto const stale_prefix =
+      parent + "/topics/" + TestTopicPrefix(system_clock::now() - hours(48));
+  auto const re = std::regex{kTopicRegex};
+  auto topics = client.ListTopics(parent);
+  for (auto const& topic : topics) {
+    ASSERT_STATUS_OK(topic);
+    if (!std::regex_search(topic->name(), re)) continue;
+    if (topic->name() < stale_prefix) {
+      client.DeleteTopic(topic->name());
     }
   }
+}
 
-  std::string RandomTopicName() {
-    auto generator =
-        google::cloud::internal::DefaultPRNG(std::random_device{}());
-    std::size_t const max_topic_size = 70;
-    auto size = static_cast<int>(max_topic_size - 1 - topic_prefix_.size());
-    return topic_prefix_ +
-           google::cloud::internal::Sample(
-               generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
-           google::cloud::internal::Sample(
-               generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
+class PublisherIntegrationTest : public testing_util::IntegrationTest {
+ protected:
+  ~PublisherIntegrationTest() override {
+    auto client = AdminServiceClient(admin_connection_);
+    (void)client.DeleteTopic(topic_name_);
   }
 
-  std::regex topic_regex_ = std::regex{
-      R"re(^projects\/\d*\/locations\/[a-z0-9\-]*\/topics\/pub-int-test[-_]\d{4}[-_]\d{2}[-_]\d{2}[-_])re"};
-  std::string topic_prefix_;
-  std::string project_id_;
-  std::string location_id_;
-  std::shared_ptr<AdminServiceConnection> admin_connection_;
+  void SetUp() override {
+    auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    ASSERT_FALSE(project_id.empty()) << "GOOGLE_CLOUD_PROJECT is unset";
+    auto const location_id = GetEnv("GOOGLE_CLOUD_CPP_TEST_ZONE").value_or("");
+    ASSERT_FALSE(location_id.empty()) << "GOOGLE_CLOUD_CPP_TEST_ZONE is unset";
+    auto const parent =
+        std::string{"projects/"} + project_id + "/locations/" + location_id;
+    auto ep = EndpointFromZone(location_id);
+    ASSERT_STATUS_OK(ep);
+
+    auto options = Options{}.set<EndpointOption>(*ep).set<AuthorityOption>(*ep);
+    admin_connection_ = MakeAdminServiceConnection(std::move(options));
+    auto client = AdminServiceClient(admin_connection_);
+
+    GarbageCollect(client, parent);
+
+    auto const topic_id = RandomTopicId();
+
+    google::cloud::pubsublite::v1::Topic t;
+    t.mutable_partition_config()->set_count(3);
+    t.mutable_retention_config()->set_per_partition_bytes(kPartitionStorage);
+    auto& capacity = *t.mutable_partition_config()->mutable_capacity();
+    capacity.set_publish_mib_per_sec(kThroughputCapacityMiB);
+    capacity.set_subscribe_mib_per_sec(kThroughputCapacityMiB);
+    ASSERT_STATUS_OK(client.CreateTopic(parent, t, topic_id));
+
+    auto topic = Topic{project_id, location_id, topic_id};
+    auto publisher_connection = MakePublisherConnection(
+        std::move(topic),
+        Options{}.set<MaxBatchMessagesOption>(kMaxNumMessagesPerBatch));
+    ASSERT_STATUS_OK(publisher_connection);
+    publisher_connection_ = *std::move(publisher_connection);
+  }
+
   std::string topic_name_;
-  std::unique_ptr<PublisherConnection> publisher_;
+  std::shared_ptr<AdminServiceConnection> admin_connection_;
+  std::shared_ptr<PublisherConnection> publisher_connection_;
 };
 
-TEST_F(PublisherIntegrationTest, BasicGoodWithoutKey) {
+TEST_F(PublisherIntegrationTest, WithoutOrderingKey) {
+  auto publisher = Publisher(publisher_connection_);
   std::vector<future<StatusOr<std::string>>> results;
   for (int i = 0; i != kNumMessages; ++i) {
-    results.push_back(publisher_->Publish(
+    results.push_back(publisher.Publish(
         {MessageBuilder{}.SetData("abcded-" + std::to_string(i)).Build()}));
   }
   for (int i = 0; i != kNumMessages; ++i) {
@@ -153,14 +136,15 @@ TEST_F(PublisherIntegrationTest, BasicGoodWithoutKey) {
   }
 }
 
-TEST_F(PublisherIntegrationTest, BasicGoodWithKey) {
+TEST_F(PublisherIntegrationTest, WithOrderingKey) {
+  auto publisher = Publisher(publisher_connection_);
   std::vector<future<StatusOr<std::string>>> results;
   for (int i = 0; i != kNumMessages; ++i) {
     results.push_back(
-        publisher_->Publish({MessageBuilder{}
-                                 .SetData("abcded-" + std::to_string(i))
-                                 .SetOrderingKey("key")
-                                 .Build()}));
+        publisher.Publish({MessageBuilder{}
+                               .SetData("abcded-" + std::to_string(i))
+                               .SetOrderingKey("key")
+                               .Build()}));
   }
   for (int i = 0; i != kNumMessages; ++i) {
     EXPECT_STATUS_OK(results[i].get());
