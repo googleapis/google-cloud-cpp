@@ -323,6 +323,7 @@ StatusOr<BucketMetadata> RestClient::LockBucketRetentionPolicy(
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
+  builder.AddOption(IfMetagenerationMatch(request.metageneration()));
   return CheckedFromString<BucketMetadataParser>(storage_rest_client_->Post(
       std::move(builder).BuildRequest(), {absl::MakeConstSpan(std::string{})}));
 }
