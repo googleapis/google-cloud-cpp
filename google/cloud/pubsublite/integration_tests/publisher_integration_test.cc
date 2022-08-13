@@ -65,14 +65,14 @@ std::string RandomTopicId() {
 }
 
 void GarbageCollect(AdminServiceClient client, std::string const& parent) {
-  auto const stale_prefix =
-      parent + "/topics/" + TestTopicPrefix(system_clock::now() - hours(48));
+  auto const stale_prefix = TestTopicPrefix(system_clock::now() - hours(48));
   auto const re = std::regex{kTopicRegex};
   auto topics = client.ListTopics(parent);
   for (auto const& topic : topics) {
     ASSERT_STATUS_OK(topic);
     if (!std::regex_search(topic->name(), re)) continue;
-    if (topic->name() < stale_prefix) {
+    auto topic_id = topic->name().substr(topic->name().rfind('/') + 1);
+    if (topic_id < stale_prefix) {
       client.DeleteTopic(topic->name());
     }
   }
@@ -102,6 +102,8 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     GarbageCollect(client, parent);
 
     auto const topic_id = RandomTopicId();
+    auto topic = Topic{project_id, location_id, topic_id};
+    topic_name_ = topic.FullName();
 
     google::cloud::pubsublite::v1::Topic t;
     t.mutable_partition_config()->set_count(3);
@@ -111,7 +113,6 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     capacity.set_subscribe_mib_per_sec(kThroughputCapacityMiB);
     ASSERT_STATUS_OK(client.CreateTopic(parent, t, topic_id));
 
-    auto topic = Topic{project_id, location_id, topic_id};
     auto publisher_connection = MakePublisherConnection(
         std::move(topic),
         Options{}.set<MaxBatchMessagesOption>(kMaxNumMessagesPerBatch));
