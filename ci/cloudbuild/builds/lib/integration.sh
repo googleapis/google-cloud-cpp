@@ -156,6 +156,8 @@ function integration::bazel_with_emulators() {
     "google/cloud/iam/..."
     # Logging integration tests
     "google/cloud/logging/..."
+    # Pub/Sub Lite integration tests
+    "google/cloud/pubsublite/..."
     # Unified Rest Credentials test
     "google/cloud:internal_unified_rest_credentials_integration_test"
   )
