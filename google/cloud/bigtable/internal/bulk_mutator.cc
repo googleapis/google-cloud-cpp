@@ -60,7 +60,8 @@ BulkMutatorState::BulkMutatorState(std::string const& app_profile_id,
                     });
     auto idempotency =
         is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent;
-    pending_annotations_.push_back(Annotations{index++, idempotency, false});
+    pending_annotations_.push_back(
+        Annotations{index++, idempotency, false, Status()});
   }
 }
 
@@ -78,9 +79,8 @@ google::bigtable::v2::MutateRowsRequest const& BulkMutatorState::BeforeStart() {
   return mutations_;
 }
 
-std::vector<int> BulkMutatorState::OnRead(
+void BulkMutatorState::OnRead(
     google::bigtable::v2::MutateRowsResponse response) {
-  std::vector<int> res;
   for (auto& entry : *response.mutable_entries()) {
     // The type of `entry.index()` is a 64-bit int. But we can never create more
     // than std::numeric_limits<std::size_t>::max() entries in the request
@@ -98,39 +98,37 @@ std::vector<int> BulkMutatorState::OnRead(
     auto const index = static_cast<std::size_t>(entry.index());
     auto& annotation = annotations_[index];
     annotation.has_mutation_result = true;
-    auto const status = MakeStatusFromRpcError(entry.status());
+    annotation.status = MakeStatusFromRpcError(entry.status());
     // Successful responses are not even recorded, this class only reports
     // the failures.  The data for successful responses is discarded, because
     // this class takes ownership in the constructor.
-    if (status.ok()) {
-      res.push_back(annotation.original_index);
-      continue;
-    }
+    if (annotation.status.ok()) continue;
     auto& original = *mutations_.mutable_entries(static_cast<int>(index));
     // Failed responses are handled according to the current policies.
-    if (SafeGrpcRetry::IsTransientFailure(status) &&
+    if (SafeGrpcRetry::IsTransientFailure(annotation.status) &&
         (annotation.idempotency == Idempotency::kIdempotent)) {
       // Retryable requests are saved in the pending mutations, along with the
       // mapping from their index in pending_mutations_ to the original
       // vector and other miscellanea.
       pending_mutations_.add_entries()->Swap(&original);
-      pending_annotations_.push_back(annotation);
+      pending_annotations_.push_back(Annotations{
+          annotation.original_index, annotation.idempotency,
+          annotation.has_mutation_result, std::move(annotation.status)});
     } else {
       // Failures are saved for reporting, notice that we avoid copying, and
       // we use the original index in the first request, not the one where it
       // failed.
-      failures_.emplace_back(std::move(*entry.mutable_status()),
+      failures_.emplace_back(std::move(annotation.status),
                              annotation.original_index);
     }
   }
-  return res;
 }
 
 void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
   last_status_ = std::move(finish_status);
 
   int index = 0;
-  for (auto const& annotation : annotations_) {
+  for (auto& annotation : annotations_) {
     if (annotation.has_mutation_result) {
       ++index;
       continue;
@@ -141,7 +139,7 @@ void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
       // If the mutation was retryable, move it to the pending mutations to try
       // again, along with their index.
       pending_mutations_.add_entries()->Swap(&original);
-      pending_annotations_.push_back(annotation);
+      pending_annotations_.push_back(std::move(annotation));
     } else {
       if (last_status_.ok()) {
         google::cloud::Status status(
@@ -151,7 +149,7 @@ void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
             "report it at "
             "https://github.com/googleapis/google-cloud-cpp/issues/new");
         failures_.emplace_back(
-            FailedMutation(status, annotation.original_index));
+            FailedMutation(std::move(status), annotation.original_index));
       } else {
         failures_.emplace_back(
             FailedMutation(last_status_, annotation.original_index));
@@ -166,17 +164,20 @@ std::vector<FailedMutation> BulkMutatorState::OnRetryDone() && {
 
   auto size = pending_mutations_.mutable_entries()->size();
   for (int idx = 0; idx != size; idx++) {
-    int original_index = pending_annotations_[idx].original_index;
-    if (last_status_.ok()) {
+    auto& annotation = pending_annotations_[idx];
+    if (annotation.has_mutation_result) {
+      result.emplace_back(std::move(annotation.status),
+                          annotation.original_index);
+    } else if (!last_status_.ok()) {
+      result.emplace_back(last_status_, annotation.original_index);
+    } else {
       google::cloud::Status status(
           google::cloud::StatusCode::kInternal,
           "The server never sent a confirmation for this mutation but the "
           "stream didn't fail either. This is most likely a bug, please "
           "report it at "
           "https://github.com/googleapis/google-cloud-cpp/issues/new");
-      result.emplace_back(status, original_index);
-    } else {
-      result.emplace_back(last_status_, original_index);
+      result.emplace_back(std::move(status), annotation.original_index);
     }
   }
 
