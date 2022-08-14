@@ -628,6 +628,43 @@ TEST(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
   (void)conn->BulkApply(kTableName, std::move(mut));
 }
 
+TEST(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
+  std::vector<bigtable::FailedMutation> expected = {
+      {Status(StatusCode::kUnavailable, "try again"), 0}};
+  bigtable::BulkMutation mut(IdempotentMutation("r1"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRows)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly(
+          [](std::unique_ptr<grpc::ClientContext>,
+             google::bigtable::v2::MutateRowsRequest const& request) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            EXPECT_EQ(kTableName, request.table_name());
+            auto stream = absl::make_unique<MockMutateRowsStream>();
+            // The overall stream succeeds, but it contains failed mutations.
+            // Our retry and backoff policies should take effect.
+            EXPECT_CALL(*stream, Read)
+                .WillOnce(Return(MakeBulkApplyResponse(
+                    {{0, grpc::StatusCode::UNAVAILABLE}})))
+                .WillOnce(Return(Status()));
+            return stream;
+          });
+
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
+    return clone;
+  });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
+  auto actual = conn->BulkApply(kTableName, std::move(mut));
+  CheckFailedMutations(actual, expected);
+}
+
 // The `AsyncBulkApplier` is tested extensively in `async_bulk_apply_test.cc`.
 // In this test, we just verify that the configuration is passed along.
 TEST(DataConnectionTest, AsyncBulkApply) {

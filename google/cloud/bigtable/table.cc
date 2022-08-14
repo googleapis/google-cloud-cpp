@@ -181,10 +181,8 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut, Options opts) {
     retry_policy->Setup(client_context);
     metadata_update_policy_.Setup(client_context);
     status = mutator.MakeOneRequest(*client_, client_context);
-    if (!status.ok() && !retry_policy->OnFailure(status)) {
-      break;
-    }
     if (!mutator.HasPendingMutations()) break;
+    if (!retry_policy->OnFailure(status)) break;
     auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
   }

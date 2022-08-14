@@ -80,18 +80,15 @@ void AsyncRetryBulkApply::OnRead(
 }
 
 void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status const& status) {
-  auto const is_retryable = status.ok() || rpc_retry_policy_->OnFailure(status);
   state_.OnFinish(status);
-  if (!state_.HasPendingMutations() || !is_retryable) {
+  if (!state_.HasPendingMutations() || !rpc_retry_policy_->OnFailure(status)) {
     SetPromise();
     return;
   }
 
-  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
-
   auto self = this->shared_from_this();
   cq.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status))
-      .then([self, cq](TimerFuture result) {
+      .then([self, cq](auto result) {
         if (result.get()) {
           self->StartIteration(std::move(cq));
         } else {
