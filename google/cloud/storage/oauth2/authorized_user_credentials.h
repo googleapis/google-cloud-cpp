@@ -15,12 +15,18 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H
 
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
+#include "google/cloud/internal/oauth2_authorized_user_credentials.h"
+#else
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
-#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
+#endif
+#include "google/cloud/storage/client_options.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/status.h"
 #include <chrono>
 #include <iostream>
@@ -32,7 +38,12 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
+
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
 /// Object to hold information used to instantiate an AuthorizedUserCredentials.
+using AuthorizedUserCredentialsInfo =
+    google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo;
+#else
 struct AuthorizedUserCredentialsInfo {
   std::string client_id;
   std::string client_secret;
@@ -40,17 +51,19 @@ struct AuthorizedUserCredentialsInfo {
   std::string token_uri;
 };
 
-/// Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
-StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
-    std::string const& content, std::string const& source,
-    std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
-
 /// Parses a refresh response JSON string into an authorization header. The
 /// header and the current time (for the expiration) form a TemporaryToken.
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseAuthorizedUserRefreshResponse(
     storage::internal::HttpResponse const& response,
     std::chrono::system_clock::time_point now);
+#endif
+
+/// Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
+StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
+    std::string const& content, std::string const& source,
+    std::string const& default_token_uri =
+        google::cloud::oauth2_internal::GoogleOAuthRefreshEndpoint());
 
 /**
  * Wrapper class for Google OAuth 2.0 user account credentials.
@@ -74,6 +87,26 @@ ParseAuthorizedUserRefreshResponse(
  * @tparam ClockType a dependency injection point to fetch the current time.
  *     This should generally not be overridden except for testing.
  */
+
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
+template <typename HttpRequestBuilderType = void, typename ClockType = void>
+class AuthorizedUserCredentials : public Credentials {
+ public:
+  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
+                                     ChannelOptions const& channel_options = {})
+      : impl_(std::move(info), Options{}.set<CARootsFilePathOption>(
+                                   channel_options.ssl_root_path())) {}
+
+  StatusOr<std::string> AuthorizationHeader() override {
+    auto header = impl_.AuthorizationHeader();
+    if (!header.ok()) return header.status();
+    return header->first + ": " + header->second;
+  }
+
+ private:
+  google::cloud::oauth2_internal::AuthorizedUserCredentials impl_;
+};
+#else
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
@@ -116,6 +149,7 @@ class AuthorizedUserCredentials : public Credentials {
   mutable std::mutex mu_;
   RefreshingCredentialsWrapper refreshing_creds_;
 };
+#endif
 
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
