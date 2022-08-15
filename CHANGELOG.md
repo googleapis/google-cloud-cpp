@@ -128,14 +128,16 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 ### [Storage](/google/cloud/storage/README.md)
 
-* The internal http implementation has changed and provides comparable download
-  performance with improved upload performance (see attached benchmark results
-  in issue). If necessary, an escape hatch back to the legacy implementation has
-  been added and can be enabled by setting the
-  `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` environment variable. Support for
-  the `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` env var is scheduled to be
-  removed in the 2022-12 release ([9659](https://github.com/googleapis/google-cloud-cpp/issues/9659)).
+* We have a new implementation of the HTTP transfer. This new implementation
+  provides comparable download performance, and improves some uploads. See
+  [#9659] for details. We have rigorously tested this new implementation. In the
+  unlikely event that this new implementation breaks your application, we
+  included an environment variable to revert to the legacy implementation. Set
+  `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` to any value to use the legacy
+  implementation. We are planning to remove the legacy code and implementation
+  by 2022-12.
 
+[#9659]: https://github.com/googleapis/google-cloud-cpp/issues/9659
 
 ## v2.1.0 - 2022-08
 
