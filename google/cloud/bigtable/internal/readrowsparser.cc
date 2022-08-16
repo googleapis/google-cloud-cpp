@@ -63,12 +63,8 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
 
   if (cell_first_chunk_) {
     cell_.timestamp = chunk.timestamp_micros();
-  }
-
-  std::move(chunk.mutable_labels()->begin(), chunk.mutable_labels()->end(),
-            std::back_inserter(cell_.labels));
-
-  if (cell_first_chunk_) {
+    std::move(chunk.mutable_labels()->begin(), chunk.mutable_labels()->end(),
+              std::back_inserter(cell_.labels));
     // Most common case, move the value
     using std::swap;
     swap(*chunk.mutable_value(), cell_.value);
