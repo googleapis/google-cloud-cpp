@@ -54,6 +54,7 @@ void AsyncRowSampler::StartIteration() {
   request.set_app_profile_id(app_profile_id_);
   request.set_table_name(table_name_);
 
+  internal::OptionsSpan span(options_);
   auto context = absl::make_unique<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
 
