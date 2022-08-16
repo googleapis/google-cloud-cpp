@@ -154,8 +154,8 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 /// @test Verify the constructor creates the right set of RawClient decorations.
 TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
   ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
-  ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
-                                 absl::nullopt);
+  ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
+                                 "yes");
 
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
@@ -175,8 +175,8 @@ TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
 TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
-  ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
-                                 absl::nullopt);
+  ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
+                                 "yes");
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
   auto tested =
@@ -199,8 +199,6 @@ TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
 /// @test Verify the constructor creates the right set of RawClient decorations.
 TEST_F(ClientTest, DefaultDecoratorsRestClient) {
   ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
-  ScopedEnvironment enable_rest("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
-                                "yes");
 
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
@@ -220,8 +218,6 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
 TEST_F(ClientTest, LoggingDecoratorsRestClient) {
-  ScopedEnvironment enable_rest("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
-                                "yes");
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
   auto tested =

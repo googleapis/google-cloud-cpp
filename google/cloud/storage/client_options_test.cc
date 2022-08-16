@@ -445,20 +445,21 @@ TEST_F(ClientOptionsTest, ProjecIdtWithEnv) {
   EXPECT_EQ("my-project", options.get<ProjectIdOption>());
 }
 
-TEST_F(ClientOptionsTest, UseRestClientWithoutEnv) {
-  ScopedEnvironment env("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT",
+TEST_F(ClientOptionsTest, UseRestClientByDefault) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
                         absl::nullopt);
-  auto const options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
-  EXPECT_FALSE(options.has<internal::UseRestClientOption>());
-}
-
-TEST_F(ClientOptionsTest, UseRestClientWithEnv) {
-  ScopedEnvironment env("GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT", "yes");
   auto const options =
       internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
   EXPECT_TRUE(options.has<internal::UseRestClientOption>());
   EXPECT_TRUE(options.get<internal::UseRestClientOption>());
+}
+
+TEST_F(ClientOptionsTest, UseLegacyHttpWithEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
+  auto const options =
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_TRUE(options.has<internal::UseRestClientOption>());
+  EXPECT_FALSE(options.get<internal::UseRestClientOption>());
 }
 
 TEST_F(ClientOptionsTest, OverrideWithRestInternal) {
