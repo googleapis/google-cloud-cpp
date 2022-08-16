@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CONFIGURE_CLIENT_CONTEXT_H
 
 #include "google/cloud/storage/internal/generic_request.h"
+#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/grpc_options.h"
 #include <grpcpp/client_context.h>
@@ -30,7 +31,7 @@ namespace internal {
  * Inject request query parameters into grpc::ClientContext.
  *
  * The REST API has a number of "standard" query parameters that are not part of
- * the gRPC request body, instead they are send via metadata headers in the gRPC
+ * the gRPC request body, instead they are sent via metadata headers in the gRPC
  * request.
  *
  * @see https://cloud.google.com/apis/docs/system-parameters
@@ -62,6 +63,22 @@ void ApplyQueryParameters(grpc::ClientContext& context, Request const& request,
   google::cloud::internal::ConfigureContext(
       context, google::cloud::internal::CurrentOptions());
 }
+
+/**
+ * The generated `StorageMetadata` stub can not handle dynamic routing headers
+ * for client side streaming. So we manually match and extract the headers in
+ * this function.
+ */
+void ApplyRoutingHeaders(grpc::ClientContext& context,
+                         InsertObjectMediaRequest const& request);
+
+/**
+ * The generated `StorageMetadata` stub can not handle dynamic routing headers
+ * for client side streaming. So we manually match and extract the headers in
+ * this function.
+ */
+void ApplyRoutingHeaders(grpc::ClientContext& context,
+                         UploadChunkRequest const& request);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

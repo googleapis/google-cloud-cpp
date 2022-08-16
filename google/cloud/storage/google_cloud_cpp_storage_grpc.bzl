@@ -57,6 +57,7 @@ google_cloud_cpp_storage_grpc_srcs = [
     "internal/grpc_bucket_metadata_parser.cc",
     "internal/grpc_bucket_request_parser.cc",
     "internal/grpc_client.cc",
+    "internal/grpc_configure_client_context.cc",
     "internal/grpc_hmac_key_metadata_parser.cc",
     "internal/grpc_hmac_key_request_parser.cc",
     "internal/grpc_notification_metadata_parser.cc",

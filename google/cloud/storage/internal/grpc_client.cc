@@ -375,6 +375,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   // extra prefix to ApplyQueryParameters sends the right filtering instructions
   // to the gRPC API.
   ApplyQueryParameters(*context, request, "resource");
+  ApplyRoutingHeaders(*context, request);
   auto stream = stub_->WriteObject(std::move(context));
 
   auto const& contents = request.contents();
@@ -635,6 +636,7 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
 
   auto context = absl::make_unique<grpc::ClientContext>();
   ApplyQueryParameters(*context, request, "resource");
+  ApplyRoutingHeaders(*context, request);
   auto writer = stub_->WriteObject(std::move(context));
 
   std::size_t const maximum_chunk_size =
