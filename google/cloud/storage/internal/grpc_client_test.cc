@@ -275,6 +275,32 @@ TEST_F(GrpcClientTest, DeleteResumableUpload) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
+TEST_F(GrpcClientTest, UploadChunk) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, WriteObject)
+      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
+        auto metadata = GetMetadata(*context);
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        // Map JSON names to the `resource` subobject
+                        Pair("x-goog-fieldmask", "resource(field1,field2)"),
+                        Pair("x-goog-request-params",
+                             "bucket=projects/_/buckets/test-bucket")));
+        ::testing::InSequence sequence;
+        auto stream = absl::make_unique<testing::MockInsertStream>();
+        EXPECT_CALL(*stream, Write).WillOnce(Return(false));
+        EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
+        return stream;
+      });
+  auto client = CreateTestClient(mock);
+  auto response = client->UploadChunk(
+      UploadChunkRequest("projects/_/buckets/test-bucket/test-upload-id", 0, {})
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
 TEST_F(GrpcClientTest, CreateBucket) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, CreateBucket)
@@ -495,7 +521,9 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
                     UnorderedElementsAre(
                         Pair("x-goog-quota-user", "test-quota-user"),
                         // Map JSON names to the `resource` subobject
-                        Pair("x-goog-fieldmask", "resource(field1,field2)")));
+                        Pair("x-goog-fieldmask", "resource(field1,field2)"),
+                        Pair("x-goog-request-params",
+                             "bucket=projects/_/buckets/test-bucket")));
         ::testing::InSequence sequence;
         auto stream = absl::make_unique<testing::MockInsertStream>();
         EXPECT_CALL(*stream, Write).WillOnce(Return(false));

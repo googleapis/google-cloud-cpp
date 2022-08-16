@@ -25,9 +25,11 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::testing::_;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::MockFunction;
+using ::testing::Not;
 using ::testing::Pair;
 
 class GrpcConfigureClientContext : public ::testing::Test {
@@ -113,6 +115,37 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersGrpcOptions) {
   grpc::ClientContext context;
   ApplyQueryParameters(context,
                        ReadObjectRangeRequest("test-bucket", "test-object"));
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObjectMedia) {
+  InsertObjectMediaRequest req("test-bucket", "test-object", "content");
+
+  grpc::ClientContext context;
+  ApplyRoutingHeaders(context, req);
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-request-params",
+                            "bucket=projects/_/buckets/test-bucket")));
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkMatch) {
+  UploadChunkRequest req("projects/_/buckets/test-bucket/blah/blah", 0, {});
+
+  grpc::ClientContext context;
+  ApplyRoutingHeaders(context, req);
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-request-params",
+                            "bucket=projects/_/buckets/test-bucket")));
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkNoMatch) {
+  UploadChunkRequest req("does-not-match", 0, {});
+
+  grpc::ClientContext context;
+  ApplyRoutingHeaders(context, req);
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata, Not(Contains(Pair("x-goog-request-params", _))));
 }
 
 }  // namespace
