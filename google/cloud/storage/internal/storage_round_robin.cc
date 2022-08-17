@@ -13,11 +13,25 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/storage_round_robin.h"
+#include "google/cloud/internal/async_connection_ready.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+auto constexpr kRefreshPeriod = std::chrono::hours(1);
+
+void StorageRoundRobin::StartRefreshLoop(
+    google::cloud::CompletionQueue cq,  // NOLINT
+    std::vector<std::shared_ptr<grpc::Channel>> channels) {
+  channels_ = std::move(channels);
+  // Break the ownership cycle.
+  auto wcq = std::weak_ptr<google::cloud::internal::CompletionQueueImpl>(
+      google::cloud::internal::GetCompletionQueueImpl(cq));
+  for (std::size_t i = 0; i != channels_.size(); ++i) Refresh(i, wcq);
+}
 
 Status StorageRoundRobin::DeleteBucket(
     grpc::ClientContext& context,
@@ -244,6 +258,34 @@ std::shared_ptr<StorageStub> StorageRoundRobin::Child() {
   auto child = children_[current_];
   current_ = (current_ + 1) % children_.size();
   return child;
+}
+
+void StorageRoundRobin::Refresh(
+    std::size_t index,
+    std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq) {
+  auto cq = wcq.lock();
+  if (!cq) return;
+  auto deadline = std::chrono::system_clock::now() + kRefreshPeriod;
+  (void)google::cloud::internal::NotifyOnStateChange::Start(
+      std::move(cq), channels_.at(index), deadline)
+      .then(
+          [index, wcq = std::move(wcq), weak = WeakFromThis()](future<bool> f) {
+            if (auto self = weak.lock()) self->OnRefresh(index, wcq, f.get());
+          });
+}
+
+void StorageRoundRobin::OnRefresh(
+    std::size_t index,
+    std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq, bool ok) {
+  // The CQ is shutting down, or the channel is shutdown, stop the loop
+  if (!ok) return;
+  // An invalid index, stop the loop
+  if (index >= channels_.size()) return;
+  auto channel_state = channels_.at(index)->GetState(true);
+  GCP_LOG(INFO) << "refresh [" << index << "] channel_state=" << channel_state;
+  // The channel has shutdown,
+  if (channel_state == GRPC_CHANNEL_SHUTDOWN) return;
+  Refresh(index, std::move(wcq));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

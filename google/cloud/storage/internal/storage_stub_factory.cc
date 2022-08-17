@@ -39,29 +39,33 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
-}  // namespace
-
 std::shared_ptr<StorageStub> CreateStorageStubRoundRobin(
-    Options const& options,
-    std::function<std::shared_ptr<StorageStub>(int)> child_factory) {
-  std::vector<std::shared_ptr<StorageStub>> children(
-      (std::max)(1, options.get<GrpcNumChannelsOption>()));
-  int id = 0;
-  std::generate(children.begin(), children.end(),
-                [&id, &child_factory] { return child_factory(id++); });
-  return std::make_shared<StorageRoundRobin>(std::move(children));
+    std::vector<std::shared_ptr<StorageStub>> children, CompletionQueue cq,
+    std::vector<std::shared_ptr<grpc::Channel>> channels) {
+  auto stub = std::make_shared<StorageRoundRobin>(std::move(children));
+  stub->StartRefreshLoop(std::move(cq), std::move(channels));
+  return stub;
 }
+
+}  // namespace
 
 std::shared_ptr<StorageStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
     BaseStorageStubFactory const& base_factory) {
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      std::move(cq), options);
-  auto child_factory = [base_factory, &auth, options](int id) {
-    auto channel = CreateGrpcChannel(*auth, options, id);
-    return base_factory(std::move(channel));
-  };
-  auto stub = CreateStorageStubRoundRobin(options, std::move(child_factory));
+  auto auth =
+      google::cloud::internal::CreateAuthenticationStrategy(cq, options);
+
+  std::vector<std::shared_ptr<grpc::Channel>> channels(
+      (std::max)(1, options.get<GrpcNumChannelsOption>()));
+  int id = 0;
+  std::generate(channels.begin(), channels.end(),
+                [&] { return CreateGrpcChannel(*auth, options, id++); });
+  std::vector<std::shared_ptr<StorageStub>> children(channels.size());
+  std::transform(channels.begin(), channels.end(), children.begin(),
+                 base_factory);
+
+  auto stub = CreateStorageStubRoundRobin(std::move(children), std::move(cq),
+                                          std::move(channels));
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<StorageAuth>(std::move(auth), std::move(stub));
   }

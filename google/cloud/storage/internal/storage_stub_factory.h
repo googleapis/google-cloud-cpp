@@ -30,10 +30,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using BaseStorageStubFactory =
     std::function<std::shared_ptr<StorageStub>(std::shared_ptr<grpc::Channel>)>;
 
-std::shared_ptr<StorageStub> CreateStorageStubRoundRobin(
-    Options const& options,
-    std::function<std::shared_ptr<StorageStub>(int)> child_factory);
-
 /// Used in testing to create decorated mocks.
 std::shared_ptr<StorageStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,

@@ -27,7 +27,8 @@ AsyncConnectionReadyFuture::AsyncConnectionReadyFuture(
     : cq_(std::move(cq)), channel_(std::move(channel)), deadline_(deadline) {}
 
 future<Status> AsyncConnectionReadyFuture::Start() {
-  RunIteration(channel_->GetState(true));
+  channel_->GetState(true);
+  RunIteration();
   return promise_.get_future();
 }
 
@@ -50,32 +51,36 @@ void AsyncConnectionReadyFuture::Notify(bool ok) {
     return;
   }
   // If connection was idle, GetState(true) triggered an attempt to connect.
-  // Otherwise it is either in state CONNECTING or TRANSIENT_FAILURE, so let's
+  // Otherwise, it is either in state CONNECTING or TRANSIENT_FAILURE, so let's
   // register for a state change.
-  RunIteration(state);
+  RunIteration();
 }
 
-void AsyncConnectionReadyFuture::RunIteration(ChannelStateType state) {
-  class OnStateChange : public AsyncGrpcOperation {
-   public:
-    explicit OnStateChange(std::shared_ptr<AsyncConnectionReadyFuture> s)
-        : self_(std::move(s)) {}
-    bool Notify(bool ok) override {
-      OptionsSpan span(options_);
-      self_->Notify(ok);
-      return true;
-    }
-    void Cancel() override {}
+void AsyncConnectionReadyFuture::RunIteration() {
+  auto options = CurrentOptions();
+  NotifyOnStateChange::Start(cq_, channel_, deadline_)
+      .then([s = shared_from_this(), o = std::move(options)](auto f) {
+        OptionsSpan span(o);
+        s->Notify(f.get());
+      });
+}
 
-   private:
-    std::shared_ptr<AsyncConnectionReadyFuture> const self_;
-    Options options_ = CurrentOptions();
-  };
-
-  auto op = std::make_shared<OnStateChange>(shared_from_this());
-  cq_->StartOperation(op, [this, state](void* tag) {
-    channel_->NotifyOnStateChange(state, deadline_, &cq_->cq(), tag);
+future<bool> NotifyOnStateChange::Start(
+    std::shared_ptr<CompletionQueueImpl> cq,
+    std::shared_ptr<grpc::Channel> channel,
+    std::chrono::system_clock::time_point deadline) {
+  auto op = std::make_shared<NotifyOnStateChange>();
+  cq->StartOperation(op, [&](void* tag) {
+    auto state = channel->GetState(true);
+    channel->NotifyOnStateChange(state, deadline, &cq->cq(), tag);
   });
+  return op->promise_.get_future();
+}
+
+bool NotifyOnStateChange::Notify(bool ok) {
+  OptionsSpan span(options_);
+  promise_.set_value(ok);
+  return true;
 }
 
 }  // namespace internal
