@@ -15,17 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H
 
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
-#include "google/cloud/internal/oauth2_authorized_user_credentials.h"
-#else
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
-#include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
-#endif
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/status.h"
 #include <chrono>
@@ -88,9 +85,15 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
  *     This should generally not be overridden except for testing.
  */
 
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
-template <typename HttpRequestBuilderType = void, typename ClockType = void>
-class AuthorizedUserCredentials : public Credentials {
+template <typename HttpRequestBuilderType =
+              storage::internal::CurlRequestBuilder,
+          typename ClockType = std::chrono::system_clock>
+class AuthorizedUserCredentials;
+
+template <>
+class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
+                                std::chrono::system_clock>
+    : public Credentials {
  public:
   explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
                                      ChannelOptions const& channel_options = {})
@@ -106,10 +109,8 @@ class AuthorizedUserCredentials : public Credentials {
  private:
   google::cloud::oauth2_internal::AuthorizedUserCredentials impl_;
 };
-#else
-template <typename HttpRequestBuilderType =
-              storage::internal::CurlRequestBuilder,
-          typename ClockType = std::chrono::system_clock>
+
+template <typename HttpRequestBuilderType, typename ClockType>
 class AuthorizedUserCredentials : public Credentials {
  public:
   explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
@@ -149,7 +150,6 @@ class AuthorizedUserCredentials : public Credentials {
   mutable std::mutex mu_;
   RefreshingCredentialsWrapper refreshing_creds_;
 };
-#endif
 
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
