@@ -67,6 +67,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
   bigtable::internal::BulkMutatorState state_;
   std::atomic<bool> keep_reading_{true};
   promise<std::vector<bigtable::FailedMutation>> promise_;
+  Options options_ = internal::CurrentOptions();
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

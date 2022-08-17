@@ -1055,6 +1055,67 @@ TEST(AsyncRowReaderTest, TimerErrorEndsLoop) {
                          std::move(mock_b));
 }
 
+TEST(AsyncRowReaderTest, CurrentOptionsContinuedOnRetries) {
+  struct TestOption {
+    using Type = int;
+  };
+
+  promise<StatusOr<std::chrono::system_clock::time_point>> timer_promise;
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillOnce([&timer_promise] {
+    return timer_promise.get_future();
+  });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .Times(2)
+      .WillRepeatedly([](CompletionQueue const&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         v2::ReadRowsRequest const&) {
+        EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
+        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(false);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(
+              Status(StatusCode::kUnavailable, "try again"));
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).Times(0);
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
+  });
+
+  auto retry = DataLimitedErrorCountRetryPolicy(1).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(1);
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(2);
+
+  internal::OptionsSpan span(
+      Options{}
+          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
+          .set<TestOption>(5));
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), std::move(retry),
+                         std::move(mock_b));
+
+  // Simulate the timer being satisfied in a thread with different prevailing
+  // options than the calling thread.
+  internal::OptionsSpan clear(Options{});
+  timer_promise.set_value(make_status_or(std::chrono::system_clock::now()));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
