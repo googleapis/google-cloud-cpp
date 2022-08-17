@@ -66,7 +66,7 @@ readonly TIMEFORMAT="... %R seconds"
 enable -n printf
 
 # Check for typos first so we don't generate more new files w/ the same typos.
-printf "%-30s" "Running typos:" >&2
+printf "%-50s" "Running typos:" >&2
 time {
   # See https://github.com/crate-ci/typos for more details.
   # A couple useful invocations:
@@ -75,7 +75,7 @@ time {
   typos
 }
 
-printf "%-30s" "Running check-include-guards:" >&2
+printf "%-50s" "Running check-include-guards:" >&2
 time {
   git ls-files -z | grep -zE '\.h$' |
     xargs -0 awk -f "ci/check-include-guards.gawk"
@@ -87,7 +87,7 @@ time {
 #   https://github.com/googleapis/google-cloud-cpp/issues/4501
 # This should run before clang-format because it might alter the order of any
 # includes.
-printf "%-30s" "Running Abseil header fixes:" >&2
+printf "%-50s" "Running Abseil header fixes:" >&2
 time {
   expressions=("-e" "'s;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";'")
   git ls-files -z |
@@ -101,7 +101,7 @@ time {
 #       are obsoleted by the gRPC team, so we should not use them in our code.
 #     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
 #       `grpc::` namespace do not exist inside google.
-printf "%-30s" "Running include fixes:" >&2
+printf "%-50s" "Running include fixes:" >&2
 time {
   expressions=("-e" "'s/grpc::\([A-Z][A-Z_]\+\)/grpc::StatusCode::\1/g'")
   expressions+=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
@@ -112,7 +112,7 @@ time {
 
 # Applies whitespace fixes in text files, unless they request no edits. The
 # `[D]` character class makes this file not contain the target text itself.
-printf "%-30s" "Running whitespace fixes:" >&2
+printf "%-50s" "Running whitespace fixes:" >&2
 time {
   # Removes trailing whitespace on lines
   expressions=("-e" "'s/[[:blank:]]\+$//'")
@@ -125,7 +125,7 @@ time {
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
-printf "%-30s" "Running buildifier:" >&2
+printf "%-50s" "Running buildifier:" >&2
 time {
   git ls-files -z | grep -zE '\.(BUILD|bzl|bazel)$' |
     xargs -0 buildifier -mode=fix
@@ -133,19 +133,19 @@ time {
 
 # Apply psf/black to format Python files.
 #    https://pypi.org/project/black/
-printf "%-30s" "Running black:" >&2
+printf "%-50s" "Running black:" >&2
 time {
   git ls-files -z | grep -z '\.py$' | xargs -0 python3 -m black --quiet
 }
 
 # Apply shfmt to format all shell scripts
-printf "%-30s" "Running shfmt:" >&2
+printf "%-50s" "Running shfmt:" >&2
 time {
   git ls-files -z | grep -z '\.sh$' | xargs -0 shfmt -w
 }
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
-printf "%-30s" "Running shellcheck:" >&2
+printf "%-50s" "Running shellcheck:" >&2
 time {
   git ls-files -z | grep -z '\.sh$' |
     xargs -P "$(nproc)" -n 1 -0 shellcheck \
@@ -158,7 +158,7 @@ time {
 
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
-printf "%-30s" "Running clang-format:" >&2
+printf "%-50s" "Running clang-format:" >&2
 time {
   git ls-files -z | grep -zE '\.(cc|h)$' |
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
@@ -166,7 +166,7 @@ time {
 
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
-printf "%-30s" "Running cmake-format:" >&2
+printf "%-50s" "Running cmake-format:" >&2
 time {
   git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
     xargs -P "$(nproc)" -n 1 -0 cmake-format -i
@@ -175,7 +175,7 @@ time {
 # The markdown generators run last. This is useful because as part of the
 # markdown generation we insert examples (such as quickstart programs) into
 # markdown files. It is nice if those examples are properly formatted.
-printf "%-30s" "Running markdown generators:" >&2
+printf "%-50s" "Running markdown generators:" >&2
 time {
   declare -A -r GENERATOR_MAP=(
     ["ci/generate-markdown/generate-readme.sh"]="/dev/null"
@@ -191,7 +191,7 @@ time {
   done
 }
 
-printf "%-30s" "Updating doxygen landing pages:" >&2
+printf "%-50s" "Running doxygen landing page updates:" >&2
 time {
   # Update the service's endpoint environment variables.
   for dox in google/cloud/*/doc/main.dox; do
