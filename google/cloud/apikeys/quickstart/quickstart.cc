@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/apikeys/api_keys_client.h"
-#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -26,8 +25,8 @@ int main(int argc, char* argv[]) try {
   namespace apikeys = ::google::cloud::apikeys;
   auto client = apikeys::ApiKeysClient(apikeys::MakeApiKeysConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.ListKeys(project.FullName())) {
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  for (auto r : client.ListKeys(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
