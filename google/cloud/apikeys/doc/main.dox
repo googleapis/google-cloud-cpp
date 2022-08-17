@@ -42,7 +42,7 @@ which should give you a taste of the API Keys API C++ client library API.
 
 <!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_APIKEYS_SERVICE_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_API_KEYS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "apikeys.googleapis.com")
   used by `MakeApiKeysConnection()`.
 

@@ -34,8 +34,8 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ApiKeysDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_APIKEYS_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_APIKEYS_SERVICE_AUTHORITY", "apikeys.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_API_KEYS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_API_KEYS_AUTHORITY", "apikeys.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<apikeys::ApiKeysRetryPolicyOption>()) {
