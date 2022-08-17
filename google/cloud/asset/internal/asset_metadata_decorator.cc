@@ -140,6 +140,14 @@ AssetServiceMetadata::AnalyzeMove(
   return child_->AnalyzeMove(context, request);
 }
 
+StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
+AssetServiceMetadata::QueryAssets(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::QueryAssetsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->QueryAssets(context, request);
+}
+
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceMetadata::CreateSavedQuery(
     grpc::ClientContext& context,

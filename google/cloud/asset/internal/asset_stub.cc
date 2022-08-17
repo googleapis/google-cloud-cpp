@@ -193,6 +193,18 @@ DefaultAssetServiceStub::AnalyzeMove(
   return response;
 }
 
+StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
+DefaultAssetServiceStub::QueryAssets(
+    grpc::ClientContext& client_context,
+    google::cloud::asset::v1::QueryAssetsRequest const& request) {
+  google::cloud::asset::v1::QueryAssetsResponse response;
+  auto status = grpc_stub_->QueryAssets(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::asset::v1::SavedQuery>
 DefaultAssetServiceStub::CreateSavedQuery(
     grpc::ClientContext& client_context,

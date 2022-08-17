@@ -118,6 +118,12 @@ AssetServiceConnection::AnalyzeMove(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
+AssetServiceConnection::QueryAssets(
+    google::cloud::asset::v1::QueryAssetsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceConnection::CreateSavedQuery(
     google::cloud::asset::v1::CreateSavedQueryRequest const&) {

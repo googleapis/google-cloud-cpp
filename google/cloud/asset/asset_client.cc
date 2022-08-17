@@ -192,6 +192,13 @@ AssetServiceClient::AnalyzeMove(
   return connection_->AnalyzeMove(request);
 }
 
+StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
+AssetServiceClient::QueryAssets(
+    google::cloud::asset::v1::QueryAssetsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->QueryAssets(request);
+}
+
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceClient::CreateSavedQuery(
     std::string const& parent,

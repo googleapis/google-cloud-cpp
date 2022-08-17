@@ -97,6 +97,9 @@ class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
   StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
       google::cloud::asset::v1::AnalyzeMoveRequest const& request) override;
 
+  StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
+      google::cloud::asset::v1::QueryAssetsRequest const& request) override;
+
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
       google::cloud::asset::v1::CreateSavedQueryRequest const& request)
       override;

@@ -79,6 +79,9 @@ class AssetServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency AnalyzeMove(
       google::cloud::asset::v1::AnalyzeMoveRequest const& request) = 0;
 
+  virtual google::cloud::Idempotency QueryAssets(
+      google::cloud::asset::v1::QueryAssetsRequest const& request) = 0;
+
   virtual google::cloud::Idempotency CreateSavedQuery(
       google::cloud::asset::v1::CreateSavedQueryRequest const& request) = 0;
 
