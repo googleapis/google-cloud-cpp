@@ -13,11 +13,30 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/storage_round_robin.h"
+#include "google/cloud/internal/async_connection_ready.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+auto constexpr kRefreshPeriod = std::chrono::hours(1);
+
+void StorageRoundRobin::StartRefreshLoop(
+    google::cloud::CompletionQueue cq,  // NOLINT
+    std::vector<std::shared_ptr<grpc::Channel>> channels) {
+  std::unique_lock<std::mutex> lk(mu_);
+  // This is purely defensive, we do not want the channels to change after the
+  // refresh loop starts.
+  if (!channels_.empty()) return;
+  channels_ = std::move(channels);
+  lk.unlock();
+  // Break the ownership cycle.
+  auto wcq = std::weak_ptr<google::cloud::internal::CompletionQueueImpl>(
+      google::cloud::internal::GetCompletionQueueImpl(cq));
+  for (std::size_t i = 0; i != channels_.size(); ++i) Refresh(i, wcq);
+}
 
 Status StorageRoundRobin::DeleteBucket(
     grpc::ClientContext& context,
@@ -260,6 +279,32 @@ std::shared_ptr<StorageStub> StorageRoundRobin::Child() {
   auto child = children_[current_];
   current_ = (current_ + 1) % children_.size();
   return child;
+}
+
+void StorageRoundRobin::Refresh(
+    std::size_t index,
+    std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq) {
+  auto cq = wcq.lock();
+  if (!cq) return;
+  auto deadline = std::chrono::system_clock::now() + kRefreshPeriod;
+  // An invalid index, stop the loop.  There is no need to check lock the mutex,
+  // as the channels do not change after the class is initialized.
+  if (index >= channels_.size()) return;
+  GCP_LOG(INFO) << "Refreshing channel [" << index << "]";
+  (void)google::cloud::internal::NotifyOnStateChange::Start(
+      std::move(cq), channels_.at(index), deadline)
+      .then(
+          [index, wcq = std::move(wcq), weak = WeakFromThis()](future<bool> f) {
+            if (auto self = weak.lock()) self->OnRefresh(index, wcq, f.get());
+          });
+}
+
+void StorageRoundRobin::OnRefresh(
+    std::size_t index,
+    std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq, bool ok) {
+  // The CQ is shutting down, or the channel is shutdown, stop the loop.
+  if (!ok) return;
+  Refresh(index, std::move(wcq));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

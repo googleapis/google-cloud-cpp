@@ -17,6 +17,9 @@
 
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/completion_queue.h"
+#include <grpcpp/grpcpp.h>
+#include <memory>
 #include <mutex>
 #include <vector>
 
@@ -25,11 +28,16 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class StorageRoundRobin : public StorageStub {
+class StorageRoundRobin
+    : public StorageStub,
+      public std::enable_shared_from_this<StorageRoundRobin> {
  public:
   explicit StorageRoundRobin(std::vector<std::shared_ptr<StorageStub>> children)
       : children_(std::move(children)) {}
   ~StorageRoundRobin() override = default;
+
+  void StartRefreshLoop(google::cloud::CompletionQueue cq,
+                        std::vector<std::shared_ptr<grpc::Channel>> channels);
 
   Status DeleteBucket(
       grpc::ClientContext& context,
@@ -187,10 +195,17 @@ class StorageRoundRobin : public StorageStub {
 
  private:
   std::shared_ptr<StorageStub> Child();
+  std::weak_ptr<StorageRoundRobin> WeakFromThis() { return shared_from_this(); }
+  void Refresh(std::size_t index,
+               std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq);
+  void OnRefresh(
+      std::size_t index,
+      std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq, bool ok);
 
   std::vector<std::shared_ptr<StorageStub>> const children_;
   std::mutex mu_;
   std::size_t current_ = 0;
+  std::vector<std::shared_ptr<grpc::Channel>> channels_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
