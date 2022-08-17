@@ -191,7 +191,7 @@ time {
   done
 }
 
-printf "%-30s" "Updated generated doxygen:" >&2
+printf "%-30s" "Updating generated doxygen:" >&2
 # Update the service's endpoint environment variables.
 for dox in google/cloud/*/doc/main.dox; do
   lib="${dox%/doc/main.dox}"
