@@ -2,6 +2,8 @@
 ./include
 ./include/google
 ./include/google/api
+./include/google/api/apikeys
+./include/google/api/apikeys/v2
 ./include/google/api/servicecontrol
 ./include/google/api/servicecontrol/v1
 ./include/google/api/servicemanagement
@@ -30,6 +32,9 @@
 ./include/google/cloud/apigeeconnect/internal
 ./include/google/cloud/apigeeconnect/mocks
 ./include/google/cloud/apigeeconnect/v1
+./include/google/cloud/apikeys
+./include/google/cloud/apikeys/internal
+./include/google/cloud/apikeys/mocks
 ./include/google/cloud/appengine
 ./include/google/cloud/appengine/internal
 ./include/google/cloud/appengine/mocks
@@ -437,6 +442,7 @@
 ./lib64/cmake/google_cloud_cpp_accesscontextmanager
 ./lib64/cmake/google_cloud_cpp_apigateway
 ./lib64/cmake/google_cloud_cpp_apigeeconnect
+./lib64/cmake/google_cloud_cpp_apikeys
 ./lib64/cmake/google_cloud_cpp_appengine
 ./lib64/cmake/google_cloud_cpp_artifactregistry
 ./lib64/cmake/google_cloud_cpp_asset
