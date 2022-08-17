@@ -63,6 +63,7 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
   std::atomic<bool> keep_reading_{true};
   std::vector<bigtable::RowKeySample> samples_;
   promise<StatusOr<std::vector<bigtable::RowKeySample>>> promise_;
+  Options options_ = internal::CurrentOptions();
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
