@@ -99,7 +99,7 @@ class BulkMutatorState {
      * status, we return a `FailedMutation` made from `original_index` and
      * `status`. The value is meaningless if `has_mutation_result` is false.
      */
-    Status status;
+    Status const status;
   };
 
   /// The annotations about the current bulk request.

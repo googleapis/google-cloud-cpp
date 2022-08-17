@@ -74,7 +74,7 @@ google::bigtable::v2::MutateRowsRequest const& BulkMutatorState::BeforeStart() {
   pending_mutations_ = {};
   pending_mutations_.set_app_profile_id(mutations_.app_profile_id());
   pending_mutations_.set_table_name(mutations_.table_name());
-  pending_annotations_ = {};
+  pending_annotations_.clear();
 
   return mutations_;
 }
@@ -98,28 +98,27 @@ void BulkMutatorState::OnRead(
     auto const index = static_cast<std::size_t>(entry.index());
     auto& annotation = annotations_[index];
     annotation.has_mutation_result = true;
-    annotation.status = MakeStatusFromRpcError(entry.status());
+    auto status = MakeStatusFromRpcError(entry.status());
     // Successful responses are not even recorded, this class only reports
     // the failures.  The data for successful responses is discarded, because
     // this class takes ownership in the constructor.
-    if (annotation.status.ok()) continue;
+    if (status.ok()) continue;
     auto& original = *mutations_.mutable_entries(static_cast<int>(index));
     // Failed responses are handled according to the current policies.
-    if (SafeGrpcRetry::IsTransientFailure(annotation.status) &&
+    if (SafeGrpcRetry::IsTransientFailure(status) &&
         (annotation.idempotency == Idempotency::kIdempotent)) {
       // Retryable requests are saved in the pending mutations, along with the
       // mapping from their index in pending_mutations_ to the original
       // vector and other miscellanea.
       pending_mutations_.add_entries()->Swap(&original);
-      pending_annotations_.push_back(Annotations{
-          annotation.original_index, annotation.idempotency,
-          annotation.has_mutation_result, std::move(annotation.status)});
+      pending_annotations_.push_back(
+          Annotations{annotation.original_index, annotation.idempotency,
+                      annotation.has_mutation_result, std::move(status)});
     } else {
       // Failures are saved for reporting, notice that we avoid copying, and
       // we use the original index in the first request, not the one where it
       // failed.
-      failures_.emplace_back(std::move(annotation.status),
-                             annotation.original_index);
+      failures_.emplace_back(std::move(status), annotation.original_index);
     }
   }
 }
