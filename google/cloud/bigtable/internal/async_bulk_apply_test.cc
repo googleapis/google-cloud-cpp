@@ -546,6 +546,62 @@ TEST(AsyncBulkApplyTest, CancelMidStream) {
   CheckFailedMutations(actual.get(), expected);
 }
 
+TEST(AsyncBulkApplyTest, CurrentOptionsContinuedOnRetries) {
+  struct TestOption {
+    using Type = int;
+  };
+
+  std::vector<bigtable::FailedMutation> expected = {
+      {Status(StatusCode::kUnavailable, "try again"), 0}};
+  bigtable::BulkMutation mut(IdempotentMutation("r0"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRows)
+      .Times(2)
+      .WillRepeatedly([](CompletionQueue const&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         v2::MutateRowsRequest const&) {
+        EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
+        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(false);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(
+              Status(StatusCode::kUnavailable, "try again"));
+        });
+        return stream;
+      });
+
+  promise<StatusOr<std::chrono::system_clock::time_point>> timer_promise;
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillOnce([&timer_promise] {
+    return timer_promise.get_future();
+  });
+  CompletionQueue cq(mock_cq);
+
+  auto retry = DataLimitedErrorCountRetryPolicy(1).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(1);
+  auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(2);
+
+  internal::OptionsSpan span(
+      Options{}
+          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
+          .set<TestOption>(5));
+  auto fut = AsyncBulkApplier::Create(cq, mock, std::move(retry),
+                                      std::move(mock_b), *idempotency,
+                                      kAppProfile, kTableName, std::move(mut));
+
+  // Simulate the timer being satisfied in a thread with different prevailing
+  // options than the calling thread.
+  internal::OptionsSpan clear(Options{});
+  timer_promise.set_value(make_status_or(std::chrono::system_clock::now()));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

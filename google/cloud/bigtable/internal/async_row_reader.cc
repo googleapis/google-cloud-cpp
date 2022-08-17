@@ -40,6 +40,7 @@ void AsyncRowReader::MakeRequest() {
   }
   parser_ = bigtable::internal::ReadRowsParserFactory().Create();
 
+  internal::OptionsSpan span(options_);
   auto context = absl::make_unique<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
 

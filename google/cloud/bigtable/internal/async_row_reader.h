@@ -159,6 +159,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   Status status_;
   /// Tracks the level of recursion of TryGiveRowToUser
   int recursion_level_ = 0;
+  Options options_ = internal::CurrentOptions();
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

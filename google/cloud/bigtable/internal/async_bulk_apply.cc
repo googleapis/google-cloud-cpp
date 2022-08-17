@@ -55,6 +55,7 @@ AsyncBulkApplier::AsyncBulkApplier(
       promise_([this] { keep_reading_ = false; }) {}
 
 void AsyncBulkApplier::StartIteration() {
+  internal::OptionsSpan span(options_);
   auto context = absl::make_unique<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
 

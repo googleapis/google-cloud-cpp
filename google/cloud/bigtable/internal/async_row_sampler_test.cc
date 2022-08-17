@@ -421,7 +421,13 @@ TEST(AsyncSampleRowKeysTest, CurrentOptionsContinuedOnRetries) {
   auto mock_b = absl::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(1);
 
-  internal::OptionsSpan span(Options{}.set<TestOption>(5));
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(2);
+
+  internal::OptionsSpan span(
+      Options{}
+          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
+          .set<TestOption>(5));
   auto fut = AsyncRowSampler::Create(
       cq, mock, std::move(retry), std::move(mock_b), kAppProfile, kTableName);
 
