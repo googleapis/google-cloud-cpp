@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[API Keys API][cloud-service-docs], a service to Manages the API keys associated with developer projects.
+[API Keys API][cloud-service-docs], a service to manage the API keys associated
+with developer projects.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/apikeys
+[cloud-service-docs]: https://cloud.google.com/api-keys
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-apikeys/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/apikeys
 
@@ -38,7 +39,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/apikeys/ EDIT HERE .h"
+#include "google/cloud/apikeys/api_keys_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,10 +51,10 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace apikeys = ::google::cloud::apikeys;
-  auto client = apikeys::Client(apikeys::MakeConnection(/* EDIT HERE */));
+  auto client = apikeys::ApiKeysClient(apikeys::MakeApiKeysConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListKeys(project.FullName())) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

@@ -2,8 +2,8 @@
 
 @mainpage API Keys API C++ Client Library
 
-An idiomatic C++ client library for the [API Keys API][cloud-service-docs], a service
-to Manages the API keys associated with developer projects.
+An idiomatic C++ client library for the [API Keys API][cloud-service-docs], a
+service to manage the API keys associated with developer projects.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -41,6 +41,11 @@ which should give you a taste of the API Keys API C++ client library API.
 ## Environment Variables
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_APIKEYS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "apikeys.googleapis.com")
+  used by `MakeApiKeysConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
@@ -86,7 +91,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/apikeys
+[cloud-service-docs]: https://cloud.google.com/api-keys
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

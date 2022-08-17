@@ -126,6 +126,14 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 ## v2.2.0 - TBD
 
+### New Libraries
+
+We are introducing new client libraries for GCP services. While we do not
+anticipate any API changes to these libraries before declaring them GA, we are
+releasing them early in case they elicit some feedback that requires changes.
+
+* [API Keys](/google/cloud/apikeys/README.md)
+
 ### [Storage](/google/cloud/storage/README.md)
 
 * We have a new implementation for HTTP requests. This new implementation

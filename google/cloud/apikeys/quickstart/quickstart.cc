@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/apikeys/ EDIT HERE .h"
+#include "google/cloud/apikeys/api_keys_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,10 +24,10 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace apikeys = ::google::cloud::apikeys;
-  auto client = apikeys::Client(apikeys::MakeConnection(/* EDIT HERE */));
+  auto client = apikeys::ApiKeysClient(apikeys::MakeApiKeysConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListKeys(project.FullName())) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
