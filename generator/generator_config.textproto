@@ -52,7 +52,6 @@ service {
   service_proto_path: "google/api/apikeys/v2/apikeys.proto"
   product_path: "google/cloud/apikeys"
   initial_copyright_year: "2022"
-  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_APIKEYS_SERVICE_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
 }
 
