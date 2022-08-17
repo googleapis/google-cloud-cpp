@@ -296,6 +296,19 @@ AssetServiceConnectionImpl::AnalyzeMove(
       request, __func__);
 }
 
+StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
+AssetServiceConnectionImpl::QueryAssets(
+    google::cloud::asset::v1::QueryAssetsRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->QueryAssets(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::QueryAssetsRequest const& request) {
+        return stub_->QueryAssets(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceConnectionImpl::CreateSavedQuery(
     google::cloud::asset::v1::CreateSavedQueryRequest const& request) {

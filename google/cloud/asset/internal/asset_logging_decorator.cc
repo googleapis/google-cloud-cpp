@@ -196,6 +196,18 @@ AssetServiceLogging::AnalyzeMove(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
+AssetServiceLogging::QueryAssets(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::QueryAssetsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::QueryAssetsRequest const& request) {
+        return child_->QueryAssets(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceLogging::CreateSavedQuery(
     grpc::ClientContext& context,

@@ -165,6 +165,15 @@ AssetServiceAuth::AnalyzeMove(
   return child_->AnalyzeMove(context, request);
 }
 
+StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
+AssetServiceAuth::QueryAssets(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::QueryAssetsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->QueryAssets(context, request);
+}
+
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceAuth::CreateSavedQuery(
     grpc::ClientContext& context,

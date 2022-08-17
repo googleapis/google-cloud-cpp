@@ -108,6 +108,11 @@ class DefaultAssetServiceConnectionIdempotencyPolicy
     return Idempotency::kIdempotent;
   }
 
+  Idempotency QueryAssets(
+      google::cloud::asset::v1::QueryAssetsRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency CreateSavedQuery(
       google::cloud::asset::v1::CreateSavedQueryRequest const&) override {
     return Idempotency::kNonIdempotent;

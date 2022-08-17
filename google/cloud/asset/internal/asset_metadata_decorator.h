@@ -97,6 +97,10 @@ class AssetServiceMetadata : public AssetServiceStub {
       grpc::ClientContext& context,
       google::cloud::asset::v1::AnalyzeMoveRequest const& request) override;
 
+  StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::QueryAssetsRequest const& request) override;
+
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
       grpc::ClientContext& context,
       google::cloud::asset::v1::CreateSavedQueryRequest const& request)
