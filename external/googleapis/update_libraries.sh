@@ -24,6 +24,7 @@ declare -A -r LIBRARIES=(
   )"
   ["apigateway"]="@com_google_googleapis//google/cloud/apigateway/v1:apigateway_cc_grpc"
   ["apigeeconnect"]="@com_google_googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_cc_grpc"
+  ["apikeys"]="@com_google_googleapis//google/api/apikeys/v2:apikeys_cc_grpc"
   ["appengine"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/appengine/v1:appengine_cc_grpc" \

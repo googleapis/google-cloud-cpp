@@ -47,6 +47,14 @@ service {
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
+# API Keys
+service {
+  service_proto_path: "google/api/apikeys/v2/apikeys.proto"
+  product_path: "google/cloud/apikeys"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # App Engine Admin
 service {
   service_proto_path: "google/appengine/v1/appengine.proto"
