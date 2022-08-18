@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Transcoder API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Transcoder API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "video_internal" "video_testing"
                             "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -65,13 +65,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_video)
 set_target_properties(
     google_cloud_cpp_video
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-video
+    PROPERTIES EXPORT_NAME google-cloud-cpp::video
                VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_video
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-video ALIAS google_cloud_cpp_video)
+add_library(google-cloud-cpp::video ALIAS google_cloud_cpp_video)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -90,11 +90,10 @@ add_library(google_cloud_cpp_video_mocks INTERFACE)
 target_sources(google_cloud_cpp_video_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_video_mocks
-    INTERFACE google-cloud-cpp::experimental-video GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_video_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-video_mocks)
+    INTERFACE google-cloud-cpp::video GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_video_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::video_mocks)
 target_include_directories(
     google_cloud_cpp_video_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -106,8 +105,7 @@ target_compile_options(google_cloud_cpp_video_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(video_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(video_quickstart
-                          PRIVATE google-cloud-cpp::experimental-video)
+    target_link_libraries(video_quickstart PRIVATE google-cloud-cpp::video)
     google_cloud_cpp_add_common_options(video_quickstart)
     add_test(
         NAME video_quickstart

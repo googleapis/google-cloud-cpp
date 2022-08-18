@@ -134,6 +134,19 @@ releasing them early in case they elicit some feedback that requires changes.
 
 * [API Keys](/google/cloud/apikeys/README.md)
 
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+<details>
+<summary> Expand to see the full list of new GA libraries...</summary>
+<br>
+
+* [Video Services](/google/cloud/video/README.md)
+* [Bare Metal Solution](/google/cloud/baremetalsolution/README.md)
+* [Optimization AI](/google/cloud/optimization/README.md)
+
+</details>
+
 ### [Storage](/google/cloud/storage/README.md)
 
 * We have a new implementation for HTTP requests. This new implementation

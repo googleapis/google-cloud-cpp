@@ -1,14 +1,12 @@
 # Bare Metal Solution API C++ Client Library
 
-:construction:
-
 [Bare Metal Solution API][cloud-service-root], a service that provides ways to
 manage Bare Metal Solution hardware installed in a regional extension located
 near a Google Cloud data center.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms
