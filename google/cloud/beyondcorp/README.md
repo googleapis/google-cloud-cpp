@@ -1,17 +1,13 @@
 # BeyondCorp API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [BeyondCorp API][cloud-service-docs] which provides identity and context aware
 access controls for enterprise resources and enables zero-trust access. Using
 the BeyondCorp Enterprise APIs, enterprises can set up multi-cloud and on-prem
 connectivity using the App Connector hybrid connectivity solution.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms
 

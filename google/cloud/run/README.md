@@ -1,7 +1,5 @@
 # Cloud Run Admin API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for
 [Cloud Run][cloud-service-root], a managed compute platform that lets
 you run containers directly on top of Google's scalable infrastructure.
@@ -14,10 +12,8 @@ actually deploy a C++ function to Cloud Run, see the
 [hello-world]: https://github.com/GoogleCloudPlatform/cpp-samples/tree/main/cloud-run-hello-world
 [functions-framework]: https://github.com/GoogleCloudPlatform/functions-framework-cpp
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms
 

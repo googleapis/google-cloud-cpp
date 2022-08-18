@@ -14,7 +14,8 @@ actually deploy a C++ function to Cloud Run, see the
 [hello-world]: https://github.com/GoogleCloudPlatform/cpp-samples/tree/main/cloud-run-hello-world
 [functions-framework]: https://github.com/GoogleCloudPlatform/functions-framework-cpp
 
-This library is **experimental**. Its APIs are subject to change without notice.
+While this library is **GA**, please note Google Cloud C++ client libraries do
+**not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
