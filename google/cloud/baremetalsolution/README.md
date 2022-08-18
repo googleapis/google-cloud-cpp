@@ -4,10 +4,8 @@
 manage Bare Metal Solution hardware installed in a regional extension located
 near a Google Cloud data center.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++
+client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms
 

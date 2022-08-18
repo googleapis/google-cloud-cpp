@@ -141,9 +141,9 @@ the APIs in these libraries are stable, and are ready for production use.
 <summary> Expand to see the full list of new GA libraries...</summary>
 <br>
 
-* [Video Services](/google/cloud/video/README.md)
 * [Bare Metal Solution](/google/cloud/baremetalsolution/README.md)
 * [Optimization AI](/google/cloud/optimization/README.md)
+* [Video Services](/google/cloud/video/README.md)
 
 </details>
 

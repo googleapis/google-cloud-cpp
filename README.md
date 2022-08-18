@@ -267,7 +267,7 @@ This repository contains idiomatic C++ client libraries for the following
 * [Cloud Translation API](google/cloud/translate/README.md)
   [[quickstart]](google/cloud/translate/quickstart/README.md)
   [[reference]](https://googleapis.dev/cpp/google-cloud-translate/latest)
-* [Transcoder API](google/cloud/video/README.md)
+* [Video Services](google/cloud/video/README.md)
   [[quickstart]](google/cloud/video/quickstart/README.md)
   [[reference]](https://googleapis.dev/cpp/google-cloud-video/latest)
 * [Cloud Video Intelligence API](google/cloud/videointelligence/README.md)
