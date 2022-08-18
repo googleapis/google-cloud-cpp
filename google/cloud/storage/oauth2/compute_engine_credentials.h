@@ -23,6 +23,7 @@
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/status.h"
 #include <chrono>
 #include <ctime>
@@ -78,6 +79,51 @@ ParseComputeEngineRefreshResponse(
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
+class ComputeEngineCredentials;
+
+/// @copydoc ComputeEngineCredentials
+template <>
+class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
+                               std::chrono::system_clock> : public Credentials {
+ public:
+  explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
+  explicit ComputeEngineCredentials(std::string service_account_email)
+      : impl_(std::move(service_account_email)) {}
+
+  StatusOr<std::string> AuthorizationHeader() override {
+    auto header = impl_.AuthorizationHeader();
+    if (!header.ok()) return header.status();
+    return header->first + ": " + header->second;
+  }
+
+  std::string AccountEmail() const override { return impl_.AccountEmail(); }
+
+  /**
+   * Returns the email or alias of this credential's service account.
+   *
+   * @note This class must query the Compute Engine instance's metadata server
+   * to fetch service account metadata. Because of this, if an alias (e.g.
+   * "default") was supplied in place of an actual email address when
+   * initializing this credential, that alias is returned as this credential's
+   * email address if the credential has not been refreshed yet.
+   */
+  std::string service_account_email() { return impl_.service_account_email(); }
+
+  /**
+   * Returns the set of scopes granted to this credential's service account.
+   *
+   * @note Because this class must query the Compute Engine instance's metadata
+   * server to fetch service account metadata, this method will return an empty
+   * set if the credential has not been refreshed yet.
+   */
+  std::set<std::string> scopes() const { return impl_.scopes(); }
+
+ private:
+  google::cloud::oauth2_internal::ComputeEngineCredentials impl_;
+};
+
+/// @copydoc ComputeEngineCredentials
+template <typename HttpRequestBuilderType, typename ClockType>
 class ComputeEngineCredentials : public Credentials {
  public:
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
