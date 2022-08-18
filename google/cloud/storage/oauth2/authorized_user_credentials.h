@@ -37,8 +37,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 
 /// Object to hold information used to instantiate an AuthorizedUserCredentials.
-struct AuthorizedUserCredentialsInfo
-    : public google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo {};
+struct AuthorizedUserCredentialsInfo {
+  std::string client_id;
+  std::string client_secret;
+  std::string refresh_token;
+  std::string token_uri;
+};
 
 /// Parses a refresh response JSON string into an authorization header. The
 /// header and the current time (for the expiration) form a TemporaryToken.
@@ -75,19 +79,29 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
  * @tparam ClockType a dependency injection point to fetch the current time.
  *     This should generally not be overridden except for testing.
  */
-
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
 class AuthorizedUserCredentials;
 
+/// @copydoc AuthorizedUserCredentials
 template <>
 class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
                                 std::chrono::system_clock>
     : public Credentials {
  public:
-  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
+  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info,
                                      ChannelOptions const& channel_options = {})
+      : impl_(
+            google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo{
+                info.client_id, info.client_secret, info.refresh_token,
+                info.token_uri},
+            Options{}.set<CARootsFilePathOption>(
+                channel_options.ssl_root_path())) {}
+
+  explicit AuthorizedUserCredentials(
+      google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo info,
+      ChannelOptions const& channel_options = {})
       : impl_(std::move(info), Options{}.set<CARootsFilePathOption>(
                                    channel_options.ssl_root_path())) {}
 
@@ -101,6 +115,7 @@ class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
   google::cloud::oauth2_internal::AuthorizedUserCredentials impl_;
 };
 
+/// @copydoc AuthorizedUserCredentials
 template <typename HttpRequestBuilderType, typename ClockType>
 class AuthorizedUserCredentials : public Credentials {
  public:

@@ -28,10 +28,10 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
       content, source, default_token_uri);
   if (!info.ok()) return info.status();
   AuthorizedUserCredentialsInfo i;
-  i.token_uri = info->token_uri;
-  i.refresh_token = info->refresh_token;
-  i.client_secret = info->client_secret;
-  i.client_id = info->client_id;
+  i.token_uri = std::move(info->token_uri);
+  i.refresh_token = std::move(info->refresh_token);
+  i.client_secret = std::move(info->client_secret);
+  i.client_id = std::move(info->client_id);
   return i;
 }
 
