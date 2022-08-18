@@ -1,6 +1,4 @@
-# Transcoder API C++ Client Library
-
-:construction:
+# Video Services C++ Client Library
 
 This directory contains an idiomatic C++ client library for video services,
 including:
@@ -13,10 +11,8 @@ including:
   servers to dynamically insert ads into video-on-demand and live streams for
   your users.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++
+client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms
 

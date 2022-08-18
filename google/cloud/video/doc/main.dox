@@ -12,7 +12,8 @@ An idiomatic C++ client library for video services, including:
   servers to dynamically insert ads into video-on-demand and live streams for
   your users.
 
-This library is **experimental**. Its APIs are subject to change without notice.
+While this library is **GA**, please note Google Cloud C++ client libraries do
+**not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
