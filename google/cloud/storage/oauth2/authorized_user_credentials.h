@@ -36,17 +36,9 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
 /// Object to hold information used to instantiate an AuthorizedUserCredentials.
-using AuthorizedUserCredentialsInfo =
-    google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo;
-#else
-struct AuthorizedUserCredentialsInfo {
-  std::string client_id;
-  std::string client_secret;
-  std::string refresh_token;
-  std::string token_uri;
-};
+struct AuthorizedUserCredentialsInfo
+    : public google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo {};
 
 /// Parses a refresh response JSON string into an authorization header. The
 /// header and the current time (for the expiration) form a TemporaryToken.
@@ -54,7 +46,6 @@ StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseAuthorizedUserRefreshResponse(
     storage::internal::HttpResponse const& response,
     std::chrono::system_clock::time_point now);
-#endif
 
 /// Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
 StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(

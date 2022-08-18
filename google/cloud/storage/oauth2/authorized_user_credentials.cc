@@ -24,48 +24,17 @@ namespace oauth2 {
 StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
-  return google::cloud::oauth2_internal::ParseAuthorizedUserCredentials(
+  auto info = google::cloud::oauth2_internal::ParseAuthorizedUserCredentials(
       content, source, default_token_uri);
-#else
-  auto credentials = nlohmann::json::parse(content, nullptr, false);
-  if (!credentials.is_object()) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "Invalid AuthorizedUserCredentials, parsing failed on data from " +
-            source);
-  }
-
-  std::string const client_id_key = "client_id";
-  std::string const client_secret_key = "client_secret";
-  std::string const refresh_token_key = "refresh_token";
-  for (auto const& key :
-       {client_id_key, client_secret_key, refresh_token_key}) {
-    if (credentials.count(key) == 0) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid AuthorizedUserCredentials, the " +
-                        std::string(key) +
-                        " field is missing on data loaded from " + source);
-    }
-    if (credentials.value(key, "").empty()) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid AuthorizedUserCredentials, the " +
-                        std::string(key) +
-                        " field is empty on data loaded from " + source);
-    }
-  }
-  return AuthorizedUserCredentialsInfo{
-      credentials.value(client_id_key, ""),
-      credentials.value(client_secret_key, ""),
-      credentials.value(refresh_token_key, ""),
-      // Some credential formats (e.g. gcloud's ADC file) don't contain a
-      // "token_uri" attribute in the JSON object.  In this case, we try using
-      // the default value.
-      credentials.value("token_uri", default_token_uri)};
-#endif
+  if (!info.ok()) return info.status();
+  AuthorizedUserCredentialsInfo i;
+  i.token_uri = info->token_uri;
+  i.refresh_token = info->refresh_token;
+  i.client_secret = info->client_secret;
+  i.client_id = info->client_id;
+  return i;
 }
 
-#ifndef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseAuthorizedUserRefreshResponse(
     storage::internal::HttpResponse const& response,
@@ -93,7 +62,7 @@ ParseAuthorizedUserRefreshResponse(
   return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
                                                       new_expiration};
 }
-#endif
+
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

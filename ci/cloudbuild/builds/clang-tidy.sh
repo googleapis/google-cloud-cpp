@@ -32,8 +32,7 @@ cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
   -DCMAKE_CXX_STANDARD=11 \
   -DGOOGLE_CLOUD_CPP_ENABLE="bigtable;bigquery;generator;iam;logging;pubsub;pubsublite;spanner;storage" \
-  -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON \
-  -DGOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST=ON
+  -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON
 cmake --build cmake-out
 
 mapfile -t ctest_args < <(ctest::common_args)
