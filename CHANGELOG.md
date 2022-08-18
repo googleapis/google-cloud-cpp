@@ -142,7 +142,9 @@ the APIs in these libraries are stable, and are ready for production use.
 <br>
 
 * [Bare Metal Solution](/google/cloud/baremetalsolution/README.md)
+* [Beyond Corp](/google/cloud/beyondcorp/README.md)
 * [Optimization AI](/google/cloud/optimization/README.md)
+* [Cloud Run](/google/cloud/run/README.md)
 * [Video Services](/google/cloud/video/README.md)
 
 </details>
