@@ -30,10 +30,7 @@ namespace oauth2 {
  * This environment variable should be checked for a valid file path when
  * attempting to load Google Application Default %Credentials.
  */
-inline char const* GoogleAdcEnvVar() {
-  static constexpr char kEnvVarName[] = "GOOGLE_APPLICATION_CREDENTIALS";
-  return kEnvVarName;
-}
+char const* GoogleAdcEnvVar();
 
 /**
  * Returns the path to the Application Default %Credentials file, if set.
@@ -59,10 +56,7 @@ std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
  * This environment variable is used for testing to override the path that
  * should be searched for the gcloud Application Default %Credentials file.
  */
-inline char const* GoogleGcloudAdcFileEnvVar() {
-  static constexpr char kEnvVarName[] = "GOOGLE_GCLOUD_ADC_PATH_OVERRIDE";
-  return kEnvVarName;
-}
+char const* GoogleGcloudAdcFileEnvVar();
 
 /**
  * Returns the environment variable used to construct the well known ADC path.
@@ -72,14 +66,7 @@ inline char const* GoogleGcloudAdcFileEnvVar() {
  * used when constructing the well known path of the Application Default
  * Credentials file.
  */
-inline char const* GoogleAdcHomeEnvVar() {
-#ifdef _WIN32
-  static constexpr char kHomeEnvVar[] = "APPDATA";
-#else
-  static constexpr char kHomeEnvVar[] = "HOME";
-#endif
-  return kHomeEnvVar;
-}
+char const* GoogleAdcHomeEnvVar();
 
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
 #include <cstdlib>
 
 namespace {
@@ -37,6 +38,10 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 
+char const* GoogleAdcEnvVar() {
+  return google::cloud::oauth2_internal::GoogleAdcEnvVar();
+}
+
 std::string GoogleAdcFilePathFromEnvVarOrEmpty() {
   auto override_value = google::cloud::internal::GetEnv(GoogleAdcEnvVar());
   if (override_value.has_value()) {
@@ -59,6 +64,14 @@ std::string GoogleAdcFilePathFromWellKnownPathOrEmpty() {
     return *adc_path_root + GoogleWellKnownAdcFilePathSuffix();
   }
   return "";
+}
+
+char const* GoogleGcloudAdcFileEnvVar() {
+  return google::cloud::oauth2_internal::GoogleGcloudAdcFileEnvVar();
+}
+
+char const* GoogleAdcHomeEnvVar() {
+  return google::cloud::oauth2_internal::GoogleAdcHomeEnvVar();
 }
 
 }  // namespace oauth2
