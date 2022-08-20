@@ -24,6 +24,18 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+auto constexpr kP12PrivateKeyIdMarker = "--unknown--";
+
+bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
+  if (info.private_key_id == kP12PrivateKeyIdMarker) return true;
+  auto disable_jwt = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT");
+  return disable_jwt.has_value();
+}
+
+}  // namespace
 
 using ::google::cloud::internal::MakeJWTAssertionNoThrow;
 
@@ -226,9 +238,7 @@ StatusOr<std::vector<std::uint8_t>> ServiceAccountCredentials::SignBlob(
 }
 
 bool ServiceAccountCredentials::UseOAuth() {
-  auto disable_jwt = google::cloud::internal::GetEnv(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT");
-  return disable_jwt.has_value();
+  return ServiceAccountUseOAuth(info_);
 }
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>

@@ -228,7 +228,7 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
   std::string KeyId() const override { return info_.private_key_id; }
 
  private:
-  static bool UseOAuth();
+  bool UseOAuth();
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh();
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshOAuth() const;
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshSelfSigned()
