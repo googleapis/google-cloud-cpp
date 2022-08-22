@@ -170,7 +170,7 @@ We are introducing new client libraries for GCP services. While we do not
 anticipate any API changes to these libraries before declaring them GA, we are
 releasing them early in case they elicit some feedback that requires changes.
 
-* [Batch](/google/cloud/batch/README.md) ([#9474](https://github.com/googleapis/google-cloud-cpp/pull/9474)) 
+* [Batch](/google/cloud/batch/README.md) ([#9474](https://github.com/googleapis/google-cloud-cpp/pull/9474))
 * [Beyond Corp](/google/cloud/beyondcorp/README.md) ([#9555](https://github.com/googleapis/google-cloud-cpp/pull/9555))
 * [Cloud Run](/google/cloud/run/README.md) ([#9460](https://github.com/googleapis/google-cloud-cpp/pull/9460))
 
