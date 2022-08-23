@@ -29,8 +29,10 @@ RUN apk update && \
 # when handling `.pc` files with lots of `Requires:` deps, which happens with
 # Abseil, so we use the normal `pkg-config` binary, which seems to not suffer
 # from this bottleneck. For more details see
-# https://github.com/pkgconf/pkgconf/issues/229
-# https://github.com/googleapis/google-cloud-cpp/issues/7052
+# https://github.com/pkgconf/pkgconf/issues/229 and
+# https://github.com/googleapis/google-cloud-cpp/issues/7052.
+
+# ```bash
 WORKDIR /var/tmp/build/pkg-config-cpp
 RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
@@ -38,6 +40,7 @@ RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.g
     make -j ${NCPU:-4} && \
     make install
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
+# ```
 
 # #### Dependencies
 
@@ -45,9 +48,11 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib
 # with Alpine >= 3.16 meet `google-cloud-cpp`'s requirements. We can simply
 # install the development packages
 
+# ```bash
 RUN apk update && \
     apk add abseil-cpp-dev c-ares-dev curl-dev grpc-dev \
         protobuf-dev nlohmann-json openssl-dev re2-dev
+# ```
 
 # #### crc32c
 

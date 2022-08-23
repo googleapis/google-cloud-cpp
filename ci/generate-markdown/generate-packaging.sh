@@ -200,7 +200,7 @@ for distro in "${DOCKER_DISTROS[@]}"; do
     "${BINDIR}/dockerfile2markdown.sh"
   echo "#### Compile and install the main project"
   echo
-  echo "We can now compile and install \`google-cloud-cpp\`"
+  echo "We can now compile and install \`google-cloud-cpp\`:"
   echo
   echo '```bash'
   extract "${BINDIR}/../cloudbuild/builds/demo-install.sh"

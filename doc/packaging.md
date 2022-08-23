@@ -163,8 +163,10 @@ Alpine's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 when handling `.pc` files with lots of `Requires:` deps, which happens with
 Abseil, so we use the normal `pkg-config` binary, which seems to not suffer
 from this bottleneck. For more details see
-https://github.com/pkgconf/pkgconf/issues/229
-https://github.com/googleapis/google-cloud-cpp/issues/7052
+https://github.com/pkgconf/pkgconf/issues/229 and
+https://github.com/googleapis/google-cloud-cpp/issues/7052.
+
+```bash
 mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
 curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
@@ -172,6 +174,7 @@ curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | 
     make -j ${NCPU:-4} && \
 sudo make install
 export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
+```
 
 #### Dependencies
 
@@ -179,9 +182,11 @@ The versions of Abseil, Protobuf, gRPC, OpenSSL, and nlohmann-json included
 with Alpine >= 3.16 meet `google-cloud-cpp`'s requirements. We can simply
 install the development packages
 
+```bash
 apk update && \
     apk add abseil-cpp-dev c-ares-dev curl-dev grpc-dev \
         protobuf-dev nlohmann-json openssl-dev re2-dev
+```
 
 #### crc32c
 
@@ -205,7 +210,7 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 
 #### Compile and install the main project
 
-We can now compile and install `google-cloud-cpp`
+We can now compile and install `google-cloud-cpp`:
 
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
@@ -384,7 +389,7 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile and install `google-cloud-cpp`
+We can now compile and install `google-cloud-cpp`:
 
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
@@ -560,7 +565,7 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile and install `google-cloud-cpp`
+We can now compile and install `google-cloud-cpp`:
 
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
@@ -711,7 +716,7 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile and install `google-cloud-cpp`
+We can now compile and install `google-cloud-cpp`:
 
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
@@ -861,7 +866,7 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile and install `google-cloud-cpp`
+We can now compile and install `google-cloud-cpp`:
 
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
@@ -1026,7 +1031,7 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile and install `google-cloud-cpp`
+We can now compile and install `google-cloud-cpp`:
 
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
@@ -1163,7 +1168,7 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile and install `google-cloud-cpp`
+We can now compile and install `google-cloud-cpp`:
 
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
@@ -1311,7 +1316,7 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile and install `google-cloud-cpp`
+We can now compile and install `google-cloud-cpp`:
 
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
@@ -1490,7 +1495,7 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile and install `google-cloud-cpp`
+We can now compile and install `google-cloud-cpp`:
 
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
@@ -1693,7 +1698,7 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile and install `google-cloud-cpp`
+We can now compile and install `google-cloud-cpp`:
 
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
