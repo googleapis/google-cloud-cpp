@@ -33,8 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OutstandingTimers
     : public std::enable_shared_from_this<OutstandingTimers> {
  public:
-  explicit OutstandingTimers(std::shared_ptr<CompletionQueue> const& cq)
-      : weak_cq_(cq) {}
+  explicit OutstandingTimers(
+      std::shared_ptr<internal::CompletionQueueImpl> const& cq_impl)
+      : weak_cq_impl_(cq_impl) {}
   // Register a timer. It will automatically deregister on completion.
   void RegisterTimer(future<void> fut);
   // Cancel all currently registered timers and all which will be registered in
@@ -51,7 +52,8 @@ class OutstandingTimers
   // Object of this class is owned by timers continuations, which means it
   // cannot have an owning reference to the `CompletionQueue` because  it would
   // otherwise create a risk of a deadlock on the completion queue destruction.
-  std::weak_ptr<CompletionQueue> weak_cq_;  // GUARDED_BY(mu_)
+  std::weak_ptr<internal::CompletionQueueImpl>
+      weak_cq_impl_;  // GUARDED_BY(mu_)
 };
 
 /**
@@ -63,7 +65,7 @@ class OutstandingTimers
 class ConnectionRefreshState {
  public:
   explicit ConnectionRefreshState(
-      std::shared_ptr<CompletionQueue> const& cq,
+      std::shared_ptr<internal::CompletionQueueImpl> const& cq_impl,
       std::chrono::milliseconds min_conn_refresh_period,
       std::chrono::milliseconds max_conn_refresh_period);
   std::chrono::milliseconds RandomizedRefreshDelay();
@@ -82,7 +84,7 @@ class ConnectionRefreshState {
  * Schedule a chain of timers to refresh the connection.
  */
 void ScheduleChannelRefresh(
-    std::shared_ptr<CompletionQueue> const& cq,
+    std::shared_ptr<internal::CompletionQueueImpl> const& cq,
     std::shared_ptr<ConnectionRefreshState> const& state,
     std::shared_ptr<grpc::Channel> const& channel);
 

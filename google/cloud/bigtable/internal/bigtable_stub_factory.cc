@@ -57,15 +57,16 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
     BaseBigtableStubFactory const& base_factory) {
-  auto cq_ptr = std::make_shared<CompletionQueue>(cq);
+  auto cq_impl = internal::GetCompletionQueueImpl(cq);
   auto refresh = std::make_shared<ConnectionRefreshState>(
-      cq_ptr, options.get<bigtable::MinConnectionRefreshOption>(),
+      cq_impl, options.get<bigtable::MinConnectionRefreshOption>(),
       options.get<bigtable::MaxConnectionRefreshOption>());
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
-  auto child_factory = [base_factory, cq_ptr, refresh, &auth, options](int id) {
+  auto child_factory = [base_factory, cq_impl, refresh, &auth,
+                        options](int id) {
     auto channel = CreateGrpcChannel(*auth, options, id);
-    if (refresh->enabled()) ScheduleChannelRefresh(cq_ptr, refresh, channel);
+    if (refresh->enabled()) ScheduleChannelRefresh(cq_impl, refresh, channel);
     return base_factory(std::move(channel));
   };
   auto stub = CreateBigtableStubRoundRobin(options, std::move(child_factory));
