@@ -52,8 +52,20 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
   std::string contents(std::istreambuf_iterator<char>{ifs}, {});
   auto cred_json = nlohmann::json::parse(contents, nullptr, false);
   if (!cred_json.is_object()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid credentials file " + path);
+    // This is not a JSON file, try to load it as a P12 service account.
+    auto info = ParseServiceAccountP12File(path);
+    if (!info) {
+      return Status(
+          StatusCode::kInvalidArgument,
+          "Cannot open credentials file " + path +
+              ", it does not contain a JSON object, nor can be parsed "
+              "as a PKCS#12 file. " +
+              info.status().message());
+    }
+    info->scopes = {};
+    info->subject = {};
+    auto credentials = absl::make_unique<ServiceAccountCredentials>(*info);
+    return std::unique_ptr<Credentials>(std::move(credentials));
   }
   std::string cred_type = cred_json.value("type", "no type given");
   // If non_service_account_ok==false and the cred_type is authorized_user,

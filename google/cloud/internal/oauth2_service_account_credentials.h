@@ -53,6 +53,14 @@ struct ServiceAccountCredentialsInfo {
   absl::optional<std::string> subject;
 };
 
+/// Indicates whether or not to use a self-signed JWT or issue a request to
+/// OAuth2.
+bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info);
+
+/// Parses the contents of a P12 keyfile into a ServiceAccountCredentialsInfo.
+StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
+    std::string const& source);
+
 /// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
@@ -228,7 +236,7 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
   std::string KeyId() const override { return info_.private_key_id; }
 
  private:
-  static bool UseOAuth();
+  bool UseOAuth();
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh();
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshOAuth() const;
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshSelfSigned()
