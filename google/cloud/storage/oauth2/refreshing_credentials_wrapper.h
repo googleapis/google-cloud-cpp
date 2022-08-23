@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_WRAPPER_H
 
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/oauth2_refreshing_credentials_wrapper.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <chrono>
@@ -33,6 +34,8 @@ namespace oauth2 {
  */
 class RefreshingCredentialsWrapper {
  public:
+  RefreshingCredentialsWrapper();
+
   struct TemporaryToken {
     std::string token;
     std::chrono::system_clock::time_point expiration_time;
@@ -40,18 +43,19 @@ class RefreshingCredentialsWrapper {
 
   template <typename RefreshFunctor>
   StatusOr<std::string> AuthorizationHeader(
-      std::chrono::system_clock::time_point now,
-      RefreshFunctor refresh_fn) const {
-    if (IsValid(now)) {
-      return temporary_token_.token;
-    }
-
-    StatusOr<TemporaryToken> new_token = refresh_fn();
-    if (new_token) {
-      temporary_token_ = *std::move(new_token);
-      return temporary_token_.token;
-    }
-    return new_token.status();
+      std::chrono::system_clock::time_point, RefreshFunctor refresh_fn) const {
+    auto refresh_fn_wrapper = [refresh_fn]()
+        -> StatusOr<
+            oauth2_internal::RefreshingCredentialsWrapper::TemporaryToken> {
+      auto temp_token = refresh_fn();
+      if (!temp_token.ok()) return temp_token.status();
+      auto token = SplitToken(temp_token->token);
+      return oauth2_internal::RefreshingCredentialsWrapper::TemporaryToken{
+          std::move(token), temp_token->expiration_time};
+    };
+    auto header = impl_->AuthorizationHeader(refresh_fn_wrapper);
+    if (!header.ok()) return header.status();
+    return header->first + ": " + header->second;
   }
 
   /**
@@ -76,7 +80,10 @@ class RefreshingCredentialsWrapper {
   bool IsValid(std::chrono::system_clock::time_point now) const;
 
  private:
-  mutable TemporaryToken temporary_token_;
+  static std::pair<std::string, std::string> SplitToken(
+      std::string const& token);
+
+  std::unique_ptr<oauth2_internal::RefreshingCredentialsWrapper> impl_;
 };
 
 }  // namespace oauth2
