@@ -75,18 +75,15 @@ void AsyncBulkApplier::OnRead(
 }
 
 void AsyncBulkApplier::OnFinish(Status const& status) {
-  auto const is_retryable = status.ok() || retry_policy_->OnFailure(status);
   state_.OnFinish(status);
-  if (!state_.HasPendingMutations() || !is_retryable) {
+  if (!state_.HasPendingMutations() || !retry_policy_->OnFailure(status)) {
     SetPromise();
     return;
   }
 
-  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
-
   auto self = this->shared_from_this();
   cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
-      .then([self](TimerFuture result) {
+      .then([self](auto result) {
         if (result.get()) {
           self->StartIteration();
         } else {

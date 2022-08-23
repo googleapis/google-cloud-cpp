@@ -602,6 +602,67 @@ TEST(AsyncBulkApplyTest, CurrentOptionsContinuedOnRetries) {
   timer_promise.set_value(make_status_or(std::chrono::system_clock::now()));
 }
 
+TEST(AsyncBulkApplyTest, RetriesOkStreamWithFailedMutations) {
+  std::vector<bigtable::FailedMutation> expected = {
+      {Status(StatusCode::kUnavailable, "try again"), 0}};
+  bigtable::BulkMutation mut(IdempotentMutation("r1"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRows)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([](CompletionQueue const&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         v2::MutateRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_THAT(request.entries(), ElementsAre(MatchEntry("r1")));
+        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(true);
+        });
+        // The overall stream succeeds, but it contains a failed mutation.
+        // Our retry and backoff policies should take effect.
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([] {
+              return make_ready_future(
+                  MakeResponse({{0, grpc::StatusCode::UNAVAILABLE}}));
+            })
+            .WillOnce([] {
+              return make_ready_future(
+                  absl::optional<v2::MutateRowsResponse>{});
+            });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(Status());
+        });
+        return stream;
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .Times(kNumRetries)
+      .WillRepeatedly([] {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
+  auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
+
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(kNumRetries + 1);
+  internal::OptionsSpan span(
+      Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
+
+  auto actual = AsyncBulkApplier::Create(
+      cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
+      kTableName, std::move(mut));
+
+  CheckFailedMutations(actual.get(), expected);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

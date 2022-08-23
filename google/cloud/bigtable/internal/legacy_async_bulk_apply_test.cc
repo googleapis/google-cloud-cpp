@@ -344,6 +344,56 @@ TEST_F(AsyncBulkApplyTest, TooManyFailures) {
   EXPECT_TRUE(cq_impl_->empty());
 }
 
+TEST_F(AsyncBulkApplyTest, RetryPolicyUsedForOkStreamsWithFailedMutations) {
+  bigtable::BulkMutation mut{bigtable::SingleRowMutation(
+      "row", {bigtable::SetCell("f", "c", 0_ms, "v2")})};
+
+  // We give up on the 3rd error.
+  auto constexpr kErrorCount = 2;
+
+  EXPECT_CALL(*client_, PrepareAsyncMutateRows)
+      .Times(kErrorCount + 1)
+      .WillRepeatedly([](grpc::ClientContext*,
+                         btproto::MutateRowsRequest const&,
+                         grpc::CompletionQueue*) {
+        auto reader = absl::make_unique<
+            MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
+        EXPECT_CALL(*reader, Read)
+            .WillOnce([](btproto::MutateRowsResponse* r, void*) {
+              auto& r1 = *r->add_entries();
+              r1.set_index(0);
+              r1.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+            })
+            .WillOnce([](btproto::MutateRowsResponse*, void*) {});
+        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status::OK;
+        });
+        EXPECT_CALL(*reader, StartCall);
+        return reader;
+      });
+
+  auto limited_retry_policy = LimitedErrorCountRetryPolicy(kErrorCount);
+  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+      cq_, limited_retry_policy.clone(), rpc_backoff_policy_->clone(),
+      *idempotent_mutation_policy_, metadata_update_policy_, client_,
+      "my-app-profile", "my-table", std::move(mut));
+
+  for (int retry = 0; retry != kErrorCount; ++retry) {
+    SimulateIteration();
+    // simulate the backoff timer
+    cq_impl_->SimulateCompletion(true);
+    ASSERT_EQ(1U, cq_impl_->size());
+  }
+
+  SimulateIteration();
+
+  auto failures = StatusOnly(bulk_apply_future.get());
+  EXPECT_THAT(failures, ElementsAre(StatusIs(StatusCode::kUnavailable)));
+
+  ASSERT_EQ(0U, cq_impl_->size());
+  EXPECT_TRUE(cq_impl_->empty());
+}
+
 TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
   bigtable::BulkMutation mut{
       bigtable::SingleRowMutation("foo2",

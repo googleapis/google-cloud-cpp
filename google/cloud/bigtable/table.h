@@ -472,12 +472,6 @@ class Table {
    * It is possible that some mutations may not be attempted at all. These
    * mutations are considered failing and will be returned.
    *
-   * @note The retry policy is only impacted by the result of the gRPC stream.
-   *     Let's say you have a `LimitedErrorCountRetryPolicy` of 2. If an
-   *     idempotent mutation fails with a retryable error and the stream itself
-   *     succeeds, it may be retried more than 2 times. Only when the stream
-   *     fails twice will we give up and consider the mutation to be failed.
-   *
    * @note This function takes ownership (and then discards) the data in the
    *     mutation. In general, a `BulkMutation` can modify multiple rows, and
    *     the modifications for each row can change (or create) multiple cells,
@@ -516,12 +510,6 @@ class Table {
    *
    * It is possible that some mutations may not be attempted at all. These
    * mutations are considered failing and will be returned.
-   *
-   * @note The retry policy is only impacted by the result of the gRPC stream.
-   *     Let's say you have a `LimitedErrorCountRetryPolicy` of 2. If an
-   *     idempotent mutation fails with a retryable error and the stream itself
-   *     succeeds, it may be retried more than 2 times. Only when the stream
-   *     fails twice will we give up and consider the mutation to be failed.
    *
    * @note This function takes ownership (and then discards) the data in the
    *     mutation. In general, a `BulkMutation` can modify multiple rows, and

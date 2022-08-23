@@ -153,15 +153,15 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
   // micro-optimization.
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
-  do {
+  while (true) {
     auto status = mutator.MakeOneRequest(*stub_);
-    if (status.ok()) continue;
+    if (!mutator.HasPendingMutations()) break;
     if (!retry) retry = retry_policy();
     if (!retry->OnFailure(status)) break;
     if (!backoff) backoff = backoff_policy();
     auto delay = backoff->OnCompletion();
     std::this_thread::sleep_for(delay);
-  } while (mutator.HasPendingMutations());
+  }
   return std::move(mutator).OnRetryDone();
 }
 

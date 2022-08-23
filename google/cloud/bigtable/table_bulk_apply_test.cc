@@ -249,6 +249,41 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
             failures.front().status().code());
 }
 
+TEST_F(TableBulkApplyTest, RetryPolicyUsedForOkStreamWithFailedMutations) {
+  // Create a table with specific policies so we can test the behavior
+  // without having to depend on timers expiring.  In this case tolerate only
+  // 3 failures.
+  Table custom_table(
+      client_, "foo_table",
+      // Configure the Table to stop at 3 failures.
+      LimitedErrorCountRetryPolicy(2),
+      // Use much shorter backoff than the default to test faster.
+      ExponentialBackoffPolicy(10_us, 40_us));
+
+  auto create_stream = [&](grpc::ClientContext*,
+                           btproto::MutateRowsRequest const&) {
+    auto stream = absl::make_unique<MockMutateRowsReader>(
+        "google.bigtable.v2.Bigtable.MutateRows");
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([](btproto::MutateRowsResponse* r) {
+          auto& e0 = *r->add_entries();
+          e0.set_index(0);
+          e0.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+          return true;
+        })
+        .WillOnce(Return(false));
+    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+    return stream;
+  };
+
+  EXPECT_CALL(*client_, MutateRows).Times(3).WillRepeatedly(create_stream);
+
+  auto failures = custom_table.BulkApply(BulkMutation(
+      SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "qux")})));
+  EXPECT_FALSE(failures.empty());
+  EXPECT_EQ(StatusCode::kUnavailable, failures.front().status().code());
+}
+
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
 TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
   // We will send both idempotent and non-idempotent mutations.  We prepare the
