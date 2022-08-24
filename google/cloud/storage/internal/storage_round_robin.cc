@@ -26,7 +26,12 @@ auto constexpr kRefreshPeriod = std::chrono::hours(1);
 void StorageRoundRobin::StartRefreshLoop(
     google::cloud::CompletionQueue cq,  // NOLINT
     std::vector<std::shared_ptr<grpc::Channel>> channels) {
+  std::unique_lock<std::mutex> lk(mu_);
+  // This is purely defensive, we do not want the channels to change after the
+  // refresh loop starts.
+  if (!channels_.empty()) return;
   channels_ = std::move(channels);
+  lk.unlock();
   // Break the ownership cycle.
   auto wcq = std::weak_ptr<google::cloud::internal::CompletionQueueImpl>(
       google::cloud::internal::GetCompletionQueueImpl(cq));
@@ -266,6 +271,10 @@ void StorageRoundRobin::Refresh(
   auto cq = wcq.lock();
   if (!cq) return;
   auto deadline = std::chrono::system_clock::now() + kRefreshPeriod;
+  // An invalid index, stop the loop.  There is no need to check lock the mutex,
+  // as the channels do not change after the class is initialized.
+  if (index >= channels_.size()) return;
+  GCP_LOG(INFO) << "Refreshing channel [" << index << "]";
   (void)google::cloud::internal::NotifyOnStateChange::Start(
       std::move(cq), channels_.at(index), deadline)
       .then(
@@ -277,14 +286,8 @@ void StorageRoundRobin::Refresh(
 void StorageRoundRobin::OnRefresh(
     std::size_t index,
     std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq, bool ok) {
-  // The CQ is shutting down, or the channel is shutdown, stop the loop
+  // The CQ is shutting down, or the channel is shutdown, stop the loop.
   if (!ok) return;
-  // An invalid index, stop the loop
-  if (index >= channels_.size()) return;
-  auto channel_state = channels_.at(index)->GetState(true);
-  GCP_LOG(INFO) << "refresh [" << index << "] channel_state=" << channel_state;
-  // The channel has shutdown,
-  if (channel_state == GRPC_CHANNEL_SHUTDOWN) return;
   Refresh(index, std::move(wcq));
 }
 
