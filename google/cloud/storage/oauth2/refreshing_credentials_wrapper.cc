@@ -14,6 +14,9 @@
 
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
+#include "google/cloud/internal/oauth2_refreshing_credentials_wrapper.h"
+#include "absl/memory/memory.h"
+#include "absl/strings/str_split.h"
 
 namespace google {
 namespace cloud {
@@ -21,15 +24,27 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 
+RefreshingCredentialsWrapper::RefreshingCredentialsWrapper()
+    : impl_(
+          absl::make_unique<oauth2_internal::RefreshingCredentialsWrapper>()) {}
+
+std::pair<std::string, std::string> RefreshingCredentialsWrapper::SplitToken(
+    std::string const& token) {
+  std::pair<std::string, std::string> split_token = absl::StrSplit(token, ": ");
+  return split_token;
+}
+
 bool RefreshingCredentialsWrapper::IsExpired(
     std::chrono::system_clock::time_point now) const {
-  return now > (temporary_token_.expiration_time -
+  return now > (impl_->temporary_token_.expiration_time -
                 GoogleOAuthAccessTokenExpirationSlack());
 }
 
 bool RefreshingCredentialsWrapper::IsValid(
     std::chrono::system_clock::time_point now) const {
-  return !temporary_token_.token.empty() && !IsExpired(now);
+  return (!impl_->temporary_token_.token.first.empty() ||
+          !impl_->temporary_token_.token.second.empty()) &&
+         !IsExpired(now);
 }
 
 }  // namespace oauth2

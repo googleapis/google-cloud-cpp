@@ -25,6 +25,13 @@
 
 namespace google {
 namespace cloud {
+namespace storage {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace oauth2 {
+class RefreshingCredentialsWrapper;
+}  // namespace oauth2
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -67,6 +74,7 @@ class RefreshingCredentialsWrapper {
   bool IsValid() const;
 
  private:
+  friend class ::google::cloud::storage::oauth2::RefreshingCredentialsWrapper;
   /**
    * Returns whether the current access token should be considered expired.
    *
