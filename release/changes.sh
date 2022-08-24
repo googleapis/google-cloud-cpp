@@ -64,7 +64,7 @@ function print_changelog() {
   shift 2
   if [[ $# -gt 0 ]]; then
     printf "\n### [%s](%s)\n\n" "${title}" "${url}"
-    printf "* %s\n" "${changelog[@]}"
+    printf -- "- %s\n" "${changelog[@]}"
   fi
 }
 
