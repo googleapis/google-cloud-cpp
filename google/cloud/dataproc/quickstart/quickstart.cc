@@ -22,20 +22,14 @@ int main(int argc, char* argv[]) try {
     std::cerr << "Usage: " << argv[0] << " project-id region\n";
     return 1;
   }
-
-  namespace gc = ::google::cloud;
-  namespace dataproc = ::google::cloud::dataproc;
-
   std::string const project_id = argv[1];
   std::string const region = argv[2];
 
-  gc::Options options;
-  if (region != "global") {
-    options.set<gc::EndpointOption>(region + "-dataproc.googleapis.com:443");
-  }
+  namespace dataproc = ::google::cloud::dataproc;
 
   auto client = dataproc::ClusterControllerClient(
-      dataproc::MakeClusterControllerConnection(options));
+      dataproc::MakeClusterControllerConnection(region == "global" ? ""
+                                                                   : region));
 
   for (auto c : client.ListClusters(project_id, region)) {
     if (!c) throw std::runtime_error(c.status().message());

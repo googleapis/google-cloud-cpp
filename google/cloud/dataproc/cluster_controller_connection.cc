@@ -98,18 +98,23 @@ ClusterControllerConnection::DiagnoseCluster(
 }
 
 std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  ClusterControllerPolicyOptionList>(options,
                                                                     __func__);
-  options =
-      dataproc_internal::ClusterControllerDefaultOptions(std::move(options));
+  options = dataproc_internal::ClusterControllerDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultClusterControllerStub(
       background->cq(), options);
   return std::make_shared<dataproc_internal::ClusterControllerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
+    Options options) {
+  return MakeClusterControllerConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

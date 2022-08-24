@@ -76,17 +76,23 @@ Status JobControllerConnection::DeleteJob(
 }
 
 std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  JobControllerPolicyOptionList>(options,
                                                                 __func__);
-  options = dataproc_internal::JobControllerDefaultOptions(std::move(options));
+  options = dataproc_internal::JobControllerDefaultOptions(location,
+                                                           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultJobControllerStub(
       background->cq(), options);
   return std::make_shared<dataproc_internal::JobControllerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
+    Options options) {
+  return MakeJobControllerConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

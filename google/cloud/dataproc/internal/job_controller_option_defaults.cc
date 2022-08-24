@@ -19,6 +19,7 @@
 #include "google/cloud/dataproc/internal/job_controller_option_defaults.h"
 #include "google/cloud/dataproc/job_controller_connection.h"
 #include "google/cloud/dataproc/job_controller_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
@@ -32,10 +33,13 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options JobControllerDefaultOptions(Options options) {
+Options JobControllerDefaultOptions(std::string const& location,
+                                    Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_JOB_CONTROLLER_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_JOB_CONTROLLER_AUTHORITY", "dataproc.googleapis.com");
+      "GOOGLE_CLOUD_CPP_JOB_CONTROLLER_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dataproc.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<dataproc::JobControllerRetryPolicyOption>()) {

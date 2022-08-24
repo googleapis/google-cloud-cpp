@@ -19,6 +19,7 @@
 #include "google/cloud/dataproc/internal/autoscaling_policy_option_defaults.h"
 #include "google/cloud/dataproc/autoscaling_policy_connection.h"
 #include "google/cloud/dataproc/autoscaling_policy_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
@@ -32,12 +33,14 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options AutoscalingPolicyServiceDefaultOptions(Options options) {
+Options AutoscalingPolicyServiceDefaultOptions(std::string const& location,
+                                               Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_AUTHORITY",
-      "dataproc.googleapis.com");
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dataproc.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<dataproc::AutoscalingPolicyServiceRetryPolicyOption>()) {
