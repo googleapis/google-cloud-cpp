@@ -220,9 +220,10 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
   ASSERT_FALSE(in.project_id().empty());
   ASSERT_FALSE(in.instance_id().empty());
 
-  ASSERT_FALSE(internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT")
-                   .value_or("")
-                   .empty());
+  auto test_iam_service_account_ =
+      internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT")
+          .value_or("");
+  ASSERT_TRUE(Emulator() || !test_iam_service_account_.empty());
 
   auto actual_policy = client_.GetIamPolicy(in.FullName());
   if (Emulator() &&
