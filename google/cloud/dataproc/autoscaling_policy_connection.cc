@@ -68,19 +68,26 @@ Status AutoscalingPolicyServiceConnection::DeleteAutoscalingPolicy(
 }
 
 std::shared_ptr<AutoscalingPolicyServiceConnection>
-MakeAutoscalingPolicyServiceConnection(Options options) {
+MakeAutoscalingPolicyServiceConnection(std::string const& location,
+                                       Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  AutoscalingPolicyServicePolicyOptionList>(
       options, __func__);
   options = dataproc_internal::AutoscalingPolicyServiceDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultAutoscalingPolicyServiceStub(
       background->cq(), options);
   return std::make_shared<
       dataproc_internal::AutoscalingPolicyServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<AutoscalingPolicyServiceConnection>
+MakeAutoscalingPolicyServiceConnection(Options options) {
+  return MakeAutoscalingPolicyServiceConnection(std::string{},
+                                                std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

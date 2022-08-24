@@ -46,23 +46,23 @@ which should give you a taste of the Cloud Dataproc API C++ client library API.
 <!-- inject-endpoint-env-vars-start -->
 
 - `GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "dataproc.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-dataproc.googleapis.com")
   used by `MakeAutoscalingPolicyServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_BATCH_CONTROLLER_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "dataproc.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-dataproc.googleapis.com")
   used by `MakeBatchControllerConnection()`.
 
 - `GOOGLE_CLOUD_CPP_CLUSTER_CONTROLLER_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "dataproc.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-dataproc.googleapis.com")
   used by `MakeClusterControllerConnection()`.
 
 - `GOOGLE_CLOUD_CPP_JOB_CONTROLLER_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "dataproc.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-dataproc.googleapis.com")
   used by `MakeJobControllerConnection()`.
 
 - `GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "dataproc.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-dataproc.googleapis.com")
   used by `MakeWorkflowTemplateServiceConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->

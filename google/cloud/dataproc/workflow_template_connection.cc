@@ -85,19 +85,26 @@ Status WorkflowTemplateServiceConnection::DeleteWorkflowTemplate(
 }
 
 std::shared_ptr<WorkflowTemplateServiceConnection>
-MakeWorkflowTemplateServiceConnection(Options options) {
+MakeWorkflowTemplateServiceConnection(std::string const& location,
+                                      Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  WorkflowTemplateServicePolicyOptionList>(
       options, __func__);
   options = dataproc_internal::WorkflowTemplateServiceDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultWorkflowTemplateServiceStub(
       background->cq(), options);
   return std::make_shared<
       dataproc_internal::WorkflowTemplateServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+}
+
+std::shared_ptr<WorkflowTemplateServiceConnection>
+MakeWorkflowTemplateServiceConnection(Options options) {
+  return MakeWorkflowTemplateServiceConnection(std::string{},
+                                               std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
