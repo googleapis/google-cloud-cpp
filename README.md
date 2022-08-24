@@ -549,7 +549,7 @@ The contents and links of our documentation may change without notice.
 ### Other Interface Points
 
 We think this covers all interface points, if we missed something please
-file a \[GitHub issue\]\[github-issue\].
+file a [GitHub issue][github-issue].
 
 ## Contact us
 
@@ -575,6 +575,7 @@ Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 [gcb-clang-tidy-shield]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/clang-tidy.svg
 [github discussions]: https://github.com/googleapis/google-cloud-cpp/discussions
 [github issues]: https://github.com/googleapis/google-cloud-cpp/issues
+[github-issue]: https://github.com/googleapis/google-cloud-cpp/issues/new/choose
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [kokoro-macos-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel-link.html
 [kokoro-macos-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel.svg

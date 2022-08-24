@@ -55,7 +55,7 @@ If you are running the benchmarks in a virtual machine, the library can
 automatically use the GCE instance service account (when you do **not** set
 `GOOGLE_APPLICATION_CREDENTIALS`). You may need to grant this service account
 permissions to work with Cloud Spanner. Examine the
-\[spanner roles\]\[spanner-roles-link\] to chose a role for this account, the
+[spanner roles][spanner-roles-link] to chose a role for this account, the
 principal used to run these benchmark should have (at least) the permissions
 granted by the `roles/spanner.databaseAdmin` role.
 
@@ -142,3 +142,4 @@ of 15 seconds each:
 
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
 [packaging-doc-link]: /doc/packaging.md
+[spanner-roles-link]: https://cloud.google.com/spanner/docs/iam#roles
