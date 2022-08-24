@@ -61,7 +61,7 @@ class Credentials {
    * mismatch.
    */
   virtual StatusOr<std::vector<std::uint8_t>> SignBlob(
-      std::string const& signing_service_account,
+      absl::optional<std::string> const& signing_service_account,
       std::string const& string_to_sign) const;
 
   /// Return the account's email associated with these credentials, if any.

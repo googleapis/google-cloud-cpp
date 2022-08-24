@@ -225,11 +225,13 @@ ServiceAccountCredentials::AuthorizationHeader() {
 }
 
 StatusOr<std::vector<std::uint8_t>> ServiceAccountCredentials::SignBlob(
-    std::string const& signing_account, std::string const& blob) const {
-  if (signing_account != info_.client_email) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "The current_credentials cannot sign blobs for " + signing_account);
+    absl::optional<std::string> const& signing_account,
+    std::string const& blob) const {
+  if (signing_account.has_value() &&
+      signing_account.value() != info_.client_email) {
+    return Status(StatusCode::kInvalidArgument,
+                  "The current_credentials cannot sign blobs for " +
+                      signing_account.value());
   }
   return internal::SignUsingSha256(blob, info_.private_key);
 }

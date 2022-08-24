@@ -20,7 +20,7 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
-    std::string const&, std::string const&) const {
+    absl::optional<std::string> const&, std::string const&) const {
   return Status(StatusCode::kUnimplemented,
                 "The current credentials cannot sign blobs locally");
 }
