@@ -261,7 +261,7 @@ However, if you are using `testing::MockDataClient` to mock the behavior of
 
 1. Be aware that we have announced our intention to remove classes derived from
    `DataClient` on or around 2023-05. Your tests will break then.
-2. Please consider using `bigtable_mocks::MockDataConnection`. It will greatly
+1. Please consider using `bigtable_mocks::MockDataConnection`. It will greatly
    simplify your tests.
 
 #### How do I update existing `DataClient` code?

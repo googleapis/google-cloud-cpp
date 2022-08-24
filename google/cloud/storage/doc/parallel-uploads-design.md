@@ -317,11 +317,11 @@ The following options were considered as means of addressing this issue:
 
 1. Ignore the situation (if the user specified an `IfGeneration*` option, it
    will yield a failure, otherwise it will create a new version of the object)
-2. Always succeed (if there already is an object of that name - return its
+1. Always succeed (if there already is an object of that name - return its
    metadata)
-3. Use the checksum (perhaps also length and other metadata) to verify if this
+1. Use the checksum (perhaps also length and other metadata) to verify if this
    is the resulting object or some other
-4. Create the object under a different name, add a unique, random tag, store it
+1. Create the object under a different name, add a unique, random tag, store it
    in the persistent state, rewrite the object to its destination name, store
    its generation in the persistent state and remove the extra tag at the end
 
