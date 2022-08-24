@@ -34,8 +34,14 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
     google::cloud::internal::GrpcAuthenticationStrategy& auth,
     Options const& options, int channel_id) {
   auto args = internal::MakeChannelArguments(options);
-  args.SetInt("grpc.channel_id", channel_id);
-  args.SetInt("grpc.use_local_subchannel_pool", 1);
+  // Use a local subchannel pool to avoid contention in gRPC
+  args.SetInt(GRPC_ARG_USE_LOCAL_SUBCHANNEL_POOL, 1);
+  // Use separate sockets for each channel, this is redundant since we also set
+  // `GRPC_ARG_USE_LOCAL_SUBCHANNEL_POOL`.
+  args.SetInt(GRPC_ARG_CHANNEL_ID, channel_id);
+  // Disable queries see b/243676671, this is harmless as we do not use any
+  // load balancer that requires server queries.
+  args.SetInt(GRPC_ARG_DNS_ENABLE_SRV_QUERIES, 0);
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
