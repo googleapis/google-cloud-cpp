@@ -432,17 +432,17 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
 // Verify maximum JSON nesting.
 TEST_F(DataTypeIntegrationTest, JsonMaxNesting) {
   // The default value of the backend spanner_json_max_nesting_level flag.
-  int const k_spanner_json_max_nesting_level = 80;
+  int const spanner_json_max_nesting_level = 80;
 
-  // Nested arrays that exceed `k_spanner_json_max_nesting_level` by one.
+  // Nested arrays that exceed `spanner_json_max_nesting_level` by one.
   std::string bad_json;
-  for (int i = 0; i != k_spanner_json_max_nesting_level + 1; ++i)
+  for (int i = 0; i != spanner_json_max_nesting_level + 1; ++i)
     bad_json.append(1, '[');
   bad_json.append("null");
-  for (int i = 0; i != k_spanner_json_max_nesting_level + 1; ++i)
+  for (int i = 0; i != spanner_json_max_nesting_level + 1; ++i)
     bad_json.append(1, ']');
 
-  // Nested arrays that match `k_spanner_json_max_nesting_level`.
+  // Nested arrays that match `spanner_json_max_nesting_level`.
   std::string good_json = bad_json.substr(1, bad_json.size() - 2);
 
   std::vector<Json> const good_data = {Json(good_json)};
