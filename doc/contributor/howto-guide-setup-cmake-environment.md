@@ -32,11 +32,12 @@ cd google-cloud-cpp
 
 ## Download and bootstrap `vcpkg`
 
-\[vcpkg\] is a package manager for C++ that builds from source and installs any
-binary artifacts in `$HOME`. We recommend using `vcpkg` for local development.
-In these instructions, we will install `vcpkg` descriptions in `$HOME/vcpkg`,
-you can change the `vcpkg` location, just remember to adapt these instructions
-as you go along. Download the `vcpkg` package descriptions using `git`:
+[vcpkg](https://vcpkg.io) is a package manager for C++ that builds
+from source and installs any binary artifacts in `$HOME`. We recommend
+using `vcpkg` for local development.  In these instructions, we will
+install `vcpkg` descriptions in `$HOME/vcpkg`, you can change the
+`vcpkg` location, just remember to adapt these instructions as you go
+along. Download the `vcpkg` package descriptions using `git`:
 
 ```shell
 git -C $HOME clone https://github.com/microsoft/vcpkg

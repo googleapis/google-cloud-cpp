@@ -87,8 +87,9 @@ int main(int argc, char* argv[]) try {
   Bazel project should consult the aforementioned
   [quickstart](quickstart/README.md).
 - Developers wanting to compile the library just to run some of the examples or
-  tests should read \[build and install\](/README.md#build-and-install\] section in
-  the top-level README file.
+  test should consult the
+  [building and installing](/README.md#building-and-installing) section of the
+  top-level README file.
 - Contributors and developers to `google-cloud-cpp` should consult the guide to
   [setup a development workstation][howto-setup-dev-workstation].
 

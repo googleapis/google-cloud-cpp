@@ -577,7 +577,7 @@ The library has been expanded to include the following services ([#8530](https:/
   `Client::GetNativeBucketIamPolicy` and `Client::SetNativeBucketIamPolicy`
   instead. See [#5929] for more details.
 - cleanup(common)!: remove legacy IAM classes ([#8667](https://github.com/googleapis/google-cloud-cpp/pull/8667))
-- cleanup(storage)!: remove deprecated IAM functions (\[#8664\](https://github.com/googleapis/google-cloud-cpp/pull
+- cleanup(storage)!: remove deprecated IAM functions ([#8664](https://github.com/googleapis/google-cloud-cpp/pull/8664))
 - cleanup!: change storage bazel visibility to private by default ([#8583](https://github.com/googleapis/google-cloud-cpp/pull/8583))
 
 **Other Changes**
@@ -1406,7 +1406,7 @@ info see [#7443](https://github.com/googleapis/google-cloud-cpp/issues/7443).
 
 - The `MutationBatcher`'s default setting for max mutations per batch was reduced
   from 100k to 1k. The new value achieves better throughput and avoids errors
-  from exhausting the server. (\[#7095\]\[https://github.com/googleapis/google-cloud-cpp/pull/7095\])
+  from exhausting the server. ([#7095](https://github.com/googleapis/google-cloud-cpp/pull/7095))
 
 ### Storage:
 
