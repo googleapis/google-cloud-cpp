@@ -13,6 +13,7 @@ In this project we use the (more or less) standard
 You create a [fork][fork-link] of [google-cloud-cpp][repo-link]. You can think
 of a "fork" as a full copy of the original repository, including all its history
 and branches. Then [clone][about-clone] that fork into your workstation:
+
 ```console
 git clone git@github.com:YOUR-USER-NAME/google-cloud-cpp.git
 ```
@@ -53,7 +54,7 @@ owners (even project owners have their code reviewed by a peer). To submit your
 change for review you need to create a pull request. Typically you start by:
 
 1. Picking an existing [GitHub bug][mastering-issues] to work on.
-1. Create a new [branch][about-branches] for each feature (or bug fix).
+2. Create a new [branch][about-branches] for each feature (or bug fix).
    ```console
    git checkout main
    git checkout -b my-feature-branch
@@ -61,9 +62,9 @@ change for review you need to create a pull request. Typically you start by:
    # make your changes
    git push
    ```
-1. And then submit a [pull-request][about-pull-requests] to merge your branch
+3. And then submit a [pull-request][about-pull-requests] to merge your branch
    into `googleapis/google-cloud-cpp`.
-1. Your reviewers may ask questions, suggest improvements or alternatives. You
+4. Your reviewers may ask questions, suggest improvements or alternatives. You
    address those by either answering the questions in the review or
    **adding more [commits][about-commits]** to your branch and `git push` -ing
    those commits to your fork.
@@ -135,13 +136,13 @@ ci/cloudbuild/build.sh -t asan-pr
 In general, most of the builds for Linux can be reproduced locally using the
 build name as an argument to `build.sh`.
 
-[workflow-link]: https://guides.github.com/introduction/flow/
-[fork-link]: https://guides.github.com/activities/forking/
-[repo-link]: https://github.com/googleapis/google-cloud-cpp.git
-[mastering-issues]: https://guides.github.com/features/issues/
-[about-clone]: https://help.github.com/articles/cloning-a-repository/
 [about-branches]: https://help.github.com/articles/about-branches/
-[about-pull-requests]: https://help.github.com/articles/about-pull-requests/
+[about-clone]: https://help.github.com/articles/cloning-a-repository/
 [about-commits]: https://help.github.com/desktop/guides/contributing-to-projects/committing-and-reviewing-changes-to-your-project/#about-commits
+[about-pull-requests]: https://help.github.com/articles/about-pull-requests/
 [about-rebase]: https://help.github.com/articles/about-git-rebase/
+[fork-link]: https://guides.github.com/activities/forking/
+[mastering-issues]: https://guides.github.com/features/issues/
+[repo-link]: https://github.com/googleapis/google-cloud-cpp.git
 [syncing-a-fork]: https://help.github.com/articles/syncing-a-fork/
+[workflow-link]: https://guides.github.com/introduction/flow/

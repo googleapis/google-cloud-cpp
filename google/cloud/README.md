@@ -17,20 +17,17 @@ notice. These include `google/cloud/internal/`, and
 
 ## Supported Platforms
 
-* Windows, macOS, Linux
-* C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and
+- Windows, macOS, Linux
+- C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and
   MSVC >= 2017)
-* Environments with or without exceptions
-* Bazel (>= 4.0) and CMake (>= 3.5) builds
+- Environments with or without exceptions
+- Bazel (>= 4.0) and CMake (>= 3.5) builds
 
 ## Documentation
 
-* [Reference doxygen documentation][doxygen-link] for each release of this
+- [Reference doxygen documentation][doxygen-link] for each release of this
   library
-* Detailed header comments in our [public `.h`][source-link] files
-
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-common/latest/
-[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud
+- Detailed header comments in our [public `.h`][source-link] files
 
 ## Contributing changes
 
@@ -41,3 +38,6 @@ as well as how to properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
+
+[doxygen-link]: https://googleapis.dev/cpp/google-cloud-common/latest/
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud

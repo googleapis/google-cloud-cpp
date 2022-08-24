@@ -164,8 +164,5 @@ gcloud run services delete index-build-logs-test \
     --platform="managed"
 ```
 
-
 [docker]: https://docker.com/
-[docker-install]: https://store.docker.com/search?type=edition&offering=community
-[sudoless docker]: https://docs.docker.com/engine/install/linux-postinstall/
 [pack-install]: https://buildpacks.io/docs/install-pack/

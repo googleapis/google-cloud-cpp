@@ -61,14 +61,13 @@ index cdaa0bc9f..b0381d72d 100755
      printf ",%s" \
        "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc" \
 ```
+
 </details>
 
 ## Update the Generator Configuration
 
 Determine the retryable status codes by looking in the service config JSON. For
 example, [here][retryable-status-codes].
-
-[retryable-status-codes]: https://github.com/googleapis/googleapis/blob/0fea253787a4f2769b97b0ed3a8f5b28ef17ffa7/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80
 
 Manually edit `generator/generator_config.textproto` and add the new service.
 
@@ -93,6 +92,7 @@ index ab033dde9..3753287d8 100644
 +}
 +
 ```
+
 </details>
 
 ## Commit these changes
@@ -179,6 +179,7 @@ index e43d85b64..1c35cf61d 100644
      "dataplex",
      "dialogflow_cx",
 ```
+
 </details>
 
 ## Update the quickstart
@@ -247,6 +248,7 @@ index c4ce00489..1858b48dc 100755
    ./include/google/cloud/spanner/internal
    ./include/google/cloud/spanner/mocks
 ```
+
 </details>
 
 ## Commit these changes
@@ -255,3 +257,5 @@ index c4ce00489..1858b48dc 100755
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
    "google/cloud/${library}" BUILD.bazel CHANGELOG.md ci
 ```
+
+[retryable-status-codes]: https://github.com/googleapis/googleapis/blob/0fea253787a4f2769b97b0ed3a8f5b28ef17ffa7/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80

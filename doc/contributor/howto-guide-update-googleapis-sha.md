@@ -43,7 +43,7 @@ git commit -m"chore: update googleapis SHA circa $(date +%Y-%m-%d)" bazel cmake
 
 ```shell
 ci/cloudbuild/build.sh -t generate-libraries-pr
- ```
+```
 
 ## Stage these changes
 

@@ -5,20 +5,18 @@ library in your own project. These instructions assume that you have some
 experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
-* Packaging maintainers or developers who prefer to install the library in a
+- Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
-* Developers wanting to use the libraries as part of a larger CMake or Bazel
+- Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the current document. Note that there are similar
   documents for each library in their corresponding directories.
-* Developers wanting to compile the library just to run some of the examples or
+- Developers wanting to compile the library just to run some of the examples or
   tests should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
-* Contributors and developers to `google-cloud-cpp` should consult the guide to
+- Contributors and developers to `google-cloud-cpp` should consult the guide to
   [setup a development workstation][howto-setup-dev-workstation].
-
-[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 
 ## Before you begin
 
@@ -37,13 +35,13 @@ review the [Authentication Overview][authentication-quickstart]. This library
 uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the
 credentials file. For example:
 
-| Shell              | Command                                        |
-| :----------------- | ---------------------------------------------- |
-| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]` |
+| Shell              | Command                                                                              |
+| :----------------- | ------------------------------------------------------------------------------------ |
+| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                       |
 | sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];`<br> `export GOOGLE_APPLICATION_CREDENTIALS` |
-| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]` |
-| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`   |
-| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`    |
+| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]`                                       |
+| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                         |
+| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                          |
 
 Setting this environment variable is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
@@ -78,8 +76,6 @@ https://cloud.google.com/docs/authentication/production
    keep in mind the [bucket naming restrictions][bucket-naming-link]. For
    example, bucket names cannot include forward slashes (`/`) or uppercase
    letters.
-
-[bucket-naming-link]: https://cloud.google.com/storage/docs/naming-buckets
 
 ## Using with CMake
 
@@ -160,13 +156,13 @@ Run the example, change the placeholder to appropriate values:
 
 ```bash
 bazel run :quickstart_grpc -- [BUCKET NAME]
- ```
+```
 
 ## Platform Specific Notes
 
 ### macOS
 
-gRPC [requires][grpc-roots-pem-bug] an environment variable to configure the
+gRPC \[requires\]\[grpc-roots-pem-bug\] an environment variable to configure the
 trust store for SSL certificates, you can download and configure this using:
 
 ```bash
@@ -174,7 +170,7 @@ curl -Lo roots.pem https://pki.google.com/roots.pem
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
 ```
 
-To workaround a [bug in Bazel][bazel-grpc-macos-bug], gRPC requires this flag on
+To workaround a \[bug in Bazel\]\[bazel-grpc-macos-bug\], gRPC requires this flag on
 macOS builds, you can add the option manually or include it in your `.bazelrc`
 file:
 
@@ -196,7 +192,7 @@ to use it via:
 bazel --output_user_root=c:\b build ...
 ```
 
-gRPC [requires][grpc-roots-pem-bug] an environment variable to configure the
+gRPC \[requires\]\[grpc-roots-pem-bug\] an environment variable to configure the
 trust store for SSL certificates, you can download and configure this using:
 
 ```console
@@ -206,8 +202,9 @@ trust store for SSL certificates, you can download and configure this using:
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
+[bucket-naming-link]: https://cloud.google.com/storage/docs/naming-buckets
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
-[cmake-download-link]: https://cmake.org/download/
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md

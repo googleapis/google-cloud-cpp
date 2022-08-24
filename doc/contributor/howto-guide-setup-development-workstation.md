@@ -5,29 +5,26 @@ This will walk you through the steps necessary to setup your development
 workstation to compile the code, run the unit and integration tests, and send
 contributions to the project.
 
-* Packaging maintainers or developers who prefer to install the library in a
+- Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
-* Developers wanting to use the libraries as part of a larger CMake or Bazel
+- Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the [quickstart guides](/README.md#quickstart) for the
   library or libraries they want to use.
-* Developers wanting to compile the library just to run some of the examples or
+- Developers wanting to compile the library just to run some of the examples or
   tests should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
-* Contributors and developers **to** `google-cloud-cpp`, this is the right
+- Contributors and developers **to** `google-cloud-cpp`, this is the right
   document
 
 ## Table of Contents
 
-* [Linux](#linux)
-* [Windows](#windows)
-* [macOS](#macos)
-* [Appendix: Linux VM on Google Compute Engine][appending-linux]
-* [Appendix: Windows VM on Google Compute Engine][appending-windows]
-
-[appending-linux]: #appendix-linux-vm-on-google-compute-engine
-[appending-windows]: #appendix-windows-vm-on-google-compute-engine
+- [Linux](#linux)
+- [Windows](#windows)
+- [macOS](#macos)
+- [Appendix: Linux VM on Google Compute Engine][appending-linux]
+- [Appendix: Windows VM on Google Compute Engine][appending-windows]
 
 ## Linux
 
@@ -211,6 +208,7 @@ in a `cmd.exe` shell, running as the `Administrator`:
 ```
 
 Then you can install the dependencies in the same shell:
+
 ```console
 choco install -y visualstudio2019community visualstudio2019-workload-nativedesktop visualstudio2019buildtools
 choco install -y git cmake ninja bazelisk
@@ -267,8 +265,6 @@ Windows, but they quickly get out of date.
 > :warning: This is a work in progress. These instructions might be incomplete
 > because we don't know how to create a "fresh" macOS install to verify we did
 > not miss a step.
-
-[homebrew]: https://brew.sh/
 
 To build on macOS you will need the command-line development tools, and some
 packages from [homebrew]. Start by installing the command-line development
@@ -444,3 +440,7 @@ Save that password in some kind of password manager.  Then connect to the VM
 using your favorite RDP client.  The Google Cloud Compute Engine
 [documentation](https://cloud.google.com/compute/docs/quickstart-windows)
 suggests some third-party clients that may be useful.
+
+[appending-linux]: #appendix-linux-vm-on-google-compute-engine
+[appending-windows]: #appendix-windows-vm-on-google-compute-engine
+[homebrew]: https://brew.sh/

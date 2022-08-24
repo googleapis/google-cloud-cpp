@@ -31,13 +31,12 @@ release/changes.sh
 to output a summary of the potentially interesting changes since the previous
 release. You paste the output into the relevant section in the `CHANGELOG.md`
 file, and manually tweak as needed.
+
 - A change in an existing library warrants its own library section.
 - Library sections should be listed in alphabetical order (Update `sections` in `release/changes.sh`).
 - Do not list changes for libraries under development.
 - Do not list changes for internal components.
 - A change that affects all libraries should only be documented in the `Common Libraries` section.
-
-[`CHANGELOG.md`]: /CHANGELOG.md
 
 ### Send a PR with all these changes
 
@@ -52,8 +51,6 @@ judgment.
 We next need to create the release tag, the release branch, and create the
 release in the GitHub UI. We use a script ([`release/release.sh`]) to automate
 said steps.
-
-[`release/release.sh`]: https://github.com/googleapis/google-cloud-cpp/blob/main/release/release.sh
 
 *No PR is needed for this step.*
 
@@ -86,13 +83,13 @@ The `publish-docs` build should start automatically when you create the release
 branch. This build will upload the docs for the new release to the following
 URLs:
 
-* https://googleapis.dev/cpp/google-cloud-bigquery/latest/
-* https://googleapis.dev/cpp/google-cloud-bigtable/latest/
-* https://googleapis.dev/cpp/google-cloud-iam/latest/
-* https://googleapis.dev/cpp/google-cloud-pubsub/latest/
-* https://googleapis.dev/cpp/google-cloud-spanner/latest/
-* https://googleapis.dev/cpp/google-cloud-storage/latest/
-* https://googleapis.dev/cpp/google-cloud-common/latest/
+- https://googleapis.dev/cpp/google-cloud-bigquery/latest/
+- https://googleapis.dev/cpp/google-cloud-bigtable/latest/
+- https://googleapis.dev/cpp/google-cloud-iam/latest/
+- https://googleapis.dev/cpp/google-cloud-pubsub/latest/
+- https://googleapis.dev/cpp/google-cloud-spanner/latest/
+- https://googleapis.dev/cpp/google-cloud-storage/latest/
+- https://googleapis.dev/cpp/google-cloud-common/latest/
 
 It can take up to an hour after the build finishes for the new docs to show up
 at the above URLs. You can watch the status of the build at
@@ -122,26 +119,24 @@ release branch naming conventions may require you to change these settings.
 Please note that we use more strict settings for release branches than for
 `main`, in particular:
 
-* We require at least one review, but stale reviews are dismissed.
-* The `Require status checks to pass before merging` option is set.
+- We require at least one review, but stale reviews are dismissed.
+
+- The `Require status checks to pass before merging` option is set.
   This prevents merges into the release branches that break the build.
-  * The `Require branches to be up to date before merging` sub-option
+
+  - The `Require branches to be up to date before merging` sub-option
     is set. This prevents two merges that do not conflict, but nevertheless
     break if both are pushed, to actually merge.
-  * _At a minimum_ the `cla/google`, `asan-pr`, and `clang-tidy-pr` checks should
+  - _At a minimum_ the `cla/google`, `asan-pr`, and `clang-tidy-pr` checks should
     be marked as "required". You may consider adding additional builds if it
     would prevent embarrassing failures, but consider the tradeoff of merges
     blocked by flaky builds.
 
-* The `Include administrators` checkbox is turned on, we want to stop ourselves
+- The `Include administrators` checkbox is turned on, we want to stop ourselves
   from making mistakes.
 
-* Turn on the `Restrict who can push to matching branches`. Only Google team
+- Turn on the `Restrict who can push to matching branches`. Only Google team
   members should be pushing to release branches.
-
-[git-docs]: https://git-scm.com/doc
-[github-guides]: https://guides.github.com/
-[github-branch-settings]: https://github.com/googleapis/google-cloud-cpp/settings/branches
 
 ## Push the release to Microsoft vcpkg
 
@@ -153,20 +148,26 @@ take several weeks.
 # Creating a patch release of google-cloud-cpp on an existing release branch
 
 In your development fork:
-* Switch to the existing release branch, e.g. `git checkout v1.17.x`.
-* Bump the version numbers for the patch release
-  * Create a new branch off the release branch
-  * Update the minor version in the top-level `CMakeLists.txt` file.
-  * Run `ci/cloudbuild/build.sh -t check-api-pr` to update both the API
-    baselines and `google/cloud/internal/version_info.h`.
-  * **Send this PR for review and merge it before continuing**
-* Create a new branch off the release branch, which now contains the new patch
-  version and baseline ABI dumps.
-* Create or cherry-pick commits with the desired changes.
-* Update `CHANGELOG.md` to reflect the changes made.
-* After merging the PR(s) with all the above changes, use the Release UI on
-  GitHub to create a pre-release along with a new tag for the release.
-* After review, publish the release.
-* Nudge `coryan@` to update our [vcpkg port].
 
+- Switch to the existing release branch, e.g. `git checkout v1.17.x`.
+- Bump the version numbers for the patch release
+  - Create a new branch off the release branch
+  - Update the minor version in the top-level `CMakeLists.txt` file.
+  - Run `ci/cloudbuild/build.sh -t check-api-pr` to update both the API
+    baselines and `google/cloud/internal/version_info.h`.
+  - **Send this PR for review and merge it before continuing**
+- Create a new branch off the release branch, which now contains the new patch
+  version and baseline ABI dumps.
+- Create or cherry-pick commits with the desired changes.
+- Update `CHANGELOG.md` to reflect the changes made.
+- After merging the PR(s) with all the above changes, use the Release UI on
+  GitHub to create a pre-release along with a new tag for the release.
+- After review, publish the release.
+- Nudge `coryan@` to update our [vcpkg port].
+
+[git-docs]: https://git-scm.com/doc
+[github-branch-settings]: https://github.com/googleapis/google-cloud-cpp/settings/branches
+[github-guides]: https://guides.github.com/
 [vcpkg port]: https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp
+[`changelog.md`]: /CHANGELOG.md
+[`release/release.sh`]: https://github.com/googleapis/google-cloud-cpp/blob/main/release/release.sh
