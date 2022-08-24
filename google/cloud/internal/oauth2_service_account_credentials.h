@@ -228,7 +228,7 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
    *     does not match the email for the credential's account.
    */
   StatusOr<std::vector<std::uint8_t>> SignBlob(
-      std::string const& signing_account,
+      absl::optional<std::string> const& signing_account,
       std::string const& blob) const override;
 
   std::string AccountEmail() const override { return info_.client_email; }
