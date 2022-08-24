@@ -5,20 +5,18 @@ client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
-* Packaging maintainers or developers who prefer to install the library in a
+- Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
-* Developers wanting to use the libraries as part of a larger CMake or Bazel
+- Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the current document. Note that there are similar
   documents for each library in their corresponding directories.
-* Developers wanting to compile the library just to run some of the examples or
+- Developers wanting to compile the library just to run some of the examples or
   tests should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
-* Contributors and developers to `google-cloud-cpp` should consult the guide to
+- Contributors and developers to `google-cloud-cpp` should consult the guide to
   [setup a development workstation][howto-setup-dev-workstation].
-
-[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 
 ## Before you begin
 
@@ -35,13 +33,13 @@ review the [Authentication Overview][authentication-quickstart]. This library
 uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the
 credentials file. For example:
 
-| Shell              | Command                                        |
-| :----------------- | ---------------------------------------------- |
-| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]` |
+| Shell              | Command                                                                              |
+| :----------------- | ------------------------------------------------------------------------------------ |
+| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                       |
 | sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];`<br> `export GOOGLE_APPLICATION_CREDENTIALS` |
-| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]` |
-| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`   |
-| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`    |
+| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]`                                       |
+| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                         |
+| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                          |
 
 Setting this environment variable is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
@@ -156,11 +154,11 @@ trust store for SSL certificates, you can download and configure this using:
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
-[bazel-install]: https://docs.bazel.build/versions/main/install.html
-[quickstart-link]: https://cloud.google.com/scheduler/docs/quickstart
-[grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
-[choco-cmake-link]: https://chocolatey.org/packages/cmake
-[homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
-[cmake-download-link]: https://cmake.org/download/
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
 [bazel-grpc-macos-bug]: https://github.com/bazelbuild/bazel/issues/4341
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[bazel-install]: https://docs.bazel.build/versions/main/install.html
+[choco-cmake-link]: https://chocolatey.org/packages/cmake
+[grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
+[homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
+[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
+[quickstart-link]: https://cloud.google.com/scheduler/docs/quickstart

@@ -25,6 +25,5 @@ _Retry the token refresh but only use remaining time:_ in this approach we would
 refresh, using the existing retry strategy (and consuming its "time" or "error count"). This is feasible, but requires
 changing *all* stubs and decorators to consume a retry policy.
 
-[IAM service account credentials]: https://cloud.google.com/iam/docs/reference/credentials/rest
-
-[self-signed JWT]: https://google.aip.dev/auth/4111
+[iam service account credentials]: https://cloud.google.com/iam/docs/reference/credentials/rest
+[self-signed jwt]: https://google.aip.dev/auth/4111

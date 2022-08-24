@@ -58,8 +58,6 @@ top-level [README](/README.md) if necessary.
 Pub/Sub, generating hundreds of dollars in charges may take only a few minutes.
 Please consult the [pricing guide][pubsub-pricing].
 
-[pubsub-pricing]: https://cloud.google.com/pubsub/pricing
-
 In this example we assume that `GOOGLE_CLOUD_PROJECT` is an environment variable
 set to the GCP project you want to use. We also assume you have compiled the
 code and it is located in `$BINARY_DIR`.
@@ -89,8 +87,6 @@ ENDPOINT=us-central1-pubsub.googleapis.com  # example, change as needed
 Then start the publisher, note that these settings far exceed the
 [default quota][pubsub-quota] for a topic (which was 200MB/s when we wrote this
 document):
-
-[pubsub-quota]: https://cloud.google.com/pubsub/quotas#quotas
 
 ```sh
 /usr/bin/time ${BINARY_DIR}/google/cloud/pubsub/benchmarks/throughput \
@@ -152,3 +148,6 @@ The test proceeds as follows:
   The subscription associated with this subscriber is selected at random.
 
 After running for T seconds or capturing N samples the test stops.
+
+[pubsub-pricing]: https://cloud.google.com/pubsub/pricing
+[pubsub-quota]: https://cloud.google.com/pubsub/quotas#quotas

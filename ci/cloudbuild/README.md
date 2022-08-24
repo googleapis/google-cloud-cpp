@@ -41,7 +41,7 @@ adds the `cxx17-pr` and `cxx17-ci` builds. The steps to add a new build are:
    PR](https://github.com/googleapis/google-cloud-cpp/pull/6259) that adds a
    build with its own Dockerfile.
 2. Create the new build script in `builds/` that runs the commands you want.
-   * You can test this script right away with `build.sh` by explicitly
+   - You can test this script right away with `build.sh` by explicitly
      specifying the `--distro` you want your build to run in.  For example:
    ```
    $ build.sh --distro fedora my-new-build # or ...
@@ -90,16 +90,16 @@ ubsan, etc. The full matrix of all combinations is infeasible to test
 completely, so we follow the following principles to minimize the test space
 while achieving high likelihood of the code working for our customers.
 
-* For simple dimensions (e.g. things that are "on/off") we want at least one
+- For simple dimensions (e.g. things that are "on/off") we want at least one
   build for each 'value' of the setting.
-* On dimensions with versions, we want to test something _old_ and something
+- On dimensions with versions, we want to test something _old_ and something
   _new_ (specific versions will change over time)
-* Integration tests should prefer running against an emulator in _most_ cases
-* Integration tests should hit production (i.e., no emulator) somewhere, though
+- Integration tests should prefer running against an emulator in _most_ cases
+- Integration tests should hit production (i.e., no emulator) somewhere, though
   we need to be careful of quotas
-* Code coverage builds need to run integration tests
-* Sanitizer builds need to run integration tests
-* We want to test our user-facing instructions (i.e., how to install and use)
+- Code coverage builds need to run integration tests
+- Sanitizer builds need to run integration tests
+- We want to test our user-facing instructions (i.e., how to install and use)
   as much as possible (this is difficult on macOS and Windows without docker)
 
 ## GCB Worker Pool

@@ -10,23 +10,18 @@ While this library is **GA**, please note that the Google Cloud C++ client libra
 
 ## Supported Platforms
 
-* Windows, macOS, Linux
-* C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and
+- Windows, macOS, Linux
+- C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and
   MSVC >= 2017)
-* Environments with or without exceptions
-* Bazel (>= 4.0) and CMake (>= 3.5) builds
+- Environments with or without exceptions
+- Bazel (>= 4.0) and CMake (>= 3.5) builds
 
 ## Documentation
 
-* Official documentation about the [Cloud Video Intelligence API][cloud-service-docs] service
-* [Reference doxygen documentation][doxygen-link] for each release of this
+- Official documentation about the [Cloud Video Intelligence API][cloud-service-docs] service
+- [Reference doxygen documentation][doxygen-link] for each release of this
   client library
-* Detailed header comments in our [public `.h`][source-link] files
-
-[cloud-service]: https://cloud.google.com/video-intelligence
-[cloud-service-docs]: https://cloud.google.com/video-intelligence/docs
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-videointelligence/latest/
-[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/videointelligence
+- Detailed header comments in our [public `.h`][source-link] files
 
 ## Quickstart
 
@@ -36,6 +31,7 @@ to get started using this client library in a larger project. The following
 this library.
 
 <!-- inject-quickstart-start -->
+
 ```cc
 #include "google/cloud/videointelligence/video_intelligence_client.h"
 #include <google/protobuf/util/time_util.h>
@@ -95,20 +91,19 @@ int main(int argc, char* argv[]) try {
   return 1;
 }
 ```
+
 <!-- inject-quickstart-end -->
 
-* Packaging maintainers or developers who prefer to install the library in a
+- Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
-* Developers wanting to use the libraries as part of a larger CMake or Bazel
+- Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the [quickstart guides](#quickstart) for the library
   or libraries they want to use.
-* Developers wanting to compile the library just to run some of the examples or
+- Developers wanting to compile the library just to run some of the examples or
   tests should read the current document.
-* Contributors and developers to `google-cloud-cpp` should consult the guide to
+- Contributors and developers to `google-cloud-cpp` should consult the guide to
   [setup a development workstation][howto-setup-dev-workstation].
-
-[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 
 ## Contributing changes
 
@@ -119,3 +114,9 @@ as well as how to properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
+
+[cloud-service]: https://cloud.google.com/video-intelligence
+[cloud-service-docs]: https://cloud.google.com/video-intelligence/docs
+[doxygen-link]: https://googleapis.dev/cpp/google-cloud-videointelligence/latest/
+[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/videointelligence

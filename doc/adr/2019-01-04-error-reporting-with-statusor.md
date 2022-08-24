@@ -31,6 +31,6 @@ no immediate plans to change the API for Cloud Bigtable. We will communicate a
 timeline to change this API in a separate document.
 
 [badbit-link]: https://en.cppreference.com/w/cpp/io/ios_base/iostate
-[gcs-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage
 [bigtable-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/bigtable
+[gcs-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage
 [survey-link]: https://isocpp.org/blog/2018/03/results-summary-cpp-foundation-developer-survey-lite-2018-02

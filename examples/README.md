@@ -54,7 +54,6 @@ GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL="$(gcloud run services describe \
     --format='value(status.url)')"
 ```
 
-
 ## Configuring Hello World (HTTP) Service
 
 The `grpc_credential_types` example uses IAM to obtain an *Identity Token*, and
