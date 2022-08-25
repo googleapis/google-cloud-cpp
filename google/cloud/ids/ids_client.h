@@ -92,12 +92,12 @@ class IDSClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L81}
   ///
   /// [google.cloud.ids.v1.ListEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L159}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L158}
   /// [google.cloud.ids.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
   ///
   StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
       std::string const& parent, Options opts = {});
@@ -106,16 +106,16 @@ class IDSClient {
   /// Lists Endpoints in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::ids::v1::ListEndpointsRequest,google/cloud/ids/v1/ids.proto#L159}
+  /// @googleapis_link{google::cloud::ids::v1::ListEndpointsRequest,google/cloud/ids/v1/ids.proto#L158}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L81}
   ///
   /// [google.cloud.ids.v1.ListEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L159}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L158}
   /// [google.cloud.ids.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
   ///
   StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
       google::cloud::ids::v1::ListEndpointsRequest request, Options opts = {});
@@ -128,12 +128,12 @@ class IDSClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L81}
   ///
   /// [google.cloud.ids.v1.GetEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L200}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L199}
   /// [google.cloud.ids.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
   ///
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
       std::string const& name, Options opts = {});
@@ -142,16 +142,16 @@ class IDSClient {
   /// Gets details of a single Endpoint.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::ids::v1::GetEndpointRequest,google/cloud/ids/v1/ids.proto#L200}
+  /// @googleapis_link{google::cloud::ids::v1::GetEndpointRequest,google/cloud/ids/v1/ids.proto#L199}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L81}
   ///
   /// [google.cloud.ids.v1.GetEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L200}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L199}
   /// [google.cloud.ids.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
   ///
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
       google::cloud::ids::v1::GetEndpointRequest const& request,
@@ -172,12 +172,12 @@ class IDSClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L81}
   ///
   /// [google.cloud.ids.v1.CreateEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L211}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L210}
   /// [google.cloud.ids.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
   ///
   future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
       std::string const& parent,
@@ -188,16 +188,16 @@ class IDSClient {
   /// Creates a new Endpoint in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::ids::v1::CreateEndpointRequest,google/cloud/ids/v1/ids.proto#L211}
+  /// @googleapis_link{google::cloud::ids::v1::CreateEndpointRequest,google/cloud/ids/v1/ids.proto#L210}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L81}
   ///
   /// [google.cloud.ids.v1.CreateEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L211}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L210}
   /// [google.cloud.ids.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L82}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
   ///
   future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
       google::cloud::ids::v1::CreateEndpointRequest const& request,
@@ -210,12 +210,12 @@ class IDSClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::ids::v1::OperationMetadata,google/cloud/ids/v1/ids.proto#L273}
+  /// @googleapis_link{google::cloud::ids::v1::OperationMetadata,google/cloud/ids/v1/ids.proto#L272}
   ///
   /// [google.cloud.ids.v1.DeleteEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L247}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L246}
   /// [google.cloud.ids.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L273}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L272}
   ///
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
       std::string const& name, Options opts = {});
@@ -224,16 +224,16 @@ class IDSClient {
   /// Deletes a single Endpoint.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::ids::v1::DeleteEndpointRequest,google/cloud/ids/v1/ids.proto#L247}
+  /// @googleapis_link{google::cloud::ids::v1::DeleteEndpointRequest,google/cloud/ids/v1/ids.proto#L246}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::ids::v1::OperationMetadata,google/cloud/ids/v1/ids.proto#L273}
+  /// @googleapis_link{google::cloud::ids::v1::OperationMetadata,google/cloud/ids/v1/ids.proto#L272}
   ///
   /// [google.cloud.ids.v1.DeleteEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L247}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L246}
   /// [google.cloud.ids.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L273}
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L272}
   ///
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
       google::cloud::ids::v1::DeleteEndpointRequest const& request,

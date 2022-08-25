@@ -102,7 +102,7 @@ class VpcAccessServiceClient {
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
   /// [google.cloud.vpcaccess.v1.CreateConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L154}
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L163}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -115,14 +115,14 @@ class VpcAccessServiceClient {
   /// Creates a Serverless VPC Access connector, returns an operation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vpcaccess::v1::CreateConnectorRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L154}
+  /// @googleapis_link{google::cloud::vpcaccess::v1::CreateConnectorRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L163}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
   /// [google.cloud.vpcaccess.v1.CreateConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L154}
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L163}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -141,7 +141,7 @@ class VpcAccessServiceClient {
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
   /// [google.cloud.vpcaccess.v1.GetConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L172}
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L181}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -153,14 +153,14 @@ class VpcAccessServiceClient {
   /// does not exist.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vpcaccess::v1::GetConnectorRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L172}
+  /// @googleapis_link{google::cloud::vpcaccess::v1::GetConnectorRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L181}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
   /// [google.cloud.vpcaccess.v1.GetConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L172}
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L181}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -179,7 +179,7 @@ class VpcAccessServiceClient {
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
   /// [google.cloud.vpcaccess.v1.ListConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L183}
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L192}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -190,14 +190,14 @@ class VpcAccessServiceClient {
   /// Lists Serverless VPC Access connectors.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vpcaccess::v1::ListConnectorsRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L183}
+  /// @googleapis_link{google::cloud::vpcaccess::v1::ListConnectorsRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L192}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
   /// [google.cloud.vpcaccess.v1.ListConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L183}
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L192}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -214,12 +214,12 @@ class VpcAccessServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vpcaccess::v1::OperationMetadata,google/cloud/vpcaccess/v1/vpc_access.proto#L220}
+  /// @googleapis_link{google::cloud::vpcaccess::v1::OperationMetadata,google/cloud/vpcaccess/v1/vpc_access.proto#L229}
   ///
   /// [google.cloud.vpcaccess.v1.DeleteConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L209}
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L218}
   /// [google.cloud.vpcaccess.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L220}
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L229}
   ///
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
   DeleteConnector(std::string const& name, Options opts = {});
@@ -229,16 +229,16 @@ class VpcAccessServiceClient {
   /// resource does not exist.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vpcaccess::v1::DeleteConnectorRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L209}
+  /// @googleapis_link{google::cloud::vpcaccess::v1::DeleteConnectorRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L218}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vpcaccess::v1::OperationMetadata,google/cloud/vpcaccess/v1/vpc_access.proto#L220}
+  /// @googleapis_link{google::cloud::vpcaccess::v1::OperationMetadata,google/cloud/vpcaccess/v1/vpc_access.proto#L229}
   ///
   /// [google.cloud.vpcaccess.v1.DeleteConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L209}
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L218}
   /// [google.cloud.vpcaccess.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L220}
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L229}
   ///
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
   DeleteConnector(

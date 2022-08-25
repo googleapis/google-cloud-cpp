@@ -56,6 +56,41 @@ class CatalogServiceLogging : public CatalogServiceStub {
                    google::cloud::retail::v2::GetDefaultBranchRequest const&
                        request) override;
 
+  StatusOr<google::cloud::retail::v2::CompletionConfig> GetCompletionConfig(
+      grpc::ClientContext& context,
+      google::cloud::retail::v2::GetCompletionConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::retail::v2::CompletionConfig> UpdateCompletionConfig(
+      grpc::ClientContext& context,
+      google::cloud::retail::v2::UpdateCompletionConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::retail::v2::AttributesConfig> GetAttributesConfig(
+      grpc::ClientContext& context,
+      google::cloud::retail::v2::GetAttributesConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::retail::v2::AttributesConfig> UpdateAttributesConfig(
+      grpc::ClientContext& context,
+      google::cloud::retail::v2::UpdateAttributesConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::retail::v2::AttributesConfig> AddCatalogAttribute(
+      grpc::ClientContext& context,
+      google::cloud::retail::v2::AddCatalogAttributeRequest const& request)
+      override;
+
+  StatusOr<google::cloud::retail::v2::AttributesConfig> RemoveCatalogAttribute(
+      grpc::ClientContext& context,
+      google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request)
+      override;
+
+  StatusOr<google::cloud::retail::v2::AttributesConfig> ReplaceCatalogAttribute(
+      grpc::ClientContext& context,
+      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request)
+      override;
+
  private:
   std::shared_ptr<CatalogServiceStub> child_;
   TracingOptions tracing_options_;

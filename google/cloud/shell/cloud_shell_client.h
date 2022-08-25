@@ -101,12 +101,12 @@ class CloudShellServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::shell::v1::Environment,google/cloud/shell/v1/cloudshell.proto#L117}
+  /// @googleapis_link{google::cloud::shell::v1::Environment,google/cloud/shell/v1/cloudshell.proto#L116}
   ///
   /// [google.cloud.shell.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L192}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L191}
   /// [google.cloud.shell.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L117}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L116}
   ///
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       std::string const& name, Options opts = {});
@@ -115,16 +115,16 @@ class CloudShellServiceClient {
   /// Gets an environment. Returns NOT_FOUND if the environment does not exist.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::shell::v1::GetEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L192}
+  /// @googleapis_link{google::cloud::shell::v1::GetEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L191}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::shell::v1::Environment,google/cloud/shell/v1/cloudshell.proto#L117}
+  /// @googleapis_link{google::cloud::shell::v1::Environment,google/cloud/shell/v1/cloudshell.proto#L116}
   ///
   /// [google.cloud.shell.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L192}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L191}
   /// [google.cloud.shell.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L117}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L116}
   ///
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       google::cloud::shell::v1::GetEnvironmentRequest const& request,
@@ -139,16 +139,16 @@ class CloudShellServiceClient {
   /// StartEnvironmentResponse in its response field.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::shell::v1::StartEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L217}
+  /// @googleapis_link{google::cloud::shell::v1::StartEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L216}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::shell::v1::StartEnvironmentResponse,google/cloud/shell/v1/cloudshell.proto#L304}
+  /// @googleapis_link{google::cloud::shell::v1::StartEnvironmentResponse,google/cloud/shell/v1/cloudshell.proto#L303}
   ///
   /// [google.cloud.shell.v1.StartEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L217}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L216}
   /// [google.cloud.shell.v1.StartEnvironmentResponse]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L304}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L303}
   ///
   future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
   StartEnvironment(
@@ -162,16 +162,16 @@ class CloudShellServiceClient {
   /// authenticate.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::shell::v1::AuthorizeEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L235}
+  /// @googleapis_link{google::cloud::shell::v1::AuthorizeEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L234}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::shell::v1::AuthorizeEnvironmentResponse,google/cloud/shell/v1/cloudshell.proto#L254}
+  /// @googleapis_link{google::cloud::shell::v1::AuthorizeEnvironmentResponse,google/cloud/shell/v1/cloudshell.proto#L253}
   ///
   /// [google.cloud.shell.v1.AuthorizeEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L235}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L234}
   /// [google.cloud.shell.v1.AuthorizeEnvironmentResponse]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L254}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L253}
   ///
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
   AuthorizeEnvironment(
@@ -184,16 +184,16 @@ class CloudShellServiceClient {
   /// with the same content already exists, this will error with ALREADY_EXISTS.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::shell::v1::AddPublicKeyRequest,google/cloud/shell/v1/cloudshell.proto#L311}
+  /// @googleapis_link{google::cloud::shell::v1::AddPublicKeyRequest,google/cloud/shell/v1/cloudshell.proto#L310}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::shell::v1::AddPublicKeyResponse,google/cloud/shell/v1/cloudshell.proto#L327}
+  /// @googleapis_link{google::cloud::shell::v1::AddPublicKeyResponse,google/cloud/shell/v1/cloudshell.proto#L326}
   ///
   /// [google.cloud.shell.v1.AddPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L311}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L310}
   /// [google.cloud.shell.v1.AddPublicKeyResponse]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L327}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L326}
   ///
   future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
       google::cloud::shell::v1::AddPublicKeyRequest const& request,
@@ -206,16 +206,16 @@ class CloudShellServiceClient {
   /// NOT_FOUND.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::shell::v1::RemovePublicKeyRequest,google/cloud/shell/v1/cloudshell.proto#L340}
+  /// @googleapis_link{google::cloud::shell::v1::RemovePublicKeyRequest,google/cloud/shell/v1/cloudshell.proto#L339}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::shell::v1::RemovePublicKeyResponse,google/cloud/shell/v1/cloudshell.proto#L351}
+  /// @googleapis_link{google::cloud::shell::v1::RemovePublicKeyResponse,google/cloud/shell/v1/cloudshell.proto#L350}
   ///
   /// [google.cloud.shell.v1.RemovePublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L340}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L339}
   /// [google.cloud.shell.v1.RemovePublicKeyResponse]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L351}
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L350}
   ///
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
   RemovePublicKey(

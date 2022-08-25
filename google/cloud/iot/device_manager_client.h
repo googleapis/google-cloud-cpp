@@ -102,7 +102,7 @@ class DeviceManagerClient {
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
   /// [google.cloud.iot.v1.CreateDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L274}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L273}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
   ///
@@ -115,14 +115,14 @@ class DeviceManagerClient {
   /// Creates a device registry that contains devices.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::CreateDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L274}
+  /// @googleapis_link{google::cloud::iot::v1::CreateDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L273}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
   /// [google.cloud.iot.v1.CreateDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L274}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L273}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
   ///
@@ -141,7 +141,7 @@ class DeviceManagerClient {
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
   /// [google.cloud.iot.v1.GetDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L291}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L290}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
   ///
@@ -152,14 +152,14 @@ class DeviceManagerClient {
   /// Gets a device registry configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::GetDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L291}
+  /// @googleapis_link{google::cloud::iot::v1::GetDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L290}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
   /// [google.cloud.iot.v1.GetDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L291}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L290}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
   ///
@@ -186,7 +186,7 @@ class DeviceManagerClient {
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
   /// [google.cloud.iot.v1.UpdateDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L315}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L314}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
   ///
@@ -198,14 +198,14 @@ class DeviceManagerClient {
   /// Updates a device registry configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::UpdateDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L315}
+  /// @googleapis_link{google::cloud::iot::v1::UpdateDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L314}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
   /// [google.cloud.iot.v1.UpdateDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L315}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L314}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
   ///
@@ -222,7 +222,7 @@ class DeviceManagerClient {
   ///     backoff policies.
   ///
   /// [google.cloud.iot.v1.DeleteDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L303}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L302}
   ///
   Status DeleteDeviceRegistry(std::string const& name, Options opts = {});
 
@@ -230,12 +230,12 @@ class DeviceManagerClient {
   /// Deletes a device registry configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::DeleteDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L303}
+  /// @googleapis_link{google::cloud::iot::v1::DeleteDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L302}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.iot.v1.DeleteDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L303}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L302}
   ///
   Status DeleteDeviceRegistry(
       google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request,
@@ -252,7 +252,7 @@ class DeviceManagerClient {
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
   /// [google.cloud.iot.v1.ListDeviceRegistriesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L330}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L329}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
   ///
@@ -263,14 +263,14 @@ class DeviceManagerClient {
   /// Lists device registries.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceRegistriesRequest,google/cloud/iot/v1/device_manager.proto#L330}
+  /// @googleapis_link{google::cloud::iot::v1::ListDeviceRegistriesRequest,google/cloud/iot/v1/device_manager.proto#L329}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
   /// [google.cloud.iot.v1.ListDeviceRegistriesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L330}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L329}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
   ///
@@ -295,7 +295,7 @@ class DeviceManagerClient {
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
   /// [google.cloud.iot.v1.CreateDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L364}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L363}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
   ///
@@ -307,14 +307,14 @@ class DeviceManagerClient {
   /// Creates a device in a device registry.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::CreateDeviceRequest,google/cloud/iot/v1/device_manager.proto#L364}
+  /// @googleapis_link{google::cloud::iot::v1::CreateDeviceRequest,google/cloud/iot/v1/device_manager.proto#L363}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
   /// [google.cloud.iot.v1.CreateDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L364}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L363}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
   ///
@@ -335,7 +335,7 @@ class DeviceManagerClient {
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
   /// [google.cloud.iot.v1.GetDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L382}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L381}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
   ///
@@ -346,14 +346,14 @@ class DeviceManagerClient {
   /// Gets details about a device.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::GetDeviceRequest,google/cloud/iot/v1/device_manager.proto#L382}
+  /// @googleapis_link{google::cloud::iot::v1::GetDeviceRequest,google/cloud/iot/v1/device_manager.proto#L381}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
   /// [google.cloud.iot.v1.GetDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L382}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L381}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
   ///
@@ -380,7 +380,7 @@ class DeviceManagerClient {
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
   /// [google.cloud.iot.v1.UpdateDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L400}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L399}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
   ///
@@ -392,14 +392,14 @@ class DeviceManagerClient {
   /// Updates a device.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::UpdateDeviceRequest,google/cloud/iot/v1/device_manager.proto#L400}
+  /// @googleapis_link{google::cloud::iot::v1::UpdateDeviceRequest,google/cloud/iot/v1/device_manager.proto#L399}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
   /// [google.cloud.iot.v1.UpdateDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L400}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L399}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
   ///
@@ -418,7 +418,7 @@ class DeviceManagerClient {
   ///     backoff policies.
   ///
   /// [google.cloud.iot.v1.DeleteDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L415}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L414}
   ///
   Status DeleteDevice(std::string const& name, Options opts = {});
 
@@ -426,12 +426,12 @@ class DeviceManagerClient {
   /// Deletes a device.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::DeleteDeviceRequest,google/cloud/iot/v1/device_manager.proto#L415}
+  /// @googleapis_link{google::cloud::iot::v1::DeleteDeviceRequest,google/cloud/iot/v1/device_manager.proto#L414}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.iot.v1.DeleteDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L415}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L414}
   ///
   Status DeleteDevice(
       google::cloud::iot::v1::DeleteDeviceRequest const& request,
@@ -448,7 +448,7 @@ class DeviceManagerClient {
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
   /// [google.cloud.iot.v1.ListDevicesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L428}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L427}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
   ///
@@ -459,14 +459,14 @@ class DeviceManagerClient {
   /// List devices in a device registry.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::ListDevicesRequest,google/cloud/iot/v1/device_manager.proto#L428}
+  /// @googleapis_link{google::cloud::iot::v1::ListDevicesRequest,google/cloud/iot/v1/device_manager.proto#L427}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
   /// [google.cloud.iot.v1.ListDevicesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L428}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L427}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
   ///
@@ -489,7 +489,7 @@ class DeviceManagerClient {
   /// @googleapis_link{google::cloud::iot::v1::DeviceConfig,google/cloud/iot/v1/resources.proto#L449}
   ///
   /// [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L502}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L501}
   /// [google.cloud.iot.v1.DeviceConfig]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L449}
   ///
@@ -503,14 +503,14 @@ class DeviceManagerClient {
   /// its metadata.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest,google/cloud/iot/v1/device_manager.proto#L502}
+  /// @googleapis_link{google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest,google/cloud/iot/v1/device_manager.proto#L501}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceConfig,google/cloud/iot/v1/resources.proto#L449}
   ///
   /// [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L502}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L501}
   /// [google.cloud.iot.v1.DeviceConfig]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L449}
   ///
@@ -529,12 +529,12 @@ class DeviceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceConfigVersionsResponse,google/cloud/iot/v1/device_manager.proto#L543}
+  /// @googleapis_link{google::cloud::iot::v1::ListDeviceConfigVersionsResponse,google/cloud/iot/v1/device_manager.proto#L542}
   ///
   /// [google.cloud.iot.v1.ListDeviceConfigVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L525}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L524}
   /// [google.cloud.iot.v1.ListDeviceConfigVersionsResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L543}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L542}
   ///
   StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>
   ListDeviceConfigVersions(std::string const& name, Options opts = {});
@@ -544,16 +544,16 @@ class DeviceManagerClient {
   /// order (i.e.: newest first).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceConfigVersionsRequest,google/cloud/iot/v1/device_manager.proto#L525}
+  /// @googleapis_link{google::cloud::iot::v1::ListDeviceConfigVersionsRequest,google/cloud/iot/v1/device_manager.proto#L524}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceConfigVersionsResponse,google/cloud/iot/v1/device_manager.proto#L543}
+  /// @googleapis_link{google::cloud::iot::v1::ListDeviceConfigVersionsResponse,google/cloud/iot/v1/device_manager.proto#L542}
   ///
   /// [google.cloud.iot.v1.ListDeviceConfigVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L525}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L524}
   /// [google.cloud.iot.v1.ListDeviceConfigVersionsResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L543}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L542}
   ///
   StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>
   ListDeviceConfigVersions(
@@ -571,12 +571,12 @@ class DeviceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceStatesResponse,google/cloud/iot/v1/device_manager.proto#L568}
+  /// @googleapis_link{google::cloud::iot::v1::ListDeviceStatesResponse,google/cloud/iot/v1/device_manager.proto#L567}
   ///
   /// [google.cloud.iot.v1.ListDeviceStatesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L550}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L549}
   /// [google.cloud.iot.v1.ListDeviceStatesResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L568}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L567}
   ///
   StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse> ListDeviceStates(
       std::string const& name, Options opts = {});
@@ -586,16 +586,16 @@ class DeviceManagerClient {
   /// newest first).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceStatesRequest,google/cloud/iot/v1/device_manager.proto#L550}
+  /// @googleapis_link{google::cloud::iot::v1::ListDeviceStatesRequest,google/cloud/iot/v1/device_manager.proto#L549}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceStatesResponse,google/cloud/iot/v1/device_manager.proto#L568}
+  /// @googleapis_link{google::cloud::iot::v1::ListDeviceStatesResponse,google/cloud/iot/v1/device_manager.proto#L567}
   ///
   /// [google.cloud.iot.v1.ListDeviceStatesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L550}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L549}
   /// [google.cloud.iot.v1.ListDeviceStatesResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L568}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L567}
   ///
   StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse> ListDeviceStates(
       google::cloud::iot::v1::ListDeviceStatesRequest const& request,
@@ -783,12 +783,12 @@ class DeviceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceResponse,google/cloud/iot/v1/device_manager.proto#L598}
+  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceResponse,google/cloud/iot/v1/device_manager.proto#L597}
   ///
   /// [google.cloud.iot.v1.SendCommandToDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L575}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L574}
   /// [google.cloud.iot.v1.SendCommandToDeviceResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L598}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L597}
   ///
   StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
   SendCommandToDevice(std::string const& name, std::string const& binary_data,
@@ -825,12 +825,12 @@ class DeviceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceResponse,google/cloud/iot/v1/device_manager.proto#L598}
+  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceResponse,google/cloud/iot/v1/device_manager.proto#L597}
   ///
   /// [google.cloud.iot.v1.SendCommandToDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L575}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L574}
   /// [google.cloud.iot.v1.SendCommandToDeviceResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L598}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L597}
   ///
   StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
   SendCommandToDevice(std::string const& name, std::string const& binary_data,
@@ -853,16 +853,16 @@ class DeviceManagerClient {
   /// guaranteed; for QoS 0, no acknowledgment will be expected from the device.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceRequest,google/cloud/iot/v1/device_manager.proto#L575}
+  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceRequest,google/cloud/iot/v1/device_manager.proto#L574}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceResponse,google/cloud/iot/v1/device_manager.proto#L598}
+  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceResponse,google/cloud/iot/v1/device_manager.proto#L597}
   ///
   /// [google.cloud.iot.v1.SendCommandToDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L575}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L574}
   /// [google.cloud.iot.v1.SendCommandToDeviceResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L598}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L597}
   ///
   StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
   SendCommandToDevice(
@@ -884,12 +884,12 @@ class DeviceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::BindDeviceToGatewayResponse,google/cloud/iot/v1/device_manager.proto#L624}
+  /// @googleapis_link{google::cloud::iot::v1::BindDeviceToGatewayResponse,google/cloud/iot/v1/device_manager.proto#L623}
   ///
   /// [google.cloud.iot.v1.BindDeviceToGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L603}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L602}
   /// [google.cloud.iot.v1.BindDeviceToGatewayResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L624}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L623}
   ///
   StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>
   BindDeviceToGateway(std::string const& parent, std::string const& gateway_id,
@@ -899,16 +899,16 @@ class DeviceManagerClient {
   /// Associates the device with the gateway.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::BindDeviceToGatewayRequest,google/cloud/iot/v1/device_manager.proto#L603}
+  /// @googleapis_link{google::cloud::iot::v1::BindDeviceToGatewayRequest,google/cloud/iot/v1/device_manager.proto#L602}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::BindDeviceToGatewayResponse,google/cloud/iot/v1/device_manager.proto#L624}
+  /// @googleapis_link{google::cloud::iot::v1::BindDeviceToGatewayResponse,google/cloud/iot/v1/device_manager.proto#L623}
   ///
   /// [google.cloud.iot.v1.BindDeviceToGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L603}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L602}
   /// [google.cloud.iot.v1.BindDeviceToGatewayResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L624}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L623}
   ///
   StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>
   BindDeviceToGateway(
@@ -930,12 +930,12 @@ class DeviceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::UnbindDeviceFromGatewayResponse,google/cloud/iot/v1/device_manager.proto#L650}
+  /// @googleapis_link{google::cloud::iot::v1::UnbindDeviceFromGatewayResponse,google/cloud/iot/v1/device_manager.proto#L649}
   ///
   /// [google.cloud.iot.v1.UnbindDeviceFromGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L629}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L628}
   /// [google.cloud.iot.v1.UnbindDeviceFromGatewayResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L650}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L649}
   ///
   StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>
   UnbindDeviceFromGateway(std::string const& parent,
@@ -946,16 +946,16 @@ class DeviceManagerClient {
   /// Deletes the association between the device and the gateway.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::UnbindDeviceFromGatewayRequest,google/cloud/iot/v1/device_manager.proto#L629}
+  /// @googleapis_link{google::cloud::iot::v1::UnbindDeviceFromGatewayRequest,google/cloud/iot/v1/device_manager.proto#L628}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iot::v1::UnbindDeviceFromGatewayResponse,google/cloud/iot/v1/device_manager.proto#L650}
+  /// @googleapis_link{google::cloud::iot::v1::UnbindDeviceFromGatewayResponse,google/cloud/iot/v1/device_manager.proto#L649}
   ///
   /// [google.cloud.iot.v1.UnbindDeviceFromGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L629}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L628}
   /// [google.cloud.iot.v1.UnbindDeviceFromGatewayResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L650}
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L649}
   ///
   StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>
   UnbindDeviceFromGateway(

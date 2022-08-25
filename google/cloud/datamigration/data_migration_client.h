@@ -96,12 +96,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.ListMigrationJobsRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L239}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   StreamRange<google::cloud::clouddms::v1::MigrationJob> ListMigrationJobs(
       std::string const& parent, Options opts = {});
@@ -114,12 +114,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.ListMigrationJobsRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L239}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   StreamRange<google::cloud::clouddms::v1::MigrationJob> ListMigrationJobs(
       google::cloud::clouddms::v1::ListMigrationJobsRequest request,
@@ -132,12 +132,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.GetMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L291}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   StatusOr<google::cloud::clouddms::v1::MigrationJob> GetMigrationJob(
       std::string const& name, Options opts = {});
@@ -150,12 +150,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.GetMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L291}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   StatusOr<google::cloud::clouddms::v1::MigrationJob> GetMigrationJob(
       google::cloud::clouddms::v1::GetMigrationJobRequest const& request,
@@ -173,12 +173,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.CreateMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L303}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   CreateMigrationJob(
@@ -194,12 +194,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.CreateMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L303}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   CreateMigrationJob(
@@ -216,12 +216,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.UpdateMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L331}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   UpdateMigrationJob(
@@ -236,12 +236,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.UpdateMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L331}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   UpdateMigrationJob(
@@ -293,12 +293,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.StartMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L375}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
       google::cloud::clouddms::v1::StartMigrationJobRequest const& request,
@@ -312,12 +312,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.StopMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L383}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
       google::cloud::clouddms::v1::StopMigrationJobRequest const& request,
@@ -332,12 +332,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.ResumeMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L391}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   ResumeMigrationJob(
@@ -353,12 +353,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.PromoteMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L399}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   PromoteMigrationJob(
@@ -374,12 +374,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.VerifyMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L407}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   VerifyMigrationJob(
@@ -396,12 +396,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   /// [google.cloud.clouddms.v1.RestartMigrationJobRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L415}
   /// [google.cloud.clouddms.v1.MigrationJob]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L372}
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   RestartMigrationJob(
@@ -437,12 +437,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   /// [google.cloud.clouddms.v1.ListConnectionProfilesRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L470}
   /// [google.cloud.clouddms.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
   ListConnectionProfiles(std::string const& parent, Options opts = {});
@@ -456,12 +456,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   /// [google.cloud.clouddms.v1.ListConnectionProfilesRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L470}
   /// [google.cloud.clouddms.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
   ListConnectionProfiles(
@@ -475,12 +475,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   /// [google.cloud.clouddms.v1.GetConnectionProfileRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L521}
   /// [google.cloud.clouddms.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   StatusOr<google::cloud::clouddms::v1::ConnectionProfile> GetConnectionProfile(
       std::string const& name, Options opts = {});
@@ -493,12 +493,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   /// [google.cloud.clouddms.v1.GetConnectionProfileRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L521}
   /// [google.cloud.clouddms.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   StatusOr<google::cloud::clouddms::v1::ConnectionProfile> GetConnectionProfile(
       google::cloud::clouddms::v1::GetConnectionProfileRequest const& request,
@@ -515,12 +515,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   /// [google.cloud.clouddms.v1.CreateConnectionProfileRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L532}
   /// [google.cloud.clouddms.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
   CreateConnectionProfile(
@@ -536,12 +536,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   /// [google.cloud.clouddms.v1.CreateConnectionProfileRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L532}
   /// [google.cloud.clouddms.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
   CreateConnectionProfile(
@@ -560,12 +560,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   /// [google.cloud.clouddms.v1.UpdateConnectionProfileRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L558}
   /// [google.cloud.clouddms.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
   UpdateConnectionProfile(
@@ -580,12 +580,12 @@ class DataMigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   /// [google.cloud.clouddms.v1.UpdateConnectionProfileRequest]:
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L558}
   /// [google.cloud.clouddms.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L537}
+  /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L536}
   ///
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
   UpdateConnectionProfile(

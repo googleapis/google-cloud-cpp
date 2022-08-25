@@ -106,7 +106,7 @@ class ReachabilityServiceClient {
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
   /// [google.cloud.networkmanagement.v1.ListConnectivityTestsRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L154}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L153}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
@@ -117,14 +117,14 @@ class ReachabilityServiceClient {
   /// Lists all Connectivity Tests owned by a project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkmanagement::v1::ListConnectivityTestsRequest,google/cloud/networkmanagement/v1/reachability.proto#L154}
+  /// @googleapis_link{google::cloud::networkmanagement::v1::ListConnectivityTestsRequest,google/cloud/networkmanagement/v1/reachability.proto#L153}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
   /// [google.cloud.networkmanagement.v1.ListConnectivityTestsRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L154}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L153}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
@@ -145,7 +145,7 @@ class ReachabilityServiceClient {
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
   /// [google.cloud.networkmanagement.v1.GetConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L202}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L201}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
@@ -156,14 +156,14 @@ class ReachabilityServiceClient {
   /// Gets the details of a specific Connectivity Test.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkmanagement::v1::GetConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L202}
+  /// @googleapis_link{google::cloud::networkmanagement::v1::GetConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L201}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
   /// [google.cloud.networkmanagement.v1.GetConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L202}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L201}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
@@ -207,7 +207,7 @@ class ReachabilityServiceClient {
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
   /// [google.cloud.networkmanagement.v1.CreateConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L209}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L208}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
@@ -234,14 +234,14 @@ class ReachabilityServiceClient {
   /// see the Connectivity Test documentation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkmanagement::v1::CreateConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L209}
+  /// @googleapis_link{google::cloud::networkmanagement::v1::CreateConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L208}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
   /// [google.cloud.networkmanagement.v1.CreateConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L209}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L208}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
@@ -279,7 +279,7 @@ class ReachabilityServiceClient {
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
   /// [google.cloud.networkmanagement.v1.UpdateConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L229}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L228}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
@@ -307,14 +307,14 @@ class ReachabilityServiceClient {
   /// in `ConnectivityTest` for for more details.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L229}
+  /// @googleapis_link{google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L228}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
   /// [google.cloud.networkmanagement.v1.UpdateConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L229}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L228}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
@@ -339,14 +339,14 @@ class ReachabilityServiceClient {
   /// the reachability result returns a value of `UNKNOWN`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkmanagement::v1::RerunConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L246}
+  /// @googleapis_link{google::cloud::networkmanagement::v1::RerunConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L245}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
   /// [google.cloud.networkmanagement.v1.RerunConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L246}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L245}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
@@ -364,12 +364,12 @@ class ReachabilityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkmanagement::v1::OperationMetadata,google/cloud/networkmanagement/v1/reachability.proto#L253}
+  /// @googleapis_link{google::cloud::networkmanagement::v1::OperationMetadata,google/cloud/networkmanagement/v1/reachability.proto#L252}
   ///
   /// [google.cloud.networkmanagement.v1.DeleteConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L239}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L238}
   /// [google.cloud.networkmanagement.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L253}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L252}
   ///
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
   DeleteConnectivityTest(std::string const& name, Options opts = {});
@@ -378,16 +378,16 @@ class ReachabilityServiceClient {
   /// Deletes a specific `ConnectivityTest`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L239}
+  /// @googleapis_link{google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L238}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkmanagement::v1::OperationMetadata,google/cloud/networkmanagement/v1/reachability.proto#L253}
+  /// @googleapis_link{google::cloud::networkmanagement::v1::OperationMetadata,google/cloud/networkmanagement/v1/reachability.proto#L252}
   ///
   /// [google.cloud.networkmanagement.v1.DeleteConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L239}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L238}
   /// [google.cloud.networkmanagement.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L253}
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L252}
   ///
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
   DeleteConnectivityTest(
