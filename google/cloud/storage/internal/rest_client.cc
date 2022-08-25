@@ -642,7 +642,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObjectXml(
   }
 
   auto response = storage_rest_client_->Get(std::move(builder).BuildRequest());
-  if (!response.ok()) return std::move(response.status());
+  if (!response.ok()) return std::move(response).status();
 
   return std::unique_ptr<ObjectReadSource>(
       new RestObjectReadSource(*std::move(response)));
