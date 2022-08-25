@@ -338,7 +338,7 @@ storage_experimental::AsyncReadObjectRangeResponse ToResponse(
                                "Mismatched CRC32C checksum in downloaded data");
       return response;
     }
-    response.contents.push_back(std::move(*data.mutable_content()));
+    response.contents.emplace_back(std::move(*data.mutable_content()));
   }
   response.object_metadata = [&] {
     for (auto& r : accumulated.payload) {
