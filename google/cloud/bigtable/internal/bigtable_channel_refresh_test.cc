@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/bigtable_channel_refresh.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include <gmock/gmock.h>
@@ -69,6 +70,59 @@ TEST(BigtableChannelRefresh, Disabled) {
   CompletionQueue cq(mock);
   auto stub = CreateBigtableStub(
       cq, Options{}.set<bigtable::MaxConnectionRefreshOption>(ms(0)));
+}
+
+TEST(BigtableChannelRefresh, Continuations) {
+  using ms = std::chrono::milliseconds;
+  using ns = std::chrono::nanoseconds;
+  using ::testing::ReturnRef;
+
+  promise<StatusOr<std::chrono::system_clock::time_point>> p;
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  grpc::CompletionQueue grpc_cq;
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(ReturnRef(grpc_cq));
+
+  ::testing::InSequence s;
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce([&p](std::chrono::nanoseconds duration) {
+        EXPECT_LE(ns(ms(500)).count(), duration.count());
+        EXPECT_LE(duration.count(), ns(ms(1000)).count());
+        // This is a regression test for
+        // https://github.com/googleapis/google-cloud-cpp/issues/9712
+        //
+        // We delay returning the future until the Stub is fully constructed.
+        return p.get_future();
+      });
+  // Mock the call to `CQ::AsyncWaitConnectionReady()`
+  EXPECT_CALL(*mock_cq, StartOperation)
+      .WillOnce([](std::shared_ptr<internal::AsyncGrpcOperation> const& op,
+                   absl::FunctionRef<void(void*)>) {
+        // False means no state change in the underlying gRPC channel
+        op->Notify(false);
+      });
+  // We should schedule another channel refresh.
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce([](std::chrono::nanoseconds duration) {
+        EXPECT_LE(ns(ms(500)).count(), duration.count());
+        EXPECT_LE(duration.count(), ns(ms(1000)).count());
+        return make_ready_future<
+            StatusOr<std::chrono::system_clock::time_point>>(
+            Status(StatusCode::kCancelled, "cancelled"));
+      });
+  // Deregister the two timers we created.
+  EXPECT_CALL(*mock_cq, RunAsync).Times(2);
+
+  CompletionQueue cq(mock_cq);
+  auto stub = CreateBigtableStub(
+      cq, Options{}
+              .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+              .set<GrpcNumChannelsOption>(1)
+              .set<bigtable::MinConnectionRefreshOption>(ms(500))
+              .set<bigtable::MaxConnectionRefreshOption>(ms(1000)));
+
+  // Simulate the timer firing, which should trigger another round of refreshes.
+  p.set_value(make_status_or(std::chrono::system_clock::now()));
 }
 
 }  // namespace

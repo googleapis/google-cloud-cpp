@@ -13,6 +13,7 @@
 
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/log.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -32,13 +33,13 @@ auto constexpr kConnectionReadyTimeout = std::chrono::seconds(10);
 }  // namespace
 
 ConnectionRefreshState::ConnectionRefreshState(
-    std::shared_ptr<CompletionQueue> const& cq,
+    std::shared_ptr<internal::CompletionQueueImpl> const& cq_impl,
     std::chrono::milliseconds min_conn_refresh_period,
     std::chrono::milliseconds max_conn_refresh_period)
     : min_conn_refresh_period_(min_conn_refresh_period),
       max_conn_refresh_period_(max_conn_refresh_period),
       rng_(std::random_device{}()),
-      timers_(std::make_shared<OutstandingTimers>(cq)) {}
+      timers_(std::make_shared<OutstandingTimers>(cq_impl)) {}
 
 std::chrono::milliseconds ConnectionRefreshState::RandomizedRefreshDelay() {
   std::lock_guard<std::mutex> lk(mu_);
@@ -53,30 +54,32 @@ bool ConnectionRefreshState::enabled() const {
 }
 
 void ScheduleChannelRefresh(
-    std::shared_ptr<CompletionQueue> const& cq,
+    std::shared_ptr<internal::CompletionQueueImpl> const& cq_impl,
     std::shared_ptr<ConnectionRefreshState> const& state,
     std::shared_ptr<grpc::Channel> const& channel) {
   // The timers will only hold weak pointers to the channel or to the
   // completion queue, so if either of them are destroyed, the timer chain
   // will simply not continue.
   std::weak_ptr<grpc::Channel> weak_channel(channel);
-  std::weak_ptr<CompletionQueue> weak_cq(cq);
+  std::weak_ptr<internal::CompletionQueueImpl> weak_cq_impl(cq_impl);
+  auto cq = CompletionQueue(cq_impl);
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
   auto timer_future =
-      cq->MakeRelativeTimer(state->RandomizedRefreshDelay())
-          .then([weak_channel, weak_cq, state](TimerFuture fut) {
+      cq.MakeRelativeTimer(state->RandomizedRefreshDelay())
+          .then([weak_channel, weak_cq_impl, state](TimerFuture fut) {
             if (!fut.get()) {
               // Timer cancelled.
               return;
             }
             auto channel = weak_channel.lock();
             if (!channel) return;
-            auto cq = weak_cq.lock();
-            if (!cq) return;
-            cq->AsyncWaitConnectionReady(
+            auto cq_impl = weak_cq_impl.lock();
+            if (!cq_impl) return;
+            auto cq = CompletionQueue(cq_impl);
+            cq.AsyncWaitConnectionReady(
                   channel,
                   std::chrono::system_clock::now() + kConnectionReadyTimeout)
-                .then([weak_channel, weak_cq, state](future<Status> fut) {
+                .then([weak_channel, weak_cq_impl, state](future<Status> fut) {
                   auto conn_status = fut.get();
                   if (!conn_status.ok()) {
                     GCP_LOG(WARNING) << "Failed to refresh connection. Error: "
@@ -84,9 +87,9 @@ void ScheduleChannelRefresh(
                   }
                   auto channel = weak_channel.lock();
                   if (!channel) return;
-                  auto cq = weak_cq.lock();
-                  if (!cq) return;
-                  ScheduleChannelRefresh(cq, state, channel);
+                  auto cq_impl = weak_cq_impl.lock();
+                  if (!cq_impl) return;
+                  ScheduleChannelRefresh(cq_impl, state, channel);
                 });
           });
   state->timers().RegisterTimer(std::move(timer_future));
@@ -105,11 +108,12 @@ void OutstandingTimers::RegisterTimer(future<void> fut) {
   auto timer = fut.then([self, id](future<void>) {
     // If the completion queue is being destroyed, we can afford not
     // ignoring this continuation. Most likely nobody cares anymore.
-    auto cq = self->weak_cq_.lock();
-    if (!cq) return;
+    auto cq_impl = self->weak_cq_impl_.lock();
+    if (!cq_impl) return;
+    auto cq = CompletionQueue(cq_impl);
     // Do not run in-line to avoid deadlocks when the timer is immediately
     // satisfied.
-    cq->RunAsync([self, id] { self->DeregisterTimer(id); });
+    cq.RunAsync([self, id] { self->DeregisterTimer(id); });
   });
   bool const inserted =
       timers_.emplace(std::make_pair(id, std::move(timer))).second;

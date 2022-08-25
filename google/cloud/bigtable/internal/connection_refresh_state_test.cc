@@ -39,12 +39,12 @@ TEST_F(OutstandingTimersTest, Trivial) {
   // With MSVC 2019 (19.28.29334) the value from make_shared<>
   // must be captured.
   auto unused = std::make_shared<OutstandingTimers>(
-      std::make_shared<CompletionQueue>(cq_));
+      internal::GetCompletionQueueImpl(cq_));
 }
 
 TEST_F(OutstandingTimersTest, TimerFinishes) {
   auto registry = std::make_shared<OutstandingTimers>(
-      std::make_shared<CompletionQueue>(cq_));
+      internal::GetCompletionQueueImpl(cq_));
   promise<void> continuation_promise;
   auto t = cq_.MakeRelativeTimer(std::chrono::milliseconds(2))
                .then([&](TimerFuture fut) {
@@ -61,7 +61,7 @@ TEST_F(OutstandingTimersTest, TimerFinishes) {
 
 TEST_F(OutstandingTimersTest, TimerIsCancelled) {
   auto registry = std::make_shared<OutstandingTimers>(
-      std::make_shared<CompletionQueue>(cq_));
+      internal::GetCompletionQueueImpl(cq_));
   promise<void> continuation_promise;
   auto t =
       cq_.MakeRelativeTimer(std::chrono::hours(10)).then([&](TimerFuture fut) {
@@ -77,7 +77,7 @@ TEST_F(OutstandingTimersTest, TimerIsCancelled) {
 
 TEST_F(OutstandingTimersTest, TimerOutlivesRegistry) {
   auto registry = std::make_shared<OutstandingTimers>(
-      std::make_shared<CompletionQueue>(cq_));
+      internal::GetCompletionQueueImpl(cq_));
   promise<void> continuation_promise;
   auto t = cq_.MakeRelativeTimer(std::chrono::milliseconds(10))
                .then([&](TimerFuture fut) {
@@ -92,7 +92,7 @@ TEST_F(OutstandingTimersTest, TimerOutlivesRegistry) {
 
 TEST_F(OutstandingTimersTest, TimerRegisteredAfterCancelAllGetCancelled) {
   auto registry = std::make_shared<OutstandingTimers>(
-      std::make_shared<CompletionQueue>(cq_));
+      internal::GetCompletionQueueImpl(cq_));
   promise<void> continuation_promise;
   auto t =
       cq_.MakeRelativeTimer(std::chrono::hours(10)).then([&](TimerFuture fut) {
@@ -108,15 +108,13 @@ TEST_F(OutstandingTimersTest, TimerRegisteredAfterCancelAllGetCancelled) {
 
 TEST(ConnectionRefreshState, Enabled) {
   using ms = std::chrono::milliseconds;
-  ConnectionRefreshState state(std::make_shared<CompletionQueue>(), ms(0),
-                               ms(1000));
+  ConnectionRefreshState state(nullptr, ms(0), ms(1000));
   EXPECT_TRUE(state.enabled());
 }
 
 TEST(ConnectionRefreshState, Disabled) {
   using ms = std::chrono::milliseconds;
-  ConnectionRefreshState state(std::make_shared<CompletionQueue>(), ms(0),
-                               ms(0));
+  ConnectionRefreshState state(nullptr, ms(0), ms(0));
   EXPECT_FALSE(state.enabled());
 }
 
