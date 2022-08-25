@@ -5,16 +5,16 @@ C++ client libraries using CMake. The intended audience is developers of the
 client libraries that want to verify their changes will work with CMake and/or
 prefer to use CMake for whatever reason.
 
-* Packaging maintainers or developers who prefer to install the library in a
+- Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
-* Developers wanting to use the libraries as part of a larger CMake or Bazel
+- Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the [quickstart guides](/README.md#quickstart) for the library
   or libraries they want to use.
-* Developers wanting to compile the library just to run some of the examples or
+- Developers wanting to compile the library just to run some of the examples or
   tests should read the [build and install](/README.md#building-and-installing)
   section from the top-level README.
-* Contributors and developers to `google-cloud-cpp` wanting to work with CMake
+- Contributors and developers to `google-cloud-cpp` wanting to work with CMake
   should read the current document.
 
 The document assumes you are using a Linux workstation running Ubuntu, changing
@@ -32,11 +32,12 @@ cd google-cloud-cpp
 
 ## Download and bootstrap `vcpkg`
 
-[vcpkg] is a package manager for C++ that builds from source and installs any
-binary artifacts in `$HOME`. We recommend using `vcpkg` for local development.
-In these instructions, we will install `vcpkg` descriptions in `$HOME/vcpkg`,
-you can change the `vcpkg` location, just remember to adapt these instructions
-as you go along. Download the `vcpkg` package descriptions using `git`:
+[vcpkg](https://vcpkg.io) is a package manager for C++ that builds
+from source and installs any binary artifacts in `$HOME`. We recommend
+using `vcpkg` for local development.  In these instructions, we will
+install `vcpkg` descriptions in `$HOME/vcpkg`, you can change the
+`vcpkg` location, just remember to adapt these instructions as you go
+along. Download the `vcpkg` package descriptions using `git`:
 
 ```shell
 git -C $HOME clone https://github.com/microsoft/vcpkg

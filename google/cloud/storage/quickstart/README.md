@@ -5,20 +5,18 @@ library in your own project. These instructions assume that you have some
 experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
-* Packaging maintainers or developers who prefer to install the library in a
+- Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
-* Developers wanting to use the libraries as part of a larger CMake or Bazel
+- Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the current document. Note that there are similar
   documents for each library in their corresponding directories.
-* Developers wanting to compile the library just to run some of the examples or
+- Developers wanting to compile the library just to run some of the examples or
   tests should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
-* Contributors and developers to `google-cloud-cpp` should consult the guide to
+- Contributors and developers to `google-cloud-cpp` should consult the guide to
   [setup a development workstation][howto-setup-dev-workstation].
-
-[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 
 ## Before you begin
 
@@ -37,13 +35,13 @@ review the [Authentication Overview][authentication-quickstart]. This library
 uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the
 credentials file. For example:
 
-| Shell              | Command                                        |
-| :----------------- | ---------------------------------------------- |
-| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]` |
+| Shell              | Command                                                                              |
+| :----------------- | ------------------------------------------------------------------------------------ |
+| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                       |
 | sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];`<br> `export GOOGLE_APPLICATION_CREDENTIALS` |
-| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]` |
-| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`   |
-| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`    |
+| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]`                                       |
+| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                         |
+| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                          |
 
 Setting this environment variable is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
@@ -57,7 +55,7 @@ https://cloud.google.com/docs/authentication/production
 1. Install Bazel using [the instructions][bazel-install] from the `bazel.build`
    website.
 
-2. Compile this example using Bazel:
+1. Compile this example using Bazel:
 
    ```bash
    cd $HOME/google-cloud-cpp/google/cloud/storage/quickstart
@@ -68,7 +66,7 @@ https://cloud.google.com/docs/authentication/production
    project. As it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-3. Run the example, change the placeholder to appropriate values:
+1. Run the example, change the placeholder to appropriate values:
 
    ```bash
    bazel run :quickstart -- [BUCKET NAME]
@@ -79,8 +77,6 @@ https://cloud.google.com/docs/authentication/production
    example, bucket names cannot include forward slashes (`/`) or uppercase
    letters.
 
-[bucket-naming-link]: https://cloud.google.com/storage/docs/naming-buckets
-
 ## Using with CMake
 
 1. Install CMake. The package managers for most Linux distributions include a
@@ -89,7 +85,7 @@ https://cloud.google.com/docs/authentication/production
    [homebrew][homebrew-cmake-link]. You can also obtain the software directly
    from the [cmake.org](https://cmake.org/download/) site.
 
-2. Install the dependencies with your favorite tools. As an example, if you use
+1. Install the dependencies with your favorite tools. As an example, if you use
    [vcpkg](https://github.com/Microsoft/vcpkg.git):
 
    ```bash
@@ -100,7 +96,7 @@ https://cloud.google.com/docs/authentication/production
    Note that, as it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-3. Configure CMake, if necessary, configure the directory where you installed
+1. Configure CMake, if necessary, configure the directory where you installed
    the dependencies:
 
    ```bash
@@ -109,7 +105,7 @@ https://cloud.google.com/docs/authentication/production
    cmake --build .build
    ```
 
-4. Run the example, changing the placeholder(s) to appropriate values:
+1. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
    .build/quickstart [BUCKET NAME]
@@ -160,7 +156,7 @@ Run the example, change the placeholder to appropriate values:
 
 ```bash
 bazel run :quickstart_grpc -- [BUCKET NAME]
- ```
+```
 
 ## Platform Specific Notes
 
@@ -206,8 +202,11 @@ trust store for SSL certificates, you can download and configure this using:
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
+[bazel-grpc-macos-bug]: https://github.com/bazelbuild/bazel/issues/4341
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
+[bucket-naming-link]: https://cloud.google.com/storage/docs/naming-buckets
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
+[grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
-[cmake-download-link]: https://cmake.org/download/
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md

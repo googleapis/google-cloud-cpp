@@ -15,25 +15,24 @@ is surprising (or wrong! We need to improve these documents too).
 
 ## Key Documents
 
-* [Forks and Pull Requests](/doc/contributor/howto-guide-forks-and-pull-requests.md):
+- [Forks and Pull Requests](/doc/contributor/howto-guide-forks-and-pull-requests.md):
   the basic workflows for GitHub projects.
-* [Running CI builds locally](/doc/contributor/howto-guide-running-ci-builds-locally.md):
+- [Running CI builds locally](/doc/contributor/howto-guide-running-ci-builds-locally.md):
   how to reproduce CI results locally, for faster edit -> build -> test cycles.
-* [Set up a development workstation](/doc/contributor/howto-guide-setup-development-workstation.md):
+- [Set up a development workstation](/doc/contributor/howto-guide-setup-development-workstation.md):
   how to set up a Linux or Windows (workstation or VM) for `google-cloud-cpp`
   development.
-* [Set up CMake Dependencies](/doc/contributor/howto-guide-setup-cmake-environment.md):
+- [Set up CMake Dependencies](/doc/contributor/howto-guide-setup-cmake-environment.md):
   how to install the dependencies of `google-cloud-cpp` in `$HOME` for easier
   and faster development with CMake.
-* [Working with Bazel and CMake](/doc/contributor/working-with-bazel-and-cmake.md):
+- [Working with Bazel and CMake](/doc/contributor/working-with-bazel-and-cmake.md):
   this project can be compiled with CMake or Bazel. Always update the CMake
   project files first, as these files are used to generate `*.bzl` files loaded
   by Bazel. More details in the linked document.
 
 ## Style
 
-This repository follows the [Google C++ Style Guide](
-https://google.github.io/styleguide/cppguide.html), with some additional
+This repository follows the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html), with some additional
 constraints specified in the [style guide](/doc/cpp-style-guide.md).
 Please make sure your contributions adhere to the style guide.
 

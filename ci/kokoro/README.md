@@ -17,15 +17,15 @@ In brief, the Kokoro configuration is split in two:
 
 1. A series of configuration files inside Google define what builds exist, and
    what resources these builds have access to.
-   * These files are in a hierarchy that mirrors the ci/kokoro directory in this
+   - These files are in a hierarchy that mirrors the ci/kokoro directory in this
      repo.
-   * The `common.cfg` files are parsed first.
-   * The `common.cfg` files are applied according to the directory hierarchy.
-   * Finally any settings in `foobar.cfg` are applied.
+   - The `common.cfg` files are parsed first.
+   - The `common.cfg` files are applied according to the directory hierarchy.
+   - Finally any settings in `foobar.cfg` are applied.
 1. A series of configuration files in the `ci/kokoro` directory further define
    the build configuration:
-   * They define the build script for each build, though they are often common.
-   * They define which of the resources *allowed* by the internal configuration
+   - They define the build script for each build, though they are often common.
+   - They define which of the resources *allowed* by the internal configuration
      are actually *used* by that build.
 
 Somewhat unique to Kokoro one must define a separate *INTEGRATION* vs.

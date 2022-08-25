@@ -40,29 +40,29 @@ adds the `cxx17-pr` and `cxx17-ci` builds. The steps to add a new build are:
    image, which is simply called the "fedora" distro. Here's an [example
    PR](https://github.com/googleapis/google-cloud-cpp/pull/6259) that adds a
    build with its own Dockerfile.
-2. Create the new build script in `builds/` that runs the commands you want.
-   * You can test this script right away with `build.sh` by explicitly
+1. Create the new build script in `builds/` that runs the commands you want.
+   - You can test this script right away with `build.sh` by explicitly
      specifying the `--distro` you want your build to run in.  For example:
    ```
    $ build.sh --distro fedora my-new-build # or ...
    $ build.sh --distro fedora my-new-build --docker
    ```
-3. Create your trigger file(s) in the `triggers/` directory. If you want both
+1. Create your trigger file(s) in the `triggers/` directory. If you want both
    PR (presubmit) and CI (postsubmit) builds you can generate the trigger files
    with the command `trigger.sh --generate my-new-build`, which will write the
    new files in the `triggers/` directory. You may need to tweak the files at
    this point, for example to change the distro (fedora is the default).
-4. At this point, you're pretty much done. You can now test your build using
+1. At this point, you're pretty much done. You can now test your build using
    the trigger name as shown here:
    ```
    $ build.sh -t my-new-build-pr # or ...
    $ build.sh -t my-new-build-pr --docker # or ...
    $ build.sh -t my-new-build-pr --project cloud-cpp-testing-resources
    ```
-5. Send a PR! Google Cloud Build will not know about your new trigger files yet
+1. Send a PR! Google Cloud Build will not know about your new trigger files yet
    so they will not be run for your PR. This is working as intended. Get the PR
    reviewed and merge it.
-6. FINAL STEP: Now that the code for your new build is checked in, tell GCB
+1. FINAL STEP: Now that the code for your new build is checked in, tell GCB
    about the triggers so the can be run automatically for all future PRs and
    merges.
    ```
@@ -90,16 +90,16 @@ ubsan, etc. The full matrix of all combinations is infeasible to test
 completely, so we follow the following principles to minimize the test space
 while achieving high likelihood of the code working for our customers.
 
-* For simple dimensions (e.g. things that are "on/off") we want at least one
+- For simple dimensions (e.g. things that are "on/off") we want at least one
   build for each 'value' of the setting.
-* On dimensions with versions, we want to test something _old_ and something
+- On dimensions with versions, we want to test something _old_ and something
   _new_ (specific versions will change over time)
-* Integration tests should prefer running against an emulator in _most_ cases
-* Integration tests should hit production (i.e., no emulator) somewhere, though
+- Integration tests should prefer running against an emulator in _most_ cases
+- Integration tests should hit production (i.e., no emulator) somewhere, though
   we need to be careful of quotas
-* Code coverage builds need to run integration tests
-* Sanitizer builds need to run integration tests
-* We want to test our user-facing instructions (i.e., how to install and use)
+- Code coverage builds need to run integration tests
+- Sanitizer builds need to run integration tests
+- We want to test our user-facing instructions (i.e., how to install and use)
   as much as possible (this is difficult on macOS and Windows without docker)
 
 ## GCB Worker Pool

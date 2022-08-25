@@ -34,8 +34,6 @@ configure the VM instance, and then install the development tools for whatever
 platform you chose. See [doc/packaging.md][packaging-doc-link] for install
 instructions for your platform.
 
-[packaging-doc-link]: /doc/packaging.md
-
 ### Compiling the library
 
 You must compile both the library and its dependencies with optimization.
@@ -60,9 +58,6 @@ permissions to work with Cloud Spanner. Examine the
 [spanner roles][spanner-roles-link] to chose a role for this account, the
 principal used to run these benchmark should have (at least) the permissions
 granted by the `roles/spanner.databaseAdmin` role.
-
-[spanner-roles-linl]: https://cloud.google.com/spanner/docs/iam#roles
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
 
 ### Running the benchmark
 
@@ -144,3 +139,7 @@ of 15 seconds each:
     --samples=20 2>&1 \
     --experiment=read | tee srtp-read.csv
 ```
+
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
+[packaging-doc-link]: /doc/packaging.md
+[spanner-roles-link]: https://cloud.google.com/spanner/docs/iam#roles

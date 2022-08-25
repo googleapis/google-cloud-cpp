@@ -4,7 +4,6 @@ about: Create a report to help us improve
 title: ''
 labels: 'priority: p2, type: bug'
 assignees: ''
-
 ---
 
 **Does this issue affect the google-cloud-cpp project?**
@@ -18,10 +17,11 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
+
 1. Call function '...'
-2. Consume  '....'
-3. ...
-4. See error
+1. Consume  '....'
+1. ...
+1. See error
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.

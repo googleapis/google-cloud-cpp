@@ -73,11 +73,11 @@ administration of the Bigtable client library. More details on this sample code 
 
 ### Running Instance Admin Samples
 
-| Target                               | Description                         |
-| ------------------------------------ | ----------------------------------- |
-| `./bigtable_hello_instance_admin`    | Demonstration of basic operations   |
+| Target                               | Description                                                                 |
+| ------------------------------------ | --------------------------------------------------------------------------- |
+| `./bigtable_hello_instance_admin`    | Demonstration of basic operations                                           |
 | `./bigtable_hello_app_profile`       | Demonstration of basic operations using [App Profile][cbt-doc-app-profiles] |
-| `./bigtable_instance_admin_snippets` | Collection of individual operations |
+| `./bigtable_instance_admin_snippets` | Collection of individual operations                                         |
 
 Run the above targets with the `--help` flag to display the available commands and their usage.
 Here is an example of one such command which will create an instance.
@@ -95,25 +95,26 @@ administration of the Bigtable client library. More details on this sample code 
 
 ### Running Table Admin Samples
 
-| Target                                   | Description                         |
-| ---------------------------------------- | ----------------------------------- |
-| `./bigtable_hello_table_admin`           | Demonstration of basic operations   |
-| `./table_admin_snippets`                 | Collection of individual operations |
+| Target                                   | Description                                        |
+| ---------------------------------------- | -------------------------------------------------- |
+| `./bigtable_hello_table_admin`           | Demonstration of basic operations                  |
+| `./table_admin_snippets`                 | Collection of individual operations                |
 | `./bigtable_table_admin_backup_snippets` | Collection of [Backup][cbt-doc-backups] operations |
 
 Run the above targets with the `--help` flag to display the available commands and their usage.
 Here is an example of one such command which will create a table.
+
 ```console
 $ ./table_admin_snippets create-table <project-id> <instance-id> <table-id>
 ```
 
 ## Reading and Writing Data Operations
 
-| Target                   | Description                                      |
-| ------------------------ | ------------------------------------------------ |
-| `./read_snippets`        | Collection of synchronous read operations        |
-| `./data_snippets`        | Collection of other synchronous table operations |
-| `./data_async_snippets`  | Collection of asynchronous table operations      |
+| Target                   | Description                                               |
+| ------------------------ | --------------------------------------------------------- |
+| `./read_snippets`        | Collection of synchronous read operations                 |
+| `./data_snippets`        | Collection of other synchronous table operations          |
+| `./data_async_snippets`  | Collection of asynchronous table operations               |
 | `./data_filter_snippets` | Collection of operations using [Filters][cbt-doc-filters] |
 
 The above samples demonstrate individual data operations. Running the targets with
@@ -135,23 +136,23 @@ can be found [here][doxygen-grpc].
 | `./table_admin_iam_policy_snippets` | Examples to interact with IAM policies |
 | `./bigtable_grpc_credentials`       | Examples of other types of credentials |
 
- Running the targets with the `--help` flag will display the available commands and their usage. Here is an example of one such command which will output the IAM Policy for a given table.
+Running the targets with the `--help` flag will display the available commands and their usage. Here is an example of one such command which will output the IAM Policy for a given table.
 
 ```console
 $ ./table_admin_iam_policy_snippets get-iam-policy <project-id> <instance-id> <table-id>
 ```
 
-[hello-world-code]: bigtable_hello_world.cc
-[instance-admin-code]: bigtable_hello_instance_admin.cc
-[table-admin-code]: bigtable_hello_table_admin.cc
-[grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
-[cbt-doc-quickstart]: https://cloud.google.com/bigtable/docs/quickstart-cbt
+[cbt-doc-access-control]: https://cloud.google.com/bigtable/docs/access-control
 [cbt-doc-app-profiles]: https://cloud.google.com/bigtable/docs/app-profiles
+[cbt-doc-authentication]: https://cloud.google.com/bigtable/docs/authentication
 [cbt-doc-backups]: https://cloud.google.com/bigtable/docs/backups
 [cbt-doc-filters]: https://cloud.google.com/bigtable/docs/filters
-[cbt-doc-authentication]: https://cloud.google.com/bigtable/docs/authentication
-[cbt-doc-access-control]: https://cloud.google.com/bigtable/docs/access-control
+[cbt-doc-quickstart]: https://cloud.google.com/bigtable/docs/quickstart-cbt
+[doxygen-grpc]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-samples-grpc-credentials.html
 [doxygen-hello-world]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-hello-world.html
 [doxygen-instance-admin]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-hello-instance-admin.html
 [doxygen-table-admin]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-hello-table-admin.html
-[doxygen-grpc]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-samples-grpc-credentials.html
+[grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
+[hello-world-code]: bigtable_hello_world.cc
+[instance-admin-code]: bigtable_hello_instance_admin.cc
+[table-admin-code]: bigtable_hello_table_admin.cc
