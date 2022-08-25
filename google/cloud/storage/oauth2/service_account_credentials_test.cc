@@ -58,7 +58,6 @@ using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
-using ::testing::StartsWith;
 using ::testing::StrEq;
 
 constexpr char kScopeForTest0[] =
@@ -73,11 +72,6 @@ constexpr char kScopeForTest1[] =
 // different Base64-encoded string, and thus a different assertion string.
 constexpr char kExpectedAssertionParam[] =
     R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL29hdXRoMi5nb29nbGVhcGlzLmNvbS90b2tlbiIsImV4cCI6MTUzMDA2MzkyNCwiaWF0IjoxNTMwMDYwMzI0LCJpc3MiOiJmb28tZW1haWxAZm9vLXByb2plY3QuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvY2xvdWQtcGxhdGZvcm0ifQ.OtL40PSxdAB9rxRkXj-UeyuMhQCoT10WJY4ccOrPXriwm-DRl5AMgbBkQvVmWeYuPMTiFKWz_CMMBjVc3lFPW015eHvKT5r3ySGra1i8hJ9cDsWO7SdIGB-l00G-BdRxVEhN8U4C20eUhlvhtjXemOwlCFrKjF22rJB-ChiKy84rXs3O-Hz0dWmsSZPfVD9q-2S2vJdr9vz7NoP-fCmpxhQ3POVocYb-2OEM5c4Uo_e7lQTX3bRtVc19wz_wrTu9wMMMRYt52K8WPoWPURt7qpjHX88_EitXMzH-cJUQoDsgIoZ6vDlQMs7_nqNfgrlsGWHpPoSoGgvJMg1vJbzVLw)""";
-// This "magic" assertion is generated in a similar manner, but specifies a
-// non-default scope set and subject string (values used can be found in the
-// kAltScopeForTest and kSubjectForGrant variables).
-constexpr char kExpectedAssertionWithOptionalArgsParam[] =
-    R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL29hdXRoMi5nb29nbGVhcGlzLmNvbS90b2tlbiIsImV4cCI6MTUzMDA2MzkyNCwiaWF0IjoxNTMwMDYwMzI0LCJpc3MiOiJmb28tZW1haWxAZm9vLXByb2plY3QuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZGV2c3RvcmFnZS5mdWxsX2NvbnRyb2wiLCJzdWIiOiJ1c2VyQGZvby5iYXIifQ.D2sZntI1C0yF3LE3R0mssmidj8e9m5VU6UwzIUvDIG6yAxQLDRWK_gEdPW7etJ1xklIDwPEk0WgEsiu9pP89caPig0nK-bih7f1vbpRBTx4Vke07roW3DpFCLXFgaEXhKJYbzoYOJ62H_oBbQISC9qSF841sqEHmbjOqj5rSAR43wJm9H9juDT8apGpDNVCJM5pSo99NprLCvxUXuCBnacEsSQwbbZlLHfmBdyrllJsumx8RgFd22laEHsgPAMTxP-oM2iyf3fBEs2s1Dj7GxdWdpG6D9abJA6Hs8H1HqSwwyEWTXH6v_SPMYGsN1hIMTAWbO7J11bdHdjxo0hO5CA)""";
 constexpr std::time_t kFixedJwtTimestamp = 1530060324;
 constexpr char kGrantParamUnescaped[] =
     "urn:ietf:params:oauth:grant-type:jwt-bearer";
@@ -134,76 +128,6 @@ class ServiceAccountCredentialsTest : public ::testing::Test {
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
 };
-
-void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
-                                      std::string const& assertion) {
-  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  std::string response = R"""({
-      "token_type": "Type",
-      "access_token": "access-token-value",
-      "expires_in": 1234
-  })""";
-  EXPECT_CALL(*mock_request, MakeRequest)
-      .WillOnce([response, assertion](std::string const& payload) {
-        EXPECT_THAT(payload, HasSubstr(assertion));
-        // Hard-coded in this order in ServiceAccountCredentials class.
-        EXPECT_THAT(payload,
-                    HasSubstr(std::string("grant_type=") + kGrantParamEscaped));
-        return HttpResponse{200, response, {}};
-      });
-
-  auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request] {
-    MockHttpRequest result;
-    result.mock = mock_request;
-    return result;
-  });
-
-  std::string expected_header =
-      "Content-Type: application/x-www-form-urlencoded";
-  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(), _, _))
-      .Times(1);
-  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
-        EXPECT_EQ(kGrantParamUnescaped, s);
-        auto t = std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
-        std::copy(kGrantParamEscaped,
-                  kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
-        return t;
-      });
-
-  ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
-      info);
-  // Calls Refresh to obtain the access token for our authorization header.
-  EXPECT_EQ("Authorization: Type access-token-value",
-            credentials.AuthorizationHeader().value());
-}
-
-/// @test Verify that we can create service account credentials from a keyfile.
-TEST_F(ServiceAccountCredentialsTest,
-       RefreshingSendsCorrectRequestBodyAndParsesResponse) {
-  ScopedEnvironment disable_self_signed_jwt(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
-
-  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
-  ASSERT_STATUS_OK(info);
-  CheckInfoYieldsExpectedAssertion(*info, kExpectedAssertionParam);
-}
-
-/// @test Verify that we can create service account credentials from a keyfile.
-TEST_F(ServiceAccountCredentialsTest,
-       RefreshingSendsCorrectRequestBodyAndParsesResponseForNonDefaultVals) {
-  ScopedEnvironment disable_self_signed_jwt(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
-
-  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
-  ASSERT_STATUS_OK(info);
-  info->scopes = {kScopeForTest0};
-  info->subject = std::string(kSubjectForGrant);
-  CheckInfoYieldsExpectedAssertion(*info,
-                                   kExpectedAssertionWithOptionalArgsParam);
-}
 
 TEST_F(ServiceAccountCredentialsTest, MultipleScopes) {
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
@@ -411,105 +335,6 @@ TEST_F(ServiceAccountCredentialsTest, ParseOptionalField) {
   auto json = nlohmann::json::parse(contents);
   auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
   ASSERT_STATUS_OK(actual.status());
-}
-
-/// @test Verify that refreshing a credential updates the timestamps.
-TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
-  ScopedEnvironment disable_self_signed_jwt(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
-
-  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
-  ASSERT_STATUS_OK(info);
-
-  auto make_request_assertion = [&info](std::int64_t timestamp) {
-    return [timestamp, &info](std::string const& p) {
-      std::string const prefix =
-          std::string("grant_type=") + kGrantParamEscaped + "&assertion=";
-      EXPECT_THAT(p, StartsWith(prefix));
-
-      std::string assertion = p.substr(prefix.size());
-
-      std::vector<std::string> const tokens = absl::StrSplit(assertion, '.');
-      std::string const& encoded_header = tokens[0];
-      std::string const& encoded_payload = tokens[1];
-
-      auto header_bytes = internal::UrlsafeBase64Decode(encoded_header).value();
-      std::string header_str{header_bytes.begin(), header_bytes.end()};
-      auto payload_bytes =
-          internal::UrlsafeBase64Decode(encoded_payload).value();
-      std::string payload_str{payload_bytes.begin(), payload_bytes.end()};
-
-      auto header = nlohmann::json::parse(header_str);
-      EXPECT_EQ("RS256", header.value("alg", ""));
-      EXPECT_EQ("JWT", header.value("typ", ""));
-      EXPECT_EQ(info->private_key_id, header.value("kid", ""));
-
-      auto payload = nlohmann::json::parse(payload_str);
-      EXPECT_EQ(timestamp, payload.value("iat", 0));
-      EXPECT_EQ(timestamp + 3600, payload.value("exp", 0));
-      EXPECT_EQ(info->client_email, payload.value("iss", ""));
-      EXPECT_EQ(info->token_uri, payload.value("aud", ""));
-
-      // Hard-coded in this order in ServiceAccountCredentials class.
-      std::string token = "mock-token-value-" + std::to_string(timestamp);
-      nlohmann::json response{{"token_type", "Mock-Type"},
-                              {"access_token", token},
-                              {"expires_in", 3600}};
-      return HttpResponse{200, response.dump(), {}};
-    };
-  };
-
-  // Setup the mock request / response for the first Refresh().
-  auto const clock_value_1 = 10000;
-  auto const clock_value_2 = 20000;
-
-  auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce([&] {
-        MockHttpRequest result;
-        EXPECT_CALL(*result.mock, MakeRequest)
-            .WillOnce(make_request_assertion(clock_value_1));
-        return result;
-      })
-      .WillOnce([&] {
-        MockHttpRequest result;
-        EXPECT_CALL(*result.mock, MakeRequest)
-            .WillOnce(make_request_assertion(clock_value_2));
-        return result;
-      });
-
-  std::string expected_header =
-      "Content-Type: application/x-www-form-urlencoded";
-  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)))
-      .Times(AtLeast(1));
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(), _, _))
-      .Times(AtLeast(1));
-  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
-        EXPECT_EQ(kGrantParamUnescaped, s);
-        auto t = std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
-        std::copy(kGrantParamEscaped,
-                  kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
-        return t;
-      });
-
-  FakeClock::now_value_ = clock_value_1;
-  ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
-      *info);
-  // Call Refresh to obtain the access token for our authorization header.
-  auto authorization_header = credentials.AuthorizationHeader();
-  ASSERT_STATUS_OK(authorization_header);
-  EXPECT_EQ("Authorization: Mock-Type mock-token-value-10000",
-            *authorization_header);
-
-  // Advance the clock past the expiration time of the token and then get a
-  // new header.
-  FakeClock::now_value_ = clock_value_2;
-  EXPECT_GT(clock_value_2 - clock_value_1, 2 * 3600);
-  authorization_header = credentials.AuthorizationHeader();
-  ASSERT_STATUS_OK(authorization_header);
-  EXPECT_EQ("Authorization: Mock-Type mock-token-value-20000",
-            *authorization_header);
 }
 
 /// @test Verify that the options are used in the constructor.
@@ -798,7 +623,7 @@ TEST_F(ServiceAccountCredentialsTest, CreateServiceAccountRefreshPayload) {
       *info, kGrantParamEscaped, FakeClock::now());
 
   EXPECT_THAT(actual_payload, HasSubstr(std::string("assertion=") + assertion));
-  EXPECT_THAT(actual_payload, HasSubstr(kGrantParamEscaped));
+  EXPECT_THAT(actual_payload, HasSubstr(kGrantParamUnescaped));
 }
 
 /// @test Parsing a refresh response with missing fields results in failure.

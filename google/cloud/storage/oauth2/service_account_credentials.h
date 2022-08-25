@@ -22,6 +22,7 @@
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
@@ -166,6 +167,58 @@ bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info);
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
+class ServiceAccountCredentials;
+
+/// @copydoc ServiceAccountCredentials
+template <>
+class ServiceAccountCredentials<storage::internal::CurlRequestBuilder, std::chrono::system_clock>  : public Credentials {
+ public:
+  explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo const& info)
+      : ServiceAccountCredentials(std::move(info), {}) {}
+  ServiceAccountCredentials(ServiceAccountCredentialsInfo const& info,
+                            ChannelOptions const& options)
+      : impl_(absl::make_unique<oauth2_internal::ServiceAccountCredentials>(
+            oauth2_internal::ServiceAccountCredentialsInfo{
+                info.client_email, info.private_key_id, info.private_key,
+                info.token_uri, info.scopes, info.subject},
+            Options{}.set<CARootsFilePathOption>(options.ssl_root_path()))) {}
+
+  StatusOr<std::string> AuthorizationHeader() override {
+    auto header = impl_->AuthorizationHeader();
+    if (!header.ok()) return header.status();
+    return header->first + ": " + header->second;
+  }
+
+  /**
+   * Create a RSA SHA256 signature of the blob using the Credential object.
+   *
+   * @param signing_account the desired service account which should sign
+   *   @p blob. If not set, uses this object's account. If set, it must match
+   *   this object's service account.
+   * @param blob the string to sign. Note that sometimes the application must
+   *   Base64-encode the data before signing.
+   * @return the signed blob as raw bytes. An error if the @p signing_account
+   *     does not match the email for the credential's account.
+   */
+  StatusOr<std::vector<std::uint8_t>> SignBlob(
+      SigningAccount const& signing_account,
+      std::string const& blob) const override {
+    return impl_->SignBlob((signing_account.has_value()
+                                ? signing_account.value()
+                                : absl::optional<std::string>(absl::nullopt)),
+                           blob);
+  }
+
+  std::string AccountEmail() const override { return impl_->AccountEmail(); }
+  std::string KeyId() const override { return impl_->KeyId(); }
+
+ private:
+  std::unique_ptr<oauth2_internal::ServiceAccountCredentials> impl_;
+};
+
+/// @copydoc ServiceAccountCredentials
+template <typename HttpRequestBuilderType,
+          typename ClockType>
 class ServiceAccountCredentials : public Credentials {
  public:
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
@@ -253,6 +306,7 @@ class ServiceAccountCredentials : public Credentials {
   RefreshingCredentialsWrapper refreshing_creds_;
   ClockType clock_;
 };
+
 
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
