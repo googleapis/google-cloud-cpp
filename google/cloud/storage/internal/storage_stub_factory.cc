@@ -53,7 +53,7 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   auto constexpr kKeepaliveTimeout =
       std::chrono::milliseconds(std::chrono::seconds(60));
   args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
-              static_cast<int>(kKeepaliveTimeout).count());
+              static_cast<int>(kKeepaliveTimeout.count()));
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
