@@ -40,29 +40,29 @@ adds the `cxx17-pr` and `cxx17-ci` builds. The steps to add a new build are:
    image, which is simply called the "fedora" distro. Here's an [example
    PR](https://github.com/googleapis/google-cloud-cpp/pull/6259) that adds a
    build with its own Dockerfile.
-2. Create the new build script in `builds/` that runs the commands you want.
+1. Create the new build script in `builds/` that runs the commands you want.
    - You can test this script right away with `build.sh` by explicitly
      specifying the `--distro` you want your build to run in.  For example:
    ```
    $ build.sh --distro fedora my-new-build # or ...
    $ build.sh --distro fedora my-new-build --docker
    ```
-3. Create your trigger file(s) in the `triggers/` directory. If you want both
+1. Create your trigger file(s) in the `triggers/` directory. If you want both
    PR (presubmit) and CI (postsubmit) builds you can generate the trigger files
    with the command `trigger.sh --generate my-new-build`, which will write the
    new files in the `triggers/` directory. You may need to tweak the files at
    this point, for example to change the distro (fedora is the default).
-4. At this point, you're pretty much done. You can now test your build using
+1. At this point, you're pretty much done. You can now test your build using
    the trigger name as shown here:
    ```
    $ build.sh -t my-new-build-pr # or ...
    $ build.sh -t my-new-build-pr --docker # or ...
    $ build.sh -t my-new-build-pr --project cloud-cpp-testing-resources
    ```
-5. Send a PR! Google Cloud Build will not know about your new trigger files yet
+1. Send a PR! Google Cloud Build will not know about your new trigger files yet
    so they will not be run for your PR. This is working as intended. Get the PR
    reviewed and merge it.
-6. FINAL STEP: Now that the code for your new build is checked in, tell GCB
+1. FINAL STEP: Now that the code for your new build is checked in, tell GCB
    about the triggers so the can be run automatically for all future PRs and
    merges.
    ```

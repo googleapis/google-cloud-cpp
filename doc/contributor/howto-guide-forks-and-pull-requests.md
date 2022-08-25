@@ -54,7 +54,7 @@ owners (even project owners have their code reviewed by a peer). To submit your
 change for review you need to create a pull request. Typically you start by:
 
 1. Picking an existing [GitHub bug][mastering-issues] to work on.
-2. Create a new [branch][about-branches] for each feature (or bug fix).
+1. Create a new [branch][about-branches] for each feature (or bug fix).
    ```console
    git checkout main
    git checkout -b my-feature-branch
@@ -62,9 +62,9 @@ change for review you need to create a pull request. Typically you start by:
    # make your changes
    git push
    ```
-3. And then submit a [pull-request][about-pull-requests] to merge your branch
+1. And then submit a [pull-request][about-pull-requests] to merge your branch
    into `googleapis/google-cloud-cpp`.
-4. Your reviewers may ask questions, suggest improvements or alternatives. You
+1. Your reviewers may ask questions, suggest improvements or alternatives. You
    address those by either answering the questions in the review or
    **adding more [commits][about-commits]** to your branch and `git push` -ing
    those commits to your fork.

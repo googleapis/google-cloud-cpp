@@ -22,7 +22,7 @@ In brief, the Kokoro configuration is split in two:
    - The `common.cfg` files are parsed first.
    - The `common.cfg` files are applied according to the directory hierarchy.
    - Finally any settings in `foobar.cfg` are applied.
-2. A series of configuration files in the `ci/kokoro` directory further define
+1. A series of configuration files in the `ci/kokoro` directory further define
    the build configuration:
    - They define the build script for each build, though they are often common.
    - They define which of the resources *allowed* by the internal configuration

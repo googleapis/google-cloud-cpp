@@ -58,7 +58,7 @@ https://cloud.google.com/docs/authentication/production
 1. Install Bazel using [the instructions][bazel-install] from the `bazel.build`
    website.
 
-2. Compile this example using Bazel:
+1. Compile this example using Bazel:
 
    ```bash
    cd $HOME/google-cloud-cpp/google/cloud/spanner/quickstart
@@ -69,7 +69,7 @@ https://cloud.google.com/docs/authentication/production
    project. As it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-3. Run the example, changing the placeholder(s) to appropriate values:
+1. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
    bazel run :quickstart -- [GCP PROJECT] [CLOUD SPANNER INSTANCE] [CLOUD SPANNER DATABASE]
@@ -86,7 +86,7 @@ https://cloud.google.com/docs/authentication/production
    [homebrew][homebrew-cmake-link]. You can also obtain the software directly
    from the [cmake.org](https://cmake.org/download/).
 
-2. Install the dependencies with your favorite tools. As an example, if you use
+1. Install the dependencies with your favorite tools. As an example, if you use
    [vcpkg](https://github.com/Microsoft/vcpkg.git):
 
    ```bash
@@ -97,7 +97,7 @@ https://cloud.google.com/docs/authentication/production
    Note that, as it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-3. Configure CMake, if necessary, configure the directory where you installed
+1. Configure CMake, if necessary, configure the directory where you installed
    the dependencies:
 
    ```bash
@@ -106,7 +106,7 @@ https://cloud.google.com/docs/authentication/production
    cmake --build .build
    ```
 
-4. Run the example, changing the placeholder(s) to appropriate values:
+1. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
    .build/quickstart [GCP PROJECT] [CLOUD SPANNER INSTANCE] [CLOUD SPANNER DATABASE]
