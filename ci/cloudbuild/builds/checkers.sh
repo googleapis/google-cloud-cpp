@@ -193,10 +193,11 @@ time {
 
 printf "%-50s" "Running markdown formatter:" >&2
 time {
+  # See `.mdformat.toml` for the configuration parameters.
   git ls-files -z | grep -zE '(\.md)$' | xargs -P "$(nproc)" -n 1 -0 mdformat
 }
 
-printf "%-50s" "Running doxygen landing page updates:" >&2
+printf "%-50s" "Running doxygen landing-page updates:" >&2
 time {
   # Update the service's endpoint environment variables.
   for dox in google/cloud/*/doc/main.dox; do
