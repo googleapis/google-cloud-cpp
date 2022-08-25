@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/bigtable_channel_refresh.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include <gmock/gmock.h>
@@ -96,11 +97,9 @@ TEST(BigtableChannelRefresh, Continuations) {
   // Mock the call to `CQ::AsyncWaitConnectionReady()`
   EXPECT_CALL(*mock_cq, StartOperation)
       .WillOnce([](std::shared_ptr<internal::AsyncGrpcOperation> const& op,
-                   absl::FunctionRef<void(void*)> call) {
-        void* tag = op.get();
+                   absl::FunctionRef<void(void*)>) {
         // False means no state change in the underlying gRPC channel
         op->Notify(false);
-        call(tag);
       });
   // We should schedule another channel refresh.
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -117,6 +116,7 @@ TEST(BigtableChannelRefresh, Continuations) {
   CompletionQueue cq(mock_cq);
   auto stub = CreateBigtableStub(
       cq, Options{}
+              .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
               .set<GrpcNumChannelsOption>(1)
               .set<bigtable::MinConnectionRefreshOption>(ms(500))
               .set<bigtable::MaxConnectionRefreshOption>(ms(1000)));
