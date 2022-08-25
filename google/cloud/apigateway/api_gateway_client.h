@@ -95,12 +95,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   /// [google.cloud.apigateway.v1.ListGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L306}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L305}
   /// [google.cloud.apigateway.v1.Gateway]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
       std::string const& parent, Options opts = {});
@@ -109,16 +109,16 @@ class ApiGatewayServiceClient {
   /// Lists Gateways in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::ListGatewaysRequest,google/cloud/apigateway/v1/apigateway.proto#L306}
+  /// @googleapis_link{google::cloud::apigateway::v1::ListGatewaysRequest,google/cloud/apigateway/v1/apigateway.proto#L305}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   /// [google.cloud.apigateway.v1.ListGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L306}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L305}
   /// [google.cloud.apigateway.v1.Gateway]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
       google::cloud::apigateway::v1::ListGatewaysRequest request,
@@ -132,12 +132,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   /// [google.cloud.apigateway.v1.GetGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L342}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L341}
   /// [google.cloud.apigateway.v1.Gateway]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
       std::string const& name, Options opts = {});
@@ -146,16 +146,16 @@ class ApiGatewayServiceClient {
   /// Gets details of a single Gateway.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::GetGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L342}
+  /// @googleapis_link{google::cloud::apigateway::v1::GetGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L341}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   /// [google.cloud.apigateway.v1.GetGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L342}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L341}
   /// [google.cloud.apigateway.v1.Gateway]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
       google::cloud::apigateway::v1::GetGatewayRequest const& request,
@@ -173,12 +173,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   /// [google.cloud.apigateway.v1.CreateGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L354}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L353}
   /// [google.cloud.apigateway.v1.Gateway]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
       std::string const& parent,
@@ -189,16 +189,16 @@ class ApiGatewayServiceClient {
   /// Creates a new Gateway in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::CreateGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L354}
+  /// @googleapis_link{google::cloud::apigateway::v1::CreateGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L353}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   /// [google.cloud.apigateway.v1.CreateGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L354}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L353}
   /// [google.cloud.apigateway.v1.Gateway]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
       google::cloud::apigateway::v1::CreateGatewayRequest const& request,
@@ -217,12 +217,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   /// [google.cloud.apigateway.v1.UpdateGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L373}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L372}
   /// [google.cloud.apigateway.v1.Gateway]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
       google::cloud::apigateway::v1::Gateway const& gateway,
@@ -232,16 +232,16 @@ class ApiGatewayServiceClient {
   /// Updates the parameters of a single Gateway.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::UpdateGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L373}
+  /// @googleapis_link{google::cloud::apigateway::v1::UpdateGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L372}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   /// [google.cloud.apigateway.v1.UpdateGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L373}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L372}
   /// [google.cloud.apigateway.v1.Gateway]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L243}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
@@ -255,12 +255,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   /// [google.cloud.apigateway.v1.DeleteGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L386}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L385}
   /// [google.cloud.apigateway.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteGateway(std::string const& name, Options opts = {});
@@ -269,16 +269,16 @@ class ApiGatewayServiceClient {
   /// Deletes a single Gateway.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::DeleteGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L386}
+  /// @googleapis_link{google::cloud::apigateway::v1::DeleteGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L385}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   /// [google.cloud.apigateway.v1.DeleteGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L386}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L385}
   /// [google.cloud.apigateway.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteGateway(
@@ -293,12 +293,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   /// [google.cloud.apigateway.v1.ListApisRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L398}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L397}
   /// [google.cloud.apigateway.v1.Api]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   StreamRange<google::cloud::apigateway::v1::Api> ListApis(
       std::string const& parent, Options opts = {});
@@ -307,16 +307,16 @@ class ApiGatewayServiceClient {
   /// Lists Apis in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::ListApisRequest,google/cloud/apigateway/v1/apigateway.proto#L398}
+  /// @googleapis_link{google::cloud::apigateway::v1::ListApisRequest,google/cloud/apigateway/v1/apigateway.proto#L397}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   /// [google.cloud.apigateway.v1.ListApisRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L398}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L397}
   /// [google.cloud.apigateway.v1.Api]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   StreamRange<google::cloud::apigateway::v1::Api> ListApis(
       google::cloud::apigateway::v1::ListApisRequest request,
@@ -330,12 +330,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   /// [google.cloud.apigateway.v1.GetApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L434}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L433}
   /// [google.cloud.apigateway.v1.Api]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   StatusOr<google::cloud::apigateway::v1::Api> GetApi(std::string const& name,
                                                       Options opts = {});
@@ -344,16 +344,16 @@ class ApiGatewayServiceClient {
   /// Gets details of a single Api.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::GetApiRequest,google/cloud/apigateway/v1/apigateway.proto#L434}
+  /// @googleapis_link{google::cloud::apigateway::v1::GetApiRequest,google/cloud/apigateway/v1/apigateway.proto#L433}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   /// [google.cloud.apigateway.v1.GetApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L434}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L433}
   /// [google.cloud.apigateway.v1.Api]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   StatusOr<google::cloud::apigateway::v1::Api> GetApi(
       google::cloud::apigateway::v1::GetApiRequest const& request,
@@ -371,12 +371,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   /// [google.cloud.apigateway.v1.CreateApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L446}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L445}
   /// [google.cloud.apigateway.v1.Api]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
       std::string const& parent, google::cloud::apigateway::v1::Api const& api,
@@ -386,16 +386,16 @@ class ApiGatewayServiceClient {
   /// Creates a new Api in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::CreateApiRequest,google/cloud/apigateway/v1/apigateway.proto#L446}
+  /// @googleapis_link{google::cloud::apigateway::v1::CreateApiRequest,google/cloud/apigateway/v1/apigateway.proto#L445}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   /// [google.cloud.apigateway.v1.CreateApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L446}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L445}
   /// [google.cloud.apigateway.v1.Api]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
       google::cloud::apigateway::v1::CreateApiRequest const& request,
@@ -414,12 +414,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   /// [google.cloud.apigateway.v1.UpdateApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L465}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L464}
   /// [google.cloud.apigateway.v1.Api]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
       google::cloud::apigateway::v1::Api const& api,
@@ -429,16 +429,16 @@ class ApiGatewayServiceClient {
   /// Updates the parameters of a single Api.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::UpdateApiRequest,google/cloud/apigateway/v1/apigateway.proto#L465}
+  /// @googleapis_link{google::cloud::apigateway::v1::UpdateApiRequest,google/cloud/apigateway/v1/apigateway.proto#L464}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   /// [google.cloud.apigateway.v1.UpdateApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L465}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L464}
   /// [google.cloud.apigateway.v1.Api]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L45}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
       google::cloud::apigateway::v1::UpdateApiRequest const& request,
@@ -452,12 +452,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   /// [google.cloud.apigateway.v1.DeleteApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L478}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L477}
   /// [google.cloud.apigateway.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
       std::string const& name, Options opts = {});
@@ -466,16 +466,16 @@ class ApiGatewayServiceClient {
   /// Deletes a single Api.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::DeleteApiRequest,google/cloud/apigateway/v1/apigateway.proto#L478}
+  /// @googleapis_link{google::cloud::apigateway::v1::DeleteApiRequest,google/cloud/apigateway/v1/apigateway.proto#L477}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   /// [google.cloud.apigateway.v1.DeleteApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L478}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L477}
   /// [google.cloud.apigateway.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
       google::cloud::apigateway::v1::DeleteApiRequest const& request,
@@ -489,12 +489,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   /// [google.cloud.apigateway.v1.ListApiConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L490}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L489}
   /// [google.cloud.apigateway.v1.ApiConfig]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
       std::string const& parent, Options opts = {});
@@ -503,16 +503,16 @@ class ApiGatewayServiceClient {
   /// Lists ApiConfigs in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::ListApiConfigsRequest,google/cloud/apigateway/v1/apigateway.proto#L490}
+  /// @googleapis_link{google::cloud::apigateway::v1::ListApiConfigsRequest,google/cloud/apigateway/v1/apigateway.proto#L489}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   /// [google.cloud.apigateway.v1.ListApiConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L490}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L489}
   /// [google.cloud.apigateway.v1.ApiConfig]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
       google::cloud::apigateway::v1::ListApiConfigsRequest request,
@@ -526,12 +526,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   /// [google.cloud.apigateway.v1.GetApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L526}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L525}
   /// [google.cloud.apigateway.v1.ApiConfig]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
       std::string const& name, Options opts = {});
@@ -540,16 +540,16 @@ class ApiGatewayServiceClient {
   /// Gets details of a single ApiConfig.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::GetApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L526}
+  /// @googleapis_link{google::cloud::apigateway::v1::GetApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L525}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   /// [google.cloud.apigateway.v1.GetApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L526}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L525}
   /// [google.cloud.apigateway.v1.ApiConfig]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
       google::cloud::apigateway::v1::GetApiConfigRequest const& request,
@@ -567,12 +567,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   /// [google.cloud.apigateway.v1.CreateApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L553}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L552}
   /// [google.cloud.apigateway.v1.ApiConfig]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
       std::string const& parent,
@@ -583,16 +583,16 @@ class ApiGatewayServiceClient {
   /// Creates a new ApiConfig in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::CreateApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L553}
+  /// @googleapis_link{google::cloud::apigateway::v1::CreateApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L552}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   /// [google.cloud.apigateway.v1.CreateApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L553}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L552}
   /// [google.cloud.apigateway.v1.ApiConfig]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
@@ -611,12 +611,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L572}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
   /// [google.cloud.apigateway.v1.ApiConfig]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
       google::cloud::apigateway::v1::ApiConfig const& api_config,
@@ -626,16 +626,16 @@ class ApiGatewayServiceClient {
   /// Updates the parameters of a single ApiConfig.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::UpdateApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L572}
+  /// @googleapis_link{google::cloud::apigateway::v1::UpdateApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L571}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L572}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
   /// [google.cloud.apigateway.v1.ApiConfig]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L108}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
@@ -649,12 +649,12 @@ class ApiGatewayServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   /// [google.cloud.apigateway.v1.DeleteApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L585}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L584}
   /// [google.cloud.apigateway.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteApiConfig(std::string const& name, Options opts = {});
@@ -663,16 +663,16 @@ class ApiGatewayServiceClient {
   /// Deletes a single ApiConfig.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::apigateway::v1::DeleteApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L585}
+  /// @googleapis_link{google::cloud::apigateway::v1::DeleteApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L584}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   /// [google.cloud.apigateway.v1.DeleteApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L585}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L584}
   /// [google.cloud.apigateway.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L597}
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteApiConfig(

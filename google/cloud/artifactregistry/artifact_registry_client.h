@@ -438,12 +438,12 @@ class ArtifactRegistryClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::artifactregistry::v1::Package,google/devtools/artifactregistry/v1/package.proto#L32}
+  /// @googleapis_link{google::devtools::artifactregistry::v1::Package,google/devtools/artifactregistry/v1/package.proto#L31}
   ///
   /// [google.devtools.artifactregistry.v1.ListPackagesRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L51}
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L50}
   /// [google.devtools.artifactregistry.v1.Package]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L32}
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L31}
   ///
   StreamRange<google::devtools::artifactregistry::v1::Package> ListPackages(
       std::string const& parent, Options opts = {});
@@ -452,16 +452,16 @@ class ArtifactRegistryClient {
   /// Lists packages.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::artifactregistry::v1::ListPackagesRequest,google/devtools/artifactregistry/v1/package.proto#L51}
+  /// @googleapis_link{google::devtools::artifactregistry::v1::ListPackagesRequest,google/devtools/artifactregistry/v1/package.proto#L50}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::artifactregistry::v1::Package,google/devtools/artifactregistry/v1/package.proto#L32}
+  /// @googleapis_link{google::devtools::artifactregistry::v1::Package,google/devtools/artifactregistry/v1/package.proto#L31}
   ///
   /// [google.devtools.artifactregistry.v1.ListPackagesRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L51}
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L50}
   /// [google.devtools.artifactregistry.v1.Package]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L32}
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L31}
   ///
   StreamRange<google::devtools::artifactregistry::v1::Package> ListPackages(
       google::devtools::artifactregistry::v1::ListPackagesRequest request,
@@ -474,12 +474,12 @@ class ArtifactRegistryClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::artifactregistry::v1::Package,google/devtools/artifactregistry/v1/package.proto#L32}
+  /// @googleapis_link{google::devtools::artifactregistry::v1::Package,google/devtools/artifactregistry/v1/package.proto#L31}
   ///
   /// [google.devtools.artifactregistry.v1.GetPackageRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L75}
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L74}
   /// [google.devtools.artifactregistry.v1.Package]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L32}
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L31}
   ///
   StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
       std::string const& name, Options opts = {});
@@ -488,16 +488,16 @@ class ArtifactRegistryClient {
   /// Gets a package.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::artifactregistry::v1::GetPackageRequest,google/devtools/artifactregistry/v1/package.proto#L75}
+  /// @googleapis_link{google::devtools::artifactregistry::v1::GetPackageRequest,google/devtools/artifactregistry/v1/package.proto#L74}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::artifactregistry::v1::Package,google/devtools/artifactregistry/v1/package.proto#L32}
+  /// @googleapis_link{google::devtools::artifactregistry::v1::Package,google/devtools/artifactregistry/v1/package.proto#L31}
   ///
   /// [google.devtools.artifactregistry.v1.GetPackageRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L75}
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L74}
   /// [google.devtools.artifactregistry.v1.Package]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L32}
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L31}
   ///
   StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
       google::devtools::artifactregistry::v1::GetPackageRequest const& request,
@@ -514,7 +514,7 @@ class ArtifactRegistryClient {
   /// @googleapis_link{google::devtools::artifactregistry::v1::OperationMetadata,google/devtools/artifactregistry/v1/service.proto#L319}
   ///
   /// [google.devtools.artifactregistry.v1.DeletePackageRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L83}
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L82}
   /// [google.devtools.artifactregistry.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L319}
   ///
@@ -526,14 +526,14 @@ class ArtifactRegistryClient {
   /// will complete once the package has been deleted.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::artifactregistry::v1::DeletePackageRequest,google/devtools/artifactregistry/v1/package.proto#L83}
+  /// @googleapis_link{google::devtools::artifactregistry::v1::DeletePackageRequest,google/devtools/artifactregistry/v1/package.proto#L82}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::OperationMetadata,google/devtools/artifactregistry/v1/service.proto#L319}
   ///
   /// [google.devtools.artifactregistry.v1.DeletePackageRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L83}
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L82}
   /// [google.devtools.artifactregistry.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L319}
   ///

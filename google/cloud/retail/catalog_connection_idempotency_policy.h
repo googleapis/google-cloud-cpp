@@ -49,6 +49,31 @@ class CatalogServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency GetDefaultBranch(
       google::cloud::retail::v2::GetDefaultBranchRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency GetCompletionConfig(
+      google::cloud::retail::v2::GetCompletionConfigRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency UpdateCompletionConfig(
+      google::cloud::retail::v2::UpdateCompletionConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency GetAttributesConfig(
+      google::cloud::retail::v2::GetAttributesConfigRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency UpdateAttributesConfig(
+      google::cloud::retail::v2::UpdateAttributesConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency AddCatalogAttribute(
+      google::cloud::retail::v2::AddCatalogAttributeRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency RemoveCatalogAttribute(
+      google::cloud::retail::v2::RemoveCatalogAttributeRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ReplaceCatalogAttribute(
+      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<CatalogServiceConnectionIdempotencyPolicy>

@@ -95,12 +95,12 @@ class OrganizationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   /// [google.cloud.resourcemanager.v3.GetOrganizationRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L170}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L169}
   /// [google.cloud.resourcemanager.v3.Organization]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
       std::string const& name, Options opts = {});
@@ -110,16 +110,16 @@ class OrganizationsClient {
   /// name.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::GetOrganizationRequest,google/cloud/resourcemanager/v3/organizations.proto#L170}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::GetOrganizationRequest,google/cloud/resourcemanager/v3/organizations.proto#L169}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   /// [google.cloud.resourcemanager.v3.GetOrganizationRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L170}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L169}
   /// [google.cloud.resourcemanager.v3.Organization]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
       google::cloud::resourcemanager::v3::GetOrganizationRequest const& request,
@@ -153,12 +153,12 @@ class OrganizationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L183}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L182}
   /// [google.cloud.resourcemanager.v3.Organization]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Organization>
   SearchOrganizations(std::string const& query, Options opts = {});
@@ -173,16 +173,16 @@ class OrganizationsClient {
   /// `resourcemanager.organizations.get`
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchOrganizationsRequest,google/cloud/resourcemanager/v3/organizations.proto#L183}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchOrganizationsRequest,google/cloud/resourcemanager/v3/organizations.proto#L182}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L183}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L182}
   /// [google.cloud.resourcemanager.v3.Organization]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Organization>
   SearchOrganizations(

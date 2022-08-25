@@ -250,12 +250,12 @@ class BatchServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L266}
+  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L276}
   ///
   /// [google.cloud.batch.v1.GetTaskRequest]:
   /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L237}
   /// [google.cloud.batch.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L266}
+  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L276}
   ///
   StatusOr<google::cloud::batch::v1::Task> GetTask(std::string const& name,
                                                    Options opts = {});
@@ -268,12 +268,12 @@ class BatchServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L266}
+  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L276}
   ///
   /// [google.cloud.batch.v1.GetTaskRequest]:
   /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L237}
   /// [google.cloud.batch.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L266}
+  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L276}
   ///
   StatusOr<google::cloud::batch::v1::Task> GetTask(
       google::cloud::batch::v1::GetTaskRequest const& request,
@@ -289,12 +289,12 @@ class BatchServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L266}
+  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L276}
   ///
   /// [google.cloud.batch.v1.ListTasksRequest]:
   /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L201}
   /// [google.cloud.batch.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L266}
+  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L276}
   ///
   StreamRange<google::cloud::batch::v1::Task> ListTasks(
       std::string const& parent, Options opts = {});
@@ -307,12 +307,12 @@ class BatchServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L266}
+  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L276}
   ///
   /// [google.cloud.batch.v1.ListTasksRequest]:
   /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L201}
   /// [google.cloud.batch.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L266}
+  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L276}
   ///
   StreamRange<google::cloud::batch::v1::Task> ListTasks(
       google::cloud::batch::v1::ListTasksRequest request, Options opts = {});

@@ -62,6 +62,45 @@ class DefaultCatalogServiceConnectionIdempotencyPolicy
       google::cloud::retail::v2::GetDefaultBranchRequest const&) override {
     return Idempotency::kIdempotent;
   }
+
+  Idempotency GetCompletionConfig(
+      google::cloud::retail::v2::GetCompletionConfigRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency UpdateCompletionConfig(
+      google::cloud::retail::v2::UpdateCompletionConfigRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency GetAttributesConfig(
+      google::cloud::retail::v2::GetAttributesConfigRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency UpdateAttributesConfig(
+      google::cloud::retail::v2::UpdateAttributesConfigRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency AddCatalogAttribute(
+      google::cloud::retail::v2::AddCatalogAttributeRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency RemoveCatalogAttribute(
+      google::cloud::retail::v2::RemoveCatalogAttributeRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency ReplaceCatalogAttribute(
+      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
 };
 }  // namespace
 

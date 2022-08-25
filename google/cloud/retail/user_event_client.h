@@ -91,14 +91,14 @@ class UserEventServiceClient {
   /// Writes a single user event.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::WriteUserEventRequest,google/cloud/retail/v2/user_event_service.proto#L120}
+  /// @googleapis_link{google::cloud::retail::v2::WriteUserEventRequest,google/cloud/retail/v2/user_event_service.proto#L119}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::UserEvent,google/cloud/retail/v2/user_event.proto#L36}
   ///
   /// [google.cloud.retail.v2.WriteUserEventRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L120}
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L119}
   /// [google.cloud.retail.v2.UserEvent]:
   /// @googleapis_reference_link{google/cloud/retail/v2/user_event.proto#L36}
   ///
@@ -114,14 +114,14 @@ class UserEventServiceClient {
   /// Manager. Users should not call this method directly.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::CollectUserEventRequest,google/cloud/retail/v2/user_event_service.proto#L130}
+  /// @googleapis_link{google::cloud::retail::v2::CollectUserEventRequest,google/cloud/retail/v2/user_event_service.proto#L129}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::HttpBody,google/api/httpbody.proto#L71}
   ///
   /// [google.cloud.retail.v2.CollectUserEventRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L130}
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L129}
   /// [google.api.HttpBody]:
   /// @googleapis_reference_link{google/api/httpbody.proto#L71}
   ///
@@ -157,21 +157,21 @@ class UserEventServiceClient {
   /// synchronous. Events that already exist are skipped.
   /// Use this method for backfilling historical user events.
   ///
-  /// Operation.response is of type ImportResponse. Note that it is
+  /// `Operation.response` is of type `ImportResponse`. Note that it is
   /// possible for a subset of the items to be successfully inserted.
-  /// Operation.metadata is of type ImportMetadata.
+  /// `Operation.metadata` is of type `ImportMetadata`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsRequest,google/cloud/retail/v2/import_config.proto#L237}
+  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsRequest,google/cloud/retail/v2/import_config.proto#L222}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsResponse,google/cloud/retail/v2/import_config.proto#L371}
+  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsResponse,google/cloud/retail/v2/import_config.proto#L356}
   ///
   /// [google.cloud.retail.v2.ImportUserEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L237}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L222}
   /// [google.cloud.retail.v2.ImportUserEventsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L371}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L356}
   ///
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
   ImportUserEvents(
@@ -189,16 +189,16 @@ class UserEventServiceClient {
   /// can take hours or days to complete.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::RejoinUserEventsRequest,google/cloud/retail/v2/user_event_service.proto#L152}
+  /// @googleapis_link{google::cloud::retail::v2::RejoinUserEventsRequest,google/cloud/retail/v2/user_event_service.proto#L151}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::RejoinUserEventsResponse,google/cloud/retail/v2/user_event_service.proto#L184}
+  /// @googleapis_link{google::cloud::retail::v2::RejoinUserEventsResponse,google/cloud/retail/v2/user_event_service.proto#L183}
   ///
   /// [google.cloud.retail.v2.RejoinUserEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L152}
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L151}
   /// [google.cloud.retail.v2.RejoinUserEventsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L184}
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L183}
   ///
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
   RejoinUserEvents(

@@ -121,12 +121,12 @@ class Controller2Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeResponse,google/devtools/clouddebugger/v2/controller.proto#L124}
+  /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeResponse,google/devtools/clouddebugger/v2/controller.proto#L123}
   ///
   /// [google.devtools.clouddebugger.v2.RegisterDebuggeeRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L116}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L115}
   /// [google.devtools.clouddebugger.v2.RegisterDebuggeeResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L124}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L123}
   ///
   StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
   RegisterDebuggee(
@@ -146,16 +146,16 @@ class Controller2Client {
   /// `debuggee_id` value changing upon re-registration.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeRequest,google/devtools/clouddebugger/v2/controller.proto#L116}
+  /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeRequest,google/devtools/clouddebugger/v2/controller.proto#L115}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeResponse,google/devtools/clouddebugger/v2/controller.proto#L124}
+  /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeResponse,google/devtools/clouddebugger/v2/controller.proto#L123}
   ///
   /// [google.devtools.clouddebugger.v2.RegisterDebuggeeRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L116}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L115}
   /// [google.devtools.clouddebugger.v2.RegisterDebuggeeResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L124}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L123}
   ///
   StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
   RegisterDebuggee(
@@ -182,12 +182,12 @@ class Controller2Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse,google/devtools/clouddebugger/v2/controller.proto#L154}
+  /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse,google/devtools/clouddebugger/v2/controller.proto#L153}
   ///
   /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L134}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L133}
   /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L154}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L153}
   ///
   StatusOr<google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse>
   ListActiveBreakpoints(std::string const& debuggee_id, Options opts = {});
@@ -208,16 +208,16 @@ class Controller2Client {
   /// setting those breakpoints again.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest,google/devtools/clouddebugger/v2/controller.proto#L134}
+  /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest,google/devtools/clouddebugger/v2/controller.proto#L133}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse,google/devtools/clouddebugger/v2/controller.proto#L154}
+  /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse,google/devtools/clouddebugger/v2/controller.proto#L153}
   ///
   /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L134}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L133}
   /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L154}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L153}
   ///
   StatusOr<google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse>
   ListActiveBreakpoints(
@@ -242,12 +242,12 @@ class Controller2Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse,google/devtools/clouddebugger/v2/controller.proto#L182}
+  /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse,google/devtools/clouddebugger/v2/controller.proto#L181}
   ///
   /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L170}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L169}
   /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L182}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L181}
   ///
   StatusOr<google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse>
   UpdateActiveBreakpoint(
@@ -266,16 +266,16 @@ class Controller2Client {
   /// or snapping the location to the correct line of code.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest,google/devtools/clouddebugger/v2/controller.proto#L170}
+  /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest,google/devtools/clouddebugger/v2/controller.proto#L169}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse,google/devtools/clouddebugger/v2/controller.proto#L182}
+  /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse,google/devtools/clouddebugger/v2/controller.proto#L181}
   ///
   /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L170}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L169}
   /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L182}
+  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L181}
   ///
   StatusOr<google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse>
   UpdateActiveBreakpoint(
