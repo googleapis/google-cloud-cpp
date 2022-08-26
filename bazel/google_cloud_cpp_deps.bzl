@@ -31,10 +31,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "platforms",
             urls = [
-                "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.5/platforms-0.0.5.tar.gz",
-                "https://github.com/bazelbuild/platforms/releases/download/0.0.5/platforms-0.0.5.tar.gz",
+                "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.6/platforms-0.0.6.tar.gz",
+                "https://github.com/bazelbuild/platforms/releases/download/0.0.6/platforms-0.0.6.tar.gz",
             ],
-            sha256 = "379113459b0feaf6bfbb584a91874c065078aa673222846ac765f86661c27407",
+            sha256 = "5308fc1d8865406a49427ba24a9ab53087f17f5266a7aabbfc28823f3916e1ca",
         )
 
     # Load rules_cc, used by googletest
