@@ -22,7 +22,7 @@ experience as a C++ developer and that you have a working C++ toolchain
 
 To run the quickstart examples you will need a working Google Cloud Platform
 (GCP) project and an existing bucket.
-The [GCS quickstarts](https://cloud.google.com/storage/docs/quickstarts) cover
+The [GCS quickstarts](https://cloud.google.com/storage/docs/introduction#quickstarts) cover
 the necessary steps in detail. Make a note of the GCP project id and the bucket
 name as you will need them below.
 
