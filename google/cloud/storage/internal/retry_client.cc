@@ -154,6 +154,42 @@ bool UploadChunkOnFailure(RetryPolicy& retry_policy, int& count,
   return retry_policy.OnFailure(status);
 }
 
+Status RetryError(Status const& last_status, RetryPolicy const& retry_policy,
+                  char const* error_message) {
+  std::ostringstream os;
+  if (retry_policy.IsExhausted()) {
+    os << "Retry policy exhausted in " << error_message << ": "
+       << last_status.message();
+  } else {
+    os << "Permanent error in " << error_message << ": "
+       << last_status.message();
+  }
+  return Status(last_status.code(), std::move(os).str());
+}
+
+Status MissingCommittedSize(int error_count, int upload_count, int reset_count,
+                            Status last_status) {
+  if (error_count > 0) return last_status;
+  std::ostringstream os;
+  os << "All requests (" << upload_count << ") have succeeded, but they lacked"
+     << " a committed_size value. This requires querying the write status."
+     << " The client library performed " << reset_count << " such queries.";
+  return Status{StatusCode::kDeadlineExceeded, std::move(os).str()};
+}
+
+Status PartialWriteStatus(int error_count, int upload_count,
+                          std::int64_t committed_size,
+                          std::int64_t expected_commited_size,
+                          Status last_status) {
+  if (error_count > 0) return last_status;
+  std::ostringstream os;
+  os << "All requests (" << upload_count << ") have succeeded, but they have"
+     << " not completed the full write. The expected committed size is "
+     << expected_commited_size << " the current committed size is "
+     << committed_size;
+  return Status{StatusCode::kDeadlineExceeded, std::move(os).str()};
+}
+
 }  // namespace
 
 std::shared_ptr<RetryClient> RetryClient::Create(
@@ -494,8 +530,10 @@ StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
 //
 StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
     UploadChunkRequest const& request) {
-  Status last_status(StatusCode::kDeadlineExceeded,
-                     "Retry policy exhausted before first attempt was made.");
+  auto const initial_status =
+      Status(StatusCode::kDeadlineExceeded,
+             "Retry policy exhausted before first attempt was made.");
+  auto last_status = initial_status;
 
   auto retry_policy = current_retry_policy();
   auto backoff_policy = current_backoff_policy();
@@ -506,29 +544,20 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
   using Action =
       std::function<StatusOr<QueryResumableUploadResponse>(std::uint64_t)>;
 
-  auto upload = Action([&request, this](std::uint64_t committed_size) {
-    return client_->UploadChunk(request.RemainingChunk(committed_size));
-  });
-  auto reset = Action([&request, this](std::uint64_t) {
+  int upload_count = 0;
+  auto upload =
+      Action([&upload_count, &request, this](std::uint64_t committed_size) {
+        ++upload_count;
+        return client_->UploadChunk(request.RemainingChunk(committed_size));
+      });
+  int reset_count = 0;
+  auto reset = Action([&reset_count, &request, this](std::uint64_t) {
     QueryResumableUploadRequest query(request.upload_session_url());
     query.set_multiple_options(request.GetOption<QuotaUser>(),
                                request.GetOption<UserIp>());
+    ++reset_count;
     return this->QueryResumableUpload(query);
   });
-
-  auto return_error = [](Status const& last_status,
-                         RetryPolicy const& retry_policy,
-                         char const* error_message) {
-    std::ostringstream os;
-    if (retry_policy.IsExhausted()) {
-      os << "Retry policy exhausted in " << error_message << ": "
-         << last_status.message();
-    } else {
-      os << "Permanent error in " << error_message << ": "
-         << last_status.message();
-    }
-    return Status(last_status.code(), std::move(os).str());
-  };
 
   auto* operation = &upload;
   auto committed_size = request.offset();
@@ -536,17 +565,19 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
       request.offset() + request.payload_size();
 
   int count_workaround_9563 = 0;
+  int error_count = 0;
 
   while (!retry_policy->IsExhausted()) {
     auto result = (*operation)(committed_size);
     if (!result) {
+      ++error_count;
       // On a failure we preserve the error, then query if retry policy allows
       // retrying.  If so, we backoff, and switch to calling
       // QueryResumableUpload().
       last_status = std::move(result).status();
       if (!UploadChunkOnFailure(*retry_policy, count_workaround_9563,
                                 last_status)) {
-        return return_error(std::move(last_status), *retry_policy, __func__);
+        return RetryError(std::move(last_status), *retry_policy, __func__);
       }
 
       auto delay = backoff_policy->OnCompletion();
@@ -567,6 +598,8 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
     // (transient) failure and query the current status to find out what to do
     // next.
     if (!result->committed_size.has_value()) {
+      last_status = MissingCommittedSize(error_count, upload_count, reset_count,
+                                         std::move(last_status));
       if (operation != &reset) {
         operation = &reset;
         continue;
@@ -591,16 +624,16 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
       // "finalizing" the object until the object metadata is returned. Note
       // that if we had the object metadata we would have already exited this
       // function.
+      last_status =
+          PartialWriteStatus(error_count, upload_count, committed_size,
+                             expected_committed_size, std::move(last_status));
       continue;
     }
 
     // On a full write we can return immediately.
     return result;
   }
-  std::ostringstream os;
-  os << "Retry policy exhausted in " << __func__ << ": "
-     << last_status.message();
-  return Status(last_status.code(), std::move(os).str());
+  return RetryError(last_status, *retry_policy, __func__);
 }
 
 StatusOr<ListBucketAclResponse> RetryClient::ListBucketAcl(
