@@ -171,7 +171,9 @@ class ServiceAccountCredentials;
 
 /// @copydoc ServiceAccountCredentials
 template <>
-class ServiceAccountCredentials<storage::internal::CurlRequestBuilder, std::chrono::system_clock>  : public Credentials {
+class ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
+                                std::chrono::system_clock>
+    : public Credentials {
  public:
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo const& info)
       : ServiceAccountCredentials(std::move(info), {}) {}
@@ -217,8 +219,7 @@ class ServiceAccountCredentials<storage::internal::CurlRequestBuilder, std::chro
 };
 
 /// @copydoc ServiceAccountCredentials
-template <typename HttpRequestBuilderType,
-          typename ClockType>
+template <typename HttpRequestBuilderType, typename ClockType>
 class ServiceAccountCredentials : public Credentials {
  public:
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
@@ -306,7 +307,6 @@ class ServiceAccountCredentials : public Credentials {
   RefreshingCredentialsWrapper refreshing_creds_;
   ClockType clock_;
 };
-
 
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

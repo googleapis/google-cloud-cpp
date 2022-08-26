@@ -77,12 +77,7 @@ std::string CreateServiceAccountRefreshPayload(
           info.client_email, info.private_key_id, info.private_key,
           info.token_uri, info.scopes, info.subject},
       now);
-  return absl::StrJoin(
-      params, "&", [](std::string* out, std::pair<std::string, std::string> const& h) {
-        std::cout << __PRETTY_FUNCTION__ << " " << h.first << ", " << h.second
-                  << std::endl;
-        absl::StrAppend(out, h.first + "=" + h.second);
-      });
+  return absl::StrJoin(params, "&", absl::PairFormatter("="));
 }
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
