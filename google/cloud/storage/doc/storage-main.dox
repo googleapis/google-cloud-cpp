@@ -201,7 +201,7 @@ good places to continue learning about the library.
 [DeleteObject]: @ref google::cloud::storage::Client::DeleteObject()
 
 
-[gcs-quickstart]: https://cloud.google.com/storage/docs/quickstarts 'GCS Quickstarts'
+[gcs-quickstart]: https://cloud.google.com/storage/docs/introduction#quickstarts 'GCS Quickstarts'
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
 [billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
 [concepts-link]: https://cloud.google.com/storage/docs/concepts 'GCS Concepts'
