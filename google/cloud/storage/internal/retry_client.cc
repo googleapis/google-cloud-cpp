@@ -155,13 +155,13 @@ bool UploadChunkOnFailure(RetryPolicy& retry_policy, int& count,
 }
 
 Status RetryError(Status const& last_status, RetryPolicy const& retry_policy,
-                  char const* error_message) {
+                  char const* function_name) {
   std::ostringstream os;
   if (retry_policy.IsExhausted()) {
-    os << "Retry policy exhausted in " << error_message << ": "
+    os << "Retry policy exhausted in " << function_name << ": "
        << last_status.message();
   } else {
-    os << "Permanent error in " << error_message << ": "
+    os << "Permanent error in " << function_name << ": "
        << last_status.message();
   }
   return Status(last_status.code(), std::move(os).str());
@@ -185,7 +185,7 @@ Status PartialWriteStatus(int error_count, int upload_count,
   std::ostringstream os;
   os << "All requests (" << upload_count << ") have succeeded, but they have"
      << " not completed the full write. The expected committed size is "
-     << expected_committed_size << " the current committed size is "
+     << expected_committed_size << " and the current committed size is "
      << committed_size;
   return Status{StatusCode::kDeadlineExceeded, std::move(os).str()};
 }
@@ -530,10 +530,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
 //
 StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
     UploadChunkRequest const& request) {
-  auto const initial_status =
+  auto last_status =
       Status(StatusCode::kDeadlineExceeded,
              "Retry policy exhausted before first attempt was made.");
-  auto last_status = initial_status;
 
   auto retry_policy = current_retry_policy();
   auto backoff_policy = current_backoff_policy();
