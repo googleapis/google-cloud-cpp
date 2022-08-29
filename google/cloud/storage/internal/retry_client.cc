@@ -179,13 +179,13 @@ Status MissingCommittedSize(int error_count, int upload_count, int reset_count,
 
 Status PartialWriteStatus(int error_count, int upload_count,
                           std::int64_t committed_size,
-                          std::int64_t expected_commited_size,
+                          std::int64_t expected_committed_size,
                           Status last_status) {
   if (error_count > 0) return last_status;
   std::ostringstream os;
   os << "All requests (" << upload_count << ") have succeeded, but they have"
      << " not completed the full write. The expected committed size is "
-     << expected_commited_size << " the current committed size is "
+     << expected_committed_size << " the current committed size is "
      << committed_size;
   return Status{StatusCode::kDeadlineExceeded, std::move(os).str()};
 }
