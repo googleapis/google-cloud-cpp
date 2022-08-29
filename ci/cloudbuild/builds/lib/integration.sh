@@ -96,7 +96,6 @@ function integration::bazel_args() {
     # corresponding endpoints (e.g., https://private.googleapis.com) are not
     # always available in Kokoro.
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_ALTERNATIVE_HOSTS=private.googleapis.com,restricted.googleapis.com"
-    "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_STORAGE_NEW_CREDENTIALS=yes"
 
     # Spanner
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS:-}"
