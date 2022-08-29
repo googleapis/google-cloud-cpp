@@ -60,6 +60,17 @@ class MinimalIamCredentialsImpl : public MinimalIamCredentialsStub {
         });
   }
 
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      grpc::ClientContext& context,
+      google::iam::credentials::v1::SignBlobRequest const& request) override {
+    auto status = auth_strategy_->ConfigureContext(context);
+    if (!status.ok()) return status;
+    google::iam::credentials::v1::SignBlobResponse response;
+    auto grpc = impl_->SignBlob(&context, request, &response);
+    if (!grpc.ok()) return MakeStatusFromRpcError(grpc);
+    return response;
+  }
+
  private:
   std::shared_ptr<GrpcAuthenticationStrategy> auth_strategy_;
   std::shared_ptr<IAMCredentials::StubInterface> impl_;
@@ -79,6 +90,14 @@ class AsyncAccessTokenGeneratorMetadata : public MinimalIamCredentialsStub {
     context->AddMetadata("x-goog-request-params", "name=" + request.name());
     context->AddMetadata("x-goog-api-client", x_goog_api_client_);
     return child_->AsyncGenerateAccessToken(cq, std::move(context), request);
+  }
+
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      grpc::ClientContext& context,
+      google::iam::credentials::v1::SignBlobRequest const& request) override {
+    context.AddMetadata("x-goog-request-params", "name=" + request.name());
+    context.AddMetadata("x-goog-api-client", x_goog_api_client_);
+    return child_->SignBlob(context, request);
   }
 
  private:
@@ -114,6 +133,17 @@ class AsyncAccessTokenGeneratorLogging : public MinimalIamCredentialsStub {
           }
           return response;
         });
+  }
+
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      grpc::ClientContext& context,
+      google::iam::credentials::v1::SignBlobRequest const& request) override {
+    return google::cloud::internal::LogWrapper(
+        [this](grpc::ClientContext& context,
+               google::iam::credentials::v1::SignBlobRequest const& request) {
+          return child_->SignBlob(context, request);
+        },
+        context, request, __func__, tracing_options_);
   }
 
  private:

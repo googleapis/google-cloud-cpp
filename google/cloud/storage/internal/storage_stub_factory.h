@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/minimal_iam_credentials_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <functional>
@@ -42,6 +43,9 @@ std::shared_ptr<StorageStub> CreateDecoratedStubs(
 /// Default function used by the `GrpcClient`.
 std::shared_ptr<StorageStub> CreateStorageStub(
     google::cloud::CompletionQueue cq, Options const& options);
+
+std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub>
+CreateStorageIamStub(google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

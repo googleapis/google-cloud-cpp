@@ -22,6 +22,7 @@ google_cloud_cpp_testing_grpc_hdrs = [
     "mock_async_response_reader.h",
     "mock_completion_queue_impl.h",
     "mock_grpc_authentication_strategy.h",
+    "mock_minimal_iam_credentials_stub.h",
     "validate_metadata.h",
 ]
 

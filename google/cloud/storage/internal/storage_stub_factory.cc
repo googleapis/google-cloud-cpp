@@ -85,6 +85,16 @@ std::shared_ptr<StorageStub> CreateStorageStub(
       });
 }
 
+std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub>
+CreateStorageIamStub(google::cloud::CompletionQueue cq,
+                     Options const& options) {
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      std::move(cq), options);
+  return google::cloud::internal::MakeMinimalIamCredentialsStub(
+      std::move(auth),
+      google::cloud::internal::MakeMinimalIamCredentialsOptions(options));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
