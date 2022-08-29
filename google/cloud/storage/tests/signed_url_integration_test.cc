@@ -32,8 +32,6 @@ class SignedUrlIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void SetUp() override {
-    // TODO(#4206) - gRPC does not implement SignBlob
-    if (UsingGrpc()) GTEST_SKIP();
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");

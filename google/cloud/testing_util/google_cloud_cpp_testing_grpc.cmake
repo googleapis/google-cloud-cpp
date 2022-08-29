@@ -24,6 +24,7 @@ add_library(
     mock_completion_queue_impl.h
     mock_grpc_authentication_strategy.cc
     mock_grpc_authentication_strategy.h
+    mock_minimal_iam_credentials_stub.h
     validate_metadata.cc
     validate_metadata.h)
 target_link_libraries(

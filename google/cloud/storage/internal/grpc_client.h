@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/internal/minimal_iam_credentials_stub.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include <google/storage/v2/storage.pb.h>
 #include <functional>
@@ -53,6 +54,12 @@ class GrpcClient : public RawClient,
   // This is used to create a client from a mocked StorageStub.
   static std::shared_ptr<GrpcClient> CreateMock(
       std::shared_ptr<storage_internal::StorageStub> stub, Options opts = {});
+
+  // This is used to create a client from a mocked StorageStub.
+  static std::shared_ptr<GrpcClient> CreateMock(
+      std::shared_ptr<storage_internal::StorageStub> stub,
+      std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam,
+      Options opts = {});
 
   ~GrpcClient() override = default;
 
@@ -174,8 +181,10 @@ class GrpcClient : public RawClient,
 
  protected:
   explicit GrpcClient(Options opts);
-  explicit GrpcClient(std::shared_ptr<storage_internal::StorageStub> stub,
-                      Options opts);
+  explicit GrpcClient(
+      std::shared_ptr<storage_internal::StorageStub> stub,
+      std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam,
+      Options opts);
 
  private:
   using BucketAclUpdater =
@@ -213,6 +222,7 @@ class GrpcClient : public RawClient,
   ClientOptions backwards_compatibility_options_;
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<storage_internal::StorageStub> stub_;
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam_stub_;
 };
 
 }  // namespace internal

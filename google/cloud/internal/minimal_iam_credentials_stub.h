@@ -52,6 +52,10 @@ class MinimalIamCredentialsStub {
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       ::google::iam::credentials::v1::GenerateAccessTokenRequest const&
           request) = 0;
+
+  virtual StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      grpc::ClientContext& context,
+      google::iam::credentials::v1::SignBlobRequest const& request) = 0;
 };
 
 /// Mostly used for unit testing, adds the metadata and logging decorators.
