@@ -116,6 +116,17 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 </details>
 
+<details>
+<summary>2023-07-01: hard dependency on OpenTelemetry</summary>
+
+On 2023-07-01 (or shortly after) the libraries in `google-cloud-cpp` will have a
+hard dependency on [OpenTelemetry for C++].  At this time, `google-cloud-cpp`
+does not use or depend on OpenTelemetry.  This announcement foreshadows a
+change, but we are not yet prepared to describe the changes or their timeline
+in more detail at this time.
+
+</details>
+
 ## v2.2.0 - TBD
 
 ### New Libraries
@@ -3149,6 +3160,7 @@ releases.  The relevant notes are:
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
 [modern-table-ctor]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/table.h#L182-L214
 [nlohmann-json-gh]: https://github.com/nlohmann/json.git
+[opentelemetry for c++]: https://opentelemetry.io/docs/instrumentation/cpp/
 [pub/sub lite]: /google/cloud/pubsublite/README.md
 [resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
 [secret manager]: /google/cloud/secretmanager/README.md
