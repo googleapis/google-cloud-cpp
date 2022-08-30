@@ -660,14 +660,19 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
   auto offset = static_cast<google::protobuf::int64>(request.offset());
 
   bool sent_last_message = false;
+  bool on_first_message = true;
   auto flush_chunk = [&](bool has_more) {
     if (chunk.size() < maximum_chunk_size && has_more) return true;
     if (chunk.empty() && !request.last_chunk()) return true;
 
     google::storage::v2::WriteObjectRequest write_request;
-    write_request.set_upload_id(request.upload_session_url());
     write_request.set_write_offset(offset);
     write_request.set_finish_write(false);
+    // Only the first message requires the upload id.
+    if (on_first_message) {
+      write_request.set_upload_id(request.upload_session_url());
+      on_first_message = false;
+    }
     auto write_size = chunk.size();
 
     auto& data = *write_request.mutable_checksummed_data();
