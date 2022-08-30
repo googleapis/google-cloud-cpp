@@ -220,11 +220,6 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
   ASSERT_FALSE(in.project_id().empty());
   ASSERT_FALSE(in.instance_id().empty());
 
-  auto test_iam_service_account =
-      internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT")
-          .value_or("");
-  ASSERT_TRUE(Emulator() || !test_iam_service_account.empty());
-
   auto actual_policy = client_.GetIamPolicy(in.FullName());
   if (Emulator() &&
       actual_policy.status().code() == StatusCode::kUnimplemented) {
