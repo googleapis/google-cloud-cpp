@@ -19,6 +19,13 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 
+# TODO(b/239480982) - remove debugging helpers
+troubleshoot_sleep() {
+  io::log_h1 "DEBUG File status at exit"
+  /bin/sleep 7200
+}
+trap troubleshoot_sleep EXIT
+
 cd "${PROJECT_ROOT}"
 # TODO(b/239480982) - remove debugging helpers
 io::log_h1 "DEBUG $PWD"
@@ -118,14 +125,6 @@ gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
 
 # TODO(b/239480982) - remove debugging helpers
 io::log_h1 "DEBUG $PWD"
-troubleshoot_sleep() {
-  io::log_h1 "DEBUG File status at exit"
-  git status || echo "git status failed"
-  ls -l /bin/sleep || echo "ls -l /bin/sleep failed"
-  io::log_h1 "DEBUG Sleeping to troubleshoot problems"
-  /bin/sleep 3600
-}
-trap troubleshoot_sleep EXIT
 ls -l || echo "ls -l failed"
 git status || echo "git status failed"
 echo "DEBUG $PWD END"
