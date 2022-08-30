@@ -153,7 +153,12 @@ else
   io::log_yellow "Not a CI build; skipping artifact cleanup"
 fi
 
+# TODO(b/239480982) - remove debugging helpers
 if [[ "${exit_status}" == "0" ]]; then
+  io::log_yellow "DEBUG cleaning up artifacts."
+  find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -prune -print0 |
+    xargs -0 -t rm -rf || true
+  io::log_h1 "DEBUG disable trap"
   trap - EXIT
 fi
 
