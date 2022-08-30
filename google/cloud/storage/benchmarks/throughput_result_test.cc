@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/throughput_result.h"
+#include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -56,13 +57,11 @@ MATCHER_P(
   return true;
 }
 
-StatusOr<std::string> ToString(ThroughputResult const& result) {
+std::string ToString(ThroughputResult const& result) {
+  ThroughputOptions options;
   std::ostringstream os;
-  PrintAsCsv(os, result);
-  if (!os) {
-    return Status{StatusCode::kInternal, "PrintAsCsv failed"};
-  };
-  return os.str();
+  PrintAsCsv(os, options, result);
+  return std::move(os).str();
 }
 
 TEST(ThroughputResult, HeaderMatches) {
@@ -71,60 +70,49 @@ TEST(ThroughputResult, HeaderMatches) {
   EXPECT_TRUE(header_stream);
   auto const header = std::move(header_stream).str();
 
-  auto const line = ToString(
-      ThroughputResult{ExperimentLibrary::kCppClient,
-                       ExperimentTransport::kGrpc,
-                       kOpInsert,
-                       std::chrono::system_clock::now(),
-                       /*object_size=*/8 * kMiB,
-                       /*transfer_offset=*/4 * kMiB,
-                       /*transfer_size=*/3 * kMiB,
-                       /*app_buffer_size=*/2 * kMiB,
-                       /*crc_enabled=*/true,
-                       /*md5_enabled=*/false,
-                       std::chrono::microseconds(234000),
-                       std::chrono::microseconds(345000),
-                       Status{StatusCode::kOutOfRange, "OOR-status-message"},
-                       "peer",
-                       "bucket-name",
-                       "object-name",
-                       "generation",
-                       "upload-id",
-                       "retry-count",
-                       "notes"});
-  ASSERT_STATUS_OK(line);
+  auto const line = ToString(ThroughputResult{
+      std::chrono::system_clock::now(), ExperimentLibrary::kCppClient,
+      ExperimentTransport::kGrpc, kOpInsert,
+      /*object_size=*/8 * kMiB,
+      /*transfer_offset=*/4 * kMiB,
+      /*transfer_size=*/3 * kMiB,
+      /*app_buffer_size=*/2 * kMiB,
+      /*crc_enabled=*/true,
+      /*md5_enabled=*/false, std::chrono::microseconds(234000),
+      std::chrono::microseconds(345000),
+      Status{StatusCode::kOutOfRange, "OOR-status-message"}, "peer",
+      "bucket-name", "object-name", "generation", "upload-id", "retry-count"});
   ASSERT_FALSE(header.empty());
-  ASSERT_FALSE(line->empty());
+  ASSERT_FALSE(line.empty());
 
   auto const header_fields = std::count(header.begin(), header.end(), ',');
-  auto const line_fields = std::count(line->begin(), line->end(), ',');
+  auto const line_fields = std::count(line.begin(), line.end(), ',');
   EXPECT_EQ(header_fields, line_fields);
-  EXPECT_EQ(line->back(), '\n');
+  EXPECT_EQ(line.back(), '\n');
   EXPECT_EQ(header.back(), '\n');
   EXPECT_THAT(header, EndsWith(",Status\n"));
 
   // We don't want to create a change detector test, but we can verify the basic
   // fields are formatted correctly.
-  EXPECT_THAT(*line, HasSubstr(ToString(ExperimentLibrary::kCppClient)));
-  EXPECT_THAT(*line, HasSubstr(ToString(ExperimentTransport::kGrpc)));
-  EXPECT_THAT(*line, HasSubstr(ToString(kOpInsert)));
-  EXPECT_THAT(*line, HasSubstr("," + std::to_string(8 * kMiB) + ","));
-  EXPECT_THAT(*line, HasSubstr("," + std::to_string(4 * kMiB) + ","));
-  EXPECT_THAT(*line, HasSubstr("," + std::to_string(3 * kMiB) + ","));
-  EXPECT_THAT(*line, HasSubstr("," + std::to_string(2 * kMiB) + ","));
-  EXPECT_THAT(*line, HasSubstr(",1,"));  // crc_enabled==true
-  EXPECT_THAT(*line, HasSubstr(",0,"));  // md5_enabled==false
-  EXPECT_THAT(*line, HasSubstr(",234000,"));
-  EXPECT_THAT(*line, HasSubstr(",345000,"));
-  EXPECT_THAT(*line, HasSubstr(StatusCodeToString(StatusCode::kOutOfRange)));
-  EXPECT_THAT(*line, HasSubstr("OOR-status-message"));
-  EXPECT_THAT(*line, HasSubstr("peer"));
-  EXPECT_THAT(*line, HasSubstr(",bucket-name,"));
-  EXPECT_THAT(*line, HasSubstr(",object-name,"));
-  EXPECT_THAT(*line, HasSubstr(",generation,"));
-  EXPECT_THAT(*line, HasSubstr(",upload-id,"));
-  EXPECT_THAT(*line, HasSubstr(",retry-count,"));
-  EXPECT_THAT(*line, HasSubstr(",notes,"));
+  EXPECT_THAT(line, HasSubstr(ToString(ExperimentLibrary::kCppClient)));
+  EXPECT_THAT(line, HasSubstr(ToString(ExperimentTransport::kGrpc)));
+  EXPECT_THAT(line, HasSubstr(ToString(kOpInsert)));
+  EXPECT_THAT(line, HasSubstr("," + std::to_string(8 * kMiB) + ","));
+  EXPECT_THAT(line, HasSubstr("," + std::to_string(4 * kMiB) + ","));
+  EXPECT_THAT(line, HasSubstr("," + std::to_string(3 * kMiB) + ","));
+  EXPECT_THAT(line, HasSubstr("," + std::to_string(2 * kMiB) + ","));
+  EXPECT_THAT(line, HasSubstr(",1,"));  // crc_enabled==true
+  EXPECT_THAT(line, HasSubstr(",0,"));  // md5_enabled==false
+  EXPECT_THAT(line, HasSubstr(",234000,"));
+  EXPECT_THAT(line, HasSubstr(",345000,"));
+  EXPECT_THAT(line, HasSubstr(StatusCodeToString(StatusCode::kOutOfRange)));
+  EXPECT_THAT(line, HasSubstr("OOR-status-message"));
+  EXPECT_THAT(line, HasSubstr("peer"));
+  EXPECT_THAT(line, HasSubstr(",bucket-name,"));
+  EXPECT_THAT(line, HasSubstr(",object-name,"));
+  EXPECT_THAT(line, HasSubstr(",generation,"));
+  EXPECT_THAT(line, HasSubstr(",upload-id,"));
+  EXPECT_THAT(line, HasSubstr(",retry-count,"));
 }
 
 TEST(ThroughputResult, QuoteCsv) {
@@ -132,31 +120,26 @@ TEST(ThroughputResult, QuoteCsv) {
 
   result.status = Status{StatusCode::kInternal, R"(message "with quotes")"};
   auto line = ToString(result);
-  ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus(R"(message "with quotes")"));
+  EXPECT_THAT(line, HasQuotedStatus(R"(message "with quotes")"));
 
   result.status = Status{StatusCode::kInternal, R"(message, with comma)"};
   line = ToString(result);
-  ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus(R"(message; with comma)"));
+  EXPECT_THAT(line, HasQuotedStatus(R"(message; with comma)"));
 
   result.status = Status{StatusCode::kInternal, "message\nwith newline"};
   line = ToString(result);
-  ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus("message;with newline"));
+  EXPECT_THAT(line, HasQuotedStatus("message;with newline"));
 
   result.status = Status{StatusCode::kInternal, "message\r\nwith CRLF"};
   line = ToString(result);
-  ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus("message;;with CRLF"));
+  EXPECT_THAT(line, HasQuotedStatus("message;;with CRLF"));
 
   result.status =
       Status{StatusCode::kInternal, R"("message, "with quotes", commas,)"
                                     "\r\nand CRLF"};
   line = ToString(result);
-  ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus(R"(message; "with quotes"; commas;)"
-                                     ";;and CRLF"));
+  EXPECT_THAT(line, HasQuotedStatus(R"(message; "with quotes"; commas;)"
+                                    ";;and CRLF"));
 }
 
 }  // namespace
