@@ -134,7 +134,6 @@ inline std::string CurrentTime() {
   return FormatTimestamp(std::chrono::system_clock::now());
 }
 
-std::string Hostname();
 absl::optional<std::string> GetLabel(std::string const& labels,
                                      std::string const& prefix);
 absl::optional<std::string> Zone(std::string const& labels);

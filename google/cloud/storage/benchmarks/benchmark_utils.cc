@@ -217,20 +217,12 @@ void PrintOptions(std::ostream& os, std::string const& prefix,
               .has<google::cloud::storage::internal::TargetApiVersionOption>();
   }
 }
+
 // Format a timestamp
 std::string FormatTimestamp(std::chrono::system_clock::time_point tp) {
   auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
   auto const t = absl::FromChrono(tp);
   return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
-}
-
-std::string Hostname() {
-  static char const* const kHostname = [] {
-    static char buffer[HOST_NAME_MAX + 1];
-    gethostname(buffer, sizeof(buffer));
-    return buffer;
-  }();
-  return kHostname;
 }
 
 absl::optional<std::string> GetLabel(std::vector<std::string> const& labels,
@@ -307,7 +299,6 @@ std::string AddDefaultLabels(std::string const& labels) {
       components.push_back(d.prefix + *contents);
     }
   }
-  components.push_back("hostname:" + Hostname());
   return absl::StrJoin(components, ",");
 }
 
