@@ -15,7 +15,6 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/bounded_queue.h"
 #include "google/cloud/storage/options.h"
-#include "google/cloud/trace/trace_client.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -29,7 +28,6 @@
 #include "absl/time/time.h"
 #include <future>
 #include <sstream>
-#include <stdexcept>
 
 namespace google {
 namespace cloud {
