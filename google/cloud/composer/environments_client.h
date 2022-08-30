@@ -370,12 +370,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::OperationMetadata,google/cloud/orchestration/airflow/service/v1/operations.proto#L28}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::OperationMetadata,google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L131}
   /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L28}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
@@ -389,12 +389,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::OperationMetadata,google/cloud/orchestration/airflow/service/v1/operations.proto#L28}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::OperationMetadata,google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L131}
   /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L28}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>

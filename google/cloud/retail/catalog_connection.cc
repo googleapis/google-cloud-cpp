@@ -60,6 +60,48 @@ CatalogServiceConnection::GetDefaultBranch(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceConnection::GetCompletionConfig(
+    google::cloud::retail::v2::GetCompletionConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceConnection::UpdateCompletionConfig(
+    google::cloud::retail::v2::UpdateCompletionConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnection::GetAttributesConfig(
+    google::cloud::retail::v2::GetAttributesConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnection::UpdateAttributesConfig(
+    google::cloud::retail::v2::UpdateAttributesConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnection::AddCatalogAttribute(
+    google::cloud::retail::v2::AddCatalogAttributeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnection::RemoveCatalogAttribute(
+    google::cloud::retail::v2::RemoveCatalogAttributeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnection::ReplaceCatalogAttribute(
+    google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<CatalogServiceConnection> MakeCatalogServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

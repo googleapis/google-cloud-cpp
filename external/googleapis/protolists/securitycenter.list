@@ -5,6 +5,7 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:connection.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:contact_details.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:container.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:database.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:exfiltration.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:external_system.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:file.proto

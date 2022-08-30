@@ -83,6 +83,97 @@ CatalogServiceLogging::GetDefaultBranch(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceLogging::GetCompletionConfig(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::GetCompletionConfigRequest const&
+                 request) {
+        return child_->GetCompletionConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceLogging::UpdateCompletionConfig(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::UpdateCompletionConfigRequest const&
+                 request) {
+        return child_->UpdateCompletionConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceLogging::GetAttributesConfig(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::GetAttributesConfigRequest const&
+                 request) {
+        return child_->GetAttributesConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceLogging::UpdateAttributesConfig(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::UpdateAttributesConfigRequest const&
+                 request) {
+        return child_->UpdateAttributesConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceLogging::AddCatalogAttribute(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::AddCatalogAttributeRequest const&
+                 request) {
+        return child_->AddCatalogAttribute(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceLogging::RemoveCatalogAttribute(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::RemoveCatalogAttributeRequest const&
+                 request) {
+        return child_->RemoveCatalogAttribute(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceLogging::ReplaceCatalogAttribute(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&
+                 request) {
+        return child_->ReplaceCatalogAttribute(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
 }  // namespace cloud

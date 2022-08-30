@@ -65,6 +65,64 @@ CatalogServiceMetadata::GetDefaultBranch(
   return child_->GetDefaultBranch(context, request);
 }
 
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceMetadata::GetCompletionConfig(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetCompletionConfig(context, request);
+}
+
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceMetadata::UpdateCompletionConfig(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
+  SetMetadata(context,
+              "completion_config.name=" + request.completion_config().name());
+  return child_->UpdateCompletionConfig(context, request);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceMetadata::GetAttributesConfig(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetAttributesConfig(context, request);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceMetadata::UpdateAttributesConfig(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
+  SetMetadata(context,
+              "attributes_config.name=" + request.attributes_config().name());
+  return child_->UpdateAttributesConfig(context, request);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceMetadata::AddCatalogAttribute(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
+  SetMetadata(context, "attributes_config=" + request.attributes_config());
+  return child_->AddCatalogAttribute(context, request);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceMetadata::RemoveCatalogAttribute(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
+  SetMetadata(context, "attributes_config=" + request.attributes_config());
+  return child_->RemoveCatalogAttribute(context, request);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceMetadata::ReplaceCatalogAttribute(
+    grpc::ClientContext& context,
+    google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
+  SetMetadata(context, "attributes_config=" + request.attributes_config());
+  return child_->ReplaceCatalogAttribute(context, request);
+}
+
 void CatalogServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

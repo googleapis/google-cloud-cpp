@@ -76,6 +76,34 @@ class CatalogServiceConnection {
   virtual StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
   GetDefaultBranch(
       google::cloud::retail::v2::GetDefaultBranchRequest const& request);
+
+  virtual StatusOr<google::cloud::retail::v2::CompletionConfig>
+  GetCompletionConfig(
+      google::cloud::retail::v2::GetCompletionConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::retail::v2::CompletionConfig>
+  UpdateCompletionConfig(
+      google::cloud::retail::v2::UpdateCompletionConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
+  GetAttributesConfig(
+      google::cloud::retail::v2::GetAttributesConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
+  UpdateAttributesConfig(
+      google::cloud::retail::v2::UpdateAttributesConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
+  AddCatalogAttribute(
+      google::cloud::retail::v2::AddCatalogAttributeRequest const& request);
+
+  virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
+  RemoveCatalogAttribute(
+      google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request);
+
+  virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
+  ReplaceCatalogAttribute(
+      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request);
 };
 
 /**

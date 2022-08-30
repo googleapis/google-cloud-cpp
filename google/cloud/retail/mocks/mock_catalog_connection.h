@@ -64,6 +64,48 @@ class MockCatalogServiceConnection : public retail::CatalogServiceConnection {
       GetDefaultBranch,
       (google::cloud::retail::v2::GetDefaultBranchRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::CompletionConfig>,
+      GetCompletionConfig,
+      (google::cloud::retail::v2::GetCompletionConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::CompletionConfig>,
+      UpdateCompletionConfig,
+      (google::cloud::retail::v2::UpdateCompletionConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::AttributesConfig>,
+      GetAttributesConfig,
+      (google::cloud::retail::v2::GetAttributesConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::AttributesConfig>,
+      UpdateAttributesConfig,
+      (google::cloud::retail::v2::UpdateAttributesConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::AttributesConfig>,
+      AddCatalogAttribute,
+      (google::cloud::retail::v2::AddCatalogAttributeRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::AttributesConfig>,
+      RemoveCatalogAttribute,
+      (google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::retail::v2::AttributesConfig>,
+              ReplaceCatalogAttribute,
+              (google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&
+                   request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

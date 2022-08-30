@@ -26,6 +26,7 @@
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
 #include "google/cloud/storage/internal/grpc_service_account_parser.h"
+#include "google/cloud/storage/internal/grpc_sign_blob_request_parser.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/big_endian.h"
@@ -224,8 +225,16 @@ std::shared_ptr<GrpcClient> GrpcClient::Create(Options opts) {
 
 std::shared_ptr<GrpcClient> GrpcClient::CreateMock(
     std::shared_ptr<storage_internal::StorageStub> stub, Options opts) {
-  return std::shared_ptr<GrpcClient>(
-      new GrpcClient(std::move(stub), DefaultOptionsGrpc(std::move(opts))));
+  return CreateMock(std::move(stub), {}, std::move(opts));
+}
+
+std::shared_ptr<GrpcClient> GrpcClient::CreateMock(
+    std::shared_ptr<storage_internal::StorageStub> stub,
+    std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam,
+    Options opts) {
+  // Cannot use std::make_shared<> as the constructor is private.
+  return std::shared_ptr<GrpcClient>(new GrpcClient(
+      std::move(stub), std::move(iam), DefaultOptionsGrpc(std::move(opts))));
 }
 
 GrpcClient::GrpcClient(Options opts)
@@ -233,15 +242,20 @@ GrpcClient::GrpcClient(Options opts)
       backwards_compatibility_options_(
           MakeBackwardsCompatibleClientOptions(options_)),
       background_(MakeBackgroundThreadsFactory(options_)()),
-      stub_(storage_internal::CreateStorageStub(background_->cq(), options_)) {}
+      stub_(storage_internal::CreateStorageStub(background_->cq(), options_)),
+      iam_stub_(storage_internal::CreateStorageIamStub(background_->cq(),
+                                                       options_)) {}
 
-GrpcClient::GrpcClient(std::shared_ptr<storage_internal::StorageStub> stub,
-                       Options opts)
+GrpcClient::GrpcClient(
+    std::shared_ptr<storage_internal::StorageStub> stub,
+    std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam,
+    Options opts)
     : options_(std::move(opts)),
       backwards_compatibility_options_(
           MakeBackwardsCompatibleClientOptions(options_)),
       background_(MakeBackgroundThreadsFactory(options_)()),
-      stub_(std::move(stub)) {}
+      stub_(std::move(stub)),
+      iam_stub_(std::move(iam)) {}
 
 ClientOptions const& GrpcClient::client_options() const {
   return backwards_compatibility_options_;
@@ -646,14 +660,19 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
   auto offset = static_cast<google::protobuf::int64>(request.offset());
 
   bool sent_last_message = false;
+  bool on_first_message = true;
   auto flush_chunk = [&](bool has_more) {
     if (chunk.size() < maximum_chunk_size && has_more) return true;
     if (chunk.empty() && !request.last_chunk()) return true;
 
     google::storage::v2::WriteObjectRequest write_request;
-    write_request.set_upload_id(request.upload_session_url());
     write_request.set_write_offset(offset);
     write_request.set_finish_write(false);
+    // Only the first message requires the upload id.
+    if (on_first_message) {
+      write_request.set_upload_id(request.upload_session_url());
+      on_first_message = false;
+    }
     auto write_size = chunk.size();
 
     auto& data = *write_request.mutable_checksummed_data();
@@ -1012,8 +1031,15 @@ StatusOr<HmacKeyMetadata> GrpcClient::UpdateHmacKey(
   return GrpcHmacKeyMetadataParser::FromProto(*response);
 }
 
-StatusOr<SignBlobResponse> GrpcClient::SignBlob(SignBlobRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+StatusOr<SignBlobResponse> GrpcClient::SignBlob(
+    SignBlobRequest const& request) {
+  auto proto = ToProto(request);
+  grpc::ClientContext context;
+  // This request does not have any options that require using
+  //     ApplyQueryParameters(context, request)
+  auto response = iam_stub_->SignBlob(context, proto);
+  if (!response) return std::move(response).status();
+  return FromProto(*response);
 }
 
 StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(

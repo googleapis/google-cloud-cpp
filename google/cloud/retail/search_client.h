@@ -99,12 +99,12 @@ class SearchServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::SearchResponse::SearchResult,google/cloud/retail/v2/search_service.proto#L714}
+  /// @googleapis_link{google::cloud::retail::v2::SearchResponse::SearchResult,google/cloud/retail/v2/search_service.proto#L726}
   ///
   /// [google.cloud.retail.v2.SearchRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L64}
   /// [google.cloud.retail.v2.SearchResponse.SearchResult]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L714}
+  /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L726}
   ///
   StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
       google::cloud::retail::v2::SearchRequest request, Options opts = {});

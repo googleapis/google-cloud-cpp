@@ -146,13 +146,6 @@ struct LegacyVisitor : public CredentialsVisitor {
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
     std::shared_ptr<google::cloud::Credentials> const& credentials) {
-  auto env = google::cloud::internal::GetEnv(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_STORAGE_NEW_CREDENTIALS");
-  if (!env.has_value()) {
-    LegacyVisitor visitor;
-    CredentialsVisitor::dispatch(*credentials, visitor);
-    return std::move(visitor.result);
-  }
   RestVisitor visitor;
   CredentialsVisitor::dispatch(*credentials, visitor);
   return std::move(visitor.result);

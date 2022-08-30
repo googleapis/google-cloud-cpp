@@ -501,7 +501,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
                     std::shared_ptr<RetryPolicy> retry_policy,
                     std::shared_ptr<BackoffPolicy> backoff_policy) {
     if (!start_initialize_response.ok()) {
-      AttemptRetry(std::move(start_initialize_response.status()), retry_policy,
+      AttemptRetry(std::move(start_initialize_response).status(), retry_policy,
                    backoff_policy);
       return;
     }

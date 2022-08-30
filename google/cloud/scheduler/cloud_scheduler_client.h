@@ -93,12 +93,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.ListJobsRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L133}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
       std::string const& parent, Options opts = {});
@@ -111,12 +111,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.ListJobsRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L133}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
       google::cloud::scheduler::v1::ListJobsRequest request, Options opts = {});
@@ -129,12 +129,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.GetJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L177}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> GetJob(std::string const& name,
                                                      Options opts = {});
@@ -147,12 +147,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.GetJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L177}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> GetJob(
       google::cloud::scheduler::v1::GetJobRequest const& request,
@@ -173,12 +173,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.CreateJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L189}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
       std::string const& parent, google::cloud::scheduler::v1::Job const& job,
@@ -192,12 +192,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.CreateJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L189}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
       google::cloud::scheduler::v1::CreateJobRequest const& request,
@@ -224,12 +224,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.UpdateJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L208}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
       google::cloud::scheduler::v1::Job const& job,
@@ -252,12 +252,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.UpdateJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L208}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
       google::cloud::scheduler::v1::UpdateJobRequest const& request,
@@ -308,12 +308,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.PauseJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L234}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> PauseJob(std::string const& name,
                                                        Options opts = {});
@@ -335,12 +335,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.PauseJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L234}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
       google::cloud::scheduler::v1::PauseJobRequest const& request,
@@ -362,12 +362,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.ResumeJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L246}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(std::string const& name,
                                                         Options opts = {});
@@ -388,12 +388,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.ResumeJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L246}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
       google::cloud::scheduler::v1::ResumeJobRequest const& request,
@@ -410,12 +410,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.RunJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L259}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> RunJob(std::string const& name,
                                                      Options opts = {});
@@ -431,12 +431,12 @@ class CloudSchedulerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
   /// [google.cloud.scheduler.v1.RunJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L259}
   /// [google.cloud.scheduler.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L34}
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   StatusOr<google::cloud::scheduler::v1::Job> RunJob(
       google::cloud::scheduler::v1::RunJobRequest const& request,

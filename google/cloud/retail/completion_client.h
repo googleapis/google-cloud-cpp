@@ -100,12 +100,12 @@ class CompletionServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::CompleteQueryResponse,google/cloud/retail/v2/completion_service.proto#L153}
+  /// @googleapis_link{google::cloud::retail::v2::CompleteQueryResponse,google/cloud/retail/v2/completion_service.proto#L154}
   ///
   /// [google.cloud.retail.v2.CompleteQueryRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L78}
   /// [google.cloud.retail.v2.CompleteQueryResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L153}
+  /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L154}
   ///
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
       google::cloud::retail::v2::CompleteQueryRequest const& request,
@@ -123,16 +123,16 @@ class CompletionServiceClient {
   /// Please enable Retail Search on Cloud Console before using this feature.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataRequest,google/cloud/retail/v2/import_config.proto#L254}
+  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataRequest,google/cloud/retail/v2/import_config.proto#L239}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataResponse,google/cloud/retail/v2/import_config.proto#L398}
+  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataResponse,google/cloud/retail/v2/import_config.proto#L383}
   ///
   /// [google.cloud.retail.v2.ImportCompletionDataRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L254}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L239}
   /// [google.cloud.retail.v2.ImportCompletionDataResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L398}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L383}
   ///
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
   ImportCompletionData(

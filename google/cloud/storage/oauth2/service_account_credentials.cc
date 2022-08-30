@@ -35,49 +35,12 @@ auto constexpr kP12PrivateKeyIdMarker = "--unknown--";
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {
-  auto credentials = nlohmann::json::parse(content, nullptr, false);
-  if (!credentials.is_object()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "parsing failed on data loaded from " +
-                      source);
-  }
-  std::string const private_key_id_key = "private_key_id";
-  std::string const private_key_key = "private_key";
-  std::string const token_uri_key = "token_uri";
-  std::string const client_email_key = "client_email";
-  for (auto const& key : {private_key_key, client_email_key}) {
-    if (credentials.count(key) == 0) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid ServiceAccountCredentials, the " +
-                        std::string(key) +
-                        " field is missing on data loaded from " + source);
-    }
-    if (credentials.value(key, "").empty()) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid ServiceAccountCredentials, the " +
-                        std::string(key) +
-                        " field is empty on data loaded from " + source);
-    }
-  }
-  // The token_uri field may be missing, but may not be empty:
-  if (credentials.count(token_uri_key) != 0 &&
-      credentials.value(token_uri_key, "").empty()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials, the " +
-                      std::string(token_uri_key) +
-                      " field is empty on data loaded from " + source);
-  }
-  return ServiceAccountCredentialsInfo{
-      credentials.value(client_email_key, ""),
-      credentials.value(private_key_id_key, ""),
-      credentials.value(private_key_key, ""),
-      // Some credential formats (e.g. gcloud's ADC file) don't contain a
-      // "token_uri" attribute in the JSON object.  In this case, we try using
-      // the default value.
-      credentials.value(token_uri_key, default_token_uri),
-      /*scopes*/ {},
-      /*subject*/ {}};
+  auto info = oauth2_internal::ParseServiceAccountCredentials(
+      content, source, default_token_uri);
+  if (!info.ok()) return info.status();
+  return ServiceAccountCredentialsInfo{info->client_email, info->private_key_id,
+                                       info->private_key,  info->token_uri,
+                                       info->scopes,       info->subject};
 }
 
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
@@ -92,40 +55,11 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point now) {
-  nlohmann::json assertion_header = {{"alg", "RS256"}, {"typ", "JWT"}};
-  if (!info.private_key_id.empty()) {
-    assertion_header["kid"] = info.private_key_id;
-  }
-
-  // Scopes must be specified in a space separated string:
-  //    https://google.aip.dev/auth/4112
-  auto scopes = [&info]() -> std::string {
-    if (!info.scopes) return GoogleOAuthScopeCloudPlatform();
-    return absl::StrJoin(*(info.scopes), " ");
-  }();
-
-  auto expiration = now + GoogleOAuthAccessTokenLifetime();
-  // As much as possible, do the time arithmetic using the std::chrono types.
-  // Convert to an integer only when we are dealing with timestamps since the
-  // epoch. Note that we cannot use `time_t` directly because that might be a
-  // floating point.
-  auto const now_from_epoch =
-      static_cast<std::intmax_t>(std::chrono::system_clock::to_time_t(now));
-  auto const expiration_from_epoch = static_cast<std::intmax_t>(
-      std::chrono::system_clock::to_time_t(expiration));
-  nlohmann::json assertion_payload = {
-      {"iss", info.client_email},
-      {"scope", scopes},
-      {"aud", info.token_uri},
-      {"iat", now_from_epoch},
-      // Resulting access token should expire after one hour.
-      {"exp", expiration_from_epoch}};
-  if (info.subject) {
-    assertion_payload["sub"] = *(info.subject);
-  }
-
-  // Note: we don't move here as it would prevent copy elision.
-  return std::make_pair(assertion_header.dump(), assertion_payload.dump());
+  return oauth2_internal::AssertionComponentsFromInfo(
+      oauth2_internal::ServiceAccountCredentialsInfo{
+          info.client_email, info.private_key_id, info.private_key,
+          info.token_uri, info.scopes, info.subject},
+      now);
 }
 
 std::string MakeJWTAssertion(std::string const& header,
@@ -136,14 +70,14 @@ std::string MakeJWTAssertion(std::string const& header,
 }
 
 std::string CreateServiceAccountRefreshPayload(
-    ServiceAccountCredentialsInfo const& info, std::string const& grant_type,
+    ServiceAccountCredentialsInfo const& info, std::string const&,
     std::chrono::system_clock::time_point now) {
-  auto assertion_components = AssertionComponentsFromInfo(info, now);
-  std::string payload = grant_type;
-  payload += "&assertion=";
-  payload += MakeJWTAssertion(assertion_components.first,
-                              assertion_components.second, info.private_key);
-  return payload;
+  auto params = oauth2_internal::CreateServiceAccountRefreshPayload(
+      oauth2_internal::ServiceAccountCredentialsInfo{
+          info.client_email, info.private_key_id, info.private_key,
+          info.token_uri, info.scopes, info.subject},
+      now);
+  return absl::StrJoin(params, "&", absl::PairFormatter("="));
 }
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>

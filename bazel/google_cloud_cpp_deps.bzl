@@ -31,10 +31,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "platforms",
             urls = [
-                "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.5/platforms-0.0.5.tar.gz",
-                "https://github.com/bazelbuild/platforms/releases/download/0.0.5/platforms-0.0.5.tar.gz",
+                "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.6/platforms-0.0.6.tar.gz",
+                "https://github.com/bazelbuild/platforms/releases/download/0.0.6/platforms-0.0.6.tar.gz",
             ],
-            sha256 = "379113459b0feaf6bfbb584a91874c065078aa673222846ac765f86661c27407",
+            sha256 = "5308fc1d8865406a49427ba24a9ab53087f17f5266a7aabbfc28823f3916e1ca",
         )
 
     # Load rules_cc, used by googletest
@@ -85,10 +85,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/84ed8f9a201ed417636dbf46c56407c21f21ff9e.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/343f52cd370556819da24df078308f3f709ff24b.tar.gz",
             ],
-            strip_prefix = "googleapis-84ed8f9a201ed417636dbf46c56407c21f21ff9e",
-            sha256 = "2cbeeea457e0e499d617c1c9cd32ae8647bc6c503464795f26f42b5c9e19548c",
+            strip_prefix = "googleapis-343f52cd370556819da24df078308f3f709ff24b",
+            sha256 = "7248822e4d4cf4dbb4a4bc8e4eab9fc098f1be34453d7839a3f04e0a1a150ba0",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
             # Scaffolding for patching googleapis after download. For example:
             #   patches = ["googleapis.patch"]
