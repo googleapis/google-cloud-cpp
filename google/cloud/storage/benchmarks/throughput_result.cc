@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/benchmarks/throughput_result.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include "google/cloud/storage/benchmarks/throughput_options.h"
 #include <sstream>
 #include <string>
 
@@ -32,13 +33,15 @@ std::string CleanupCsv(std::string v) {
 
 }  // namespace
 
-void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
+void PrintAsCsv(std::ostream& os, ThroughputOptions const& options,
+                ThroughputResult const& r) {
   auto const start = FormatTimestamp(r.start);
 
-  os << ToString(r.library)                    // clang-format hack
+  os << start                                  // clang-format hack
+     << ',' << CleanupCsv(options.labels)      //
+     << ',' << ToString(r.library)             //
      << ',' << ToString(r.transport)           //
      << ',' << ToString(r.op)                  //
-     << ',' << start                           //
      << ',' << r.object_size                   //
      << ',' << r.transfer_offset               //
      << ',' << r.transfer_size                 //
@@ -53,17 +56,16 @@ void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
      << ',' << CleanupCsv(r.generation)        //
      << ',' << CleanupCsv(r.upload_id)         //
      << ',' << CleanupCsv(r.retry_count)       //
-     << ',' << CleanupCsv(r.notes)             //
      << ',' << r.status.code()                 //
      << ',' << CleanupCsv(r.status.message())  //
      << '\n';
 }
 
 void PrintThroughputResultHeader(std::ostream& os) {
-  os << "Library,Transport,Op,Start,ObjectSize,TransferOffset,TransferSize"
-     << ",AppBufferSize,Crc32cEnabled,MD5Enabled"
+  os << "Start,Labels,Library,Transport,Op,ObjectSize,TransferOffset"
+     << ",TransferSize,AppBufferSize,Crc32cEnabled,MD5Enabled"
      << ",ElapsedTimeUs,CpuTimeUs,Peer,BucketName,ObjectName,Generation"
-     << ",UploadId,RetryCount,Notes,StatusCode,Status\n";
+     << ",UploadId,RetryCount,StatusCode,Status\n";
 }
 
 char const* ToString(OpType op) {

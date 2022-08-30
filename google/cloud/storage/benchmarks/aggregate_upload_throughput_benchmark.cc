@@ -142,11 +142,7 @@ int main(int argc, char* argv[]) {
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
 
-  auto current_time = [] {
-    return FormatTimestamp(std::chrono::system_clock::now());
-  };
-
-  std::cout << "# Start time: " << current_time()
+  std::cout << "# Start time: " << gcs_bm::CurrentTime()
             << "\n# Labels: " << options->labels
             << "\n# Bucket Name: " << options->bucket_name
             << "\n# Object Prefix: " << options->object_prefix
@@ -210,7 +206,7 @@ int main(int argc, char* argv[]) {
   // header because sometimes we interrupt the benchmark and these tools
   // require a header even for empty files.
   std::cout
-      << "Iteration,Start,Labels,ObjectCount,ResumableUploadChunkSize"
+      << "Start,Labels,Iteration,ObjectCount,ResumableUploadChunkSize"
       << ",ThreadCount,Api,ClientPerThread"
       << ",BucketName,ObjectName,UploadId,Peer,StatusCode"
       << ",BytesUploaded,ElapsedMicroseconds"
@@ -250,9 +246,9 @@ int main(int argc, char* argv[]) {
       for (auto const& d : r.details) {
         // Join the iteration details with the per-upload details. That makes
         // it easier to analyze the data in external scripts.
-        std::cout << d.iteration                                  //
-                  << ',' << FormatTimestamp(d.start_time)         //
+        std::cout << FormatTimestamp(d.start_time)                //
                   << ',' << labels                                //
+                  << ',' << d.iteration                           //
                   << ',' << options->object_count                 //
                   << ',' << options->resumable_upload_chunk_size  //
                   << ',' << options->thread_count                 //
@@ -277,7 +273,7 @@ int main(int argc, char* argv[]) {
     // the operator of these benchmarks (coryan@) is an impatient person.
     auto const bandwidth =
         FormatBandwidthGbPerSecond(uploaded_bytes, usage.elapsed_time);
-    std::cout << "# " << current_time() << " uploaded=" << uploaded_bytes
+    std::cout << "# " << gcs_bm::CurrentTime() << " uploaded=" << uploaded_bytes
               << " cpu_time=" << absl::FromChrono(usage.cpu_time)
               << " elapsed_time=" << absl::FromChrono(usage.elapsed_time)
               << " Gbit/s=" << bandwidth << std::endl;
@@ -410,8 +406,13 @@ google::cloud::StatusOr<AggregateUploadThroughputOptions> ParseArgs(
       GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES").value_or("") == "yes";
   if (auto_run) return SelfTest(argv[0]);
 
-  return gcs_bm::ParseAggregateUploadThroughputOptions({argv, argv + argc},
-                                                       kDescription);
+  auto options = gcs_bm::ParseAggregateUploadThroughputOptions(
+      {argv, argv + argc}, kDescription);
+  if (!options) return options;
+  // We don't want to get the default labels in the unit tests, as they can
+  // flake.
+  options->labels = gcs_bm::AddDefaultLabels(std::move(options->labels));
+  return options;
 }
 
 }  // namespace

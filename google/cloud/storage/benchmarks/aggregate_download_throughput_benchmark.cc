@@ -131,10 +131,6 @@ gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
   return gcs::Client(std::move(opts));
 }
 
-std::string CurrentTime() {
-  return FormatTimestamp(std::chrono::system_clock::now());
-};
-
 void PrintResults(AggregateDownloadThroughputOptions const& options,
                   std::size_t object_count, std::uint64_t dataset_size,
                   std::vector<TaskResult> const& iteration_results,
@@ -172,7 +168,7 @@ int main(int argc, char* argv[]) {
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
 
-  std::cout << "# Start time: " << CurrentTime()
+  std::cout << "# Start time: " << gcs_bm::CurrentTime()
             << "\n# Labels: " << options->labels
             << "\n# Bucket Name: " << options->bucket_name
             << "\n# Object Prefix: " << options->object_prefix
@@ -218,7 +214,7 @@ int main(int argc, char* argv[]) {
   // our analysis tools (typically Python pandas, but could be R). Flush the
   // header because sometimes we interrupt the benchmark and these tools
   // require a header even for empty files.
-  std::cout << "Iteration,Start,Labels,ObjectCount,DatasetSize,ThreadCount"
+  std::cout << "Start,Labels,Iteration,ObjectCount,DatasetSize,ThreadCount"
             << ",RepeatsPerIteration,ReadSize,ReadBufferSize,Api"
             << ",ClientPerThread"
             << ",StatusCode,Peer,BytesDownloaded,ElapsedMicroseconds"
@@ -364,8 +360,13 @@ google::cloud::StatusOr<AggregateDownloadThroughputOptions> ParseArgs(
       GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES").value_or("") == "yes";
   if (auto_run) return SelfTest(argv[0]);
 
-  return gcs_bm::ParseAggregateDownloadThroughputOptions({argv, argv + argc},
-                                                         kDescription);
+  auto options = gcs_bm::ParseAggregateDownloadThroughputOptions(
+      {argv, argv + argc}, kDescription);
+  if (!options) return options;
+  // We don't want to get the default labels in the unit tests, as they can
+  // flake.
+  options->labels = gcs_bm::AddDefaultLabels(std::move(options->labels));
+  return options;
 }
 
 void PrintResults(AggregateDownloadThroughputOptions const& options,
@@ -395,9 +396,9 @@ void PrintResults(AggregateDownloadThroughputOptions const& options,
     for (auto const& d : r.details) {
       // Join the iteration details with the per-download details. That makes
       // it easier to analyze the data in external scripts.
-      std::cout << ',' << d.iteration                    //
-                << ',' << FormatTimestamp(d.start_time)  //
-                << labels                                //
+      std::cout << FormatTimestamp(d.start_time)         //
+                << ',' << labels                         //
+                << ',' << d.iteration                    //
                 << ',' << object_count                   //
                 << ',' << dataset_size                   //
                 << ',' << options.thread_count           //
@@ -420,7 +421,8 @@ void PrintResults(AggregateDownloadThroughputOptions const& options,
   // the operator of these benchmarks (coryan@) is an impatient person.
   auto const bandwidth =
       FormatBandwidthGbPerSecond(downloaded_bytes, usage.elapsed_time);
-  std::cout << "# " << CurrentTime() << " downloaded=" << downloaded_bytes
+  std::cout << "# " << gcs_bm::CurrentTime()
+            << " downloaded=" << downloaded_bytes
             << " cpu_time=" << absl::FromChrono(usage.cpu_time)
             << " elapsed_time=" << absl::FromChrono(usage.elapsed_time)
             << " Gbit/s=" << bandwidth << std::endl;

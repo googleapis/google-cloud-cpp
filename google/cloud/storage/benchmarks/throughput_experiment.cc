@@ -98,10 +98,10 @@ class ResumableUpload : public ThroughputExperiment {
                           ? std::to_string(writer.metadata()->generation())
                           : std::string{};
 
-    return ThroughputResult{ExperimentLibrary::kCppClient,
+    return ThroughputResult{start,
+                            ExperimentLibrary::kCppClient,
                             transport_,
                             kOpWrite,
-                            start,
                             config.object_size,
                             /*transfer_offset=*/0,
                             config.object_size,
@@ -116,8 +116,7 @@ class ResumableUpload : public ThroughputExperiment {
                             object_name,
                             std::move(generation),
                             std::move(upload_id),
-                            ExtractRetryCount(writer.headers()),
-                            /*notes=*/{}};
+                            ExtractRetryCount(writer.headers())};
   }
 
  private:
@@ -166,10 +165,10 @@ class SimpleUpload : public ThroughputExperiment {
     auto generation = object_metadata
                           ? std::to_string(object_metadata->generation())
                           : std::string{};
-    return ThroughputResult{ExperimentLibrary::kCppClient,
+    return ThroughputResult{start,
+                            ExperimentLibrary::kCppClient,
                             transport_,
                             kOpInsert,
-                            start,
                             config.object_size,
                             /*transfer_offset=*/0,
                             config.object_size,
@@ -184,8 +183,7 @@ class SimpleUpload : public ThroughputExperiment {
                             object_name,
                             std::move(generation),
                             "[upload-id-N/A]",
-                            "[retry-count-unknown]",
-                            /*notes=*/{}};
+                            "[retry-count-unknown]"};
   }
 
  private:
@@ -234,10 +232,10 @@ class DownloadObject : public ThroughputExperiment {
       transfer_size += reader.gcount();
     }
     auto const usage = timer.Sample();
-    return ThroughputResult{ExperimentLibrary::kCppClient,
+    return ThroughputResult{start,
+                            ExperimentLibrary::kCppClient,
                             transport_,
                             config.op,
-                            start,
                             config.object_size,
                             offset,
                             transfer_size,
@@ -252,8 +250,7 @@ class DownloadObject : public ThroughputExperiment {
                             object_name,
                             std::to_string(reader.generation().value_or(-1)),
                             "[upload-id-N/A]",
-                            ExtractRetryCount(reader.headers()),
-                            /*notes=*/{}};
+                            ExtractRetryCount(reader.headers())};
   }
 
  private:
@@ -339,10 +336,10 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     curl_easy_cleanup(hnd);
     curl_slist_free_all(slist1);
     auto const usage = timer.Sample();
-    return ThroughputResult{ExperimentLibrary::kRaw,
+    return ThroughputResult{start,
+                            ExperimentLibrary::kRaw,
                             ExperimentTransport::kXml,
                             config.op,
-                            start,
                             config.object_size,
                             /*transfer_offset=*/0,
                             config.object_size,
@@ -357,8 +354,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
                             object_name,
                             "[generation-N/A]",
                             "[upload-id-N/A]",
-                            "[retry-count-N/A]",
-                            /*notes=*/{}};
+                            "[retry-count-N/A]"};
   }
 
  private:
@@ -416,10 +412,10 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
         ::google::cloud::MakeStatusFromRpcError(stream->Finish());
     auto const usage = timer.Sample();
 
-    return ThroughputResult{ExperimentLibrary::kRaw,
+    return ThroughputResult{start,
+                            ExperimentLibrary::kRaw,
                             transport_,
                             config.op,
-                            start,
                             config.object_size,
                             /*transfer_offset=*/0,
                             bytes_received,
@@ -434,8 +430,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
                             object_name,
                             generation,
                             "[upload-id-N/A]",
-                            "[retry-count-N/A]",
-                            /*notes=*/{}};
+                            "[retry-count-N/A]"};
   }
 
  private:

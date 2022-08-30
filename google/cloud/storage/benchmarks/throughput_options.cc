@@ -234,6 +234,8 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&wants_description](std::string const&) { wants_description = true; }},
       {"--project-id", "use the given project id for the benchmark",
        [&options](std::string const& val) { options.project_id = val; }},
+      {"--labels", "user-defined labels to tag the results",
+       [&options](std::string const& val) { options.labels = val; }},
       {"--region", "use the given region for the benchmark",
        [&options](std::string const& val) { options.region = val; }},
       {"--bucket-prefix", "use this prefix when creating the bucket",

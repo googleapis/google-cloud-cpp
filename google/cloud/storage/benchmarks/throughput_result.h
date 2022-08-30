@@ -22,6 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage_benchmarks {
+struct ThroughputOptions;
 
 /// The operation used for the experiment
 enum OpType {
@@ -57,14 +58,14 @@ enum OpType {
  * etc.) as well as its results: status, CPU time, and elapsed time.
  */
 struct ThroughputResult {
+  /// The start time for this result.
+  std::chrono::system_clock::time_point start;
   /// The library used in this experiment
   ExperimentLibrary library;
   /// The transport used in this experiment
   ExperimentTransport transport;
   /// The type of operation in this experiment.
   OpType op;
-  /// The start time for this result.
-  std::chrono::system_clock::time_point start;
   /// The total size of the object involved in this experiment. Currently also
   /// represents the number of bytes transferred.
   std::int64_t object_size;
@@ -100,12 +101,11 @@ struct ThroughputResult {
   std::string upload_id;
   /// Retry Count
   std::string retry_count;
-  /// Additional notes
-  std::string notes;
 };
 
 /// Print @p r as a CSV line.
-void PrintAsCsv(std::ostream& os, ThroughputResult const& r);
+void PrintAsCsv(std::ostream& os, ThroughputOptions const& options,
+                ThroughputResult const& r);
 
 /// Print the field names produced by `PrintAsCsv()`
 void PrintThroughputResultHeader(std::ostream& os);

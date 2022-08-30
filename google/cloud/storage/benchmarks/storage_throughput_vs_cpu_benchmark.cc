@@ -105,7 +105,8 @@ A helper script in this directory can generate pretty graphs from the output of
 this program.
 )""";
 
-using ResultHandler = std::function<void(gcs_bm::ThroughputResult)>;
+using ResultHandler =
+    std::function<void(ThroughputOptions const&, gcs_bm::ThroughputResult)>;
 
 gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options);
 
@@ -166,10 +167,11 @@ int main(int argc, char* argv[]) {
               << "]\n# " << name << " Quantum: " << quantum;
   };
 
-  std::cout << "# Running test on bucket: " << bucket_name << "\n# Start time: "
-            << google::cloud::internal::FormatRfc3339(
-                   std::chrono::system_clock::now())
-            << "\n# Region: " << options->region << "\n# Duration: "
+  std::cout << "# Start time: " << gcs_bm::CurrentTime()      //
+            << "\n# Labels: " << options->labels              //
+            << "\n# Running test on bucket: " << bucket_name  //
+            << "\n# Region: " << options->region              //
+            << "\n# Duration: "
             << absl::FormatDuration(absl::FromChrono(options->duration))
             << "\n# Thread Count: " << options->thread_count
             << "\n# Client Per Thread: " << options->client_per_thread;
@@ -228,9 +230,10 @@ int main(int argc, char* argv[]) {
 
   // Serialize output to `std::cout`.
   std::mutex mu;
-  auto handler = [&mu](gcs_bm::ThroughputResult const& result) {
+  auto handler = [&mu](ThroughputOptions const& options,
+                       gcs_bm::ThroughputResult const& result) {
     std::lock_guard<std::mutex> lk(mu);
-    gcs_bm::PrintAsCsv(std::cout, result);
+    gcs_bm::PrintAsCsv(std::cout, options, result);
     if (!result.status.ok()) {
       google::cloud::LogSink::Instance().Flush();
     }
@@ -403,16 +406,16 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
             gcs_bm::kOpWrite, object_size, write_buffer_size, enable_crc,
             enable_md5, /*read_range=*/absl::nullopt});
     auto status = upload_result.status;
-    handler(std::move(upload_result));
+    handler(options, std::move(upload_result));
 
     if (!status.ok()) continue;
 
     auto& downloader = downloaders[downloader_generator(generator)];
     for (auto op : {gcs_bm::kOpRead0, gcs_bm::kOpRead1, gcs_bm::kOpRead2}) {
-      handler(downloader->Run(
-          bucket_name, object_name,
-          gcs_bm::ThroughputExperimentConfig{op, object_size, read_buffer_size,
-                                             enable_crc, enable_md5, range}));
+      handler(options, downloader->Run(bucket_name, object_name,
+                                       gcs_bm::ThroughputExperimentConfig{
+                                           op, object_size, read_buffer_size,
+                                           enable_crc, enable_md5, range}));
     }
     auto client = provider(ExperimentTransport::kJson);
     (void)client.DeleteObject(bucket_name, object_name);
@@ -468,7 +471,13 @@ google::cloud::StatusOr<ThroughputOptions> ParseArgs(int argc, char* argv[]) {
           .value_or("") == "yes";
   if (auto_run) return SelfTest(argv[0]);
 
-  return gcs_bm::ParseThroughputOptions({argv, argv + argc}, kDescription);
+  auto options =
+      gcs_bm::ParseThroughputOptions({argv, argv + argc}, kDescription);
+  if (!options) return options;
+  // We don't want to get the default labels in the unit tests, as they can
+  // flake.
+  options->labels = gcs_bm::AddDefaultLabels(std::move(options->labels));
+  return options;
 }
 
 }  // namespace
