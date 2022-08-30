@@ -20,6 +20,12 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 
 cd "${PROJECT_ROOT}"
+# TODO(b/239480982) - remove debugging helpers
+io::log_h1 "DEBUG $PWD"
+ls -l || echo "ls -l failed"
+git status || echo "git status failed"
+git ls-files || echo "git ls-files failed"
+echo "DEBUG $PWD END"
 
 export RUN_INTEGRATION_TESTS="no"
 
@@ -110,6 +116,20 @@ readonly CACHE_NAME="cache-macos-${BUILD_NAME}"
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
+# TODO(b/239480982) - remove debugging helpers
+io::log_h1 "DEBUG $PWD"
+troubleshoot_sleep() {
+  io::log_h1 "DEBUG File status at exit"
+  git status || echo "git status failed"
+  ls -l /bin/sleep || echo "ls -l /bin/sleep failed"
+  io::log_h1 "DEBUG Sleeping to troubleshoot problems"
+  /bin/sleep 3600
+}
+trap troubleshoot_sleep EXIT
+ls -l || echo "ls -l failed"
+git status || echo "git status failed"
+echo "DEBUG $PWD END"
+
 io::log_h1 "Starting Build: ${BUILD_NAME}"
 if "ci/kokoro/macos/builds/${BUILD_NAME}.sh"; then
   io::log_green "build script was successful."
@@ -123,7 +143,7 @@ else
   exit_status=1
 fi
 
-if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
+if false; then # DEBUG [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
   # Our CI system (Kokoro) syncs the data in this directory to somewhere after
   # the build completes. Removing the cmake-out/ dir shaves minutes off this
   # process. This is safe as long as we don't wish to save any build artifacts.
@@ -132,6 +152,10 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; the
     xargs -0 -t rm -rf || true
 else
   io::log_yellow "Not a CI build; skipping artifact cleanup"
+fi
+
+if [[ "${exit_status}" == "0" ]]; then
+  trap - EXIT
 fi
 
 exit "${exit_status}"
