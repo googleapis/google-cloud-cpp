@@ -13,11 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/bigquery_read_client.h"
+#include "google/cloud/bigquery/bigquery_read_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/bigquery_read_options.h"
 #include "google/cloud/bigquery/internal/bigquery_read_stub_factory.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -35,6 +36,31 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::NotNull;
+
+/// In order to reduce flakiness, allow retries on CreateReadSession and
+/// SplitReadStream.
+class RelaxedTestIdempotencyPolicy
+    : public BigQueryReadConnectionIdempotencyPolicy {
+ public:
+  ~RelaxedTestIdempotencyPolicy() override = default;
+
+  std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy> clone()
+      const override {
+    return absl::make_unique<RelaxedTestIdempotencyPolicy>();
+  }
+
+  google::cloud::Idempotency CreateReadSession(
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&)
+      override {
+    return google::cloud::Idempotency::kIdempotent;
+  }
+
+  google::cloud::Idempotency SplitReadStream(
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&)
+      override {
+    return google::cloud::Idempotency::kIdempotent;
+  }
+};
 
 class BigQueryReadIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -79,19 +105,6 @@ std::int64_t CountRowsFromStream(
     }
   }
   return num_rows;
-}
-
-template <typename Functor>
-google::cloud::internal::invoke_result_t<Functor> StatusRetryLoop(
-    Functor&& operation,
-    std::vector<int> const& delay_seconds = {10, 30, 60, 60}) {
-  google::cloud::internal::invoke_result_t<Functor> status;
-  for (auto delay : delay_seconds) {
-    status = operation();
-    if (status.ok()) break;
-    std::this_thread::sleep_for(std::chrono::seconds(delay));
-  }
-  return status;
 }
 
 TEST_F(BigQueryReadIntegrationTest, CreateReadSessionFailure) {
@@ -145,8 +158,15 @@ TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoFailure) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, CreateReadSessionSuccess) {
-  auto client =
-      BigQueryReadClient(MakeBigQueryReadConnection(TestSuccessOptions()));
+  auto client = BigQueryReadClient(MakeBigQueryReadConnection(
+      TestSuccessOptions()
+          .set<bigquery::BigQueryReadRetryPolicyOption>(
+              absl::make_unique<BigQueryReadLimitedErrorCountRetryPolicy>(4))
+          .set<bigquery::BigQueryReadBackoffPolicyOption>(
+              absl::make_unique<ExponentialBackoffPolicy>(
+                  std::chrono::seconds(15), std::chrono::seconds(60), 2.0))
+          .set<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>(
+              absl::make_unique<RelaxedTestIdempotencyPolicy>())));
   ::google::cloud::bigquery::storage::v1::ReadSession read_session;
   read_session.set_data_format(
       google::cloud::bigquery::storage::v1::DataFormat::AVRO);
@@ -191,9 +211,7 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsSuccess) {
       "usa_1910_current");
   read_session.mutable_read_options()->set_row_restriction("state = \"WA\"");
   *session_request.mutable_read_session() = read_session;
-  auto session_response = StatusRetryLoop(
-      [&] { return client.CreateReadSession(session_request); });
-
+  auto session_response = client.CreateReadSession(session_request);
   ASSERT_THAT(session_response, IsOk());
   EXPECT_GT(session_response->streams().size(), 0);
 
