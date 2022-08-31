@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/curl_wrappers.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
@@ -168,6 +169,17 @@ class CurlInitializer {
   CurlInitializer() { curl_global_init(CURL_GLOBAL_ALL); }
   ~CurlInitializer() { curl_global_cleanup(); }
 };
+
+auto constexpr kMaxDebugLength = 128;
+
+std::string CleanupDebugData(char const* data, std::size_t size) {
+  auto const n = std::min<std::size_t>(size, kMaxDebugLength);
+  auto text = std::string{data, n};
+  std::transform(text.begin(), text.end(), text.begin(),
+                 [](auto c) { return std::isprint(c) ? c : '.'; });
+  return text;
+}
+
 }  // namespace
 
 std::string CurlSslLibraryId() {
@@ -243,26 +255,59 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
   return size;
 }
 
+std::string DebugInfo(char const* data, std::size_t size) {
+  return absl::StrCat("== curl(Info): ", absl::string_view{data, size});
+}
+
+std::string DebugRecvHeader(char const* data, std::size_t size) {
+  return absl::StrCat("<< curl(Recv Header): ", absl::string_view{data, size});
+}
+
+std::string DebugSendHeader(char const* data, std::size_t size) {
+  auto header = absl::string_view{data, size};
+  auto const match = absl::string_view{": Bearer "};
+  auto const limit = match.size() + 32;
+  auto const bearer_pos = header.find(match);
+  if (bearer_pos != std::string::npos) {
+    auto const nl_pos = header.find('\n', bearer_pos);
+    auto const n = std::min(limit, nl_pos - bearer_pos);
+    return absl::StrCat(">> curl(Send Header): ", header.substr(0, bearer_pos),
+                        header.substr(bearer_pos, n), "...<truncated>...",
+                        header.substr(nl_pos), "\n");
+  }
+  return absl::StrCat(">> curl(Send Header): ", header);
+}
+
+std::string DebugInData(char const* data, std::size_t size) {
+  return absl::StrCat("<< curl(Recv Data): size=", size,
+                      " data=", CleanupDebugData(data, size), "\n");
+}
+
+std::string DebugOutData(char const* data, std::size_t size) {
+  return absl::StrCat(">> curl(Send Data): size=", size,
+                      " data=", CleanupDebugData(data, size), "\n");
+}
+
 void CurlInitializeOnce(Options const& options) {
   static CurlInitializer curl_initializer;
   static bool const kInitialized = [&options]() {
     // The Google Cloud Storage C++ client library depends on libcurl, which
-    // depends on many different SSL libraries, depending on the library the
-    // library needs to take action to be thread-safe. More details can be
-    // found here:
+    // can use different SSL libraries. Depending on the SSL implementation,
+    // we need to take action to be thread-safe. More details can be found here:
     //
     //     https://curl.haxx.se/libcurl/c/threadsafe.html
     //
     InitializeSslLocking(options.get<EnableCurlSslLockingOption>());
 
-    // libcurl recommends turning on CURLOPT_NOSIGNAL for multi-threaded
-    // applications: "Note that setting CURLOPT_NOSIGNAL to 0L will not work in
-    // a threaded situation as there will be race where libcurl risks restoring
-    // the former signal handler while another thread should still ignore it."
+    // libcurl recommends turning on `CURLOPT_NOSIGNAL` for threaded
+    // applications: "Note that setting `CURLOPT_NOSIGNAL` to 0L will not work
+    // in a threaded situation as there will be race where libcurl risks
+    // restoring the former signal handler while another thread should still
+    // ignore it."
     //
-    // libcurl further recommends that we setup our own signal handler for
-    // SIGPIPE when using multiple threads: "When CURLOPT_NOSIGNAL is set to
-    // 1L, your application needs to deal with the risk of a SIGPIPE (that at
+    // libcurl further recommends that we set up our own signal handler for
+    // SIGPIPE when using multiple threads: "When `CURLOPT_NOSIGNAL` is set to
+    // 1L, your application needs to deal with the risk of a `SIGPIPE` (that at
     // least the OpenSSL backend can trigger)".
     //
     //     https://curl.haxx.se/libcurl/c/threadsafe.html
