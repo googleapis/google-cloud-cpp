@@ -30,44 +30,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::storage::internal::BinaryDataAsDebugString;
-
-std::size_t const kMaxDataDebugSize = 48;
+using ::google::cloud::rest_internal::DebugInData;
+using ::google::cloud::rest_internal::DebugInfo;
+using ::google::cloud::rest_internal::DebugOutData;
+using ::google::cloud::rest_internal::DebugRecvHeader;
+using ::google::cloud::rest_internal::DebugSendHeader;
 
 extern "C" int CurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
                                        std::size_t size, void* userptr) {
   auto* debug_info = reinterpret_cast<CurlHandle::DebugInfo*>(userptr);
   switch (type) {
     case CURLINFO_TEXT:
-      debug_info->buffer += "== curl(Info): " + std::string(data, size);
+      debug_info->buffer += DebugInfo(data, size);
       break;
     case CURLINFO_HEADER_IN:
-      debug_info->buffer += "<< curl(Recv Header): " + std::string(data, size);
+      debug_info->buffer += DebugRecvHeader(data, size);
       break;
     case CURLINFO_HEADER_OUT:
-      debug_info->buffer += ">> curl(Send Header): " + std::string(data, size);
+      debug_info->buffer += DebugSendHeader(data, size);
       break;
     case CURLINFO_DATA_IN:
       ++debug_info->recv_count;
       if (size == 0) {
         ++debug_info->recv_zero_count;
-      } else {
-        debug_info->buffer += ">> curl(Recv Data): size=";
-        debug_info->buffer += std::to_string(size) + "\n";
-        debug_info->buffer +=
-            BinaryDataAsDebugString(data, size, kMaxDataDebugSize);
       }
+      debug_info->buffer += DebugInData(data, size);
       break;
     case CURLINFO_DATA_OUT:
       ++debug_info->send_count;
       if (size == 0) {
         ++debug_info->send_zero_count;
-      } else {
-        debug_info->buffer += ">> curl(Send Data): size=";
-        debug_info->buffer += std::to_string(size) + "\n";
-        debug_info->buffer +=
-            BinaryDataAsDebugString(data, size, kMaxDataDebugSize);
       }
+      debug_info->buffer += DebugOutData(data, size);
       break;
     case CURLINFO_SSL_DATA_IN:
     case CURLINFO_SSL_DATA_OUT:
