@@ -15,8 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_CLIENT_H
 
-#include "google/cloud/storage/internal/curl_client.h"
-#include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
 #include <string>
@@ -147,8 +145,8 @@ class HybridClient : public RawClient {
  private:
   explicit HybridClient(Options const& options);
 
-  std::shared_ptr<GrpcClient> grpc_;
-  std::shared_ptr<CurlClient> curl_;
+  std::shared_ptr<RawClient> grpc_;
+  std::shared_ptr<RawClient> curl_;
 };
 
 }  // namespace internal

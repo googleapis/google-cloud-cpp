@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/hybrid_client.h"
+#include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
+#include "google/cloud/storage/internal/rest_client.h"
 
 namespace google {
 namespace cloud {
@@ -27,7 +29,7 @@ std::shared_ptr<RawClient> HybridClient::Create(Options const& options) {
 
 HybridClient::HybridClient(Options const& options)
     : grpc_(GrpcClient::Create(DefaultOptionsGrpc(options))),
-      curl_(CurlClient::Create(DefaultOptionsWithCredentials(options))) {}
+      curl_(RestClient::Create(DefaultOptionsWithCredentials(options))) {}
 
 ClientOptions const& HybridClient::client_options() const {
   return curl_->client_options();
