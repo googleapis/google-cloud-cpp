@@ -22,17 +22,16 @@ namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Formats a block of data for debug printing.
  *
- * Takes a block of data, possible with non-printable characters and creates
- * a string with two columns.  The first column is 24 characters wide and has
- * the non-printable characters replaced by periods.  The second column is 48
- * characters wide and contains the hexdump of the data.  The columns are
- * separated by a single space.
+ * Converts non-printable characters to '.'. If requested, it truncates the
+ * output and adds a '...<truncated>...' marker when it does so.
  */
 std::string BinaryDataAsDebugString(char const* data, std::size_t size,
                                     std::size_t max_output_bytes = 0);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud

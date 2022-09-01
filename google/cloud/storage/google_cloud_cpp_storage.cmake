@@ -47,7 +47,6 @@ add_library(
     internal/access_control_common_parser.h
     internal/access_token_credentials.cc
     internal/access_token_credentials.h
-    internal/binary_data_as_debug_string.cc
     internal/binary_data_as_debug_string.h
     internal/bucket_access_control_parser.cc
     internal/bucket_access_control_parser.h
@@ -437,7 +436,6 @@ if (BUILD_TESTING)
         internal/access_control_common_parser_test.cc
         internal/access_control_common_test.cc
         internal/access_token_credentials_test.cc
-        internal/binary_data_as_debug_string_test.cc
         internal/bucket_acl_requests_test.cc
         internal/bucket_requests_test.cc
         internal/complex_option_test.cc

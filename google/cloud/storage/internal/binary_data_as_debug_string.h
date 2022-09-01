@@ -16,24 +16,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BINARY_DATA_AS_DEBUG_STRING_H
 
 #include "google/cloud/storage/version.h"
-#include <string>
+#include "google/cloud/internal/binary_data_as_debug_string.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-/**
- * Formats a block of data for debug printing.
- *
- * Takes a block of data, possible with non-printable characters and creates
- * a string with two columns.  The first column is 24 characters wide and has
- * the non-printable characters replaced by periods.  The second column is 48
- * characters wide and contains the hexdump of the data.  The columns are
- * separated by a single space.
- */
-std::string BinaryDataAsDebugString(char const* data, std::size_t size,
-                                    std::size_t max_output_bytes = 0);
+
+using ::google::cloud::rest_internal::BinaryDataAsDebugString;
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
