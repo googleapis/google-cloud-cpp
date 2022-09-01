@@ -165,14 +165,10 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
   os << "InsertObjectMediaRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
   r.DumpOptions(os, ", ");
-  std::size_t constexpr kMaxDumpSize = 1024;
-  if (r.contents().size() > kMaxDumpSize) {
-    os << ", contents[0..1024]=\n"
-       << BinaryDataAsDebugString(r.contents().data(), kMaxDumpSize);
-  } else {
-    os << ", contents=\n"
-       << BinaryDataAsDebugString(r.contents().data(), r.contents().size());
-  }
+  std::size_t constexpr kMaxDumpSize = 128;
+  os << ", contents="
+     << BinaryDataAsDebugString(r.contents().data(), r.contents().size(),
+                                kMaxDumpSize);
   return os << "}";
 }
 

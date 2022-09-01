@@ -148,7 +148,6 @@ google_cloud_cpp_storage_srcs = [
     "idempotency_policy.cc",
     "internal/access_control_common_parser.cc",
     "internal/access_token_credentials.cc",
-    "internal/binary_data_as_debug_string.cc",
     "internal/bucket_access_control_parser.cc",
     "internal/bucket_acl_requests.cc",
     "internal/bucket_metadata_parser.cc",
