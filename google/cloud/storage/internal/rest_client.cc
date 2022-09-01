@@ -180,7 +180,9 @@ RestClient::RestClient(
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       options_(std::move(options)),
       backwards_compatibility_options_(
-          MakeBackwardsCompatibleClientOptions(options_)) {}
+          MakeBackwardsCompatibleClientOptions(options_)) {
+  rest_internal::CurlInitializeOnce(options_);
+}
 
 ClientOptions const& RestClient::client_options() const {
   return backwards_compatibility_options_;
