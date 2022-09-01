@@ -144,7 +144,6 @@ the APIs in these libraries are stable, and are ready for production use.
 ### [Bigtable](/google/cloud/bigtable/README.md)
 
 - fix(bigtable): `DataConnection` refreshes channels ([#9718](https://github.com/googleapis/google-cloud-cpp/pull/9718))
-- doc: fix some broken links exposed by the use of mdformat ([#9725](https://github.com/googleapis/google-cloud-cpp/pull/9725))
 - fix(bigtable): Use retry policy on all streams with failing mutations ([#9706](https://github.com/googleapis/google-cloud-cpp/pull/9706))
 - feat(bigtable): per-operation Options ([#9627](https://github.com/googleapis/google-cloud-cpp/pull/9627)) ([#9623](https://github.com/googleapis/google-cloud-cpp/pull/9623))
 
@@ -154,9 +153,7 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### [Spanner](/google/cloud/spanner/README.md)
 
-- doc: fix some broken links exposed by the use of mdformat ([#9725](https://github.com/googleapis/google-cloud-cpp/pull/9725))
 - feat(spanner): fine-grained access control ([#9669](https://github.com/googleapis/google-cloud-cpp/pull/9669))
-- doc: add table of contents to landing page ([#9671](https://github.com/googleapis/google-cloud-cpp/pull/9671))
 - feat(spanner): equality for copyable classes ([#9648](https://github.com/googleapis/google-cloud-cpp/pull/9648))
 
 ### [Storage](/google/cloud/storage/README.md)
@@ -170,10 +167,7 @@ the APIs in these libraries are stable, and are ready for production use.
   implementation. We are planning to remove the legacy code and the
   `GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP` environment variable by 2022-12.
 - feat(storage): improve error messages on stalled uploads ([#9744](https://github.com/googleapis/google-cloud-cpp/pull/9744))
-- doc(storage): update broken docs link ([#9738](https://github.com/googleapis/google-cloud-cpp/pull/9738))
-- doc: fix some broken links exposed by the use of mdformat ([#9725](https://github.com/googleapis/google-cloud-cpp/pull/9725))
 - feat(storage): equality for Native IAM types ([#9649](https://github.com/googleapis/google-cloud-cpp/pull/9649))
-- doc(storage): fix comments for Notification requests ([#9642](https://github.com/googleapis/google-cloud-cpp/pull/9642))
 - feat(storage): SA credentials default to self-signed JWTs ([#9629](https://github.com/googleapis/google-cloud-cpp/pull/9629))
 
 ### [Common Libraries](/google/cloud/README.md)
