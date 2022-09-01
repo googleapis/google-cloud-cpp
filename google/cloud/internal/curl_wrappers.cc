@@ -270,7 +270,7 @@ std::string DebugSendHeader(char const* data, std::size_t size) {
   auto const bearer_pos = header.find(match);
   if (bearer_pos != std::string::npos) {
     auto const nl_pos = header.find('\n', bearer_pos);
-    auto const n = std::min(limit, nl_pos - bearer_pos);
+    auto const n = (std::min)(limit, nl_pos - bearer_pos);
     return absl::StrCat(">> curl(Send Header): ", header.substr(0, bearer_pos),
                         header.substr(bearer_pos, n), "...<truncated>...",
                         header.substr(nl_pos), "\n");
