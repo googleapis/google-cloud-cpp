@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/grpc_plugin.h"
-#include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/hybrid_client.h"
+#include "google/cloud/storage/internal/rest_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
@@ -27,18 +27,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
-using ::google::cloud::storage::internal::CurlClient;
 using ::google::cloud::storage::internal::GrpcClient;
 using ::google::cloud::storage::internal::HybridClient;
+using ::google::cloud::storage::internal::RestClient;
 using ::google::cloud::storage::internal::RetryClient;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::IsNull;
 using ::testing::NotNull;
 
 TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
-  // Explicitly disable the RestClient, which may be enabled by our CI builds.
-  auto rest =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
@@ -54,9 +51,6 @@ TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
 }
 
 TEST(GrpcPluginTest, EnvironmentOverrides) {
-  // Explicitly disable the RestClient, which may be enabled by our CI builds.
-  auto rest =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
@@ -71,9 +65,6 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
 }
 
 TEST(GrpcPluginTest, UnsetConfigCreatesCurl) {
-  // Explicitly disable the RestClient, which may be enabled by our CI builds.
-  auto rest =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
@@ -83,14 +74,11 @@ TEST(GrpcPluginTest, UnsetConfigCreatesCurl) {
   auto const* const retry =
       dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
   ASSERT_THAT(retry, NotNull());
-  auto const* const curl = dynamic_cast<CurlClient*>(retry->client().get());
-  ASSERT_THAT(curl, NotNull());
+  auto const* const rest = dynamic_cast<RestClient*>(retry->client().get());
+  ASSERT_THAT(rest, NotNull());
 }
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
-  // Explicitly disable the RestClient, which may be enabled by our CI builds.
-  auto rest =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
@@ -100,14 +88,11 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
   auto const* const retry =
       dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
   ASSERT_THAT(retry, NotNull());
-  auto const* const curl = dynamic_cast<CurlClient*>(retry->client().get());
-  ASSERT_THAT(curl, NotNull());
+  auto const* const rest = dynamic_cast<RestClient*>(retry->client().get());
+  ASSERT_THAT(rest, NotNull());
 }
 
 TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
-  // Explicitly disable the RestClient, which may be enabled by our CI builds.
-  auto rest =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);

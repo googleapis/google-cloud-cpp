@@ -15,9 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_CLIENT_H
 
-#include "google/cloud/storage/internal/curl_client.h"
+#include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/internal/rest_client.h"
+#include <memory>
+#include <mutex>
 #include <string>
 
 namespace google {
@@ -40,8 +43,8 @@ class RestClient : public RawClient,
       Options options,
       std::shared_ptr<google::cloud::rest_internal::RestClient>
           storage_rest_client,
-      std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
-      std::shared_ptr<RawClient> curl_client);
+      std::shared_ptr<google::cloud::rest_internal::RestClient>
+          iam_rest_client);
 
   static Options ResolveStorageAuthority(Options const& options);
   static Options ResolveIamAuthority(Options const& options);
@@ -51,9 +54,7 @@ class RestClient : public RawClient,
   RestClient& operator=(RestClient const& rhs) = delete;
   RestClient& operator=(RestClient&& rhs) = delete;
 
-  ClientOptions const& client_options() const override {
-    return curl_client_->client_options();
-  }
+  ClientOptions const& client_options() const override;
   Options options() const override;
 
   StatusOr<ListBucketsResponse> ListBuckets(
@@ -170,7 +171,7 @@ class RestClient : public RawClient,
       std::shared_ptr<google::cloud::rest_internal::RestClient>
           storage_rest_client,
       std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
-      std::shared_ptr<RawClient> curl_client, Options options);
+      Options options);
 
  private:
   StatusOr<ObjectMetadata> InsertObjectMediaMultipart(
@@ -189,11 +190,11 @@ class RestClient : public RawClient,
   std::shared_ptr<google::cloud::rest_internal::RestClient>
       storage_rest_client_;
   std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client_;
-  std::shared_ptr<RawClient> curl_client_;
   bool const xml_enabled_;
   std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
   google::cloud::Options options_;
+  ClientOptions backwards_compatibility_options_;
 };
 
 }  // namespace internal

@@ -139,20 +139,18 @@ std::shared_ptr<RestClient> RestClient::Create(Options options) {
       RestEndpoint(options), ResolveStorageAuthority(options));
   auto iam_client = rest::MakePooledRestClient(IamEndpoint(options),
                                                ResolveIamAuthority(options));
-  auto curl_client = internal::CurlClient::Create(options);
   return Create(std::move(options), std::move(storage_client),
-                std::move(iam_client), std::move(curl_client));
+                std::move(iam_client));
 }
 
 std::shared_ptr<RestClient> RestClient::Create(
     Options options,
     std::shared_ptr<google::cloud::rest_internal::RestClient>
         storage_rest_client,
-    std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
-    std::shared_ptr<RawClient> curl_client) {
+    std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client) {
   return std::shared_ptr<RestClient>(
       new RestClient(std::move(storage_rest_client), std::move(iam_rest_client),
-                     std::move(curl_client), std::move(options)));
+                     std::move(options)));
 }
 
 Options RestClient::ResolveStorageAuthority(Options const& options) {
@@ -175,13 +173,20 @@ RestClient::RestClient(
     std::shared_ptr<google::cloud::rest_internal::RestClient>
         storage_rest_client,
     std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
-    std::shared_ptr<RawClient> curl_client, google::cloud::Options options)
+    google::cloud::Options options)
     : storage_rest_client_(std::move(storage_rest_client)),
       iam_rest_client_(std::move(iam_rest_client)),
-      curl_client_(std::move(curl_client)),
       xml_enabled_(XmlEnabled()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
-      options_(std::move(options)) {}
+      options_(std::move(options)),
+      backwards_compatibility_options_(
+          MakeBackwardsCompatibleClientOptions(options_)) {
+  rest_internal::CurlInitializeOnce(options_);
+}
+
+ClientOptions const& RestClient::client_options() const {
+  return backwards_compatibility_options_;
+}
 
 Options RestClient::options() const { return options_; }
 
