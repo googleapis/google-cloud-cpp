@@ -73,9 +73,22 @@ if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
   exit 0
 fi
 
+# See b/242562806 for the motivation. To update ci/docuploader-requirements.txt you need to do something like:
+#    ci/cloudbuild/build.sh -t publish-docs-pr  --docker-shell
+#    python3 -m venv /h/v-docuploader
+#    source /h/v-docuploader/bin/activate
+#    pip install git+https://github.com/googleapis/docuploader@993badb47be3bf548a4c1726658eadba4bafeaca
+#    pip freeze | grep -v gcp-docuploader >ci/docuploader-requirements.txt
+#    pip install hashin
+#    for package in $(sed -n '/==/ s/\(.*\)==.*/\1/p' ci/docuploader-requirements.txt); do
+#      hashin "${package}" -r ci/docuploader-requirements.txt;
+#    done
+# Apologies, we can try to simplify this later.
 io::log_h2 "Installing the docuploader package"
 python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
-  --no-warn-script-location \
+  --no-warn-script-location --require-hashes -r ci/docuploader-requirements.txt
+python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
+  --no-warn-script-location --no-deps \
   "git+https://github.com/googleapis/docuploader@993badb47be3bf548a4c1726658eadba4bafeaca"
 python3 -m pip list
 
