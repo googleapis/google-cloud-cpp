@@ -145,4 +145,3 @@ six==1.16.0 \
 urllib3==1.26.12 \
     --hash=sha256:3fa96cf423e6987997fc326ae8df396db2a8b7c667747d47ddd8ecba91f4a74e \
     --hash=sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997
-git+https://github.com/googleapis/docuploader@993badb47be3bf548a4c1726658eadba4bafeaca#egg=gcp-docuploader
