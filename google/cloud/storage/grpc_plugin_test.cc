@@ -74,8 +74,8 @@ TEST(GrpcPluginTest, UnsetConfigCreatesCurl) {
   auto const* const retry =
       dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
   ASSERT_THAT(retry, NotNull());
-  auto const* const curl = dynamic_cast<RestClient*>(retry->client().get());
-  ASSERT_THAT(curl, NotNull());
+  auto const* const rest = dynamic_cast<RestClient*>(retry->client().get());
+  ASSERT_THAT(rest, NotNull());
 }
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
@@ -88,8 +88,8 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
   auto const* const retry =
       dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
   ASSERT_THAT(retry, NotNull());
-  auto const* const curl = dynamic_cast<RestClient*>(retry->client().get());
-  ASSERT_THAT(curl, NotNull());
+  auto const* const rest = dynamic_cast<RestClient*>(retry->client().get());
+  ASSERT_THAT(rest, NotNull());
 }
 
 TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {

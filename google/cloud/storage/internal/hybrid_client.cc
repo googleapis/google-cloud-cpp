@@ -29,63 +29,63 @@ std::shared_ptr<RawClient> HybridClient::Create(Options const& options) {
 
 HybridClient::HybridClient(Options const& options)
     : grpc_(GrpcClient::Create(DefaultOptionsGrpc(options))),
-      curl_(RestClient::Create(DefaultOptionsWithCredentials(options))) {}
+      rest_(RestClient::Create(DefaultOptionsWithCredentials(options))) {}
 
 ClientOptions const& HybridClient::client_options() const {
-  return curl_->client_options();
+  return rest_->client_options();
 }
 
-Options HybridClient::options() const { return curl_->options(); }
+Options HybridClient::options() const { return rest_->options(); }
 
 StatusOr<ListBucketsResponse> HybridClient::ListBuckets(
     ListBucketsRequest const& request) {
-  return curl_->ListBuckets(request);
+  return rest_->ListBuckets(request);
 }
 
 StatusOr<BucketMetadata> HybridClient::CreateBucket(
     CreateBucketRequest const& request) {
-  return curl_->CreateBucket(request);
+  return rest_->CreateBucket(request);
 }
 
 StatusOr<BucketMetadata> HybridClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
-  return curl_->GetBucketMetadata(request);
+  return rest_->GetBucketMetadata(request);
 }
 
 StatusOr<EmptyResponse> HybridClient::DeleteBucket(
     DeleteBucketRequest const& request) {
-  return curl_->DeleteBucket(request);
+  return rest_->DeleteBucket(request);
 }
 
 StatusOr<BucketMetadata> HybridClient::UpdateBucket(
     UpdateBucketRequest const& request) {
-  return curl_->UpdateBucket(request);
+  return rest_->UpdateBucket(request);
 }
 
 StatusOr<BucketMetadata> HybridClient::PatchBucket(
     PatchBucketRequest const& request) {
-  return curl_->PatchBucket(request);
+  return rest_->PatchBucket(request);
 }
 
 StatusOr<NativeIamPolicy> HybridClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
-  return curl_->GetNativeBucketIamPolicy(request);
+  return rest_->GetNativeBucketIamPolicy(request);
 }
 
 StatusOr<NativeIamPolicy> HybridClient::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {
-  return curl_->SetNativeBucketIamPolicy(request);
+  return rest_->SetNativeBucketIamPolicy(request);
 }
 
 StatusOr<TestBucketIamPermissionsResponse>
 HybridClient::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
-  return curl_->TestBucketIamPermissions(request);
+  return rest_->TestBucketIamPermissions(request);
 }
 
 StatusOr<BucketMetadata> HybridClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
-  return curl_->LockBucketRetentionPolicy(request);
+  return rest_->LockBucketRetentionPolicy(request);
 }
 
 StatusOr<ObjectMetadata> HybridClient::InsertObjectMedia(
@@ -95,12 +95,12 @@ StatusOr<ObjectMetadata> HybridClient::InsertObjectMedia(
 
 StatusOr<ObjectMetadata> HybridClient::CopyObject(
     CopyObjectRequest const& request) {
-  return curl_->CopyObject(request);
+  return rest_->CopyObject(request);
 }
 
 StatusOr<ObjectMetadata> HybridClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
-  return curl_->GetObjectMetadata(request);
+  return rest_->GetObjectMetadata(request);
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> HybridClient::ReadObject(
@@ -110,32 +110,32 @@ StatusOr<std::unique_ptr<ObjectReadSource>> HybridClient::ReadObject(
 
 StatusOr<ListObjectsResponse> HybridClient::ListObjects(
     ListObjectsRequest const& request) {
-  return curl_->ListObjects(request);
+  return rest_->ListObjects(request);
 }
 
 StatusOr<EmptyResponse> HybridClient::DeleteObject(
     DeleteObjectRequest const& request) {
-  return curl_->DeleteObject(request);
+  return rest_->DeleteObject(request);
 }
 
 StatusOr<ObjectMetadata> HybridClient::UpdateObject(
     UpdateObjectRequest const& request) {
-  return curl_->UpdateObject(request);
+  return rest_->UpdateObject(request);
 }
 
 StatusOr<ObjectMetadata> HybridClient::PatchObject(
     PatchObjectRequest const& request) {
-  return curl_->PatchObject(request);
+  return rest_->PatchObject(request);
 }
 
 StatusOr<ObjectMetadata> HybridClient::ComposeObject(
     ComposeObjectRequest const& request) {
-  return curl_->ComposeObject(request);
+  return rest_->ComposeObject(request);
 }
 
 StatusOr<RewriteObjectResponse> HybridClient::RewriteObject(
     RewriteObjectRequest const& request) {
-  return curl_->RewriteObject(request);
+  return rest_->RewriteObject(request);
 }
 
 StatusOr<CreateResumableUploadResponse> HybridClient::CreateResumableUpload(
@@ -153,7 +153,7 @@ StatusOr<EmptyResponse> HybridClient::DeleteResumableUpload(
   if (internal::IsGrpcResumableSessionUrl(request.upload_session_url())) {
     return grpc_->DeleteResumableUpload(request);
   }
-  return curl_->DeleteResumableUpload(request);
+  return rest_->DeleteResumableUpload(request);
 }
 
 StatusOr<QueryResumableUploadResponse> HybridClient::UploadChunk(
@@ -163,147 +163,147 @@ StatusOr<QueryResumableUploadResponse> HybridClient::UploadChunk(
 
 StatusOr<ListBucketAclResponse> HybridClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
-  return curl_->ListBucketAcl(request);
+  return rest_->ListBucketAcl(request);
 }
 
 StatusOr<BucketAccessControl> HybridClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
-  return curl_->CreateBucketAcl(request);
+  return rest_->CreateBucketAcl(request);
 }
 
 StatusOr<EmptyResponse> HybridClient::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
-  return curl_->DeleteBucketAcl(request);
+  return rest_->DeleteBucketAcl(request);
 }
 
 StatusOr<BucketAccessControl> HybridClient::GetBucketAcl(
     GetBucketAclRequest const& request) {
-  return curl_->GetBucketAcl(request);
+  return rest_->GetBucketAcl(request);
 }
 
 StatusOr<BucketAccessControl> HybridClient::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
-  return curl_->UpdateBucketAcl(request);
+  return rest_->UpdateBucketAcl(request);
 }
 
 StatusOr<BucketAccessControl> HybridClient::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
-  return curl_->PatchBucketAcl(request);
+  return rest_->PatchBucketAcl(request);
 }
 
 StatusOr<ListObjectAclResponse> HybridClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
-  return curl_->ListObjectAcl(request);
+  return rest_->ListObjectAcl(request);
 }
 
 StatusOr<ObjectAccessControl> HybridClient::CreateObjectAcl(
     CreateObjectAclRequest const& request) {
-  return curl_->CreateObjectAcl(request);
+  return rest_->CreateObjectAcl(request);
 }
 
 StatusOr<EmptyResponse> HybridClient::DeleteObjectAcl(
     DeleteObjectAclRequest const& request) {
-  return curl_->DeleteObjectAcl(request);
+  return rest_->DeleteObjectAcl(request);
 }
 
 StatusOr<ObjectAccessControl> HybridClient::GetObjectAcl(
     GetObjectAclRequest const& request) {
-  return curl_->GetObjectAcl(request);
+  return rest_->GetObjectAcl(request);
 }
 
 StatusOr<ObjectAccessControl> HybridClient::UpdateObjectAcl(
     UpdateObjectAclRequest const& request) {
-  return curl_->UpdateObjectAcl(request);
+  return rest_->UpdateObjectAcl(request);
 }
 
 StatusOr<ObjectAccessControl> HybridClient::PatchObjectAcl(
     PatchObjectAclRequest const& request) {
-  return curl_->PatchObjectAcl(request);
+  return rest_->PatchObjectAcl(request);
 }
 
 StatusOr<ListDefaultObjectAclResponse> HybridClient::ListDefaultObjectAcl(
     ListDefaultObjectAclRequest const& request) {
-  return curl_->ListDefaultObjectAcl(request);
+  return rest_->ListDefaultObjectAcl(request);
 }
 
 StatusOr<ObjectAccessControl> HybridClient::CreateDefaultObjectAcl(
     CreateDefaultObjectAclRequest const& request) {
-  return curl_->CreateDefaultObjectAcl(request);
+  return rest_->CreateDefaultObjectAcl(request);
 }
 
 StatusOr<EmptyResponse> HybridClient::DeleteDefaultObjectAcl(
     DeleteDefaultObjectAclRequest const& request) {
-  return curl_->DeleteDefaultObjectAcl(request);
+  return rest_->DeleteDefaultObjectAcl(request);
 }
 
 StatusOr<ObjectAccessControl> HybridClient::GetDefaultObjectAcl(
     GetDefaultObjectAclRequest const& request) {
-  return curl_->GetDefaultObjectAcl(request);
+  return rest_->GetDefaultObjectAcl(request);
 }
 
 StatusOr<ObjectAccessControl> HybridClient::UpdateDefaultObjectAcl(
     UpdateDefaultObjectAclRequest const& request) {
-  return curl_->UpdateDefaultObjectAcl(request);
+  return rest_->UpdateDefaultObjectAcl(request);
 }
 
 StatusOr<ObjectAccessControl> HybridClient::PatchDefaultObjectAcl(
     PatchDefaultObjectAclRequest const& request) {
-  return curl_->PatchDefaultObjectAcl(request);
+  return rest_->PatchDefaultObjectAcl(request);
 }
 
 StatusOr<ServiceAccount> HybridClient::GetServiceAccount(
     GetProjectServiceAccountRequest const& request) {
-  return curl_->GetServiceAccount(request);
+  return rest_->GetServiceAccount(request);
 }
 
 StatusOr<ListHmacKeysResponse> HybridClient::ListHmacKeys(
     ListHmacKeysRequest const& request) {
-  return curl_->ListHmacKeys(request);
+  return rest_->ListHmacKeys(request);
 }
 
 StatusOr<CreateHmacKeyResponse> HybridClient::CreateHmacKey(
     CreateHmacKeyRequest const& request) {
-  return curl_->CreateHmacKey(request);
+  return rest_->CreateHmacKey(request);
 }
 
 StatusOr<EmptyResponse> HybridClient::DeleteHmacKey(
     DeleteHmacKeyRequest const& request) {
-  return curl_->DeleteHmacKey(request);
+  return rest_->DeleteHmacKey(request);
 }
 
 StatusOr<HmacKeyMetadata> HybridClient::GetHmacKey(
     GetHmacKeyRequest const& request) {
-  return curl_->GetHmacKey(request);
+  return rest_->GetHmacKey(request);
 }
 
 StatusOr<HmacKeyMetadata> HybridClient::UpdateHmacKey(
     UpdateHmacKeyRequest const& request) {
-  return curl_->UpdateHmacKey(request);
+  return rest_->UpdateHmacKey(request);
 }
 
 StatusOr<SignBlobResponse> HybridClient::SignBlob(
     SignBlobRequest const& request) {
-  return curl_->SignBlob(request);
+  return rest_->SignBlob(request);
 }
 
 StatusOr<ListNotificationsResponse> HybridClient::ListNotifications(
     ListNotificationsRequest const& request) {
-  return curl_->ListNotifications(request);
+  return rest_->ListNotifications(request);
 }
 
 StatusOr<NotificationMetadata> HybridClient::CreateNotification(
     CreateNotificationRequest const& request) {
-  return curl_->CreateNotification(request);
+  return rest_->CreateNotification(request);
 }
 
 StatusOr<NotificationMetadata> HybridClient::GetNotification(
     GetNotificationRequest const& request) {
-  return curl_->GetNotification(request);
+  return rest_->GetNotification(request);
 }
 
 StatusOr<EmptyResponse> HybridClient::DeleteNotification(
     DeleteNotificationRequest const& request) {
-  return curl_->DeleteNotification(request);
+  return rest_->DeleteNotification(request);
 }
 
 }  // namespace internal

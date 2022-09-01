@@ -146,7 +146,7 @@ class HybridClient : public RawClient {
   explicit HybridClient(Options const& options);
 
   std::shared_ptr<RawClient> grpc_;
-  std::shared_ptr<RawClient> curl_;
+  std::shared_ptr<RawClient> rest_;
 };
 
 }  // namespace internal
