@@ -46,6 +46,40 @@ TEST(CurlWrappers, VersionToCurlCode) {
   }
 }
 
+TEST(CurlWrappers, DebugSendHeader) {
+  struct TestCasse {
+    std::string input;
+    std::string expected;
+  } cases[] = {
+      {R"""(header1: v1)""", R"""(>> curl(Send Header): header1: v1)"""},
+      {R"""(header1: value1
+header2: value2)""",
+       R"""(>> curl(Send Header): header1: value1
+header2: value2)"""},
+      {R"""(header1: value1
+authorization: Bearer 1234567890
+header2: value2)""",
+       R"""(>> curl(Send Header): header1: value1
+authorization: Bearer 1234567890
+header2: value2)"""},
+      {R"""(header1: value1
+authorization: Bearer a1234567890.b1234567890.c1234567890.d1234567890
+header2: value2)""",
+       R"""(>> curl(Send Header): header1: value1
+authorization: Bearer a1234567890.b1234567890.c1234567...<truncated>...
+header2: value2)"""},
+      {R"""(header1: value1
+authorization: Bearer a1234567890.b1234567890.c1234567890.d1234567890)""",
+       R"""(>> curl(Send Header): header1: value1
+authorization: Bearer a1234567890.b1234567890.c1234567...<truncated>...)"""},
+  };
+
+  for (auto const& test : cases) {
+    EXPECT_EQ(test.expected,
+              DebugSendHeader(test.input.data(), test.input.size()));
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

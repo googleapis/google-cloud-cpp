@@ -170,10 +170,10 @@ class CurlInitializer {
   ~CurlInitializer() { curl_global_cleanup(); }
 };
 
-auto constexpr kMaxDebugLength = 128;
+std::size_t constexpr kMaxDebugLength = 128;
 
 std::string CleanupDebugData(char const* data, std::size_t size) {
-  auto const n = std::min<std::size_t>(size, kMaxDebugLength);
+  auto const n = (std::min)(size, kMaxDebugLength);
   auto text = std::string{data, n};
   std::transform(text.begin(), text.end(), text.begin(),
                  [](auto c) { return std::isprint(c) ? c : '.'; });
@@ -271,9 +271,10 @@ std::string DebugSendHeader(char const* data, std::size_t size) {
   if (bearer_pos != std::string::npos) {
     auto const nl_pos = header.find('\n', bearer_pos);
     auto const n = (std::min)(limit, nl_pos - bearer_pos);
-    return absl::StrCat(">> curl(Send Header): ", header.substr(0, bearer_pos),
-                        header.substr(bearer_pos, n), "...<truncated>...",
-                        header.substr(nl_pos), "\n");
+    return absl::StrCat(
+        ">> curl(Send Header): ", header.substr(0, bearer_pos + n),
+        n == limit ? "...<truncated>..." : "",
+        nl_pos == std::string::npos ? "" : header.substr(nl_pos));
   }
   return absl::StrCat(">> curl(Send Header): ", header);
 }
