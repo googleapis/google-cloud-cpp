@@ -78,7 +78,13 @@ class ObjectFileMultiThreadedTest
       }
       auto metadata =
           client.InsertObject(bucket_name_, n, contents, IfGenerationMatch(0));
-      if (!metadata) return metadata.status();
+      if (metadata) continue;
+      // kAlreadyExists is acceptable, it happens if (1) a retry attempt
+      // succeeds, but returns kUnavailable or a similar error (these can be
+      // network / overload issues), (2) the next retry attempt finds the object
+      // was already created.
+      if (metadata.status().code() == StatusCode::kAlreadyExists) continue;
+      return metadata.status();
     }
     return Status();
   }
@@ -114,7 +120,12 @@ class ObjectFileMultiThreadedTest
         std::cout << '.' << std::flush;
       }
       auto result = client.DeleteObject(bucket_name_, name);
-      if (!result.ok()) status = result;
+      if (result.ok()) continue;
+      // kNotFound is acceptable, it happens if (1) a retry attempt succeeds,
+      // but returns kUnavailable or a similar error, (2) the next retry attempt
+      // cannot find the object.
+      if (result.code() == StatusCode::kNotFound) continue;
+      status = result;
     }
     return status;
   }
