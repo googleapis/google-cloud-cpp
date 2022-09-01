@@ -13,72 +13,24 @@
 // limitations under the License.
 
 #include "google/cloud/internal/binary_data_as_debug_string.h"
-#include <array>
+#include <algorithm>
 #include <cctype>
-#include <limits>
 
 namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 std::string BinaryDataAsDebugString(char const* data, std::size_t size,
                                     std::size_t max_output_bytes) {
-  // We want about 2/3 of a standard 80 column terminal to be used by the hex
-  // representation and the other 1/3 (because it is half as wide) with the
-  // text representation. Setting this value to 24 uses 72 columns: 48 for the
-  // hex representation, 24 for text, and one space. We could use 25 or 26, we
-  // chose (somewhat arbitrarily) 24 as it is 16 + 8 and thus more "round" in
-  // base 2.
-  auto constexpr kTextWidth = 24;
-  std::string result;
-  std::string text_column(kTextWidth, ' ');
-  std::string hex_column(2 * kTextWidth, ' ');
-
-  // Capture everything (which we use anyway) because:
-  //   - clang-tidy complains if you capture a constexpr or const
-  //   - MSVC does not automatically capture constexpr types unless we do this
-  auto flush = [&] {
-    result += text_column;
-    result += ' ';
-    result += hex_column;
-    result += '\n';
-    text_column = std::string(kTextWidth, ' ');
-    hex_column = std::string(2 * kTextWidth, ' ');
-  };
-
-  // Limit the output to the first `max_output_bytes`.
-  std::size_t n = size;
-  if (max_output_bytes > 0 && max_output_bytes < size) {
-    n = max_output_bytes;
-  }
-
-  std::size_t count = 0;
-  for (char const* c = data; c != data + n; ++c) {
-    // std::isprint() actually takes an int argument, signed, without this
-    // explicit conversion MSVC in Debug mode asserts an invalid argument, and
-    // pops up a nice dialog box that breaks the CI builds.
-    int cval = static_cast<unsigned char>(*c);
-    if (std::isprint(cval) != 0) {
-      text_column[count] = *c;
-    } else {
-      text_column[count] = '.';
-    }
-    auto constexpr kCharHexWidth = 2;
-    std::array<char, kCharHexWidth + 1> buf{};
-    snprintf(buf.data(), buf.size(), "%02x", cval);
-    hex_column[2 * count] = buf[0];
-    hex_column[2 * count + 1] = buf[1];
-    ++count;
-    if (count == kTextWidth) {
-      flush();
-      count = 0;
-    }
-  }
-  if (count != 0) {
-    flush();
-  }
-  return result;
+  auto dump = std::string{
+      data, max_output_bytes == 0 ? size : std::min(size, max_output_bytes)};
+  std::transform(dump.begin(), dump.end(), dump.begin(),
+                 [](auto c) { return std::isprint(c) ? c : '.'; });
+  if (max_output_bytes == 0 || size <= max_output_bytes) return dump;
+  return dump + "...<truncated>...";
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
