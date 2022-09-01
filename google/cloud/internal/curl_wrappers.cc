@@ -264,19 +264,28 @@ std::string DebugRecvHeader(char const* data, std::size_t size) {
 }
 
 std::string DebugSendHeader(char const* data, std::size_t size) {
-  auto header = absl::string_view{data, size};
-  auto const match = absl::string_view{": Bearer "};
-  auto const limit = match.size() + 32;
-  auto const bearer_pos = header.find(match);
+  // libcurl delivers multiple headers in a single payload, separated by '\n'.
+  auto const payload = absl::string_view{data, size};
+  // We want to truncate the portion of the payload following this ": Bearer" to
+  // at most 32 characters, skipping everything else until any newline.
+  auto const bearer = absl::string_view{": Bearer "};
+  auto const limit = bearer.size() + 32;
+  auto const bearer_pos = payload.find(bearer);
   if (bearer_pos != std::string::npos) {
-    auto const nl_pos = header.find('\n', bearer_pos);
-    auto const n = (std::min)(limit, nl_pos - bearer_pos);
-    return absl::StrCat(
-        ">> curl(Send Header): ", header.substr(0, bearer_pos + n),
-        n == limit ? "...<truncated>..." : "",
-        nl_pos == std::string::npos ? "" : header.substr(nl_pos));
+    auto const nl_pos = payload.find('\n', bearer_pos);
+    auto const prefix = payload.substr(0, bearer_pos);
+    auto trailer = absl::string_view{};
+    auto body = payload.substr(bearer_pos);
+    if (nl_pos != std::string::npos) {
+      trailer = payload.substr(nl_pos);
+      body = payload.substr(bearer_pos, nl_pos - bearer_pos);
+    }
+    auto marker = body.size() > limit ? "...<truncated>..." : "";
+    body = absl::ClippedSubstr(std::move(body), 0, limit);
+    return absl::StrCat(">> curl(Send Header): ", prefix, body, marker,
+                        trailer);
   }
-  return absl::StrCat(">> curl(Send Header): ", header);
+  return absl::StrCat(">> curl(Send Header): ", payload);
 }
 
 std::string DebugInData(char const* data, std::size_t size) {

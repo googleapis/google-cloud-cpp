@@ -51,27 +51,76 @@ TEST(CurlWrappers, DebugSendHeader) {
     std::string input;
     std::string expected;
   } cases[] = {
-      {R"""(header1: v1)""", R"""(>> curl(Send Header): header1: v1)"""},
-      {R"""(header1: value1
-header2: value2)""",
-       R"""(>> curl(Send Header): header1: value1
-header2: value2)"""},
-      {R"""(header1: value1
-authorization: Bearer 1234567890
-header2: value2)""",
-       R"""(>> curl(Send Header): header1: value1
-authorization: Bearer 1234567890
-header2: value2)"""},
-      {R"""(header1: value1
-authorization: Bearer a1234567890.b1234567890.c1234567890.d1234567890
-header2: value2)""",
-       R"""(>> curl(Send Header): header1: value1
-authorization: Bearer a1234567890.b1234567890.c1234567...<truncated>...
-header2: value2)"""},
-      {R"""(header1: value1
-authorization: Bearer a1234567890.b1234567890.c1234567890.d1234567890)""",
-       R"""(>> curl(Send Header): header1: value1
-authorization: Bearer a1234567890.b1234567890.c1234567...<truncated>...)"""},
+      {R"""(header1: no-marker-no-nl)""",
+       R"""(>> curl(Send Header): header1: no-marker-no-nl)"""},
+      {R"""(header1: no-marker-w-nl
+)""",
+       R"""(>> curl(Send Header): header1: no-marker-w-nl
+)"""},
+      {R"""(header1: no-marker-w-nl-and-data
+header2: value2
+)""",
+       R"""(>> curl(Send Header): header1: no-marker-w-nl-and-data
+header2: value2
+)"""},
+
+      {R"""(header1: short-no-nl
+authorization: Bearer 012345678901234567890123456789)""",
+       R"""(>> curl(Send Header): header1: short-no-nl
+authorization: Bearer 012345678901234567890123456789)"""},
+      {R"""(header1: short-w-nl
+authorization: Bearer 012345678901234567890123456789
+)""",
+       R"""(>> curl(Send Header): header1: short-w-nl
+authorization: Bearer 012345678901234567890123456789
+)"""},
+      {R"""(header1: short-w-nl-and-data
+authorization: Bearer 012345678901234567890123456789
+header2: value2
+)""",
+       R"""(>> curl(Send Header): header1: short-w-nl-and-data
+authorization: Bearer 012345678901234567890123456789
+header2: value2
+)"""},
+
+      {R"""(header1: exact-no-nl
+authorization: Bearer 01234567890123456789012345678912)""",
+       R"""(>> curl(Send Header): header1: exact-no-nl
+authorization: Bearer 01234567890123456789012345678912)"""},
+      {R"""(header1: exact-w-nl
+authorization: Bearer 01234567890123456789012345678912
+)""",
+       R"""(>> curl(Send Header): header1: exact-w-nl
+authorization: Bearer 01234567890123456789012345678912
+)"""},
+      {R"""(header1: exact-w-nl-and-data
+authorization: Bearer 01234567890123456789012345678912
+header2: value2
+)""",
+       R"""(>> curl(Send Header): header1: exact-w-nl-and-data
+authorization: Bearer 01234567890123456789012345678912
+header2: value2
+)"""},
+
+
+      {R"""(header1: long-no-nl
+authorization: Bearer 012345678901234567890123456789123456)""",
+       R"""(>> curl(Send Header): header1: long-no-nl
+authorization: Bearer 01234567890123456789012345678912...<truncated>...)"""},
+      {R"""(header1: long-w-nl
+authorization: Bearer 012345678901234567890123456789123456
+)""",
+       R"""(>> curl(Send Header): header1: long-w-nl
+authorization: Bearer 01234567890123456789012345678912...<truncated>...
+)"""},
+      {R"""(header1: long-w-nl-and-data
+authorization: Bearer 012345678901234567890123456789123456
+header2: value2
+)""",
+       R"""(>> curl(Send Header): header1: long-w-nl-and-data
+authorization: Bearer 01234567890123456789012345678912...<truncated>...
+header2: value2
+)"""},
   };
 
   for (auto const& test : cases) {
