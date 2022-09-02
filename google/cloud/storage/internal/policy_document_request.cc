@@ -91,7 +91,7 @@ bool EscapeAsciiChar(std::string& result, char32_t c) {
 StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const& utf8_bytes) {
   std::string result;
 
-#if (_MSC_VER >= 1900)
+#if (_MSC_VER >= 1900) && !defined(_LIBCPP_VERSION)
   // Working around missing std::codecvt_utf8<char32_t> symbols in MSVC
   // Microsoft bug number: VSO#143857
   // Context:
