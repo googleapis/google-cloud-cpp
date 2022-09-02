@@ -23,22 +23,48 @@
 
 namespace google {
 namespace cloud {
-/// Helper types and functions used in Cloud Spanner C++ client library tests.
 namespace spanner_testing {
-/// An inlined, versioned namespace for the testing helpers.
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DatabaseIntegrationTest
-    : public ::google::cloud::testing_util::IntegrationTest {
- public:
+/**
+ * A `testing::Test` that:
+ *   - creates (for all tests in the suite) a randomly-named database,
+ *     in a randomly-chosen instance,
+ *   - populates the database with some useful tables, and
+ *   - flushes the `google::cloud::LogSink` when a test completes with
+ *     a failure (see `testing_util::IntegrationTest`).
+ */
+class DatabaseIntegrationTest : public testing_util::IntegrationTest {
+ protected:
   static void SetUpTestSuite();
   static void TearDownTestSuite();
 
-  static google::cloud::spanner::Database const& GetDatabase() { return *db_; }
+  static spanner::Database const& GetDatabase() { return *db_; }
+  static bool UsingEmulator() { return emulator_; }
 
  private:
-  static google::cloud::spanner::Database* db_;
-  static google::cloud::internal::DefaultPRNG* generator_;
+  static internal::DefaultPRNG* generator_;
+  static spanner::Database* db_;
+  static bool emulator_;
+};
+
+/**
+ * Same as `DatabaseIntegrationTest`, but creates the database using
+ * `DatabaseDialect::POSTGRESQL`, and with PostgreSQL-specific column
+ * types.
+ */
+class PgDatabaseIntegrationTest : public testing_util::IntegrationTest {
+ protected:
+  static void SetUpTestSuite();
+  static void TearDownTestSuite();
+
+  static spanner::Database const& GetDatabase() { return *db_; }
+  static bool UsingEmulator() { return emulator_; }
+
+ private:
+  static internal::DefaultPRNG* generator_;
+  static spanner::Database* db_;
+  static bool emulator_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
