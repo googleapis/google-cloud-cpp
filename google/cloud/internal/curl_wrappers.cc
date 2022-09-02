@@ -280,7 +280,7 @@ std::string DebugSendHeader(char const* data, std::size_t size) {
       trailer = payload.substr(nl_pos);
       body = payload.substr(bearer_pos, nl_pos - bearer_pos);
     }
-    auto marker = body.size() > limit ? "...<truncated>..." : "";
+    auto const* marker = body.size() > limit ? "...<truncated>..." : "";
     body = absl::ClippedSubstr(std::move(body), 0, limit);
     return absl::StrCat(">> curl(Send Header): ", prefix, body, marker,
                         trailer);
