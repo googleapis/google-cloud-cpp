@@ -102,7 +102,6 @@ authorization: Bearer 01234567890123456789012345678912
 header2: value2
 )"""},
 
-
       {R"""(header1: long-no-nl
 authorization: Bearer 012345678901234567890123456789123456)""",
        R"""(>> curl(Send Header): header1: long-no-nl
