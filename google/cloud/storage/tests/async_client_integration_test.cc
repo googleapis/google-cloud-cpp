@@ -83,6 +83,25 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
   EXPECT_THAT(get, StatusIs(StatusCode::kNotFound));
 }
 
+TEST_F(AsyncClientIntegrationTest, WriteObject) {
+  auto client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto o1 = MakeRandomObjectName();
+  auto o2 = MakeRandomObjectName();
+
+  auto async = MakeAsyncClient();
+  auto pending0 = async.StartResumableUpload(bucket_name(), o1);
+  auto pending1 = async.StartResumableUpload(bucket_name(), o2);
+
+  std::vector<std::string> ids;
+  for (auto* p : {&pending1, &pending0}) {
+    auto response = p->get();
+    EXPECT_STATUS_OK(response);
+    ids.push_back(*std::move(response));
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental

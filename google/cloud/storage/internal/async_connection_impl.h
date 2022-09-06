@@ -46,6 +46,9 @@ class AsyncConnectionImpl : public AsyncConnection {
   future<Status> AsyncDeleteObject(
       storage::internal::DeleteObjectRequest request) override;
 
+  future<StatusOr<std::string>> AsyncStartResumableWrite(
+      storage::internal::ResumableUploadRequest request) override;
+
  private:
   CompletionQueue cq_;
   std::shared_ptr<StorageStub> stub_;
