@@ -54,7 +54,7 @@ AsyncConnectionImpl::AsyncConnectionImpl(CompletionQueue cq,
 
 future<storage_experimental::AsyncReadObjectRangeResponse>
 AsyncConnectionImpl::AsyncReadObjectRange(
-    storage::internal::ReadObjectRangeRequest const& request) {
+    storage::internal::ReadObjectRangeRequest request) {
   auto proto = storage::internal::GrpcObjectRequestParser::ToProto(request);
   if (!proto) {
     auto response = storage_experimental::AsyncReadObjectRangeResponse{};
@@ -62,7 +62,7 @@ AsyncConnectionImpl::AsyncReadObjectRange(
     return make_ready_future(std::move(response));
   }
 
-  auto context_factory = [request]() {
+  auto context_factory = [request = std::move(request)]() {
     auto context = absl::make_unique<grpc::ClientContext>();
     ApplyQueryParameters(*context, request);
     return context;
@@ -77,17 +77,16 @@ AsyncConnectionImpl::AsyncReadObjectRange(
 }
 
 future<Status> AsyncConnectionImpl::AsyncDeleteObject(
-    storage::internal::DeleteObjectRequest const& request) {
+    storage::internal::DeleteObjectRequest request) {
   auto proto = storage::internal::GrpcObjectRequestParser::ToProto(request);
   auto const idempotency = idempotency_policy()->IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
-  auto& stub = stub_;
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(), idempotency, cq_,
-      [stub, request](CompletionQueue& cq,
-                      std::unique_ptr<grpc::ClientContext> context,
-                      google::storage::v2::DeleteObjectRequest const& proto) {
+      [stub = stub_, request = std::move(request)](
+          CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+          google::storage::v2::DeleteObjectRequest const& proto) {
         ApplyQueryParameters(*context, request);
         return stub->AsyncDeleteObject(cq, std::move(context), proto);
       },
