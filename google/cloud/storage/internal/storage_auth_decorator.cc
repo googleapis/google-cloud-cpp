@@ -334,6 +334,26 @@ StorageAuth::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
+future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
+StorageAuth::AsyncStartResumableWrite(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::StartResumableWriteRequest const& request) {
+  using ReturnType = StatusOr<google::storage::v2::StartResumableWriteResponse>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncStartResumableWrite(cq, *std::move(context),
+                                               request);
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
