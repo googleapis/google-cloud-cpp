@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
-#include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/grpc_options.h"

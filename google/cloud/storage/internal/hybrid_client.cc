@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
 #include "google/cloud/storage/internal/rest_client.h"
+#include "absl/strings/match.h"
 
 namespace google {
 namespace cloud {
@@ -150,10 +150,10 @@ StatusOr<QueryResumableUploadResponse> HybridClient::QueryResumableUpload(
 
 StatusOr<EmptyResponse> HybridClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
-  if (internal::IsGrpcResumableSessionUrl(request.upload_session_url())) {
-    return grpc_->DeleteResumableUpload(request);
+  if (absl::StartsWith(request.upload_session_url(), "https://")) {
+    return rest_->DeleteResumableUpload(request);
   }
-  return rest_->DeleteResumableUpload(request);
+  return grpc_->DeleteResumableUpload(request);
 }
 
 StatusOr<QueryResumableUploadResponse> HybridClient::UploadChunk(
