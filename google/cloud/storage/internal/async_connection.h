@@ -22,6 +22,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -52,6 +53,9 @@ class AsyncConnection {
 
   virtual future<Status> AsyncDeleteObject(
       storage::internal::DeleteObjectRequest request) = 0;
+
+  virtual future<StatusOr<std::string>> AsyncStartResumableWrite(
+      storage::internal::ResumableUploadRequest request) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

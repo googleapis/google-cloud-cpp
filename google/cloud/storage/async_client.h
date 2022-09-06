@@ -191,6 +191,61 @@ class AsyncClient {
     return connection_->AsyncDeleteObject(std::move(request));
   }
 
+  /**
+   * Starts a resumable upload.
+   *
+   * This creates an upload id, which later can be use to upload an object.
+   * [Resumable uploads][resumable-link] can continue, even if the program
+   * performing the upload needs to restart.
+   *
+   * @note When resuming uploads it is the application's responsibility to save
+   *     the upload id to restart the upload later.
+   *
+   * For small uploads we recommend using `InsertObject`, consult
+   * [the documentation][how-to-upload-link] for details.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param options a list of optional query parameters and/or request headers.
+   *   Valid types for this operation include `ContentEncoding`, `ContentType`,
+   *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
+   *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
+   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, `UserProject`,
+   *   `WithObjectMetadata`, `UploadContentLength`, `AutoFinalize`, and
+   *   `UploadBufferSize`.
+   *
+   * @par Idempotency
+   * This operation is always idempotent.  The only side-effect is the creation
+   * on a resumable upload id, which are automatically garbage collected after
+   * 7 days, and have no additional costs.
+   *
+   * @see [Resumable Uploads][resumable-link] for more information about
+   *     resumable uploads.
+   *
+   * [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
+   * [how-to-upload-link]:
+   * https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload
+   */
+  template <typename... RequestOptions>
+  future<StatusOr<std::string>> StartResumableUpload(
+      std::string const& bucket_name, std::string const& object_name,
+      RequestOptions&&... options) {
+    struct HasUseResumableUploadSession
+        : public absl::disjunction<std::is_same<
+              storage::UseResumableUploadSession, RequestOptions>...> {};
+    static_assert(!HasUseResumableUploadSession::value,
+                  "Cannot use `UseResumableUploadSession` as a request option "
+                  "in `AsyncClient::StartResumableUpload()`. If you want to "
+                  "resume the upload, simply use the existing upload id.");
+
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
+    storage::internal::ResumableUploadRequest request(bucket_name, object_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return connection_->AsyncStartResumableWrite(std::move(request));
+  }
+
  private:
   friend AsyncClient MakeAsyncClient(Options opts);
   explicit AsyncClient(
