@@ -1307,6 +1307,7 @@ service {
   gen_async_rpcs: [
     "DeleteObject",
     "ReadObject",
+    "StartResumableWrite",
     "WriteObject"
   ]
 }
