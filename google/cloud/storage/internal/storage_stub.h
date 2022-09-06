@@ -182,6 +182,12 @@ class StorageStub {
       google::storage::v2::WriteObjectResponse>>
   AsyncWriteObject(google::cloud::CompletionQueue const& cq,
                    std::unique_ptr<grpc::ClientContext> context) = 0;
+
+  virtual future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
+  AsyncStartResumableWrite(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::StartResumableWriteRequest const& request) = 0;
 };
 
 class DefaultStorageStub : public StorageStub {
@@ -332,6 +338,12 @@ class DefaultStorageStub : public StorageStub {
       google::storage::v2::WriteObjectResponse>>
   AsyncWriteObject(google::cloud::CompletionQueue const& cq,
                    std::unique_ptr<grpc::ClientContext> context) override;
+
+  future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
+  AsyncStartResumableWrite(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::StartResumableWriteRequest const& request) override;
 
  private:
   std::unique_ptr<google::storage::v2::Storage::StubInterface> grpc_stub_;
