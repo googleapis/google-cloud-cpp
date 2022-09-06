@@ -172,6 +172,12 @@ class MockStorageStub : public storage_internal::StorageStub {
               (google::cloud::CompletionQueue const&,
                std::unique_ptr<grpc::ClientContext>),
               (override));
+  MOCK_METHOD(
+      future<StatusOr<google::storage::v2::StartResumableWriteResponse>>,
+      AsyncStartResumableWrite,
+      (google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+       google::storage::v2::StartResumableWriteRequest const&),
+      (override));
 };
 
 class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<
