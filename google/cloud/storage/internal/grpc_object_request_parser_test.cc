@@ -1019,6 +1019,25 @@ TEST(GrpcObjectRequestParser, ResumableUploadRequestWithObjectMetadataFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcObjectRequestParser, ResumableUploadRequestWithContentLength) {
+  google::storage::v2::StartResumableWriteRequest expected;
+  EXPECT_TRUE(TextFormat::ParseFromString(R"""(
+      write_object_spec: {
+          resource: {
+            name: "test-object"
+            bucket: "projects/_/buckets/test-bucket"
+          }
+          object_size: 123456
+      })""",
+                                          &expected));
+
+  ResumableUploadRequest req("test-bucket", "test-object");
+  req.set_multiple_options(UploadContentLength(123456));
+
+  auto actual = GrpcObjectRequestParser::ToProto(req).value();
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcObjectRequestParser, QueryResumableUploadRequestSimple) {
   google::storage::v2::QueryWriteStatusRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(

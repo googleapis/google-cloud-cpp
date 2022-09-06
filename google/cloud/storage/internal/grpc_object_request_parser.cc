@@ -670,6 +670,10 @@ GrpcObjectRequestParser::ToProto(ResumableUploadRequest const& request) {
   SetPredefinedAcl(object_spec, request);
   SetGenerationConditions(object_spec, request);
   SetMetagenerationConditions(object_spec, request);
+  if (request.HasOption<UploadContentLength>()) {
+    object_spec.set_object_size(static_cast<std::int64_t>(
+        request.GetOption<UploadContentLength>().value()));
+  }
 
   resource.set_bucket("projects/_/buckets/" + request.bucket_name());
   resource.set_name(request.object_name());
