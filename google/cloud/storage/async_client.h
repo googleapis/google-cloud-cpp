@@ -161,7 +161,7 @@ class AsyncClient {
     storage::internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...,
                                  storage::ReadRange(offset, offset + limit));
-    return connection_->AsyncReadObjectRange(request);
+    return connection_->AsyncReadObjectRange(std::move(request));
   }
 
   /**
@@ -188,7 +188,7 @@ class AsyncClient {
         SpanOptions(std::forward<RequestOptions>(options)...));
     storage::internal::DeleteObjectRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<RequestOptions>(options)...);
-    return connection_->AsyncDeleteObject(request);
+    return connection_->AsyncDeleteObject(std::move(request));
   }
 
  private:

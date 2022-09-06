@@ -41,10 +41,10 @@ class AsyncConnectionImpl : public AsyncConnection {
 
   future<storage_experimental::AsyncReadObjectRangeResponse>
   AsyncReadObjectRange(
-      storage::internal::ReadObjectRangeRequest const& request) override;
+      storage::internal::ReadObjectRangeRequest request) override;
 
   future<Status> AsyncDeleteObject(
-      storage::internal::DeleteObjectRequest const& request) override;
+      storage::internal::DeleteObjectRequest request) override;
 
  private:
   CompletionQueue cq_;
