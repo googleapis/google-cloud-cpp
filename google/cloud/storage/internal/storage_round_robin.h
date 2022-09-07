@@ -179,6 +179,12 @@ class StorageRoundRobin : public StorageStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::storage::v2::StartResumableWriteRequest const& request) override;
 
+  future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
+  AsyncQueryWriteStatus(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::QueryWriteStatusRequest const& request) override;
+
  private:
   std::shared_ptr<StorageStub> Child();
 
