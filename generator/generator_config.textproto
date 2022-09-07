@@ -979,6 +979,15 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Network Connectivity
+service {
+  service_proto_path: "google/cloud/networkconnectivity/v1/hub.proto"
+  additional_proto_files: ["google/cloud/networkconnectivity/v1/common.proto"]
+  product_path: "google/cloud/networkconnectivity"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Network Management
 service {
   service_proto_path: "google/cloud/networkmanagement/v1/reachability.proto"
