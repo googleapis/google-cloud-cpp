@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/documentai/document_processor_client.h"
-#include "google/cloud/common_options.h"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -30,18 +29,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace gc = ::google::cloud;
   namespace documentai = ::google::cloud::documentai;
-  // The Document AI service requires using an endpoint matching
-  // the processor's location.  TODO(#9626): Use the location-aware
-  // MakeDocumentProcessorServiceConnection() instead.
-  auto options = gc::Options{}.set<gc::EndpointOption>(
-      location + "-documentai.googleapis.com");
   auto client = documentai::DocumentProcessorServiceClient(
-      documentai::MakeDocumentProcessorServiceConnection(options));
+      documentai::MakeDocumentProcessorServiceConnection(location));
 
   auto const resource = std::string{"projects/"} + argv[1] + "/locations/" +
-                        argv[2] + "/processors/" + argv[3];
+                        location + "/processors/" + argv[3];
 
   google::cloud::documentai::v1::ProcessRequest req;
   req.set_name(resource);

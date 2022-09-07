@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/dialogflow_cx/agents_client.h"
-#include "google/cloud/common_options.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -22,18 +21,12 @@ int main(int argc, char* argv[]) try {
     std::cerr << "Usage: " << argv[0] << " project-id region-id\n";
     return 1;
   }
-
   auto const project = std::string{argv[1]};
   auto const region = std::string{argv[2]};
-  namespace dialogflow_cx = ::google::cloud::dialogflow_cx;
-  namespace gc = ::google::cloud;
 
-  // For regional resources Dialogflow requires overriding the Authority option.
-  // TODO(#9626): Use the location-aware MakeAgentsConnection() instead.
-  auto options = gc::Options{}.set<gc::AuthorityOption>(
-      region + "-dialogflow.googleapis.com");
-  auto client = dialogflow_cx::AgentsClient(
-      dialogflow_cx::MakeAgentsConnection(std::move(options)));
+  namespace dialogflow_cx = ::google::cloud::dialogflow_cx;
+  auto client =
+      dialogflow_cx::AgentsClient(dialogflow_cx::MakeAgentsConnection(region));
 
   auto const location = "projects/" + project + "/locations/" + region;
   for (auto a : client.ListAgents(location)) {
