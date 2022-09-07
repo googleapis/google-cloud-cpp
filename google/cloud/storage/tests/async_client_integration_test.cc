@@ -94,11 +94,9 @@ TEST_F(AsyncClientIntegrationTest, WriteObject) {
   auto pending0 = async.StartResumableUpload(bucket_name(), o1);
   auto pending1 = async.StartResumableUpload(bucket_name(), o2);
 
-  std::vector<std::string> ids;
   for (auto* p : {&pending1, &pending0}) {
     auto response = p->get();
     EXPECT_STATUS_OK(response);
-    ids.push_back(*std::move(response));
   }
 }
 
