@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Network Connectivity API][cloud-service-docs], a service to The Network Connectivity API provides access to Network Connectivity Center.
+[Network Connectivity API][cloud-service-docs], a suite of products that provide
+enterprise connectivity from your on-premises network or from another cloud
+provider to your Virtual Private Cloud (VPC) network.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -35,8 +37,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/networkconnectivity/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/networkconnectivity/hub_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -47,13 +48,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace networkconnectivity = ::google::cloud::networkconnectivity;
-  auto client = networkconnectivity::Client(
-      networkconnectivity::MakeConnection(/* EDIT HERE */));
+  auto client = networkconnectivity::HubServiceClient(
+      networkconnectivity::MakeHubServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  for (auto h : client.ListHubs(parent)) {
+    if (!h) throw std::runtime_error(h.status().message());
+    std::cout << h->DebugString() << "\n";
   }
 
   return 0;
@@ -86,7 +87,7 @@ as well as how to properly format your code.
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 
-[cloud-service-docs]: https://cloud.google.com/networkconnectivity
+[cloud-service-docs]: https://cloud.google.com/network-connectivity/docs/concepts
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-networkconnectivity/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/networkconnectivity

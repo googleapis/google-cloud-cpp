@@ -118,6 +118,14 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 ## v2.3.0 - TBD
 
+### New Libraries
+
+We are introducing new client libraries for GCP services. While we do not
+anticipate any API changes to these libraries before declaring them GA, we are
+releasing them early in case they elicit some feedback that requires changes.
+
+- [Network Connectivity API](/google/cloud/networkconnectivity/README.md)
+
 ## v2.2.0 - 2022-09
 
 ### New Libraries
