@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::storage::v2::Object;
+
 template <typename GrpcRequest, typename StorageRequest>
 Status SetCommonObjectParameters(GrpcRequest& request,
                                  StorageRequest const& req) {
@@ -160,6 +162,48 @@ void SetStorageClass(google::storage::v2::Object& resource,
   if (!req.template HasOption<WithObjectMetadata>()) return;
   auto metadata = req.template GetOption<WithObjectMetadata>().value();
   resource.set_storage_class(metadata.storage_class());
+}
+
+Status PatchAcl(Object& o, nlohmann::json const& p) {
+  if (p.is_null()) {
+    o.clear_acl();
+    return Status{};
+  }
+  for (auto const& a : p) {
+    auto acl = ObjectAccessControlParser::FromJson(a);
+    if (!acl) return std::move(acl).status();
+    *o.add_acl() = GrpcObjectAccessControlParser::ToProto(*acl);
+  }
+  return Status{};
+}
+
+Status PatchCustomTime(Object& o, nlohmann::json const& p) {
+  if (p.is_null()) {
+    o.clear_custom_time();
+    return Status{};
+  }
+  auto ts = google::cloud::internal::ParseRfc3339(p.get<std::string>());
+  if (!ts) return std::move(ts).status();
+  *o.mutable_custom_time() = google::cloud::internal::ToProtoTimestamp(*ts);
+  return Status{};
+}
+
+Status PatchEventBasedHold(Object& o, nlohmann::json const& p) {
+  if (p.is_null()) {
+    o.clear_event_based_hold();
+  } else {
+    o.set_event_based_hold(p.get<bool>());
+  }
+  return Status{};
+}
+
+Status PatchTemporaryHold(Object& o, nlohmann::json const& p) {
+  if (p.is_null()) {
+    o.clear_temporary_hold();
+  } else {
+    o.set_temporary_hold(p.get<bool>());
+  }
+  return Status{};
 }
 
 }  // namespace
@@ -294,35 +338,38 @@ GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
   object.set_generation(request.GetOption<Generation>().value_or(0));
 
   auto const& patch = PatchBuilderDetails::GetPatch(request.patch().impl_);
+  struct ComplexField {
+    char const* json_name;
+    char const* grpc_name;
+    std::function<Status(Object&, nlohmann::json const&)> action;
+  } fields[] = {
+      {"acl", "acl", PatchAcl},
+      {"customTime", "custom_time", PatchCustomTime},
+      {"eventBasedHold", "event_based_hold", PatchEventBasedHold},
+      {"temporaryHold", "temporary_hold", PatchTemporaryHold},
+  };
 
-  if (patch.contains("acl")) {
-    for (auto const& a : patch["acl"]) {
-      auto acl = ObjectAccessControlParser::FromJson(a);
-      if (!acl) return std::move(acl).status();
-      *object.add_acl() = GrpcObjectAccessControlParser::ToProto(*acl);
-    }
-    result.mutable_update_mask()->add_paths("acl");
+  for (auto const& field : fields) {
+    if (!patch.contains(field.json_name)) continue;
+    auto s = field.action(object, patch[field.json_name]);
+    if (!s.ok()) return s;
+    result.mutable_update_mask()->add_paths(field.grpc_name);
   }
 
   if (request.patch().metadata_subpatch_dirty_) {
     auto const& subpatch =
         PatchBuilderDetails::GetPatch(request.patch().metadata_subpatch_);
+    if (subpatch.is_null()) {
+      object.clear_metadata();
+    } else {
+      for (auto const& kv : subpatch.items()) {
+        auto const& v = kv.value();
+        if (!v.is_string()) continue;
+        (*object.mutable_metadata())[kv.key()] = v.get<std::string>();
+      }
+    }
     // The semantics in gRPC are to replace any metadata attributes
     result.mutable_update_mask()->add_paths("metadata");
-    for (auto const& kv : subpatch.items()) {
-      auto const& v = kv.value();
-      if (!v.is_string()) continue;
-      (*object.mutable_metadata())[kv.key()] = v.get<std::string>();
-    }
-  }
-
-  if (patch.contains("customTime")) {
-    auto ts =
-        google::cloud::internal::ParseRfc3339(patch.value("customTime", ""));
-    if (!ts) return std::move(ts).status();
-    result.mutable_update_mask()->add_paths("custom_time");
-    *object.mutable_custom_time() =
-        google::cloud::internal::ToProtoTimestamp(*ts);
   }
 
   // We need to check each modifiable field.
@@ -346,17 +393,9 @@ GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
   };
   for (auto const& f : string_fields) {
     if (!patch.contains(f.json_name)) continue;
-    f.setter(patch.value(f.json_name, ""));
+    auto const& p = patch[f.json_name];
+    f.setter(p.is_null() ? std::string{} : p.get<std::string>());
     result.mutable_update_mask()->add_paths(f.grpc_name);
-  }
-
-  if (patch.contains("eventBasedHold")) {
-    object.set_event_based_hold(patch.value("eventBasedHold", false));
-    result.mutable_update_mask()->add_paths("event_based_hold");
-  }
-  if (patch.contains("temporaryHold")) {
-    object.set_temporary_hold(patch.value("temporaryHold", false));
-    result.mutable_update_mask()->add_paths("temporary_hold");
   }
 
   return result;
