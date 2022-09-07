@@ -44,8 +44,8 @@ $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT="bigtable-test-iam-sa@${env:
 $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_QUICKSTART_TABLE="quickstart"
 
 # Cloud Storage configuration parameters
-$env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="cloud-cpp-testing-bucket"
-$env:GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME="cloud-cpp-testing-regional"
+$env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="gcs-grpc-team-cloud-cpp-testing-bucket"
+$env:GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME="gcs-grpc-team-cloud-cpp-testing-regional"
 $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID="us-central1"
 $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_LOCATION="${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
 $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT="storage-test-iam-sa@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
