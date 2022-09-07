@@ -1308,6 +1308,7 @@ service {
     "DeleteObject",
     "ReadObject",
     "StartResumableWrite",
+    "QueryWriteStatus",
     "WriteObject"
   ]
 }
