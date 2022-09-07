@@ -520,6 +520,49 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcBucketRequestParser, PatchBucketRequestAllResets) {
+  google::storage::v2::UpdateBucketRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket { name: "projects/_/buckets/bucket-name" }
+        update_mask {}
+      )pb",
+      &expected));
+
+  PatchBucketRequest req("bucket-name", BucketMetadataPatchBuilder{}
+                                            .SetStorageClass("NEARLINE")
+                                            .ResetAcl()
+                                            .ResetBilling()
+                                            .ResetCors()
+                                            .ResetDefaultEventBasedHold()
+                                            .ResetDefaultAcl()
+                                            .ResetIamConfiguration()
+                                            .ResetEncryption()
+                                            .ResetLabels()
+                                            .ResetLifecycle()
+                                            .ResetLogging()
+                                            .ResetRetentionPolicy()
+                                            .ResetRpo()
+                                            .ResetStorageClass()
+                                            .ResetVersioning()
+                                            .ResetWebsite());
+
+  auto actual = GrpcBucketRequestParser::ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  // First check the paths, we do not care about their order, so checking them
+  // with IsProtoEqual does not work.
+  EXPECT_THAT(actual->update_mask().paths(),
+              UnorderedElementsAre(
+                  "storage_class", "rpo", "acl", "default_object_acl",
+                  "lifecycle", "cors", "default_event_based_hold", "labels",
+                  "website", "versioning", "logging", "encryption", "billing",
+                  "retention_policy", "iam_config"));
+
+  // Clear the paths, which we already compared, and test the rest
+  actual->mutable_update_mask()->clear_paths();
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
   google::storage::v2::UpdateBucketRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
