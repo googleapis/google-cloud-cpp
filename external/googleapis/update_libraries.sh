@@ -129,6 +129,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/monitoring/dashboard/v1:dashboard_cc_grpc" \
       "@com_google_googleapis//google/monitoring/metricsscope/v1:metricsscope_cc_grpc"
   )"
+  ["networkconnectivity"]="@com_google_googleapis//google/cloud/networkconnectivity/v1:networkconnectivity_cc_grpc"
   ["networkmanagement"]="@com_google_googleapis//google/cloud/networkmanagement/v1:networkmanagement_cc_grpc"
   ["notebooks"]="@com_google_googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc"
   ["optimization"]="@com_google_googleapis//google/cloud/optimization/v1:optimization_cc_grpc"
