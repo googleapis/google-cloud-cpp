@@ -99,7 +99,8 @@ future<StatusOr<std::string>> AsyncConnectionImpl::AsyncStartResumableWrite(
   if (!proto) {
     return make_ready_future(StatusOr<std::string>(std::move(proto).status()));
   }
-  // Always treat this as idempotent. Creating a resumable upload
+  // Always treat this as idempotent. See the `AsyncClient` documentation for
+  // details.
   auto const idempotency = Idempotency::kIdempotent;
   return google::cloud::internal::AsyncRetryLoop(
              retry_policy(), backoff_policy(), idempotency, cq_,

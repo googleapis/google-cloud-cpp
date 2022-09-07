@@ -194,7 +194,7 @@ class AsyncClient {
   /**
    * Starts a resumable upload.
    *
-   * This creates an upload id, which later can be use to upload an object.
+   * This creates an upload id, which later can be used to upload an object.
    * [Resumable uploads][resumable-link] can continue, even if the program
    * performing the upload needs to restart.
    *
@@ -217,8 +217,9 @@ class AsyncClient {
    *
    * @par Idempotency
    * This operation is always idempotent.  The only side-effect is the creation
-   * on a resumable upload id, which are automatically garbage collected after
-   * 7 days, and have no additional costs.
+   * of a resumable upload id, which are automatically garbage collected after
+   * 7 days, and have no additional costs.  Furthermore, this side-effect is
+   * not observable, as there is no way to list the current upload ids.
    *
    * @see [Resumable Uploads][resumable-link] for more information about
    *     resumable uploads.
