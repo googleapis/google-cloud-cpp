@@ -759,6 +759,32 @@ TEST(StorageRoundRobinTest, AsyncStartResumableWrite) {
   }
 }
 
+TEST(StorageRoundRobinTest, AsyncQueryWriteStatus) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, AsyncQueryWriteStatus).WillOnce([](auto, auto, auto) {
+        auto response = StatusOr<google::storage::v2::QueryWriteStatusResponse>(
+            Status(StatusCode::kPermissionDenied, "uh-oh"));
+        return make_ready_future(response);
+      });
+    }
+  }
+
+  StorageRoundRobin under_test(AsPlainStubs(mocks));
+  google::cloud::CompletionQueue cq;
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    google::storage::v2::QueryWriteStatusRequest request;
+    auto response =
+        under_test
+            .AsyncQueryWriteStatus(cq, absl::make_unique<grpc::ClientContext>(),
+                                   request)
+            .get();
+    EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

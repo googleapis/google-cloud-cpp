@@ -247,6 +247,14 @@ StorageRoundRobin::AsyncStartResumableWrite(
   return Child()->AsyncStartResumableWrite(cq, std::move(context), request);
 }
 
+future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
+StorageRoundRobin::AsyncQueryWriteStatus(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::QueryWriteStatusRequest const& request) {
+  return Child()->AsyncQueryWriteStatus(cq, std::move(context), request);
+}
+
 std::shared_ptr<StorageStub> StorageRoundRobin::Child() {
   std::lock_guard<std::mutex> lk(mu_);
   auto child = children_[current_];
