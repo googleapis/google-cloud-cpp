@@ -462,6 +462,20 @@ StorageLogging::AsyncStartResumableWrite(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
+StorageLogging::AsyncQueryWriteStatus(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::QueryWriteStatusRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::storage::v2::QueryWriteStatusRequest const& request) {
+        return child_->AsyncQueryWriteStatus(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

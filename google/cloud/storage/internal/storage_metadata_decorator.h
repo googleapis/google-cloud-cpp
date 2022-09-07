@@ -183,6 +183,12 @@ class StorageMetadata : public StorageStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::storage::v2::StartResumableWriteRequest const& request) override;
 
+  future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
+  AsyncQueryWriteStatus(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::QueryWriteStatusRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
