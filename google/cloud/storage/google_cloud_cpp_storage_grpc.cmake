@@ -40,6 +40,8 @@ else ()
         internal/grpc_bucket_access_control_parser.h
         internal/grpc_bucket_metadata_parser.cc
         internal/grpc_bucket_metadata_parser.h
+        internal/grpc_bucket_name.cc
+        internal/grpc_bucket_name.h
         internal/grpc_bucket_request_parser.cc
         internal/grpc_bucket_request_parser.h
         internal/grpc_client.cc
