@@ -506,7 +506,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
 
   auto actual = GrpcBucketRequestParser::ToProto(req);
   ASSERT_STATUS_OK(actual);
-  // First check the paths, we do not care about their order, so checking them
+  // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
   EXPECT_THAT(actual->update_mask().paths(),
               UnorderedElementsAre(
@@ -515,7 +515,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
                   "website", "versioning", "logging", "encryption", "billing",
                   "retention_policy", "iam_config"));
 
-  // Clear the paths, which we already compared, and test the rest
+  // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -549,7 +549,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllResets) {
 
   auto actual = GrpcBucketRequestParser::ToProto(req);
   ASSERT_STATUS_OK(actual);
-  // First check the paths, we do not care about their order, so checking them
+  // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
   EXPECT_THAT(actual->update_mask().paths(),
               UnorderedElementsAre(
@@ -558,7 +558,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllResets) {
                   "website", "versioning", "logging", "encryption", "billing",
                   "retention_policy", "iam_config"));
 
-  // Clear the paths, which we already compared, and test the rest
+  // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }

@@ -78,6 +78,8 @@ Status PatchLifecycle(Bucket& b, nlohmann::json const& patch) {
   // subobject.
   for (auto const& r : patch["rule"]) {
     auto lf = LifecycleRuleParser::FromJson(r);
+    // We do not care if `b` may have been modified. It will be discarded if
+    // this function (or similar functions) return a non-Okay Status.
     if (!lf) return std::move(lf).status();
     *lifecycle.add_rule() = GrpcBucketMetadataParser::ToProto(*lf);
   }
@@ -482,9 +484,9 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
 
   auto const& patch = PatchBuilderDetails::GetPatch(request.patch().impl_);
 
-  // The `labels` field is too special, handle separately
+  // The `labels` field is too special, handle separately.
   if (request.patch().labels_subpatch_dirty_) {
-    // The semantics in gRPC are to replace any labels
+    // The semantics in gRPC are to replace any labels.
     auto const& subpatch =
         PatchBuilderDetails::GetPatch(request.patch().labels_subpatch_);
     for (auto const& kv : subpatch.items()) {
