@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_notification_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc_bucket_name.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 
@@ -59,8 +60,8 @@ google::storage::v2::Notification ToProto(NotificationMetadata const& rhs) {
 google::storage::v2::Notification ToProto(NotificationMetadata const& rhs,
                                           std::string const& bucket_name) {
   auto result = ToProto(rhs);
-  result.set_name("projects/_/buckets/" + bucket_name +
-                  "/notificationConfigs/" + rhs.id());
+  result.set_name(GrpcBucketIdToName(bucket_name) + "/notificationConfigs/" +
+                  rhs.id());
   return result;
 }
 

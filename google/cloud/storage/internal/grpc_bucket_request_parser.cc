@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc_bucket_name.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
@@ -303,7 +304,7 @@ void UpdateIamConfig(Bucket& bucket, BucketMetadata const& metadata) {
 google::storage::v2::DeleteBucketRequest GrpcBucketRequestParser::ToProto(
     DeleteBucketRequest const& request) {
   google::storage::v2::DeleteBucketRequest result;
-  result.set_name("projects/_/buckets/" + request.bucket_name());
+  result.set_name(GrpcBucketIdToName(request.bucket_name()));
   if (request.HasOption<IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
         request.GetOption<IfMetagenerationMatch>().value());
@@ -318,7 +319,7 @@ google::storage::v2::DeleteBucketRequest GrpcBucketRequestParser::ToProto(
 google::storage::v2::GetBucketRequest GrpcBucketRequestParser::ToProto(
     GetBucketMetadataRequest const& request) {
   google::storage::v2::GetBucketRequest result;
-  result.set_name("projects/_/buckets/" + request.bucket_name());
+  result.set_name(GrpcBucketIdToName(request.bucket_name()));
   if (request.HasOption<IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
         request.GetOption<IfMetagenerationMatch>().value());
@@ -394,7 +395,7 @@ google::storage::v2::LockBucketRetentionPolicyRequest
 GrpcBucketRequestParser::ToProto(
     LockBucketRetentionPolicyRequest const& request) {
   google::storage::v2::LockBucketRetentionPolicyRequest result;
-  result.set_bucket("projects/_/buckets/" + request.bucket_name());
+  result.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   result.set_if_metageneration_match(request.metageneration());
   return result;
 }
@@ -402,7 +403,7 @@ GrpcBucketRequestParser::ToProto(
 google::iam::v1::GetIamPolicyRequest GrpcBucketRequestParser::ToProto(
     GetBucketIamPolicyRequest const& request) {
   google::iam::v1::GetIamPolicyRequest result;
-  result.set_resource("projects/_/buckets/" + request.bucket_name());
+  result.set_resource(GrpcBucketIdToName(request.bucket_name()));
   if (request.HasOption<RequestedPolicyVersion>()) {
     result.mutable_options()->set_requested_policy_version(
         static_cast<std::int32_t>(
@@ -436,7 +437,7 @@ NativeIamPolicy GrpcBucketRequestParser::FromProto(
 google::iam::v1::SetIamPolicyRequest GrpcBucketRequestParser::ToProto(
     SetNativeBucketIamPolicyRequest const& request) {
   google::iam::v1::SetIamPolicyRequest result;
-  result.set_resource("projects/_/buckets/" + request.bucket_name());
+  result.set_resource(GrpcBucketIdToName(request.bucket_name()));
   auto& policy = *result.mutable_policy();
   policy.set_version(request.policy().version());
   policy.set_etag(request.policy().etag());
@@ -459,7 +460,7 @@ google::iam::v1::SetIamPolicyRequest GrpcBucketRequestParser::ToProto(
 google::iam::v1::TestIamPermissionsRequest GrpcBucketRequestParser::ToProto(
     TestBucketIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsRequest result;
-  result.set_resource("projects/_/buckets/" + request.bucket_name());
+  result.set_resource(GrpcBucketIdToName(request.bucket_name()));
   for (auto const& p : request.permissions()) {
     result.add_permissions(p);
   }
@@ -480,7 +481,7 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
   google::storage::v2::UpdateBucketRequest result;
 
   auto& bucket = *result.mutable_bucket();
-  bucket.set_name("projects/_/buckets/" + request.bucket());
+  bucket.set_name(GrpcBucketIdToName(request.bucket()));
 
   auto const& patch = PatchBuilderDetails::GetPatch(request.patch().impl_);
 
@@ -556,7 +557,7 @@ google::storage::v2::UpdateBucketRequest GrpcBucketRequestParser::ToProto(
 
   auto& bucket = *result.mutable_bucket();
   auto const& metadata = request.metadata();
-  bucket.set_name("projects/_/buckets/" + metadata.name());
+  bucket.set_name(GrpcBucketIdToName(metadata.name()));
 
   // We set the update_mask for all fields, even if not present in `metadata` as
   // "not present" implies the field should be cleared.

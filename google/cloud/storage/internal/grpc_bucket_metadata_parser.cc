@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_access_control_parser.h"
+#include "google/cloud/storage/internal/grpc_bucket_name.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_owner_parser.h"
 #include "google/cloud/storage/version.h"
@@ -50,7 +51,7 @@ google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
   google::storage::v2::Bucket result;
   // These are in the order of the proto fields, to make it easier to find them
   // later.
-  result.set_name("projects/_/buckets/" + rhs.id());
+  result.set_name(GrpcBucketIdToName(rhs.id()));
   result.set_bucket_id(rhs.id());
   result.set_etag(rhs.etag());
   result.set_project("projects/" + std::to_string(rhs.project_number()));
@@ -141,8 +142,7 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   metadata.location_type_ = rhs.location_type();
   if (rhs.has_logging()) metadata.logging_ = FromProto(rhs.logging());
   metadata.metageneration_ = rhs.metageneration();
-  // The proto name is in `projects/_/buckets/{bucket_id}` format
-  metadata.name_ = rhs.bucket_id();
+  metadata.name_ = GrpcBucketNameToId(rhs.name());
   if (rhs.has_owner()) {
     metadata.owner_ = GrpcOwnerParser::FromProto(rhs.owner());
   }
