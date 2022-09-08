@@ -146,7 +146,8 @@ Status PatchLogging(Bucket& b, nlohmann::json const& l) {
   if (l.is_null()) {
     b.clear_logging();
   } else {
-    b.mutable_logging()->set_log_bucket(l.value("logBucket", ""));
+    b.mutable_logging()->set_log_bucket(
+        GrpcBucketIdToName(l.value("logBucket", "")));
     b.mutable_logging()->set_log_object_prefix(l.value("logObjectPrefix", ""));
   }
   return Status{};
