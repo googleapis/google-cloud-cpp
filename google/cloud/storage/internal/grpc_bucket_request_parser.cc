@@ -32,7 +32,21 @@ namespace {
 
 using ::google::storage::v2::Bucket;
 
+Status PatchStorageClass(Bucket& b, nlohmann::json const& p) {
+  b.set_storage_class(p.is_null() ? std::string{} : p.get<std::string>());
+  return Status{};
+}
+
+Status PatchRpo(Bucket& b, nlohmann::json const& p) {
+  b.set_rpo(p.is_null() ? std::string{} : p.get<std::string>());
+  return Status{};
+}
+
 Status PatchAcl(Bucket& b, nlohmann::json const& patch) {
+  if (patch.is_null()) {
+    b.clear_acl();
+    return Status{};
+  }
   for (auto const& a : patch) {
     auto& acl = *b.add_acl();
     acl.set_entity(a.value("entity", ""));
@@ -42,6 +56,10 @@ Status PatchAcl(Bucket& b, nlohmann::json const& patch) {
 }
 
 Status PatchDefaultObjectAcl(Bucket& b, nlohmann::json const& patch) {
+  if (patch.is_null()) {
+    b.clear_default_object_acl();
+    return Status{};
+  }
   for (auto const& a : patch) {
     auto& acl = *b.add_default_object_acl();
     acl.set_entity(a.value("entity", ""));
@@ -51,11 +69,17 @@ Status PatchDefaultObjectAcl(Bucket& b, nlohmann::json const& patch) {
 }
 
 Status PatchLifecycle(Bucket& b, nlohmann::json const& patch) {
+  if (patch.is_null()) {
+    b.clear_lifecycle();
+    return Status{};
+  }
   auto& lifecycle = *b.mutable_lifecycle();
   // By construction, the PatchBuilder always includes the "rule"
   // subobject.
   for (auto const& r : patch["rule"]) {
     auto lf = LifecycleRuleParser::FromJson(r);
+    // We do not care if `b` may have been modified. It will be discarded if
+    // this function (or similar functions) return a non-Okay Status.
     if (!lf) return std::move(lf).status();
     *lifecycle.add_rule() = GrpcBucketMetadataParser::ToProto(*lf);
   }
@@ -63,6 +87,10 @@ Status PatchLifecycle(Bucket& b, nlohmann::json const& patch) {
 }
 
 Status PatchCors(Bucket& b, nlohmann::json const& patch) {
+  if (patch.is_null()) {
+    b.clear_cors();
+    return Status{};
+  }
   for (auto const& c : patch) {
     auto& cors = *b.add_cors();
     cors.set_max_age_seconds(c.value("maxAgeSeconds", std::int32_t{0}));
@@ -85,7 +113,79 @@ Status PatchCors(Bucket& b, nlohmann::json const& patch) {
   return Status{};
 }
 
+Status PatchEventBasedHold(Bucket& b, nlohmann::json const& patch) {
+  if (patch.is_null()) {
+    b.clear_default_event_based_hold();
+  } else {
+    b.set_default_event_based_hold(patch.get<bool>());
+  }
+  return Status{};
+}
+
+Status PatchWebsite(Bucket& b, nlohmann::json const& w) {
+  if (w.is_null()) {
+    b.clear_website();
+  } else {
+    b.mutable_website()->set_main_page_suffix(w.value("mainPageSuffix", ""));
+    b.mutable_website()->set_not_found_page(w.value("notFoundPage", ""));
+  }
+  return Status{};
+}
+
+Status PatchVersioning(Bucket& b, nlohmann::json const& v) {
+  if (v.is_null()) {
+    b.clear_versioning();
+  } else {
+    b.mutable_versioning()->set_enabled(v.value("enabled", false));
+  }
+  return Status{};
+}
+
+Status PatchLogging(Bucket& b, nlohmann::json const& l) {
+  if (l.is_null()) {
+    b.clear_logging();
+  } else {
+    b.mutable_logging()->set_log_bucket(l.value("logBucket", ""));
+    b.mutable_logging()->set_log_object_prefix(l.value("logObjectPrefix", ""));
+  }
+  return Status{};
+}
+
+Status PatchEncryption(Bucket& b, nlohmann::json const& e) {
+  if (e.is_null()) {
+    b.clear_encryption();
+  } else {
+    b.mutable_encryption()->set_default_kms_key(
+        e.value("defaultKmsKeyName", ""));
+  }
+  return Status{};
+}
+
+Status PatchBilling(Bucket& bucket, nlohmann::json const& b) {
+  if (b.is_null()) {
+    bucket.clear_billing();
+  } else {
+    bucket.mutable_billing()->set_requester_pays(
+        b.value("requesterPays", false));
+  }
+  return Status{};
+}
+
+Status PatchRetentionPolicy(Bucket& b, nlohmann::json const& r) {
+  if (r.is_null()) {
+    b.clear_retention_policy();
+  } else {
+    b.mutable_retention_policy()->set_retention_period(
+        r.value("retentionPeriod", int64_t{0}));
+  }
+  return Status{};
+}
+
 Status PatchIamConfig(Bucket& b, nlohmann::json const& i) {
+  if (i.is_null()) {
+    b.clear_iam_config();
+    return Status{};
+  }
   auto& iam_config = *b.mutable_iam_config();
   if (i.contains("uniformBucketLevelAccess")) {
     iam_config.mutable_uniform_bucket_level_access()->set_enabled(
@@ -384,9 +484,9 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
 
   auto const& patch = PatchBuilderDetails::GetPatch(request.patch().impl_);
 
-  // The `labels` field is too special, handle separately
+  // The `labels` field is too special, handle separately.
   if (request.patch().labels_subpatch_dirty_) {
-    // The semantics in gRPC are to replace any labels
+    // The semantics in gRPC are to replace any labels.
     auto const& subpatch =
         PatchBuilderDetails::GetPatch(request.patch().labels_subpatch_);
     for (auto const& kv : subpatch.items()) {
@@ -406,62 +506,20 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
   } fields[] = {
       // To ease inspection, the fields appear in the same order as they are
       // declared in the proto
-      {"storageClass", "storage_class",
-       [](Bucket& b, nlohmann::json const& patch) {
-         b.set_storage_class(patch.get<std::string>());
-         return Status{};
-       }},
-      {"rpo", "",
-       [](Bucket& b, nlohmann::json const& patch) {
-         b.set_rpo(patch.get<std::string>());
-         return Status{};
-       }},
+      {"storageClass", "storage_class", PatchStorageClass},
+      {"rpo", "", PatchRpo},
       {"acl", "", PatchAcl},
       {"defaultObjectAcl", "default_object_acl", PatchDefaultObjectAcl},
       {"lifecycle", "", PatchLifecycle},
       {"cors", "", PatchCors},
       {"defaultEventBasedHold", "default_event_based_hold",
-       [](Bucket& b, nlohmann::json const& patch) {
-         b.set_default_event_based_hold(patch.get<bool>());
-         return Status{};
-       }},
-      {"website", "",
-       [](Bucket& b, nlohmann::json const& w) {
-         b.mutable_website()->set_main_page_suffix(
-             w.value("mainPageSuffix", ""));
-         b.mutable_website()->set_not_found_page(w.value("notFoundPage", ""));
-         return Status{};
-       }},
-      {"versioning", "",
-       [](Bucket& b, nlohmann::json const& v) {
-         b.mutable_versioning()->set_enabled(v.value("enabled", false));
-         return Status{};
-       }},
-      {"logging", "",
-       [](Bucket& b, nlohmann::json const& l) {
-         b.mutable_logging()->set_log_bucket(l.value("logBucket", ""));
-         b.mutable_logging()->set_log_object_prefix(
-             l.value("logObjectPrefix", ""));
-         return Status{};
-       }},
-      {"encryption", "",
-       [](Bucket& b, nlohmann::json const& e) {
-         b.mutable_encryption()->set_default_kms_key(
-             e.value("defaultKmsKeyName", ""));
-         return Status{};
-       }},
-      {"billing", "",
-       [](Bucket& bucket, nlohmann::json const& b) {
-         bucket.mutable_billing()->set_requester_pays(
-             b.value("requesterPays", false));
-         return Status{};
-       }},
-      {"retentionPolicy", "retention_policy",
-       [](Bucket& b, nlohmann::json const& r) {
-         b.mutable_retention_policy()->set_retention_period(
-             r.value("retentionPeriod", int64_t{0}));
-         return Status{};
-       }},
+       PatchEventBasedHold},
+      {"website", "", PatchWebsite},
+      {"versioning", "", PatchVersioning},
+      {"logging", "", PatchLogging},
+      {"encryption", "", PatchEncryption},
+      {"billing", "", PatchBilling},
+      {"retentionPolicy", "retention_policy", PatchRetentionPolicy},
       {"iamConfiguration", "iam_config", PatchIamConfig},
   };
 
