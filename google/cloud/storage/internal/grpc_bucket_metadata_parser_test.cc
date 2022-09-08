@@ -101,7 +101,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     }
     versioning { enabled: true }
     logging {
-      log_bucket: "test-log-bucket"
+      log_bucket: "projects/_/buckets/test-log-bucket"
       log_object_prefix: "test-log-object-prefix"
     }
     owner { entity: "test-entity" entity_id: "test-entity-id" }
@@ -423,7 +423,7 @@ TEST(GrpcBucketMetadataParser, BucketLifecycleRoundtrip) {
 
 TEST(GrpcBucketMetadataParser, BucketLoggingRoundtrip) {
   auto constexpr kText = R"pb(
-    log_bucket: "test-bucket-name"
+    log_bucket: "projects/_/buckets/test-bucket-name"
     log_object_prefix: "test-object-prefix/"
   )pb";
   google::storage::v2::Bucket::Logging start;

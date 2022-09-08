@@ -424,7 +424,7 @@ BucketLifecycle GrpcBucketMetadataParser::FromProto(
 google::storage::v2::Bucket::Logging GrpcBucketMetadataParser::ToProto(
     BucketLogging const& rhs) {
   google::storage::v2::Bucket::Logging result;
-  result.set_log_bucket(rhs.log_bucket);
+  result.set_log_bucket(GrpcBucketIdToName(rhs.log_bucket));
   result.set_log_object_prefix(rhs.log_object_prefix);
   return result;
 }
@@ -432,7 +432,7 @@ google::storage::v2::Bucket::Logging GrpcBucketMetadataParser::ToProto(
 BucketLogging GrpcBucketMetadataParser::FromProto(
     google::storage::v2::Bucket::Logging const& rhs) {
   BucketLogging result;
-  result.log_bucket = rhs.log_bucket();
+  result.log_bucket = GrpcBucketNameToId(rhs.log_bucket());
   result.log_object_prefix = rhs.log_object_prefix();
   return result;
 }

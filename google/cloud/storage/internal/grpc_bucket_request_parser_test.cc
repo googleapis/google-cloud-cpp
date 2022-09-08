@@ -115,7 +115,7 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
           default_event_based_hold: true
           labels { key: "k0" value: "v0" }
           logging {
-            log_bucket: "test-log-bucket"
+            log_bucket: "projects/_/buckets/test-log-bucket"
             log_object_prefix: "test-log-object-prefix"
           }
           versioning { enabled: true }
@@ -417,7 +417,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
           website { main_page_suffix: "index.html" not_found_page: "404.html" }
           versioning { enabled: true }
           logging {
-            log_bucket: "test-log-bucket"
+            log_bucket: "projects/_/buckets/test-log-bucket"
             log_object_prefix: "test-log-prefix"
           }
           encryption { default_kms_key: "test-only-kms-key" }
