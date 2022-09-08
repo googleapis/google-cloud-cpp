@@ -307,7 +307,10 @@ void CurlInitializeOnce(Options const& options) {
     //
     //     https://curl.haxx.se/libcurl/c/threadsafe.html
     //
-    InitializeSslLocking(options.get<EnableCurlSslLockingOption>());
+    auto const locking = options.has<EnableCurlSslLockingOption>()
+                             ? options.get<EnableCurlSslLockingOption>()
+                             : true;
+    InitializeSslLocking(locking);
 
     // libcurl recommends turning on `CURLOPT_NOSIGNAL` for threaded
     // applications: "Note that setting `CURLOPT_NOSIGNAL` to 0L will not work
@@ -322,7 +325,11 @@ void CurlInitializeOnce(Options const& options) {
     //
     //     https://curl.haxx.se/libcurl/c/threadsafe.html
     //
-    InitializeSigPipeHandler(options.get<EnableCurlSigpipeHandlerOption>());
+    auto const enable_handler =
+        options.has<EnableCurlSigpipeHandlerOption>()
+            ? options.get<EnableCurlSigpipeHandlerOption>()
+            : true;
+    InitializeSigPipeHandler(enable_handler);
     return true;
   }();
   static_cast<void>(kInitialized);
