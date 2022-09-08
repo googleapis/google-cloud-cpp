@@ -97,13 +97,15 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
       << "Test aborted. The bucket <" << bucket_name << "> already exists."
       << " This is unexpected as the test generates a random bucket name.";
 
-  auto insert_meta = client->CreateBucketForProject(bucket_name, project_id_,
-                                                    BucketMetadata());
+  // Always request a full projection as this works with REST and gRPC
+  auto insert_meta = client->CreateBucketForProject(
+      bucket_name, project_id_, BucketMetadata(), Projection::Full());
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_EQ(bucket_name, insert_meta->name());
   EXPECT_THAT(list_bucket_names(), ContainsOnce(bucket_name));
 
-  StatusOr<BucketMetadata> get_meta = client->GetBucketMetadata(bucket_name);
+  StatusOr<BucketMetadata> get_meta =
+      client->GetBucketMetadata(bucket_name, Projection::Full());
   ASSERT_STATUS_OK(get_meta);
   EXPECT_EQ(*insert_meta, *get_meta);
 
@@ -142,7 +144,10 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   patched = client->PatchBucket(
       bucket_name, BucketMetadataPatchBuilder().ResetWebsite().ResetBilling());
   ASSERT_STATUS_OK(patched);
-  EXPECT_FALSE(patched->has_billing());
+  // It does not matter if the `billing` compound is set. Only that it has the
+  // same effect as-if it was not set, i.e., it has the default value.
+  EXPECT_EQ(patched->billing_as_optional().value_or(BucketBilling{false}),
+            BucketBilling{false});
   EXPECT_FALSE(patched->has_website());
 
   auto status = client->DeleteBucket(bucket_name);
@@ -263,6 +268,9 @@ TEST_F(BucketIntegrationTest, PatchLifecycleConditions) {
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
+  // TODO(#5673) - enable in production.
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -470,6 +478,9 @@ TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
 
 /// @test Verify that we can set the RPO in a Bucket.
 TEST_F(BucketIntegrationTest, RpoPatch) {
+  // TODO(#5673) - enable in production
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -549,8 +560,9 @@ TEST_F(BucketIntegrationTest, GetMetadataFields) {
   auto metadata = client->GetBucketMetadata(bucket_name_, Fields("name"));
   ASSERT_STATUS_OK(metadata);
   EXPECT_EQ(bucket_name_, metadata->name());
-  EXPECT_TRUE(metadata->id().empty());
-  EXPECT_TRUE(metadata->kind().empty());
+  // This field is normally returned by JSON and gRPC. In this case it should be
+  // empty, because we only requested the `name` field.
+  EXPECT_THAT(metadata->storage_class(), IsEmpty());
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatchSuccess) {
@@ -603,6 +615,9 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
+  // TODO(#5673) - enable in production
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -674,6 +689,9 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
+  // TODO(#5673) - enable in production
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -743,6 +761,9 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
+  // TODO(#5673) - enable when gRPC implements these operations.
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
