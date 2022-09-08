@@ -369,7 +369,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
 
   auto actual = GrpcObjectRequestParser::ToProto(req);
   ASSERT_STATUS_OK(actual);
-  // First check the paths, we do not care about their order, so checking them
+  // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
   EXPECT_THAT(
       actual->update_mask().paths(),
@@ -377,7 +377,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
                            "cache_control", "content_language", "content_type",
                            "metadata", "temporary_hold", "event_based_hold",
                            "custom_time"));
-  // Clear the paths, which we already compared, and test the rest
+  // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -405,7 +405,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllResets) {
 
   auto actual = GrpcObjectRequestParser::ToProto(req);
   ASSERT_STATUS_OK(actual);
-  // First check the paths, we do not care about their order, so checking them
+  // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
   EXPECT_THAT(
       actual->update_mask().paths(),
@@ -413,7 +413,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllResets) {
                            "cache_control", "content_language", "content_type",
                            "metadata", "temporary_hold", "event_based_hold",
                            "custom_time"));
-  // Clear the paths, which we already compared, and test the rest
+  // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }

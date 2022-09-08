@@ -171,6 +171,8 @@ Status PatchAcl(Object& o, nlohmann::json const& p) {
   }
   for (auto const& a : p) {
     auto acl = ObjectAccessControlParser::FromJson(a);
+    // We do not care if `o` may have been modified. It will be discarded if
+    // this function (or similar functions) return a non-Okay Status.
     if (!acl) return std::move(acl).status();
     *o.add_acl() = GrpcObjectAccessControlParser::ToProto(*acl);
   }
