@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/spanner/timestamp.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include "absl/time/time.h"
@@ -31,6 +31,8 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AllOf;
+using ::testing::AnyOf;
 using ::testing::HasSubstr;
 using ::testing::UnorderedElementsAreArray;
 
@@ -63,35 +65,43 @@ StatusOr<T> WriteReadData(Client& client, T const& data,
   return actual;
 }
 
-class DataTypeIntegrationTest
-    : public spanner_testing::DatabaseIntegrationTest {
- public:
+template <typename T>
+class DataTypeIntegrationTestTmpl : public T {
+ protected:
   static void SetUpTestSuite() {
-    spanner_testing::DatabaseIntegrationTest::SetUpTestSuite();
-    client_ = absl::make_unique<Client>(MakeConnection(GetDatabase()));
+    T::SetUpTestSuite();
+    client_ = absl::make_unique<Client>(MakeConnection(T::GetDatabase()));
   }
 
   void SetUp() override {
     auto commit_result = client_->Commit(Mutations{
         MakeDeleteMutation("DataTypes", KeySet::All()),
     });
-    EXPECT_STATUS_OK(commit_result);
+    if (T::UsingEmulator()) {
+      // PgDataTypeIntegrationTest::SetUpTestSuite() will fail until
+      // the emulator supports PostgreSQL syntax to quote identifiers.
+      ASSERT_THAT(commit_result,
+                  AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
+    } else {
+      ASSERT_THAT(commit_result, IsOk());
+    }
   }
 
   static void TearDownTestSuite() {
     client_ = nullptr;
-    spanner_testing::DatabaseIntegrationTest::TearDownTestSuite();
+    T::TearDownTestSuite();
   }
 
-  static bool UsingEmulator() {
-    return google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
-  }
-
- protected:
   static std::unique_ptr<Client> client_;
 };
 
-std::unique_ptr<Client> DataTypeIntegrationTest::client_;
+template <typename T>
+std::unique_ptr<Client> DataTypeIntegrationTestTmpl<T>::client_;
+
+using DataTypeIntegrationTest =
+    DataTypeIntegrationTestTmpl<spanner_testing::DatabaseIntegrationTest>;
+using PgDataTypeIntegrationTest =
+    DataTypeIntegrationTestTmpl<spanner_testing::PgDatabaseIntegrationTest>;
 
 TEST_F(DataTypeIntegrationTest, WriteReadBool) {
   std::vector<bool> const data = {true, false};
@@ -251,6 +261,29 @@ TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
+TEST_F(PgDataTypeIntegrationTest, WriteReadNumeric) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
+
+  auto limit = std::string(131072, '9') + "." + std::string(16383, '9');
+  auto min = MakePgNumeric("-" + limit);
+  ASSERT_STATUS_OK(min);
+  auto max = MakePgNumeric(limit);
+  ASSERT_STATUS_OK(max);
+
+  std::vector<PgNumeric> const data = {
+      *min,                                  //
+      MakePgNumeric(-999999999e-3).value(),  //
+      MakePgNumeric(-1).value(),             //
+      MakePgNumeric(0).value(),              //
+      MakePgNumeric(1).value(),              //
+      MakePgNumeric(999999999e-3).value(),   //
+      *max,                                  //
+  };
+  auto result = WriteReadData(*client_, data, "NumericValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
 TEST_F(DataTypeIntegrationTest, WriteReadArrayBool) {
   std::vector<std::vector<bool>> const data = {
       std::vector<bool>{},
@@ -369,6 +402,54 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
+TEST_F(PgDataTypeIntegrationTest, WriteReadArrayNumeric) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
+
+  std::vector<std::vector<PgNumeric>> const data = {
+      std::vector<PgNumeric>{},
+      std::vector<PgNumeric>{PgNumeric()},
+      std::vector<PgNumeric>{
+          MakePgNumeric(-1e+9).value(),
+          MakePgNumeric(1e-9).value(),
+          MakePgNumeric(1e+9).value(),
+      },
+  };
+  auto result = WriteReadData(*client_, data, "ArrayNumericValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
+  spanner_admin::DatabaseAdminClient admin_client(
+      spanner_admin::MakeDatabaseAdminConnection());
+
+  // Verify that a JSON column cannot be used as an index.
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+        CREATE INDEX DataTypesByJsonValue
+          ON DataTypes(JsonValue)
+      )""");
+  auto metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kFailedPrecondition,
+                                 HasSubstr("DataTypesByJsonValue")));
+
+  // Verify that a JSON column cannot be used as a primary key.
+  statements.clear();
+  statements.emplace_back(R"""(
+        CREATE TABLE JsonKey (
+          Key JSON NOT NULL
+        ) PRIMARY KEY (Key)
+      )""");
+  metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
+                                 AllOf(HasSubstr("Key has type JSON"),
+                                       HasSubstr("part of the primary key"))));
+}
+
 TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
   auto& client = *client_;
   auto const key = MakeNumeric(42).value();
@@ -384,6 +465,28 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
   auto row = GetSingularRow(StreamOf<RowType>(rows));
   ASSERT_STATUS_OK(row);
   EXPECT_EQ(std::get<0>(*std::move(row)), key);
+}
+
+TEST_F(PgDataTypeIntegrationTest, NumericPrimaryKey) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
+
+  spanner_admin::DatabaseAdminClient admin_client(
+      spanner_admin::MakeDatabaseAdminConnection());
+
+  // Verify that a NUMERIC column cannot be used as a primary key.
+  std::vector<std::string> statements;
+  statements.emplace_back(R"sql(
+        CREATE TABLE NumericKey (
+          Key NUMERIC NOT NULL,
+          PRIMARY KEY(Key)
+        )
+      )sql");
+  auto metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
+                                 AllOf(HasSubstr("has type PG.NUMERIC"),
+                                       HasSubstr("part of the primary key"))));
 }
 
 // This test differs a lot from the other tests since Spanner STRUCT types may

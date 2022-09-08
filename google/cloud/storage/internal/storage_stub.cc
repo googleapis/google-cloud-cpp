@@ -439,6 +439,34 @@ DefaultStorageStub::AsyncWriteObject(
       });
 }
 
+future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
+DefaultStorageStub::AsyncStartResumableWrite(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::StartResumableWriteRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::storage::v2::StartResumableWriteRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncStartResumableWrite(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
+DefaultStorageStub::AsyncQueryWriteStatus(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::QueryWriteStatusRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::storage::v2::QueryWriteStatusRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncQueryWriteStatus(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

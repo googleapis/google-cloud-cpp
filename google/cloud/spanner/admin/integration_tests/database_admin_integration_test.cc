@@ -255,28 +255,6 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   }
   EXPECT_FALSE(metadata->throttled());
 
-  // Verify that a JSON column cannot be used as an index.
-  statements.clear();
-  statements.emplace_back(R"""(
-        CREATE INDEX SingersByDetail
-          ON Singers(SingerDetails)
-      )""");
-  metadata = client_.UpdateDatabaseDdl(database_.FullName(), statements).get();
-  EXPECT_THAT(metadata, StatusIs(StatusCode::kFailedPrecondition,
-                                 HasSubstr("SingersByDetail")));
-
-  // Verify that a JSON column cannot be used as a primary key.
-  statements.clear();
-  statements.emplace_back(R"""(
-        CREATE TABLE JsonKey (
-          Key JSON NOT NULL
-        ) PRIMARY KEY (Key)
-      )""");
-  metadata = client_.UpdateDatabaseDdl(database_.FullName(), statements).get();
-  EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
-                                 AllOf(HasSubstr("Key has type JSON"),
-                                       HasSubstr("part of the primary key"))));
-
   // Verify that a new role can be created and returned.
   statements.clear();
   statements.emplace_back(R"""(

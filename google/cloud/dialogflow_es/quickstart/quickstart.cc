@@ -24,14 +24,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace dialogflow_es = ::google::cloud::dialogflow_es;
-  // TODO(#9626): Use the location-aware MakeAgentsConnection() instead?
   auto client =
       dialogflow_es::AgentsClient(dialogflow_es::MakeAgentsConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.SearchAgents(project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto a : client.SearchAgents(project.FullName())) {
+    if (!a) throw std::runtime_error(a.status().message());
+    std::cout << a->DebugString() << "\n";
   }
 
   return 0;

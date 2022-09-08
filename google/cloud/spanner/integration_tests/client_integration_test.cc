@@ -16,7 +16,6 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -36,11 +35,7 @@ using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
 
 class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
- public:
-  ClientIntegrationTest()
-      : emulator_(google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST")
-                      .has_value()) {}
-
+ protected:
   static void SetUpTestSuite() {
     spanner_testing::DatabaseIntegrationTest::SetUpTestSuite();
     client_ = absl::make_unique<Client>(MakeConnection(GetDatabase()));
@@ -49,7 +44,7 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
   void SetUp() override {
     auto commit_result = client_->Commit(
         Mutations{MakeDeleteMutation("Singers", KeySet::All())});
-    EXPECT_STATUS_OK(commit_result);
+    ASSERT_STATUS_OK(commit_result);
   }
 
   static void InsertTwoSingers() {
@@ -66,12 +61,10 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
     spanner_testing::DatabaseIntegrationTest::TearDownTestSuite();
   }
 
- protected:
-  bool EmulatorUnimplemented(Status const& status) const {
-    return emulator_ && status.code() == StatusCode::kUnimplemented;
+  static bool EmulatorUnimplemented(Status const& status) {
+    return UsingEmulator() && status.code() == StatusCode::kUnimplemented;
   }
 
-  bool emulator_;
   static std::unique_ptr<Client> client_;
 };
 
@@ -363,7 +356,7 @@ TEST_F(ClientIntegrationTest, QueryOptionsWork) {
     }
     ++row_count;
   }
-  if (!emulator_) {
+  if (!UsingEmulator()) {
     EXPECT_TRUE(got_error) << "An invalid optimizer version should be an error";
     EXPECT_EQ(0, row_count);
   } else {
@@ -852,7 +845,7 @@ TEST_F(ClientIntegrationTest, ProfileQuery) {
   EXPECT_GT(stats->size(), 0);
 
   auto plan = rows.ExecutionPlan();
-  if (!emulator_ || plan) {
+  if (!UsingEmulator() || plan) {
     EXPECT_TRUE(plan);
     EXPECT_GT(plan->plan_nodes_size(), 0);
   }
@@ -880,7 +873,7 @@ TEST_F(ClientIntegrationTest, ProfileDml) {
   EXPECT_GT(stats->size(), 0);
 
   auto plan = profile_result.ExecutionPlan();
-  if (!emulator_ || plan) {
+  if (!UsingEmulator() || plan) {
     EXPECT_TRUE(plan);
     EXPECT_GT(plan->plan_nodes_size(), 0);
   }
@@ -895,7 +888,7 @@ TEST_F(ClientIntegrationTest, DatabaseDialect) {
       )"""));
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
-    if (emulator_) {
+    if (UsingEmulator()) {
       EXPECT_THAT(row, AnyOf(IsOk(), StatusIs(StatusCode::kInvalidArgument)));
     } else {
       EXPECT_THAT(row, IsOk());
@@ -914,7 +907,7 @@ TEST_F(ClientIntegrationTest, VersionRetentionPeriod) {
       )"""));
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
-    if (emulator_) {
+    if (UsingEmulator()) {
       // TODO(#5479): Awaiting emulator support for version_retention_period.
       EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
     } else {
@@ -934,7 +927,7 @@ TEST_F(ClientIntegrationTest, DefaultLeader) {
       )"""));
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
-    if (emulator_) {
+    if (UsingEmulator()) {
       // TODO(#7144): Awaiting emulator support for default_leader.
       EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
     } else {
@@ -955,7 +948,7 @@ TEST_F(ClientIntegrationTest, SupportedOptimizerVersions) {
       )"""));
   using RowType = std::tuple<std::int64_t, absl::CivilDay>;
   for (auto& row : StreamOf<RowType>(rows)) {
-    if (emulator_) {
+    if (UsingEmulator()) {
       EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
     } else {
       EXPECT_THAT(row, IsOk());
@@ -974,7 +967,7 @@ TEST_F(ClientIntegrationTest, SpannerStatistics) {
       )"""));
   using RowType = std::tuple<std::string, std::string, bool>;
   for (auto& row : StreamOf<RowType>(rows)) {
-    if (emulator_) {
+    if (UsingEmulator()) {
       EXPECT_THAT(row, StatusIs(AnyOf(StatusCode::kInvalidArgument,
                                       StatusCode::kUnimplemented)));
     } else {
@@ -991,7 +984,7 @@ TEST_F(ClientIntegrationTest, SpannerStatistics) {
 TEST_F(ClientIntegrationTest, UnifiedCredentials) {
   auto options =
       Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  if (emulator_) {
+  if (UsingEmulator()) {
     options = Options{}
                   .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                   .set<internal::UseInsecureChannelOption>(true);

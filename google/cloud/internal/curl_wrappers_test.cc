@@ -46,6 +46,88 @@ TEST(CurlWrappers, VersionToCurlCode) {
   }
 }
 
+TEST(CurlWrappers, DebugSendHeader) {
+  struct TestCasse {
+    std::string input;
+    std::string expected;
+  } cases[] = {
+      {R"""(header1: no-marker-no-nl)""",
+       R"""(>> curl(Send Header): header1: no-marker-no-nl)"""},
+      {R"""(header1: no-marker-w-nl
+)""",
+       R"""(>> curl(Send Header): header1: no-marker-w-nl
+)"""},
+      {R"""(header1: no-marker-w-nl-and-data
+header2: value2
+)""",
+       R"""(>> curl(Send Header): header1: no-marker-w-nl-and-data
+header2: value2
+)"""},
+
+      {R"""(header1: short-no-nl
+authorization: Bearer 012345678901234567890123456789)""",
+       R"""(>> curl(Send Header): header1: short-no-nl
+authorization: Bearer 012345678901234567890123456789)"""},
+      {R"""(header1: short-w-nl
+authorization: Bearer 012345678901234567890123456789
+)""",
+       R"""(>> curl(Send Header): header1: short-w-nl
+authorization: Bearer 012345678901234567890123456789
+)"""},
+      {R"""(header1: short-w-nl-and-data
+authorization: Bearer 012345678901234567890123456789
+header2: value2
+)""",
+       R"""(>> curl(Send Header): header1: short-w-nl-and-data
+authorization: Bearer 012345678901234567890123456789
+header2: value2
+)"""},
+
+      {R"""(header1: exact-no-nl
+authorization: Bearer 01234567890123456789012345678912)""",
+       R"""(>> curl(Send Header): header1: exact-no-nl
+authorization: Bearer 01234567890123456789012345678912)"""},
+      {R"""(header1: exact-w-nl
+authorization: Bearer 01234567890123456789012345678912
+)""",
+       R"""(>> curl(Send Header): header1: exact-w-nl
+authorization: Bearer 01234567890123456789012345678912
+)"""},
+      {R"""(header1: exact-w-nl-and-data
+authorization: Bearer 01234567890123456789012345678912
+header2: value2
+)""",
+       R"""(>> curl(Send Header): header1: exact-w-nl-and-data
+authorization: Bearer 01234567890123456789012345678912
+header2: value2
+)"""},
+
+      {R"""(header1: long-no-nl
+authorization: Bearer 012345678901234567890123456789123456)""",
+       R"""(>> curl(Send Header): header1: long-no-nl
+authorization: Bearer 01234567890123456789012345678912...<truncated>...)"""},
+      {R"""(header1: long-w-nl
+authorization: Bearer 012345678901234567890123456789123456
+)""",
+       R"""(>> curl(Send Header): header1: long-w-nl
+authorization: Bearer 01234567890123456789012345678912...<truncated>...
+)"""},
+      {R"""(header1: long-w-nl-and-data
+authorization: Bearer 012345678901234567890123456789123456
+header2: value2
+)""",
+       R"""(>> curl(Send Header): header1: long-w-nl-and-data
+authorization: Bearer 01234567890123456789012345678912...<truncated>...
+header2: value2
+)"""},
+  };
+
+  for (auto const& test : cases) {
+    EXPECT_EQ(test.expected,
+              DebugSendHeader(test.input.data(), test.input.size()));
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

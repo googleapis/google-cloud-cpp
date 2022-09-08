@@ -615,6 +615,56 @@ StorageMetadata::AsyncWriteObject(
   return child_->AsyncWriteObject(cq, std::move(context));
 }
 
+future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
+StorageMetadata::AsyncStartResumableWrite(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::StartResumableWriteRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.write_object_spec().resource().bucket().empty()) {
+    params.push_back("bucket=" +
+                     request.write_object_spec().resource().bucket());
+  }
+
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
+    SetMetadata(*context, absl::StrJoin(params, "&"));
+  }
+  return child_->AsyncStartResumableWrite(cq, std::move(context), request);
+}
+
+future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
+StorageMetadata::AsyncQueryWriteStatus(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::QueryWriteStatusRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::v2::QueryWriteStatusRequest>{
+        "bucket=",
+        {
+            {[](google::storage::v2::QueryWriteStatusRequest const& request)
+                 -> std::string const& { return request.upload_id(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
+    SetMetadata(*context, absl::StrJoin(params, "&"));
+  }
+  return child_->AsyncQueryWriteStatus(cq, std::move(context), request);
+}
+
 void StorageMetadata::SetMetadata(grpc::ClientContext& context,
                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
