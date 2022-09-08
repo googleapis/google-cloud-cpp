@@ -35,7 +35,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
   // Keep the proto fields in the order they show up in the proto file. It is
   // easier to add new fields and to inspect the test for missing fields
   auto constexpr kText = R"pb(
-    name: "projects/_/buckets/test-bucket-id"
+    name: "projects/_/buckets/test-bucket-name"
     bucket_id: "test-bucket-id"
     project: "projects/123456"
     metageneration: 1234567
@@ -173,7 +173,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     "timeCreated": "2019-08-07T16:22:04.123456000Z",
     "id": "test-bucket-id",
     "kind": "storage#bucket",
-    "name": "test-bucket-id",
+    "name": "test-bucket-name",
     "projectNumber": 123456,
     "metageneration": "1234567",
     "cors": [{
