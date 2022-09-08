@@ -21,7 +21,6 @@
 #include "google/cloud/internal/time_utils.h"
 #include "absl/algorithm/container.h"
 #include "absl/strings/match.h"
-#include "absl/strings/strip.h"
 #include "absl/time/civil_time.h"
 #include <algorithm>
 #include <cctype>
