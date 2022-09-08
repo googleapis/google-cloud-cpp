@@ -13,23 +13,38 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_bucket_name.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "absl/strings/strip.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
 
-std::string GrpcBucketIdToName(std::string const& id) {
-  return absl::StrCat("projects/_/buckets/", id);
+TEST(GrpcBucketName, ToGrpcBucketName) {
+  EXPECT_EQ("projects/_/buckets/bucket-name",
+            GrpcBucketIdToName("bucket-name"));
+  EXPECT_EQ("projects/_/buckets/bucket.example.com",
+            GrpcBucketIdToName("bucket.example.com"));
 }
 
-std::string GrpcBucketNameToId(std::string const& name) {
-  return std::string{absl::StripPrefix(name, "projects/_/buckets/")};
+TEST(GrpcBucketName, FromGrpcBucketName) {
+  EXPECT_EQ("bucket-name", GrpcBucketNameToId("bucket-name"));
+  EXPECT_EQ("bucket-name",
+            GrpcBucketNameToId("projects/_/buckets/bucket-name"));
+  EXPECT_EQ("bucket.example.com",
+            GrpcBucketNameToId("projects/_/buckets/bucket.example.com"));
 }
 
+TEST(GrpcBucketName, Roundtrip) {
+  EXPECT_EQ("bucket-name",
+            GrpcBucketNameToId(GrpcBucketIdToName("bucket-name")));
+  EXPECT_EQ("bucket.example.com",
+            GrpcBucketNameToId(GrpcBucketIdToName("bucket.example.com")));
+};
+
+}  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

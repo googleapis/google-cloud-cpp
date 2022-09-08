@@ -24,8 +24,27 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-std::string BucketNameToProto(std::string const& bucket_name);
-std::string BucketNameFromProto(std::string const& bucket_name);
+/**
+ *  Convert from bucket ids to bucket names for the gRPC transport.
+ *
+ * In REST the [bucket] name and bucket id properties have identical values. In
+ * gRPC the bucket names are prefixed with `projects/_/buckets/`. This function
+ * adds that prefix.
+ *
+ *  [bucket]: https://cloud.google.com/storage/docs/json_api/v1/buckets
+ */
+std::string GrpcBucketIdToName(std::string const& id);
+
+/**
+ *  Convert from bucket names to bucket ids for the gRPC transport.
+ *
+ * In REST the [bucket] name and bucket id properties have identical values. In
+ * gRPC the bucket names are prefixed with `projects/_/buckets/`. This function
+ * removes that prefix.
+ *
+ *  [bucket]: https://cloud.google.com/storage/docs/json_api/v1/buckets
+ */
+std::string GrpcBucketNameToId(std::string const& name);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

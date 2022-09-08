@@ -25,7 +25,7 @@ namespace internal {
 google::storage::v2::DeleteNotificationRequest ToProto(
     DeleteNotificationRequest const& rhs) {
   google::storage::v2::DeleteNotificationRequest request;
-  request.set_name(BucketNameToProto(rhs.bucket_name()) +
+  request.set_name(GrpcBucketIdToName(rhs.bucket_name()) +
                    "/notificationConfigs/" + rhs.notification_id());
   return request;
 }
@@ -33,7 +33,7 @@ google::storage::v2::DeleteNotificationRequest ToProto(
 google::storage::v2::GetNotificationRequest ToProto(
     GetNotificationRequest const& rhs) {
   google::storage::v2::GetNotificationRequest request;
-  request.set_name(BucketNameToProto(rhs.bucket_name()) +
+  request.set_name(GrpcBucketIdToName(rhs.bucket_name()) +
                    "/notificationConfigs/" + rhs.notification_id());
   return request;
 }
@@ -41,7 +41,7 @@ google::storage::v2::GetNotificationRequest ToProto(
 google::storage::v2::CreateNotificationRequest ToProto(
     CreateNotificationRequest const& rhs) {
   google::storage::v2::CreateNotificationRequest request;
-  request.set_parent(BucketNameToProto(rhs.bucket_name()));
+  request.set_parent(GrpcBucketIdToName(rhs.bucket_name()));
   *request.mutable_notification() = ToProto(rhs.metadata());
   return request;
 }
@@ -49,7 +49,7 @@ google::storage::v2::CreateNotificationRequest ToProto(
 google::storage::v2::ListNotificationsRequest ToProto(
     ListNotificationsRequest const& rhs) {
   google::storage::v2::ListNotificationsRequest request;
-  request.set_parent(BucketNameToProto(rhs.bucket_name()));
+  request.set_parent(GrpcBucketIdToName(rhs.bucket_name()));
   return request;
 }
 

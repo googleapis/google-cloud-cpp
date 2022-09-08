@@ -60,7 +60,7 @@ google::storage::v2::Notification ToProto(NotificationMetadata const& rhs) {
 google::storage::v2::Notification ToProto(NotificationMetadata const& rhs,
                                           std::string const& bucket_name) {
   auto result = ToProto(rhs);
-  result.set_name(BucketNameToProto(bucket_name) + "/notificationConfigs/" +
+  result.set_name(GrpcBucketIdToName(bucket_name) + "/notificationConfigs/" +
                   rhs.id());
   return result;
 }

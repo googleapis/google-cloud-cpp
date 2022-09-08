@@ -51,7 +51,7 @@ google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
   google::storage::v2::Bucket result;
   // These are in the order of the proto fields, to make it easier to find them
   // later.
-  result.set_name(BucketNameToProto(rhs.id()));
+  result.set_name(GrpcBucketIdToName(rhs.id()));
   result.set_bucket_id(rhs.id());
   result.set_etag(rhs.etag());
   result.set_project("projects/" + std::to_string(rhs.project_number()));
@@ -142,7 +142,7 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   metadata.location_type_ = rhs.location_type();
   if (rhs.has_logging()) metadata.logging_ = FromProto(rhs.logging());
   metadata.metageneration_ = rhs.metageneration();
-  metadata.name_ = BucketNameFromProto(rhs.name());
+  metadata.name_ = GrpcBucketNameToId(rhs.name());
   if (rhs.has_owner()) {
     metadata.owner_ = GrpcOwnerParser::FromProto(rhs.owner());
   }
