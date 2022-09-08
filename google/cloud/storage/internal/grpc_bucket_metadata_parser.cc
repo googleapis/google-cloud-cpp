@@ -51,7 +51,7 @@ google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
   google::storage::v2::Bucket result;
   // These are in the order of the proto fields, to make it easier to find them
   // later.
-  result.set_name(GrpcBucketIdToName(rhs.id()));
+  result.set_name(GrpcBucketIdToName(rhs.name()));
   result.set_bucket_id(rhs.id());
   result.set_etag(rhs.etag());
   result.set_project("projects/" + std::to_string(rhs.project_number()));
