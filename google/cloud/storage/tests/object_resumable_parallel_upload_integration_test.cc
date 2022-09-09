@@ -38,8 +38,6 @@ using ObjectResumableParallelUploadIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumableParallelUpload) {
-  // TODO(b/146890058) - reenable the test for gRPC
-  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -79,8 +77,6 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumableParallelUpload) {
 }
 
 TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
-  // TODO(b/146890058) - reenable the test for gRPC
-  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

@@ -43,6 +43,9 @@ using ObjectBasicCRUDIntegrationTest =
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
 TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
+  // TODO(#9805) - restore gRPC integration tests against production
+  if (!UsingEmulator()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -72,43 +75,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       bucket_name_, object_name, Generation(insert_meta->generation()),
       Projection("full"));
   ASSERT_STATUS_OK(get_meta);
-
-  if (UsingGrpc()) {
-    // The metadata returned by gRPC (InsertObject) doesn't contain the `acl`,
-    // `etag`, `media_link`, or `self_link` fields. Just compare field by field:
-    EXPECT_EQ(get_meta->name(), insert_meta->name());
-    // EXPECT_EQ(get_meta->acl(), insert_meta->acl());
-    EXPECT_EQ(get_meta->bucket(), insert_meta->bucket());
-    EXPECT_EQ(get_meta->cache_control(), insert_meta->cache_control());
-    EXPECT_EQ(get_meta->component_count(), insert_meta->component_count());
-    EXPECT_EQ(get_meta->content_disposition(),
-              insert_meta->content_disposition());
-    EXPECT_EQ(get_meta->content_encoding(), insert_meta->content_encoding());
-    EXPECT_EQ(get_meta->content_type(), insert_meta->content_type());
-    EXPECT_EQ(get_meta->crc32c(), insert_meta->crc32c());
-    EXPECT_EQ(get_meta->event_based_hold(), insert_meta->event_based_hold());
-    EXPECT_EQ(get_meta->generation(), insert_meta->generation());
-    EXPECT_EQ(get_meta->id(), insert_meta->id());
-    EXPECT_EQ(get_meta->kind(), insert_meta->kind());
-    EXPECT_EQ(get_meta->kms_key_name(), insert_meta->kms_key_name());
-    EXPECT_EQ(get_meta->md5_hash(), insert_meta->md5_hash());
-    EXPECT_EQ(get_meta->media_link(), insert_meta->media_link());
-    EXPECT_EQ(get_meta->metageneration(), insert_meta->metageneration());
-    // EXPECT_EQ(get_meta->owner(), insert_meta->owner());
-    EXPECT_EQ(get_meta->retention_expiration_time(),
-              insert_meta->retention_expiration_time());
-    EXPECT_EQ(get_meta->self_link(), insert_meta->self_link());
-    EXPECT_EQ(get_meta->size(), insert_meta->size());
-    EXPECT_EQ(get_meta->storage_class(), insert_meta->storage_class());
-    EXPECT_EQ(get_meta->temporary_hold(), insert_meta->temporary_hold());
-    EXPECT_EQ(get_meta->time_created(), insert_meta->time_created());
-    EXPECT_EQ(get_meta->time_deleted(), insert_meta->time_deleted());
-    EXPECT_EQ(get_meta->time_storage_class_updated(),
-              insert_meta->time_storage_class_updated());
-    EXPECT_EQ(get_meta->updated(), insert_meta->updated());
-  } else {
-    EXPECT_EQ(*get_meta, *insert_meta);
-  }
+  EXPECT_EQ(*get_meta, *insert_meta);
 
   ObjectMetadata update = *get_meta;
   update.mutable_acl().emplace_back(
@@ -124,8 +91,8 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       bucket_name_, object_name, update, Projection("full"));
   ASSERT_STATUS_OK(updated_meta);
 
-  // Because some of the ACL values are not predictable we convert the values we
-  // care about to strings and compare that.
+  // Because some ACL field values are not predictable, we convert the values we
+  // care about to strings and compare those.
   {
     auto acl_to_string_vector =
         [](std::vector<ObjectAccessControl> const& acl) {
@@ -154,7 +121,8 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
 
   ObjectMetadata desired_patch = *updated_meta;
   desired_patch.set_content_language("en");
-  desired_patch.mutable_metadata().erase("updated");
+  // TODO(#9803) - enable once gRPC supports partial metadata updates.
+  if (!UsingGrpc()) desired_patch.mutable_metadata().erase("updated");
   desired_patch.mutable_metadata().emplace("patched", "true");
   StatusOr<ObjectMetadata> patched_meta =
       client->PatchObject(bucket_name_, object_name, *updated_meta,
