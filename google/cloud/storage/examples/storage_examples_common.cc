@@ -32,7 +32,9 @@ bool UsingEmulator() {
       .has_value();
 }
 
-std::string BucketPrefix() { return "cloud-cpp-testing-examples"; }
+std::string BucketPrefix() {
+  return "gcs-grpc-team-cloud-cpp-testing-examples";
+}
 
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen) {
   return google::cloud::storage::testing::MakeRandomBucketName(gen,

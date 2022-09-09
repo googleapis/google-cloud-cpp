@@ -146,7 +146,7 @@ std::unique_ptr<RetryPolicy> StorageIntegrationTest::TestRetryPolicy() {
 }
 
 std::string StorageIntegrationTest::RandomBucketNamePrefix() {
-  return "cloud-cpp-testing";
+  return "gcs-grpc-team-cloud-cpp-testing";
 }
 
 std::string StorageIntegrationTest::MakeRandomBucketName() {
