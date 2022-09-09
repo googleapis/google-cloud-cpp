@@ -27,19 +27,27 @@ namespace {
 namespace gcs = ::google::cloud::storage;
 namespace gcs_ex = ::google::cloud::storage_experimental;
 
-Status ValidateQuantizedRange(std::string const& name, std::int64_t minimum,
-                              std::int64_t maximum, std::int64_t quantum) {
+Status ValidateQuantizedRange(std::string const& name,
+                              absl::optional<std::int64_t> minimum,
+                              absl::optional<std::int64_t> maximum,
+                              std::int64_t quantum) {
   using ::google::cloud::StatusCode;
-  if (minimum > maximum || minimum < 0 || maximum < 0) {
+  if (!minimum.has_value() && !maximum.has_value()) return {};
+  if (!minimum.has_value() || !maximum.has_value()) {
     std::ostringstream os;
-    os << "Invalid range for " << name << " [" << minimum << ',' << maximum
+    os << "One of the range limits for " << name << " is missing";
+    return google::cloud::Status{StatusCode::kInvalidArgument, os.str()};
+  }
+  if (*minimum > *maximum || *minimum < 0 || *maximum < 0) {
+    std::ostringstream os;
+    os << "Invalid range for " << name << " [" << *minimum << ',' << *maximum
        << "]";
     return google::cloud::Status{StatusCode::kInvalidArgument, os.str()};
   }
-  if (quantum <= 0 || (quantum > minimum && minimum != 0)) {
+  if (quantum <= 0 || (quantum > *minimum && *minimum != 0)) {
     std::ostringstream os;
     os << "Invalid quantum for " << name << " (" << quantum
-       << "), it should be in the (0," << minimum << "] range";
+       << "), it should be in the (0," << *minimum << "] range";
     return google::cloud::Status{StatusCode::kInvalidArgument, os.str()};
   }
 

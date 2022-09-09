@@ -166,6 +166,16 @@ int main(int argc, char* argv[]) {
     std::cout << "\n# " << name << " Range: [" << minimum << ',' << maximum
               << "]\n# " << name << " Quantum: " << quantum;
   };
+  auto output_optional_quantized_range =
+      [](std::string const& name, auto minimum, auto maximum, auto quantum) {
+        if (!minimum.has_value() || !maximum.has_value()) {
+          std::cout << "\n# " << name << " Range: [not set]";
+        } else {
+          std::cout << "\n# " << name << " Range: [" << *minimum << ','
+                    << *maximum << "]";
+        }
+        std::cout << "\n# " << name << " Quantum: " << quantum;
+      };
 
   std::cout << "# Start time: " << gcs_bm::CurrentTime()      //
             << "\n# Labels: " << options->labels              //
@@ -204,12 +214,12 @@ int main(int argc, char* argv[]) {
   gcs_bm::PrintOptions(std::cout, "Grpc", options->grpc_options);
   gcs_bm::PrintOptions(std::cout, "Direct Path", options->direct_path_options);
 
-  output_quantized_range("Read Offset", options->minimum_read_offset,
-                         options->maximum_read_offset,
-                         options->read_offset_quantum);
-  output_quantized_range("Read Size", options->minimum_read_size,
-                         options->maximum_read_size,
-                         options->read_size_quantum);
+  output_optional_quantized_range("Read Offset", options->minimum_read_offset,
+                                  options->maximum_read_offset,
+                                  options->read_offset_quantum);
+  output_optional_quantized_range("Read Size", options->minimum_read_size,
+                                  options->maximum_read_size,
+                                  options->read_size_quantum);
 
   std::cout << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
@@ -356,15 +366,21 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
   auto read_buffer_size_generator = quantized_range_generator(
       options.minimum_read_buffer_size, options.maximum_read_buffer_size,
       options.read_buffer_quantum);
-  auto read_offset_generator = quantized_range_generator(
-      options.minimum_read_offset, options.maximum_read_offset,
-      options.read_offset_quantum);
-  auto read_size_generator = quantized_range_generator(
-      options.minimum_read_size, options.maximum_read_size,
-      options.read_size_quantum);
 
   auto read_range_generator = [&](auto& g, std::int64_t object_size)
       -> absl::optional<std::pair<std::int64_t, std::int64_t>> {
+    if (!options.minimum_read_size.has_value() ||
+        !options.maximum_read_size.has_value() ||
+        !options.minimum_read_offset.has_value() ||
+        !options.maximum_read_offset.has_value()) {
+      return absl::nullopt;
+    }
+    auto read_offset_generator = quantized_range_generator(
+        *options.minimum_read_offset, *options.maximum_read_offset,
+        options.read_offset_quantum);
+    auto read_size_generator = quantized_range_generator(
+        *options.minimum_read_size, *options.maximum_read_size,
+        options.read_size_quantum);
     auto offset = (std::min)(object_size, read_offset_generator(g));
     auto size = (std::min)(object_size - offset, read_size_generator(g));
     // This makes it easier to control the ratio of ranged vs. full reads from

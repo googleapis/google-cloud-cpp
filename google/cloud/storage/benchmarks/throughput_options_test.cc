@@ -326,6 +326,16 @@ TEST(ThroughputOptions, Validate) {
       "--maximum-read-offset=8",
       "--read-offset-quantum=5",
   }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-read-offset=4",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--maximum-read-offset=4",
+  }));
 
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
@@ -340,6 +350,17 @@ TEST(ThroughputOptions, Validate) {
       "--maximum-read-size=8",
       "--read-size-quantum=5",
   }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--minimum-read-size=8",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--maximum-read-size=8",
+  }));
+
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
       "--region=r",
