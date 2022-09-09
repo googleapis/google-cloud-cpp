@@ -61,6 +61,9 @@ using CurlShare = std::unique_ptr<CURLSH, decltype(&curl_share_cleanup)>;
 /// Returns true if the SSL locking callbacks are installed.
 bool SslLockingCallbacksInstalled();
 
+/// Return the default global options
+Options CurlInitializeOptions(Options options);
+
 /// Initializes (if needed) the SSL locking callbacks.
 void CurlInitializeOnce(Options const& options);
 

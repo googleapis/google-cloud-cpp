@@ -298,19 +298,23 @@ std::string DebugOutData(char const* data, std::size_t size) {
                       " data=", CleanupDebugData(data, size), "\n");
 }
 
+Options CurlInitializeOptions(Options options) {
+  return google::cloud::internal::MergeOptions(
+      std::move(options), Options{}
+                              .set<EnableCurlSigpipeHandlerOption>(true)
+                              .set<EnableCurlSslLockingOption>(true));
+}
+
 void CurlInitializeOnce(Options const& options) {
   static CurlInitializer curl_initializer;
-  static bool const kInitialized = [&options]() {
+  static bool const kInitialized = [](Options const& options) {
     // The Google Cloud Storage C++ client library depends on libcurl, which
     // can use different SSL libraries. Depending on the SSL implementation,
     // we need to take action to be thread-safe. More details can be found here:
     //
     //     https://curl.haxx.se/libcurl/c/threadsafe.html
     //
-    auto const locking = options.has<EnableCurlSslLockingOption>()
-                             ? options.get<EnableCurlSslLockingOption>()
-                             : true;
-    InitializeSslLocking(locking);
+    InitializeSslLocking(options.get<EnableCurlSslLockingOption>());
 
     // libcurl recommends turning on `CURLOPT_NOSIGNAL` for threaded
     // applications: "Note that setting `CURLOPT_NOSIGNAL` to 0L will not work
@@ -325,13 +329,9 @@ void CurlInitializeOnce(Options const& options) {
     //
     //     https://curl.haxx.se/libcurl/c/threadsafe.html
     //
-    auto const enable_handler =
-        options.has<EnableCurlSigpipeHandlerOption>()
-            ? options.get<EnableCurlSigpipeHandlerOption>()
-            : true;
-    InitializeSigPipeHandler(enable_handler);
+    InitializeSigPipeHandler(options.get<EnableCurlSigpipeHandlerOption>());
     return true;
-  }();
+  }(CurlInitializeOptions(options));
   static_cast<void>(kInitialized);
 }
 
