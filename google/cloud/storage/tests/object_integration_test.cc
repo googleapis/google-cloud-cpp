@@ -511,7 +511,7 @@ TEST_F(ObjectIntegrationTest, XmlReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
-  // TODO(#5673) - enable in production.
+  // TODO(#9800) - enable in production.
   if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
 
   StatusOr<Client> client = MakeIntegrationTestClient();
@@ -797,7 +797,7 @@ TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, DeleteResumableUpload) {
-  // TODO(#5673): Enable this.
+  // TODO(#9804) - enable in production.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient(
       absl::make_unique<LimitedErrorCountRetryPolicy>(1));

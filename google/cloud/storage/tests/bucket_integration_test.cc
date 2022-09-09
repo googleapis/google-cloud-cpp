@@ -268,7 +268,7 @@ TEST_F(BucketIntegrationTest, PatchLifecycleConditions) {
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
-  // TODO(#5673) - enable in production.
+  // TODO(#9801) - enable in production.
   if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
 
   std::string bucket_name = MakeRandomBucketName();
@@ -478,7 +478,7 @@ TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
 
 /// @test Verify that we can set the RPO in a Bucket.
 TEST_F(BucketIntegrationTest, RpoPatch) {
-  // TODO(#5673) - enable in production
+  // TODO(#9802) - enable in production.
   if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
 
   std::string bucket_name = MakeRandomBucketName();
@@ -615,7 +615,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
-  // TODO(#5673) - enable in production
+  // TODO(#9800) - enable in production.
   if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
 
   std::string bucket_name = MakeRandomBucketName();
@@ -689,7 +689,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
-  // TODO(#5673) - enable in production
+  // TODO(#9800) - enable in production
   if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
 
   std::string bucket_name = MakeRandomBucketName();
@@ -761,7 +761,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
-  // TODO(#5673) - enable when gRPC implements these operations.
+  // TODO(#9806) - enable when gRPC implements these operations.
   if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
 
   std::string bucket_name = MakeRandomBucketName();

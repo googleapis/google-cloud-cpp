@@ -41,7 +41,7 @@ class GrpcNotificationIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
-  // TODO(#5673) - enable in production
+  // TODO(#9806) - enable in production
   if (!UsingEmulator()) GTEST_SKIP();
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
