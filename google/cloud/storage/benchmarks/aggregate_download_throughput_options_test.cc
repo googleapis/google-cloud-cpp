@@ -70,9 +70,8 @@ TEST(AggregateDownloadThroughputOptions, Basic) {
             options->client_options.get<EndpointOption>());
   EXPECT_EQ(std::chrono::seconds(10),
             options->client_options.get<gcs::DownloadStallTimeoutOption>());
-  EXPECT_EQ(
-      100 * kKiB,
-      options->client_options.get<gcs_ex::DownloadStallMinimumRateOption>());
+  EXPECT_EQ(100 * kKiB,
+            options->client_options.get<gcs::DownloadStallMinimumRateOption>());
   EXPECT_EQ(4,
             options->client_options.get<GrpcBackgroundThreadPoolSizeOption>());
   EXPECT_EQ(123, options->client_options.get<gcs::ConnectionPoolSizeOption>());

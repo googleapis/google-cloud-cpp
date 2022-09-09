@@ -25,7 +25,6 @@ namespace storage_benchmarks {
 namespace {
 
 namespace gcs = ::google::cloud::storage;
-namespace gcs_ex = ::google::cloud::storage_experimental;
 
 Status ValidateQuantizedRange(std::string const& name,
                               absl::optional<std::int64_t> minimum,
@@ -368,7 +367,7 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        " is aborted if the average transfer rate is below this limit for"
        " the period set via `storage::TransferStallTimeoutOption`.",
        [&options](std::string const& val) {
-         options.client_options.set<gcs_ex::TransferStallMinimumRateOption>(
+         options.client_options.set<gcs::TransferStallMinimumRateOption>(
              static_cast<std::uint32_t>(ParseBufferSize(val)));
        }},
       {"--download-stall-timeout",
@@ -385,7 +384,7 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        " is aborted if the average transfer rate is below this limit for"
        " the period set via `storage::DownloadStallTimeoutOption`.",
        [&options](std::string const& val) {
-         options.client_options.set<gcs_ex::DownloadStallMinimumRateOption>(
+         options.client_options.set<gcs::DownloadStallMinimumRateOption>(
              static_cast<std::uint32_t>(ParseBufferSize(val)));
        }},
       {"--minimum-sample-delay",

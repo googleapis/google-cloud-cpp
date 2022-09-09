@@ -97,11 +97,9 @@ CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
   http_version_ =
       std::move(options.get<storage_experimental::HttpVersionOption>());
   transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
-  transfer_stall_minimum_rate_ =
-      options.get<storage_experimental::TransferStallMinimumRateOption>();
+  transfer_stall_minimum_rate_ = options.get<TransferStallMinimumRateOption>();
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
-  download_stall_minimum_rate_ =
-      options.get<storage_experimental::DownloadStallMinimumRateOption>();
+  download_stall_minimum_rate_ = options.get<DownloadStallMinimumRateOption>();
   return *this;
 }
 
