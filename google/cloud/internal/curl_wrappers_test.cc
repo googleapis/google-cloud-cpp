@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/curl_wrappers.h"
+#include "google/cloud/internal/curl_options.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -126,6 +127,22 @@ header2: value2
     EXPECT_EQ(test.expected,
               DebugSendHeader(test.input.data(), test.input.size()));
   }
+}
+
+TEST(CurlWrappers, CurlInitializeOptions) {
+  auto defaults = CurlInitializeOptions({});
+  EXPECT_TRUE(defaults.get<EnableCurlSslLockingOption>());
+  EXPECT_TRUE(defaults.get<EnableCurlSigpipeHandlerOption>());
+
+  auto override1 =
+      CurlInitializeOptions(Options{}.set<EnableCurlSslLockingOption>(false));
+  EXPECT_FALSE(override1.get<EnableCurlSslLockingOption>());
+  EXPECT_TRUE(override1.get<EnableCurlSigpipeHandlerOption>());
+
+  auto override2 = CurlInitializeOptions(
+      Options{}.set<EnableCurlSigpipeHandlerOption>(false));
+  EXPECT_TRUE(override2.get<EnableCurlSslLockingOption>());
+  EXPECT_FALSE(override2.get<EnableCurlSigpipeHandlerOption>());
 }
 
 }  // namespace
