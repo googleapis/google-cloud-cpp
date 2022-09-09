@@ -272,15 +272,12 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
   EXPECT_EQ(session_id, os.resumable_session_id());
   ASSERT_STATUS_OK(os.metadata());
   ScheduleForDelete(*os.metadata());
-  // TODO(b/146890058) - gRPC does not return the object metadata.
-  if (!UsingGrpc()) {
-    ObjectMetadata meta = os.metadata().value();
-    EXPECT_EQ(object_name, meta.name());
-    EXPECT_EQ(bucket_name_, meta.bucket());
-    if (UsingEmulator()) {
-      EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
-      EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
-    }
+  ObjectMetadata meta = os.metadata().value();
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name_, meta.bucket());
+  if (UsingEmulator()) {
+    EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
 }
 

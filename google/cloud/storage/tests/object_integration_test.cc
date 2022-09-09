@@ -511,6 +511,9 @@ TEST_F(ObjectIntegrationTest, XmlReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
+  // TODO(#5673) - enable in production.
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

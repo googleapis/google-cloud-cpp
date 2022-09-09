@@ -64,13 +64,10 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
-  auto get = client->GetObjectMetadata(bucket_name, object_name);
+  auto get =
+      client->GetObjectMetadata(bucket_name, object_name, Projection::Full());
   ASSERT_STATUS_OK(get);
-  auto sans_acls = [](ObjectMetadata meta) {
-    meta.set_acl({});
-    return meta;
-  };
-  EXPECT_EQ(sans_acls(*insert), sans_acls(*get));
+  EXPECT_EQ(*insert, *get);
 
   std::vector<std::string> names;
   for (auto const& object : client->ListObjects(bucket_name)) {
