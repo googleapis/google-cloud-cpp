@@ -91,7 +91,7 @@ TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
   auto object_metadata = ParallelUploadFile(
       *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
       MinStreamSize(0), MaxStreams(64));
-  EXPECT_STATUS_OK(object_metadata);
+  ASSERT_STATUS_OK(object_metadata);
   ScheduleForDelete(*object_metadata);
 
   EXPECT_EQ(block.size(), object_metadata->size());
