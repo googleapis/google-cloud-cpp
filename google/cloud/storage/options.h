@@ -50,26 +50,6 @@ struct HttpVersionOption {
   using Type = std::string;
 };
 
-/**
- * The minimum accepted bytes/second transfer rate.
- *
- * If the average rate is below this value for the `TransferStallTimeoutOption`
- * then the transfer is aborted.
- */
-struct TransferStallMinimumRateOption {
-  using Type = std::int32_t;
-};
-
-/**
- * The minimum accepted bytes/second download rate.
- *
- * If the average rate is below this value for the `DownloadStallTimeoutOption`
- * then the download is aborted.
- */
-struct DownloadStallMinimumRateOption {
-  using Type = std::int32_t;
-};
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 
@@ -254,6 +234,16 @@ struct TransferStallTimeoutOption {
 };
 
 /**
+ * The minimum accepted bytes/second transfer rate.
+ *
+ * If the average rate is below this value for the `TransferStallTimeoutOption`
+ * then the transfer is aborted.
+ */
+struct TransferStallMinimumRateOption {
+  using Type = std::int32_t;
+};
+
+/**
  * Sets the download stall timeout.
  *
  * If a download *stalls*, i.e., no bytes are received for a significant period,
@@ -269,6 +259,16 @@ struct TransferStallTimeoutOption {
  */
 struct DownloadStallTimeoutOption {
   using Type = std::chrono::seconds;
+};
+
+/**
+ * The minimum accepted bytes/second download rate.
+ *
+ * If the average rate is below this value for the `DownloadStallTimeoutOption`
+ * then the download is aborted.
+ */
+struct DownloadStallMinimumRateOption {
+  using Type = std::int32_t;
 };
 
 /// Set the retry policy for a GCS client.

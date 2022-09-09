@@ -26,7 +26,6 @@ namespace storage_benchmarks {
 namespace {
 
 namespace gcs = ::google::cloud::storage;
-namespace gcs_ex = ::google::cloud::storage_experimental;
 using ::testing::ElementsAre;
 using ::testing::UnorderedElementsAre;
 
@@ -112,14 +111,12 @@ TEST(ThroughputOptions, Basic) {
             options->direct_path_options.get<EndpointOption>());
   EXPECT_EQ(std::chrono::seconds(86400),
             options->client_options.get<gcs::TransferStallTimeoutOption>());
-  EXPECT_EQ(
-      7 * kKiB,
-      options->client_options.get<gcs_ex::TransferStallMinimumRateOption>());
+  EXPECT_EQ(7 * kKiB,
+            options->client_options.get<gcs::TransferStallMinimumRateOption>());
   EXPECT_EQ(std::chrono::seconds(86401),
             options->client_options.get<gcs::DownloadStallTimeoutOption>());
-  EXPECT_EQ(
-      9 * kKiB,
-      options->client_options.get<gcs_ex::DownloadStallMinimumRateOption>());
+  EXPECT_EQ(9 * kKiB,
+            options->client_options.get<gcs::DownloadStallMinimumRateOption>());
   EXPECT_EQ("vN",
             options->rest_options.get<gcs::internal::TargetApiVersionOption>());
   EXPECT_EQ(16,

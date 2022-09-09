@@ -72,9 +72,8 @@ TEST(AggregateUploadThroughputOptions, Basic) {
             options->client_options.get<EndpointOption>());
   EXPECT_EQ(std::chrono::seconds(10),
             options->client_options.get<gcs::TransferStallTimeoutOption>());
-  EXPECT_EQ(
-      100 * kKiB,
-      options->client_options.get<gcs_ex::TransferStallMinimumRateOption>());
+  EXPECT_EQ(100 * kKiB,
+            options->client_options.get<gcs::TransferStallMinimumRateOption>());
   EXPECT_EQ(4,
             options->client_options.get<GrpcBackgroundThreadPoolSizeOption>());
   EXPECT_EQ(123, options->client_options.get<gcs::ConnectionPoolSizeOption>());

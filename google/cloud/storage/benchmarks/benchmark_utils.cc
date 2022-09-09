@@ -34,7 +34,6 @@ namespace cloud {
 namespace storage_benchmarks {
 
 namespace gcs = ::google::cloud::storage;
-namespace gcs_ex = ::google::cloud::storage_experimental;
 
 void DeleteAllObjects(google::cloud::storage::Client client,
                       std::string const& bucket_name, int thread_count) {
@@ -197,20 +196,20 @@ void PrintOptions(std::ostream& os, std::string const& prefix,
        << absl::FormatDuration(
               absl::FromChrono(options.get<gcs::TransferStallTimeoutOption>()));
   }
-  if (options.has<gcs_ex::TransferStallMinimumRateOption>()) {
+  if (options.has<gcs::TransferStallMinimumRateOption>()) {
     os << "\n# " << prefix << " Transfer Stall Minimum Rate: "
        << testing_util::FormatSize(
-              options.get<gcs_ex::TransferStallMinimumRateOption>());
+              options.get<gcs::TransferStallMinimumRateOption>());
   }
   if (options.has<gcs::DownloadStallTimeoutOption>()) {
     os << "\n# " << prefix << " Download Stall Timeout: "
        << absl::FormatDuration(
               absl::FromChrono(options.get<gcs::DownloadStallTimeoutOption>()));
   }
-  if (options.has<gcs_ex::DownloadStallMinimumRateOption>()) {
+  if (options.has<gcs::DownloadStallMinimumRateOption>()) {
     os << "\n# " << prefix << " Download Stall Minimum Rate: "
        << testing_util::FormatSize(
-              options.get<gcs_ex::DownloadStallMinimumRateOption>());
+              options.get<gcs::DownloadStallMinimumRateOption>());
   }
 
   if (options.has<google::cloud::storage::internal::TargetApiVersionOption>()) {

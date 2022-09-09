@@ -373,7 +373,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   auto const& current = google::cloud::internal::CurrentOptions();
   auto timeout = ScaleStallTimeout(
       current.get<TransferStallTimeoutOption>(),
-      current.get<storage_experimental::TransferStallMinimumRateOption>(),
+      current.get<TransferStallMinimumRateOption>(),
       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
   auto create_watchdog = [cq = background_->cq(), timeout]() mutable {
     if (timeout == std::chrono::seconds(0)) {
@@ -637,7 +637,7 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
   auto const& current = google::cloud::internal::CurrentOptions();
   auto const timeout = ScaleStallTimeout(
       current.get<TransferStallTimeoutOption>(),
-      current.get<storage_experimental::TransferStallMinimumRateOption>(),
+      current.get<TransferStallMinimumRateOption>(),
       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
 
   auto create_watchdog = [cq = background_->cq(), timeout]() mutable {

@@ -157,7 +157,7 @@ ParseAggregateUploadThroughputOptions(std::vector<std::string> const& argv,
        " is aborted if the average transfer rate is below this limit for"
        " the period set via `storage::TransferStallTimeoutOption`.",
        [&options](std::string const& val) {
-         options.client_options.set<gcs_ex::TransferStallMinimumRateOption>(
+         options.client_options.set<gcs::TransferStallMinimumRateOption>(
              static_cast<std::uint32_t>(ParseBufferSize(val)));
        }},
       {"--grpc-background-threads",
