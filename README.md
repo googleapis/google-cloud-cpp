@@ -319,7 +319,7 @@ bazel build //...
 
 ### Building with CMake
 
-This library requires CMake >= 3.5. If you are planning to install the libraries
+This library requires CMake >= 3.10. If you are planning to install the libraries
 please consult the [packaging guide](/doc/packaging.md), these instructions will
 **NOT** produce artifacts that you can put in `/usr/local`, or share with your
 colleagues.
@@ -400,7 +400,7 @@ int main(int argc, char* argv[]) {
   which is best understood as the [Foundational C++ Support Matrix][support-matrix].
   - Language Version (>= C++14)
   - Operating Systems: Windows, macOS, and Linux.
-  - Build Systems: Bazel (>= 4.0)[^1], CMake (>= 3.10).
+  - Build Systems: Bazel (>= 4.0)[^bazel-version-note], CMake (>= 3.10).
   - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2017), Apple Clang (>= 12)
 - This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md)
 - This project works with or without exceptions enabled
