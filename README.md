@@ -310,8 +310,8 @@ run the examples included with the libraries.
 
 ### Building with Bazel
 
-This library requires Bazel >= 4.0. From the top-level directory, run the usual
-commands.
+This library requires Bazel >= 4.0[^bazel-version-note]. From the top-level
+directory, run the usual commands.
 
 ```shell
 bazel build //...
@@ -565,6 +565,10 @@ properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
+
+[^bazel-version-note]: On some platforms (e.g. macOS with M1 processors), you
+    may need a more recent version of Bazel. Consult the
+    [Bazel Install Guide](https://bazel.build/install) for details.
 
 [changelog]: /CHANGELOG.md
 [codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
