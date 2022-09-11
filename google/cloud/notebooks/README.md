@@ -69,10 +69,10 @@ int main(int argc, char* argv[]) try {
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the [quickstart guides](#quickstart) for the library
   or libraries they want to use.
-- Developers wanting to compile the library just to run some of the examples or
+- Developers wanting to compile the library just to run some examples or
   tests should read the current document.
 - Contributors and developers to `google-cloud-cpp` should consult the guide to
-  [setup a development workstation][howto-setup-dev-workstation].
+  [set up a development workstation][howto-setup-dev-workstation].
 
 ## Contributing changes
 

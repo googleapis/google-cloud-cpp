@@ -1,6 +1,6 @@
-# How-to Guide: Setup for CMake-based builds
+# How-to Guide: Set Up for CMake-based builds
 
-This document describes how to setup your workstation to build the Google Cloud
+This document describes how to set up your workstation to build the Google Cloud
 C++ client libraries using CMake. The intended audience is developers of the
 client libraries that want to verify their changes will work with CMake and/or
 prefer to use CMake for whatever reason.
@@ -8,10 +8,14 @@ prefer to use CMake for whatever reason.
 - Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
+- Developers that prefer using a package manager such as
+  [vcpkg](https://vcpkg.io), [Conda](https://conda.io),
+  or [Conan](https://conan.io) should follow the instructions for their package
+  manager.
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
-  project should consult the [quickstart guides](/README.md#quickstart) for the library
-  or libraries they want to use.
-- Developers wanting to compile the library just to run some of the examples or
+  project should consult the [quickstart guides](/README.md#quickstart) for the
+  library or libraries they want to use.
+- Developers wanting to compile the library just to run some examples or
   tests should read the [build and install](/README.md#building-and-installing)
   section from the top-level README.
 - Contributors and developers to `google-cloud-cpp` wanting to work with CMake
