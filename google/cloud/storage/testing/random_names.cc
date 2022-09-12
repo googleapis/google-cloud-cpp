@@ -42,9 +42,10 @@ std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
     //   https://cloud.google.com/storage/docs/naming-buckets
     auto valid = true;
     for (auto const* bad : {"goog", "g00g", "g0og", "go0g"}) {
-      if (!absl::StrContains(name, bad)) continue;
-      valid = false;
-      break;
+      if (absl::StrContains(name, bad)) {
+        valid = false;
+        break;
+      }
     }
     if (valid) return name;
   }
