@@ -82,8 +82,8 @@ std::map<std::string, std::string> ScaffoldVars(
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
   vars["site_root"] = SiteRoot(service);
-  vars["prefix"] = experimental ? "experimental-" : "";
-  vars["suffix"] = experimental ? " (Experimental)" : "";
+  vars["library_prefix"] = experimental ? "experimental-" : "";
+  vars["doxygen_version_suffix"] = experimental ? " (Experimental)" : "";
   vars["construction"] = experimental ? "\n:construction:\n" : "";
   vars["status"] =
       experimental ? "This library is **experimental**. Its APIs are subject "
@@ -327,7 +327,7 @@ void GenerateCMakeLists(std::ostream& os,
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "$title$ C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the $title$")
-set(DOXYGEN_PROJECT_NUMBER "$${PROJECT_VERSION}$suffix$")
+set(DOXYGEN_PROJECT_NUMBER "$${PROJECT_VERSION}$doxygen_version_suffix$")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "$library$_internal" "$library$_testing"
                             "examples")
 set(DOXYGEN_EXAMPLE_PATH $${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -376,13 +376,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_$library$)
 set_target_properties(
     google_cloud_cpp_$library$
-    PROPERTIES EXPORT_NAME google-cloud-cpp::$prefix$$library$
+    PROPERTIES EXPORT_NAME google-cloud-cpp::$library_prefix$$library$
                VERSION "$${PROJECT_VERSION}"
                SOVERSION "$${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_$library$
                        PUBLIC $${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::$prefix$$library$ ALIAS google_cloud_cpp_$library$)
+add_library(google-cloud-cpp::$library_prefix$$library$ ALIAS google_cloud_cpp_$library$)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -400,11 +400,11 @@ add_library(google_cloud_cpp_$library$_mocks INTERFACE)
 target_sources(google_cloud_cpp_$library$_mocks INTERFACE $${mock_files})
 target_link_libraries(
     google_cloud_cpp_$library$_mocks
-    INTERFACE google-cloud-cpp::$prefix$$library$ GTest::gmock_main
+    INTERFACE google-cloud-cpp::$library_prefix$$library$ GTest::gmock_main
               GTest::gmock GTest::gtest)
 set_target_properties(
     google_cloud_cpp_$library$_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::$prefix$$library$_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::$library_prefix$$library$_mocks)
 target_include_directories(
     google_cloud_cpp_$library$_mocks
     INTERFACE $$<BUILD_INTERFACE:$${PROJECT_SOURCE_DIR}>
@@ -417,7 +417,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable($library$_quickstart "quickstart/quickstart.cc")
     target_link_libraries($library$_quickstart
-                          PRIVATE google-cloud-cpp::$prefix$$library$)
+                          PRIVATE google-cloud-cpp::$library_prefix$$library$)
     google_cloud_cpp_add_common_options($library$_quickstart)
     add_test(
         NAME $library$_quickstart
@@ -863,7 +863,7 @@ endif ()
 
 # Define your targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart google-cloud-cpp::$prefix$$library$)
+target_link_libraries(quickstart google-cloud-cpp::$library_prefix$$library$)
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
@@ -1002,7 +1002,7 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//:$prefix$$library$",
+        "@com_github_googleapis_google_cloud_cpp//:$library_prefix$$library$",
     ],
 )
 )""";

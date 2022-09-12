@@ -126,7 +126,8 @@ TEST_F(ScaffoldGenerator, Vars) {
                               "Provides a placeholder to write this test.")),
                 Contains(Pair("library", "test")),
                 Contains(Pair("copyright_year", "2034")),
-                Contains(Pair("prefix", "")), Contains(Pair("suffix", "")),
+                Contains(Pair("library_prefix", "")),
+                Contains(Pair("doxygen_version_suffix", "")),
                 Contains(Pair("construction", "")),
                 Contains(Pair("status", HasSubstr("**GA**")))));
 
@@ -138,8 +139,8 @@ TEST_F(ScaffoldGenerator, Vars) {
                           "Provides a placeholder to write this test.")),
             Contains(Pair("library", "test")),
             Contains(Pair("copyright_year", "2034")),
-            Contains(Pair("prefix", "experimental-")),
-            Contains(Pair("suffix", " (Experimental)")),
+            Contains(Pair("library_prefix", "experimental-")),
+            Contains(Pair("doxygen_version_suffix", " (Experimental)")),
             Contains(Pair("construction", "\n:construction:\n")),
             Contains(Pair("status", HasSubstr("**experimental**")))));
 }
@@ -193,8 +194,8 @@ TEST_F(ScaffoldGenerator, CMakeLists) {
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
-  EXPECT_THAT(actual, Not(HasSubstr("$prefix$")));
-  EXPECT_THAT(actual, Not(HasSubstr("$suffix$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$doxygen_version_suffix$")));
   EXPECT_THAT(actual, HasSubstr(R"""(include(CompileProtos)
 google_cloud_cpp_load_protolist(
     proto_list
@@ -258,7 +259,7 @@ TEST_F(ScaffoldGenerator, QuickstartCMake) {
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
-  EXPECT_THAT(actual, Not(HasSubstr("$prefix$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartMakefile) {
@@ -287,7 +288,7 @@ TEST_F(ScaffoldGenerator, QuickstartBuild) {
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
-  EXPECT_THAT(actual, Not(HasSubstr("$prefix$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartBazelrc) {
