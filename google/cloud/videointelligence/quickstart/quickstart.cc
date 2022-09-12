@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "DONE\n";
 
   auto response = future.get();
-  if (!response) throw std::runtime_error(response.status().message());
+  if (!response) throw response.status();
 
   for (auto const& result : response->annotation_results()) {
     using ::google::protobuf::util::TimeUtil;
@@ -65,6 +65,9 @@ int main(int argc, char* argv[]) try {
   }
 
   return 0;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status raised: " << status << "\n";
+  return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
