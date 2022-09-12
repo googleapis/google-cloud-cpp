@@ -397,14 +397,14 @@ int main(int argc, char* argv[]) {
 ## Support
 
 - This project follows Google's [Foundational C++ Support Policy][support-policy],
-  which is best understood as the [Foundational C++ Support Matrix][support-matrix].
-  - Language Version (>= C++14)
+  which is summarized in the [Foundational C++ Support Matrix][support-matrix].
+  - Language Version (>= C++14).
   - Operating Systems: Windows, macOS, and Linux.
   - Build Systems: Bazel (>= 4.0)[^bazel-version-note], CMake (>= 3.10).
-  - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2017), Apple Clang (>= 12)
-- This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md)
-- This project works with or without exceptions enabled
-- This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes
+  - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2017), Apple Clang (>= 12).
+- This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md).
+- This project works with or without exceptions enabled.
+- This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes.
 
 ## Public API and API Breaking Changes
 
