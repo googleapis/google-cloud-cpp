@@ -40,13 +40,13 @@ std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
     // substring.  There is no string definition of "too similar", but this
     // should work in practice.
     //   https://cloud.google.com/storage/docs/naming-buckets
-    auto invalid = false;
+    auto valid = true;
     for (auto const* bad : {"goog", "g00g", "g0og", "go0g"}) {
       if (!absl::StrContains(name, bad)) continue;
-      invalid = true;
+      valid = false;
       break;
     }
-    if (!invalid) return name;
+    if (valid) return name;
   }
 }
 
