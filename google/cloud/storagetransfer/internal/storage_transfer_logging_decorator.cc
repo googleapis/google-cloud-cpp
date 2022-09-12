@@ -140,6 +140,18 @@ StorageTransferServiceLogging::AsyncRunTransferJob(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+Status StorageTransferServiceLogging::DeleteTransferJob(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storagetransfer::v1::DeleteTransferJobRequest const&
+                 request) {
+        return child_->DeleteTransferJob(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceLogging::CreateAgentPool(
     grpc::ClientContext& context,

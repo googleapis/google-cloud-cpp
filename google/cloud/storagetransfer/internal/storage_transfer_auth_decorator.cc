@@ -112,6 +112,14 @@ StorageTransferServiceAuth::AsyncRunTransferJob(
       });
 }
 
+Status StorageTransferServiceAuth::DeleteTransferJob(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTransferJob(context, request);
+}
+
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceAuth::CreateAgentPool(
     grpc::ClientContext& context,

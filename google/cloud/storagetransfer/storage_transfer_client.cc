@@ -93,6 +93,13 @@ StorageTransferServiceClient::RunTransferJob(
   return connection_->RunTransferJob(request);
 }
 
+Status StorageTransferServiceClient::DeleteTransferJob(
+    google::storagetransfer::v1::DeleteTransferJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTransferJob(request);
+}
+
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceClient::CreateAgentPool(
     std::string const& project_id,

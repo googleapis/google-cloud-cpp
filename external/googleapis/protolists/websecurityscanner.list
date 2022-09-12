@@ -6,5 +6,6 @@
 @com_google_googleapis//google/cloud/websecurityscanner/v1:scan_config_error.proto
 @com_google_googleapis//google/cloud/websecurityscanner/v1:scan_run.proto
 @com_google_googleapis//google/cloud/websecurityscanner/v1:scan_run_error_trace.proto
+@com_google_googleapis//google/cloud/websecurityscanner/v1:scan_run_log.proto
 @com_google_googleapis//google/cloud/websecurityscanner/v1:scan_run_warning_trace.proto
 @com_google_googleapis//google/cloud/websecurityscanner/v1:web_security_scanner.proto

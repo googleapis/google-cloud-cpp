@@ -85,6 +85,11 @@ StorageTransferServiceConnection::RunTransferJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+Status StorageTransferServiceConnection::DeleteTransferJob(
+    google::storagetransfer::v1::DeleteTransferJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceConnection::CreateAgentPool(
     google::storagetransfer::v1::CreateAgentPoolRequest const&) {

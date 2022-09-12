@@ -188,6 +188,19 @@ StorageTransferServiceConnectionImpl::RunTransferJob(
       __func__);
 }
 
+Status StorageTransferServiceConnectionImpl::DeleteTransferJob(
+    google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteTransferJob(request),
+      [this](grpc::ClientContext& context,
+             google::storagetransfer::v1::DeleteTransferJobRequest const&
+                 request) {
+        return stub_->DeleteTransferJob(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceConnectionImpl::CreateAgentPool(
     google::storagetransfer::v1::CreateAgentPoolRequest const& request) {

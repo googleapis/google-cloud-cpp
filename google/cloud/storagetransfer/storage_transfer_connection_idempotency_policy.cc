@@ -87,6 +87,11 @@ class DefaultStorageTransferServiceConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency DeleteTransferJob(
+      google::storagetransfer::v1::DeleteTransferJobRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency CreateAgentPool(
       google::storagetransfer::v1::CreateAgentPoolRequest const&) override {
     return Idempotency::kNonIdempotent;

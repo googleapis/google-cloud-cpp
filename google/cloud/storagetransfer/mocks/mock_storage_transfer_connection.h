@@ -92,6 +92,11 @@ class MockStorageTransferServiceConnection
       (override));
 
   MOCK_METHOD(
+      Status, DeleteTransferJob,
+      (google::storagetransfer::v1::DeleteTransferJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::storagetransfer::v1::AgentPool>, CreateAgentPool,
       (google::storagetransfer::v1::CreateAgentPoolRequest const& request),
       (override));

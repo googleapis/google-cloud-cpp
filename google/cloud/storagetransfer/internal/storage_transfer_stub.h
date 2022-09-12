@@ -74,6 +74,10 @@ class StorageTransferServiceStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::storagetransfer::v1::RunTransferJobRequest const& request) = 0;
 
+  virtual Status DeleteTransferJob(
+      grpc::ClientContext& context,
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request) = 0;
+
   virtual StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
       grpc::ClientContext& context,
       google::storagetransfer::v1::CreateAgentPoolRequest const& request) = 0;
@@ -156,6 +160,11 @@ class DefaultStorageTransferServiceStub : public StorageTransferServiceStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::storagetransfer::v1::RunTransferJobRequest const& request)
+      override;
+
+  Status DeleteTransferJob(
+      grpc::ClientContext& client_context,
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request)
       override;
 
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(

@@ -99,6 +99,9 @@ class StorageTransferServiceConnection {
   RunTransferJob(
       google::storagetransfer::v1::RunTransferJobRequest const& request);
 
+  virtual Status DeleteTransferJob(
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request);
+
   virtual StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
       google::storagetransfer::v1::CreateAgentPoolRequest const& request);
 
