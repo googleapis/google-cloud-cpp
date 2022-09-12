@@ -24,6 +24,7 @@ DOWNLOAD="$(mktemp)"
 curl -sSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
 gsutil -q cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
 SHA256=$(sha256sum "${DOWNLOAD}" | sed "s/ .*//")
+rm -f "${DOWNLOAD}"
 
 # Update the Bazel dependency.
 sed -i -f - bazel/google_cloud_cpp_deps.bzl <<EOT
