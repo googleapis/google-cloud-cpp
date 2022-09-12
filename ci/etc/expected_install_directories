@@ -217,6 +217,10 @@
 ./include/google/cloud/monitoring
 ./include/google/cloud/monitoring/internal
 ./include/google/cloud/monitoring/mocks
+./include/google/cloud/networkconnectivity
+./include/google/cloud/networkconnectivity/internal
+./include/google/cloud/networkconnectivity/mocks
+./include/google/cloud/networkconnectivity/v1
 ./include/google/cloud/networkmanagement
 ./include/google/cloud/networkmanagement/internal
 ./include/google/cloud/networkmanagement/mocks
@@ -485,6 +489,7 @@
 ./lib64/cmake/google_cloud_cpp_managedidentities
 ./lib64/cmake/google_cloud_cpp_memcache
 ./lib64/cmake/google_cloud_cpp_monitoring
+./lib64/cmake/google_cloud_cpp_networkconnectivity
 ./lib64/cmake/google_cloud_cpp_networkmanagement
 ./lib64/cmake/google_cloud_cpp_notebooks
 ./lib64/cmake/google_cloud_cpp_optimization

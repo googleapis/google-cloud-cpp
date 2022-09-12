@@ -81,6 +81,7 @@ GA_LIBRARIES = [
     "managedidentities",
     "memcache",
     "monitoring",
+    "networkconnectivity",
     "networkmanagement",
     "notebooks",
     "orgpolicy",
