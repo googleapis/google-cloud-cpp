@@ -219,6 +219,15 @@ arguments in the CI builds.
 
 - `google/cloud/${library}/CMakeLists.txt`
 
+The scaffold generator does not know the current version of `google-cloud-cpp`.
+We can copy it from a library that should be up-to-date.
+
+```sh
+sed -i '/workspace(/q' google/cloud/${library}/quickstart/WORKSPACE.bazel
+sed '1,/workspace(/d' google/cloud/accessapproval/quickstart/WORKSPACE.bazel \
+    >> google/cloud/${library}/quickstart/WORKSPACE.bazel
+```
+
 ## Update the README files
 
 The following files probably need some light copy-editing to read less like they
