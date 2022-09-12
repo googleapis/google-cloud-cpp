@@ -81,7 +81,8 @@ Change the comments stating that the library is experimental to state that the
 library is GA, and that `google-cloud-cpp` does not follow semantic versioning.
 
 ```shell
-for lib in "${ga[@]}"; do sed -i 's;^This library is \*\*experimental.*;While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).;' google/cloud/${lib}/doc/main.dox; done
+for lib in "${ga[@]}"; do sed -i '/^This library is \*\*experimental/,+1d' google/cloud/${lib}/doc/main.dox; done
+for lib in "${ga[@]}"; do sed -i 's/^Please note that the Google Cloud C/While this library is **GA**, please note that the Google Cloud C/' google/cloud/${lib}/doc/main.dox; done
 ```
 
 ### `google/cloud/${library}/CMakeLists.txt`:

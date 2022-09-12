@@ -119,17 +119,33 @@ TEST_F(ScaffoldGenerator, LibraryName) {
 }
 
 TEST_F(ScaffoldGenerator, Vars) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const ga = ScaffoldVars(path(), service(), false);
   EXPECT_THAT(
-      vars, AllOf(Contains(Pair("title", "Test Only API")),
-                  Contains(Pair("description",
-                                "Provides a placeholder to write this test.")),
-                  Contains(Pair("library", "test")),
-                  Contains(Pair("copyright_year", "2034"))));
+      ga, AllOf(Contains(Pair("title", "Test Only API")),
+                Contains(Pair("description",
+                              "Provides a placeholder to write this test.")),
+                Contains(Pair("library", "test")),
+                Contains(Pair("copyright_year", "2034")),
+                Contains(Pair("prefix", "")), Contains(Pair("suffix", "")),
+                Contains(Pair("construction", "")),
+                Contains(Pair("status", HasSubstr("**GA**")))));
+
+  auto const experimental = ScaffoldVars(path(), service(), true);
+  EXPECT_THAT(
+      experimental,
+      AllOf(Contains(Pair("title", "Test Only API")),
+            Contains(Pair("description",
+                          "Provides a placeholder to write this test.")),
+            Contains(Pair("library", "test")),
+            Contains(Pair("copyright_year", "2034")),
+            Contains(Pair("prefix", "experimental-")),
+            Contains(Pair("suffix", " (Experimental)")),
+            Contains(Pair("construction", "\n:construction:\n")),
+            Contains(Pair("status", HasSubstr("**experimental**")))));
 }
 
 TEST_F(ScaffoldGenerator, CmakeConfigIn) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateCmakeConfigIn(os, vars);
   auto const actual = std::move(os).str();
@@ -142,7 +158,7 @@ TEST_F(ScaffoldGenerator, CmakeConfigIn) {
 }
 
 TEST_F(ScaffoldGenerator, Readme) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateReadme(os, vars);
   auto const actual = std::move(os).str();
@@ -151,10 +167,13 @@ TEST_F(ScaffoldGenerator, Readme) {
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-test/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/test
 )"""));
+  EXPECT_THAT(actual, Not(HasSubstr("$construction$")));
+  EXPECT_THAT(actual, HasSubstr("**GA**"));
+  EXPECT_THAT(actual, Not(HasSubstr("$status$")));
 }
 
 TEST_F(ScaffoldGenerator, Build) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateBuild(os, vars);
   auto const actual = std::move(os).str();
@@ -168,12 +187,14 @@ TEST_F(ScaffoldGenerator, Build) {
 }
 
 TEST_F(ScaffoldGenerator, CMakeLists) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateCMakeLists(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$prefix$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$suffix$")));
   EXPECT_THAT(actual, HasSubstr(R"""(include(CompileProtos)
 google_cloud_cpp_load_protolist(
     proto_list
@@ -195,7 +216,7 @@ target_link_libraries(google_cloud_cpp_test_protos PUBLIC ${proto_deps})
 }
 
 TEST_F(ScaffoldGenerator, DoxygenMainPage) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateDoxygenMainPage(os, vars);
   auto const actual = std::move(os).str();
@@ -206,10 +227,12 @@ to Provides a placeholder to write this test.
   EXPECT_THAT(actual, HasSubstr(R"""(
 [cloud-service-docs]: https://cloud.google.com/test
 )"""));
+  EXPECT_THAT(actual, Not(HasSubstr("$status$")));
+  EXPECT_THAT(actual, HasSubstr("**GA**"));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartReadme) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartReadme(os, vars);
   auto const actual = std::move(os).str();
@@ -220,7 +243,7 @@ TEST_F(ScaffoldGenerator, QuickstartReadme) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartSkeleton) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartSkeleton(os, vars);
   auto const actual = std::move(os).str();
@@ -229,16 +252,17 @@ TEST_F(ScaffoldGenerator, QuickstartSkeleton) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartCMake) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartCMake(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$prefix$")));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartMakefile) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartMakefile(os, vars);
   auto const actual = std::move(os).str();
@@ -248,7 +272,7 @@ TEST_F(ScaffoldGenerator, QuickstartMakefile) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartWorkspace) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartWorkspace(os, vars);
   auto const actual = std::move(os).str();
@@ -257,16 +281,17 @@ TEST_F(ScaffoldGenerator, QuickstartWorkspace) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartBuild) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartBuild(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$prefix$")));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartBazelrc) {
-  auto const vars = ScaffoldVars(path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartBazelrc(os, vars);
   auto const actual = std::move(os).str();

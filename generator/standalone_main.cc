@@ -40,6 +40,8 @@ ABSL_FLAG(std::string, output_path, ".",
           "Path to root dir where code is emitted.");
 ABSL_FLAG(std::string, scaffold, "",
           "Generate the library support files for the given directory.");
+ABSL_FLAG(bool, experimental_scaffold, false,
+          "Generate experimental library support files.");
 ABSL_FLAG(bool, update_ci, true, "Update the CI support files.");
 
 namespace {
@@ -172,6 +174,7 @@ int main(int argc, char** argv) {
   auto config_file = absl::GetFlag(FLAGS_config_file);
   auto output_path = absl::GetFlag(FLAGS_output_path);
   auto scaffold = absl::GetFlag(FLAGS_scaffold);
+  auto experimental_scaffold = absl::GetFlag(FLAGS_experimental_scaffold);
 
   GCP_LOG(INFO) << "proto_path = " << proto_path << "\n";
   GCP_LOG(INFO) << "googleapis_path = " << googleapis_path << "\n";
@@ -193,8 +196,8 @@ int main(int argc, char** argv) {
   std::vector<std::future<google::cloud::Status>> tasks;
   for (auto const& service : config->service()) {
     if (service.product_path() == scaffold) {
-      google::cloud::generator_internal::GenerateScaffold(googleapis_path,
-                                                          output_path, service);
+      google::cloud::generator_internal::GenerateScaffold(
+          googleapis_path, output_path, service, experimental_scaffold);
     }
     std::vector<std::string> args;
     // empty arg prevents first real arg from being ignored.

@@ -100,7 +100,7 @@ index ab033dde9..3753287d8 100644
 Create your first commit with purely hand-crafted changes
 
 ```shell
-git checkout -b feat-${library}-generate-library # Don't forget
+git checkout -b feat-${library}-generate-library
 git commit -m"feat(${library}): generate library" external/ generator/
 ```
 
@@ -124,6 +124,9 @@ bazel run \
   --config_file="${PWD}/generator/generator_config.textproto" \
   --scaffold="google/cloud/${library}"
 ```
+
+To generate a library that is initially experimental, add an
+`--experimental_scaffold` flag.
 
 ## Fix formatting of existing libraries and the generated code
 
@@ -158,11 +161,30 @@ dependencies for more complex libraries.
 
 ## Update the root files
 
-Manually edit the top level `BUILD.bazel` to include the new target as an
-experimental library. Take note of when the library was generated.
+Manually edit the top level `BUILD.bazel` to include the new target.
 
 <details>
 <summary>Expand for an example</summary>
+
+If you are generating a GA library, add it to `GA_LIBRARIES`.
+
+```diff
+diff --git a/BUILD.bazel b/BUILD.bazel
+index 2c08e2a73..3a61351d2 100644
+--- a/BUILD.bazel
++++ b/BUILD.bazel
+@@ -52,6 +52,7 @@ GA_LIBRARIES = [
+     "automl",
+     "billing",
+     "binaryauthorization",
++    "bms",
+     "channel",
+     "cloudbuild",
+     "composer",
+```
+
+Otherwise, if you are generating an experimental library, add it to
+`EXPERIMENTAL_LIBRARIES` and take note of when the library was generated.
 
 ```diff
 diff --git a/BUILD.bazel b/BUILD.bazel
@@ -255,7 +277,7 @@ index c4ce00489..1858b48dc 100755
 
 ```shell
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
-   "google/cloud/${library}" BUILD.bazel CHANGELOG.md ci
+   "google/cloud/${library}" BUILD.bazel CHANGELOG.md ci README.md
 ```
 
 [retryable-status-codes]: https://github.com/googleapis/googleapis/blob/0fea253787a4f2769b97b0ed3a8f5b28ef17ffa7/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80
