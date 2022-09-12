@@ -45,6 +45,7 @@ logging
 managedidentities
 memcache
 monitoring
+networkconnectivity
 networkmanagement
 notebooks
 optimization
