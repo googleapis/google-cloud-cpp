@@ -122,7 +122,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         videointelligence_quickstart
         PROPERTIES
             LABELS "integration-test;quickstart" ENVIRONMENT
-            GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
+            GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT}
+            DISABLED TRUE)
 endif ()
 
 # Get the destination directories based on the GNU recommendations.
