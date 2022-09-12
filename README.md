@@ -326,7 +326,7 @@ bazel build //...
 
 ### Building with CMake
 
-This library requires CMake >= 3.5. If you are planning to install the libraries
+This library requires CMake >= 3.10. If you are planning to install the libraries
 please consult the [packaging guide](/doc/packaging.md), these instructions will
 **NOT** produce artifacts that you can put in `/usr/local`, or share with your
 colleagues.
@@ -403,16 +403,19 @@ int main(int argc, char* argv[]) {
 
 ## Support
 
-- This project supports Windows, macOS, Linux
-- This project supports C++14 (and higher) compilers (we test with GCC >= 7.3,
-  Clang >= 6.0, and MSVC >= 2017)
-- This project supports Bazel (>= 4.0) and CMake (>= 3.5) builds. See the
-  [Quickstart examples](https://github.com/googleapis/google-cloud-cpp#quickstart)
-- This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md)
-- This project works with or without exceptions enabled
-- This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes
+- This project follows Google's [Foundational C++ Support Policy][support-policy],
+  which is summarized in the [Foundational C++ Support Matrix][support-matrix].
+  - Language Version (>= C++14).
+  - Operating Systems: Windows, macOS, and Linux.
+  - Build Systems: Bazel (>= 4.0)[^bazel-version-note], CMake (>= 3.10).
+  - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2017), Apple Clang (>= 12).
+- This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md).
+- This project works with or without exceptions enabled.
+- This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes.
 
 ## Public API and API Breaking Changes
+
+This project follows Google's [OSS Library Breaking Change Policy][breaking-change-policy].
 
 In general, we avoid making backwards incompatible changes to our C++ APIs (see
 below for the definition of "API"). Sometimes such changes yield benefits to
@@ -577,6 +580,7 @@ Apache 2.0; see [`LICENSE`](/LICENSE) for details.
     may need a more recent version of Bazel. Consult the
     [Bazel Install Guide](https://bazel.build/install) for details.
 
+[breaking-change-policy]: https://opensource.google/documentation/policies/library-breaking-change
 [changelog]: /CHANGELOG.md
 [codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
 [codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/main/graph/badge.svg
@@ -596,3 +600,5 @@ Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 [kokoro-windows-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel.svg
 [kokoro-windows-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake-link.html
 [kokoro-windows-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake.svg
+[support-matrix]: https://github.com/google/oss-policies-info/blob/main/foundational-cxx-support-matrix.md
+[support-policy]: https://opensource.google/documentation/policies/cplusplus-support
