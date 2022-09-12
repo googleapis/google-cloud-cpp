@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/random_names.h"
+#include "absl/strings/match.h"
 #include "absl/time/civil_time.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
@@ -29,10 +30,24 @@ std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
   auto const date =
       absl::FormatCivilTime(absl::ToCivilDay(absl::Now(), absl::UTCTimeZone()));
   auto const full = prefix + '-' + date + '_';
-  std::size_t const max_random_characters = kMaxBucketNameLength - full.size();
-  return full + google::cloud::internal::Sample(
-                    gen, static_cast<int>(max_random_characters),
-                    "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const max_random_characters = kMaxBucketNameLength - full.size();
+  while (true) {
+    auto name = full + google::cloud::internal::Sample(
+                           gen, static_cast<int>(max_random_characters),
+                           "abcdefghijklmnopqrstuvwxyz0123456789");
+    // Bucket names cannot contain strings too similar to "google". Our builds
+    // flake when the randomly generated string happens to generate a prohibited
+    // substring.  There is no string definition of "too similar", but this
+    // should work in practice.
+    //   https://cloud.google.com/storage/docs/naming-buckets
+    auto invalid = false;
+    for (auto const* bad : {"goog", "g00g", "g0og", "go0g"}) {
+      if (!absl::StrContains(name, bad)) continue;
+      invalid = true;
+      break;
+    }
+    if (!invalid) return name;
+  }
 }
 
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen) {
