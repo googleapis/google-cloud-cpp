@@ -1,10 +1,12 @@
 # Network Connectivity API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Network Connectivity API][cloud-service-docs], a service to The Network Connectivity API provides access to Network Connectivity Center.
+[Network Connectivity API][cloud-service-docs], a suite of products that provide
+enterprise connectivity from your on-premises network or from another cloud
+provider to your Virtual Private Cloud (VPC) network.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms
 
@@ -82,7 +84,7 @@ as well as how to properly format your code.
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 
-[cloud-service-docs]: https://cloud.google.com/networkconnectivity
+[cloud-service-docs]: https://cloud.google.com/network-connectivity/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-networkconnectivity/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/networkconnectivity

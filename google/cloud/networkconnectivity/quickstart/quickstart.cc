@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/networkconnectivity/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/networkconnectivity/hub_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -24,13 +23,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace networkconnectivity = ::google::cloud::networkconnectivity;
-  auto client = networkconnectivity::Client(
-      networkconnectivity::MakeConnection(/* EDIT HERE */));
+  auto client = networkconnectivity::HubServiceClient(
+      networkconnectivity::MakeHubServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  for (auto h : client.ListHubs(parent)) {
+    if (!h) throw std::runtime_error(h.status().message());
+    std::cout << h->DebugString() << "\n";
   }
 
   return 0;

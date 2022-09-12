@@ -2,11 +2,13 @@
 
 @mainpage Network Connectivity API C++ Client Library
 
-An idiomatic C++ client library for the [Network Connectivity API][cloud-service-docs], a service
-to The Network Connectivity API provides access to Network Connectivity Center.
+An idiomatic C++ client library for the
+[Network Connectivity API][cloud-service-docs], a suite of products that provide
+enterprise connectivity from your on-premises network or from another cloud
+provider to your Virtual Private Cloud (VPC) network.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
@@ -92,7 +94,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/networkconnectivity
+[cloud-service-docs]: https://cloud.google.com/network-connectivity/docs
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

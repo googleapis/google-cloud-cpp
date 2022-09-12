@@ -120,9 +120,7 @@ if (BUILD_TESTING)
         NAME networkconnectivity_quickstart
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:networkconnectivity_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+            $<TARGET_FILE:networkconnectivity_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(networkconnectivity_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
