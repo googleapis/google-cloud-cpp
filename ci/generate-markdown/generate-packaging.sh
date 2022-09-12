@@ -33,6 +33,10 @@ directory.
 - Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the current
   document.
+- Developers that prefer using a package manager such as
+  [vcpkg](https://vcpkg.io), [Conda](https://conda.io),
+  or [Conan](https://conan.io) should follow the instructions for their package
+  manager.
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the [quickstart guides](/README.md#quickstart) for the
   library or libraries they want to use.

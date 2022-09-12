@@ -83,15 +83,19 @@ int main(int argc, char* argv[]) try {
 - Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
+- Developers that prefer using a package manager such as
+  [vcpkg](https://vcpkg.io), [Conda](https://conda.io),
+  or [Conan](https://conan.io) should follow the instructions for their package
+  manager.
 - Developers wanting to use this client library as part of a larger CMake or
   Bazel project should consult the aforementioned
   [quickstart](quickstart/README.md).
-- Developers wanting to compile the library just to run some of the examples or
+- Developers wanting to compile the library just to run some examples or
   test should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
 - Contributors and developers to `google-cloud-cpp` should consult the guide to
-  [setup a development workstation][howto-setup-dev-workstation].
+  [set up a development workstation][howto-setup-dev-workstation].
 
 ## Contributing changes
 
