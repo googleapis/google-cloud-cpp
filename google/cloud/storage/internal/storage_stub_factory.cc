@@ -34,14 +34,16 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
     google::cloud::internal::GrpcAuthenticationStrategy& auth,
     Options const& options, int channel_id) {
   auto args = internal::MakeChannelArguments(options);
-  // Use a local subchannel pool to avoid contention in gRPC
+  // Use a local subchannel pool to avoid contention in gRPC.
   args.SetInt(GRPC_ARG_USE_LOCAL_SUBCHANNEL_POOL, 1);
-  // Use separate sockets for each channel, this is redundant since we also set
+  // Use separate sockets for each channel. This is redundant since we also set
   // `GRPC_ARG_USE_LOCAL_SUBCHANNEL_POOL`, but it is harmless.
   args.SetInt(GRPC_ARG_CHANNEL_ID, channel_id);
 
-  // Disable queries see b/243676671, this is harmless as we do not use any
-  // load balancer that requires server queries.
+  // Disable queries. GCS+gRPC does not use a load-balancer (such as `grpclb`)
+  // that requires server queries. Disabling the server queries is, therefore,
+  // harmless. Furthermore, it avoids triggering any latent bugs in the code
+  // to send and/or receive those queries.
   args.SetInt(GRPC_ARG_DNS_ENABLE_SRV_QUERIES, 0);
 
   // Effectively disable keepalive messages.
