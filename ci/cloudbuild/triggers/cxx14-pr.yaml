@@ -5,10 +5,10 @@ github:
   pullRequest:
     branch: ^(master|main|v\d+\..*)$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: gcc-63-pr
+name: cxx14-pr
 substitutions:
-  _BUILD_NAME: gcc-63
-  _DISTRO: debian-stretch
+  _BUILD_NAME: cxx14
+  _DISTRO: fedora-36-cxx14
   _TRIGGER_TYPE: pr
 tags:
 - pr

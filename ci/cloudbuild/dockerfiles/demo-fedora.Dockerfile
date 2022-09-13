@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:35
+FROM fedora:36
 ARG NCPU=4
 
 ## [BEGIN packaging.md]
@@ -25,7 +25,7 @@ RUN dnf makecache && \
         openssl-devel patch unzip tar wget zip zlib-devel
 # ```
 
-# Fedora 34 includes packages for gRPC and Protobuf, but they are not
+# Fedora 36 includes packages for gRPC and Protobuf, but they are not
 # recent enough to support the protos published by Google Cloud. The indirect
 # dependencies of libcurl, Protobuf, and gRPC are recent enough for our needs.
 
@@ -51,7 +51,7 @@ RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.g
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
-# default pkg-config does not search in these directories.
+# default, pkg-config does not search in these directories.
 
 # ```bash
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
@@ -60,6 +60,17 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib
 # #### Abseil
 
 # We need a recent version of Abseil.
+
+# :warning: By default, Abseil's ABI changes depending on whether it is used
+# with C++ >= 17 enabled or not. Installing Abseil with the default
+# configuration is error-prone, unless you can guarantee that all the code using
+# Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+# C++ version. We recommend that you switch the default configuration to pin
+# Abseil's ABI to the version used at compile time. In this case, the compiler
+# defaults to C++17. Nevertheless, gRPC compiles with C++11 and depends on
+# some of the Abseil polyfills, such as `absl::string_view`. Therefore, we
+# pin Abseil's ABI to always use the polyfills. See [abseil/abseil-cpp#696]
+# for more information.
 
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
@@ -141,7 +152,7 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz |
 
 # #### gRPC
 
-# Finally we build gRPC from source also:
+# Finally, we build gRPC from source:
 
 # ```bash
 WORKDIR /var/tmp/build/grpc

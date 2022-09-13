@@ -29,8 +29,13 @@ io::log_h2 "Update or install dependencies"
 # vcpkg needs this
 brew list --versions pkg-config || brew install pkg-config
 
-# Fetch vcpkg at the specified hash.
-vcpkg_dir="${HOME}/vcpkg-quickstart"
+# Fetch vcpkg at the specified hash, download to the tmpfs directory when
+# running on Kokoro.
+if [[ -z "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
+  vcpkg_dir="${HOME}/vcpkg-quickstart"
+else
+  vcpkg_dir="${KOKORO_ARTIFACTS_DIR}/vcpkg-quickstart"
+fi
 install_vcpkg "${vcpkg_dir}"
 
 # The downloads can fail, therefore require a retry loop.

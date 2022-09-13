@@ -5,10 +5,10 @@ github:
   pullRequest:
     branch: ^(master|main|v\d+\..*)$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: cxx11-pr
+name: demo-alpine-stable-pr
 substitutions:
-  _BUILD_NAME: cxx11
-  _DISTRO: fedora-35-cxx11
+  _BUILD_NAME: demo-install
+  _DISTRO: demo-alpine-stable
   _TRIGGER_TYPE: pr
 tags:
-- pr
+  - pr

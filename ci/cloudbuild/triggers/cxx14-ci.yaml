@@ -4,10 +4,10 @@ github:
   owner: googleapis
   push:
     branch: ^(master|main|v\d+\..*)$
-name: demo-debian-stretch-ci
+name: cxx14-ci
 substitutions:
-  _BUILD_NAME: demo-install
-  _DISTRO: demo-debian-stretch
+  _BUILD_NAME: cxx14
+  _DISTRO: fedora-36-cxx14
   _TRIGGER_TYPE: ci
 tags:
 - ci

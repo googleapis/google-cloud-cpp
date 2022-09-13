@@ -81,6 +81,8 @@ brew list --versions coreutils || brew install coreutils
 # machines, but we ignore errors here because maybe the local version works.
 if [[ "${RUNNING_CI:-}" = "yes" ]]; then
   brew reinstall google-cloud-sdk || true
+  gcloud components install alpha || true
+  python -m pip install google-crc32c --target /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/lib/third_party || true
 fi
 
 readonly KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"

@@ -7,7 +7,7 @@ github:
 name: cmake-gcs-rest-ci
 substitutions:
   _BUILD_NAME: cmake-gcs-rest
-  _DISTRO: fedora-35
+  _DISTRO: fedora-36
   _TRIGGER_TYPE: ci
 tags:
 - ci

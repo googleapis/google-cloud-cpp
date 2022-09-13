@@ -4,10 +4,10 @@ github:
   owner: googleapis
   push:
     branch: ^(master|main|v\d+\..*)$
-name: gcc-63-ci
+name: gcc-7-3-ci
 substitutions:
-  _BUILD_NAME: gcc-63
-  _DISTRO: debian-stretch
+  _BUILD_NAME: gcc-7.3
+  _DISTRO: centos-7
   _TRIGGER_TYPE: ci
 tags:
 - ci

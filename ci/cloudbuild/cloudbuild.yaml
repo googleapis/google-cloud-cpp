@@ -62,7 +62,7 @@ logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COM
 
 steps:
   # Builds the docker image that will be used by the main build step.
-- name: 'gcr.io/kaniko-project/executor:v1.8.1'
+- name: 'gcr.io/kaniko-project/executor:v1.9.0'
   args: [
     '--log-format=text',
     '--context=dir:///workspace/ci',
@@ -80,7 +80,7 @@ steps:
 
   # Restores the homedir cache into /h in parallel with the previous step.
   # Won't break the build if this step fails.
-- name: 'gcr.io/cloud-builders/gsutil'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   waitFor: [ '-' ]
   entrypoint: 'bash'
   dir: '/h'
@@ -105,7 +105,7 @@ steps:
 
   # Caches some directories in the homedir, in the specified GCS bucket.
   # Won't break the build if this step fails.
-- name: 'gcr.io/cloud-builders/gsutil'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
   dir: '/h'
   args:

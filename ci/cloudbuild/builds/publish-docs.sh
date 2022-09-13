@@ -73,9 +73,27 @@ if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
   exit 0
 fi
 
+# To protect against supply chain attacks we need to use `--require-hashes` in
+# `pip install` commands.  Googlers may want to see b/242562806 for more
+# details.
+#
+# Because we are currently using a SHA (as opposed to a released version) of
+# the `gcp-docuploader` the process to update these hashes is somewhat manual.
+# This worked for me (coryan@) circa 2022-09-08:
+#
+#    venv="$(mktemp -d)"
+#    python3 -m venv "${venv}/requirements"
+#    source "${venv}/requirements/bin/activate"
+#    pip install git+https://github.com/googleapis/docuploader@993badb47be3bf548a4c1726658eadba4bafeaca
+#    pip freeze | grep -v gcp-docuploader >ci/etc/docuploader-requirements.in
+#    pip install --require-hashes -r ci/etc/pip-tooling-requirements.txt
+#    pip-compile --generate-hashes ci/etc/docuploader-requirements.in
+#
 io::log_h2 "Installing the docuploader package"
 python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
-  --no-warn-script-location \
+  --no-warn-script-location --require-hashes -r ci/etc/docuploader-requirements.txt
+python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
+  --no-warn-script-location --no-deps \
   "git+https://github.com/googleapis/docuploader@993badb47be3bf548a4c1726658eadba4bafeaca"
 python3 -m pip list
 

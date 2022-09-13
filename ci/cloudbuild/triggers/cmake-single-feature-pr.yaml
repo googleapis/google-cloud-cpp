@@ -8,7 +8,7 @@ github:
 name: cmake-single-feature-pr
 substitutions:
   _BUILD_NAME: cmake-single-feature
-  _DISTRO: fedora-35
+  _DISTRO: fedora-36
   _TRIGGER_TYPE: pr
 tags:
 - pr

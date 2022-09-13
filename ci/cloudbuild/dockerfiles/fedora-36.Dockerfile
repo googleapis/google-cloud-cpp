@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:35
+FROM fedora:36
 ARG NCPU=4
+ARG ARCH=amd64
 
 # Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
 # for `google-cloud-cpp`. Install these packages and additional development
@@ -24,7 +25,7 @@ RUN dnf makecache && \
         cmake diffutils doxygen findutils gcc-c++ git \
         lcov libcxx-devel libcxxabi-devel \
         libasan libubsan libtsan libcurl-devel make ninja-build \
-        openssl-devel patch python python3.8 \
+        openssl-devel patch python python3 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
@@ -39,10 +40,11 @@ RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
 
 # Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
-# when handling `.pc` files with lots of `Requires:` deps, which happens with
-# Abseil, so we use the normal `pkg-config` binary, which seems to not suffer
-# from this bottleneck. For more details see
-# https://github.com/googleapis/google-cloud-cpp/issues/7052
+# when handling `.pc` files with lots of `Requires:` deps.  This problem is
+# triggered by the Abseil `.pc` files, which we use (indirectly) when testing
+# our own `.pc` files.  We install the more traditional `pkg-config` binary.
+# For more details see
+#     https://github.com/googleapis/google-cloud-cpp/issues/7052
 WORKDIR /var/tmp/build/pkg-config-cpp
 RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
@@ -52,8 +54,6 @@ RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.g
     ldconfig
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
 
-# Install Abseil, remove the downloaded files and the temporary artifacts
-# after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
@@ -62,36 +62,30 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
-      -H. -Bcmake-out/abseil && \
-    cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-    ldconfig && \
-    cd /var/tmp && rm -fr build
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 
-# Install googletest, remove the downloaded files and the temporary artifacts
-# after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/google/googletest/archive/release-1.11.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
-      -H. -Bcmake-out/googletest && \
-    cmake --build cmake-out/googletest --target install -- -j ${NCPU} && \
-    ldconfig && \
-    cd /var/tmp && rm -fr build
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 
-# Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/google/benchmark/archive/v1.6.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-        -DCMAKE_BUILD_TYPE="Release" \
-        -DBUILD_SHARED_LIBS=yes \
-        -DBENCHMARK_ENABLE_TESTING=OFF \
-        -H. -Bcmake-out/benchmark && \
-    cmake --build cmake-out/benchmark --target install -- -j ${NCPU} && \
-    ldconfig && \
-    cd /var/tmp && rm -fr build
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBENCHMARK_ENABLE_TESTING=OFF \
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
@@ -102,10 +96,9 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -Bcmake-out/crc32c && \
-    cmake --build cmake-out/crc32c --target install -- -j ${NCPU} && \
-    ldconfig && \
-    cd /var/tmp && rm -fr build
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
@@ -115,10 +108,9 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -DJSON_BuildTests=OFF \
-      -H. -Bcmake-out/nlohmann/json && \
-    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
-    ldconfig && \
-    cd /var/tmp && rm -fr build
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
 RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
@@ -128,30 +120,28 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz |
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
-        -H. -Bcmake-out -GNinja && \
+      -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
-    ldconfig && \
-    cd /var/tmp && rm -fr build
+    ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel re2-devel
 RUN curl -sSL https://github.com/grpc/grpc/archive/v1.46.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON \
-        -DgRPC_INSTALL=ON \
-        -DgRPC_BUILD_TESTS=OFF \
-        -DgRPC_ABSL_PROVIDER=package \
-        -DgRPC_CARES_PROVIDER=package \
-        -DgRPC_PROTOBUF_PROVIDER=package \
-        -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
-        -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out -GNinja && \
-    cmake --build cmake-out --target install -- -j ${NCPU} && \
-    ldconfig && \
-    cd /var/tmp && rm -fr build
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=ON \
+      -DgRPC_INSTALL=ON \
+      -DgRPC_BUILD_TESTS=OFF \
+      -DgRPC_ABSL_PROVIDER=package \
+      -DgRPC_CARES_PROVIDER=package \
+      -DgRPC_PROTOBUF_PROVIDER=package \
+      -DgRPC_RE2_PROVIDER=package \
+      -DgRPC_SSL_PROVIDER=package \
+      -DgRPC_ZLIB_PROVIDER=package \
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 
 # Install ctcache to speed up our clang-tidy build
 WORKDIR /var/tmp/build
@@ -185,7 +175,7 @@ RUN curl -sSL https://github.com/lvc/abi-dumper/archive/814effec0f20a9613441dfa0
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
-ENV CLOUDSDK_PYTHON=python3.8
+ENV CLOUDSDK_PYTHON=python3.10
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
@@ -197,6 +187,6 @@ RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 # those library directories will be found.
 RUN ldconfig /usr/local/lib*
 
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.12.0/bazelisk-linux-amd64" && \
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.14.0/bazelisk-linux-${ARCH}" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel

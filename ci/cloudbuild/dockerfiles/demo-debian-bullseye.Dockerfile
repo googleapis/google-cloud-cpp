@@ -29,8 +29,18 @@ RUN apt-get update && \
 
 # #### Abseil
 
-# Debian 11 ships with Abseil==20200923.3.  Unfortunately, the current gRPC version needs
-# Abseil>=20210324.
+# Debian 11 ships with Abseil==20200923.3.  Unfortunately, the current gRPC
+# version needs Abseil >= 20210324.
+
+# :warning: By default, Abseil's ABI changes depending on whether it is used
+# with C++ >= 17 enabled or not. Installing Abseil with the default
+# configuration is error-prone, unless you can guarantee that all the code using
+# Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+# C++ version. We recommend that you switch the default configuration to pin
+# Abseil's ABI to the version used at compile time. In this case, the compiler
+# defaults to C++14. Therefore, we change `absl/base/options.h` to **always**
+# use `absl::any`, `absl::string_view`, and `absl::variant`. See
+# [abseil/abseil-cpp#696] for more information.
 
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
@@ -100,7 +110,7 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz |
 
 # #### gRPC
 
-# Finally we build gRPC from source also:
+# Finally, we build gRPC from source:
 
 # ```bash
 WORKDIR /var/tmp/build/grpc

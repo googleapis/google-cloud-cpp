@@ -16,14 +16,38 @@
 
 set -euo pipefail
 
-readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="390.0.0"
-readonly GOOGLE_CLOUD_CPP_SDK_SHA256="5ce31b85013599dd842ca8a08539aaa6047aee63bb216d5b3988fb2666b06c07"
+readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="393.0.0"
+declare -A -r GOOGLE_CLOUD_CPP_SDK_SHA256=(
+  ["x86_64"]="6f3aadf553011f9a0478dc1ef029dd71d8ee1b34a6c534653faaca13392a971c"
+  ["arm"]="55d47d9650adccfc592577c052313dad9e54d4e3ea006280d1b35de2104ddaa4"
+)
+
+ARCH="$(uname -p)"
+if [[ "${ARCH}" == "aarch64" ]]; then
+  # The tarball uses this name
+  ARCH="arm"
+fi
+readonly ARCH
+
+components=(
+  # All the emulators are in the "beta" components
+  beta
+  # We need the Bigtable emulator and CLI tool
+  bigtable
+  cbt
+  # We use the Pub/Sub emulator in our tests
+  pubsub-emulator
+)
+if [[ "${ARCH}" == "x86_64" ]]; then
+  # The spanner emulator is not available for ARM64, but we do use it for testing on x86_64
+  components+=(cloud-spanner-emulator)
+fi
 
 readonly SITE="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
-readonly TARBALL="google-cloud-cli-${GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION}-linux-x86_64.tar.gz"
-curl -L "${SITE}/${TARBALL}" -o "${TARBALL}"
+readonly TARBALL="google-cloud-cli-${GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION}-linux-${ARCH}.tar.gz"
 
-echo "${GOOGLE_CLOUD_CPP_SDK_SHA256} ${TARBALL}" | sha256sum --check -
+curl -L "${SITE}/${TARBALL}" -o "${TARBALL}"
+echo "${GOOGLE_CLOUD_CPP_SDK_SHA256[${ARCH}]} ${TARBALL}" | sha256sum --check -
 tar x -C /usr/local -f "${TARBALL}"
 /usr/local/google-cloud-sdk/bin/gcloud --quiet components install \
-  beta bigtable cbt cloud-spanner-emulator pubsub-emulator
+  "${components[@]}"

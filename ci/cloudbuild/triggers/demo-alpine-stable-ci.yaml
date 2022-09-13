@@ -4,10 +4,10 @@ github:
   owner: googleapis
   push:
     branch: ^(master|main|v\d+\..*)$
-name: install-gcs-grpc-ci
+name: demo-alpine-stable-ci
 substitutions:
-  _BUILD_NAME: install-gcs-grpc
-  _DISTRO: fedora-35
+  _BUILD_NAME: demo-install
+  _DISTRO: demo-alpine-stable
   _TRIGGER_TYPE: ci
 tags:
-- ci
+  - ci

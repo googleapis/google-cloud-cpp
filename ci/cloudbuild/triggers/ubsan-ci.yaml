@@ -7,7 +7,7 @@ github:
 name: ubsan-ci
 substitutions:
   _BUILD_NAME: ubsan
-  _DISTRO: fedora-35
+  _DISTRO: fedora-36
   _TRIGGER_TYPE: ci
 tags:
 - ci

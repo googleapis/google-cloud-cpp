@@ -63,8 +63,8 @@
 # Advanced Examples:
 #
 # 1. Runs the ci/cloudbuild/builds/asan.sh script using the
-#    ci/cloudbuild/dockerfiles/fedora-35.Dockerfile distro.
-#    $ build.sh --build asan --distro fedora-35
+#    ci/cloudbuild/dockerfiles/fedora-36.Dockerfile distro.
+#    $ build.sh --build asan --distro fedora-36
 #
 # Note: Builds with the `--docker` flag inherit some (but not all) environment
 # variables from the calling process, such as USE_BAZEL_VERSION
@@ -92,11 +92,12 @@ function die() {
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
   --options="t:c:ldsh" \
-  --longoptions="build:,distro:,trigger:,cloud:,local,docker,docker-shell,docker-clean,verbose,help" \
+  --longoptions="arch:,build:,distro:,trigger:,cloud:,local,docker,docker-shell,docker-clean,verbose,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
+ARCH_FLAG=""
 BUILD_FLAG=""
 DISTRO_FLAG=""
 TRIGGER_FLAG=""
@@ -108,6 +109,10 @@ SHELL_FLAG="false"
 : "${VERBOSE_FLAG:=false}"
 while true; do
   case "$1" in
+    --arch)
+      ARCH_FLAG="$2"
+      shift 2
+      ;;
     --build)
       BUILD_FLAG="$2"
       shift 2
@@ -179,10 +184,11 @@ fi
 CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
 LOG_LINKER_PAT="$(tr -d '[:space:]' <<<"${LOG_LINKER_PAT:-}")"
 
-export TRIGGER_TYPE
+export CODECOV_TOKEN
 export BRANCH_NAME
 export COMMIT_SHA
-export CODECOV_TOKEN
+export TRIGGER_TYPE
+export VERBOSE_FLAG
 export LOG_LINKER_PAT
 
 # --local is the most fundamental build mode, in that all other builds
@@ -306,6 +312,9 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--build-arg=NCPU=$(nproc)"
     -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile"
   )
+  if [[ -n "${ARCH_FLAG}" ]]; then
+    build_flags+=("--build-arg=ARCH=${ARCH_FLAG}")
+  fi
   export DOCKER_BUILDKIT=1
   io::run docker build "${build_flags[@]}" ci
   io::log_h2 "Starting docker container: ${image}"

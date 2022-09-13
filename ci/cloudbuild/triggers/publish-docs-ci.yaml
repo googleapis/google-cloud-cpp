@@ -7,7 +7,7 @@ github:
 name: publish-docs-ci
 substitutions:
   _BUILD_NAME: publish-docs
-  _DISTRO: fedora-35
+  _DISTRO: fedora-36
   _TRIGGER_TYPE: ci
 tags:
 - ci

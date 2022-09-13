@@ -17,8 +17,9 @@
 # than to the extent that certain distros offer certain versions of software
 # that the build needs. It's fine to add more deps that are needed by the
 # `checkers.sh` build.
-FROM fedora:35
+FROM fedora:36
 ARG NCPU=4
+ARG ARCH=amd64
 
 RUN dnf makecache && \
     dnf install -y \
@@ -35,16 +36,19 @@ RUN dnf makecache && \
 
 RUN cargo install typos-cli --version 1.3.9 --root /usr/local
 
-RUN curl -L -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/5.0.1/buildifier-linux-amd64 && \
+RUN curl -L -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/5.0.1/buildifier-linux-${ARCH} && \
     chmod 755 /usr/bin/buildifier
 
-RUN curl -L -o /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.4.3/shfmt_v3.4.3_linux_amd64 && \
+RUN curl -L -o /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.4.3/shfmt_v3.4.3_linux_${ARCH} && \
     chmod 755 /usr/local/bin/shfmt
 
 RUN pip3 install --upgrade pip
 RUN pip3 install cmake_format==0.6.13
 RUN pip3 install black==22.3.0
+RUN pip3 install mdformat-gfm==0.3.5 \
+                 mdformat-frontmatter==0.4.1 \
+                 mdformat-footnote==0.1.1
 
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.12.0/bazelisk-linux-amd64" && \
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.14.0/bazelisk-linux-${ARCH}" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel

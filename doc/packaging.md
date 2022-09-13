@@ -139,7 +139,7 @@ sudo dnf install -y ccache cmake curl findutils gcc-c++ git make ninja-build \
         openssl-devel patch unzip tar wget zip zlib-devel
 ```
 
-Fedora 34 includes packages for gRPC and Protobuf, but they are not
+Fedora 36 includes packages for gRPC and Protobuf, but they are not
 recent enough to support the protos published by Google Cloud. The indirect
 dependencies of libcurl, Protobuf, and gRPC are recent enough for our needs.
 
@@ -165,7 +165,7 @@ sudo ldconfig
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
-default pkg-config does not search in these directories.
+default, pkg-config does not search in these directories.
 
 ```bash
 export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
@@ -174,6 +174,17 @@ export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/
 #### Abseil
 
 We need a recent version of Abseil.
+
+:warning: By default, Abseil's ABI changes depending on whether it is used
+with C++ >= 17 enabled or not. Installing Abseil with the default
+configuration is error-prone, unless you can guarantee that all the code using
+Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+C++ version. We recommend that you switch the default configuration to pin
+Abseil's ABI to the version used at compile time. In this case, the compiler
+defaults to C++17. Nevertheless, gRPC compiles with C++11 and depends on
+some of the Abseil polyfills, such as `absl::string_view`. Therefore, we
+pin Abseil's ABI to always use the polyfills. See [abseil/abseil-cpp#696]
+for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -255,7 +266,7 @@ sudo ldconfig
 
 #### gRPC
 
-Finally we build gRPC from source also:
+Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
@@ -325,6 +336,16 @@ export PATH=/usr/local/bin:${PATH}
 #### Abseil
 
 We need a recent version of Abseil.
+
+:warning: By default, Abseil's ABI changes depending on whether it is used
+with C++ >= 17 enabled or not. Installing Abseil with the default
+configuration is error-prone, unless you can guarantee that all the code using
+Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+C++ version. We recommend that you switch the default configuration to pin
+Abseil's ABI to the version used at compile time. In this case, the compiler
+defaults to C++14. Therefore, we change `absl/base/options.h` to **always**
+use `absl::any`, `absl::string_view`, and `absl::variant`. See
+[abseil/abseil-cpp#696] for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -480,6 +501,17 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 We need a recent version of Abseil.
 
+:warning: By default, Abseil's ABI changes depending on whether it is used
+with C++ >= 17 enabled or not. Installing Abseil with the default
+configuration is error-prone, unless you can guarantee that all the code using
+Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+C++ version. We recommend that you switch the default configuration to pin
+Abseil's ABI to the version used at compile time. In this case, the compiler
+defaults to C++17. Nevertheless, gRPC compiles with C++11 and depends on
+some of the Abseil polyfills, such as `absl::string_view`. Therefore, we
+pin Abseil's ABI to always use the polyfills. See [abseil/abseil-cpp#696]
+for more information.
+
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
@@ -620,6 +652,16 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 We need a recent version of Abseil.
 
+:warning: By default, Abseil's ABI changes depending on whether it is used
+with C++ >= 17 enabled or not. Installing Abseil with the default
+configuration is error-prone, unless you can guarantee that all the code using
+Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+C++ version. We recommend that you switch the default configuration to pin
+Abseil's ABI to the version used at compile time. In this case, the compiler
+defaults to C++14. Therefore, we change `absl/base/options.h` to **always**
+use `absl::any`, `absl::string_view`, and `absl::variant`. See
+[abseil/abseil-cpp#696] for more information.
+
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
@@ -758,6 +800,16 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 #### Abseil
 
 We need a recent version of Abseil.
+
+:warning: By default, Abseil's ABI changes depending on whether it is used
+with C++ >= 17 enabled or not. Installing Abseil with the default
+configuration is error-prone, unless you can guarantee that all the code using
+Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+C++ version. We recommend that you switch the default configuration to pin
+Abseil's ABI to the version used at compile time. In this case, the compiler
+defaults to C++14. Therefore, we change `absl/base/options.h` to **always**
+use `absl::any`, `absl::string_view`, and `absl::variant`. See
+[abseil/abseil-cpp#696] for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -913,8 +965,18 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 #### Abseil
 
-Debian 11 ships with Abseil==20200923.3.  Unfortunately, the current gRPC version needs
-Abseil>=20210324.
+Debian 11 ships with Abseil==20200923.3.  Unfortunately, the current gRPC
+version needs Abseil >= 20210324.
+
+:warning: By default, Abseil's ABI changes depending on whether it is used
+with C++ >= 17 enabled or not. Installing Abseil with the default
+configuration is error-prone, unless you can guarantee that all the code using
+Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+C++ version. We recommend that you switch the default configuration to pin
+Abseil's ABI to the version used at compile time. In this case, the compiler
+defaults to C++14. Therefore, we change `absl/base/options.h` to **always**
+use `absl::any`, `absl::string_view`, and `absl::variant`. See
+[abseil/abseil-cpp#696] for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -984,7 +1046,7 @@ sudo ldconfig
 
 #### gRPC
 
-Finally we build gRPC from source also:
+Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
@@ -1041,6 +1103,16 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 #### Abseil
 
 We need a recent version of Abseil.
+
+:warning: By default, Abseil's ABI changes depending on whether it is used
+with C++ >= 17 enabled or not. Installing Abseil with the default
+configuration is error-prone, unless you can guarantee that all the code using
+Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+C++ version. We recommend that you switch the default configuration to pin
+Abseil's ABI to the version used at compile time. In this case, the compiler
+defaults to C++14. Therefore, we change `absl/base/options.h` to **always**
+use `absl::any`, `absl::string_view`, and `absl::variant`. See
+[abseil/abseil-cpp#696] for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -1122,7 +1194,7 @@ sudo ldconfig
 
 #### gRPC
 
-Finally we build gRPC from source also:
+Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
@@ -1376,7 +1448,7 @@ sudo ldconfig
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
-default Rocky Linux 8 does not search for shared libraries in these
+default, Rocky Linux 8 does not search for shared libraries in these
 directories, there are multiple ways to solve this problem, the following
 steps are one solution:
 
@@ -1390,6 +1462,16 @@ export PATH=/usr/local/bin:${PATH}
 #### Abseil
 
 We need a recent version of Abseil.
+
+:warning: By default, Abseil's ABI changes depending on whether it is used
+with C++ >= 17 enabled or not. Installing Abseil with the default
+configuration is error-prone, unless you can guarantee that all the code using
+Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+C++ version. We recommend that you switch the default configuration to pin
+Abseil's ABI to the version used at compile time. In this case, the compiler
+defaults to C++14. Therefore, we change `absl/base/options.h` to **always**
+use `absl::any`, `absl::string_view`, and `absl::variant`. See
+[abseil/abseil-cpp#696] for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -1555,7 +1637,7 @@ sudo ldconfig
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
-default CentOS-7 does not search for shared libraries in these directories,
+default, CentOS-7 does not search for shared libraries in these directories,
 there are multiple ways to solve this problem, the following steps are one
 solution:
 
@@ -1569,6 +1651,16 @@ export PATH=/usr/local/bin:${PATH}
 #### Abseil
 
 We need a recent version of Abseil.
+
+:warning: By default, Abseil's ABI changes depending on whether it is used
+with C++ >= 17 enabled or not. Installing Abseil with the default
+configuration is error-prone, unless you can guarantee that all the code using
+Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+C++ version. We recommend that you switch the default configuration to pin
+Abseil's ABI to the version used at compile time. In this case, the compiler
+defaults to C++14. Therefore, we change `absl/base/options.h` to **always**
+use `absl::any`, `absl::string_view`, and `absl::variant`. See
+[abseil/abseil-cpp#696] for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
