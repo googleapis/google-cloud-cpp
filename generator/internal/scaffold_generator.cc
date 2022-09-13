@@ -49,7 +49,8 @@ std::string SiteRoot(
 
 std::map<std::string, std::string> ScaffoldVars(
     std::string const& googleapis_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service) {
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    bool experimental) {
   auto const api_index_path = googleapis_path + "/" + kApiIndexFilename;
   auto status = google::cloud::internal::status(api_index_path);
   if (!exists(status)) {
@@ -81,6 +82,13 @@ std::map<std::string, std::string> ScaffoldVars(
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
   vars["site_root"] = SiteRoot(service);
+  vars["library_prefix"] = experimental ? "experimental-" : "";
+  vars["doxygen_version_suffix"] = experimental ? " (Experimental)" : "";
+  vars["construction"] = experimental ? "\n:construction:\n" : "";
+  vars["status"] =
+      experimental ? "This library is **experimental**. Its APIs are subject "
+                     "to change without notice.\n\nPlease,"
+                   : "While this library is **GA**, please";
 
   return vars;
 }
@@ -95,7 +103,8 @@ void MakeDirectory(std::string const& path) {
 
 void GenerateScaffold(
     std::string const& googleapis_path, std::string const& output_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service) {
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    bool experimental) {
   using Generator = std::function<void(
       std::ostream&, std::map<std::string, std::string> const&)>;
   struct Destination {
@@ -116,7 +125,7 @@ void GenerateScaffold(
       {"quickstart/.bazelrc", GenerateQuickstartBazelrc},
   };
 
-  auto const vars = ScaffoldVars(googleapis_path, service);
+  auto const vars = ScaffoldVars(googleapis_path, service, experimental);
   MakeDirectory(output_path + "/");
   auto const destination = output_path + "/" + service.product_path() + "/";
   MakeDirectory(destination);
@@ -162,16 +171,12 @@ include("$${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_$library$-targets.cmake")
 void GenerateReadme(std::ostream& os,
                     std::map<std::string, std::string> const& variables) {
   auto constexpr kText = R"""(# $title$ C++ Client Library
-
-:construction:
-
+$construction$
 This directory contains an idiomatic C++ client library for the
 [$title$][cloud-service-docs], a service to $description$
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+$status$ note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms
 
@@ -322,7 +327,7 @@ void GenerateCMakeLists(std::ostream& os,
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "$title$ C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the $title$")
-set(DOXYGEN_PROJECT_NUMBER "$${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "$${PROJECT_VERSION}$doxygen_version_suffix$")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "$library$_internal" "$library$_testing"
                             "examples")
 set(DOXYGEN_EXAMPLE_PATH $${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -371,13 +376,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_$library$)
 set_target_properties(
     google_cloud_cpp_$library$
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-$library$
+    PROPERTIES EXPORT_NAME google-cloud-cpp::$library_prefix$$library$
                VERSION "$${PROJECT_VERSION}"
                SOVERSION "$${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_$library$
                        PUBLIC $${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-$library$ ALIAS google_cloud_cpp_$library$)
+add_library(google-cloud-cpp::$library_prefix$$library$ ALIAS google_cloud_cpp_$library$)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -395,11 +400,11 @@ add_library(google_cloud_cpp_$library$_mocks INTERFACE)
 target_sources(google_cloud_cpp_$library$_mocks INTERFACE $${mock_files})
 target_link_libraries(
     google_cloud_cpp_$library$_mocks
-    INTERFACE google-cloud-cpp::experimental-$library$ GTest::gmock_main
+    INTERFACE google-cloud-cpp::$library_prefix$$library$ GTest::gmock_main
               GTest::gmock GTest::gtest)
 set_target_properties(
     google_cloud_cpp_$library$_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-$library$_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::$library_prefix$$library$_mocks)
 target_include_directories(
     google_cloud_cpp_$library$_mocks
     INTERFACE $$<BUILD_INTERFACE:$${PROJECT_SOURCE_DIR}>
@@ -412,7 +417,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable($library$_quickstart "quickstart/quickstart.cc")
     target_link_libraries($library$_quickstart
-                          PRIVATE google-cloud-cpp::experimental-$library$)
+                          PRIVATE google-cloud-cpp::$library_prefix$$library$)
     google_cloud_cpp_add_common_options($library$_quickstart)
     add_test(
         NAME $library$_quickstart
@@ -502,7 +507,8 @@ void GenerateDoxygenMainPage(
 An idiomatic C++ client library for the [$title$][cloud-service-docs], a service
 to $description$
 
-This library is **experimental**. Its APIs are subject to change without notice.
+$status$ note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
 
 This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
@@ -857,7 +863,7 @@ endif ()
 
 # Define your targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart google-cloud-cpp::experimental-$library$)
+target_link_libraries(quickstart google-cloud-cpp::$library_prefix$$library$)
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
@@ -940,9 +946,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # NOTE: Update this version and SHA256 as needed.
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
-    sha256 = "a7e51bfffb95a377094b2ae7e3b9f715a68ed931c48992c7273b2fae989c029c",
-    strip_prefix = "google-cloud-cpp-1.36.0",
-    url = "https://github.com/googleapis/google-cloud-cpp/archive/v1.36.0.tar.gz",
+    sha256 = "e8d904bbff788a26aa9cd67d6c0725f9798448fcf73ab809ec2d7b80f89a1dc5",
+    strip_prefix = "google-cloud-cpp-2.2.0",
+    url = "https://github.com/googleapis/google-cloud-cpp/archive/v2.2.0.tar.gz",
 )
 
 # Load indirect dependencies due to
@@ -996,7 +1002,7 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//:experimental-$library$",
+        "@com_github_googleapis_google_cloud_cpp//:$library_prefix$$library$",
     ],
 )
 )""";

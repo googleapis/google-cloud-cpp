@@ -40,13 +40,15 @@ std::string LibraryName(
 
 std::map<std::string, std::string> ScaffoldVars(
     std::string const& googleapis_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service);
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    bool experimental);
 
 void MakeDirectory(std::string const& path);
 
 void GenerateScaffold(
     std::string const& googleapis_path, std::string const& output_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service);
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    bool experimental);
 
 void GenerateCmakeConfigIn(std::ostream& os,
                            std::map<std::string, std::string> const& variables);
