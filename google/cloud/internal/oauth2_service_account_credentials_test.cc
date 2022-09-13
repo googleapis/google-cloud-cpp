@@ -273,6 +273,7 @@ TEST(ServiceAccountCredentialsTest,
   auto const expected_header =
       nlohmann::json{{"alg", "RS256"}, {"typ", "JWT"}, {"kid", kPrivateKeyId}};
 
+  FakeClock::reset_clock(kFixedJwtTimestamp);
   auto const iat = static_cast<std::intmax_t>(kFixedJwtTimestamp);
   auto const exp = iat + 3600;
   auto const expected_payload = nlohmann::json{
@@ -339,6 +340,7 @@ TEST(ServiceAccountCredentialsTest,
   auto const expected_header =
       nlohmann::json{{"alg", "RS256"}, {"typ", "JWT"}, {"kid", kPrivateKeyId}};
 
+  FakeClock::reset_clock(kFixedJwtTimestamp);
   auto const iat = static_cast<std::intmax_t>(kFixedJwtTimestamp);
   auto const exp = iat + 3600;
   auto const expected_payload = nlohmann::json{
@@ -783,7 +785,7 @@ TEST(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   auto const clock_value_1 = 10000;
-  FakeClock::now_value_ = clock_value_1;
+  FakeClock::reset_clock(clock_value_1);
   auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
 
   auto header = nlohmann::json::parse(components.first);
