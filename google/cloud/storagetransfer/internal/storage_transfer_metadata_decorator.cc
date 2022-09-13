@@ -99,6 +99,13 @@ StorageTransferServiceMetadata::AsyncRunTransferJob(
   return child_->AsyncRunTransferJob(cq, std::move(context), request);
 }
 
+Status StorageTransferServiceMetadata::DeleteTransferJob(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
+  SetMetadata(context, "job_name=" + request.job_name());
+  return child_->DeleteTransferJob(context, request);
+}
+
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceMetadata::CreateAgentPool(
     grpc::ClientContext& context,

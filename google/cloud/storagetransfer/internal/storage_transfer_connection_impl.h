@@ -85,6 +85,10 @@ class StorageTransferServiceConnectionImpl
   RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const&
                      request) override;
 
+  Status DeleteTransferJob(
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request)
+      override;
+
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
       google::storagetransfer::v1::CreateAgentPoolRequest const& request)
       override;

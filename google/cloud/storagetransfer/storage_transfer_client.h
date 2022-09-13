@@ -101,14 +101,14 @@ class StorageTransferServiceClient {
   /// only be used by Storage Transfer Service.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::GetGoogleServiceAccountRequest,google/storagetransfer/v1/transfer.proto#L167}
+  /// @googleapis_link{google::storagetransfer::v1::GetGoogleServiceAccountRequest,google/storagetransfer/v1/transfer.proto#L175}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::storagetransfer::v1::GoogleServiceAccount,google/storagetransfer/v1/transfer_types.proto#L36}
   ///
   /// [google.storagetransfer.v1.GetGoogleServiceAccountRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L167}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L175}
   /// [google.storagetransfer.v1.GoogleServiceAccount]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L36}
   ///
@@ -122,16 +122,16 @@ class StorageTransferServiceClient {
   /// Creates a transfer job that runs periodically.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::CreateTransferJobRequest,google/storagetransfer/v1/transfer.proto#L174}
+  /// @googleapis_link{google::storagetransfer::v1::CreateTransferJobRequest,google/storagetransfer/v1/transfer.proto#L182}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L736}
+  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L842}
   ///
   /// [google.storagetransfer.v1.CreateTransferJobRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L174}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L182}
   /// [google.storagetransfer.v1.TransferJob]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L736}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
   ///
   StatusOr<google::storagetransfer::v1::TransferJob> CreateTransferJob(
       google::storagetransfer::v1::CreateTransferJobRequest const& request,
@@ -148,16 +148,16 @@ class StorageTransferServiceClient {
   /// [ENABLED][google.storagetransfer.v1.TransferJob.Status.ENABLED]).
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::UpdateTransferJobRequest,google/storagetransfer/v1/transfer.proto#L180}
+  /// @googleapis_link{google::storagetransfer::v1::UpdateTransferJobRequest,google/storagetransfer/v1/transfer.proto#L188}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L736}
+  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L842}
   ///
   /// [google.storagetransfer.v1.UpdateTransferJobRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L180}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L188}
   /// [google.storagetransfer.v1.TransferJob]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L736}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
   ///
   StatusOr<google::storagetransfer::v1::TransferJob> UpdateTransferJob(
       google::storagetransfer::v1::UpdateTransferJobRequest const& request,
@@ -167,16 +167,16 @@ class StorageTransferServiceClient {
   /// Gets a transfer job.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::GetTransferJobRequest,google/storagetransfer/v1/transfer.proto#L214}
+  /// @googleapis_link{google::storagetransfer::v1::GetTransferJobRequest,google/storagetransfer/v1/transfer.proto#L222}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L736}
+  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L842}
   ///
   /// [google.storagetransfer.v1.GetTransferJobRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L214}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L222}
   /// [google.storagetransfer.v1.TransferJob]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L736}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
   ///
   StatusOr<google::storagetransfer::v1::TransferJob> GetTransferJob(
       google::storagetransfer::v1::GetTransferJobRequest const& request,
@@ -186,16 +186,16 @@ class StorageTransferServiceClient {
   /// Lists transfer jobs.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::ListTransferJobsRequest,google/storagetransfer/v1/transfer.proto#L225}
+  /// @googleapis_link{google::storagetransfer::v1::ListTransferJobsRequest,google/storagetransfer/v1/transfer.proto#L243}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L736}
+  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L842}
   ///
   /// [google.storagetransfer.v1.ListTransferJobsRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L225}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L243}
   /// [google.storagetransfer.v1.TransferJob]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L736}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
   ///
   StreamRange<google::storagetransfer::v1::TransferJob> ListTransferJobs(
       google::storagetransfer::v1::ListTransferJobsRequest request,
@@ -205,12 +205,12 @@ class StorageTransferServiceClient {
   /// Pauses a transfer operation.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::PauseTransferOperationRequest,google/storagetransfer/v1/transfer.proto#L257}
+  /// @googleapis_link{google::storagetransfer::v1::PauseTransferOperationRequest,google/storagetransfer/v1/transfer.proto#L275}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.storagetransfer.v1.PauseTransferOperationRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L257}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L275}
   ///
   Status PauseTransferOperation(
       google::storagetransfer::v1::PauseTransferOperationRequest const& request,
@@ -220,12 +220,12 @@ class StorageTransferServiceClient {
   /// Resumes a transfer operation that is paused.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::ResumeTransferOperationRequest,google/storagetransfer/v1/transfer.proto#L263}
+  /// @googleapis_link{google::storagetransfer::v1::ResumeTransferOperationRequest,google/storagetransfer/v1/transfer.proto#L281}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.storagetransfer.v1.ResumeTransferOperationRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L263}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L281}
   ///
   Status ResumeTransferOperation(
       google::storagetransfer::v1::ResumeTransferOperationRequest const&
@@ -238,20 +238,36 @@ class StorageTransferServiceClient {
   /// is called while a TransferOperation is active, an error will be returned.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::RunTransferJobRequest,google/storagetransfer/v1/transfer.proto#L269}
+  /// @googleapis_link{google::storagetransfer::v1::RunTransferJobRequest,google/storagetransfer/v1/transfer.proto#L287}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::TransferOperation,google/storagetransfer/v1/transfer_types.proto#L1067}
+  /// @googleapis_link{google::storagetransfer::v1::TransferOperation,google/storagetransfer/v1/transfer_types.proto#L1173}
   ///
   /// [google.storagetransfer.v1.RunTransferJobRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L269}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L287}
   /// [google.storagetransfer.v1.TransferOperation]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1067}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1173}
   ///
   future<StatusOr<google::storagetransfer::v1::TransferOperation>>
   RunTransferJob(
       google::storagetransfer::v1::RunTransferJobRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Deletes a transfer job. Deleting a transfer job sets its status to
+  /// [DELETED][google.storagetransfer.v1.TransferJob.Status.DELETED].
+  ///
+  /// @param request
+  /// @googleapis_link{google::storagetransfer::v1::DeleteTransferJobRequest,google/storagetransfer/v1/transfer.proto#L232}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  ///
+  /// [google.storagetransfer.v1.DeleteTransferJobRequest]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L232}
+  ///
+  Status DeleteTransferJob(
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request,
       Options opts = {});
 
   ///
@@ -274,12 +290,12 @@ class StorageTransferServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   /// [google.storagetransfer.v1.CreateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L279}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L297}
   /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
       std::string const& project_id,
@@ -290,16 +306,16 @@ class StorageTransferServiceClient {
   /// Creates an agent pool resource.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::CreateAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L279}
+  /// @googleapis_link{google::storagetransfer::v1::CreateAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L297}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   /// [google.storagetransfer.v1.CreateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L279}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L297}
   /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
       google::storagetransfer::v1::CreateAgentPoolRequest const& request,
@@ -325,12 +341,12 @@ class StorageTransferServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   /// [google.storagetransfer.v1.UpdateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L304}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L322}
   /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
       google::storagetransfer::v1::AgentPool const& agent_pool,
@@ -340,16 +356,16 @@ class StorageTransferServiceClient {
   /// Updates an existing agent pool resource.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::UpdateAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L304}
+  /// @googleapis_link{google::storagetransfer::v1::UpdateAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L322}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   /// [google.storagetransfer.v1.UpdateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L304}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L322}
   /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
       google::storagetransfer::v1::UpdateAgentPoolRequest const& request,
@@ -362,12 +378,12 @@ class StorageTransferServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   /// [google.storagetransfer.v1.GetAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L329}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L347}
   /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
       std::string const& name, Options opts = {});
@@ -376,16 +392,16 @@ class StorageTransferServiceClient {
   /// Gets an agent pool.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::GetAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L329}
+  /// @googleapis_link{google::storagetransfer::v1::GetAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L347}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   /// [google.storagetransfer.v1.GetAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L329}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L347}
   /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
       google::storagetransfer::v1::GetAgentPoolRequest const& request,
@@ -399,12 +415,12 @@ class StorageTransferServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   /// [google.storagetransfer.v1.ListAgentPoolsRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L341}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
   /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
       std::string const& project_id, Options opts = {});
@@ -413,16 +429,16 @@ class StorageTransferServiceClient {
   /// Lists agent pools.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::ListAgentPoolsRequest,google/storagetransfer/v1/transfer.proto#L341}
+  /// @googleapis_link{google::storagetransfer::v1::ListAgentPoolsRequest,google/storagetransfer/v1/transfer.proto#L359}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   /// [google.storagetransfer.v1.ListAgentPoolsRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L341}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
   /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L323}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
   ///
   StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
       google::storagetransfer::v1::ListAgentPoolsRequest request,
@@ -436,7 +452,7 @@ class StorageTransferServiceClient {
   ///     backoff policies.
   ///
   /// [google.storagetransfer.v1.DeleteAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L335}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L353}
   ///
   Status DeleteAgentPool(std::string const& name, Options opts = {});
 
@@ -444,12 +460,12 @@ class StorageTransferServiceClient {
   /// Deletes an agent pool.
   ///
   /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::DeleteAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L335}
+  /// @googleapis_link{google::storagetransfer::v1::DeleteAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L353}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.storagetransfer.v1.DeleteAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L335}
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L353}
   ///
   Status DeleteAgentPool(
       google::storagetransfer::v1::DeleteAgentPoolRequest const& request,

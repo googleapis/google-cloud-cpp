@@ -3,6 +3,7 @@
 @com_google_googleapis//google/cloud/bigquery/datatransfer/v1:transfer.proto
 @com_google_googleapis//google/cloud/bigquery/logging/v1:audit_data.proto
 @com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation.proto
+@com_google_googleapis//google/cloud/bigquery/storage/v1:annotations.proto
 @com_google_googleapis//google/cloud/bigquery/storage/v1:arrow.proto
 @com_google_googleapis//google/cloud/bigquery/storage/v1:avro.proto
 @com_google_googleapis//google/cloud/bigquery/storage/v1:protobuf.proto

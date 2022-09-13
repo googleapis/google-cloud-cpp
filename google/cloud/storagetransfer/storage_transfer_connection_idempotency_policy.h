@@ -65,6 +65,9 @@ class StorageTransferServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RunTransferJob(
       google::storagetransfer::v1::RunTransferJobRequest const& request) = 0;
 
+  virtual google::cloud::Idempotency DeleteTransferJob(
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request) = 0;
+
   virtual google::cloud::Idempotency CreateAgentPool(
       google::storagetransfer::v1::CreateAgentPoolRequest const& request) = 0;
 

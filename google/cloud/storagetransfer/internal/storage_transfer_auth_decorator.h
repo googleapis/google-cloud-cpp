@@ -81,6 +81,11 @@ class StorageTransferServiceAuth : public StorageTransferServiceStub {
       google::storagetransfer::v1::RunTransferJobRequest const& request)
       override;
 
+  Status DeleteTransferJob(
+      grpc::ClientContext& context,
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request)
+      override;
+
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
       grpc::ClientContext& context,
       google::storagetransfer::v1::CreateAgentPoolRequest const& request)

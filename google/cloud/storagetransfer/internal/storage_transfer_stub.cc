@@ -134,6 +134,18 @@ DefaultStorageTransferServiceStub::AsyncRunTransferJob(
       request, std::move(context));
 }
 
+Status DefaultStorageTransferServiceStub::DeleteTransferJob(
+    grpc::ClientContext& client_context,
+    google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteTransferJob(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::storagetransfer::v1::AgentPool>
 DefaultStorageTransferServiceStub::CreateAgentPool(
     grpc::ClientContext& client_context,
