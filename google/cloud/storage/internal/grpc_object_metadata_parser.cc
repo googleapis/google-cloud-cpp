@@ -111,7 +111,7 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
 
   metadata.metageneration_ = object.metageneration();
   if (object.has_owner()) {
-    metadata.owner_ = GrpcOwnerParser::FromProto(*object.mutable_owner());
+    metadata.owner_ = storage_internal::FromProto(*object.mutable_owner());
   }
   metadata.storage_class_ = std::move(*object.mutable_storage_class());
   if (object.has_create_time()) {

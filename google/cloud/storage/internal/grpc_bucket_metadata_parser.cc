@@ -87,7 +87,7 @@ google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
   }
   if (rhs.has_logging()) *result.mutable_logging() = ToProto(rhs.logging());
   if (rhs.has_owner()) {
-    *result.mutable_owner() = GrpcOwnerParser::ToProto(rhs.owner());
+    *result.mutable_owner() = storage_internal::ToProto(rhs.owner());
   }
   if (rhs.has_encryption()) {
     *result.mutable_encryption() = ToProto(rhs.encryption());
@@ -144,7 +144,7 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   metadata.metageneration_ = rhs.metageneration();
   metadata.name_ = GrpcBucketNameToId(rhs.name());
   if (rhs.has_owner()) {
-    metadata.owner_ = GrpcOwnerParser::FromProto(rhs.owner());
+    metadata.owner_ = storage_internal::FromProto(rhs.owner());
   }
 
   // The protos use `projects/{project}` format, but the field may be absent or
