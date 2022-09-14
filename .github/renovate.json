@@ -36,6 +36,10 @@
     {
       "matchPackageNames": ["com_google_protobuf", "com_google_absl"],
       "versioning": "loose"
+    },
+    {
+      "matchManagers": ["Pip_requirements"],
+      "schedule": ["before 12pm on Tuesday"]
     }
   ],
   "ignoreDeps": [
