@@ -10,9 +10,9 @@ cachetools==5.2.0 \
     # via
     #   -r ci/etc/docuploader-requirements.in
     #   google-auth
-certifi==2022.6.15.2 \
-    --hash=sha256:0aa1a42fbd57645fabeb6290a7687c21755b0344ecaeaa05f4e9f6207ae2e9a8 \
-    --hash=sha256:aa08c101214127b9b0472ca6338315113c9487d45376fd3e669201b477c71003
+certifi==2022.9.14 \
+    --hash=sha256:36973885b9542e6bd01dea287b2b4b3b21236307c56324fcc3f1160f2d655ed5 \
+    --hash=sha256:e232343de1ab72c2aa521b625c80f699e356830fd0e2c620b465b304b17b0516
     # via
     #   -r ci/etc/docuploader-requirements.in
     #   requests
