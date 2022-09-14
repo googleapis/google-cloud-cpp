@@ -30,9 +30,9 @@ colorlog==6.7.0 \
     --hash=sha256:0d33ca236784a1ba3ff9c532d4964126d8a2c44f1f0cb1d2b0728196f512f662 \
     --hash=sha256:bd94bd21c1e13fac7bd3153f4bc3a7dc0eb0974b8bc2fdf1a989e474f6e582e5
     # via -r ci/etc/docuploader-requirements.in
-google-api-core==2.10.0 \
-    --hash=sha256:1d053734f14591939e7764e99c31253fed46bf2578da0dcd82821f17a6dd991c \
-    --hash=sha256:325529859836a479244b0882c1a77320fd35cb108df2ec1232e3e908ea56eda4
+google-api-core==2.10.1 \
+    --hash=sha256:92d17123cfe399b5ef7e026c63babf978d8475e1ac877919eb7933e25dea2273 \
+    --hash=sha256:e16c15a11789bc5a3457afb2818a3540a03f341e6e710d7f9bbf6cde2ef4a7c8
     # via
     #   -r ci/etc/docuploader-requirements.in
     #   google-cloud-core
