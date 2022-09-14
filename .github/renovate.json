@@ -38,7 +38,7 @@
       "versioning": "loose"
     },
     {
-      "matchManagers": ["Pip_requirements"],
+      "matchManagers": ["pip_requirements"],
       "schedule": ["before 12pm on Tuesday"]
     }
   ],
