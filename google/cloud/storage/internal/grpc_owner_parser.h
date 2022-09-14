@@ -21,18 +21,14 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-struct GrpcOwnerParser {
-  static google::storage::v2::Owner ToProto(Owner);
-  static Owner FromProto(google::storage::v2::Owner);
-};
+google::storage::v2::Owner ToProto(storage::Owner);
+storage::Owner FromProto(google::storage::v2::Owner);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
