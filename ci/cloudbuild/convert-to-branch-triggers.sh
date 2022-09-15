@@ -57,14 +57,14 @@ eval set -- "${PARSED}"
 
 while true; do
   case "$1" in
-  -h | --help)
-    print_usage
-    exit 0
-    ;;
-  --)
-    shift
-    break
-    ;;
+    -h | --help)
+      print_usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
   esac
 done
 
