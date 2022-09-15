@@ -38,7 +38,7 @@ if (-not (Test-Path $bazel_root)) {
 $common_flags = @("--output_user_root=${bazel_root}")
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
-$Env:USE_BAZEL_VERSION="5.2.0"
+$Env:USE_BAZEL_VERSION="5.3.0"
 bazelisk $common_flags version
 
 # Shutdown the Bazel server to release any locks
@@ -80,7 +80,12 @@ if ((Test-Path env:KOKORO_GFILE_DIR) -and
     $build_flags += @("--experimental_guard_against_concurrent_changes")
 }
 
-$env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\${env:MSVC_VERSION}\Community\VC"
+# Before MSVC 2022 the compiler is a 32-bit binary
+if ("${env:MSVC_VERSION}" -ge "2022") {
+    $env:BAZEL_VC="C:\Program Files\Microsoft Visual Studio\${env:MSVC_VERSION}\Community\VC"
+} else {
+    $env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\${env:MSVC_VERSION}\Community\VC"
+}
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
 # If at all possible, load the configuration for the integration tests and
