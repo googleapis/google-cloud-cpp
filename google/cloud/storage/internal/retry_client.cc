@@ -107,10 +107,12 @@ Status ValidateCommittedSize(UploadChunkRequest const& request,
        << response.committed_size.value_or(0) << " bytes as committed."
        << " This is most likely a bug in the GCS client library, possibly"
        << " related to parsing the server response."
-       << " Please contact support or report the problem at"
-       << " https://github.com/googleapis/google-cloud-cpp/issues/new"
-       << " Include as much information as you can including this message";
-    os << ", session_id=" << request.upload_session_url();
+       << " If you believe this is a bug in the client library, please contact"
+       << " support (https://cloud.google.com/support/), or report the bug"
+       << " (https://github.com/googleapis/google-cloud-cpp/issues/new)."
+       << " Please include as much information as you can including this"
+       << " message and the following details:";
+    os << " session_id=" << request.upload_session_url();
     os << ", result=" << response;
     os << ", request=" << request;
     return Status(StatusCode::kInternal, os.str());
@@ -120,14 +122,24 @@ Status ValidateCommittedSize(UploadChunkRequest const& request,
     os << __func__ << ": the server indicates that "
        << response.committed_size.value_or(0) << " bytes are committed "
        << " but given the current request no more than "
-       << expected_committed_size << " should be."
-       << " This could be caused by multiple applications trying to use the"
-       << " same resumable upload, but could be a bug in the library or"
-       << " the service. If you believe this is a bug, please contact support"
-       << " or report the bug at"
-       << " https://github.com/googleapis/google-cloud-cpp/issues/new"
-       << " Include as much information as you can including this message";
-    os << ", session_id=" << request.upload_session_url();
+       << expected_committed_size << " are expected be."
+       << " Most likely your application resumed an upload, and the client"
+       << " library queried the service to find the current persisted bytes."
+       << " In some cases, the service is still writing data in the background"
+       << " and conservatively reports fewer bytes as persisted."
+       << " In this case, the next upload may report a much higher number of"
+       << " bytes persisted than expected. It is not possible for the client"
+       << " library to recover from this situation. The application needs to"
+       << " resume the upload."
+       << " This could also be caused by multiple instances of a distributed"
+       << " application trying to use the same resumable upload, this is a bug"
+       << " in the application."
+       << " If you believe this is a bug in the client library, please contact"
+       << " support (https://cloud.google.com/support/), or report the bug"
+       << " (https://github.com/googleapis/google-cloud-cpp/issues/new)."
+       << " Please include as much information as you can including this"
+       << " message and the following details:";
+    os << " session_id=" << request.upload_session_url();
     os << ", result=" << response;
     os << ", request=" << request;
     return Status(StatusCode::kInternal, os.str());
