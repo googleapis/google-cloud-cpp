@@ -19,10 +19,6 @@
 # where the CI matrix may have changed since the branch was created, and
 # therefore the existing branches may not apply.
 #
-# Usage: convert-to-branch-triggers.sh [options] <branch>
-#
-#   Options:
-#     -h|--help           Print this help message
 
 set -euo pipefail
 
@@ -31,7 +27,12 @@ source module ci/lib/io.sh
 
 function print_usage() {
   # Extracts the usage from the file comment starting at line 17.
-  sed -n '17,/^$/s/^# \?//p' "${PROGRAM_PATH}"
+  cat <<_EOM_
+Usage: ${PROGRAM_NAME} [options]
+  Options:
+    -h|--help          Print this help message
+    --branch=<name>    Use name instead of the current branch
+_EOM_
 }
 
 function convert_triggers() {
@@ -39,10 +40,9 @@ function convert_triggers() {
   local name_prefix="${branch//./-}"
   shift
   for file in "$@"; do
-    sed \
+    sed -i \
       -e "s/^name: /name: ${name_prefix}-/" \
-      -e "s/branch: .*/branch: ${branch}/" "${file}" |
-      sponge "${file}"
+      -e "s/branch: .*/branch: ${branch}/" "${file}"
   done
 }
 export -f convert_triggers
@@ -50,16 +50,21 @@ export -f convert_triggers
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
   --options="h" \
-  --longoptions="help" \
+  --longoptions="help,branch:" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
+BRANCH=""
 while true; do
   case "$1" in
     -h | --help)
       print_usage
       exit 0
+      ;;
+    --branch)
+      BRANCH="$2"
+      shift 2
       ;;
     --)
       shift
@@ -68,11 +73,9 @@ while true; do
   esac
 done
 
-if [[ $# -lt 1 ]]; then
-  print_usage
-  exit 1
+if [[ -z "${BRANCH}" ]]; then
+  BRANCH="$(git branch --show-current)"
 fi
-BRANCH="$1"
 
 git ls-files -z -- ci/cloudbuild/triggers/*.yaml |
-  xargs -P "$(nproc)" -n 50 -0 bash -c "convert_triggers \"${BRANCH}\" \"\$@\""
+  xargs -P "$(nproc)" -n 10 -0 bash -c "convert_triggers \"${BRANCH}\" \"\$@\""
