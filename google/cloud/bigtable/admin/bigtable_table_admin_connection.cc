@@ -55,6 +55,14 @@ BigtableTableAdminConnection::GetTable(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnection::UpdateTable(
+    google::bigtable::admin::v2::UpdateTableRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Table>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 Status BigtableTableAdminConnection::DeleteTable(
     google::bigtable::admin::v2::DeleteTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

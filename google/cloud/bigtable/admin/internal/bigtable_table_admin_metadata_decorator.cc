@@ -58,6 +58,15 @@ BigtableTableAdminMetadata::GetTable(
   return child_->GetTable(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminMetadata::AsyncUpdateTable(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  SetMetadata(*context, "table.name=" + request.table().name());
+  return child_->AsyncUpdateTable(cq, std::move(context), request);
+}
+
 Status BigtableTableAdminMetadata::DeleteTable(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {

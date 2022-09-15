@@ -49,6 +49,32 @@ class InstanceAdminStub {
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateInstanceConfig(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateInstanceConfig(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request) = 0;
+
+  virtual Status DeleteInstanceConfig(
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::spanner::admin::instance::v1::
+                       ListInstanceConfigOperationsResponse>
+  ListInstanceConfigOperations(
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::
+          ListInstanceConfigOperationsRequest const& request) = 0;
+
   virtual StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
   ListInstances(
       grpc::ClientContext& context,
@@ -122,6 +148,30 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
       grpc::ClientContext& client_context,
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
           request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateInstanceConfig(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstanceConfig(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request) override;
+
+  Status DeleteInstanceConfig(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::instance::v1::
+               ListInstanceConfigOperationsResponse>
+  ListInstanceConfigOperations(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::instance::v1::
+          ListInstanceConfigOperationsRequest const& request) override;
 
   StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
   ListInstances(

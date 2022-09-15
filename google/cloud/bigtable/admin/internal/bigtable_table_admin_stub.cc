@@ -66,6 +66,20 @@ DefaultBigtableTableAdminStub::GetTable(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultBigtableTableAdminStub::AsyncUpdateTable(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::bigtable::admin::v2::UpdateTableRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateTable(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 Status DefaultBigtableTableAdminStub::DeleteTable(
     grpc::ClientContext& client_context,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {

@@ -55,6 +55,30 @@ class DefaultInstanceAdminConnectionIdempotencyPolicy
     return Idempotency::kIdempotent;
   }
 
+  Idempotency CreateInstanceConfig(
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UpdateInstanceConfig(
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeleteInstanceConfig(
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency ListInstanceConfigOperations(
+      google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
   Idempotency ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest) override {
     return Idempotency::kIdempotent;

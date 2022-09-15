@@ -76,6 +76,25 @@ class InstanceAdminConnection {
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
           request);
 
+  virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  CreateInstanceConfig(
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  UpdateInstanceConfig(
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request);
+
+  virtual Status DeleteInstanceConfig(
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+          request);
+
+  virtual StreamRange<google::longrunning::Operation>
+  ListInstanceConfigOperations(
+      google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
+          request);
+
   virtual StreamRange<google::spanner::admin::instance::v1::Instance>
   ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest request);

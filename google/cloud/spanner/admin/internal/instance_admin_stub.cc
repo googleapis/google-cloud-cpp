@@ -58,6 +58,67 @@ DefaultInstanceAdminStub::GetInstanceConfig(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultInstanceAdminStub::AsyncCreateInstanceConfig(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::spanner::admin::instance::v1::
+                 CreateInstanceConfigRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateInstanceConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultInstanceAdminStub::AsyncUpdateInstanceConfig(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::spanner::admin::instance::v1::
+                 UpdateInstanceConfigRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateInstanceConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+Status DefaultInstanceAdminStub::DeleteInstanceConfig(
+    grpc::ClientContext& client_context,
+    google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteInstanceConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<
+    google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse>
+DefaultInstanceAdminStub::ListInstanceConfigOperations(
+    grpc::ClientContext& client_context,
+    google::spanner::admin::instance::v1::
+        ListInstanceConfigOperationsRequest const& request) {
+  google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse
+      response;
+  auto status = grpc_stub_->ListInstanceConfigOperations(&client_context,
+                                                         request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
 DefaultInstanceAdminStub::ListInstances(
     grpc::ClientContext& client_context,

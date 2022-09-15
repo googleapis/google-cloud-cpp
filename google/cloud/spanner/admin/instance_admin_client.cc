@@ -67,6 +67,83 @@ InstanceAdminClient::GetInstanceConfig(
   return connection_->GetInstanceConfig(request);
 }
 
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminClient::CreateInstanceConfig(
+    std::string const& parent,
+    google::spanner::admin::instance::v1::InstanceConfig const& instance_config,
+    std::string const& instance_config_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::CreateInstanceConfigRequest request;
+  request.set_parent(parent);
+  *request.mutable_instance_config() = instance_config;
+  request.set_instance_config_id(instance_config_id);
+  return connection_->CreateInstanceConfig(request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminClient::CreateInstanceConfig(
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstanceConfig(request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminClient::UpdateInstanceConfig(
+    google::spanner::admin::instance::v1::InstanceConfig const& instance_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::UpdateInstanceConfigRequest request;
+  *request.mutable_instance_config() = instance_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateInstanceConfig(request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminClient::UpdateInstanceConfig(
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstanceConfig(request);
+}
+
+Status InstanceAdminClient::DeleteInstanceConfig(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::DeleteInstanceConfigRequest request;
+  request.set_name(name);
+  return connection_->DeleteInstanceConfig(request);
+}
+
+Status InstanceAdminClient::DeleteInstanceConfig(
+    google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteInstanceConfig(request);
+}
+
+StreamRange<google::longrunning::Operation>
+InstanceAdminClient::ListInstanceConfigOperations(std::string const& parent,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListInstanceConfigOperations(request);
+}
+
+StreamRange<google::longrunning::Operation>
+InstanceAdminClient::ListInstanceConfigOperations(
+    google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListInstanceConfigOperations(std::move(request));
+}
+
 StreamRange<google::spanner::admin::instance::v1::Instance>
 InstanceAdminClient::ListInstances(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

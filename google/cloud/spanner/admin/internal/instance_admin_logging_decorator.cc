@@ -61,6 +61,68 @@ InstanceAdminLogging::GetInstanceConfig(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminLogging::AsyncCreateInstanceConfig(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::spanner::admin::instance::v1::
+                 CreateInstanceConfigRequest const& request) {
+        return child_->AsyncCreateInstanceConfig(cq, std::move(context),
+                                                 request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminLogging::AsyncUpdateInstanceConfig(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::spanner::admin::instance::v1::
+                 UpdateInstanceConfigRequest const& request) {
+        return child_->AsyncUpdateInstanceConfig(cq, std::move(context),
+                                                 request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+Status InstanceAdminLogging::DeleteInstanceConfig(
+    grpc::ClientContext& context,
+    google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::spanner::admin::instance::v1::
+                 DeleteInstanceConfigRequest const& request) {
+        return child_->DeleteInstanceConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse>
+InstanceAdminLogging::ListInstanceConfigOperations(
+    grpc::ClientContext& context,
+    google::spanner::admin::instance::v1::
+        ListInstanceConfigOperationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::spanner::admin::instance::v1::
+                 ListInstanceConfigOperationsRequest const& request) {
+        return child_->ListInstanceConfigOperations(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
 InstanceAdminLogging::ListInstances(
     grpc::ClientContext& context,

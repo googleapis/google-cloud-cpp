@@ -49,6 +49,35 @@ InstanceAdminConnection::GetInstanceConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminConnection::CreateInstanceConfig(
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminConnection::UpdateInstanceConfig(
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+Status InstanceAdminConnection::DeleteInstanceConfig(
+    google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::longrunning::Operation>
+InstanceAdminConnection::ListInstanceConfigOperations(
+    google::spanner::admin::instance::v1::
+        ListInstanceConfigOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
 StreamRange<google::spanner::admin::instance::v1::Instance>
 InstanceAdminConnection::ListInstances(
     google::spanner::admin::instance::v1::
