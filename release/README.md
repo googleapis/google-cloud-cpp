@@ -149,15 +149,56 @@ take several weeks.
 
 In your development fork:
 
-- Switch to the existing release branch, e.g. `git checkout v1.17.x`.
+- We will use `PATCH=v1.17.1` as an example, set that shell variable to an
+  appropriate value.
+- Create a new branch
+  ```shell
+  git branch chore-prepare-for-${PATCH}-release upstream/v1.17.x
+  git checkout chore-prepare-for-${PATCH}-release
+  ```
 - Bump the version numbers for the patch release
-  - Create a new branch off the release branch
   - Update the minor version in the top-level `CMakeLists.txt` file.
-  - Run `ci/cloudbuild/build.sh -t check-api-pr` to update both the API
-    baselines and `google/cloud/internal/version_info.h`.
-  - **Send this PR for review and merge it before continuing**
+  ```shell
+  git commit -m"chore: prepare for ${PATCH}"
+  ```
+- If this is the first patch release for that branch, you need to update the
+  GCB triggers.
+  - Update the Google Cloud Build trigger definitions to compile this branch:
+    ```shell
+    ci/cloudbuild/convert-to-branch-triggers.sh
+    ```
+  - Actually create the triggers in GCB:
+    ```shell
+    for trigger in $(git ls-files -- ci/cloudbuild/triggers/*.yaml ); do
+      ci/cloudbuild/trigger.sh --import "${trigger}";
+    done
+    ```
+  - Commit these changes:
+    ```shell
+    git commit -m"Updated GCB triggers" ci
+    ```
+- Run `ci/cloudbuild/build.sh -t check-api-pr` to update both the API
+  baselines and `google/cloud/internal/version_info.h`. And then commit the
+  changes:
+  ```shell
+  git commit -m"Update API/ABI baseline" ci
+  ```
+- Push the branch and then create a PR:
+  ```shell
+  git push --set-upstream origin "$(git branch --show-current)"
+  ```
+
+______________________________________________________________________
+
+## Send this PR for review and merge it before continuing
+
 - Create a new branch off the release branch, which now contains the new patch
   version and baseline ABI dumps.
+  ```shell
+  git fetch upstream
+  git branch my-patch upstream/v1.17.x
+  git checkout my-patch
+  ```
 - Create or cherry-pick commits with the desired changes.
 - Update `CHANGELOG.md` to reflect the changes made.
 - After merging the PR(s) with all the above changes, use the Release UI on
