@@ -449,9 +449,9 @@ TEST(RetryClientTest, UploadChunkHandleOvercommit) {
       UploadChunkRequest("test-only-upload-id", 0, {{payload}}));
   EXPECT_THAT(
       response,
-      StatusIs(StatusCode::kInternal,
-               HasSubstr("This could be caused by multiple applications trying "
-                         "to use the same resumable upload")));
+      StatusIs(
+          StatusCode::kInternal,
+          HasSubstr("If you believe this is a bug in the client library")));
 }
 
 /// @test Verify that retry exhaustion following a short write fails.
