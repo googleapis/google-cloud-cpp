@@ -66,7 +66,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.1.tar.gz | \
+RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
