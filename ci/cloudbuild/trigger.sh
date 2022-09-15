@@ -50,7 +50,7 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^(master|main|v\\d+\\..*)$
+    branch: ^main$
 name: ${name}-ci
 substitutions:
   _BUILD_NAME: ${name}
@@ -69,7 +69,7 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^(master|main|v\\d+\\..*)$
+    branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 name: ${name}-pr
 substitutions:

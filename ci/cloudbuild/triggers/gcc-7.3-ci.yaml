@@ -3,7 +3,7 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^(master|main|v\d+\..*)$
+    branch: ^main$
 name: gcc-7-3-ci
 substitutions:
   _BUILD_NAME: gcc-7.3
