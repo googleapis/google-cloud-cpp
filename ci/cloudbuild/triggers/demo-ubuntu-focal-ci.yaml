@@ -3,8 +3,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^(master|main|v\d+\..*)$
-name: demo-ubuntu-focal-ci
+    branch: v1.42.x
+name: v1-42-x-demo-ubuntu-focal-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-ubuntu-focal

@@ -3,9 +3,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^(master|main|v\d+\..*)$
+    branch: v1.42.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: demo-debian-buster-pr
+name: v1-42-x-demo-debian-buster-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-debian-buster

@@ -3,8 +3,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^(master|main|v\d+\..*)$
-name: generate-libraries-ci
+    branch: v1.42.x
+name: v1-42-x-generate-libraries-ci
 substitutions:
   _BUILD_NAME: generate-libraries
   _DISTRO: checkers

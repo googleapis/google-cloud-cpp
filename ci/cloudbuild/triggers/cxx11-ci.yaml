@@ -3,8 +3,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^(master|main|v\d+\..*)$
-name: cxx11-ci
+    branch: v1.42.x
+name: v1-42-x-cxx11-ci
 substitutions:
   _BUILD_NAME: cxx11
   _DISTRO: fedora-35-cxx11
