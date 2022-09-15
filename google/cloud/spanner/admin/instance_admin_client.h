@@ -239,7 +239,7 @@ class InstanceAdminClient {
   ///  instance_config.name must be
   ///  `<parent>/instanceConfigs/<instance_config_id>`.
   ///  instance_config.base_config must be a Google managed configuration name,
-  ///  e.g. <parent>/instanceConfigs/us-east1, <parent>/instanceConfigs/nam3.
+  ///  e.g. `<parent>/instanceConfigs/us-east1`, `<parent>/instanceConfigs/nam3`.
   /// @param instance_config_id  Required. The ID of the instance config to
   /// create.  Valid identifiers are
   ///  of the form `custom-[-a-z0-9]*[a-z0-9]` and must be between 2 and 64
