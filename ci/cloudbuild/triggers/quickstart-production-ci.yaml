@@ -3,8 +3,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^(master|main|v\d+\..*)$
-name: quickstart-production-ci
+    branch: v1.42.x
+name: v1-42-x-quickstart-production-ci
 substitutions:
   _BUILD_NAME: quickstart-production
   _DISTRO: fedora-35

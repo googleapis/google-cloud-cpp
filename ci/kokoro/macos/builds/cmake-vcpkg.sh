@@ -36,8 +36,13 @@ brew list --versions ninja || ci/retry-command.sh 3 120 brew install ninja
 io::log_h2 "Using CMake version"
 cmake --version
 
-# Fetch vcpkg at the specified hash.
-vcpkg_dir="${HOME}/vcpkg-quickstart"
+# Fetch vcpkg at the specified hash, download to the tmpfs directory when
+# running on Kokoro.
+if [[ -z "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
+  vcpkg_dir="${HOME}/vcpkg"
+else
+  vcpkg_dir="${KOKORO_ARTIFACTS_DIR}/vcpkg"
+fi
 install_vcpkg "${vcpkg_dir}"
 
 io::log_h2 "ccache stats"

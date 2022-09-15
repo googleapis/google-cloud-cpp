@@ -3,9 +3,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^(master|main|v\d+\..*)$
+    branch: v1.42.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: cmake-single-feature-pr
+name: v1-42-x-cmake-single-feature-pr
 substitutions:
   _BUILD_NAME: cmake-single-feature
   _DISTRO: fedora-35
