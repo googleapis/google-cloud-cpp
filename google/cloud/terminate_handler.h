@@ -63,7 +63,6 @@ TerminateHandler GetTerminateHandler();
  * @param msg Details about the error.
  *
  * This function should never return.
- *
  */
 [[noreturn]] void Terminate(char const* msg);
 
