@@ -118,7 +118,7 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 ## v2.2.1 - 2022-09
 
-*  Update Protobuf version in Bazel configuration to v21.6 (#9856)
+- Update Protobuf version in Bazel configuration to v21.6 (#9856)
 
 ## v2.2.0 - 2022-09
 
