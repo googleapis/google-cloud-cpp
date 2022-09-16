@@ -18,52 +18,50 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 google::storage::v2::DeleteNotificationRequest ToProto(
-    DeleteNotificationRequest const& rhs) {
+    storage::internal::DeleteNotificationRequest const& rhs) {
   google::storage::v2::DeleteNotificationRequest request;
-  request.set_name(GrpcBucketIdToName(rhs.bucket_name()) +
+  request.set_name(storage::internal::GrpcBucketIdToName(rhs.bucket_name()) +
                    "/notificationConfigs/" + rhs.notification_id());
   return request;
 }
 
 google::storage::v2::GetNotificationRequest ToProto(
-    GetNotificationRequest const& rhs) {
+    storage::internal::GetNotificationRequest const& rhs) {
   google::storage::v2::GetNotificationRequest request;
-  request.set_name(GrpcBucketIdToName(rhs.bucket_name()) +
+  request.set_name(storage::internal::GrpcBucketIdToName(rhs.bucket_name()) +
                    "/notificationConfigs/" + rhs.notification_id());
   return request;
 }
 
 google::storage::v2::CreateNotificationRequest ToProto(
-    CreateNotificationRequest const& rhs) {
+    storage::internal::CreateNotificationRequest const& rhs) {
   google::storage::v2::CreateNotificationRequest request;
-  request.set_parent(GrpcBucketIdToName(rhs.bucket_name()));
-  *request.mutable_notification() = ToProto(rhs.metadata());
+  request.set_parent(storage::internal::GrpcBucketIdToName(rhs.bucket_name()));
+  *request.mutable_notification() = storage_internal::ToProto(rhs.metadata());
   return request;
 }
 
 google::storage::v2::ListNotificationsRequest ToProto(
-    ListNotificationsRequest const& rhs) {
+    storage::internal::ListNotificationsRequest const& rhs) {
   google::storage::v2::ListNotificationsRequest request;
-  request.set_parent(GrpcBucketIdToName(rhs.bucket_name()));
+  request.set_parent(storage::internal::GrpcBucketIdToName(rhs.bucket_name()));
   return request;
 }
 
-ListNotificationsResponse FromProto(
+storage::internal::ListNotificationsResponse FromProto(
     google::storage::v2::ListNotificationsResponse const& rhs) {
-  ListNotificationsResponse response;
+  storage::internal::ListNotificationsResponse response;
   for (auto const& i : rhs.notifications()) {
-    response.items.push_back(FromProto(i));
+    response.items.push_back(storage_internal::FromProto(i));
   }
   return response;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

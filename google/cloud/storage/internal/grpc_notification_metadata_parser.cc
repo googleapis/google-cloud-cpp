@@ -19,15 +19,15 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-NotificationMetadata FromProto(google::storage::v2::Notification const& rhs) {
+storage::NotificationMetadata FromProto(
+    google::storage::v2::Notification const& rhs) {
   std::vector<absl::string_view> components = absl::StrSplit(rhs.name(), '/');
   auto id = components.empty() ? std::string{} : std::string{components.back()};
 
-  NotificationMetadata result(std::move(id), rhs.etag());
+  storage::NotificationMetadata result(std::move(id), rhs.etag());
   absl::string_view topic = rhs.topic();
   absl::ConsumePrefix(&topic, "//pubsub.googleapis.com/");
   result.set_topic(std::string{topic});
@@ -42,7 +42,8 @@ NotificationMetadata FromProto(google::storage::v2::Notification const& rhs) {
   return result;
 }
 
-google::storage::v2::Notification ToProto(NotificationMetadata const& rhs) {
+google::storage::v2::Notification ToProto(
+    storage::NotificationMetadata const& rhs) {
   google::storage::v2::Notification result;
   result.set_topic("//pubsub.googleapis.com/" + rhs.topic());
   result.set_etag(rhs.etag());
@@ -57,16 +58,15 @@ google::storage::v2::Notification ToProto(NotificationMetadata const& rhs) {
   return result;
 }
 
-google::storage::v2::Notification ToProto(NotificationMetadata const& rhs,
-                                          std::string const& bucket_name) {
+google::storage::v2::Notification ToProto(
+    storage::NotificationMetadata const& rhs, std::string const& bucket_name) {
   auto result = ToProto(rhs);
-  result.set_name(GrpcBucketIdToName(bucket_name) + "/notificationConfigs/" +
-                  rhs.id());
+  result.set_name(storage::internal::GrpcBucketIdToName(bucket_name) +
+                  "/notificationConfigs/" + rhs.id());
   return result;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

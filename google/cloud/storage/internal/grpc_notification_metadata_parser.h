@@ -21,18 +21,18 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-NotificationMetadata FromProto(google::storage::v2::Notification const& rhs);
-google::storage::v2::Notification ToProto(NotificationMetadata const& rhs);
-google::storage::v2::Notification ToProto(NotificationMetadata const& rhs,
-                                          std::string const& bucket_name);
+storage::NotificationMetadata FromProto(
+    google::storage::v2::Notification const& rhs);
+google::storage::v2::Notification ToProto(
+    storage::NotificationMetadata const& rhs);
+google::storage::v2::Notification ToProto(
+    storage::NotificationMetadata const& rhs, std::string const& bucket_name);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
