@@ -71,3 +71,7 @@ fi
 MODULE_SEARCH_PATH=(
   "${PROJECT_ROOT}"
 )
+
+# Run tests in a random order to help expose undesirable interdependencies.
+# Set GTEST_RANDOM_SEED=<SEED> to reproduce a previous order.
+export GTEST_SHUFFLE=1
