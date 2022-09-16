@@ -58,6 +58,11 @@ class DefaultBigtableTableAdminConnectionIdempotencyPolicy
     return Idempotency::kIdempotent;
   }
 
+  Idempotency UpdateTable(
+      google::bigtable::admin::v2::UpdateTableRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency DeleteTable(
       google::bigtable::admin::v2::DeleteTableRequest const&) override {
     return Idempotency::kNonIdempotent;

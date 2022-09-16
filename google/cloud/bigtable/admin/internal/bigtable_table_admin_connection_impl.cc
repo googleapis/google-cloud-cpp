@@ -100,6 +100,34 @@ BigtableTableAdminConnectionImpl::GetTable(
       request, __func__);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnectionImpl::UpdateTable(
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::bigtable::admin::v2::Table>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::bigtable::admin::v2::UpdateTableRequest const& request) {
+        return stub->AsyncUpdateTable(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::Table>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateTable(request), polling_policy(), __func__);
+}
+
 Status BigtableTableAdminConnectionImpl::DeleteTable(
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
   return google::cloud::internal::RetryLoop(

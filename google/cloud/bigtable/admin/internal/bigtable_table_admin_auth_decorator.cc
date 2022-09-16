@@ -56,6 +56,25 @@ StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminAuth::GetTable(
   return child_->GetTable(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminAuth::AsyncUpdateTable(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateTable(cq, *std::move(context), request);
+      });
+}
+
 Status BigtableTableAdminAuth::DeleteTable(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {

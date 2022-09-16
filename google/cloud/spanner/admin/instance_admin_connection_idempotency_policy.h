@@ -46,6 +46,22 @@ class InstanceAdminConnectionIdempotencyPolicy {
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
           request) = 0;
 
+  virtual google::cloud::Idempotency CreateInstanceConfig(
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency UpdateInstanceConfig(
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency DeleteInstanceConfig(
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListInstanceConfigOperations(
+      google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
+          request) = 0;
+
   virtual google::cloud::Idempotency ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest request) = 0;
 

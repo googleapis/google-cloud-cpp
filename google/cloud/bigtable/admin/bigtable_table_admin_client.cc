@@ -82,6 +82,25 @@ StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminClient::GetTable(
   return connection_->GetTable(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::UpdateTable(
+    google::bigtable::admin::v2::Table const& table,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateTableRequest request;
+  *request.mutable_table() = table;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateTable(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::UpdateTable(
+    google::bigtable::admin::v2::UpdateTableRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTable(request);
+}
+
 Status BigtableTableAdminClient::DeleteTable(std::string const& name,
                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

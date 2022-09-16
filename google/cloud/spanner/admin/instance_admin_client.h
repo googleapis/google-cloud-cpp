@@ -117,12 +117,12 @@ class InstanceAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
+  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
   /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L430}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L671}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(std::string const& parent, Options opts = {});
@@ -131,16 +131,16 @@ class InstanceAdminClient {
   /// Lists the supported instance configurations for a given project.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::ListInstanceConfigsRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L430}
+  /// @googleapis_link{google::spanner::admin::instance::v1::ListInstanceConfigsRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L671}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
+  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
   /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L430}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L671}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(
@@ -156,12 +156,12 @@ class InstanceAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
+  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
   /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L464}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L707}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
   GetInstanceConfig(std::string const& name, Options opts = {});
@@ -170,20 +170,401 @@ class InstanceAdminClient {
   /// Gets information about a particular instance configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceConfigRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L464}
+  /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceConfigRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L707}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
+  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
   /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L464}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L707}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
   GetInstanceConfig(
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+          request,
+      Options opts = {});
+
+  ///
+  /// Creates an instance config and begins preparing it to be used. The
+  /// returned [long-running operation][google.longrunning.Operation]
+  /// can be used to track the progress of preparing the new
+  /// instance config. The instance config name is assigned by the caller. If
+  /// the named instance config already exists, `CreateInstanceConfig` returns
+  /// `ALREADY_EXISTS`.
+  ///
+  /// Immediately after the request returns:
+  ///
+  ///   * The instance config is readable via the API, with all requested
+  ///     attributes. The instance config's
+  ///     [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
+  ///     field is set to true. Its state is `CREATING`.
+  ///
+  /// While the operation is pending:
+  ///
+  ///   * Cancelling the operation renders the instance config immediately
+  ///     unreadable via the API.
+  ///   * Except for deleting the creating resource, all other attempts to
+  ///   modify
+  ///     the instance config are rejected.
+  ///
+  /// Upon completion of the returned operation:
+  ///
+  ///   * Instances can be created using the instance configuration.
+  ///   * The instance config's
+  ///   [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
+  ///   field becomes false. Its state becomes `READY`.
+  ///
+  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// have a name of the format
+  /// `<instance_config_name>/operations/<operation_id>` and can be used to
+  /// track creation of the instance config. The
+  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// [CreateInstanceConfigMetadata][google.spanner.admin.instance.v1.CreateInstanceConfigMetadata].
+  /// The [response][google.longrunning.Operation.response] field type is
+  /// [InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig], if
+  /// successful.
+  ///
+  /// Authorization requires `spanner.instanceConfigs.create` permission on
+  /// the resource
+  /// [parent][google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent].
+  ///
+  /// @param parent  Required. The name of the project in which to create the
+  /// instance config.
+  ///  Values are of the form `projects/<project>`.
+  /// @param instance_config  Required. The InstanceConfig proto of the
+  /// configuration to create.
+  ///  instance_config.name must be
+  ///  `<parent>/instanceConfigs/<instance_config_id>`.
+  ///  instance_config.base_config must be a Google managed configuration name,
+  ///  e.g. `<parent>/instanceConfigs/us-east1`,
+  ///  `<parent>/instanceConfigs/nam3`.
+  /// @param instance_config_id  Required. The ID of the instance config to
+  /// create.  Valid identifiers are
+  ///  of the form `custom-[-a-z0-9]*[a-z0-9]` and must be between 2 and 64
+  ///  characters in length. The `custom-` prefix is required to avoid name
+  ///  conflicts with Google managed configurations.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  ///
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L720}
+  /// [google.spanner.admin.instance.v1.InstanceConfig]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  ///
+  future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  CreateInstanceConfig(
+      std::string const& parent,
+      google::spanner::admin::instance::v1::InstanceConfig const&
+          instance_config,
+      std::string const& instance_config_id, Options opts = {});
+
+  ///
+  /// Creates an instance config and begins preparing it to be used. The
+  /// returned [long-running operation][google.longrunning.Operation]
+  /// can be used to track the progress of preparing the new
+  /// instance config. The instance config name is assigned by the caller. If
+  /// the named instance config already exists, `CreateInstanceConfig` returns
+  /// `ALREADY_EXISTS`.
+  ///
+  /// Immediately after the request returns:
+  ///
+  ///   * The instance config is readable via the API, with all requested
+  ///     attributes. The instance config's
+  ///     [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
+  ///     field is set to true. Its state is `CREATING`.
+  ///
+  /// While the operation is pending:
+  ///
+  ///   * Cancelling the operation renders the instance config immediately
+  ///     unreadable via the API.
+  ///   * Except for deleting the creating resource, all other attempts to
+  ///   modify
+  ///     the instance config are rejected.
+  ///
+  /// Upon completion of the returned operation:
+  ///
+  ///   * Instances can be created using the instance configuration.
+  ///   * The instance config's
+  ///   [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
+  ///   field becomes false. Its state becomes `READY`.
+  ///
+  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// have a name of the format
+  /// `<instance_config_name>/operations/<operation_id>` and can be used to
+  /// track creation of the instance config. The
+  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// [CreateInstanceConfigMetadata][google.spanner.admin.instance.v1.CreateInstanceConfigMetadata].
+  /// The [response][google.longrunning.Operation.response] field type is
+  /// [InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig], if
+  /// successful.
+  ///
+  /// Authorization requires `spanner.instanceConfigs.create` permission on
+  /// the resource
+  /// [parent][google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent].
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::instance::v1::CreateInstanceConfigRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L720}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  ///
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L720}
+  /// [google.spanner.admin.instance.v1.InstanceConfig]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  ///
+  future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  CreateInstanceConfig(
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request,
+      Options opts = {});
+
+  ///
+  /// Updates an instance config. The returned
+  /// [long-running operation][google.longrunning.Operation] can be used to
+  /// track the progress of updating the instance. If the named instance config
+  /// does not exist, returns `NOT_FOUND`.
+  ///
+  /// Only user managed configurations can be updated.
+  ///
+  /// Immediately after the request returns:
+  ///
+  ///   * The instance config's
+  ///     [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
+  ///     field is set to true.
+  ///
+  /// While the operation is pending:
+  ///
+  ///   * Cancelling the operation sets its metadata's
+  ///     [cancel_time][google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time].
+  ///     The operation is guaranteed to succeed at undoing all changes, after
+  ///     which point it terminates with a `CANCELLED` status.
+  ///   * All other attempts to modify the instance config are rejected.
+  ///   * Reading the instance config via the API continues to give the
+  ///     pre-request values.
+  ///
+  /// Upon completion of the returned operation:
+  ///
+  ///   * Creating instances using the instance configuration uses the new
+  ///     values.
+  ///   * The instance config's new values are readable via the API.
+  ///   * The instance config's
+  ///   [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
+  ///   field becomes false.
+  ///
+  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// have a name of the format
+  /// `<instance_config_name>/operations/<operation_id>` and can be used to
+  /// track the instance config modification.  The
+  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// [UpdateInstanceConfigMetadata][google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata].
+  /// The [response][google.longrunning.Operation.response] field type is
+  /// [InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig], if
+  /// successful.
+  ///
+  /// Authorization requires `spanner.instanceConfigs.update` permission on
+  /// the resource [name][google.spanner.admin.instance.v1.InstanceConfig.name].
+  ///
+  /// @param instance_config  Required. The user instance config to update,
+  /// which must always include the
+  ///  instance config name. Otherwise, only fields mentioned in
+  ///  [update_mask][google.spanner.admin.instance.v1.UpdateInstanceConfigRequest.update_mask]
+  ///  need be included. To prevent conflicts of concurrent updates,
+  ///  [etag][google.spanner.admin.instance.v1.InstanceConfig.reconciling] can
+  ///  be used.
+  /// @param update_mask  Required. A mask specifying which fields in
+  ///  [InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig] should
+  ///  be updated. The field mask must always be specified; this prevents any
+  ///  future fields in
+  ///  [InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig] from
+  ///  being erased accidentally by clients that do not know about them. Only
+  ///  display_name and labels can be updated.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  ///
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L750}
+  /// [google.spanner.admin.instance.v1.InstanceConfig]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  ///
+  future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  UpdateInstanceConfig(
+      google::spanner::admin::instance::v1::InstanceConfig const&
+          instance_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  ///
+  /// Updates an instance config. The returned
+  /// [long-running operation][google.longrunning.Operation] can be used to
+  /// track the progress of updating the instance. If the named instance config
+  /// does not exist, returns `NOT_FOUND`.
+  ///
+  /// Only user managed configurations can be updated.
+  ///
+  /// Immediately after the request returns:
+  ///
+  ///   * The instance config's
+  ///     [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
+  ///     field is set to true.
+  ///
+  /// While the operation is pending:
+  ///
+  ///   * Cancelling the operation sets its metadata's
+  ///     [cancel_time][google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time].
+  ///     The operation is guaranteed to succeed at undoing all changes, after
+  ///     which point it terminates with a `CANCELLED` status.
+  ///   * All other attempts to modify the instance config are rejected.
+  ///   * Reading the instance config via the API continues to give the
+  ///     pre-request values.
+  ///
+  /// Upon completion of the returned operation:
+  ///
+  ///   * Creating instances using the instance configuration uses the new
+  ///     values.
+  ///   * The instance config's new values are readable via the API.
+  ///   * The instance config's
+  ///   [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
+  ///   field becomes false.
+  ///
+  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// have a name of the format
+  /// `<instance_config_name>/operations/<operation_id>` and can be used to
+  /// track the instance config modification.  The
+  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// [UpdateInstanceConfigMetadata][google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata].
+  /// The [response][google.longrunning.Operation.response] field type is
+  /// [InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig], if
+  /// successful.
+  ///
+  /// Authorization requires `spanner.instanceConfigs.update` permission on
+  /// the resource [name][google.spanner.admin.instance.v1.InstanceConfig.name].
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::instance::v1::UpdateInstanceConfigRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L750}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  ///
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L750}
+  /// [google.spanner.admin.instance.v1.InstanceConfig]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  ///
+  future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  UpdateInstanceConfig(
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request,
+      Options opts = {});
+
+  ///
+  /// Deletes the instance config. Deletion is only allowed when no
+  /// instances are using the configuration. If any instances are using
+  /// the config, returns `FAILED_PRECONDITION`.
+  ///
+  /// Only user managed configurations can be deleted.
+  ///
+  /// Authorization requires `spanner.instanceConfigs.delete` permission on
+  /// the resource [name][google.spanner.admin.instance.v1.InstanceConfig.name].
+  ///
+  /// @param name  Required. The name of the instance configuration to be
+  /// deleted.
+  ///  Values are of the form
+  ///  `projects/<project>/instanceConfigs/<instance_config>`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  ///
+  /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L775}
+  ///
+  Status DeleteInstanceConfig(std::string const& name, Options opts = {});
+
+  ///
+  /// Deletes the instance config. Deletion is only allowed when no
+  /// instances are using the configuration. If any instances are using
+  /// the config, returns `FAILED_PRECONDITION`.
+  ///
+  /// Only user managed configurations can be deleted.
+  ///
+  /// Authorization requires `spanner.instanceConfigs.delete` permission on
+  /// the resource [name][google.spanner.admin.instance.v1.InstanceConfig.name].
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::instance::v1::DeleteInstanceConfigRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L775}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  ///
+  /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L775}
+  ///
+  Status DeleteInstanceConfig(
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+          request,
+      Options opts = {});
+
+  ///
+  /// Lists the user-managed instance config [long-running
+  /// operations][google.longrunning.Operation] in the given project. An
+  /// instance config operation has a name of the form
+  /// `projects/<project>/instanceConfigs/<instance_config>/operations/<operation>`.
+  /// The long-running operation
+  /// [metadata][google.longrunning.Operation.metadata] field type
+  /// `metadata.type_url` describes the type of the metadata. Operations
+  /// returned include those that have completed/failed/canceled within the last
+  /// 7 days, and pending operations. Operations returned are ordered by
+  /// `operation.metadata.value.start_time` in descending order starting
+  /// from the most recently started operation.
+  ///
+  /// @param parent  Required. The project of the instance config operations.
+  ///  Values are of the form `projects/<project>`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
+  ///
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L802}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  ///
+  StreamRange<google::longrunning::Operation> ListInstanceConfigOperations(
+      std::string const& parent, Options opts = {});
+
+  ///
+  /// Lists the user-managed instance config [long-running
+  /// operations][google.longrunning.Operation] in the given project. An
+  /// instance config operation has a name of the form
+  /// `projects/<project>/instanceConfigs/<instance_config>/operations/<operation>`.
+  /// The long-running operation
+  /// [metadata][google.longrunning.Operation.metadata] field type
+  /// `metadata.type_url` describes the type of the metadata. Operations
+  /// returned include those that have completed/failed/canceled within the last
+  /// 7 days, and pending operations. Operations returned are ordered by
+  /// `operation.metadata.value.start_time` in descending order starting
+  /// from the most recently started operation.
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L802}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
+  ///
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L802}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  ///
+  StreamRange<google::longrunning::Operation> ListInstanceConfigOperations(
+      google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
           request,
       Options opts = {});
 
@@ -196,12 +577,12 @@ class InstanceAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   /// [google.spanner.admin.instance.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L514}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L928}
   /// [google.spanner.admin.instance.v1.Instance]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
       std::string const& parent, Options opts = {});
@@ -210,16 +591,16 @@ class InstanceAdminClient {
   /// Lists all instances in the given project.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::ListInstancesRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L514}
+  /// @googleapis_link{google::spanner::admin::instance::v1::ListInstancesRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L928}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   /// [google.spanner.admin.instance.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L514}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L928}
   /// [google.spanner.admin.instance.v1.Instance]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest request,
@@ -234,12 +615,12 @@ class InstanceAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   /// [google.spanner.admin.instance.v1.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L476}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L887}
   /// [google.spanner.admin.instance.v1.Instance]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       std::string const& name, Options opts = {});
@@ -248,16 +629,16 @@ class InstanceAdminClient {
   /// Gets information about a particular instance.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L476}
+  /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L887}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   /// [google.spanner.admin.instance.v1.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L476}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L887}
   /// [google.spanner.admin.instance.v1.Instance]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       google::spanner::admin::instance::v1::GetInstanceRequest const& request,
@@ -312,12 +693,12 @@ class InstanceAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   /// [google.spanner.admin.instance.v1.CreateInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L493}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L906}
   /// [google.spanner.admin.instance.v1.Instance]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   CreateInstance(std::string const& parent, std::string const& instance_id,
@@ -361,16 +742,16 @@ class InstanceAdminClient {
   /// [Instance][google.spanner.admin.instance.v1.Instance], if successful.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::CreateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L493}
+  /// @googleapis_link{google::spanner::admin::instance::v1::CreateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L906}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   /// [google.spanner.admin.instance.v1.CreateInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L493}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L906}
   /// [google.spanner.admin.instance.v1.Instance]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   CreateInstance(
@@ -426,19 +807,19 @@ class InstanceAdminClient {
   ///  [field_mask][google.spanner.admin.instance.v1.UpdateInstanceRequest.field_mask]
   ///  need be included.
   /// @param field_mask  Required. A mask specifying which fields in
-  /// [Instance][google.spanner.admin.instance.v1.Instance] should be updated.
+  ///  [Instance][google.spanner.admin.instance.v1.Instance] should be updated.
   ///  The field mask must always be specified; this prevents any future fields
   ///  in [Instance][google.spanner.admin.instance.v1.Instance] from being
   ///  erased accidentally by clients that do not know about them.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L567}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L984}
   /// [google.spanner.admin.instance.v1.Instance]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(google::spanner::admin::instance::v1::Instance const& instance,
@@ -488,16 +869,16 @@ class InstanceAdminClient {
   /// the resource [name][google.spanner.admin.instance.v1.Instance.name].
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::UpdateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L567}
+  /// @googleapis_link{google::spanner::admin::instance::v1::UpdateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L984}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L567}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L984}
   /// [google.spanner.admin.instance.v1.Instance]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(
@@ -525,7 +906,7 @@ class InstanceAdminClient {
   ///     backoff policies.
   ///
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L580}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1002}
   ///
   Status DeleteInstance(std::string const& name, Options opts = {});
 
@@ -543,12 +924,12 @@ class InstanceAdminClient {
   ///     is permanently deleted.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::DeleteInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L580}
+  /// @googleapis_link{google::spanner::admin::instance::v1::DeleteInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1002}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L580}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1002}
   ///
   Status DeleteInstance(
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&

@@ -76,6 +76,9 @@ class BigtableTableAdminConnection {
   virtual StatusOr<google::bigtable::admin::v2::Table> GetTable(
       google::bigtable::admin::v2::GetTableRequest const& request);
 
+  virtual future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
+      google::bigtable::admin::v2::UpdateTableRequest const& request);
+
   virtual Status DeleteTable(
       google::bigtable::admin::v2::DeleteTableRequest const& request);
 

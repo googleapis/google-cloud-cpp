@@ -59,6 +59,10 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::GetTableRequest const& request),
               (override));
 
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>, UpdateTable,
+              (google::bigtable::admin::v2::UpdateTableRequest const& request),
+              (override));
+
   MOCK_METHOD(Status, DeleteTable,
               (google::bigtable::admin::v2::DeleteTableRequest const& request),
               (override));
