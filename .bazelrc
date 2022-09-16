@@ -33,6 +33,11 @@ build:macos --cxxopt=-std=c++14
 # the project separately.
 build --experimental_convenience_symlinks=ignore
 
+# Inject ${GTEST_SHUFFLE} and ${GTEST_RANDOM_SEED} into the test environment
+# if they are set in the enclosing environment. This allows for running tests
+# in a random order to help expose undesirable interdependencies.
+test --test_env=GTEST_SHUFFLE --test_env=GTEST_RANDOM_SEED
+
 # Clang Sanitizers, use with (for example):
 #
 # --client_env=CXX=clang++ --client_env=CC=clang --config asan
