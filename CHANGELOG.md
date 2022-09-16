@@ -107,7 +107,9 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
   details.
 </details>
 
-## v1.43.0 (or maybe v2.43.0) - TBD
+## v1.42.1 - 2022-09
+
+- Update Protobuf version in Bazel configuration to v21.6 ([#9863](https://github.com/googleapis/google-cloud-cpp/pull/9863))
 
 ## v1.42.0 - 2022-06
 
