@@ -466,6 +466,11 @@ std::string FormatApiMethodSignatureParameters(
             // Doxygen cannot process this tag. One proto uses it in a comment.
             {"<tbody>", "<!--<tbody>-->"},
             {"</tbody>", "<!--</tbody>-->"},
+            // Unescaped elements in spanner_instance_admin.proto.
+            {" <parent>/instanceConfigs/us-east1,",
+             " `<parent>/instanceConfigs/us-east1`,"},
+            {" <parent>/instanceConfigs/nam3.",
+             " `<parent>/instanceConfigs/nam3`."},
         });
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
                           FieldName(parameter_descriptor), std::move(comment));
