@@ -9,7 +9,7 @@ some experience as a C++ developer and that you have a working C++ toolchain
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
 
-* Developers that prefer using a package manager such as
+- Developers that prefer using a package manager such as
   [vcpkg](https://vcpkg.io), [Conda](https://conda.io),
   or [Conan](https://conan.io) should follow the instructions for their package
   manager.
@@ -17,10 +17,12 @@ some experience as a C++ developer and that you have a working C++ toolchain
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the current document. Note that there are similar
   documents for each library in their corresponding directories.
+
 - Developers wanting to compile the library just to run some examples or
   tests should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
+
 - Contributors and developers to `google-cloud-cpp` should consult the guide to
   [set up a development workstation][howto-setup-dev-workstation].
 
@@ -167,4 +169,4 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
-[quickstart-link]: https://cloud.google.com/edgecontainer/docs/quickstart
+[quickstart-link]: https://cloud.google.com/distributed-cloud/edge/latest/docs/requirements

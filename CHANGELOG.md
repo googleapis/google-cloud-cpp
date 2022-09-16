@@ -123,6 +123,7 @@ may elicit a deprecation warning. See [#9086] for more details.
 We are happy to announce the following GA libraries.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
+- [Distributed Cloud Edge Container API](/google/cloud/edgecontainer/README.md)
 - [Network Connectivity API](/google/cloud/networkconnectivity/README.md)
 
 ## v2.2.0 - 2022-09

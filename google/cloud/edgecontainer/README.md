@@ -1,7 +1,9 @@
 # Distributed Cloud Edge Container API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Distributed Cloud Edge Container API][cloud-service-docs], a service to \<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Distributed Cloud Edge Container API][cloud-service-docs], a service that
+allows you to run Kubernetes clusters on dedicated hardware provided and
+maintained by Google that is separate from the Google Cloud data center.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -31,23 +33,23 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/edgecontainer/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/edgecontainer/edge_container_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace edgecontainer = ::google::cloud::edgecontainer;
-  auto client =
-      edgecontainer::Client(edgecontainer::MakeConnection(/* EDIT HERE */));
+  auto client = edgecontainer::EdgeContainerClient(
+      edgecontainer::MakeEdgeContainerConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListClusters(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

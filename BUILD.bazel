@@ -67,6 +67,7 @@ GA_LIBRARIES = [
     "dialogflow_es",
     "dlp",
     "documentai",
+    "edgecontainer",
     "eventarc",
     "filestore",
     "functions",

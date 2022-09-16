@@ -2,11 +2,13 @@
 
 @mainpage Distributed Cloud Edge Container API C++ Client Library
 
-An idiomatic C++ client library for the [Distributed Cloud Edge Container API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+An idiomatic C++ client library for the
+[Distributed Cloud Edge Container API][cloud-service-docs], a service that
+allows you to run Kubernetes clusters on dedicated hardware provided and
+maintained by Google that is separate from the Google Cloud data center.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
