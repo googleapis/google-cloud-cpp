@@ -741,6 +741,14 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
+# Edgecontainer
+service {
+  service_proto_path: "google/cloud/edgecontainer/v1/service.proto"
+  product_path: "google/cloud/edgecontainer"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Eventarc
 service {
   service_proto_path: "google/cloud/eventarc/v1/eventarc.proto"
