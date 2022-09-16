@@ -32,6 +32,9 @@ std::string PickInstanceConfig(
   for (auto const& instance_config :
        client.ListInstanceConfigs(project.FullName())) {
     if (instance_config) {
+      if (!instance_config->base_config().empty()) {
+        continue;  // skip non-base configurations
+      }
       if (instance_config_name.empty()) {
         // The fallback for when nothing satisfies the predicate, which is
         // only really useful for the emulator, which has a single config.

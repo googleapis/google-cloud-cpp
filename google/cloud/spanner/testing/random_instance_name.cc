@@ -44,6 +44,13 @@ std::string RandomInstanceName(internal::DefaultPRNG& generator) {
   return RandomId("temporary-instance", 64, generator);
 }
 
+std::string RandomInstanceConfigName(internal::DefaultPRNG& generator) {
+  // An instance-config ID must be between 2 and 64 characters, matching the
+  // regular expression `custom-[-a-z0-9]*[a-z0-9]`. The `custom-` prefix
+  // is required to avoid name conflicts with Google-managed configurations.
+  return RandomId("custom-temporary-config", 64, generator);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing
 }  // namespace cloud

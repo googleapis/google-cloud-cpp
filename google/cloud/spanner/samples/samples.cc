@@ -106,6 +106,151 @@ void ListInstanceConfigsCommand(std::vector<std::string> argv) {
   ListInstanceConfigs(std::move(client), argv[0]);
 }
 
+// [START spanner_create_instance_config]
+void CreateInstanceConfig(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id, std::string const& user_config_id,
+    std::string const& base_config_id) {
+  auto project = google::cloud::Project(project_id);
+  auto base_config = client.GetInstanceConfig(
+      project.FullName() + "/instanceConfigs/" + base_config_id);
+  if (!base_config) throw std::runtime_error(base_config.status().message());
+  if (base_config->optional_replicas().empty()) {
+    throw std::runtime_error("No optional replicas in base config");
+  }
+  google::spanner::admin::instance::v1::CreateInstanceConfigRequest request;
+  request.set_parent(project.FullName());
+  request.set_instance_config_id(user_config_id);
+  auto* request_config = request.mutable_instance_config();
+  request_config->set_name(project.FullName() + "/instanceConfigs/" +
+                           user_config_id);
+  request_config->set_display_name("My instance config");
+  // The user-managed instance config must contain all the replicas
+  // of the base config plus at least one of the optional replicas.
+  *request_config->mutable_replicas() = base_config->replicas();
+  for (auto const& replica : base_config->optional_replicas()) {
+    *request_config->add_replicas() = replica;
+  }
+  request_config->set_base_config(base_config->name());
+  *request_config->mutable_leader_options() = base_config->leader_options();
+  request.set_validate_only(false);
+  auto user_config = client.CreateInstanceConfig(request).get();
+  if (!user_config) {
+    throw std::runtime_error(user_config.status().message());
+  }
+  std::cout << "Created instance config [" << user_config_id << "]:\n"
+            << user_config->DebugString();
+}
+// [END spanner_create_instance_config]
+
+void CreateInstanceConfigCommand(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "create-instance-config <project-id> <config-id> <base-config-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  CreateInstanceConfig(std::move(client), argv[0], argv[1], argv[2]);
+}
+
+// [START spanner_update_instance_config]
+void UpdateInstanceConfig(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id, std::string const& config_id) {
+  auto project = google::cloud::Project(project_id);
+  auto config = client.GetInstanceConfig(project.FullName() +
+                                         "/instanceConfigs/" + config_id);
+  if (!config) throw std::runtime_error(config.status().message());
+  google::spanner::admin::instance::v1::UpdateInstanceConfigRequest request;
+  auto* request_config = request.mutable_instance_config();
+  request_config->set_name(config->name());
+  request_config->mutable_labels()->insert({"key", "value"});
+  request.mutable_update_mask()->add_paths("labels");
+  request_config->set_etag(config->etag());
+  request.set_validate_only(false);
+  auto updated_config = client.UpdateInstanceConfig(request).get();
+  if (!updated_config) {
+    throw std::runtime_error(updated_config.status().message());
+  }
+  std::cout << "Updated instance config [" << config_id << "]:\n"
+            << updated_config->DebugString();
+}
+// [END spanner_update_instance_config]
+
+void UpdateInstanceConfigCommand(std::vector<std::string> argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("update-instance-config <project-id> <config-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  UpdateInstanceConfig(std::move(client), argv[0], argv[1]);
+}
+
+// [START spanner_delete_instance_config]
+void DeleteInstanceConfig(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id, std::string const& config_id) {
+  auto project = google::cloud::Project(project_id);
+  auto config_name = project.FullName() + "/instanceConfigs/" + config_id;
+  auto status = client.DeleteInstanceConfig(config_name);
+  if (!status.ok()) throw std::runtime_error(status.message());
+  std::cout << "Instance config " << config_name << " successfully deleted\n";
+}
+// [END spanner_delete_instance_config]
+
+void DeleteInstanceConfigCommand(std::vector<std::string> argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("delete-instance-config <project-id> <config-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  DeleteInstanceConfig(std::move(client), argv[0], argv[1]);
+}
+
+// [START spanner_list_instance_config_operations]
+void ListInstanceConfigOperations(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id) {
+  auto project = google::cloud::Project(project_id);
+
+  google::spanner::admin::database::v1::ListBackupOperationsRequest request;
+  request.set_parent(project.FullName());
+
+  request.set_filter(
+      std::string("metadata.@type=type.googleapis.com/") +
+      "google.spanner.admin.instance.v1.CreateInstanceConfigMetadata");
+  for (auto const& operation :
+       client.ListInstanceConfigOperations(project.FullName())) {
+    if (!operation) throw std::runtime_error(operation.status().message());
+    google::spanner::admin::instance::v1::CreateInstanceConfigMetadata metadata;
+    operation->metadata().UnpackTo(&metadata);
+    std::cout << "CreateInstanceConfig metadata is:\n"
+              << metadata.DebugString();
+  }
+
+  request.set_filter(
+      std::string("metadata.@type=type.googleapis.com/") +
+      "google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata");
+  for (auto const& operation :
+       client.ListInstanceConfigOperations(project.FullName())) {
+    if (!operation) throw std::runtime_error(operation.status().message());
+    google::spanner::admin::instance::v1::UpdateInstanceConfigMetadata metadata;
+    operation->metadata().UnpackTo(&metadata);
+    std::cout << "UpdateInstanceConfig metadata is:\n"
+              << metadata.DebugString();
+  }
+}
+// [END spanner_list_instance_config_operations]
+
+void ListInstanceConfigOperationsCommand(std::vector<std::string> argv) {
+  if (argv.size() != 1) {
+    throw std::runtime_error("list-instance-config-operations <project-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  ListInstanceConfigOperations(std::move(client), argv[0]);
+}
+
 //! [get-instance]
 void GetInstance(google::cloud::spanner_admin::InstanceAdminClient client,
                  std::string const& project_id,
@@ -3635,6 +3780,10 @@ int RunOneCommand(std::vector<std::string> argv) {
   CommandMap commands = {
       {"get-instance-config", GetInstanceConfigCommand},
       {"list-instance-configs", ListInstanceConfigsCommand},
+      {"create-instance-config", CreateInstanceConfigCommand},
+      {"update-instance-config", UpdateInstanceConfigCommand},
+      {"delete-instance-config", DeleteInstanceConfigCommand},
+      {"list-instance-config-operations", ListInstanceConfigOperationsCommand},
       {"get-instance", GetInstanceCommand},
       {"list-instances", ListInstancesCommand},
       {"create-instance", CreateInstanceCommand},
@@ -4011,6 +4160,35 @@ void RunAllSlowInstanceTests(
 
   SampleBanner("delete-instance");
   DeleteInstance(instance_admin_client, project_id, crud_instance_id);
+
+  if (!emulator) {
+    auto const base_config_id =
+        Basename(google::cloud::spanner_testing::PickInstanceConfig(
+            google::cloud::Project(project_id), generator,
+            [](google::spanner::admin::instance::v1::InstanceConfig const&
+                   config) { return !config.optional_replicas().empty(); }));
+    if (base_config_id.empty()) {
+      throw std::runtime_error("Failed to pick a base config");
+    }
+    auto const user_config_id =
+        google::cloud::spanner_testing::RandomInstanceConfigName(generator);
+
+    SampleBanner("spanner_create_instance_config");
+    CreateInstanceConfig(instance_admin_client, project_id, user_config_id,
+                         base_config_id);
+
+    SampleBanner("spanner_update_instance_config");
+    UpdateInstanceConfig(instance_admin_client, project_id, user_config_id);
+
+    SampleBanner("spanner_list_instance_config_operations");
+    ListInstanceConfigOperations(instance_admin_client, project_id);
+
+    SampleBanner("spanner_list_instance_configs");
+    ListInstanceConfigs(instance_admin_client, project_id);
+
+    SampleBanner("spanner_delete_instance_config");
+    DeleteInstanceConfig(instance_admin_client, project_id, user_config_id);
+  }
 }
 
 void RunAll(bool emulator) {
