@@ -20,9 +20,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace v2 = ::google::storage::v2;
@@ -37,7 +36,8 @@ TEST(GrpcNotificationRequestParser, DeleteNotification) {
       )pb",
       &expected));
 
-  DeleteNotificationRequest req("test-bucket-name", "test-notification-id");
+  storage::internal::DeleteNotificationRequest req("test-bucket-name",
+                                                   "test-notification-id");
 
   auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
@@ -51,7 +51,8 @@ TEST(GrpcNotificationRequestParser, GetNotification) {
       )pb",
       &expected));
 
-  GetNotificationRequest req("test-bucket-name", "test-notification-id");
+  storage::internal::GetNotificationRequest req("test-bucket-name",
+                                                "test-notification-id");
 
   auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
@@ -74,9 +75,9 @@ TEST(GrpcNotificationRequestParser, CreateNotification) {
       )pb",
       &expected));
 
-  CreateNotificationRequest req(
+  storage::internal::CreateNotificationRequest req(
       "test-bucket-name",
-      NotificationMetadata()
+      storage::NotificationMetadata()
           .set_topic("projects/test-topic-project/topics/test-topic-id")
           .append_event_type("OBJECT_DELETE")
           .append_event_type("OBJECT_ARCHIVE")
@@ -84,7 +85,7 @@ TEST(GrpcNotificationRequestParser, CreateNotification) {
           .upsert_custom_attributes("test-key-1", "test-value-1")
           .set_object_name_prefix("test-object-name-prefix/")
           .set_payload_format("JSON_API_V1"));
-  req.set_multiple_options(UserProject("test-user-project"));
+  req.set_multiple_options(storage::UserProject("test-user-project"));
 
   auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
@@ -98,7 +99,7 @@ TEST(GrpcNotificationRequestParser, ListNotifications) {
       )pb",
       &expected));
 
-  ListNotificationsRequest req("test-bucket-name");
+  storage::internal::ListNotificationsRequest req("test-bucket-name");
 
   auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
@@ -132,7 +133,7 @@ TEST(GrpcNotificationRequestParser, ListNotificationsResponse) {
   EXPECT_THAT(
       actual.items,
       ElementsAre(
-          NotificationMetadata("test-id-1", "test-etag-1")
+          storage::NotificationMetadata("test-id-1", "test-etag-1")
               .set_topic("projects/test-topic-project/topics/test-topic-id-1")
               .append_event_type("OBJECT_DELETE")
               .append_event_type("OBJECT_ARCHIVE")
@@ -140,14 +141,13 @@ TEST(GrpcNotificationRequestParser, ListNotificationsResponse) {
               .upsert_custom_attributes("test-key-1", "test-value-1")
               .set_object_name_prefix("test-object-name-prefix/")
               .set_payload_format("JSON_API_V1"),
-          NotificationMetadata("test-id-2", "test-etag-2")
+          storage::NotificationMetadata("test-id-2", "test-etag-2")
               .set_topic("projects/test-topic-project/topics/test-topic-id-2")
               .set_payload_format("JSON_API_V1")));
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

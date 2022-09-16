@@ -21,24 +21,22 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 google::storage::v2::DeleteNotificationRequest ToProto(
-    DeleteNotificationRequest const& rhs);
+    storage::internal::DeleteNotificationRequest const& rhs);
 google::storage::v2::GetNotificationRequest ToProto(
-    GetNotificationRequest const& rhs);
+    storage::internal::GetNotificationRequest const& rhs);
 google::storage::v2::CreateNotificationRequest ToProto(
-    CreateNotificationRequest const& rhs);
+    storage::internal::CreateNotificationRequest const& rhs);
 google::storage::v2::ListNotificationsRequest ToProto(
-    ListNotificationsRequest const& rhs);
-ListNotificationsResponse FromProto(
+    storage::internal::ListNotificationsRequest const& rhs);
+storage::internal::ListNotificationsResponse FromProto(
     google::storage::v2::ListNotificationsResponse const& rhs);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

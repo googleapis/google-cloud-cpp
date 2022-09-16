@@ -1062,37 +1062,37 @@ StatusOr<SignBlobResponse> GrpcClient::SignBlob(
 
 StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(
     ListNotificationsRequest const& request) {
-  auto proto = ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->ListNotifications(context, proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<NotificationMetadata> GrpcClient::CreateNotification(
     CreateNotificationRequest const& request) {
-  auto proto = ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->CreateNotification(context, proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<NotificationMetadata> GrpcClient::GetNotification(
     GetNotificationRequest const& request) {
-  auto proto = ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->GetNotification(context, proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteNotification(
     DeleteNotificationRequest const& request) {
-  auto proto = ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->DeleteNotification(context, proto);
