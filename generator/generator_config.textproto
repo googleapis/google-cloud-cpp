@@ -741,7 +741,7 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
-# Edgecontainer
+# Edge Container
 service {
   service_proto_path: "google/cloud/edgecontainer/v1/service.proto"
   product_path: "google/cloud/edgecontainer"

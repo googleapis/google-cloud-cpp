@@ -90,7 +90,7 @@ as well as how to properly format your code.
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 
-[cloud-service-docs]: https://cloud.google.com/edgecontainer
+[cloud-service-docs]: https://cloud.google.com/distributed-cloud/edge/latest/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-edgecontainer/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/edgecontainer
