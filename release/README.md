@@ -177,9 +177,11 @@ In your development fork:
     ```shell
     git commit -m"Updated GCB triggers" ci
     ```
-- Run `ci/cloudbuild/build.sh -t check-api-pr` to update both the API
-  baselines and `google/cloud/internal/version_info.h`. And then commit the
-  changes:
+- Update the API baselines and `google/cloud/internal/version_info.h`:
+  ```shell
+  ci/cloudbuild/build.sh -t check-api-pr
+  ```
+- Commit the changes:
   ```shell
   git commit -m"Update API/ABI baseline" ci
   ```
