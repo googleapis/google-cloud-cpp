@@ -26,7 +26,6 @@ source "$(dirname "$0")/../lib/init.sh"
 source module ci/lib/io.sh
 
 function print_usage() {
-  # Extracts the usage from the file comment starting at line 17.
   cat <<_EOM_
 Usage: ${PROGRAM_NAME} [options]
   Options:
@@ -68,7 +67,6 @@ function parent() {
     expr "${CLOSEST[1]}" : 'refs/heads/\(.*\)'
   fi
 }
-export -f parent
 
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
