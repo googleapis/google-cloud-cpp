@@ -94,13 +94,7 @@ while true; do
   esac
 done
 
-if [[ -z "${BRANCH}" ]]; then
-  BRANCH="$(git branch --show-current)"
-  if [[ ! "${BRANCH}" =~ ^v[1-9]([0-9]*)?\.[0-9]+\.x$ ]]; then
-    # This is not a release branch, find the parent branch.
-    BRANCH="$(parent)"
-  fi
-fi
+BRANCH="$(parent)"
 
 git ls-files -z -- ci/cloudbuild/triggers/*.yaml |
   xargs -P "$(nproc)" -n 10 -0 bash -c "convert_triggers \"${BRANCH}\" \"\$@\""
