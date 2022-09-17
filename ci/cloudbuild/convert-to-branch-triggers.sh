@@ -94,7 +94,9 @@ while true; do
   esac
 done
 
-BRANCH="$(parent)"
+if [[ -z "${BRANCH}" ]]; then
+  BRANCH="$(parent)"
+fi
 
 git ls-files -z -- ci/cloudbuild/triggers/*.yaml |
   xargs -P "$(nproc)" -n 10 -0 bash -c "convert_triggers \"${BRANCH}\" \"\$@\""
