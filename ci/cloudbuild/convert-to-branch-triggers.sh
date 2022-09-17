@@ -47,6 +47,7 @@ function convert_triggers() {
 }
 export -f convert_triggers
 
+# shellcheck disable=SC2046 disable=SC2162
 function parent() {
   local HEAD
   HEAD="$(git rev-parse --verify 'HEAD^{commit}')"
@@ -54,14 +55,14 @@ function parent() {
   declare -a CLOSEST=()
   while read -a REF; do
     if git merge-base --is-ancestor "${REF[0]}" "${HEAD}" 2>/dev/null; then
-      if (( ${#CLOSEST[@]} == 0 )); then
+      if ((${#CLOSEST[@]} == 0)); then
         CLOSEST=("${REF[@]}")
       elif git merge-base --is-ancestor "${CLOSEST[0]}" "${REF[0]}"; then
         CLOSEST=("${REF[@]}")
       fi
     fi
   done <<<$(git ls-remote --heads --quiet upstream)
-  if (( ${#CLOSEST[@]} == 0 )); then
+  if ((${#CLOSEST[@]} == 0)); then
     git branch --show-current
   else
     expr "${CLOSEST[1]}" : 'refs/heads/\(.*\)'
@@ -99,12 +100,9 @@ if [[ -z "${BRANCH}" ]]; then
   BRANCH="$(git branch --show-current)"
   if [[ ! "${BRANCH}" =~ ^v[1-9]([0-9]*)?\.[0-9]+\.x$ ]]; then
     # This is not a release branch, find the parent branch.
-    BRANCH="$(bash -c parent)"
+    BRANCH="$(parent)"
   fi
 fi
-
-echo "BRANCH=$BRANCH"
-exit 0
 
 git ls-files -z -- ci/cloudbuild/triggers/*.yaml |
   xargs -P "$(nproc)" -n 10 -0 bash -c "convert_triggers \"${BRANCH}\" \"\$@\""
