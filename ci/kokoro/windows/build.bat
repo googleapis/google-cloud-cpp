@@ -23,11 +23,11 @@ REM Change PATH to install the Bazelisk version we just installed
 
 REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.
 if "%KOKORO_JOB_POOL%" == "yoshi-cpp-win" (
-  call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars64.bat"
-  set BAZEL_VC="C:\Program Files\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC"
+  call "%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars64.bat"
+  set BAZEL_VC="%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC"
 ) else (
-  call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-  set BAZEL_VC="C:\Program Files\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC"
+  call "%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+  set BAZEL_VC="%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC"
 )
 
 REM The remaining of the build script is implemented in PowerShell.
