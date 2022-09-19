@@ -74,10 +74,6 @@ Status CleanupStaleInstances(Project const& project) {
       }
     }
   }
-  // Let it fail if we have too many leaks.
-  if (instances.size() > 20) {
-    return Status(StatusCode::kInternal, "Too many stale instances");
-  }
 
   // We ignore failures here.
   spanner_admin::DatabaseAdminClient database_admin_client(
@@ -124,10 +120,6 @@ Status CleanupStaleInstanceConfigs(Project const& project) {
         configs.push_back(name);
       }
     }
-  }
-  // Let it fail if we have too many leaks.
-  if (configs.size() > 20) {
-    return Status(StatusCode::kInternal, "Too many stale instance configs");
   }
 
   // We ignore failures here.
