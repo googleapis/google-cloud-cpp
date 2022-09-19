@@ -30,6 +30,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 Status CleanupStaleInstances(Project const& project);
 
+/**
+ * Deletes any instance configs within @p project @p that are named with
+ * a YYYY-MM-DD component prior to yesterday (in UTC).
+ */
+Status CleanupStaleInstanceConfigs(Project const& project);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing
 }  // namespace cloud

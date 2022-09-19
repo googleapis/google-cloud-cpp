@@ -28,7 +28,7 @@ namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Returns the name of one instance config that satisfies the given
+ * Returns the name of one base instance config that satisfies the given
  * predicate from amongst all those that exist within the given project.
  *
  * If multiple instance configs qualify, the one returned is chosen

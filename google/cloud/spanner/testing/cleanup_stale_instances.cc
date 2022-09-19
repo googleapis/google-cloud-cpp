@@ -91,6 +91,52 @@ Status CleanupStaleInstances(Project const& project) {
   return Status();
 }
 
+Status CleanupStaleInstanceConfigs(Project const& project) {
+  std::regex name_regex(R"(projects/.+/instanceConfigs/)"
+                        R"(custom-temporary-config-(\d{4}-\d{2}-\d{2})-.+)");
+
+  // Make sure we're using a regex that matches a random config name.
+  if (name_regex.mark_count() != 1) {
+    return Status(StatusCode::kInternal,
+                  "Config regex must have a single capture group");
+  }
+  auto generator = internal::MakeDefaultPRNG();
+  auto random_id = spanner_testing::RandomInstanceConfigName(generator);
+  auto full_name = project.FullName() + "/instanceConfigs/" + random_id;
+  std::smatch m;
+  if (!std::regex_match(full_name, m, name_regex)) {
+    return Status(StatusCode::kInternal,
+                  "Config regex does not match a random config name");
+  }
+
+  spanner_admin::InstanceAdminClient instance_admin_client(
+      spanner_admin::MakeInstanceAdminConnection());
+  auto cutoff_date = CutoffDate();
+  std::vector<std::string> configs;
+  for (auto const& config :
+       instance_admin_client.ListInstanceConfigs(project.FullName())) {
+    if (!config) break;
+    auto name = config->name();
+    std::smatch m;
+    if (std::regex_match(name, m, name_regex)) {
+      auto date_str = m[1];
+      if (date_str < cutoff_date) {
+        configs.push_back(name);
+      }
+    }
+  }
+  // Let it fail if we have too many leaks.
+  if (configs.size() > 20) {
+    return Status(StatusCode::kInternal, "Too many stale instance configs");
+  }
+
+  // We ignore failures here.
+  for (auto const& config : configs) {
+    instance_admin_client.DeleteInstanceConfig(config);
+  }
+  return Status();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing
 }  // namespace cloud
