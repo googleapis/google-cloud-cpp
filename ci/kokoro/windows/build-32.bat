@@ -25,7 +25,7 @@ REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to Powe
 if %KOKORO_JOB_POOL% == "yoshi-cpp-win" (
   call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars32.bat"
   set BAZEL_VC="C:\Program Files\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC"
-else (
+) else (
   call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC\Auxiliary\Build\vcvars32.bat"
   set BAZEL_VC="C:\Program Files\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC"
 )
