@@ -17,6 +17,9 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
+# If possible, configure the vcpkg cache.
+. ci/kokoro/windows/lib/vcpkg-cache.ps1
+
 # First check the required environment variables.
 if (-not (Test-Path env:CONFIG)) {
     Write-Host -ForegroundColor Red `
@@ -35,7 +38,6 @@ $IsCI = (Test-Path env:KOKORO_JOB_TYPE) -and `
     ($env:KOKORO_JOB_TYPE -eq "CONTINUOUS_INTEGRATION")
 $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
     ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
-$HasBuildCache = (Test-Path env:BUILD_CACHE)
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
 $vcpkg_version = Get-Content -Path "${project_root}\ci\etc\vcpkg-commit.txt"
@@ -111,29 +113,6 @@ if (-not (Test-Path "${vcpkg_dir}\vcpkg.exe")) {
     Exit 1
 }
 
-# If BUILD_CACHE is set (which typically is on Kokoro builds), try
-# to download and extract the build cache.
-if ($RunningCI -and $HasBuildCache) {
-    gcloud auth activate-service-account `
-        --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-        "rsync vcpkg binary cache from GCS."
-    New-Item "${env:LOCALAPPDATA}\vcpkg" -ItemType Directory -ErrorAction SilentlyContinue
-    New-Item "${env:LOCALAPPDATA}\vcpkg\archives" -ItemType Directory -ErrorAction SilentlyContinue
-    gsutil -m -q rsync -r ${env:BUILD_CACHE} "${env:LOCALAPPDATA}\vcpkg\archives"
-    if ($LastExitCode) {
-        # Ignore errors, caching failures should not break the build.
-        Write-Host "gsutil download failed with exit code $LastExitCode"
-    }
-}
-
-# Integrate installed packages into the build environment.
-&"${vcpkg_dir}\vcpkg.exe" integrate install
-if ($LastExitCode) {
-    Write-Host -ForegroundColor Red "vcpkg integrate failed with exit code $LastExitCode"
-    Exit ${LastExitCode}
-}
-
 # Remove old versions of the packages.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup outdated vcpkg packages."
 &"${vcpkg_dir}\vcpkg.exe" remove ${vcpkg_flags} --outdated --recurse
@@ -162,20 +141,6 @@ foreach ($pkg in $packages) {
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 &"${vcpkg_dir}\vcpkg.exe" list
-
-# Do not update the vcpkg cache on PRs, it might dirty the cache for any
-# PRs running in parallel, and it is a waste of time in most cases.
-if ($RunningCI -and $IsCI -and $HasBuildCache) {
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-    "rsync vcpkg binary cache to GCS."
-    gcloud auth activate-service-account `
-        --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-    gsutil -m -q rsync -r "${env:LOCALAPPDATA}\vcpkg\archives" ${env:BUILD_CACHE}
-} else {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-      "vcpkg not updated IsCI = $IsCI, IsPR = $IsPR, " `
-      "HasBuildCache = $HasBuildCache."
-}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
 Get-CimInstance -Class CIM_LogicalDisk | `

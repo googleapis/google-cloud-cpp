@@ -48,7 +48,6 @@ the KOKORO_JOB_NAME environment variable.
     Exit 1
 }
 
-$env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/vcpkg-binary-cache/windows/${BuildName}/"
 $DependencyScriptArgs=@()
 if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $env:CONFIG = "Debug"

@@ -17,6 +17,9 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
+# If possible, configure the vcpkg cache.
+. ci/kokoro/windows/lib/vcpkg-cache.ps1
+
 # First check the required environment variables.
 $missing=@()
 ForEach($var in ("CONFIG", "GENERATOR", "VCPKG_TRIPLET")) {
