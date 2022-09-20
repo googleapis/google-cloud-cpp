@@ -17,14 +17,14 @@
 function Configure-Vcpkg-Cache {
     if (-not (Test-Path env:KOKORO_GFILE_DIR)) {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "Will not configure a remove vcpkg cache as KOKORO_GFILE_DIR is not set."
+            "Will not configure a remote vcpkg cache as KOKORO_GFILE_DIR is not set."
         return
     }
     $CACHE_KEYFILE="${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
     &gcloud auth activate-service-account --key-file ${CACHE_KEYFILE}
     if ($LastExitCode) {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "Will not configure a remove vcpkg cache as the service account activation failed."
+            "Will not configure a remote vcpkg cache as the service account activation failed."
         return
     }
 
@@ -35,9 +35,9 @@ function Configure-Vcpkg-Cache {
     }
 
     if (Test-Path env:MSVC_VERSION) {
-        $CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/vcpkg/windows/main/${env:MSVC_VERSION}/"
+        $CACHE_FOLDER="build-cache/google-cloud-cpp/vcpkg/windows/main/${env:MSVC_VERSION}/"
     } else {
-        $CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/vcpkg/windows/main/default/"
+        $CACHE_FOLDER="build-cache/google-cloud-cpp/vcpkg/windows/main/default/"
     }
     ${env:VCPKG_BINARY_SOURCES}="x-gcs,gs://${CACHE_BUCKET}/${CACHE_FOLDER},readwrite"
 }
