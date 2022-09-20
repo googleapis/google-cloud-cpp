@@ -16,6 +16,7 @@
 
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
+. ci/kokoro/windows/lib/vcpkg-cache.ps1
 
 # First check the required environment variables.
 $missing=@()

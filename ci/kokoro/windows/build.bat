@@ -19,7 +19,7 @@ REM Install Bazelisk.
 @if ERRORLEVEL 1 exit /b 1
 
 REM Change PATH to install the Bazelisk version we just installed
-@set PATH=C:\bin;%PATH%
+@set "PATH=C:\bin;%ProgramFiles(x86)%\Google\Cloud SDK\google-cloud-sdk\bin;%PATH%"
 
 REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.
 if "%KOKORO_JOB_POOL%" == "yoshi-cpp-win" (
@@ -27,7 +27,7 @@ if "%KOKORO_JOB_POOL%" == "yoshi-cpp-win" (
   set BAZEL_VC="%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC"
 ) else (
   call "%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-  set BAZEL_VC="%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC"
+  set "BAZEL_VC=%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC"
 )
 
 REM The remaining of the build script is implemented in PowerShell.
