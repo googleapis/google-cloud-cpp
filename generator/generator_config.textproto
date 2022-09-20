@@ -204,6 +204,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/bigquery/analyticshub/v1/analyticshub.proto"
+  product_path: "google/cloud/bigquery"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Bigtable
 service {
   service_proto_path: "google/bigtable/v2/bigtable.proto"
