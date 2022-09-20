@@ -35,7 +35,7 @@ install_vcpkg() {
 
   io::log_h2 "Configure VCPKG to use GCS as a cache"
   readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
-  readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/vcpkg/macos"
+  readonly CACHE_FOLDER="build-cache/google-cloud-cpp/vcpkg/macos"
   export VCPKG_BINARY_SOURCES="x-gcs,gs://${CACHE_BUCKET}/${CACHE_FOLDER},readwrite"
 
   create_gcloud_config
