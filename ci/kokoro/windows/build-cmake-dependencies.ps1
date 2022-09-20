@@ -38,7 +38,6 @@ $IsCI = (Test-Path env:KOKORO_JOB_TYPE) -and `
     ($env:KOKORO_JOB_TYPE -eq "CONTINUOUS_INTEGRATION")
 $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
     ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
-$HasBuildCache = (Test-Path env:BUILD_CACHE)
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
 $vcpkg_version = Get-Content -Path "${project_root}\ci\etc\vcpkg-commit.txt"
