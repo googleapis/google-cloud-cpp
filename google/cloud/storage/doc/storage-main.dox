@@ -193,13 +193,11 @@ good places to continue learning about the library.
 
 <!-- @ref storage-grpc "Using the GCS+gRPC plugin" -->
 
-
 [Client]: @ref google::cloud::storage::Client
 [ReadObject]: @ref google::cloud::storage::Client::ReadObject()
 [WriteObject]: @ref google::cloud::storage::Client::WriteObject()
 [ListObjects]: @ref google::cloud::storage::Client::ListObjects()
 [DeleteObject]: @ref google::cloud::storage::Client::DeleteObject()
-
 
 [gcs-quickstart]: https://cloud.google.com/storage/docs/introduction#quickstarts 'GCS Quickstarts'
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
