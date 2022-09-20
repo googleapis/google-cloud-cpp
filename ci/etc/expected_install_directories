@@ -75,6 +75,8 @@
 ./include/google/cloud/beyondcorp/internal
 ./include/google/cloud/beyondcorp/mocks
 ./include/google/cloud/bigquery
+./include/google/cloud/bigquery/analyticshub
+./include/google/cloud/bigquery/analyticshub/v1
 ./include/google/cloud/bigquery/connection
 ./include/google/cloud/bigquery/connection/v1
 ./include/google/cloud/bigquery/datatransfer
