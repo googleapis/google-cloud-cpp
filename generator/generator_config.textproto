@@ -731,7 +731,6 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
-
 # Document AI
 service {
   service_proto_path: "google/cloud/documentai/v1/document_processor_service.proto"

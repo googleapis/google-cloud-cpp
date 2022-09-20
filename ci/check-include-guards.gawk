@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 # Exit the script with an error status if any files had bad guards.
 BEGIN {
     found_bad_include_guards = 0;
