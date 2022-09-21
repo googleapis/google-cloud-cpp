@@ -115,36 +115,42 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   // These are sorted as the fields in the BucketMetadata class, to make them
   // easier to find in the future.
   for (auto const& v : rhs.acl()) {
-    metadata.acl_.push_back(
+    metadata.mutable_acl().push_back(
         GrpcBucketAccessControlParser::FromProto(v, rhs.bucket_id()));
   }
-  if (rhs.has_billing()) metadata.billing_ = FromProto(rhs.billing());
-  metadata.default_event_based_hold_ = rhs.default_event_based_hold();
+  if (rhs.has_billing()) metadata.set_billing(FromProto(rhs.billing()));
+  metadata.set_default_event_based_hold(rhs.default_event_based_hold());
   for (auto const& v : rhs.cors()) {
-    metadata.cors_.push_back(FromProto(v));
+    metadata.mutable_cors().push_back(FromProto(v));
   }
   for (auto const& v : rhs.default_object_acl()) {
-    metadata.default_acl_.push_back(GrpcObjectAccessControlParser::FromProto(
-        v, rhs.bucket_id(), /*object_name*/ std::string{}, /*generation=*/0));
+    metadata.mutable_default_acl().push_back(
+        GrpcObjectAccessControlParser::FromProto(v, rhs.bucket_id(),
+                                                 /*object_name*/ std::string{},
+                                                 /*generation=*/0));
   }
-  if (rhs.has_encryption()) metadata.encryption_ = FromProto(rhs.encryption());
+  if (rhs.has_encryption()) {
+    metadata.set_encryption(FromProto(rhs.encryption()));
+  }
   if (rhs.has_iam_config()) {
-    metadata.iam_configuration_ = FromProto(rhs.iam_config());
+    metadata.set_iam_configuration(FromProto(rhs.iam_config()));
   }
-  metadata.etag_ = rhs.etag();
-  metadata.id_ = rhs.bucket_id();
-  metadata.kind_ = "storage#bucket";
+  metadata.set_etag(rhs.etag());
+  metadata.set_id(rhs.bucket_id());
+  metadata.set_kind("storage#bucket");
   for (auto const& kv : rhs.labels()) {
-    metadata.labels_.emplace(std::make_pair(kv.first, kv.second));
+    metadata.mutable_labels().emplace(std::make_pair(kv.first, kv.second));
   }
-  if (rhs.has_lifecycle()) metadata.lifecycle_ = FromProto(rhs.lifecycle());
-  metadata.location_ = rhs.location();
-  metadata.location_type_ = rhs.location_type();
-  if (rhs.has_logging()) metadata.logging_ = FromProto(rhs.logging());
-  metadata.metageneration_ = rhs.metageneration();
-  metadata.name_ = GrpcBucketNameToId(rhs.name());
+  if (rhs.has_lifecycle()) {
+    metadata.set_lifecycle(FromProto(rhs.lifecycle()));
+  }
+  metadata.set_location(rhs.location());
+  metadata.set_location_type(rhs.location_type());
+  if (rhs.has_logging()) metadata.set_logging(FromProto(rhs.logging()));
+  metadata.set_metageneration(rhs.metageneration());
+  metadata.set_name(GrpcBucketNameToId(rhs.name()));
   if (rhs.has_owner()) {
-    metadata.owner_ = storage_internal::FromProto(rhs.owner());
+    metadata.set_owner(storage_internal::FromProto(rhs.owner()));
   }
 
   // The protos use `projects/{project}` format, but the field may be absent or
@@ -155,27 +161,29 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
     auto s = rhs.project().substr(std::strlen("projects/"));
     char* end;
     auto number = std::strtol(s.c_str(), &end, 10);
-    if (end != nullptr && *end == '\0') metadata.project_number_ = number;
+    if (end != nullptr && *end == '\0') metadata.set_project_number(number);
   }
 
   if (rhs.has_retention_policy()) {
-    metadata.retention_policy_ = FromProto(rhs.retention_policy());
+    metadata.set_retention_policy(FromProto(rhs.retention_policy()));
   }
-  metadata.rpo_ = rhs.rpo();
-  metadata.storage_class_ = rhs.storage_class();
+  metadata.set_rpo(rhs.rpo());
+  metadata.set_storage_class(rhs.storage_class());
   if (rhs.has_create_time()) {
-    metadata.time_created_ =
-        google::cloud::internal::ToChronoTimePoint(rhs.create_time());
+    metadata.set_time_created(
+        google::cloud::internal::ToChronoTimePoint(rhs.create_time()));
   }
   if (rhs.has_update_time()) {
-    metadata.updated_ =
-        google::cloud::internal::ToChronoTimePoint(rhs.update_time());
+    metadata.set_updated(
+        google::cloud::internal::ToChronoTimePoint(rhs.update_time()));
   }
-  if (rhs.has_versioning()) metadata.versioning_ = FromProto(rhs.versioning());
-  if (rhs.has_website()) metadata.website_ = FromProto(rhs.website());
+  if (rhs.has_versioning()) {
+    metadata.set_versioning(FromProto(rhs.versioning()));
+  }
+  if (rhs.has_website()) metadata.set_website(FromProto(rhs.website()));
   if (rhs.has_custom_placement_config()) {
-    metadata.custom_placement_config_ =
-        FromProto(rhs.custom_placement_config());
+    metadata.set_custom_placement_config(
+        FromProto(rhs.custom_placement_config()));
   }
 
   return metadata;
