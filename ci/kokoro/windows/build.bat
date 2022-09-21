@@ -28,6 +28,7 @@ if "%KOKORO_JOB_POOL%" == "yoshi-cpp-win" (
 ) else (
   call "%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
   set "BAZEL_VC=%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC"
+  set "VCPKG_OVERLAY_TRIPLETS=%cd%\ci\kokoro\windows\triplets"
 )
 
 REM The remaining of the build script is implemented in PowerShell.
