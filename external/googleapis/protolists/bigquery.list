@@ -1,3 +1,4 @@
+@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub.proto
 @com_google_googleapis//google/cloud/bigquery/connection/v1:connection.proto
 @com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer.proto
 @com_google_googleapis//google/cloud/bigquery/datatransfer/v1:transfer.proto

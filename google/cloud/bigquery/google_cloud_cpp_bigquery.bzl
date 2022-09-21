@@ -17,6 +17,10 @@
 """Automatically generated source lists for google_cloud_cpp_bigquery - DO NOT EDIT."""
 
 google_cloud_cpp_bigquery_hdrs = [
+    "analytics_hub_client.h",
+    "analytics_hub_connection.h",
+    "analytics_hub_connection_idempotency_policy.h",
+    "analytics_hub_options.h",
     "bigquery_read_client.h",
     "bigquery_read_connection.h",
     "bigquery_read_connection_idempotency_policy.h",
@@ -33,6 +37,14 @@ google_cloud_cpp_bigquery_hdrs = [
     "data_transfer_connection.h",
     "data_transfer_connection_idempotency_policy.h",
     "data_transfer_options.h",
+    "internal/analytics_hub_auth_decorator.h",
+    "internal/analytics_hub_connection_impl.h",
+    "internal/analytics_hub_logging_decorator.h",
+    "internal/analytics_hub_metadata_decorator.h",
+    "internal/analytics_hub_option_defaults.h",
+    "internal/analytics_hub_retry_traits.h",
+    "internal/analytics_hub_stub.h",
+    "internal/analytics_hub_stub_factory.h",
     "internal/bigquery_read_auth_decorator.h",
     "internal/bigquery_read_connection_impl.h",
     "internal/bigquery_read_logging_decorator.h",
@@ -93,6 +105,9 @@ google_cloud_cpp_bigquery_hdrs = [
 ]
 
 google_cloud_cpp_bigquery_srcs = [
+    "analytics_hub_client.cc",
+    "analytics_hub_connection.cc",
+    "analytics_hub_connection_idempotency_policy.cc",
     "bigquery_read_client.cc",
     "bigquery_read_connection.cc",
     "bigquery_read_connection_idempotency_policy.cc",
@@ -105,6 +120,13 @@ google_cloud_cpp_bigquery_srcs = [
     "data_transfer_client.cc",
     "data_transfer_connection.cc",
     "data_transfer_connection_idempotency_policy.cc",
+    "internal/analytics_hub_auth_decorator.cc",
+    "internal/analytics_hub_connection_impl.cc",
+    "internal/analytics_hub_logging_decorator.cc",
+    "internal/analytics_hub_metadata_decorator.cc",
+    "internal/analytics_hub_option_defaults.cc",
+    "internal/analytics_hub_stub.cc",
+    "internal/analytics_hub_stub_factory.cc",
     "internal/bigquery_read_auth_decorator.cc",
     "internal/bigquery_read_connection_impl.cc",
     "internal/bigquery_read_logging_decorator.cc",
