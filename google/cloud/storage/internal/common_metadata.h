@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMMON_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMMON_METADATA_H
 
+#include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
@@ -27,38 +28,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-/// A simple wrapper for the `owner` field in `internal::CommonMetadata`.
-struct Owner {
-  std::string entity;
-  std::string entity_id;
-};
-
-inline bool operator==(Owner const& lhs, Owner const& rhs) {
-  return std::tie(lhs.entity, lhs.entity_id) ==
-         std::tie(rhs.entity, rhs.entity_id);
-}
-
-inline bool operator<(Owner const& lhs, Owner const& rhs) {
-  return std::tie(lhs.entity, lhs.entity_id) <
-         std::tie(rhs.entity, rhs.entity_id);
-}
-
-inline bool operator!=(Owner const& lhs, Owner const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(Owner const& lhs, Owner const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(Owner const& lhs, Owner const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(Owner const& lhs, Owner const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-
 namespace internal {
 struct GrpcBucketMetadataParser;
 struct GrpcObjectMetadataParser;
@@ -73,8 +42,10 @@ struct CommonMetadataParser;
  *
  * @see https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern
  */
+// TODO(#9897) - remove this class and any references to it
 template <typename Derived>
-class CommonMetadata {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed shortly after 2023-06-01") CommonMetadata {
  public:
   CommonMetadata() = default;
 
@@ -121,8 +92,10 @@ class CommonMetadata {
 };
 
 template <typename T>
-inline bool operator==(CommonMetadata<T> const& lhs,
-                       CommonMetadata<T> const& rhs) {
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed shortly after 2023-06-01")
+inline bool
+operator==(CommonMetadata<T> const& lhs, CommonMetadata<T> const& rhs) {
   // etag changes each time the metadata changes, so that is the best field
   // to short-circuit this comparison.  The check the name, project number,
   // and metadata generation, which have the next best chance to
@@ -138,8 +111,10 @@ inline bool operator==(CommonMetadata<T> const& lhs,
 }
 
 template <typename T>
-inline bool operator!=(CommonMetadata<T> const& lhs,
-                       CommonMetadata<T> const& rhs) {
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed shortly after 2023-06-01")
+inline bool
+operator!=(CommonMetadata<T> const& lhs, CommonMetadata<T> const& rhs) {
   return std::rel_ops::operator!=(lhs, rhs);
 }
 

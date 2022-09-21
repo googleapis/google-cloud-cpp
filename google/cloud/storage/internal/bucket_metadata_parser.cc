@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
-#include "google/cloud/storage/internal/common_metadata_parser.h"
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "absl/strings/str_format.h"
 #include <nlohmann/json.hpp>

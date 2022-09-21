@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_METADATA_H
 
-#include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/object_access_control.h"
+#include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
@@ -96,7 +96,7 @@ inline bool operator>=(CustomerEncryption const& lhs,
  * @see https://cloud.google.com/storage/docs/json_api/v1/objects for a more
  *     detailed description of each attribute and their effects.
  */
-class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
+class ObjectMetadata {
  public:
   ObjectMetadata() = default;
 
@@ -118,6 +118,12 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   /// The name of the bucket containing this object.
   std::string const& bucket() const { return bucket_; }
 
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_bucket(std::string v) {
+    bucket_ = std::move(v);
+    return *this;
+  }
+
   /// The `cacheControl` attribute.
   std::string const& cache_control() const { return cache_control_; }
 
@@ -129,6 +135,12 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
 
   /// The number of components, for objects built using `ComposeObject()`.
   std::int32_t component_count() const { return component_count_; }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_component_count(std::int32_t v) {
+    component_count_ = v;
+    return *this;
+  }
 
   /// The `contentDisposition` attribute.
   std::string content_disposition() const { return content_disposition_; }
@@ -169,6 +181,33 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   /// The `CRC32C` checksum for the object contents.
   std::string const& crc32c() const { return crc32c_; }
 
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_crc32c(std::string v) {
+    crc32c_ = std::move(v);
+    return *this;
+  }
+
+  /// Returns `true` if the object has a `customTime` attribute.
+  bool has_custom_time() const { return custom_time_.has_value(); }
+
+  /// Returns the object's `customTime` or the system clock's epoch.
+  std::chrono::system_clock::time_point custom_time() const {
+    return custom_time_.value_or(std::chrono::system_clock::time_point{});
+  }
+
+  /// Changes the `customTime` attribute.
+  ObjectMetadata& set_custom_time(std::chrono::system_clock::time_point v) {
+    custom_time_ = v;
+    return *this;
+  }
+
+  /// Reset (clears) the `customTime` attribute. `has_custom_time()` returns
+  /// `false` after calling this function.
+  ObjectMetadata& reset_custom_time() {
+    custom_time_.reset();
+    return *this;
+  }
+
   /// Returns `true` if the object uses CSEK (Customer-Supplied Encryption
   /// Keys).
   bool has_customer_encryption() const {
@@ -185,8 +224,26 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
     return customer_encryption_.value();
   }
 
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_customer_encryption(CustomerEncryption v) {
+    customer_encryption_ = std::move(v);
+    return *this;
+  }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& reset_customer_encryption() {
+    customer_encryption_.reset();
+    return *this;
+  }
+
   /// The `Etag` attribute.
-  using CommonMetadata::etag;
+  std::string const& etag() const { return etag_; }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_etag(std::string v) {
+    etag_ = std::move(v);
+    return *this;
+  }
 
   /// The `eventBasedHold` attribute.
   bool event_based_hold() const { return event_based_hold_; }
@@ -206,11 +263,29 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
    */
   std::int64_t generation() const { return generation_; }
 
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_generation(std::int64_t v) {
+    generation_ = v;
+    return *this;
+  }
+
   /// The `id` attribute (the object name)
-  using CommonMetadata::id;
+  std::string const& id() const { return id_; }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_id(std::string v) {
+    id_ = std::move(v);
+    return *this;
+  }
 
   /// The `kind` attribute, that is, `storage#object`.
-  using CommonMetadata::kind;
+  std::string const& kind() const { return kind_; }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_kind(std::string v) {
+    kind_ = std::move(v);
+    return *this;
+  }
 
   /**
    * The name of the KMS (Key Management Service) key used in this object.
@@ -220,11 +295,29 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
    */
   std::string const& kms_key_name() const { return kms_key_name_; }
 
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_kms_key_name(std::string v) {
+    kms_key_name_ = std::move(v);
+    return *this;
+  }
+
   /// The MD5 hash of the object contents. Can be empty.
   std::string const& md5_hash() const { return md5_hash_; }
 
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_md5_hash(std::string v) {
+    md5_hash_ = std::move(v);
+    return *this;
+  }
+
   /// The HTTPS link to access the object contents.
   std::string const& media_link() const { return media_link_; }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_media_link(std::string v) {
+    media_link_ = std::move(v);
+    return *this;
+  }
 
   /**
    * @name Accessors and modifiers for metadata entries.
@@ -279,9 +372,6 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::map<std::string, std::string>& mutable_metadata() { return metadata_; }
   ///@}
 
-  /// Returns `true` if the object has an `owner` attribute.
-  using CommonMetadata::has_owner;
-
   /**
    * The generation of the object metadata.
    *
@@ -289,10 +379,25 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
    * attribute) increases the metageneration, but does not change the object
    * generation.
    */
-  using CommonMetadata::metageneration;
+  std::int64_t metageneration() const { return metageneration_; }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_metageneration(std::int64_t v) {
+    metageneration_ = v;
+    return *this;
+  }
 
   /// The object name, including bucket and generation.
-  using CommonMetadata::name;
+  std::string const& name() const { return name_; }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_name(std::string v) {
+    name_ = std::move(v);
+    return *this;
+  }
+
+  /// Returns `true` if the object has an `owner` attribute.
+  bool has_owner() const { return owner_.has_value(); }
 
   /**
    * The object's `owner` attribute.
@@ -300,25 +405,56 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
    * It is undefined behavior to call this member function if
    * `has_owner() == false`.
    */
-  using CommonMetadata::owner;
+  Owner const& owner() const { return *owner_; }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_owner(Owner v) {
+    owner_ = std::move(v);
+    return *this;
+  }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& reset_owner() {
+    owner_.reset();
+    return *this;
+  }
 
   /// The retention expiration time, or the system clock's epoch, if not set.
   std::chrono::system_clock::time_point retention_expiration_time() const {
     return retention_expiration_time_;
   }
 
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_retention_expiration_time(
+      std::chrono::system_clock::time_point v) {
+    retention_expiration_time_ = v;
+    return *this;
+  }
+
   /// An HTTPS link to the object metadata.
-  using CommonMetadata::self_link;
+  std::string const& self_link() const { return self_link_; }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_self_link(std::string v) {
+    self_link_ = std::move(v);
+    return *this;
+  }
 
   /// The size of the object's data.
   std::uint64_t size() const { return size_; }
 
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_size(std::uint64_t v) {
+    size_ = v;
+    return *this;
+  }
+
   /// The `storageClass` attribute.
-  using CommonMetadata::storage_class;
+  std::string const& storage_class() const { return storage_class_; }
 
   /// Changes the `storageClass` attribute.
   ObjectMetadata& set_storage_class(std::string v) {
-    CommonMetadata::set_storage_class(std::move(v));
+    storage_class_ = std::move(v);
     return *this;
   }
 
@@ -332,11 +468,25 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   }
 
   /// The object creation timestamp.
-  using CommonMetadata::time_created;
+  std::chrono::system_clock::time_point time_created() const {
+    return time_created_;
+  }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_time_created(std::chrono::system_clock::time_point v) {
+    time_created_ = v;
+    return *this;
+  }
 
   /// The object's deletion timestamp.
   std::chrono::system_clock::time_point time_deleted() const {
     return time_deleted_;
+  }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_time_deleted(std::chrono::system_clock::time_point v) {
+    time_deleted_ = v;
+    return *this;
   }
 
   /// The timestamp for the last storage class change.
@@ -344,27 +494,19 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
     return time_storage_class_updated_;
   }
 
-  /// The timestamp for the last object *metadata* update.
-  using CommonMetadata::updated;
-
-  /// Returns `true` if the object has a `customTime` attribute.
-  bool has_custom_time() const { return custom_time_.has_value(); }
-
-  /// Returns the object's `customTime` or the system clock's epoch.
-  std::chrono::system_clock::time_point custom_time() const {
-    return custom_time_.value_or(std::chrono::system_clock::time_point{});
-  }
-
-  /// Changes the `customTime` attribute.
-  ObjectMetadata& set_custom_time(std::chrono::system_clock::time_point v) {
-    custom_time_ = v;
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_time_storage_class_updated(
+      std::chrono::system_clock::time_point v) {
+    time_storage_class_updated_ = v;
     return *this;
   }
 
-  /// Reset (clears) the `customTime` attribute. `has_custom_time()` returns
-  /// `false` after calling this function.
-  ObjectMetadata& reset_custom_time() {
-    custom_time_.reset();
+  /// The timestamp for the last object *metadata* update.
+  std::chrono::system_clock::time_point updated() const { return updated_; }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_updated(std::chrono::system_clock::time_point v) {
+    updated_ = v;
     return *this;
   }
 
@@ -374,9 +516,6 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   }
 
  private:
-  friend struct internal::ObjectMetadataParser;
-  friend struct internal::GrpcObjectMetadataParser;
-
   friend std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<ObjectAccessControl> acl_;
@@ -388,19 +527,29 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::string content_language_;
   std::string content_type_;
   std::string crc32c_;
+  absl::optional<std::chrono::system_clock::time_point> custom_time_;
   absl::optional<CustomerEncryption> customer_encryption_;
+  std::string etag_;
   bool event_based_hold_{false};
   std::int64_t generation_{0};
+  std::string id_;
+  std::string kind_;
   std::string kms_key_name_;
+  std::int64_t metageneration_{0};
   std::string md5_hash_;
   std::string media_link_;
   std::map<std::string, std::string> metadata_;
+  std::string name_;
+  absl::optional<Owner> owner_;
   std::chrono::system_clock::time_point retention_expiration_time_;
+  std::string self_link_;
   std::uint64_t size_{0};
+  std::string storage_class_;
   bool temporary_hold_{false};
+  std::chrono::system_clock::time_point time_created_;
   std::chrono::system_clock::time_point time_deleted_;
   std::chrono::system_clock::time_point time_storage_class_updated_;
-  absl::optional<std::chrono::system_clock::time_point> custom_time_;
+  std::chrono::system_clock::time_point updated_;
 };
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);

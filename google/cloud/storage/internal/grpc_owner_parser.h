@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OWNER_PARSER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OWNER_PARSER_H
 
-#include "google/cloud/storage/internal/common_metadata.h"
+#include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
 #include <google/storage/v2/storage.pb.h>
 

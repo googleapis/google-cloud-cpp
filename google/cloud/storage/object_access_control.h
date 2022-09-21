@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_ACCESS_CONTROL_H
 
 #include "google/cloud/storage/internal/access_control_common.h"
-#include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/patch_builder.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"

@@ -86,13 +86,13 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
   };
 
   ObjectMetadata metadata;
-  metadata.kind_ = "storage#object";
-  metadata.bucket_ = bucket_id(object);
-  metadata.name_ = std::move(*object.mutable_name());
-  metadata.generation_ = object.generation();
-  metadata.etag_ = object.etag();
-  metadata.id_ = metadata.bucket() + "/" + metadata.name() + "/" +
-                 std::to_string(metadata.generation());
+  metadata.set_kind("storage#object");
+  metadata.set_bucket(bucket_id(object));
+  metadata.set_name(std::move(*object.mutable_name()));
+  metadata.set_generation(object.generation());
+  metadata.set_etag(object.etag());
+  metadata.set_id(metadata.bucket() + "/" + metadata.name() + "/" +
+                  std::to_string(metadata.generation()));
   auto const metadata_endpoint = [&options]() -> std::string {
     if (options.get<RestEndpointOption>() != "https://storage.googleapis.com") {
       return options.get<RestEndpointOption>();
@@ -104,23 +104,23 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
     return "/storage/" + options.get<TargetApiVersionOption>();
   }();
   auto const rel_path = "/b/" + metadata.bucket() + "/o/" + metadata.name();
-  metadata.self_link_ = metadata_endpoint + path + rel_path;
-  metadata.media_link_ =
+  metadata.set_self_link(metadata_endpoint + path + rel_path);
+  metadata.set_media_link(
       options.get<RestEndpointOption>() + "/download" + path + rel_path +
-      "?generation=" + std::to_string(metadata.generation()) + "&alt=media";
+      "?generation=" + std::to_string(metadata.generation()) + "&alt=media");
 
-  metadata.metageneration_ = object.metageneration();
+  metadata.set_metageneration(object.metageneration());
   if (object.has_owner()) {
-    metadata.owner_ = storage_internal::FromProto(*object.mutable_owner());
+    metadata.set_owner(storage_internal::FromProto(*object.mutable_owner()));
   }
-  metadata.storage_class_ = std::move(*object.mutable_storage_class());
+  metadata.set_storage_class(std::move(*object.mutable_storage_class()));
   if (object.has_create_time()) {
-    metadata.time_created_ =
-        google::cloud::internal::ToChronoTimePoint(object.create_time());
+    metadata.set_time_created(
+        google::cloud::internal::ToChronoTimePoint(object.create_time()));
   }
   if (object.has_update_time()) {
-    metadata.updated_ =
-        google::cloud::internal::ToChronoTimePoint(object.update_time());
+    metadata.set_updated(
+        google::cloud::internal::ToChronoTimePoint(object.update_time()));
   }
   std::vector<ObjectAccessControl> acl;
   acl.reserve(object.acl_size());
@@ -129,53 +129,53 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
         std::move(item), metadata.bucket(), metadata.name(),
         metadata.generation()));
   }
-  metadata.acl_ = std::move(acl);
-  metadata.cache_control_ = std::move(*object.mutable_cache_control());
-  metadata.component_count_ = object.component_count();
-  metadata.content_disposition_ =
-      std::move(*object.mutable_content_disposition());
-  metadata.content_encoding_ = std::move(*object.mutable_content_encoding());
-  metadata.content_language_ = std::move(*object.mutable_content_language());
-  metadata.content_type_ = std::move(*object.mutable_content_type());
+  metadata.set_acl(std::move(acl));
+  metadata.set_cache_control(std::move(*object.mutable_cache_control()));
+  metadata.set_component_count(object.component_count());
+  metadata.set_content_disposition(
+      std::move(*object.mutable_content_disposition()));
+  metadata.set_content_encoding(std::move(*object.mutable_content_encoding()));
+  metadata.set_content_language(std::move(*object.mutable_content_language()));
+  metadata.set_content_type(std::move(*object.mutable_content_type()));
   if (object.has_checksums()) {
     if (object.checksums().has_crc32c()) {
-      metadata.crc32c_ = Crc32cFromProto(object.checksums().crc32c());
+      metadata.set_crc32c(Crc32cFromProto(object.checksums().crc32c()));
     }
     if (!object.checksums().md5_hash().empty()) {
-      metadata.md5_hash_ = MD5FromProto(object.checksums().md5_hash());
+      metadata.set_md5_hash(MD5FromProto(object.checksums().md5_hash()));
     }
   }
   if (object.has_customer_encryption()) {
-    metadata.customer_encryption_ =
-        FromProto(std::move(*object.mutable_customer_encryption()));
+    metadata.set_customer_encryption(
+        FromProto(std::move(*object.mutable_customer_encryption())));
   }
   if (object.has_event_based_hold()) {
-    metadata.event_based_hold_ = object.event_based_hold();
+    metadata.set_event_based_hold(object.event_based_hold());
   }
-  metadata.kms_key_name_ = std::move(*object.mutable_kms_key());
+  metadata.set_kms_key_name(std::move(*object.mutable_kms_key()));
 
   for (auto const& kv : object.metadata()) {
-    metadata.metadata_[kv.first] = kv.second;
+    metadata.upsert_metadata(kv.first, kv.second);
   }
   if (object.has_retention_expire_time()) {
-    metadata.retention_expiration_time_ =
+    metadata.set_retention_expiration_time(
         google::cloud::internal::ToChronoTimePoint(
-            object.retention_expire_time());
+            object.retention_expire_time()));
   }
-  metadata.size_ = static_cast<std::uint64_t>(object.size());
-  metadata.temporary_hold_ = object.temporary_hold();
+  metadata.set_size(static_cast<std::uint64_t>(object.size()));
+  metadata.set_temporary_hold(object.temporary_hold());
   if (object.has_delete_time()) {
-    metadata.time_deleted_ =
-        google::cloud::internal::ToChronoTimePoint(object.delete_time());
+    metadata.set_time_deleted(
+        google::cloud::internal::ToChronoTimePoint(object.delete_time()));
   }
   if (object.has_update_storage_class_time()) {
-    metadata.time_storage_class_updated_ =
+    metadata.set_time_storage_class_updated(
         google::cloud::internal::ToChronoTimePoint(
-            object.update_storage_class_time());
+            object.update_storage_class_time()));
   }
   if (object.has_custom_time()) {
-    metadata.custom_time_ =
-        google::cloud::internal::ToChronoTimePoint(object.custom_time());
+    metadata.set_custom_time(
+        google::cloud::internal::ToChronoTimePoint(object.custom_time()));
   }
 
   return metadata;
