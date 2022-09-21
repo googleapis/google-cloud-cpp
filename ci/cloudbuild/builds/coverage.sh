@@ -76,13 +76,13 @@ time {
 }
 
 codecov_args=(
-  "-X" "gcov"
-  "-f" "${MERGED_COVERAGE}"
-  "-q" "${HOME}/coverage-report.txt"
-  "-B" "${BRANCH_NAME}"
-  "-C" "${COMMIT_SHA}"
-  "-P" "${PR_NUMBER:-}"
-  "-b" "${BUILD_ID:-}"
+  "--filter=gcov"
+  "--file=${MERGED_COVERAGE}"
+  "--branch=${BRANCH_NAME}"
+  "--sha=${COMMIT_SHA}"
+  "--pr=${PR_NUMBER:-}"
+  "--build=${BUILD_ID:-}"
+  "--verbose"
 )
 io::log_h2 "Uploading ${MERGED_COVERAGE} to codecov.io"
 io::log "Flags: ${codecov_args[*]}"
@@ -90,13 +90,13 @@ TIMEFORMAT="==> 🕑 codecov.io upload done in %R seconds"
 time {
   # Downloads and verifies the codecov uploader before executing it.
   codecov="$(mktemp -u -t codecov.XXXXXXXXXX)"
-  curl -sSL -o "${codecov}" https://uploader.codecov.io/v0.2.3/linux/codecov
-  sha256sum="648b599397548e4bb92429eec6391374c2cbb0edb835e3b3f03d4281c011f401"
+  curl -sSL -o "${codecov}" https://uploader.codecov.io/v0.3.1/linux/codecov
+  sha256sum="0146032e40bc0179db3afa3de179dab4da59ece0449af03d881f3c509eaabc8b"
   if ! sha256sum -c <(echo "${sha256sum} *${codecov}"); then
     io::log_h2 "ERROR: Invalid sha256sum for codecov program"
     exit 1
   fi
   chmod +x "${codecov}"
-  env -i HOME="${HOME}" "${codecov}" -t "${CODECOV_TOKEN}" "${codecov_args[@]}"
+  env -i HOME="${HOME}" "${codecov}" --token="${CODECOV_TOKEN}" "${codecov_args[@]}"
   rm "${codecov}"
 }
