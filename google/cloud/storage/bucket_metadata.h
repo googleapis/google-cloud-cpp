@@ -709,6 +709,7 @@ class BucketMetadata {
   ///@}
 
   std::string const& etag() const { return etag_; }
+
   /// @note This is only intended for mocking.
   BucketMetadata& set_etag(std::string v) {
     etag_ = std::move(v);
@@ -746,14 +747,17 @@ class BucketMetadata {
   }
   ///@}
 
+  /// Return the bucket id.
   std::string const& id() const { return id_; }
-  /// @note This is only intended for mocking
+
+  /// @note This is only intended for mocking.
   BucketMetadata& set_id(std::string v) {
     id_ = std::move(v);
     return *this;
   }
 
   std::string const& kind() const { return kind_; }
+
   /// @note This is only intended for mocking
   BucketMetadata& set_kind(std::string v) {
     kind_ = std::move(v);
@@ -827,7 +831,10 @@ class BucketMetadata {
   }
   ///@}
 
+  /// Return the bucket location.
   std::string const& location() const { return location_; }
+
+  /// Set the bucket location. Only applicable when creating buckets.
   BucketMetadata& set_location(std::string v) {
     location_ = std::move(v);
     return *this;
@@ -861,6 +868,7 @@ class BucketMetadata {
 
   /// The bucket metageneration.
   std::int64_t metageneration() const { return metageneration_; }
+
   /// @note this is only intended for mocking.
   BucketMetadata& set_metageneration(std::int64_t v) {
     metageneration_ = v;
@@ -974,6 +982,7 @@ class BucketMetadata {
   std::chrono::system_clock::time_point time_created() const {
     return time_created_;
   }
+
   /// @note This is only intended for mocking.
   BucketMetadata& set_time_created(std::chrono::system_clock::time_point v) {
     time_created_ = v;

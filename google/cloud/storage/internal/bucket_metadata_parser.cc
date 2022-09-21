@@ -197,10 +197,11 @@ std::map<std::string, std::string> ParseLabels(nlohmann::json const& json) {
 
 Status ParseOwner(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("owner")) return Status{};
-  Owner o;
-  o.entity = json["owner"].value("entity", "");
-  o.entity_id = json["owner"].value("entityId", "");
-  meta.set_owner(std::move(o));
+  auto const& o = json["owner"];
+  Owner owner;
+  owner.entity = o.value("entity", "");
+  owner.entity_id = o.value("entityId", "");
+  meta.set_owner(std::move(owner));
   return Status{};
 }
 
