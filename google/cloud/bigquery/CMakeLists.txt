@@ -31,6 +31,13 @@ include(GoogleCloudCppCommon)
 # configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     google_cloud_cpp_bigquery # cmake-format: sort
+    analytics_hub_client.cc
+    analytics_hub_client.h
+    analytics_hub_connection.cc
+    analytics_hub_connection.h
+    analytics_hub_connection_idempotency_policy.cc
+    analytics_hub_connection_idempotency_policy.h
+    analytics_hub_options.h
     bigquery_read_client.cc
     bigquery_read_client.h
     bigquery_read_connection.cc
@@ -59,6 +66,21 @@ add_library(
     data_transfer_connection_idempotency_policy.cc
     data_transfer_connection_idempotency_policy.h
     data_transfer_options.h
+    internal/analytics_hub_auth_decorator.cc
+    internal/analytics_hub_auth_decorator.h
+    internal/analytics_hub_connection_impl.cc
+    internal/analytics_hub_connection_impl.h
+    internal/analytics_hub_logging_decorator.cc
+    internal/analytics_hub_logging_decorator.h
+    internal/analytics_hub_metadata_decorator.cc
+    internal/analytics_hub_metadata_decorator.h
+    internal/analytics_hub_option_defaults.cc
+    internal/analytics_hub_option_defaults.h
+    internal/analytics_hub_retry_traits.h
+    internal/analytics_hub_stub.cc
+    internal/analytics_hub_stub.h
+    internal/analytics_hub_stub_factory.cc
+    internal/analytics_hub_stub_factory.h
     internal/bigquery_read_auth_decorator.cc
     internal/bigquery_read_auth_decorator.h
     internal/bigquery_read_connection_impl.cc
@@ -199,6 +221,7 @@ add_library(google_cloud_cpp_bigquery_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_bigquery_mocks
     INTERFACE # cmake-format: sort
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_analytics_hub_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_write_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_connection_connection.h
