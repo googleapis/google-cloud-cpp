@@ -140,22 +140,35 @@ std::ostream& operator<<(std::ostream& os,
 }
 
 bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
-  return static_cast<internal::CommonMetadata<BucketMetadata> const&>(lhs) ==
-             rhs &&
-         lhs.acl_ == rhs.acl_ && lhs.billing_ == rhs.billing_ &&
-         lhs.cors_ == rhs.cors_ &&
-         lhs.default_event_based_hold_ == rhs.default_event_based_hold_ &&
-         lhs.default_acl_ == rhs.default_acl_ &&
-         lhs.encryption_ == rhs.encryption_ &&
-         lhs.iam_configuration_ == rhs.iam_configuration_ &&
-         lhs.project_number_ == rhs.project_number_ &&
-         lhs.lifecycle_ == rhs.lifecycle_ && lhs.location_ == rhs.location_ &&
-         lhs.location_type_ == rhs.location_type_ &&
-         lhs.logging_ == rhs.logging_ && lhs.labels_ == rhs.labels_ &&
-         lhs.retention_policy_ == rhs.retention_policy_ &&
-         lhs.rpo_ == rhs.rpo_ && lhs.versioning_ == rhs.versioning_ &&
-         lhs.website_ == rhs.website_ &&
-         lhs.custom_placement_config_ == rhs.custom_placement_config_;
+  return lhs.acl_ == rhs.acl_                                               //
+         && lhs.billing_ == rhs.billing_                                    //
+         && lhs.cors_ == rhs.cors_                                          //
+         && lhs.custom_placement_config_ == rhs.custom_placement_config_    //
+         && lhs.default_acl_ == rhs.default_acl_                            //
+         && lhs.default_event_based_hold_ == rhs.default_event_based_hold_  //
+         && lhs.encryption_ == rhs.encryption_                              //
+         && lhs.etag_ == rhs.etag_                                          //
+         && lhs.iam_configuration_ == rhs.iam_configuration_                //
+         && lhs.id_ == rhs.id_                                              //
+         && lhs.kind_ == rhs.kind_                                          //
+         && lhs.labels_ == rhs.labels_                                      //
+         && lhs.lifecycle_ == rhs.lifecycle_                                //
+         && lhs.location_ == rhs.location_                                  //
+         && lhs.location_type_ == rhs.location_type_                        //
+         && lhs.logging_ == rhs.logging_                                    //
+         && lhs.metageneration_ == rhs.metageneration_                      //
+         && lhs.name_ == rhs.name_                                          //
+         && lhs.owner_ == rhs.owner_                                        //
+         && lhs.project_number_ == rhs.project_number_                      //
+         && lhs.retention_policy_ == rhs.retention_policy_                  //
+         && lhs.rpo_ == rhs.rpo_                                            //
+         && lhs.self_link_ == rhs.self_link_                                //
+         && lhs.storage_class_ == rhs.storage_class_                        //
+         && lhs.time_created_ == rhs.time_created_                          //
+         && lhs.updated_ == rhs.updated_                                    //
+         && lhs.versioning_ == rhs.versioning_                              //
+         && lhs.website_ == rhs.website_                                    //
+      ;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
