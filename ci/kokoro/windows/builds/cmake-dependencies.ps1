@@ -141,9 +141,3 @@ foreach ($pkg in $packages) {
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 &"${vcpkg_dir}\vcpkg.exe" list
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
-Get-CimInstance -Class CIM_LogicalDisk | `
-    Select-Object -Property DeviceID, DriveType, VolumeName, `
-        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
-        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}

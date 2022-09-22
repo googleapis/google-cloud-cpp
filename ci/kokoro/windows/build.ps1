@@ -49,57 +49,51 @@ the KOKORO_JOB_NAME environment variable.
 }
 
 $DependencyScriptArgs=@()
-if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
+if ($BuildName -eq "cmake-debug") {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
-    $DependencyScript = "build-cmake-dependencies.ps1"
-    $BuildScript = "build-cmake.ps1"
+    $DependencyScript = "builds/cmake-dependencies.ps1"
+    $BuildScript = "builds/cmake.ps1"
 } elseif ($BuildName -eq "cmake-release") {
     $env:CONFIG = "Release"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
-    $DependencyScript = "build-cmake-dependencies.ps1"
-    $BuildScript = "build-cmake.ps1"
+    $DependencyScript = "builds/cmake-dependencies.ps1"
+    $BuildScript = "builds/cmake.ps1"
 } elseif ($BuildName -eq "cmake-debug-x86") {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x86-windows-static"
-    $DependencyScript = "build-cmake-dependencies.ps1"
-    $BuildScript = "build-cmake.ps1"
+    $DependencyScript = "builds/cmake-dependencies.ps1"
+    $BuildScript = "builds/cmake.ps1"
 } elseif ($BuildName -eq "cmake-release-x86") {
     $env:CONFIG = "Release"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x86-windows-static"
-    $DependencyScript = "build-cmake-dependencies.ps1"
-    $BuildScript = "build-cmake.ps1"
+    $DependencyScript = "builds/cmake-dependencies.ps1"
+    $BuildScript = "builds/cmake.ps1"
 } elseif ($BuildName -like "bazel*") {
-    $DependencyScript = "build-bazel-dependencies.ps1"
-    $BuildScript = "build-bazel.ps1"
+    $DependencyScript = "builds/bazel-dependencies.ps1"
+    $BuildScript = "builds/bazel.ps1"
 } elseif ($BuildName -eq "quickstart-bazel") {
-    $DependencyScript = "build-bazel-dependencies.ps1"
-    $BuildScript = "build-quickstart-bazel.ps1"
+    $DependencyScript = "builds/bazel-dependencies.ps1"
+    $BuildScript = "builds/quickstart-bazel.ps1"
 } elseif ($BuildName -eq "quickstart-cmake-static") {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
-    $DependencyScript = "build-cmake-dependencies.ps1"
+    $DependencyScript = "builds/cmake-dependencies.ps1"
     $DependencyScriptArgs=@("vcpkg-quickstart", "google-cloud-cpp")
-    $BuildScript = "build-quickstart-cmake.ps1"
+    $BuildScript = "builds/quickstart-cmake.ps1"
 } elseif ($BuildName -eq "quickstart-cmake-dll") {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows"
-    $DependencyScript = "build-cmake-dependencies.ps1"
+    $DependencyScript = "builds/cmake-dependencies.ps1"
     $DependencyScriptArgs=@("vcpkg-quickstart", "google-cloud-cpp")
-    $BuildScript = "build-quickstart-cmake.ps1"
+    $BuildScript = "builds/quickstart-cmake.ps1"
 }
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
-Get-CimInstance -Class CIM_LogicalDisk | `
-    Select-Object -Property DeviceID, DriveType, VolumeName, `
-        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
-        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
 $ScriptLocation = Split-Path $PSCommandPath -Parent
 
@@ -110,25 +104,11 @@ if ($LastExitCode) {
     Exit ${LastExitCode}
 }
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
-Get-CimInstance -Class CIM_LogicalDisk -ErrorAction SilentlyContinue | `
-    Select-Object -ErrorAction SilentlyContinue `
-        -Property DeviceID, DriveType, VolumeName, `
-        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
-        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
-
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running build script for $BuildName build"
 powershell -exec bypass "${ScriptLocation}/${BuildScript}" "${BuildName}"
 # Save the build exit code, we want to delete the artifacts
 # even if the build fails.
 $BuildExitCode = $LastExitCode
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
-Get-CimInstance -Class CIM_LogicalDisk -ErrorAction SilentlyContinue | `
-    Select-Object -ErrorAction SilentlyContinue `
-        -Property DeviceID, DriveType, VolumeName, `
-        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
-        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
 # Remove most things from the artifacts directory. Kokoro copies these files
 # *very* slowly on Windows, and then ignores most of them :shrug:
