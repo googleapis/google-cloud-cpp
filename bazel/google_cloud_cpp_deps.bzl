@@ -41,6 +41,7 @@ def google_cloud_cpp_deps():
     if "rules_cc" not in native.existing_rules():
         http_archive(
             name = "rules_cc",
+            strip_prefix = "rules_cc-0.0.3",
             urls = [
                 "https://github.com/bazelbuild/rules_cc/releases/download/0.0.3/rules_cc-0.0.3.tar.gz",
             ],
