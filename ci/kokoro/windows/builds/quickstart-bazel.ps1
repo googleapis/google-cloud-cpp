@@ -37,9 +37,9 @@ $project_root = (Get-Item -Path ".\" -Verbose).FullName
 $libraries=@("bigquery", "bigtable", "iam", "pubsub", "spanner", "storage")
 $failures=@()
 ForEach($library in $libraries) {
+    Write-Host "`n$(Get-Date -Format o) Build quickstart for ${library}"
     Set-Location "${project_root}/google/cloud/${library}/quickstart"
     Fetch-Bazel-Dependencies
-    Write-Host "`n$(Get-Date -Format o) Build quickstart for ${library}"
     bazelisk $common_flags build $build_flags :quickstart
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "bazel build failed with exit code ${LastExitCode}."
