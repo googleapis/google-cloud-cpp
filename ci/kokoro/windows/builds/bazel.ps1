@@ -17,104 +17,22 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
-$BuildName = ""
-if ($args.count -eq 1) {
-    $BuildName = $args[0]
-} else {
+. ci/kokoro/windows/lib/bazel.ps1
+
+if ($args.count -ne 1) {
     Write-Host -ForegroundColor Red `
         "Aborting build, expected the build name as the first (and only) argument"
     Exit 1
 }
+$BuildName = $args[0]
 
-# Create output directory for Bazel. Bazel creates really long paths,
-# sometimes exceeding the Windows limits. Using a short name for the
-# root of the Bazel output directory works around this problem.
-# We do this in C: (the boot disk) because T: (the tmpfs / build disk)
-# is too small for the Bazel directory.
-$bazel_root="C:\b"
-if (-not (Test-Path $bazel_root)) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create bazel user root (${bazel_root})"
-    New-Item -ItemType Directory -Path $bazel_root | Out-Null
-}
+$common_flags = Get-Bazel-Common-Flags
 
-$common_flags = @("--output_user_root=${bazel_root}")
+Write-Bazel-Config
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
-$Env:USE_BAZEL_VERSION="5.3.1"
-bazelisk $common_flags version
+$build_flags = Get-Bazel-Build-Flags
 
-# Shutdown the Bazel server to release any locks
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
-bazelisk $common_flags shutdown
-
-$download_dir = "T:\tmp"
-if (Test-Path env:TEMP) {
-    $download_dir="${env:TEMP}"
-} elseif (-not (Test-Path "${download_dir}")) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create download directory ${download_dir}"
-    Make-Item -Type "Directory" ${download_dir}
-}
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Using ${download_dir} as download directory"
-
-$build_flags = @(
-    "--keep_going",
-    "--per_file_copt=^//google/cloud@-W3",
-    "--per_file_copt=^//google/cloud@-WX",
-    "--per_file_copt=^//google/cloud@-experimental:external",
-    "--per_file_copt=^//google/cloud@-external:W0",
-    "--per_file_copt=^//google/cloud@-external:anglebrackets",
-    # Disable warnings on generated proto files.
-    "--per_file_copt=.*\.pb\.cc@/wd4244"
-)
-
-$BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
-
-# If we have the right credentials, tell bazel to cache build results in a GCS
-# bucket. Note: this will not cache external deps, so the "fetch" below will
-# not hit this cache.
-if ((Test-Path env:KOKORO_GFILE_DIR) -and
-    (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
-    Write-Host -ForegroundColor Yellow "Using bazel remote cache: ${BAZEL_CACHE}/windows/${BuildName}"
-    $build_flags += @(
-        "--remote_cache=${BAZEL_CACHE}/windows/${BuildName}",
-        # Reduce the timeout for the remote cache from the 60s default:
-        #     https://docs.bazel.build/versions/main/command-line-reference.html#flag--remote_timeout
-        # If the build machine has network problems we would rather build
-        # locally over blocking the build for 60s. When adjusting this
-        # parameter, keep in mind that:
-        # - Some of the objects in the cache in the ~60MiB range.
-        # - Without tuning uploads run in the 50 MiB/s range, and downloads in
-        #   the 150 MiB/s range.
-        "--remote_timeout=5"
-      )
-    $build_flags += @("--google_credentials=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")
-    # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
-    # and https://github.com/bazelbuild/bazel/issues/3360
-    $build_flags += @("--experimental_guard_against_concurrent_changes")
-}
-
-# TODO(#9531) - enable release builds for MSVC 2017
-if (($BuildName -like "bazel-release*") -and ($BuildName -ne "bazel-release-2017")) {
-    $build_flags += ("-c", "opt")
-}
-
-ForEach($_ in (1, 2, 3)) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Fetch dependencies [$_]"
-    # Additional dependencies, these are not downloaded by `bazel fetch ...`,
-    # but are needed to compile the code
-    $external=@(
-        "@local_config_platform//...",
-        "@local_config_cc_toolchains//...",
-        "@local_config_sh//...",
-        "@go_sdk//...",
-        "@remotejdk11_win//:jdk"
-    )
-    bazelisk $common_flags fetch ${external} ...
-    if ($LastExitCode -eq 0) {
-        break
-    }
-    Start-Sleep -Seconds (60 * $_)
-}
+Fetch-Bazel-Dependencies
 
 # All the build_flags should be set by now, so we'll copy them, and add a few
 # more test-only flags.
