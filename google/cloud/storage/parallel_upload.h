@@ -32,6 +32,7 @@
 #include <mutex>
 #include <string>
 #include <tuple>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -1015,7 +1016,7 @@ using ParallelUploadFileSupportedOptions = google::cloud::internal::TypeList<
 template <typename T>
 using SupportsParallelOption =
     google::cloud::internal::TypeListHasType<ParallelUploadFileSupportedOptions,
-                                             T>;
+                                             std::decay_t<T>>;
 
 template <typename... Provided>
 struct IsOptionSupportedWithParallelUpload
