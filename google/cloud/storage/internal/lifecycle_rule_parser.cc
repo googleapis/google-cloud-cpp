@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
-#include "google/cloud/storage/internal/common_metadata_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 
 namespace google {
 namespace cloud {

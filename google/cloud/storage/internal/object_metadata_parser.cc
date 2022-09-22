@@ -13,10 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/object_metadata_parser.h"
-#include "google/cloud/storage/internal/common_metadata_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/internal/format_time_point.h"
 #include <nlohmann/json.hpp>
+#include <functional>
 
 namespace google {
 namespace cloud {
@@ -37,84 +38,235 @@ void SetIfNotEmpty(nlohmann::json& json, char const* key,
   }
   json[key] = value;
 }
+
+Status ParseAcl(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto i = json.find("acl");
+  if (i == json.end()) return Status{};
+  std::vector<ObjectAccessControl> acl;
+  for (auto const& kv : i->items()) {
+    auto parsed = ObjectAccessControlParser::FromJson(kv.value());
+    if (!parsed) return std::move(parsed).status();
+    acl.push_back(*std::move(parsed));
+  }
+  meta.set_acl(std::move(acl));
+  return Status{};
+}
+
+Status ParseComponentCount(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = internal::ParseIntField(json, "componentCount");
+  if (!v) return std::move(v).status();
+  meta.set_component_count(*v);
+  return Status{};
+}
+
+Status ParseCustomTime(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto f = json.find("customTime");
+  if (f == json.end()) return Status{};
+  auto v = internal::ParseTimestampField(json, "customTime");
+  if (!v) return std::move(v).status();
+  meta.set_custom_time(*v);
+  return Status{};
+}
+
+Status ParseCustomerEncryption(ObjectMetadata& meta,
+                               nlohmann::json const& json) {
+  auto f = json.find("customerEncryption");
+  if (f == json.end()) return Status{};
+  CustomerEncryption e;
+  e.encryption_algorithm = f->value("encryptionAlgorithm", "");
+  e.key_sha256 = f->value("keySha256", "");
+  meta.set_customer_encryption(std::move(e));
+  return Status{};
+}
+
+Status ParseEventBasedHold(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = internal::ParseBoolField(json, "eventBasedHold");
+  if (!v) return std::move(v).status();
+  meta.set_event_based_hold(*v);
+  return Status{};
+}
+
+Status ParseGeneration(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = internal::ParseLongField(json, "generation");
+  if (!v) return std::move(v).status();
+  meta.set_generation(*v);
+  return Status{};
+}
+
+Status ParseMetageneration(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = internal::ParseLongField(json, "metageneration");
+  if (!v) return std::move(v).status();
+  meta.set_metageneration(*v);
+  return Status{};
+}
+
+Status ParseMetadata(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto f = json.find("metadata");
+  if (f == json.end()) return Status{};
+  std::map<std::string, std::string> metadata;
+  for (auto const& kv : f->items()) {
+    metadata.emplace(kv.key(), kv.value().get<std::string>());
+  }
+  meta.mutable_metadata() = std::move(metadata);
+  return Status{};
+}
+
+Status ParseOwner(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto f = json.find("owner");
+  if (f == json.end()) return Status{};
+  Owner owner;
+  owner.entity = f->value("entity", "");
+  owner.entity_id = f->value("entityId", "");
+  meta.set_owner(std::move(owner));
+  return Status{};
+}
+
+Status ParseRetentionExpirationTime(ObjectMetadata& meta,
+                                    nlohmann::json const& json) {
+  auto v = internal::ParseTimestampField(json, "retentionExpirationTime");
+  if (!v) return std::move(v).status();
+  meta.set_retention_expiration_time(*v);
+  return Status{};
+}
+
+Status ParseSize(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = internal::ParseUnsignedLongField(json, "size");
+  if (!v) return std::move(v).status();
+  meta.set_size(*v);
+  return Status{};
+}
+
+Status ParseTemporaryHold(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = internal::ParseBoolField(json, "temporaryHold");
+  if (!v) return std::move(v).status();
+  meta.set_temporary_hold(*v);
+  return Status{};
+}
+
+Status ParseTimeCreated(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = ParseTimestampField(json, "timeCreated");
+  if (!v) return std::move(v).status();
+  meta.set_time_created(*std::move(v));
+  return Status{};
+}
+
+Status ParseTimeDeleted(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = ParseTimestampField(json, "timeDeleted");
+  if (!v) return std::move(v).status();
+  meta.set_time_deleted(*std::move(v));
+  return Status{};
+}
+
+Status ParseTimeStorageClassUpdated(ObjectMetadata& meta,
+                                    nlohmann::json const& json) {
+  auto v = ParseTimestampField(json, "timeStorageClassUpdated");
+  if (!v) return std::move(v).status();
+  meta.set_time_storage_class_updated(*std::move(v));
+  return Status{};
+}
+
+Status ParseUpdated(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = ParseTimestampField(json, "updated");
+  if (!v) return std::move(v).status();
+  meta.set_updated(*std::move(v));
+  return Status{};
+}
+
 }  // namespace
 
 StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
     nlohmann::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  ObjectMetadata result{};
-  auto status = CommonMetadataParser<ObjectMetadata>::FromJson(result, json);
-  if (!status.ok()) return status;
+  if (!json.is_object()) return Status(StatusCode::kInvalidArgument, __func__);
 
-  if (json.count("acl") != 0) {
-    for (auto const& kv : json["acl"].items()) {
-      auto parsed = ObjectAccessControlParser::FromJson(kv.value());
-      if (!parsed.ok()) {
-        return std::move(parsed).status();
-      }
-      result.acl_.emplace_back(std::move(*parsed));
-    }
+  using Parser = std::function<Status(ObjectMetadata&, nlohmann::json const&)>;
+  Parser parsers[] = {
+      ParseAcl,
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_bucket(json.value("bucket", ""));
+        return Status{};
+      },
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_cache_control(json.value("cacheControl", ""));
+        return Status{};
+      },
+      ParseComponentCount,
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_content_disposition(json.value("contentDisposition", ""));
+        return Status{};
+      },
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_content_encoding(json.value("contentEncoding", ""));
+        return Status{};
+      },
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_content_language(json.value("contentLanguage", ""));
+        return Status{};
+      },
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_content_type(json.value("contentType", ""));
+        return Status{};
+      },
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_crc32c(json.value("crc32c", ""));
+        return Status{};
+      },
+      ParseCustomTime,
+      ParseCustomerEncryption,
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_etag(json.value("etag", ""));
+        return Status{};
+      },
+      ParseEventBasedHold,
+      ParseGeneration,
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_id(json.value("id", ""));
+        return Status{};
+      },
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_kind(json.value("kind", ""));
+        return Status{};
+      },
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_kms_key_name(json.value("kmsKeyName", ""));
+        return Status{};
+      },
+      ParseMetageneration,
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_md5_hash(json.value("md5Hash", ""));
+        return Status{};
+      },
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_media_link(json.value("mediaLink", ""));
+        return Status{};
+      },
+      ParseMetadata,
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_name(json.value("name", ""));
+        return Status{};
+      },
+      ParseOwner,
+      ParseRetentionExpirationTime,
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_self_link(json.value("selfLink", ""));
+        return Status{};
+      },
+      [](ObjectMetadata& meta, nlohmann::json const& json) {
+        meta.set_storage_class(json.value("storageClass", ""));
+        return Status{};
+      },
+      ParseSize,
+      ParseTemporaryHold,
+      ParseTimeCreated,
+      ParseTimeDeleted,
+      ParseTimeStorageClassUpdated,
+      ParseUpdated,
+  };
+  ObjectMetadata meta;
+  for (auto const& p : parsers) {
+    auto status = p(meta, json);
+    if (!status.ok()) return status;
   }
-
-  result.bucket_ = json.value("bucket", "");
-  result.cache_control_ = json.value("cacheControl", "");
-  auto component_count = internal::ParseIntField(json, "componentCount");
-  if (!component_count) return std::move(component_count).status();
-  result.component_count_ = *component_count;
-  result.content_disposition_ = json.value("contentDisposition", "");
-  result.content_encoding_ = json.value("contentEncoding", "");
-  result.content_language_ = json.value("contentLanguage", "");
-  result.content_type_ = json.value("contentType", "");
-  result.crc32c_ = json.value("crc32c", "");
-  if (json.count("customerEncryption") != 0) {
-    auto const& field = json["customerEncryption"];
-    CustomerEncryption e;
-    e.encryption_algorithm = field.value("encryptionAlgorithm", "");
-    e.key_sha256 = field.value("keySha256", "");
-    result.customer_encryption_ = std::move(e);
-  }
-  auto event_based_hold = internal::ParseBoolField(json, "eventBasedHold");
-  if (!event_based_hold) return std::move(event_based_hold).status();
-  result.event_based_hold_ = *event_based_hold;
-  auto generation = internal::ParseLongField(json, "generation");
-  if (!generation) return std::move(generation).status();
-  result.generation_ = *generation;
-  result.kms_key_name_ = json.value("kmsKeyName", "");
-  result.md5_hash_ = json.value("md5Hash", "");
-  result.media_link_ = json.value("mediaLink", "");
-  if (json.count("metadata") > 0) {
-    for (auto const& kv : json["metadata"].items()) {
-      result.metadata_.emplace(kv.key(), kv.value().get<std::string>());
-    }
-  }
-  auto expiration_time =
-      internal::ParseTimestampField(json, "retentionExpirationTime");
-  if (!expiration_time) return std::move(expiration_time).status();
-  result.retention_expiration_time_ = *expiration_time;
-  auto size = internal::ParseUnsignedLongField(json, "size");
-  if (!size) return std::move(size).status();
-  result.size_ = *size;
-  auto temporary_hold = internal::ParseBoolField(json, "temporaryHold");
-  if (!temporary_hold) return std::move(temporary_hold).status();
-  result.temporary_hold_ = *temporary_hold;
-  auto time_deleted = internal::ParseTimestampField(json, "timeDeleted");
-  if (!time_deleted) return std::move(time_deleted).status();
-  result.time_deleted_ = *time_deleted;
-  auto time_storage_class_updated =
-      internal::ParseTimestampField(json, "timeStorageClassUpdated");
-  if (!time_storage_class_updated)
-    return std::move(time_storage_class_updated).status();
-  result.time_storage_class_updated_ = *time_storage_class_updated;
-  if (json.count("customTime") == 0) {
-    result.custom_time_.reset();
-  } else {
-    auto v = internal::ParseTimestampField(json, "customTime");
-    if (!v) return std::move(v).status();
-    result.custom_time_ = *v;
-  }
-  return result;
+  return meta;
 }
 
 StatusOr<ObjectMetadata> ObjectMetadataParser::FromString(

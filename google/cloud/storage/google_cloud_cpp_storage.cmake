@@ -208,6 +208,7 @@ add_library(
     object_write_stream.h
     options.h
     override_default_project.h
+    owner.h
     parallel_upload.cc
     parallel_upload.h
     policy_document.cc

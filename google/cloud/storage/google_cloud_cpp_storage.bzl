@@ -122,6 +122,7 @@ google_cloud_cpp_storage_hdrs = [
     "object_write_stream.h",
     "options.h",
     "override_default_project.h",
+    "owner.h",
     "parallel_upload.h",
     "policy_document.h",
     "retry_policy.h",

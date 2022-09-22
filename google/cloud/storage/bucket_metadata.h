@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_METADATA_H
 
 #include "google/cloud/storage/bucket_access_control.h"
-#include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/patch_builder.h"
 #include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/object_access_control.h"
+#include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
 #include "absl/types/optional.h"
