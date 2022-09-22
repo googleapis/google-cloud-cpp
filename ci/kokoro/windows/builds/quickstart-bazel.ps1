@@ -17,14 +17,14 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
-. ci/kokoro/windows/lib/bazel.ps1
-
 if ($args.count -ne 1) {
     Write-Host -ForegroundColor Red `
         "Aborting build, expected the build name as the first (and only) argument"
     Exit 1
 }
 $BuildName = $args[0]
+
+. ci/kokoro/windows/lib/bazel.ps1
 
 $common_flags = Get-Bazel-Common-Flags
 
@@ -34,19 +34,19 @@ $build_flags = Get-Bazel-Build-Flags
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
 
-$libraries=("bigquery", "bigtable", "iam", "pubsub", "spanner", "storage")
-$failures=()
+$libraries=@("bigquery", "bigtable", "iam", "pubsub", "spanner", "storage")
+$failures=@()
 ForEach($library in $libraries) {
     Set-Location "${project_root}/google/cloud/${library}/quickstart"
     Fetch-Bazel-Dependencies
-    Write-Host -ForegroundColor Yellow "$(Get-Date -Format o) Build quickstart for ${library}"
+    Write-Host "`n$(Get-Date -Format o) Build quickstart for ${library}"
     bazelisk $common_flags build $build_flags :quickstart
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "bazel build failed with exit code ${LastExitCode}."
         $failures += (${library})
     }
     # Shutdown the Bazel server to release any locks
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
+    Write-Host "$(Get-Date -Format o) Shutting down Bazel server"
     bazelisk $common_flags shutdown
     bazelisk shutdown 
     Set-Location "${project_root}"

@@ -31,7 +31,7 @@ $download_dir = "T:\tmp"
 if (Test-Path env:TEMP) {
     $download_dir="${env:TEMP}"
 } elseif (-not $download_dir) {
-    Write-Host -ForegroundColor Yellow "$(Get-Date -Format o) Create temporary directory ${download_dir}"
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create temporary directory ${download_dir}"
     Make-Item -Type "Directory" ${download_dir}
 }
 
@@ -86,11 +86,11 @@ function Get-Bazel-Build-Flags {
 
 function Write-Bazel-Config {
     $common_flags = Get-Bazel-Common-Flags
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
+    Write-Host "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
     bazelisk $common_flags version
 
     # Shutdown the Bazel server to release any locks
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
+    Write-Host "$(Get-Date -Format o) Shutting down Bazel server"
     bazelisk $common_flags shutdown
 }
 
@@ -106,13 +106,14 @@ function Fetch-Bazel-Dependencies {
         "@remotejdk11_win//:jdk"
     )
     ForEach($_ in (1, 2)) {
-        Write-Host -ForegroundColor "`n$(Get-Date -Format o) Fetch dependencies [$_]"
+        Write-Host "$(Get-Date -Format o) Fetch dependencies [$_]"
         bazelisk $common_flags fetch ${external} ...
         if ($LastExitCode -eq 0) {
             return
         }
-        Write-Host -ForegroundColor "`n$(Get-Date -Format o) Fetch attemp $_ failed, trying again"
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Fetch attemp $_ failed, trying again"
         Start-Sleep -Seconds (60 * $_)
     }    
+    Write-Host "$(Get-Date -Format o) Fetch dependencies (last attempt)"
     bazelisk $common_flags fetch ${external} ...
 }

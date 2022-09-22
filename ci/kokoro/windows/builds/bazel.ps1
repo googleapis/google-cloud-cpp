@@ -17,14 +17,14 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
-. ci/kokoro/windows/lib/bazel.ps1
-
 if ($args.count -ne 1) {
     Write-Host -ForegroundColor Red `
         "Aborting build, expected the build name as the first (and only) argument"
     Exit 1
 }
 $BuildName = $args[0]
+
+. ci/kokoro/windows/lib/bazel.ps1
 
 $common_flags = Get-Bazel-Common-Flags
 
@@ -39,15 +39,14 @@ Fetch-Bazel-Dependencies
 $test_flags = $build_flags
 $test_flags += @("--test_output=errors", "--verbose_failures=true")
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling and running unit tests"
+Write-Host "`n$(Get-Date -Format o) Compiling and running unit tests"
 bazelisk $common_flags test $test_flags --test_tag_filters=-integration-test ...
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
 }
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling extra programs"
-Write-Host -ForegroundColor Yellow bazel $common_flags build $build_flags ...
+Write-Host "`n$(Get-Date -Format o) Compiling extra programs with bazel $common_flags build $build_flags ..."
 bazelisk $common_flags build $build_flags ...
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel build failed with exit code ${LastExitCode}."
@@ -78,7 +77,7 @@ function Invoke-gRPC-Quickstart {
 }
 
 if (Test-Integration-Enabled) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart prorams"
+    Write-Host "`n$(Get-Date -Format o) Running minimal quickstart prorams"
     Install-Roots-Pem
     ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
     ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
@@ -87,8 +86,8 @@ if (Test-Integration-Enabled) {
 }
 
 # Shutdown the Bazel server to release any locks
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
+Write-Host "$(Get-Date -Format o) Shutting down Bazel server"
 bazelisk $common_flags shutdown
 bazelisk shutdown
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"
+Write-Host "`n$(Get-Date -Format o) DONE"
