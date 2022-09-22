@@ -30,7 +30,7 @@ $common_flags = Get-Bazel-Common-Flags
 
 Write-Bazel-Config
 
-$build_flags = Get-Bazel-Build-Flags
+$build_flags = Get-Bazel-Build-Flags "${BuildName}"
 
 Fetch-Bazel-Dependencies
 

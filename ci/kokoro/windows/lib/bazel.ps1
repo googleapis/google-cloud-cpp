@@ -40,6 +40,7 @@ function Get-Bazel-Common-Flags {
 }
 
 function Get-Bazel-Build-Flags {
+    param ($BuildName)
     # These flags are shared by all builds
     $build_flags = @(
         "--keep_going",
@@ -51,36 +52,40 @@ function Get-Bazel-Build-Flags {
         # Disable warnings on generated proto files.
         "--per_file_copt=.*\.pb\.cc@/wd4244"
     )
-    $BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
-
-    # If we have the right credentials, tell bazel to cache build results in a GCS
-    # bucket. Note: this will not cache external deps, so the "fetch" below will
-    # not hit this cache.
-    if ((Test-Path env:KOKORO_GFILE_DIR) -and
-        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
-        Write-Host "$(Get-Date -Format o) Using bazel remote cache: ${BAZEL_CACHE}/windows/${BuildName}"
-        $build_flags += @(
-            "--remote_cache=${BAZEL_CACHE}/windows/${BuildName}",
-            # Reduce the timeout for the remote cache from the 60s default:
-            #     https://docs.bazel.build/versions/main/command-line-reference.html#flag--remote_timeout
-            # If the build machine has network problems we would rather build
-            # locally over blocking the build for 60s. When adjusting this
-            # parameter, keep in mind that:
-            # - Some of the objects in the cache in the ~60MiB range.
-            # - Without tuning uploads run in the 50 MiB/s range, and downloads in
-            #   the 150 MiB/s range.
-            "--remote_timeout=5"
-        )
-        $build_flags += @("--google_credentials=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")
-        # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
-        # and https://github.com/bazelbuild/bazel/issues/3360
-        $build_flags += @("--experimental_guard_against_concurrent_changes")
-    }
-
     # TODO(#9531) - enable release builds for MSVC 2017
     if (($BuildName -like "bazel-release*") -and ($BuildName -ne "bazel-release-2017")) {
         $build_flags += ("-c", "opt")
     }
+
+    if (-not (Test-Path env:KOKORO_GFILE_DIR)) {
+        return $build_flags
+    }
+    if (-not (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
+        return $build_flags
+    }
+
+    # If we have the right credentials, tell bazel to cache build results in a GCS
+    # bucket. Note: this will not cache external deps, so the "fetch" below will
+    # not hit this cache.
+    Write-Host "$(Get-Date -Format o) Using bazel remote cache: ${BAZEL_CACHE}/windows/${BuildName}"
+    $BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
+    $build_flags += @(
+        "--remote_cache=${BAZEL_CACHE}/windows/${BuildName}",
+        # Reduce the timeout for the remote cache from the 60s default:
+        #     https://docs.bazel.build/versions/main/command-line-reference.html#flag--remote_timeout
+        # If the build machine has network problems we would rather build
+        # locally over blocking the build for 60s. When adjusting this
+        # parameter, keep in mind that:
+        # - Some of the objects in the cache in the ~60MiB range.
+        # - Without tuning uploads run in the 50 MiB/s range, and downloads in
+        #   the 150 MiB/s range.
+        "--remote_timeout=5",
+        "--google_credentials=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
+        # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
+        # and https://github.com/bazelbuild/bazel/issues/3360
+        "--experimental_guard_against_concurrent_changes"
+    )
+
     return $build_flags
 }
 
