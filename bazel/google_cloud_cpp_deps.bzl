@@ -42,9 +42,9 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "rules_cc",
             urls = [
-                "https://github.com/bazelbuild/rules_cc/releases/download/0.0.1/rules_cc-0.0.1.tar.gz",
+                "https://github.com/bazelbuild/rules_cc/releases/download/0.0.3/rules_cc-0.0.3.tar.gz",
             ],
-            sha256 = "4dccbfd22c0def164c8f47458bd50e0c7148f3d92002cdb459c2a96a68498241",
+            sha256 = "89a465c1866361d825fb5797ba9fae0b630612319594bc8be5b093a6d24aecbe",
         )
 
     # Load Abseil
