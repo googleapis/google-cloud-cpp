@@ -113,7 +113,7 @@ function Fetch-Bazel-Dependencies {
         }
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Fetch attempt $_ failed, trying again"
         Start-Sleep -Seconds (60 * $_)
-    }    
+    }
     Write-Host "$(Get-Date -Format o) Fetch dependencies (last attempt)"
     bazelisk $common_flags fetch ${external} ...
 }

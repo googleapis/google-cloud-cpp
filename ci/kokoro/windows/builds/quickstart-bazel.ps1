@@ -48,7 +48,7 @@ ForEach($library in $libraries) {
     # Shutdown the Bazel server to release any locks
     Write-Host "$(Get-Date -Format o) Shutting down Bazel server"
     bazelisk $common_flags shutdown
-    bazelisk shutdown 
+    bazelisk shutdown
     Set-Location "${project_root}"
 }
 
