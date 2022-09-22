@@ -57,7 +57,7 @@ void CreateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
   request.set_database_dialect(
       google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
   auto db = client.CreateDatabase(request).get();
-  if (!db) throw std::runtime_error(db.status().message());
+  if (!db) throw std::move(db).status();
   std::cout << "Database " << db->name() << " created.\n";
 }
 // [END spanner_postgresql_create_database]
@@ -75,7 +75,7 @@ void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
       client.UpdateDatabaseDdl(database.FullName(), statements).get();
   google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
       client, database, metadata.status());              //! TODO(#4758)
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "Column added.\nNew DDL:\n" << metadata->DebugString();
 }
 // [END spanner_postgresql_add_column]
@@ -105,7 +105,7 @@ void InsertData(google::cloud::spanner::Client client) {
           .Build();
   auto commit = client.Commit(google::cloud::spanner::Mutations{
       insert_singers, insert_albums, insert_users});
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Insert was successful.\n";
 }
 
@@ -118,8 +118,8 @@ void QueryWithParameter(google::cloud::spanner::Client client) {
       {{"p1", google::cloud::spanner::Value("S%")}});
   using RowType = std::tuple<std::int64_t, std::string, std::string>;
   auto rows = client.ExecuteQuery(std::move(sql));
-  for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row) << "\t";
     std::cout << "FirstName: " << std::get<1>(*row) << "\t";
     std::cout << "LastName: " << std::get<2>(*row) << "\n";
@@ -178,7 +178,7 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
         if (!update) return std::move(update).status();
         return google::cloud::spanner::Mutations{};
       });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Update was successful.\n";
 }
 // [END spanner_postgresql_dml_getting_started_update]
@@ -214,7 +214,7 @@ void BatchDml(google::cloud::spanner::Client client) {
         if (!result->status.ok()) return result->status;
         return google::cloud::spanner::Mutations{};
       });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Update was successful.\n";
 }
 // [END spanner_postgresql_batch_dml]
@@ -254,7 +254,7 @@ void CaseSensitivity(
       admin_client.UpdateDatabaseDdl(database.FullName(), statements).get();
   google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
       admin_client, database, metadata.status());        //! TODO(#4758)
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "Tables created.\nNew DDL:\n" << metadata->DebugString();
 
   // Column names in mutations are always case-insensitive, regardless
@@ -267,7 +267,7 @@ void CaseSensitivity(
           .Build();
   auto commit =
       client.Commit(google::cloud::spanner::Mutations{insert_singers});
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Insert was successful.\n";
 
   // DML statements must also follow the PostgreSQL case rules.
@@ -283,13 +283,12 @@ void CaseSensitivity(
         if (!insert) return std::move(insert).status();
         return google::cloud::spanner::Mutations{};
       });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Insert was successful.\n";
 
   auto sql = google::cloud::spanner::SqlStatement("SELECT * FROM Singers");
-  auto rows = client.ExecuteQuery(std::move(sql));
-  for (auto const& row : rows) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : client.ExecuteQuery(std::move(sql))) {
+    if (!row) throw std::move(row).status();
 
     // SingerId is automatically folded to lower case. Accessing the
     // column by its name must therefore use all lower-case letters.
@@ -321,9 +320,8 @@ void CaseSensitivity(
           CONCAT("FirstName", ' '::VARCHAR, "LastName") AS "FullName"
           FROM Singers
   )""");
-  rows = client.ExecuteQuery(std::move(sql));
-  for (auto const& row : rows) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : client.ExecuteQuery(std::move(sql))) {
+    if (!row) throw std::move(row).status();
 
     // The aliases are double-quoted and therefore retain their mixed case.
     if (auto singer_id = row->get<std::int64_t>("SingerId")) {
@@ -358,8 +356,8 @@ void CastDataType(google::cloud::spanner::Client client) {
                  google::cloud::spanner::Bytes, double, bool,
                  google::cloud::spanner::Timestamp>;
   auto rows = client.ExecuteQuery(std::move(sql));
-  for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "String:    " << std::get<0>(*row) << "\n";
     std::cout << "Int:       " << std::get<1>(*row) << "\n";
     std::cout << "Decimal:   " << std::get<2>(*row) << "\n";
@@ -393,7 +391,7 @@ void OrderNulls(google::cloud::spanner::Client client) {
         if (!insert) return std::move(insert).status();
         return google::cloud::spanner::Mutations{};
       });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Insertion of NULL LastName was successful.\n";
 
   using RowType = std::tuple<absl::optional<std::string>>;
@@ -402,8 +400,8 @@ void OrderNulls(google::cloud::spanner::Client client) {
         R"""(SELECT "LastName" FROM Singers ORDER BY "LastName")""" + option);
     std::cout << sql.sql() << "\n";
     auto rows = client.ExecuteQuery(std::move(sql));
-    for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
-      if (!row) throw std::runtime_error(row.status().message());
+    for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+      if (!row) throw std::move(row).status();
       std::cout << "    ";
       if (std::get<0>(*row).has_value()) {
         std::cout << *std::get<0>(*row);
@@ -439,7 +437,7 @@ void DmlWithParameters(google::cloud::spanner::Client client) {
         dml_result = *std::move(insert);
         return google::cloud::spanner::Mutations{};
       });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Inserted " << dml_result.RowsModified() << " singers.\n";
 }
 // [END spanner_postgresql_dml_with_parameters]
@@ -455,8 +453,8 @@ void Functions(google::cloud::spanner::Client client) {
   )""");
   using RowType = std::tuple<google::cloud::spanner::Timestamp>;
   auto rows = client.ExecuteQuery(std::move(sql));
-  for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "1284352323 seconds after the epoch is " << std::get<0>(*row)
               << "\n";
   }
@@ -493,7 +491,7 @@ void InterleavedTable(google::cloud::spanner_admin::DatabaseAdminClient client,
       client.UpdateDatabaseDdl(database.FullName(), statements).get();
   google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
       client, database, metadata.status());              //! TODO(#4758)
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "Tables created.\nNew DDL:\n" << metadata->DebugString();
 }
 // [END spanner_postgresql_interleaved_table]
@@ -513,7 +511,7 @@ void CreateStoringIndex(
       client.UpdateDatabaseDdl(database.FullName(), statements).get();
   google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
       client, database, metadata.status());              //! TODO(#4758)
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "Index added.\nNew DDL:\n" << metadata->DebugString();
 }
 // [END spanner_postgresql_create_storing_index]
@@ -537,7 +535,7 @@ void InformationSchema(
       admin_client.UpdateDatabaseDdl(database.FullName(), statements).get();
   google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
       admin_client, database, metadata.status());        //! TODO(#4758)
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "Table created.\nNew DDL:\n" << metadata->DebugString();
 
   // Get all the user tables in the database. PostgreSQL uses the `public`
@@ -556,8 +554,8 @@ void InformationSchema(
                  absl::optional<std::string>, absl::optional<std::string>,
                  absl::optional<std::string>>;
   auto rows = client.ExecuteQuery(std::move(sql));
-  for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::string user_defined_type = "null";
     if (std::get<3>(*row).has_value()) {
       user_defined_type = std::get<3>(*row).value() + "." +
@@ -592,7 +590,7 @@ void NumericDataType(google::cloud::spanner::Client client) {
         dml_result = *std::move(insert);
         return google::cloud::spanner::Mutations{};
       });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Inserted " << dml_result.RowsModified() << " venue(s).\n";
 
   // Insert a Venue with a NULL value for the Revenue column.
@@ -613,7 +611,7 @@ void NumericDataType(google::cloud::spanner::Client client) {
         dml_result = *std::move(insert);
         return google::cloud::spanner::Mutations{};
       });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Inserted " << dml_result.RowsModified() << " venue(s)"
             << " with NULL revenue.\n";
 
@@ -636,7 +634,7 @@ void NumericDataType(google::cloud::spanner::Client client) {
         dml_result = *std::move(insert);
         return google::cloud::spanner::Mutations{};
       });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Inserted " << dml_result.RowsModified() << " venue(s)"
             << " with NaN revenue.\n";
 
@@ -650,7 +648,7 @@ void NumericDataType(google::cloud::spanner::Client client) {
                       google::cloud::spanner::MakePgNumeric("NaN").value())
           .Build();
   commit = client.Commit(google::cloud::spanner::Mutations{insert_venues});
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Inserted 2 venues using mutations at "
             << commit->commit_timestamp << ".\n";
 
@@ -661,8 +659,8 @@ void NumericDataType(google::cloud::spanner::Client client) {
   using RowType = std::tuple<std::string,
                              absl::optional<google::cloud::spanner::PgNumeric>>;
   auto rows = client.ExecuteQuery(std::move(sql));
-  for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "Revenue of " << std::get<0>(*row) << ": ";
     if (std::get<1>(*row).has_value()) {
       std::cout << *std::get<1>(*row);
@@ -685,7 +683,7 @@ void PartitionedDml(google::cloud::spanner::Client client) {
       DELETE FROM users WHERE active = FALSE
   )""");
   auto result = client.ExecutePartitionedDml(std::move(sql));
-  if (!result) throw std::runtime_error(result.status().message());
+  if (!result) throw std::move(result).status();
   // The returned count is the lower bound on the number of rows modified.
   std::cout << "Deleted at least " << result->row_count_lower_bound
             << " inactive users\n";
@@ -695,7 +693,7 @@ void PartitionedDml(google::cloud::spanner::Client client) {
 void DropDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
                   google::cloud::spanner::Database const& database) {
   auto status = client.DropDatabase(database.FullName());
-  if (!status.ok()) throw std::runtime_error(status.message());
+  if (!status.ok()) throw std::move(status);
   std::cout << "Database " << database << " dropped.\n";
 }
 
@@ -737,7 +735,7 @@ void CreateTables(google::cloud::spanner_admin::DatabaseAdminClient client,
       client.UpdateDatabaseDdl(database.FullName(), statements).get();
   google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
       client, database, metadata.status());              //! TODO(#4758)
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "Tables created.\nNew DDL:\n" << metadata->DebugString();
 }
 
@@ -755,7 +753,7 @@ void DropTables(google::cloud::spanner_admin::DatabaseAdminClient client,
       client.UpdateDatabaseDdl(database.FullName(), statements).get();
   google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
       client, database, metadata.status());              //! TODO(#4758)
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "Tables dropped.\nNew DDL:\n" << metadata->DebugString();
 }
 
@@ -982,8 +980,11 @@ int main(int ac, char* av[]) try {
                              " <command> [<argument> ...]" + extra_help);
   }
   return RunOneCommand({av, av + ac}, extra_help);
+} catch (google::cloud::Status const& status) {
+  std::cerr << "\n" << status << "\n";
+  google::cloud::LogSink::Instance().Flush();
+  return 1;
 } catch (std::exception const& ex) {
   std::cerr << "\n" << ex.what() << "\n";
-  google::cloud::LogSink::Instance().Flush();
   return 1;
 }

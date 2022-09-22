@@ -34,9 +34,8 @@ this library.
 ```cc
 #include "google/cloud/spanner/client.h"
 #include <iostream>
-#include <stdexcept>
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   if (argc != 4) {
     std::cerr << "Usage: " << argv[0]
               << " project-id instance-id database-id\n";
@@ -51,14 +50,14 @@ int main(int argc, char* argv[]) try {
       client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
 
   for (auto const& row : spanner::StreamOf<std::tuple<std::string>>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+    if (!row) {
+      std::cerr << row.status() << "\n";
+      return 1;
+    }
     std::cout << std::get<0>(*row) << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
-  return 1;
 }
 ```
 
