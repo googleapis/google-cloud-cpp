@@ -63,6 +63,19 @@ inline bool operator>=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
   return std::rel_ops::operator>=(lhs, rhs);
 }
 
+///@{
+/**
+ * @name Well-known values for the project_team().team field..
+ *
+ * The following functions are handy to avoid common typos in the team names.
+ * We use functions instead of enums because enums are not backwards
+ * compatible and are brittle to changes in the server-side.
+ */
+inline std::string TEAM_EDITORS() { return "editors"; }
+inline std::string TEAM_OWNERS() { return "owners"; }
+inline std::string TEAM_VIEWERS() { return "viewers"; }
+///@}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud

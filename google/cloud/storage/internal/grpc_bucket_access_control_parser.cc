@@ -45,22 +45,21 @@ BucketAccessControl GrpcBucketAccessControlParser::FromProto(
     google::storage::v2::BucketAccessControl acl,
     std::string const& bucket_name) {
   BucketAccessControl result;
-  result.kind_ = "storage#bucketAccessControl";
-  result.bucket_ = bucket_name;
-  result.domain_ = std::move(*acl.mutable_domain());
-  result.email_ = std::move(*acl.mutable_email());
-  result.entity_ = std::move(*acl.mutable_entity());
-  result.entity_id_ = std::move(*acl.mutable_entity_id());
-  result.id_ = std::move(*acl.mutable_id());
+  result.set_kind("storage#bucketAccessControl");
+  result.set_bucket(bucket_name);
+  result.set_domain(std::move(*acl.mutable_domain()));
+  result.set_email(std::move(*acl.mutable_email()));
+  result.set_entity(std::move(*acl.mutable_entity()));
+  result.set_entity_id(std::move(*acl.mutable_entity_id()));
+  result.set_id(std::move(*acl.mutable_id()));
   if (acl.has_project_team()) {
-    result.project_team_ = ProjectTeam{
+    result.set_project_team(ProjectTeam{
         std::move(*acl.mutable_project_team()->mutable_project_number()),
         std::move(*acl.mutable_project_team()->mutable_team()),
-    };
+    });
   }
-  result.role_ = std::move(*acl.mutable_role());
-  result.self_link_.clear();
-  result.etag_ = std::move(*acl.mutable_etag());
+  result.set_role(std::move(*acl.mutable_role()));
+  result.set_etag(std::move(*acl.mutable_etag()));
 
   return result;
 }

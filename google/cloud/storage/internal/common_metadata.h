@@ -29,10 +29,6 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-struct GrpcBucketMetadataParser;
-struct GrpcObjectMetadataParser;
-template <typename Derived>
-struct CommonMetadataParser;
 
 /**
  * Defines common attributes to both `BucketMetadata` and `ObjectMetadata`.
@@ -93,7 +89,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
 
 template <typename T>
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This class will be removed shortly after 2023-06-01")
+    "This function will be removed shortly after 2023-06-01")
 inline bool
 operator==(CommonMetadata<T> const& lhs, CommonMetadata<T> const& rhs) {
   // etag changes each time the metadata changes, so that is the best field
@@ -112,7 +108,7 @@ operator==(CommonMetadata<T> const& lhs, CommonMetadata<T> const& rhs) {
 
 template <typename T>
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This class will be removed shortly after 2023-06-01")
+    "This function will be removed shortly after 2023-06-01")
 inline bool
 operator!=(CommonMetadata<T> const& lhs, CommonMetadata<T> const& rhs) {
   return std::rel_ops::operator!=(lhs, rhs);

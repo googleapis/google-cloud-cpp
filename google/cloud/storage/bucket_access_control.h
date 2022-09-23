@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_ACCESS_CONTROL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_ACCESS_CONTROL_H
 
-#include "google/cloud/storage/internal/access_control_common.h"
 #include "google/cloud/storage/internal/patch_builder.h"
+#include "google/cloud/storage/project_team.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
 #include <string>
@@ -40,40 +40,117 @@ struct GrpcBucketAccessControlParser;
  * https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls for
  *     an authoritative source of field definitions.
  */
-class BucketAccessControl : private internal::AccessControlCommon {
+class BucketAccessControl {
  public:
   BucketAccessControl() = default;
 
-  using AccessControlCommon::ROLE_OWNER;
-  using AccessControlCommon::ROLE_READER;
-  using AccessControlCommon::TEAM_EDITORS;
-  using AccessControlCommon::TEAM_OWNERS;
-  using AccessControlCommon::TEAM_VIEWERS;
+  ///@{
+  /**
+   * @name Well-known values for the role() field..
+   *
+   * The following functions are handy to avoid common typos in the role names.
+   * We use functions instead of enums because enums are not backwards
+   * compatible and are brittle to changes in the server-side.
+   */
+  static std::string ROLE_OWNER() { return "OWNER"; }
+  static std::string ROLE_READER() { return "READER"; }
+  ///@}
 
-  using AccessControlCommon::bucket;
-  using AccessControlCommon::domain;
-  using AccessControlCommon::email;
+  ///@{
+  /**
+   * @name Well-known values for the project_team().team field..
+   *
+   * The following functions are handy to avoid common typos in the team names.
+   * We use functions instead of enums because enums are not backwards
+   * compatible and are brittle to changes in the server-side.
+   */
+  static std::string TEAM_EDITORS() { return storage::TEAM_EDITORS(); }
+  static std::string TEAM_OWNERS() { return storage::TEAM_OWNERS(); }
+  static std::string TEAM_VIEWERS() { return storage::TEAM_VIEWERS(); }
+  ///@}
 
-  using AccessControlCommon::entity;
+  ///@{
+  /**
+   * @name Accessors.
+   */
+  std::string const& bucket() const { return bucket_; }
+  std::string const& domain() const { return domain_; }
+  std::string const& email() const { return email_; }
+  std::string const& entity() const { return entity_; }
+  std::string const& entity_id() const { return entity_id_; }
+  std::string const& etag() const { return etag_; }
+  std::string const& id() const { return id_; }
+  std::string const& kind() const { return kind_; }
+  bool has_project_team() const { return project_team_.has_value(); }
+  ProjectTeam const& project_team() const { return *project_team_; }
+  absl::optional<ProjectTeam> const& project_team_as_optional() const {
+    return project_team_;
+  }
+  std::string const& role() const { return role_; }
+  std::string const& self_link() const { return self_link_; }
+  ///@}
+
+  ///@{
+  /**
+   * @name Modifiers for mutable attributes.
+   *
+   * The follow attributes can be changed in update and patch operations.
+   */
   BucketAccessControl& set_entity(std::string v) {
-    AccessControlCommon::set_entity(std::move(v));
+    entity_ = std::move(v);
     return *this;
   }
-
-  using AccessControlCommon::entity_id;
-  using AccessControlCommon::etag;
-  using AccessControlCommon::has_project_team;
-  using AccessControlCommon::id;
-  using AccessControlCommon::kind;
-  using AccessControlCommon::project_team;
-
-  using AccessControlCommon::role;
   BucketAccessControl& set_role(std::string v) {
-    AccessControlCommon::set_role(std::move(v));
+    role_ = std::move(v);
     return *this;
   }
+  ///@}
 
-  using AccessControlCommon::self_link;
+  ///@{
+  /**
+   * @name Testing modifiers.
+   *
+   * The following attributes cannot be changed when updating, creating, or
+   * patching an BucketAccessControl resource. However, it is useful to change
+   * them in tests, e.g., when mocking the results from the C++ client library.
+   */
+  BucketAccessControl& set_bucket(std::string v) {
+    bucket_ = std::move(v);
+    return *this;
+  }
+  BucketAccessControl& set_domain(std::string v) {
+    domain_ = std::move(v);
+    return *this;
+  }
+  BucketAccessControl& set_email(std::string v) {
+    email_ = std::move(v);
+    return *this;
+  }
+  BucketAccessControl& set_entity_id(std::string v) {
+    entity_id_ = std::move(v);
+    return *this;
+  }
+  BucketAccessControl& set_etag(std::string v) {
+    etag_ = std::move(v);
+    return *this;
+  }
+  BucketAccessControl& set_id(std::string v) {
+    id_ = std::move(v);
+    return *this;
+  }
+  BucketAccessControl& set_kind(std::string v) {
+    kind_ = std::move(v);
+    return *this;
+  }
+  BucketAccessControl& set_project_team(ProjectTeam v) {
+    project_team_ = std::move(v);
+    return *this;
+  }
+  BucketAccessControl& set_self_link(std::string v) {
+    self_link_ = std::move(v);
+    return *this;
+  }
+  ///@}
 
   friend bool operator==(BucketAccessControl const& lhs,
                          BucketAccessControl const& rhs);
@@ -82,8 +159,18 @@ class BucketAccessControl : private internal::AccessControlCommon {
     return !(lhs == rhs);
   }
 
-  friend struct internal::BucketAccessControlParser;
-  friend struct internal::GrpcBucketAccessControlParser;
+ private:
+  std::string bucket_;
+  std::string domain_;
+  std::string email_;
+  std::string entity_;
+  std::string entity_id_;
+  std::string etag_;
+  std::string id_;
+  std::string kind_;
+  absl::optional<ProjectTeam> project_team_;
+  std::string role_;
+  std::string self_link_;
 };
 
 std::ostream& operator<<(std::ostream& os, BucketAccessControl const& rhs);

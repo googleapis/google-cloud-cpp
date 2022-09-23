@@ -24,9 +24,17 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-struct AccessControlCommonParser {
+
+// TODO(#9897) - remove this class and any references to it
+struct GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed shortly after 2023-06-01")
+    AccessControlCommonParser {
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
   static Status FromJson(AccessControlCommon& result,
                          nlohmann::json const& json);
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 };
 
 }  // namespace internal

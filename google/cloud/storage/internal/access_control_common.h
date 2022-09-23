@@ -38,7 +38,9 @@ struct GrpcObjectAccessControlParser;
  * https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
  * https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
  */
-class AccessControlCommon {
+// TODO(#9897) - remove this class and any references to it
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed shortly after 2023-06-01") AccessControlCommon {
  public:
   AccessControlCommon() = default;
 
@@ -62,9 +64,9 @@ class AccessControlCommon {
    * We use functions instead of enums because enums are not backwards
    * compatible and are brittle to changes in the server-side.
    */
-  static std::string TEAM_EDITORS() { return "editors"; }
-  static std::string TEAM_OWNERS() { return "owners"; }
-  static std::string TEAM_VIEWERS() { return "viewers"; }
+  static std::string TEAM_EDITORS() { return storage::TEAM_EDITORS(); }
+  static std::string TEAM_OWNERS() { return storage::TEAM_OWNERS(); }
+  static std::string TEAM_VIEWERS() { return storage::TEAM_VIEWERS(); }
   //@}
 
   std::string const& bucket() const { return bucket_; }
@@ -108,6 +110,8 @@ class AccessControlCommon {
   std::string self_link_;
 };
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
 inline bool operator==(AccessControlCommon const& lhs,
                        AccessControlCommon const& rhs) {
   // Start with id, bucket, etag because they should fail early, then
@@ -126,6 +130,8 @@ inline bool operator!=(AccessControlCommon const& lhs,
                        AccessControlCommon const& rhs) {
   return std::rel_ops::operator!=(lhs, rhs);
 }
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
