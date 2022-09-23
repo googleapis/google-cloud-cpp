@@ -54,7 +54,7 @@ function Install-Vcpkg {
         return "${vcpkg_root}"
     }
     # Download the right version of `vcpkg`
-    New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue | Write-Host
     ForEach($_ in (1, 2, 3)) {
         if ($_ -ne 1) { Start-Sleep -Seconds (60 * $_) }
         Write-Host "$(Get-Date -Format o) Downloading vcpkg ports archive [$_]"
