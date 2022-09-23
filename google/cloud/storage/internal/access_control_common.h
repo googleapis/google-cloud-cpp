@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_H
 
+#include "google/cloud/storage/project_team.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
 #include "absl/types/optional.h"
@@ -27,47 +28,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct AccessControlCommonParser;
-}  // namespace internal
-
-/**
- * Represents the projectTeam field in *AccessControls.
- *
- * @see
- * https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
- * https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
- */
-struct ProjectTeam {
-  std::string project_number;
-  std::string team;
-};
-
-inline bool operator==(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::tie(lhs.project_number, lhs.team) ==
-         std::tie(rhs.project_number, rhs.team);
-}
-
-inline bool operator<(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::tie(lhs.project_number, lhs.team) <
-         std::tie(rhs.project_number, rhs.team);
-}
-
-inline bool operator!=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-
-namespace internal {
 struct GrpcBucketAccessControlParser;
 struct GrpcObjectAccessControlParser;
 
