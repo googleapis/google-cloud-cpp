@@ -47,9 +47,9 @@ $packages = @("zlib", "openssl",
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
 $vcpkg_root = Install-Vcpkg "${project_root}/cmake-out" "${BuildName}"
-Warm-Up-Vcpkg $vcpkg_root @("benchmark", "crc32c", "curl", "grpc", "gtest", "nlohmann-json", "openssl", "protobuf")
+Build-Vcpkg-Packages $vcpkg_root @("benchmark", "crc32c", "curl", "grpc", "gtest", "nlohmann-json", "openssl", "protobuf")
 
-$binary_dir="cmake-out/msvc-${env:VCPKG_TRIPLET}"
+$binary_dir="cmake-out/${BuildName}"
 $cmake_args=@(
     "-G$env:GENERATOR",
     "-S", ".",

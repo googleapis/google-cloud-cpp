@@ -43,9 +43,9 @@ if ($missing.count -ge 1) {
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
 
 $vcpkg_root = Install-Vcpkg "${project_root}/cmake-out" "${BuildName}"
-Warm-Up-Vcpkg $vcpkg_root @("google-cloud-cpp")
+Build-Vcpkg-Packages $vcpkg_root @("google-cloud-cpp")
 
-$binary_dir="cmake-out/msvc-${env:VCPKG_TRIPLET}"
+$binary_dir="cmake-out/${BuildName}"
 $cmake_args=@(
     "-G$env:GENERATOR",
     "-S", "google/cloud/storage/quickstart",

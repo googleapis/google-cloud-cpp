@@ -81,16 +81,7 @@ function Install-Vcpkg {
         Write-Host -ForegroundColor Red "Missing vcpkg root directory (${vcpkg_root})."
         Exit 1
     }
-    return "${vcpkg_root}"
-}
 
-function Warm-Up-Vcpkg {
-    param([string]$vcpkg_root, [string[]]$packages)
-
-    $vcpkg_flags = @(
-        "--triplet", "${env:VCPKG_TRIPLET}",
-        "--feature-flags=-manifests"
-    )
     # On Windows the bootstrap script simply downloads the latest release.
     # We need to retry the operation to prevent flakes, but it is relatively
     # fast.
@@ -111,16 +102,8 @@ function Warm-Up-Vcpkg {
         Exit 1
     }
 
-    # Remove old versions of the packages.
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup outdated vcpkg packages."
-    &"${vcpkg_root}/vcpkg.exe" remove ${vcpkg_flags} --outdated --recurse
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "vcpkg remove --outdated failed with exit code $LastExitCode"
-        Exit ${LastExitCode}
-    }
-
     # Download the tools that vcpkg typically needs
-    ForEach($tool in ("cmake", "ninja")) {
+    ForEach($tool in ("cmake", "ninja", "7zip")) {
         ForEach($_ in (1, 2, 3)) {
             if ($_ -ne 1) { Start-Sleep -Seconds (60 * $_) }
             Write-Host "$(Get-Date -Format o) Fetch ${tool} [$_]"
@@ -129,6 +112,25 @@ function Warm-Up-Vcpkg {
                 break
             }
         }
+    }
+
+    return "${vcpkg_root}"
+}
+
+function Build-Vcpkg-Packages {
+    param([string]$vcpkg_root, [string[]]$packages)
+
+    $vcpkg_flags = @(
+        "--triplet", "${env:VCPKG_TRIPLET}",
+        "--feature-flags=-manifests"
+    )
+
+    # Remove old versions of the packages.
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup outdated vcpkg packages."
+    &"${vcpkg_root}/vcpkg.exe" remove ${vcpkg_flags} --outdated --recurse
+    if ($LastExitCode) {
+        Write-Host -ForegroundColor Red "vcpkg remove --outdated failed with exit code $LastExitCode"
+        Exit ${LastExitCode}
     }
 
     # Install the packages one at a time.
