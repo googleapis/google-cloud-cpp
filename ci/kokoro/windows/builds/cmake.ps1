@@ -44,9 +44,8 @@ if ($missing.count -ge 1) {
 }
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
-$cmake_out = Create-CMakeOut
-$vcpkg_root = Install-Vcpkg "${cmake_out}" ""
-$binary_dir="${cmake_out}/${BuildName}"
+$vcpkg_root = Install-Vcpkg "${project_root}" ""
+$binary_dir="cmake-out/${BuildName}"
 Build-Vcpkg-Packages $vcpkg_root @("benchmark", "crc32c", "curl", "grpc", "gtest", "nlohmann-json", "openssl", "protobuf")
 
 $cmake_args=@(

@@ -44,8 +44,7 @@ if ($missing.count -ge 1) {
 }
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
-$cmake_out = Create-CMakeOut
-$vcpkg_root = Install-Vcpkg "${cmake_out}" "-qs"
+$vcpkg_root = Install-Vcpkg "${project_root}" "-qs"
 $binary_dir="cmake-out/${BuildName}"
 Build-Vcpkg-Packages $vcpkg_root @("google-cloud-cpp")
 

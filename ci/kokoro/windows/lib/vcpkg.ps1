@@ -44,41 +44,52 @@ function Configure-Vcpkg-Cache {
 }
 
 function Install-Vcpkg {
-    param($CMakeOut, $Suffix)
-
-    $vcpkg_version = Get-Content -Path "${project_root}\ci\etc\vcpkg-commit.txt"
     # quickstart builds install `google-cloud-cpp`. Therefore, these builds have all the
-    # headers for (potentially) older versions of `google-cloud-cpp` in the search path.
-    # In the CI environment only one type of build happens at a time, but manual tests
+    # headers for (potentially) older versions of `google-cloud-cpp` in the include search
+    # path. In the CI environment only one type of build happens at a time, but manual tests
     # create both. We separate the vcpkg installation for those builds to avoid confusion. 
-    $vcpkg_root = "${CMakeOut}/vcpkg${Suffix}"
+    param([string]$project_root, [string]$suffix)
+
+    # Create a directory to install vcpkg. Our builds can create really long paths,
+    # sometimes exceeding the Windows limits. Using a short name for the root of
+    # the CMake output directory works around this problem.
+    if (Test-Path "T:") {
+        # In the Kokoro environment "T:" is a faster drive.
+        $vcpkg_root = "T:/vcpkg${suffix}"
+        $extract_root = "T:"
+    } else {
+        $vcpkg_root = "${env:SystemDrive}/vcpkg${suffix}"
+        $extract_root = "${env:SystemDrive}"
+    }
+    $vcpkg_version = Get-Content -Path "${project_root}\ci\etc\vcpkg-commit.txt"
     # In manual builds the directory already exists, assume it is a good directory and return
     if (Test-Path "${vcpkg_root}") {
         Write-Host -ForegroundColor Green "$(Get-Date -Format o) vcpkg directory already exists."
         return "${vcpkg_root}"
     }
+
     # Download the right version of `vcpkg`
-    New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue | Write-Host
+    New-Item -ItemType Directory -Path "${vcpkg_root}" -ErrorAction SilentlyContinue | Write-Host
     ForEach($_ in (1, 2, 3)) {
         if ($_ -ne 1) { Start-Sleep -Seconds (60 * $_) }
         Write-Host "$(Get-Date -Format o) Downloading vcpkg ports archive [$_]"
         try {
             (New-Object System.Net.WebClient).Downloadfile(
                     "https://github.com/microsoft/vcpkg/archive/${vcpkg_version}.zip",
-                    "cmake-out\${vcpkg_version}.zip") |  Write-Host
+                    "${env:TEMP}/${vcpkg_version}.zip") |  Write-Host
             break
         } catch {
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
         }
     }
-    7z x -o"${CmakeOut}" "${CMakeOut}/${vcpkg_version}.zip" -aoa -bsp0 | Write-Host
+    7z x -o"${extract_root}" "${env:TEMP}/${vcpkg_version}.zip" -aoa -bsp0 | Write-Host
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "`n$(Get-Date -Format o) " `
             "extracting vcpkg from archive failed with exit code ${LastExitCode}."
         Exit 1
     }
-    Push-Location "${CMakeOut}"
-    Rename-Item "vcpkg-${vcpkg_version}" "vcpkg${Suffix}"
+    Push-Location "${extract_root}"
+    Rename-Item "vcpkg-${vcpkg_version}" "vcpkg${suffix}"
     Pop-Location
 
     if (-not (Test-Path "${vcpkg_root}")) {
@@ -107,7 +118,7 @@ function Install-Vcpkg {
     }
 
     # Download the tools that vcpkg typically needs
-    ForEach($tool in ("cmake", "ninja", "7zip")) {
+    ForEach($tool in ("cmake", "ninja", "7zip", "powershell")) {
         ForEach($_ in (1, 2, 3)) {
             if ($_ -ne 1) { Start-Sleep -Seconds (60 * $_) }
             Write-Host "$(Get-Date -Format o) Fetch ${tool} [$_]"
