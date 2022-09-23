@@ -27,6 +27,9 @@ $BuildName = $args[0]
 # Load the functions to configure and use vcpkg.
 . ci/kokoro/windows/lib/vcpkg.ps1
 
+# Load the functions to configure and use CMake.
+. ci/kokoro/windows/lib/cmake.ps1
+
 # First check the required environment variables.
 $missing=@()
 ForEach($var in ("CONFIG", "GENERATOR", "VCPKG_TRIPLET")) {
@@ -40,16 +43,12 @@ if ($missing.count -ge 1) {
     Exit 1
 }
 
-$packages = @("zlib", "openssl",
-              "protobuf", "c-ares", "benchmark",
-              "grpc", "gtest", "crc32c", "curl",
-              "nlohmann-json")
-
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
-$vcpkg_root = Install-Vcpkg "${project_root}/cmake-out" "${BuildName}"
+$cmake_out = Create-CMakeOut
+$vcpkg_root = Install-Vcpkg "${cmake_out}" ""
+$binary_dir="${cmake_out}/${BuildName}"
 Build-Vcpkg-Packages $vcpkg_root @("benchmark", "crc32c", "curl", "grpc", "gtest", "nlohmann-json", "openssl", "protobuf")
 
-$binary_dir="cmake-out/${BuildName}"
 $cmake_args=@(
     "-G$env:GENERATOR",
     "-S", ".",

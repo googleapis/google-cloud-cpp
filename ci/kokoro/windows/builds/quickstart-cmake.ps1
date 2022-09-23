@@ -27,6 +27,9 @@ $BuildName = $args[0]
 # Load the functions to configure and use vcpkg.
 . ci/kokoro/windows/lib/vcpkg.ps1
 
+# Load the functions to configure and use CMake.
+. ci/kokoro/windows/lib/cmake.ps1
+
 # First check the required environment variables.
 $missing=@()
 ForEach($var in ("CONFIG", "GENERATOR", "VCPKG_TRIPLET")) {
@@ -41,15 +44,15 @@ if ($missing.count -ge 1) {
 }
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
-
-$vcpkg_root = Install-Vcpkg "${project_root}/cmake-out" "${BuildName}"
+$cmake_out = Create-CMakeOut
+$vcpkg_root = Install-Vcpkg "${cmake_out}" "-qs"
+$binary_dir="cmake-out/${BuildName}"
 Build-Vcpkg-Packages $vcpkg_root @("google-cloud-cpp")
 
-$binary_dir="cmake-out/${BuildName}"
 $cmake_args=@(
     "-G$env:GENERATOR",
     "-S", "google/cloud/storage/quickstart",
-    "-B", "${binary_dir}/quickstart-storage"
+    "-B", "${binary_dir}/storage"
     "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`""
     "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
     "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",

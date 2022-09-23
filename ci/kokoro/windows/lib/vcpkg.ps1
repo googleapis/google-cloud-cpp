@@ -44,10 +44,14 @@ function Configure-Vcpkg-Cache {
 }
 
 function Install-Vcpkg {
-    param($CMakeOut, $BuildName)
+    param($CMakeOut, $Suffix)
 
     $vcpkg_version = Get-Content -Path "${project_root}\ci\etc\vcpkg-commit.txt"
-    $vcpkg_root = "${CMakeOut}/vcpkg-${BuildName}"
+    # quickstart builds install `google-cloud-cpp`. Therefore, these builds have all the
+    # headers for (potentially) older versions of `google-cloud-cpp` in the search path.
+    # In the CI environment only one type of build happens at a time, but manual tests
+    # create both. We separate the vcpkg installation for those builds to avoid confusion. 
+    $vcpkg_root = "${CMakeOut}/vcpkg${Suffix}"
     # In manual builds the directory already exists, assume it is a good directory and return
     if (Test-Path "${vcpkg_root}") {
         Write-Host -ForegroundColor Green "$(Get-Date -Format o) vcpkg directory already exists."
@@ -74,7 +78,7 @@ function Install-Vcpkg {
         Exit 1
     }
     Push-Location "${CMakeOut}"
-    Rename-Item "vcpkg-${vcpkg_version}" "vcpkg-${BuildName}"
+    Rename-Item "vcpkg-${vcpkg_version}" "vcpkg${Suffix}"
     Pop-Location
 
     if (-not (Test-Path "${vcpkg_root}")) {
@@ -143,6 +147,14 @@ function Build-Vcpkg-Packages {
             if ($LastExitCode -eq 0) {
                 break
             }
+            Write-Host -ForegroundColor Yellow "`n`n$(Get-Date -Format o) DEBUG DEBUG DEBUG - dbg-out"
+            Get-Content "${vcpkg_root}/buildtrees/${pkg}/install-${env:VCPKG_TRIPLET}-dbg-out.log" -ErrorAction SilentlyContinue | Write-Host
+            Write-Host -ForegroundColor Yellow "`n`n$(Get-Date -Format o) DEBUG DEBUG DEBUG - dbg-err"
+            Get-Content "${vcpkg_root}/buildtrees/${pkg}/install-${env:VCPKG_TRIPLET}-dbg-err.log" -ErrorAction SilentlyContinue  Write-Host
+            Write-Host -ForegroundColor Yellow "`n`n$(Get-Date -Format o) DEBUG DEBUG DEBUG - rel-out"
+            Get-Content "${vcpkg_root}/buildtrees/${pkg}/install-${env:VCPKG_TRIPLET}-rel-out.log" -ErrorAction SilentlyContinue | Write-Host
+            Write-Host -ForegroundColor Yellow "`n`n$(Get-Date -Format o) DEBUG DEBUG DEBUG - rel-err"
+            Get-Content "${vcpkg_root}/buildtrees/${pkg}/install-${env:VCPKG_TRIPLET}-rel-err.log" -ErrorAction SilentlyContinue | Write-Host
         }
         if ($LastExitCode -ne 0) {
             Write-Host -ForegroundColor Red "vcpkg install ${pkg} failed with exit code ${LastExitCode}"
