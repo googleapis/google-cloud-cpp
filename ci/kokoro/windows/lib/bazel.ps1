@@ -28,7 +28,7 @@ if (-not (Test-Path $bazel_root)) {
 }
 
 function Get-Bazel-Common-Flags {
-    return @("--output_user_root=${bazel_root}")
+    return @("--output_user_root=${bazel_root}", "--noshow_loading_progress")
 }
 
 function Get-Bazel-Build-Flags {
