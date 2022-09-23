@@ -213,6 +213,7 @@ add_library(
     parallel_upload.h
     policy_document.cc
     policy_document.h
+    project_team.h
     retry_policy.h
     service_account.cc
     service_account.h

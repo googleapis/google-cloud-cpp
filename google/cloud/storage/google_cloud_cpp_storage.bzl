@@ -125,6 +125,7 @@ google_cloud_cpp_storage_hdrs = [
     "owner.h",
     "parallel_upload.h",
     "policy_document.h",
+    "project_team.h",
     "retry_policy.h",
     "service_account.h",
     "signed_url_options.h",
