@@ -17,8 +17,15 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
-# If possible, configure the vcpkg cache.
-. ci/kokoro/windows/lib/vcpkg-cache.ps1
+if ($args.count -ne 1) {
+    Write-Host -ForegroundColor Red `
+        "Aborting build, expected the build name as the first (and only) argument"
+    Exit 1
+}
+$BuildName = $args[0]
+
+# Load the functions to configure and use vcpkg.
+. ci/kokoro/windows/lib/vcpkg.ps1
 
 # First check the required environment variables.
 $missing=@()
@@ -33,16 +40,26 @@ if ($missing.count -ge 1) {
     Exit 1
 }
 
-$binary_dir="cmake-out\msvc-${env:VCPKG_TRIPLET}"
-# By default assume "module", use the configuration parameters and build in the `cmake-out` directory.
-$cmake_args=@("-G$env:GENERATOR", "-DCMAKE_BUILD_TYPE=$env:CONFIG", "-H.", "-B${binary_dir}")
+$packages = @("zlib", "openssl",
+              "protobuf", "c-ares", "benchmark",
+              "grpc", "gtest", "crc32c", "curl",
+              "nlohmann-json")
 
-# Setup the environment for vcpkg:
-$project_root = (Get-Item -Path ".\" -Verbose).FullName
-$cmake_args += "-DCMAKE_TOOLCHAIN_FILE=`"${project_root}\cmake-out\vcpkg\scripts\buildsystems\vcpkg.cmake`""
-$cmake_args += "-DVCPKG_TARGET_TRIPLET=$env:VCPKG_TRIPLET"
-$cmake_args += "-DCMAKE_C_COMPILER=cl.exe"
-$cmake_args += "-DCMAKE_CXX_COMPILER=cl.exe"
+$project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
+$vcpkg_root = Install-Vcpkg "${project_root}/cmake-out" "${BuildName}"
+Warm-Up-Vcpkg $vcpkg_root @("benchmark", "crc32c", "curl", "grpc", "gtest", "nlohmann-json", "openssl", "protobuf")
+
+$binary_dir="cmake-out/msvc-${env:VCPKG_TRIPLET}"
+$cmake_args=@(
+    "-G$env:GENERATOR",
+    "-S", ".",
+    "-B", "${binary_dir}"
+    "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`""
+    "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
+    "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",
+    "-DCMAKE_C_COMPILER=cl.exe",
+    "-DCMAKE_CXX_COMPILER=cl.exe"
+)
 
 # Configure CMake and create the build directory.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Configuring CMake with $cmake_args"
@@ -121,4 +138,4 @@ if (Test-Integration-Enabled) {
     Set-Location "${project_root}"
 }
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"
+Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) DONE"
