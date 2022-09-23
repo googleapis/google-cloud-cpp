@@ -61,7 +61,7 @@ function Install-Vcpkg {
         try {
             (New-Object System.Net.WebClient).Downloadfile(
                     "https://github.com/microsoft/vcpkg/archive/${vcpkg_version}.zip",
-                    "cmake-out\${vcpkg_version}.zip")
+                    "cmake-out\${vcpkg_version}.zip") |  Write-Host
             break
         } catch {
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
@@ -92,7 +92,7 @@ function Install-Vcpkg {
         if ($_ -ne 1) { Start-Sleep -Seconds (60 * $_) }
         Write-Host "$(Get-Date -Format o) bootstrap vcpkg in ${vcpkg_root}."
         try {
-            &"${vcpkg_root}/bootstrap-vcpkg.bat"
+            &"${vcpkg_root}/bootstrap-vcpkg.bat" | Write-Host
         } catch {
             Write-Host -ForegroundColor Yellow "$(Get-Date -Format o) bootstrap error"
         }
@@ -107,7 +107,7 @@ function Install-Vcpkg {
         ForEach($_ in (1, 2, 3)) {
             if ($_ -ne 1) { Start-Sleep -Seconds (60 * $_) }
             Write-Host "$(Get-Date -Format o) Fetch ${tool} [$_]"
-            &"${vcpkg_root}/vcpkg.exe" fetch "${tool}"
+            &"${vcpkg_root}/vcpkg.exe" fetch "${tool}" | Write-Host
             if ($LastExitCode -eq 0) {
                 break
             }
