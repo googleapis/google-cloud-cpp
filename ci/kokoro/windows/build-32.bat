@@ -15,21 +15,16 @@
 REM Install Bazelisk.
 @echo %date% %time%
 @cd github\google-cloud-cpp
-@powershell -exec bypass ci\kokoro\windows\install-bazelisk.ps1
+@powershell -exec bypass ci\kokoro\windows\lib\install-bazelisk.ps1
 @if ERRORLEVEL 1 exit /b 1
 
 REM Change PATH to install the Bazelisk version we just installed
 @set "PATH=C:\bin;%ProgramFiles(x86)%\Google\Cloud SDK\google-cloud-sdk\bin;%PATH%"
 
 REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.
-if "%KOKORO_JOB_POOL%" == "yoshi-cpp-win" (
-  call "%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars32.bat"
-  set "BAZEL_VC=%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC"
-) else (
-  call "%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC\Auxiliary\Build\vcvars32.bat"
-  set "BAZEL_VC=%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC"
-  set "VCPKG_OVERLAY_TRIPLETS=%cd%\ci\kokoro\windows\triplets"
-)
+call "%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC\Auxiliary\Build\vcvars32.bat"
+set "BAZEL_VC=%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC"
+set "VCPKG_OVERLAY_TRIPLETS=%cd%\ci\kokoro\windows\triplets"
 
 REM The remaining of the build script is implemented in PowerShell.
 @echo %date% %time%
