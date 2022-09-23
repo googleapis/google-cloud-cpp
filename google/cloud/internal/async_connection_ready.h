@@ -49,8 +49,6 @@ class AsyncConnectionReadyFuture
  private:
   void Notify(bool ok);
 
-  // gRPC uses an anonymous type for the gRPC channel state enum :shrug:.
-  using ChannelStateType = decltype(GRPC_CHANNEL_READY);
   void RunIteration();
 
   std::shared_ptr<google::cloud::internal::CompletionQueueImpl> const cq_;
