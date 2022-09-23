@@ -69,7 +69,6 @@ function Install-Vcpkg {
     }
 
     # Download the right version of `vcpkg`
-    New-Item -ItemType Directory -Path "${vcpkg_root}" -ErrorAction SilentlyContinue | Write-Host
     ForEach($_ in (1, 2, 3)) {
         if ($_ -ne 1) { Start-Sleep -Seconds (60 * $_) }
         Write-Host "$(Get-Date -Format o) Downloading vcpkg ports archive [$_]"
@@ -88,9 +87,8 @@ function Install-Vcpkg {
             "extracting vcpkg from archive failed with exit code ${LastExitCode}."
         Exit 1
     }
-    Push-Location "${extract_root}"
-    Rename-Item "vcpkg-${vcpkg_version}" "vcpkg${suffix}"
-    Pop-Location
+    Write-Host "$(Get-Date -Format o) rename ${extract_root}/vcpkg-${vcpkg_version} -> ${vcpkg_root}"
+    Rename-Item "${extract_root}/vcpkg-${vcpkg_version}" "${vcpkg_root}"
 
     if (-not (Test-Path "${vcpkg_root}")) {
         Write-Host -ForegroundColor Red "Missing vcpkg root directory (${vcpkg_root})."
@@ -118,7 +116,7 @@ function Install-Vcpkg {
     }
 
     # Download the tools that vcpkg typically needs
-    ForEach($tool in ("cmake", "ninja", "7zip", "powershell")) {
+    ForEach($tool in ("cmake", "ninja", "7zip")) {
         ForEach($_ in (1, 2, 3)) {
             if ($_ -ne 1) { Start-Sleep -Seconds (60 * $_) }
             Write-Host "$(Get-Date -Format o) Fetch ${tool} [$_]"
