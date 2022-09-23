@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/access_control_common.h"
 #include <gmock/gmock.h>
 
@@ -22,7 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 /// @test Verify the well-known values defined in AccessControlCommon.
-TEST(ccessControlCommonTest, WellKnownValues) {
+TEST(AccessControlCommonTest, WellKnownValues) {
   EXPECT_EQ("OWNER", AccessControlCommon::ROLE_OWNER());
   EXPECT_EQ("READER", AccessControlCommon::ROLE_READER());
 

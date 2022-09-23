@@ -23,13 +23,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 StatusOr<BucketAccessControl> BucketAccessControlParser::FromJson(
     nlohmann::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  BucketAccessControl result{};
-  auto status = internal::AccessControlCommonParser::FromJson(result, json);
-  if (!status.ok()) {
-    return status;
+  if (!json.is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+
+  BucketAccessControl result;
+  result.set_bucket(json.value("bucket", ""));
+  result.set_domain(json.value("domain", ""));
+  result.set_email(json.value("email", ""));
+  result.set_entity(json.value("entity", ""));
+  result.set_entity_id(json.value("entityId", ""));
+  result.set_etag(json.value("etag", ""));
+  result.set_id(json.value("id", ""));
+  result.set_kind(json.value("kind", ""));
+  result.set_role(json.value("role", ""));
+  result.set_self_link(json.value("selfLink", ""));
+  auto team = json.find("projectTeam");
+  if (team != json.end()) {
+    auto const& tmp = *team;
+    if (tmp.is_null()) return result;
+    ProjectTeam p;
+    p.project_number = tmp.value("projectNumber", "");
+    p.team = tmp.value("team", "");
+    result.set_project_team(std::move(p));
   }
   return result;
 }
