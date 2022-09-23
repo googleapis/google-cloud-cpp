@@ -32,13 +32,9 @@
 #if defined(GOOGLE_CLOUD_CPP_DEPRECATED)
 #error "Applications should not define GOOGLE_CLOUD_CPP_DEPRECATED"
 #elif GOOGLE_CLOUD_CPP_DISABLE_DEPRECATION_WARNINGS
-// Do nothing, the default definition effectively
+#define GOOGLE_CLOUD_CPP_DEPRECATED(message)
 #else
 #define GOOGLE_CLOUD_CPP_DEPRECATED(message) [[deprecated(message)]]
 #endif
-
-#ifndef GOOGLE_CLOUD_CPP_DEPRECATED
-#define GOOGLE_CLOUD_CPP_DEPRECATED(message)
-#endif  // GCLOUD_DEPRECATED
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ATTRIBUTES_H
