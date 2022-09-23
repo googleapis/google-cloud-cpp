@@ -27,9 +27,6 @@ $BuildName = $args[0]
 # Load the functions to configure and use vcpkg.
 . ci/kokoro/windows/lib/vcpkg.ps1
 
-# Load the functions to configure and use CMake.
-. ci/kokoro/windows/lib/cmake.ps1
-
 # First check the required environment variables.
 $missing=@()
 ForEach($var in ("CONFIG", "GENERATOR", "VCPKG_TRIPLET")) {
