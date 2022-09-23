@@ -27,14 +27,6 @@ if (-not (Test-Path $bazel_root)) {
     New-Item -ItemType Directory -Path $bazel_root | Out-Null
 }
 
-$download_dir = "T:\tmp"
-if (Test-Path env:TEMP) {
-    $download_dir="${env:TEMP}"
-} elseif (-not $download_dir) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create temporary directory ${download_dir}"
-    Make-Item -Type "Directory" ${download_dir}
-}
-
 function Get-Bazel-Common-Flags {
     return @("--output_user_root=${bazel_root}")
 }

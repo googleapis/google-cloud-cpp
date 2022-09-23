@@ -48,63 +48,45 @@ the KOKORO_JOB_NAME environment variable.
     Exit 1
 }
 
-$DependencyScriptArgs=@()
 if ($BuildName -eq "cmake-debug") {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
-    $DependencyScript = "builds/cmake-dependencies.ps1"
     $BuildScript = "builds/cmake.ps1"
 } elseif ($BuildName -eq "cmake-release") {
     $env:CONFIG = "Release"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
-    $DependencyScript = "builds/cmake-dependencies.ps1"
     $BuildScript = "builds/cmake.ps1"
 } elseif ($BuildName -eq "cmake-debug-x86") {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x86-windows-static"
-    $DependencyScript = "builds/cmake-dependencies.ps1"
     $BuildScript = "builds/cmake.ps1"
 } elseif ($BuildName -eq "cmake-release-x86") {
     $env:CONFIG = "Release"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x86-windows-static"
-    $DependencyScript = "builds/cmake-dependencies.ps1"
     $BuildScript = "builds/cmake.ps1"
 } elseif ($BuildName -like "bazel*") {
-    $DependencyScript = "builds/bazel-dependencies.ps1"
     $BuildScript = "builds/bazel.ps1"
 } elseif ($BuildName -eq "quickstart-bazel") {
-    $DependencyScript = "builds/bazel-dependencies.ps1"
     $BuildScript = "builds/quickstart-bazel.ps1"
 } elseif ($BuildName -eq "quickstart-cmake-static") {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
-    $DependencyScript = "builds/cmake-dependencies.ps1"
-    $DependencyScriptArgs=@("vcpkg-quickstart", "google-cloud-cpp")
     $BuildScript = "builds/quickstart-cmake.ps1"
 } elseif ($BuildName -eq "quickstart-cmake-dll") {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows"
-    $DependencyScript = "builds/cmake-dependencies.ps1"
-    $DependencyScriptArgs=@("vcpkg-quickstart", "google-cloud-cpp")
     $BuildScript = "builds/quickstart-cmake.ps1"
 }
 
 $ScriptLocation = Split-Path $PSCommandPath -Parent
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building dependencies for $BuildName build"
-powershell -exec bypass "${ScriptLocation}/${DependencyScript}" $DependencyScriptArgs
-if ($LastExitCode) {
-    Write-Host -ForegroundColor Red "Building dependencies failed with ${LastExitCode}"
-    Exit ${LastExitCode}
-}
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running build script for $BuildName build"
+Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) Running build script for $BuildName build"
 powershell -exec bypass "${ScriptLocation}/${BuildScript}" "${BuildName}"
 # Save the build exit code, we want to delete the artifacts
 # even if the build fails.
@@ -121,7 +103,7 @@ if (Test-Path env:KOKORO_ARTIFACTS_DIR) {
             -Path "${env:KOKORO_ARTIFACTS_DIR}" | `
             Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
     } catch {
-        Write-Host "$(Get-Date -Format o) error cleaning up KOKORO_ARTIFACTS DIR, ignored"
+        Write-Host "$(Get-Date -Format o) error cleaning up KOKORO_ARTIFACTS_DIR, ignored"
     }
 }
 
@@ -129,3 +111,6 @@ if ($BuildExitCode) {
     Write-Host -ForegroundColor Red "Build failed with exit code ${BuildExitCode}"
     Exit ${BuildExitCode}
 }
+
+Write-Host -ForegroundColor Green "Build completed successfully"
+Exit 0
