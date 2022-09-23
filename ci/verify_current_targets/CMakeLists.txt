@@ -14,7 +14,7 @@
 # limitations under the License.
 # ~~~
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.10...3.24)
 project(verify-exported-targets CXX)
 
 # We list the common libraries first because we want to load their packages

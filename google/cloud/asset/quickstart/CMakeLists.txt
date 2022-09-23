@@ -15,7 +15,7 @@
 # This file shows how to use the Cloud Asset API C++ client library from a
 # larger CMake project.
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.10...3.24)
 project(google-cloud-cpp-asset-quickstart CXX)
 
 find_package(google_cloud_cpp_asset REQUIRED)
