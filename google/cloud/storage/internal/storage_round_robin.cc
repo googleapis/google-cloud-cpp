@@ -287,8 +287,8 @@ void StorageRoundRobin::Refresh(
   auto cq = wcq.lock();
   if (!cq) return;
   auto deadline = std::chrono::system_clock::now() + kRefreshPeriod;
-  // An invalid index, stop the loop.  There is no need to check lock the mutex,
-  // as the channels do not change after the class is initialized.
+  // An invalid index, stop the loop.  There is no need to lock the mutex, as
+  // the channels do not change after the class is initialized.
   if (index >= channels_.size()) return;
   GCP_LOG(INFO) << "Refreshing channel [" << index << "]";
   (void)google::cloud::internal::NotifyOnStateChange::Start(
