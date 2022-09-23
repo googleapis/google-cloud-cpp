@@ -27,7 +27,6 @@ AsyncConnectionReadyFuture::AsyncConnectionReadyFuture(
     : cq_(std::move(cq)), channel_(std::move(channel)), deadline_(deadline) {}
 
 future<Status> AsyncConnectionReadyFuture::Start() {
-  channel_->GetState(true);
   RunIteration();
   return promise_.get_future();
 }
