@@ -21,9 +21,6 @@
  * Marks a class, struct, enum, function, member function, or variable as
  * deprecated.
  *
- * This macro injects an attribute equivalent to C++14's `[[deprecated(msg)]]`.
- * On C++11 it uses compiler extensions to implement equivalent behavior.
- *
  * @note If you need to temporarily disable the deprecation warnings in your
  *     application, consider adding a pre-processor flag to define
  *     `GOOGLE_CLOUD_CPP_DISABLE_DEPRECATION_WARNINGS`.
@@ -35,18 +32,9 @@
 #if defined(GOOGLE_CLOUD_CPP_DEPRECATED)
 #error "Applications should not define GOOGLE_CLOUD_CPP_DEPRECATED"
 #elif GOOGLE_CLOUD_CPP_DISABLE_DEPRECATION_WARNINGS
-// Do nothing, the default definition effectively
-#elif GOOGLE_CLOUD_CPP_CPP_VERSION >= 201402L
-#define GOOGLE_CLOUD_CPP_DEPRECATED(message) [[deprecated(message)]]
-#elif defined(_MSC_VER)
-#define GOOGLE_CLOUD_CPP_DEPRECATED(message) __declspec(deprecated(message))
-#elif defined(__clang__) || defined(__GNUC__)
-#define GOOGLE_CLOUD_CPP_DEPRECATED(message) \
-  __attribute__((deprecated(message)))
-#endif  // C++ <= 11
-
-#ifndef GOOGLE_CLOUD_CPP_DEPRECATED
 #define GOOGLE_CLOUD_CPP_DEPRECATED(message)
-#endif  // GCLOUD_DEPRECATED
+#else
+#define GOOGLE_CLOUD_CPP_DEPRECATED(message) [[deprecated(message)]]
+#endif
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ATTRIBUTES_H
