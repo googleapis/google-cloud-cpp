@@ -40,27 +40,69 @@ if ($missing.count -ge 1) {
     Exit 1
 }
 
+function Get-Vcpkg-Features {
+    param([string]$vcpkg_root, [string]$package)
+
+    & "${vcpkg_root}/vcpkg.exe" search "${package}" | 
+        Where-Object { $_.StartsWith("${package}[") } | 
+        ForEach-Object { $_.replace("${package}[", "") -replace "].*", "" } |
+        # TODO(#8145) TODO(#9340) TODO(#8125) TODDO(#8725) - these do not compile on Windows.
+        Where-Object { -not ("asset", "beyondcorp", "channel", "storagetransfer" -contains $_) } |
+        # TODO(#9913) - these compile, but do not install on Windows.
+        Where-Object { -not ("assuredworkloads",  "dialogflow-cx", "dialogflow-es" -contains $_) } |
+        # TODO(#9914) - these depends on the `grafeas`, feature but vcpkg does not install it
+        Where-Object { -not ( "binaryauthorization", "containeranalysis" -contains $_) } |
+        # TODO(#9915) - the quickstart does not work with the version of vcpkg
+        Where-Object { -not ("assuredworkloads",  "dataproc", "documentai" -contains $_) } |
+        # These are convenience features to refactor dependencies.
+        Where-Object { -not ("googleapis", "grpc-common" -contains $_) }
+}
+
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
 $vcpkg_root = Install-Vcpkg "${project_root}" "-qs"
 $binary_dir="cmake-out/${BuildName}"
-Build-Vcpkg-Packages $vcpkg_root @("google-cloud-cpp")
+$features = Get-Vcpkg-Features "${vcpkg_root}" "google-cloud-cpp"
+Build-Vcpkg-Packages $vcpkg_root @("google-cloud-cpp[$($features  -Join ',')]")
 
-$cmake_args=@(
-    "-G$env:GENERATOR",
-    "-S", "google/cloud/storage/quickstart",
-    "-B", "${binary_dir}/storage"
-    "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`""
-    "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
-    "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",
-    "-DCMAKE_POLICY_DEFAULT_CMP0091=NEW",
-    "-DCMAKE_C_COMPILER=cl.exe",
-    "-DCMAKE_CXX_COMPILER=cl.exe"
-)
+$failures=@()
+ForEach($feature in $features) {
+    if ($feature -eq "experimental-storage-grpc") {
+        # Skip this feature as it is not a separate library with a quickstart.
+        continue
+    }
+    $library = $feature.replace('-', '_')
+    Write-Host "`n$(Get-Date -Format o) Build quickstart for ${library}"
+    $cmake_args=@(
+        "-G$env:GENERATOR",
+        "-S", "google/cloud/${library}/quickstart",
+        "-B", "${binary_dir}/${library}"
+        "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`""
+        "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
+        "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",
+        "-DCMAKE_POLICY_DEFAULT_CMP0091=NEW",
+        "-DCMAKE_C_COMPILER=cl.exe",
+        "-DCMAKE_CXX_COMPILER=cl.exe"
+    )
+    
+    Write-Host "$(Get-Date -Format o) Configuring CMake with $cmake_args"
+    cmake $cmake_args
+    if ($LastExitCode) {
+        Write-Host -ForegroundColor Red "CMake configuration failed with ${LastExitCode}."
+        $failures += (${library})
+        continue
+    }
+    Write-Host "$(Get-Date -Format o) Compiling $target with CMake $env:CONFIG"
+    cmake --build "${binary_dir}/${library}" --config $env:CONFIG    
+    if ($LastExitCode) {
+        Write-Host -ForegroundColor Red "CMake configuration failed with ${LastExitCode}."
+        $failures += (${library})
+    }
+}
 
-Write-Host "`n$(Get-Date -Format o) Configuring CMake with $cmake_args"
-cmake $cmake_args
+if ($failures.count -eq 0) {
+    Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) All quickstarts built successfully"
+    Exit 0
+}
 
-Write-Host "`n$(Get-Date -Format o) Compiling $target with CMake $env:CONFIG"
-cmake --build "${binary_dir}/quickstart-storage" --config $env:CONFIG
-
-Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) DONE"
+Write-Host -ForegroundColor Red "`n$(Get-Date -Format o) The following quickstarts failed to build: ${failures}"
+Exit 1
