@@ -17,6 +17,7 @@
 
 #include "google/cloud/future.h"
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <grpcpp/channel.h>
@@ -48,14 +49,28 @@ class AsyncConnectionReadyFuture
  private:
   void Notify(bool ok);
 
-  // gRPC uses an anonymous type for the gRPC channel state enum :shrug:.
-  using ChannelStateType = decltype(GRPC_CHANNEL_READY);
-  void RunIteration(ChannelStateType state);
+  void RunIteration();
 
   std::shared_ptr<google::cloud::internal::CompletionQueueImpl> const cq_;
   std::shared_ptr<grpc::Channel> const channel_;
   std::chrono::system_clock::time_point const deadline_;
   promise<Status> promise_;
+};
+
+class NotifyOnStateChange
+    : public AsyncGrpcOperation,
+      public std::enable_shared_from_this<NotifyOnStateChange> {
+ public:
+  static future<bool> Start(std::shared_ptr<CompletionQueueImpl> cq,
+                            std::shared_ptr<grpc::Channel> channel,
+                            std::chrono::system_clock::time_point deadline);
+
+  bool Notify(bool ok) override;
+  void Cancel() override {}
+
+ private:
+  promise<bool> promise_;
+  google::cloud::Options options_ = CurrentOptions();
 };
 
 }  // namespace internal
