@@ -47,7 +47,7 @@ function Install-Vcpkg {
     # quickstart builds install `google-cloud-cpp`. Therefore, these builds have all the
     # headers for (potentially) older versions of `google-cloud-cpp` in the include search
     # path. In the CI environment only one type of build happens at a time, but manual tests
-    # create both. We separate the vcpkg installation for those builds to avoid confusion. 
+    # create both. We separate the vcpkg installation for those builds to avoid confusion.
     param([string]$project_root, [string]$suffix)
 
     # Create a directory to install vcpkg. Our builds can create really long paths,
