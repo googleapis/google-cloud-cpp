@@ -110,8 +110,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   std::string self_link_;
 };
 
-GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This class will be removed shortly after 2023-06-01")
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
 inline bool operator==(AccessControlCommon const& lhs,
                        AccessControlCommon const& rhs) {
   // Start with id, bucket, etag because they should fail early, then
@@ -126,12 +126,12 @@ inline bool operator==(AccessControlCommon const& lhs,
          lhs.role() == rhs.role() && lhs.self_link() == rhs.self_link();
 }
 
-GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This class will be removed shortly after 2023-06-01")
 inline bool operator!=(AccessControlCommon const& lhs,
                        AccessControlCommon const& rhs) {
   return std::rel_ops::operator!=(lhs, rhs);
 }
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -29,10 +29,12 @@ namespace internal {
 struct GOOGLE_CLOUD_CPP_DEPRECATED(
     "This class will be removed shortly after 2023-06-01")
     AccessControlCommonParser {
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "This function will be removed shortly after 2023-06-01")
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
   static Status FromJson(AccessControlCommon& result,
                          nlohmann::json const& json);
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 };
 
 }  // namespace internal
