@@ -15,7 +15,7 @@
 # This file shows how to use the Pub/Sub Lite API C++ client library from a
 # larger CMake project.
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.10...3.24)
 project(google-cloud-cpp-pubsublite-quickstart CXX)
 
 find_package(google_cloud_cpp_pubsublite REQUIRED)
