@@ -937,7 +937,7 @@ void GenerateQuickstartWorkspace(
 
 # A minimal WORKSPACE file showing how to use the $title$
 # C++ client library in Bazel-based projects.
-workspace(name = "$library$_quickstart")
+workspace(name = "qs")
 
 # Add the necessary Starlark functions to fetch google-cloud-cpp.
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
