@@ -272,8 +272,8 @@ function (google_cloud_cpp_load_protodeps var file)
     set(targets_to_omit
         "google-cloud-cpp::cloud_orgpolicy_v1_orgpolicy_protos"
         "google-cloud-cpp::cloud_oslogin_common_common_protos"
-        "google-cloud-cpp::identity_accesscontextmanager_type_type_protos"
-        "google-cloud-cpp::cloud_recommender_v1_recommender_protos")
+        "google-cloud-cpp::cloud_recommender_v1_recommender_protos"
+        "google-cloud-cpp::identity_accesscontextmanager_type_type_protos")
     # Replace "google-cloud-cpp::$1" with "google-cloud-cpp:$2" in deps.
     set(target_substitutions
         "grafeas_v1_grafeas_protos\;grafeas_protos"
