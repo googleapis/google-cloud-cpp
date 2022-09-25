@@ -133,10 +133,6 @@ bazel build --copt=-DGRPC_BAZEL_BUILD ...
 
 ### Windows
 
-To correctly configure the MSVC runtime you should change the CMake minimum
-required version to 3.15 or add `-DCMAKE_POLICY_DEFAULT_CMP0091=NEW` to the
-CMake configuration step.
-
 Bazel tends to create very long file names and paths. You may need to use a
 short directory to store the build output, such as `c:\b`, and instruct Bazel
 to use it via:
