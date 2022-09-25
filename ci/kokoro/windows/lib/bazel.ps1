@@ -28,7 +28,7 @@ if (-not (Test-Path $bazel_root)) {
 }
 
 function Get-Bazel-Common-Flags {
-    return @("--output_user_root=${bazel_root}", "--noshow_loading_progress")
+    return @("--output_user_root=${bazel_root}")
 }
 
 function Get-Bazel-Build-Flags {
@@ -104,7 +104,7 @@ function Fetch-Bazel-Dependencies {
     )
     ForEach($_ in (1, 2)) {
         Write-Host "$(Get-Date -Format o) Fetch dependencies [$_]"
-        bazelisk $common_flags fetch ${external} ...
+        bazelisk $common_flags fetch --noshow_loading_progress ${external} ...
         if ($LastExitCode -eq 0) {
             return
         }
@@ -112,5 +112,5 @@ function Fetch-Bazel-Dependencies {
         Start-Sleep -Seconds (60 * $_)
     }
     Write-Host "$(Get-Date -Format o) Fetch dependencies (last attempt)"
-    bazelisk $common_flags fetch ${external} ...
+    bazelisk $common_flags fetch --noshow_loading_progress ${external} ...
 }
