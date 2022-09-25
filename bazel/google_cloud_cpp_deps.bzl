@@ -90,7 +90,7 @@ def google_cloud_cpp_deps():
             ],
             strip_prefix = "googleapis-5a9ee4d5deca8e3da550b0419ed336e22521fc8e",
             sha256 = "57ff2830ff96329e83a349757f694885c4addc2a8791120f6f7447f86daae680",
-            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
+            build_file = Label("//bazel:googleapis.BUILD"),
             # Scaffolding for patching googleapis after download. For example:
             #   patches = ["googleapis.patch"]
             # NOTE: This should only be used while developing with a new
@@ -158,7 +158,7 @@ def google_cloud_cpp_deps():
             ],
             strip_prefix = "curl-7.69.1",
             sha256 = "01ae0c123dee45b01bbaef94c0bc00ed2aec89cb2ee0fd598e0d302a6b5e0a98",
-            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:curl.BUILD",
+            build_file = Label("//bazel:curl.BUILD"),
         )
 
     # We need the nlohmann_json library
@@ -169,7 +169,7 @@ def google_cloud_cpp_deps():
                 "https://github.com/nlohmann/json/releases/download/v3.11.2/include.zip",
             ],
             sha256 = "e5c7a9f49a16814be27e4ed0ee900ecd0092bfb7dbfca65b5a421b774dccaaed",
-            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:nlohmann_json.BUILD",
+            build_file = Label("//bazel:nlohmann_json.BUILD"),
         )
 
     # Load google/crc32c, a library to efficiently compute CRC32C checksums.
@@ -181,5 +181,5 @@ def google_cloud_cpp_deps():
                 "https://github.com/google/crc32c/archive/1.1.2.tar.gz",
             ],
             sha256 = "ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56",
-            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:crc32c.BUILD",
+            build_file = Label("//bazel:crc32c.BUILD"),
         )
