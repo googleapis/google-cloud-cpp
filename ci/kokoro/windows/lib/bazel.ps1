@@ -44,8 +44,7 @@ function Get-Bazel-Build-Flags {
         # Disable warnings on generated proto files.
         "--per_file_copt=.*\.pb\.cc@/wd4244"
     )
-    # TODO(#9531) - enable release builds for MSVC 2017
-    if (($BuildName -like "bazel-release*") -and ($BuildName -ne "bazel-release-2017")) {
+    if ($BuildName -like "bazel-release*") {
         $build_flags += ("-c", "opt")
     }
 
