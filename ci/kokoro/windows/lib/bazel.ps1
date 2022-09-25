@@ -44,7 +44,7 @@ function Get-Bazel-Build-Flags {
         # Disable warnings on generated proto files.
         "--per_file_copt=.*\.pb\.cc@/wd4244"
     )
-    if ($BuildName -like "bazel-release*") {
+    if (($BuildName -like "bazel-release*") -and ($BuildName -ne "bazel-release-2017")) {
         $build_flags += ("-c", "opt")
     }
 
