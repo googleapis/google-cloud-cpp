@@ -79,6 +79,7 @@ ForEach($feature in $features) {
         "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`""
         "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
         "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",
+        "-DCMAKE_POLICY_DEFAULT_CMP0091=NEW",
         "-DCMAKE_CXX_COMPILER=cl.exe"
     )
 
