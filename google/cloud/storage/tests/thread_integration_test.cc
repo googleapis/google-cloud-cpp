@@ -115,7 +115,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   // feature.
   auto const thread_count =
       (std::min)(32U, (std::max)(8U, std::thread::hardware_concurrency()));
-  auto const object_count = 100 * thread_count;
+  auto const object_count = 75 * thread_count;
   std::vector<std::string> objects(object_count);
   std::generate(objects.begin(), objects.end(),
                 [this] { return MakeRandomObjectName(); });
