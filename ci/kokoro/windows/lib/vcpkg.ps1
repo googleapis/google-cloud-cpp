@@ -152,18 +152,19 @@ function Build-Vcpkg-Packages {
         ForEach($_ in (1, 2, 3)) {
             if ($_ -ne 1) { Start-Sleep -Seconds (60 * $_) }
             Write-Host "$(Get-Date -Format o) vcpkg install ${pkg} [$_]"
-            &"${vcpkg_root}/vcpkg.exe" install ${vcpkg_flags} "${pkg}"
+            &"${vcpkg_root}/vcpkg.exe" install ${vcpkg_flags} --recurse "${pkg}"
             if ($LastExitCode -eq 0) {
                 break
             }
+            $pkg_base = $pkg -replace '\[.*', ''
             Write-Host -ForegroundColor Yellow "`n`n$(Get-Date -Format o) DEBUG DEBUG DEBUG - dbg-out"
-            Get-Content "${vcpkg_root}/buildtrees/${pkg}/install-${env:VCPKG_TRIPLET}-dbg-out.log" -ErrorAction SilentlyContinue | Write-Host
+            Get-Content "${vcpkg_root}/buildtrees/${pkg_base}/install-${env:VCPKG_TRIPLET}-dbg-out.log" -ErrorAction SilentlyContinue | Write-Host
             Write-Host -ForegroundColor Yellow "`n`n$(Get-Date -Format o) DEBUG DEBUG DEBUG - dbg-err"
-            Get-Content "${vcpkg_root}/buildtrees/${pkg}/install-${env:VCPKG_TRIPLET}-dbg-err.log" -ErrorAction SilentlyContinue  Write-Host
+            Get-Content "${vcpkg_root}/buildtrees/${pkg_base}/install-${env:VCPKG_TRIPLET}-dbg-err.log" -ErrorAction SilentlyContinue | Write-Host
             Write-Host -ForegroundColor Yellow "`n`n$(Get-Date -Format o) DEBUG DEBUG DEBUG - rel-out"
-            Get-Content "${vcpkg_root}/buildtrees/${pkg}/install-${env:VCPKG_TRIPLET}-rel-out.log" -ErrorAction SilentlyContinue | Write-Host
+            Get-Content "${vcpkg_root}/buildtrees/${pkg_base}/install-${env:VCPKG_TRIPLET}-rel-out.log" -ErrorAction SilentlyContinue | Write-Host
             Write-Host -ForegroundColor Yellow "`n`n$(Get-Date -Format o) DEBUG DEBUG DEBUG - rel-err"
-            Get-Content "${vcpkg_root}/buildtrees/${pkg}/install-${env:VCPKG_TRIPLET}-rel-err.log" -ErrorAction SilentlyContinue | Write-Host
+            Get-Content "${vcpkg_root}/buildtrees/${pkg_base}/install-${env:VCPKG_TRIPLET}-rel-err.log" -ErrorAction SilentlyContinue | Write-Host
         }
         if ($LastExitCode -ne 0) {
             Write-Host -ForegroundColor Red "vcpkg install ${pkg} failed with exit code ${LastExitCode}"
@@ -172,7 +173,7 @@ function Build-Vcpkg-Packages {
     }
 
     Write-Host "`n$(Get-Date -Format o) vcpkg list"
-    &"${vcpkg_root}/vcpkg.exe" list
+    &"${vcpkg_root}/vcpkg.exe" list ${vcpkg_flags}
 }
 
 Configure-Vcpkg-Cache
