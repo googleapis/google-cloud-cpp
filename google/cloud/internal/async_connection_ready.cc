@@ -57,7 +57,13 @@ void AsyncConnectionReadyFuture::Notify(bool ok) {
 
 void AsyncConnectionReadyFuture::RunIteration() {
   auto options = CurrentOptions();
-  NotifyOnStateChange::Start(cq_, channel_, deadline_)
+  // If the connection is ready, we do not need to wait for a state change.
+  auto state = channel_->GetState(true);
+  if (state == GRPC_CHANNEL_READY) {
+    promise_.set_value(Status{});
+    return;
+  }
+  NotifyOnStateChange::Start(cq_, channel_, deadline_, state)
       .then([s = shared_from_this(), o = std::move(options)](auto f) {
         OptionsSpan span(o);
         s->Notify(f.get());
@@ -68,9 +74,17 @@ future<bool> NotifyOnStateChange::Start(
     std::shared_ptr<CompletionQueueImpl> cq,
     std::shared_ptr<grpc::Channel> channel,
     std::chrono::system_clock::time_point deadline) {
+  auto current_state = channel->GetState(true);
+  return Start(std::move(cq), std::move(channel), deadline, current_state);
+}
+
+future<bool> NotifyOnStateChange::Start(
+    std::shared_ptr<CompletionQueueImpl> cq,
+    std::shared_ptr<grpc::Channel> channel,
+    std::chrono::system_clock::time_point deadline, int last_observed) {
   auto op = std::make_shared<NotifyOnStateChange>();
   cq->StartOperation(op, [&](void* tag) {
-    auto state = channel->GetState(true);
+    auto state = static_cast<grpc_connectivity_state>(last_observed);
     channel->NotifyOnStateChange(state, deadline, &cq->cq(), tag);
   });
   return op->promise_.get_future();
