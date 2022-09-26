@@ -38,15 +38,8 @@ $project_root = (Get-Item -Path ".\" -Verbose).FullName
 function Get-Released-Quickstarts {
     param([string]$project_root, [string[]]$bazel_common_flags)
 
-    Push-Location "${project_root}/google/cloud/bigtable"
-    bazelisk $bazel_common_flags version | Out-Null
-    bazelisk $bazel_common_flags query --noshow_progress --noshow_loading_progress " filter(/quickstart:quickstart, kind(cc_binary, @com_github_googleapis_google_cloud_cpp//google/...))" |
-        ForEach-Object { $_.replace("@com_github_googleapis_google_cloud_cpp//google/cloud/", "").replace("/quickstart:quickstart", "") } |
-        # TODO(#8145) TODO(#9340) TODO(#8125) TODDO(#8725) - these do not compile on Windows.
-        Where-Object { -not ("asset", "beyondcorp", "channel", "storagetransfer" -contains $_) } |
-        # TODO(#9923) - compiling all quickstarts on Windows is too slow
-        Get-Random -Count 10
-    Pop-Location
+    # Use a hard-coded list in the v1.42.x because too many quickstarts are not ready.
+    return @("bigquery", "bigtable", "iam", "pubsub", "spanner", "storage")
 }
 
 $libraries = Get-Released-Quickstarts $project_root $common_flags
