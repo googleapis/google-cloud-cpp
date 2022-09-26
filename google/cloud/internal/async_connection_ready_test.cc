@@ -54,7 +54,7 @@ TEST(CompletionQueueTest, SuccessfulWaitingForConnection) {
   builder.AddListeningPort("localhost:0", grpc::InsecureServerCredentials(),
                            &selected_port);
   auto srv_cq = builder.AddCompletionQueue();
-  std::thread srv_thread([&srv_cq] {
+  std::thread srv_thread([&] {
     bool ok;
     void* placeholder;
     while (srv_cq->Next(&placeholder, &ok))
@@ -65,20 +65,33 @@ TEST(CompletionQueueTest, SuccessfulWaitingForConnection) {
   CompletionQueue cli_cq;
   std::thread cli_thread([&cli_cq] { cli_cq.Run(); });
 
-  auto channel =
-      grpc::CreateChannel("localhost:" + std::to_string(selected_port),
-                          grpc::InsecureChannelCredentials());
+  // This test depends on successfully connecting back to itself. Under load,
+  // specially in our CI builds, this can fail for reasons that have nothing to
+  // do with the correctness of the code. This warmup call avoids most of these
+  // problems. We use a custom channel with different attributes to make sure
+  // gRPC uses a different socket.
+  auto const endpoint = "localhost:" + std::to_string(selected_port);
+  grpc::ChannelArguments arguments;
+  arguments.SetInt(GRPC_ARG_USE_LOCAL_SUBCHANNEL_POOL, 1);
+  auto channel = grpc::CreateCustomChannel(
+      endpoint, grpc::InsecureChannelCredentials(), arguments);
+  // Most of the time the connection completes within a second. We use a far
+  // more generous deadline to avoid flakes.
+  auto const warmup_deadline =
+      std::chrono::system_clock::now() + std::chrono::seconds(30);
+  if (!channel->WaitForConnected(warmup_deadline)) GTEST_SKIP();
 
   // The connection doesn't try to connect to the endpoint unless there's a
   // method call or `GetState(true)` is called, so we can safely expect IDLE
   // state here.
+  channel = grpc::CreateChannel(endpoint, grpc::InsecureChannelCredentials());
   EXPECT_EQ(GRPC_CHANNEL_IDLE, channel->GetState(false));
-  EXPECT_STATUS_OK(
-      cli_cq
-          .AsyncWaitConnectionReady(channel, std::chrono::system_clock::now() +
-                                                 std::chrono::seconds(1))
-          .get());
+  auto const deadline =
+      std::chrono::system_clock::now() + std::chrono::seconds(30);
+  EXPECT_STATUS_OK(cli_cq.AsyncWaitConnectionReady(channel, deadline).get())
+      << "state = " << channel->GetState(false);
 
+  server->Shutdown();
   srv_cq->Shutdown();
   srv_thread.join();
 
