@@ -67,7 +67,7 @@ class NotifyOnStateChange
   static future<bool> Start(std::shared_ptr<CompletionQueueImpl> cq,
                             std::shared_ptr<grpc::Channel> channel,
                             std::chrono::system_clock::time_point deadline,
-                            int last_observed);
+                            grpc_connectivity_state last_observed);
 
   bool Notify(bool ok) override;
   void Cancel() override {}
