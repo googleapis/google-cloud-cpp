@@ -484,19 +484,20 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
   auto& bucket = *result.mutable_bucket();
   bucket.set_name(GrpcBucketIdToName(request.bucket()));
 
-  auto const& patch = PatchBuilderDetails::GetPatch(request.patch().impl_);
-
   // The `labels` field is too special, handle separately.
-  if (request.patch().labels_subpatch_dirty_) {
+  auto const& subpatch =
+      internal::PatchBuilderDetails::GetLabelsSubPatch(request.patch());
+  if (subpatch.is_null()) {
+    bucket.clear_labels();
+    result.mutable_update_mask()->add_paths("labels");
+  } else {
     // The semantics in gRPC are to replace any labels.
-    auto const& subpatch =
-        PatchBuilderDetails::GetPatch(request.patch().labels_subpatch_);
     for (auto const& kv : subpatch.items()) {
       auto const& v = kv.value();
       if (!v.is_string()) continue;
       (*bucket.mutable_labels())[kv.key()] = v.get<std::string>();
     }
-    result.mutable_update_mask()->add_paths("labels");
+    if (!subpatch.empty()) result.mutable_update_mask()->add_paths("labels");
   }
 
   // This struct and the vector refactors some common code to create patches for
@@ -525,6 +526,7 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
       {"iamConfiguration", "iam_config", PatchIamConfig},
   };
 
+  auto const& patch = internal::PatchBuilderDetails::GetPatch(request.patch());
   for (auto const& field : fields) {
     if (!patch.contains(field.name)) continue;
     auto status = field.action(bucket, patch[field.name]);

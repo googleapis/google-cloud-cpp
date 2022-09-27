@@ -340,7 +340,7 @@ GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
   object.set_name(request.object_name());
   object.set_generation(request.GetOption<Generation>().value_or(0));
 
-  auto const& patch = PatchBuilderDetails::GetPatch(request.patch().impl_);
+  auto const& patch = PatchBuilderDetails::GetPatch(request.patch());
   struct ComplexField {
     char const* json_name;
     char const* grpc_name;
@@ -359,20 +359,18 @@ GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
     result.mutable_update_mask()->add_paths(field.grpc_name);
   }
 
-  if (request.patch().metadata_subpatch_dirty_) {
-    auto const& subpatch =
-        PatchBuilderDetails::GetPatch(request.patch().metadata_subpatch_);
-    if (subpatch.is_null()) {
-      object.clear_metadata();
-    } else {
-      for (auto const& kv : subpatch.items()) {
-        auto const& v = kv.value();
-        if (!v.is_string()) continue;
-        (*object.mutable_metadata())[kv.key()] = v.get<std::string>();
-      }
-    }
-    // The semantics in gRPC are to replace any metadata attributes
+  auto const& subpatch =
+      PatchBuilderDetails::GetMetadataSubPatch(request.patch());
+  if (subpatch.is_null()) {
+    object.clear_metadata();
     result.mutable_update_mask()->add_paths("metadata");
+  } else {
+    for (auto const& kv : subpatch.items()) {
+      auto const& v = kv.value();
+      if (!v.is_string()) continue;
+      (*object.mutable_metadata())[kv.key()] = v.get<std::string>();
+    }
+    if (!subpatch.empty()) result.mutable_update_mask()->add_paths("metadata");
   }
 
   // We need to check each modifiable field.

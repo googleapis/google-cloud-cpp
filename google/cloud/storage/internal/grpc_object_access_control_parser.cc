@@ -68,7 +68,7 @@ ObjectAccessControl GrpcObjectAccessControlParser::FromProto(
 
 std::string GrpcObjectAccessControlParser::Role(
     ObjectAccessControlPatchBuilder const& patch) {
-  return PatchBuilderDetails::GetPatch(patch.impl_).value("role", "");
+  return PatchBuilderDetails::GetPatch(patch).value("role", "");
 }
 
 }  // namespace internal

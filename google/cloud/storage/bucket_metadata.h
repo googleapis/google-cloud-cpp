@@ -34,9 +34,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-struct GrpcBucketRequestParser;
-}  // namespace internal
 
 /**
  * The billing configuration for a Bucket.
@@ -1194,7 +1191,7 @@ class BucketMetadataPatchBuilder {
   BucketMetadataPatchBuilder& ResetWebsite();
 
  private:
-  friend struct internal::GrpcBucketRequestParser;
+  friend struct internal::PatchBuilderDetails;
 
   internal::PatchBuilder impl_;
   bool labels_subpatch_dirty_{false};
