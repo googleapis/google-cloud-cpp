@@ -532,51 +532,6 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
   EXPECT_EQ(data, v[0]);
 }
 
-// Verify maximum JSON nesting.
-TEST_F(DataTypeIntegrationTest, JsonMaxNesting) {
-  // The default value of the backend spanner_json_max_nesting_level flag.
-  int const spanner_json_max_nesting_level = 80;
-
-  // Nested arrays that exceed `spanner_json_max_nesting_level` by one.
-  std::string bad_json;
-  for (int i = 0; i != spanner_json_max_nesting_level + 1; ++i)
-    bad_json.append(1, '[');
-  bad_json.append("null");
-  for (int i = 0; i != spanner_json_max_nesting_level + 1; ++i)
-    bad_json.append(1, ']');
-
-  // Nested arrays that match `spanner_json_max_nesting_level`.
-  std::string good_json = bad_json.substr(1, bad_json.size() - 2);
-
-  std::vector<Json> const good_data = {Json(good_json)};
-  auto result = WriteReadData(*client_, good_data, "JsonValue");
-  ASSERT_THAT(result, IsOk());
-  EXPECT_THAT(*result, UnorderedElementsAreArray(good_data));
-
-  std::vector<Json> const bad_data = {Json(bad_json)};
-  result = WriteReadData(*client_, bad_data, "JsonValue");
-  if (UsingEmulator()) {
-    // The emulator has no such limitation, so it tries to re-insert.
-    EXPECT_THAT(result, StatusIs(StatusCode::kAlreadyExists));
-  } else {
-#if 1
-    // NOTE: The service is currently (August 2022) in a state where there
-    // is no workable "spanner_json_max_nesting_level".  It accepts 80, but
-    // crashes on some yet-to-be discovered value in [82..90].  81 results
-    // in ALREADY_EXISTS.  We really want to get out of the "JsonMaxNesting"
-    // business!
-    EXPECT_THAT(result, StatusIs(StatusCode::kAlreadyExists,
-                                 HasSubstr("already exists")));
-#else
-    // NOTE: The backend is currently dropping a more specific "Max nesting
-    // of 80 had been exceeded [INVALID_ARGUMENT]" error, so expect this
-    // expectation to change when that problem is fixed.
-    EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition,
-                                 HasSubstr("Expected JSON")));
-#endif
-  }
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
