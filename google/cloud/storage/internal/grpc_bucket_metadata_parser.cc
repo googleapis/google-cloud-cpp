@@ -61,7 +61,7 @@ google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
   result.set_storage_class(rhs.storage_class());
   result.set_rpo(rhs.rpo());
   for (auto const& v : rhs.acl()) {
-    *result.add_acl() = GrpcBucketAccessControlParser::ToProto(v);
+    *result.add_acl() = storage_internal::ToProto(v);
   }
   for (auto const& v : rhs.default_acl()) {
     *result.add_default_object_acl() =
@@ -116,7 +116,7 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   // easier to find in the future.
   for (auto const& v : rhs.acl()) {
     metadata.mutable_acl().push_back(
-        GrpcBucketAccessControlParser::FromProto(v, rhs.bucket_id()));
+        storage_internal::FromProto(v, rhs.bucket_id()));
   }
   if (rhs.has_billing()) metadata.set_billing(FromProto(rhs.billing()));
   metadata.set_default_event_based_hold(rhs.default_event_based_hold());

@@ -810,7 +810,7 @@ StatusOr<BucketAccessControl> GrpcClient::PatchBucketAcl(
   get_request.set_option(Projection("full"));
   auto updater = [&request](std::vector<BucketAccessControl> acl) {
     return UpsertAcl(std::move(acl), request.entity(),
-                     GrpcBucketAccessControlParser::Role(request.patch()));
+                     storage_internal::Role(request.patch()));
   };
   return FindBucketAccessControl(
       ModifyBucketAccessControl(get_request, updater), request.entity());
