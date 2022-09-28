@@ -28,8 +28,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct AccessControlCommonParser;
-struct GrpcBucketAccessControlParser;
-struct GrpcObjectAccessControlParser;
 
 /**
  * Defines common code to both `BucketAccessControl` and `ObjectAccessControl`.
@@ -93,8 +91,6 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   std::string const& self_link() const { return self_link_; }
 
  private:
-  friend struct GrpcBucketAccessControlParser;
-  friend struct GrpcObjectAccessControlParser;
   friend struct internal::AccessControlCommonParser;
 
   std::string bucket_;

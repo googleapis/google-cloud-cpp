@@ -130,7 +130,7 @@ Status SetObjectMetadata(google::storage::v2::Object& resource,
     resource.set_cache_control(metadata.cache_control());
   }
   for (auto const& acl : metadata.acl()) {
-    *resource.add_acl() = GrpcObjectAccessControlParser::ToProto(acl);
+    *resource.add_acl() = storage_internal::ToProto(acl);
   }
   if (!metadata.content_language().empty()) {
     resource.set_content_language(metadata.content_language());
@@ -175,7 +175,7 @@ Status PatchAcl(Object& o, nlohmann::json const& p) {
     // We do not care if `o` may have been modified. It will be discarded if
     // this function (or similar functions) return a non-Okay Status.
     if (!acl) return std::move(acl).status();
-    *o.add_acl() = GrpcObjectAccessControlParser::ToProto(*acl);
+    *o.add_acl() = storage_internal::ToProto(*acl);
   }
   return Status{};
 }
@@ -223,7 +223,7 @@ GrpcObjectRequestParser::ToProto(ComposeObjectRequest const& request) {
   if (request.HasOption<WithObjectMetadata>()) {
     auto metadata = request.GetOption<WithObjectMetadata>().value();
     for (auto const& a : metadata.acl()) {
-      *destination.add_acl() = GrpcObjectAccessControlParser::ToProto(a);
+      *destination.add_acl() = storage_internal::ToProto(a);
     }
     for (auto const& kv : metadata.metadata()) {
       (*destination.mutable_metadata())[kv.first] = kv.second;
@@ -418,7 +418,7 @@ GrpcObjectRequestParser::ToProto(UpdateObjectRequest const& request) {
 
   result.mutable_update_mask()->add_paths("acl");
   for (auto const& a : request.metadata().acl()) {
-    *object.add_acl() = GrpcObjectAccessControlParser::ToProto(a);
+    *object.add_acl() = storage_internal::ToProto(a);
   }
 
   // The semantics in gRPC are to replace any metadata attributes

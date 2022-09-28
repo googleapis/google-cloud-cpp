@@ -18,12 +18,11 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-google::storage::v2::ObjectAccessControl GrpcObjectAccessControlParser::ToProto(
-    ObjectAccessControl const& acl) {
+google::storage::v2::ObjectAccessControl ToProto(
+    storage::ObjectAccessControl const& acl) {
   google::storage::v2::ObjectAccessControl result;
   result.set_role(acl.role());
   result.set_id(acl.id());
@@ -40,11 +39,11 @@ google::storage::v2::ObjectAccessControl GrpcObjectAccessControlParser::ToProto(
   return result;
 }
 
-ObjectAccessControl GrpcObjectAccessControlParser::FromProto(
+storage::ObjectAccessControl FromProto(
     google::storage::v2::ObjectAccessControl acl,
     std::string const& bucket_name, std::string const& object_name,
     std::uint64_t generation) {
-  ObjectAccessControl result;
+  storage::ObjectAccessControl result;
   result.set_kind("storage#objectAccessControl");
   result.set_bucket(bucket_name);
   result.set_object(object_name);
@@ -55,7 +54,7 @@ ObjectAccessControl GrpcObjectAccessControlParser::FromProto(
   result.set_entity_id(std::move(*acl.mutable_entity_id()));
   result.set_id(std::move(*acl.mutable_id()));
   if (acl.has_project_team()) {
-    result.set_project_team(ProjectTeam{
+    result.set_project_team(storage::ProjectTeam{
         std::move(*acl.mutable_project_team()->mutable_project_number()),
         std::move(*acl.mutable_project_team()->mutable_team()),
     });
@@ -66,13 +65,12 @@ ObjectAccessControl GrpcObjectAccessControlParser::FromProto(
   return result;
 }
 
-std::string GrpcObjectAccessControlParser::Role(
-    ObjectAccessControlPatchBuilder const& patch) {
-  return PatchBuilderDetails::GetPatch(patch).value("role", "");
+std::string Role(storage::ObjectAccessControlPatchBuilder const& patch) {
+  return storage::internal::PatchBuilderDetails::GetPatch(patch).value("role",
+                                                                       "");
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
