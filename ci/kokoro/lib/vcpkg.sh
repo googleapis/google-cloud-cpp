@@ -29,8 +29,13 @@ install_vcpkg() {
 
   mkdir -p "${vcpkg_dir}"
   io::log "Downloading vcpkg into ${vcpkg_dir}..."
-  VCPKG_COMMIT="$(<ci/etc/vcpkg-commit.txt)"
-  ci/retry-command.sh 3 120 curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
+  VCPKG_VERSION="$(<ci/etc/vcpkg-version.txt)"
+  local url = "https://github.com/microsoft/vcpkg/archive/${VCPKG_VERSION}.tar.gz"
+  if [[ "${VCPKG_VERSION}" =~ [0-9]{4}.[0-9]{2}.[0-9]{2} ]];
+    # vcpkg uses date-like tags for releases
+    url = "https://github.com/microsoft/vcpkg/archive/refs/tags/${VCPKG_VERSION}.tar.gz"
+  fi
+  ci/retry-command.sh 3 120 curl -sSL "${url}" |
     tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 
   io::log_h2 "Configure VCPKG to use GCS as a cache"

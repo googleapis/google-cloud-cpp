@@ -61,11 +61,16 @@ function Install-Vcpkg {
         $vcpkg_root = "${env:SystemDrive}/vcpkg${suffix}"
         $extract_root = "${env:SystemDrive}"
     }
-    $vcpkg_version = Get-Content -Path "${project_root}\ci\etc\vcpkg-commit.txt"
     # In manual builds the directory already exists, assume it is a good directory and return
     if (Test-Path "${vcpkg_root}") {
         Write-Host -ForegroundColor Green "$(Get-Date -Format o) vcpkg directory already exists."
         return "${vcpkg_root}"
+    }
+
+    $vcpkg_version = Get-Content -Path "${project_root}\ci\etc\vcpkg-version.txt"
+    $vcpkg_url = "https://github.com/microsoft/vcpkg/archive/${vcpkg_version}.zip"
+    if ($vcpkg_version -match "[0-9]{4}.[0-9]{2}.[0-9]{2}" ) {
+        $vcpkg_url = "https://github.com/microsoft/vcpkg/archive/ref/tags/${vcpkg_version}.zip"
     }
 
     # Download the right version of `vcpkg`
@@ -73,8 +78,7 @@ function Install-Vcpkg {
         if ($_ -ne 1) { Start-Sleep -Seconds (60 * $_) }
         Write-Host "$(Get-Date -Format o) Downloading vcpkg ports archive [$_]"
         try {
-            (New-Object System.Net.WebClient).Downloadfile(
-                    "https://github.com/microsoft/vcpkg/archive/${vcpkg_version}.zip",
+            (New-Object System.Net.WebClient).Downloadfile($vcpkg_url,
                     "${env:TEMP}/${vcpkg_version}.zip") |  Write-Host
             break
         } catch {

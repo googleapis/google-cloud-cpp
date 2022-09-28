@@ -31,7 +31,7 @@ jobs:
           fetch-depth: 0
       - name: Checkout pinned vcpkg version
         run: >
-          git -C build/vcpkg checkout -q $(<ci/etc/vcpkg-commit.txt)
+          git -C build/vcpkg checkout -q $(<ci/etc/vcpkg-version.txt)
       - name: cache-vcpkg
         id: cache-vcpkg
         uses: actions/cache@v3
