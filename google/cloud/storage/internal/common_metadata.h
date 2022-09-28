@@ -69,8 +69,6 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   std::chrono::system_clock::time_point updated() const { return updated_; }
 
  private:
-  friend struct GrpcBucketMetadataParser;
-  friend struct GrpcObjectMetadataParser;
   template <typename ParserDerived>
   friend struct CommonMetadataParser;
 

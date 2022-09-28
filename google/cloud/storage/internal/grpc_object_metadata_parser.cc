@@ -22,21 +22,20 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-CustomerEncryption GrpcObjectMetadataParser::FromProto(
+storage::CustomerEncryption FromProto(
     google::storage::v2::CustomerEncryption rhs) {
-  CustomerEncryption result;
+  storage::CustomerEncryption result;
   result.encryption_algorithm = std::move(*rhs.mutable_encryption_algorithm());
-  result.key_sha256 = Base64Encode(rhs.key_sha256_bytes());
+  result.key_sha256 = storage::internal::Base64Encode(rhs.key_sha256_bytes());
   return result;
 }
 
-StatusOr<google::storage::v2::CustomerEncryption>
-GrpcObjectMetadataParser::ToProto(CustomerEncryption rhs) {
-  auto key_sha256 = Base64Decode(rhs.key_sha256);
+StatusOr<google::storage::v2::CustomerEncryption> ToProto(
+    storage::CustomerEncryption rhs) {
+  auto key_sha256 = storage::internal::Base64Decode(rhs.key_sha256);
   if (!key_sha256) return std::move(key_sha256).status();
   google::storage::v2::CustomerEncryption result;
   result.set_encryption_algorithm(std::move(rhs.encryption_algorithm));
@@ -45,39 +44,36 @@ GrpcObjectMetadataParser::ToProto(CustomerEncryption rhs) {
   return result;
 }
 
-std::string GrpcObjectMetadataParser::Crc32cFromProto(std::uint32_t v) {
+std::string Crc32cFromProto(std::uint32_t v) {
   auto endian_encoded = google::cloud::internal::EncodeBigEndian(v);
-  return Base64Encode(endian_encoded);
+  return storage::internal::Base64Encode(endian_encoded);
 }
 
-StatusOr<std::uint32_t> GrpcObjectMetadataParser::Crc32cToProto(
-    std::string const& v) {
-  auto decoded = Base64Decode(v);
+StatusOr<std::uint32_t> Crc32cToProto(std::string const& v) {
+  auto decoded = storage::internal::Base64Decode(v);
   if (!decoded) return std::move(decoded).status();
   return google::cloud::internal::DecodeBigEndian<std::uint32_t>(
       std::string(decoded->begin(), decoded->end()));
 }
 
-std::string GrpcObjectMetadataParser::MD5FromProto(std::string const& v) {
-  return internal::Base64Encode(v);
+std::string MD5FromProto(std::string const& v) {
+  return storage::internal::Base64Encode(v);
 }
 
-StatusOr<std::string> GrpcObjectMetadataParser::MD5ToProto(
-    std::string const& v) {
+StatusOr<std::string> MD5ToProto(std::string const& v) {
   if (v.empty()) return {};
-  auto binary = internal::Base64Decode(v);
+  auto binary = storage::internal::Base64Decode(v);
   if (!binary) return std::move(binary).status();
   return std::string{binary->begin(), binary->end()};
 }
 
-std::string GrpcObjectMetadataParser::ComputeMD5Hash(
-    std::string const& payload) {
-  auto b = internal::MD5Hash(payload);
+std::string ComputeMD5Hash(std::string const& payload) {
+  auto b = storage::internal::MD5Hash(payload);
   return std::string{b.begin(), b.end()};
 }
 
-ObjectMetadata GrpcObjectMetadataParser::FromProto(
-    google::storage::v2::Object object, Options const& options) {
+storage::ObjectMetadata FromProto(google::storage::v2::Object object,
+                                  Options const& options) {
   auto bucket_id = [](google::storage::v2::Object const& object) {
     auto const& bucket_name = object.bucket();
     auto const pos = bucket_name.find_last_of('/');
@@ -85,7 +81,7 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
     return bucket_name.substr(pos + 1);
   };
 
-  ObjectMetadata metadata;
+  storage::ObjectMetadata metadata;
   metadata.set_kind("storage#object");
   metadata.set_bucket(bucket_id(object));
   metadata.set_name(std::move(*object.mutable_name()));
@@ -94,24 +90,27 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
   metadata.set_id(metadata.bucket() + "/" + metadata.name() + "/" +
                   std::to_string(metadata.generation()));
   auto const metadata_endpoint = [&options]() -> std::string {
-    if (options.get<RestEndpointOption>() != "https://storage.googleapis.com") {
-      return options.get<RestEndpointOption>();
+    if (options.get<storage::RestEndpointOption>() !=
+        "https://storage.googleapis.com") {
+      return options.get<storage::RestEndpointOption>();
     }
     return "https://www.googleapis.com";
   }();
   auto const path = [&options]() -> std::string {
-    if (!options.has<TargetApiVersionOption>()) return "/storage/v1";
-    return "/storage/" + options.get<TargetApiVersionOption>();
+    if (!options.has<storage::internal::TargetApiVersionOption>())
+      return "/storage/v1";
+    return "/storage/" +
+           options.get<storage::internal::TargetApiVersionOption>();
   }();
   auto const rel_path = "/b/" + metadata.bucket() + "/o/" + metadata.name();
   metadata.set_self_link(metadata_endpoint + path + rel_path);
-  metadata.set_media_link(
-      options.get<RestEndpointOption>() + "/download" + path + rel_path +
-      "?generation=" + std::to_string(metadata.generation()) + "&alt=media");
+  metadata.set_media_link(options.get<storage::RestEndpointOption>() +
+                          "/download" + path + rel_path + "?generation=" +
+                          std::to_string(metadata.generation()) + "&alt=media");
 
   metadata.set_metageneration(object.metageneration());
   if (object.has_owner()) {
-    metadata.set_owner(storage_internal::FromProto(*object.mutable_owner()));
+    metadata.set_owner(FromProto(*object.mutable_owner()));
   }
   metadata.set_storage_class(std::move(*object.mutable_storage_class()));
   if (object.has_create_time()) {
@@ -122,12 +121,11 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
     metadata.set_updated(
         google::cloud::internal::ToChronoTimePoint(object.update_time()));
   }
-  std::vector<ObjectAccessControl> acl;
+  std::vector<storage::ObjectAccessControl> acl;
   acl.reserve(object.acl_size());
   for (auto& item : *object.mutable_acl()) {
-    acl.push_back(
-        storage_internal::FromProto(std::move(item), metadata.bucket(),
-                                    metadata.name(), metadata.generation()));
+    acl.push_back(FromProto(std::move(item), metadata.bucket(), metadata.name(),
+                            metadata.generation()));
   }
   metadata.set_acl(std::move(acl));
   metadata.set_cache_control(std::move(*object.mutable_cache_control()));
@@ -181,8 +179,7 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
   return metadata;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

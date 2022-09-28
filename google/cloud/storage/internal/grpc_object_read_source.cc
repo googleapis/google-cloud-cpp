@@ -97,17 +97,15 @@ void GrpcObjectReadSource::HandleResponse(
   if (response.has_object_checksums()) {
     auto const& checksums = response.object_checksums();
     if (checksums.has_crc32c()) {
-      result.hashes = Merge(
-          std::move(result.hashes),
-          HashValues{
-              GrpcObjectMetadataParser::Crc32cFromProto(checksums.crc32c()),
-              {}});
+      result.hashes =
+          Merge(std::move(result.hashes),
+                HashValues{
+                    storage_internal::Crc32cFromProto(checksums.crc32c()), {}});
     }
     if (!checksums.md5_hash().empty()) {
-      result.hashes = Merge(std::move(result.hashes),
-                            HashValues{{},
-                                       GrpcObjectMetadataParser::MD5FromProto(
-                                           checksums.md5_hash())});
+      result.hashes = Merge(
+          std::move(result.hashes),
+          HashValues{{}, storage_internal::MD5FromProto(checksums.md5_hash())});
     }
   }
   if (response.has_metadata()) {

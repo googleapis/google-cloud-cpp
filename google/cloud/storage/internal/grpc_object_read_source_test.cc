@@ -212,9 +212,9 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("The quick brown");
         response.mutable_object_checksums()->set_md5_hash(
-            GrpcObjectMetadataParser::MD5ToProto(expected_md5).value());
+            storage_internal::MD5ToProto(expected_md5).value());
         response.mutable_object_checksums()->set_crc32c(
-            GrpcObjectMetadataParser::Crc32cToProto(expected_crc32c).value());
+            storage_internal::Crc32cToProto(expected_crc32c).value());
         return response;
       })
       .WillOnce([&] {
@@ -224,9 +224,9 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
         // The headers may be included more than once in the stream,
         // `GrpcObjectReadSource` should return them only once.
         response.mutable_object_checksums()->set_md5_hash(
-            GrpcObjectMetadataParser::MD5ToProto(expected_md5).value());
+            storage_internal::MD5ToProto(expected_md5).value());
         response.mutable_object_checksums()->set_crc32c(
-            GrpcObjectMetadataParser::Crc32cToProto(expected_crc32c).value());
+            storage_internal::Crc32cToProto(expected_crc32c).value());
         return response;
       })
       .WillOnce(Return(Status{}));

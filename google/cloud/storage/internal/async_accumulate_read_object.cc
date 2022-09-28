@@ -343,9 +343,7 @@ storage_experimental::AsyncReadObjectRangeResponse ToResponse(
   response.object_metadata = [&] {
     for (auto& r : accumulated.payload) {
       if (!r.has_metadata()) continue;
-      return absl::make_optional(
-          storage::internal::GrpcObjectMetadataParser::FromProto(
-              *r.mutable_metadata(), options));
+      return absl::make_optional(FromProto(*r.mutable_metadata(), options));
     }
     return absl::optional<storage::ObjectMetadata>{};
   }();
