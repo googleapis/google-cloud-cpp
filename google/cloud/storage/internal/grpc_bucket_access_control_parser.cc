@@ -66,7 +66,7 @@ BucketAccessControl GrpcBucketAccessControlParser::FromProto(
 
 std::string GrpcBucketAccessControlParser::Role(
     BucketAccessControlPatchBuilder const& patch) {
-  return PatchBuilderDetails::GetPatch(patch.impl_).value("role", "");
+  return PatchBuilderDetails::GetPatch(patch).value("role", "");
 }
 
 }  // namespace internal

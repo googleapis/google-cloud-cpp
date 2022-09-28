@@ -25,6 +25,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+struct PatchBuilderDetails;
 
 /**
  * Prepares a patch for the '<Resource Type>: patch' APIs in Google Cloud

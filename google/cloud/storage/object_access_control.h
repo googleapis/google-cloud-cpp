@@ -25,10 +25,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-struct ObjectAccessControlParser;
-struct GrpcObjectAccessControlParser;
-}  // namespace internal
 
 /**
  * Wraps the objectAccessControl resource in Google Cloud Storage.
@@ -228,8 +224,7 @@ class ObjectAccessControlPatchBuilder {
   }
 
  private:
-  friend struct internal::GrpcObjectAccessControlParser;
-
+  friend struct internal::PatchBuilderDetails;
   internal::PatchBuilder impl_;
 };
 
