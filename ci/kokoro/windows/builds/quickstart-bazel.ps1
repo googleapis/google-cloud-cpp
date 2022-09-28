@@ -40,7 +40,7 @@ function Get-Released-Quickstarts {
 
     Push-Location "${project_root}/google/cloud/bigtable/quickstart"
     bazelisk $bazel_common_flags version | Out-Null
-    bazelisk $bazel_common_flags query --noshow_progress --noshow_loading_progress " filter(/quickstart:quickstart, kind(cc_binary, @com_github_googleapis_google_cloud_cpp//google/...))" |
+    bazelisk $bazel_common_flags query --noshow_progress --noshow_loading_progress "filter(/quickstart:quickstart$, kind(cc_binary, @com_github_googleapis_google_cloud_cpp//google/...))" |
         ForEach-Object { $_.replace("@com_github_googleapis_google_cloud_cpp//google/cloud/", "").replace("/quickstart:quickstart", "") } |
         # TODO(#8145) TODO(#9340) TODO(#8125) TODDO(#8725) - these do not compile on Windows.
         Where-Object { -not ("asset", "beyondcorp", "channel", "storagetransfer" -contains $_) } |
