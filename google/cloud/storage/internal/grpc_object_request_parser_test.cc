@@ -24,9 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace storage_proto = ::google::storage::v2;
@@ -97,15 +96,15 @@ google::storage::v2::Object ExpectedFullObjectMetadata() {
   return proto;
 }
 
-ObjectMetadata FullObjectMetadata() {
-  return ObjectMetadata{}
+storage::ObjectMetadata FullObjectMetadata() {
+  return storage::ObjectMetadata{}
       .set_content_encoding("test-content-encoding")
       .set_content_disposition("test-content-disposition")
       .set_cache_control("test-cache-control")
-      .set_acl({ObjectAccessControl()
+      .set_acl({storage::ObjectAccessControl()
                     .set_role("test-role1")
                     .set_entity("test-entity1"),
-                ObjectAccessControl()
+                storage::ObjectAccessControl()
                     .set_role("test-role2")
                     .set_entity("test-entity2")})
       .set_content_language("test-content-language")
@@ -162,24 +161,27 @@ TEST(GrpcObjectRequestParser, ComposeObjectRequestAllOptions) {
   *expected.mutable_common_object_request_params() =
       ExpectedCommonObjectRequestParams();
 
-  ComposeObjectRequest req(
+  storage::internal::ComposeObjectRequest req(
       "bucket-name",
       {
-          ComposeSourceObject{"source-object-1", absl::nullopt, absl::nullopt},
-          ComposeSourceObject{"source-object-2", 27, 28},
-          ComposeSourceObject{"source-object-3", 37, absl::nullopt},
-          ComposeSourceObject{"source-object-4", absl::nullopt, 48},
+          storage::ComposeSourceObject{"source-object-1", absl::nullopt,
+                                       absl::nullopt},
+          storage::ComposeSourceObject{"source-object-2", 27, 28},
+          storage::ComposeSourceObject{"source-object-3", 37, absl::nullopt},
+          storage::ComposeSourceObject{"source-object-4", absl::nullopt, 48},
       },
       "object-name");
   req.set_multiple_options(
-      EncryptionKey::FromBinaryKey("01234567"),
-      DestinationPredefinedAcl("projectPrivate"),
-      KmsKeyName("test-only-kms-key"), IfGenerationMatch(1),
-      IfMetagenerationMatch(3), UserProject("test-user-project"),
-      WithObjectMetadata(FullObjectMetadata().set_storage_class("STANDARD")),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+      storage::EncryptionKey::FromBinaryKey("01234567"),
+      storage::DestinationPredefinedAcl("projectPrivate"),
+      storage::KmsKeyName("test-only-kms-key"), storage::IfGenerationMatch(1),
+      storage::IfMetagenerationMatch(3),
+      storage::UserProject("test-user-project"),
+      storage::WithObjectMetadata(
+          FullObjectMetadata().set_storage_class("STANDARD")),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto actual = GrpcObjectRequestParser::ToProto(req);
+  auto actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -198,14 +200,15 @@ TEST(GrpcObjectRequestParser, DeleteObjectAllFields) {
       )pb",
       &expected));
 
-  DeleteObjectRequest req("test-bucket", "test-object");
+  storage::internal::DeleteObjectRequest req("test-bucket", "test-object");
   req.set_multiple_options(
-      Generation(7), IfGenerationMatch(1), IfGenerationNotMatch(2),
-      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"));
+      storage::Generation(7), storage::IfGenerationMatch(1),
+      storage::IfGenerationNotMatch(2), storage::IfMetagenerationMatch(3),
+      storage::IfMetagenerationNotMatch(4),
+      storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -224,14 +227,16 @@ TEST(GrpcObjectRequestParser, GetObjectMetadataAllFields) {
       )pb",
       &expected));
 
-  GetObjectMetadataRequest req("test-bucket", "test-object");
+  storage::internal::GetObjectMetadataRequest req("test-bucket", "test-object");
   req.set_multiple_options(
-      Generation(7), IfGenerationMatch(1), IfGenerationNotMatch(2),
-      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4), Projection("full"),
-      UserProject("test-user-project"), UserProject("test-user-project"),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+      storage::Generation(7), storage::IfGenerationMatch(1),
+      storage::IfGenerationNotMatch(2), storage::IfMetagenerationMatch(3),
+      storage::IfMetagenerationNotMatch(4), storage::Projection("full"),
+      storage::UserProject("test-user-project"),
+      storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -243,9 +248,9 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestSimple) {
       )pb",
       &expected));
 
-  ReadObjectRangeRequest req("test-bucket", "test-object");
+  storage::internal::ReadObjectRangeRequest req("test-bucket", "test-object");
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
+  auto const actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -267,15 +272,18 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestAllFields) {
   *expected.mutable_common_object_request_params() =
       ExpectedCommonObjectRequestParams();
 
-  ReadObjectRangeRequest req("test-bucket", "test-object");
+  storage::internal::ReadObjectRangeRequest req("test-bucket", "test-object");
   req.set_multiple_options(
-      Generation(7), ReadFromOffset(2000), ReadRange(1000, 3000),
-      IfGenerationMatch(1), IfGenerationNotMatch(2), IfMetagenerationMatch(3),
-      IfMetagenerationNotMatch(4), UserProject("test-user-project"),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"), EncryptionKey::FromBinaryKey("01234567"));
+      storage::Generation(7), storage::ReadFromOffset(2000),
+      storage::ReadRange(1000, 3000), storage::IfGenerationMatch(1),
+      storage::IfGenerationNotMatch(2), storage::IfMetagenerationMatch(3),
+      storage::IfMetagenerationNotMatch(4),
+      storage::UserProject("test-user-project"),
+      storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"),
+      storage::EncryptionKey::FromBinaryKey("01234567"));
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
+  auto const actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -289,10 +297,10 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLast) {
       )pb",
       &expected));
 
-  ReadObjectRangeRequest req("test-bucket", "test-object");
-  req.set_multiple_options(ReadLast(2000));
+  storage::internal::ReadObjectRangeRequest req("test-bucket", "test-object");
+  req.set_multiple_options(storage::ReadLast(2000));
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
+  auto const actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -304,17 +312,19 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLastZero) {
       )pb",
       &expected));
 
-  ReadObjectRangeRequest req("test-bucket", "test-object");
-  req.set_multiple_options(ReadLast(0));
+  storage::internal::ReadObjectRangeRequest req("test-bucket", "test-object");
+  req.set_multiple_options(storage::ReadLast(0));
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
+  auto const actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
-  auto client = GrpcClient::Create(DefaultOptionsGrpc(
-      Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<EndpointOption>("localhost:1")));
-  StatusOr<std::unique_ptr<ObjectReadSource>> reader = client->ReadObject(req);
+  auto client = storage::internal::GrpcClient::Create(
+      storage::internal::DefaultOptionsGrpc(
+          Options{}
+              .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+              .set<EndpointOption>("localhost:1")));
+  StatusOr<std::unique_ptr<storage::internal::ObjectReadSource>> reader =
+      client->ReadObject(req);
   EXPECT_THAT(reader, StatusIs(StatusCode::kOutOfRange));
 }
 
@@ -337,9 +347,9 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
   *expected.mutable_common_object_request_params() =
       ExpectedCommonObjectRequestParams();
 
-  PatchObjectRequest req(
+  storage::internal::PatchObjectRequest req(
       "bucket-name", "object-name",
-      ObjectMetadataPatchBuilder{}
+      storage::ObjectMetadataPatchBuilder{}
           .SetContentEncoding("test-content-encoding")
           .SetContentDisposition("test-content-disposition")
           .SetCacheControl("test-cache-control")
@@ -349,10 +359,10 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
           .SetMetadata("test-metadata-key2", "test-value2")
           .SetTemporaryHold(true)
           .SetAcl({
-              ObjectAccessControl{}
+              storage::ObjectAccessControl{}
                   .set_entity("test-entity1")
                   .set_role("test-role1"),
-              ObjectAccessControl{}
+              storage::ObjectAccessControl{}
                   .set_entity("test-entity2")
                   .set_role("test-role2"),
           })
@@ -361,13 +371,15 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
                          std::chrono::seconds(1643126687) +
                          std::chrono::milliseconds(123)));
   req.set_multiple_options(
-      Generation(7), IfGenerationMatch(1), IfGenerationNotMatch(2),
-      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4),
-      PredefinedAcl("projectPrivate"), EncryptionKey::FromBinaryKey("01234567"),
-      Projection("full"), UserProject("test-user-project"),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+      storage::Generation(7), storage::IfGenerationMatch(1),
+      storage::IfGenerationNotMatch(2), storage::IfMetagenerationMatch(3),
+      storage::IfMetagenerationNotMatch(4),
+      storage::PredefinedAcl("projectPrivate"),
+      storage::EncryptionKey::FromBinaryKey("01234567"),
+      storage::Projection("full"), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto actual = GrpcObjectRequestParser::ToProto(req);
+  auto actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
   // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
@@ -390,20 +402,21 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllResets) {
   google::storage::v2::UpdateObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
 
-  PatchObjectRequest req("bucket-name", "object-name",
-                         ObjectMetadataPatchBuilder{}
-                             .ResetAcl()
-                             .ResetCacheControl()
-                             .ResetContentDisposition()
-                             .ResetContentEncoding()
-                             .ResetContentLanguage()
-                             .ResetContentType()
-                             .ResetEventBasedHold()
-                             .ResetMetadata()
-                             .ResetTemporaryHold()
-                             .ResetCustomTime());
+  storage::internal::PatchObjectRequest req(
+      "bucket-name", "object-name",
+      storage::ObjectMetadataPatchBuilder{}
+          .ResetAcl()
+          .ResetCacheControl()
+          .ResetContentDisposition()
+          .ResetContentEncoding()
+          .ResetContentLanguage()
+          .ResetContentType()
+          .ResetEventBasedHold()
+          .ResetMetadata()
+          .ResetTemporaryHold()
+          .ResetCustomTime());
 
-  auto actual = GrpcObjectRequestParser::ToProto(req);
+  auto actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
   // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
@@ -437,15 +450,18 @@ TEST(GrpcObjectRequestParser, UpdateObjectRequestAllOptions) {
   *expected.mutable_common_object_request_params() =
       ExpectedCommonObjectRequestParams();
 
-  UpdateObjectRequest req("bucket-name", "object-name", FullObjectMetadata());
+  storage::internal::UpdateObjectRequest req("bucket-name", "object-name",
+                                             FullObjectMetadata());
   req.set_multiple_options(
-      Generation(7), IfGenerationMatch(1), IfGenerationNotMatch(2),
-      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4),
-      PredefinedAcl("projectPrivate"), EncryptionKey::FromBinaryKey("01234567"),
-      Projection("full"), UserProject("test-user-project"),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+      storage::Generation(7), storage::IfGenerationMatch(1),
+      storage::IfGenerationNotMatch(2), storage::IfMetagenerationMatch(3),
+      storage::IfMetagenerationNotMatch(4),
+      storage::PredefinedAcl("projectPrivate"),
+      storage::EncryptionKey::FromBinaryKey("01234567"),
+      storage::Projection("full"), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto actual = GrpcObjectRequestParser::ToProto(req);
+  auto actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
   // First check the paths, we do not care about their order, so checking them
   // with IsProtoEqual does not work.
@@ -479,14 +495,15 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestSimple) {
       )pb",
       &expected));
 
-  InsertObjectMediaRequest request(
+  storage::internal::InsertObjectMediaRequest request(
       "test-bucket-name", "test-object-name",
       "The quick brown fox jumps over the lazy dog");
-  auto actual = GrpcObjectRequestParser::ToProto(request).value();
+  auto actual = ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
+  using storage::internal::InsertObjectMediaRequest;
   // See top-of-file comments for details on the magic numbers
   struct Test {
     std::function<void(InsertObjectMediaRequest&)> apply_options;
@@ -498,17 +515,17 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
       // was somehow corrupted locally (say a bad disk). In that case, we don't
       // want to recompute the hashes in the upload.
       {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-            r.set_option(DisableCrc32cChecksum(true));
+          [](storage::internal::InsertObjectMediaRequest& r) {
+            r.set_option(storage::MD5HashValue(storage::ComputeMD5Hash(kText)));
+            r.set_option(storage::DisableCrc32cChecksum(true));
           },
           R"pb(
             md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6")pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
-            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-            r.set_option(DisableCrc32cChecksum(false));
+            r.set_option(storage::MD5HashValue(storage::ComputeMD5Hash(kText)));
+            r.set_option(storage::DisableCrc32cChecksum(false));
           },
           R"pb(
             md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
@@ -516,8 +533,9 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
       },
       {
           [](InsertObjectMediaRequest& r) {
-            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+            r.set_option(storage::MD5HashValue(storage::ComputeMD5Hash(kText)));
+            r.set_option(storage::Crc32cChecksumValue(
+                storage::ComputeCrc32cChecksum(kText)));
           },
           R"pb(
             md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
@@ -526,16 +544,16 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
 
       {
           [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(false));
-            r.set_option(DisableCrc32cChecksum(true));
+            r.set_option(storage::DisableMD5Hash(false));
+            r.set_option(storage::DisableCrc32cChecksum(true));
           },
           R"pb(
             md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21")pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(false));
-            r.set_option(DisableCrc32cChecksum(false));
+            r.set_option(storage::DisableMD5Hash(false));
+            r.set_option(storage::DisableCrc32cChecksum(false));
           },
           R"pb(
             md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
@@ -543,8 +561,9 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
       },
       {
           [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(false));
-            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+            r.set_option(storage::DisableMD5Hash(false));
+            r.set_option(storage::Crc32cChecksumValue(
+                storage::ComputeCrc32cChecksum(kText)));
           },
           R"pb(
             md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
@@ -553,24 +572,25 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
 
       {
           [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(true));
-            r.set_option(DisableCrc32cChecksum(true));
+            r.set_option(storage::DisableMD5Hash(true));
+            r.set_option(storage::DisableCrc32cChecksum(true));
           },
           R"pb(
           )pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(true));
-            r.set_option(DisableCrc32cChecksum(false));
+            r.set_option(storage::DisableMD5Hash(true));
+            r.set_option(storage::DisableCrc32cChecksum(false));
           },
           R"pb(
             crc32c: 0x4ad67f80)pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(true));
-            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+            r.set_option(storage::DisableMD5Hash(true));
+            r.set_option(storage::Crc32cChecksumValue(
+                storage::ComputeCrc32cChecksum(kText)));
           },
           R"pb(
             crc32c: 0x22620404)pb",
@@ -583,10 +603,10 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
     ASSERT_TRUE(
         TextFormat::ParseFromString(test.expected_checksums, &expected));
 
-    InsertObjectMediaRequest request("test-bucket-name", "test-object-name",
-                                     kAlt);
+    storage::internal::InsertObjectMediaRequest request(
+        "test-bucket-name", "test-object-name", kAlt);
     test.apply_options(request);
-    auto actual = GrpcObjectRequestParser::ToProto(request);
+    auto actual = ToProto(request);
     ASSERT_STATUS_OK(actual) << "expected=" << test.expected_checksums;
     EXPECT_THAT(actual->object_checksums(), IsProtoEqual(expected));
   }
@@ -625,20 +645,22 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestAllOptions) {
 
   auto constexpr kContents = "The quick brown fox jumps over the lazy dog";
 
-  InsertObjectMediaRequest request("test-bucket-name", "test-object-name",
-                                   kContents);
+  storage::internal::InsertObjectMediaRequest request(
+      "test-bucket-name", "test-object-name", kContents);
   request.set_multiple_options(
-      ContentType("test-content-type"),
-      ContentEncoding("test-content-encoding"),
-      Crc32cChecksumValue(ComputeCrc32cChecksum(kContents)),
-      MD5HashValue(ComputeMD5Hash(kContents)), PredefinedAcl("private"),
-      IfGenerationMatch(0), IfGenerationNotMatch(7), IfMetagenerationMatch(42),
-      IfMetagenerationNotMatch(84), Projection::Full(),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"), EncryptionKey::FromBinaryKey("01234567"),
-      KmsKeyName("test-kms-key-name"));
+      storage::ContentType("test-content-type"),
+      storage::ContentEncoding("test-content-encoding"),
+      storage::Crc32cChecksumValue(storage::ComputeCrc32cChecksum(kContents)),
+      storage::MD5HashValue(storage::ComputeMD5Hash(kContents)),
+      storage::PredefinedAcl("private"), storage::IfGenerationMatch(0),
+      storage::IfGenerationNotMatch(7), storage::IfMetagenerationMatch(42),
+      storage::IfMetagenerationNotMatch(84), storage::Projection::Full(),
+      storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"),
+      storage::EncryptionKey::FromBinaryKey("01234567"),
+      storage::KmsKeyName("test-kms-key-name"));
 
-  auto actual = GrpcObjectRequestParser::ToProto(request).value();
+  auto actual = ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -657,12 +679,12 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestWithObjectMetadata) {
 
   auto constexpr kContents = "The quick brown fox jumps over the lazy dog";
 
-  InsertObjectMediaRequest request("test-bucket-name", "test-object-name",
-                                   kContents);
-  request.set_multiple_options(
-      WithObjectMetadata(FullObjectMetadata().set_storage_class("STANDARD")));
+  storage::internal::InsertObjectMediaRequest request(
+      "test-bucket-name", "test-object-name", kContents);
+  request.set_multiple_options(storage::WithObjectMetadata(
+      FullObjectMetadata().set_storage_class("STANDARD")));
 
-  auto actual = GrpcObjectRequestParser::ToProto(request).value();
+  auto actual = ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -674,7 +696,7 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseSimple) {
       )pb",
       &input));
 
-  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{}, {});
+  auto const actual = FromProto(input, Options{}, {});
   EXPECT_EQ(actual.committed_size.value_or(0), 123456);
   EXPECT_FALSE(actual.payload.has_value());
 }
@@ -690,7 +712,7 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseWithResource) {
         })pb",
       &input));
 
-  auto const actual = GrpcObjectRequestParser::FromProto(
+  auto const actual = FromProto(
       input, Options{}, {{"header", "value"}, {"other-header", "other-value"}});
   EXPECT_FALSE(actual.committed_size.has_value());
   ASSERT_TRUE(actual.payload.has_value());
@@ -718,15 +740,17 @@ TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
       )pb",
       &expected));
 
-  ListObjectsRequest req("test-bucket");
+  storage::internal::ListObjectsRequest req("test-bucket");
   req.set_page_token("test-only-invalid");
   req.set_multiple_options(
-      MaxResults(10), Delimiter("/"), IncludeTrailingDelimiter(true),
-      Prefix("test/prefix"), Versions(true), StartOffset("test/prefix/a"),
-      EndOffset("test/prefix/abc"), UserProject("test-user-project"),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+      storage::MaxResults(10), storage::Delimiter("/"),
+      storage::IncludeTrailingDelimiter(true), storage::Prefix("test/prefix"),
+      storage::Versions(true), storage::StartOffset("test/prefix/a"),
+      storage::EndOffset("test/prefix/abc"),
+      storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -742,7 +766,7 @@ TEST(GrpcObjectRequestParser, ListObjectsResponse) {
       )pb",
       &response));
 
-  auto actual = GrpcObjectRequestParser::FromProto(response, Options{});
+  auto actual = FromProto(response, Options{});
   EXPECT_EQ(actual.next_page_token, "test-only-invalid-token");
   EXPECT_THAT(actual.prefixes, ElementsAre("prefix1/", "prefix2/"));
   std::vector<std::string> names;
@@ -786,23 +810,27 @@ TEST(GrpcObjectRequestParser, RewriteObjectRequestAllOptions) {
   *expected.mutable_common_object_request_params() =
       ExpectedCommonObjectRequestParams();
 
-  RewriteObjectRequest req("source-bucket", "source-object",
-                           "destination-bucket", "destination-object",
-                           "test-only-rewrite-token");
+  storage::internal::RewriteObjectRequest req(
+      "source-bucket", "source-object", "destination-bucket",
+      "destination-object", "test-only-rewrite-token");
   req.set_multiple_options(
-      DestinationKmsKeyName("test-kms-key-name-from-option"),
-      DestinationPredefinedAcl("projectPrivate"),
-      EncryptionKey::FromBinaryKey("01234567"), IfGenerationMatch(1),
-      IfGenerationNotMatch(2), IfMetagenerationMatch(3),
-      IfMetagenerationNotMatch(4), IfSourceGenerationMatch(5),
-      IfSourceGenerationNotMatch(6), IfSourceMetagenerationMatch(7),
-      IfSourceMetagenerationNotMatch(8), MaxBytesRewrittenPerCall(123456),
-      Projection("full"), SourceEncryptionKey::FromBinaryKey("ABCDEFGH"),
-      SourceGeneration(7), UserProject("test-user-project"),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"),
-      WithObjectMetadata(FullObjectMetadata().set_storage_class("STANDARD")));
+      storage::DestinationKmsKeyName("test-kms-key-name-from-option"),
+      storage::DestinationPredefinedAcl("projectPrivate"),
+      storage::EncryptionKey::FromBinaryKey("01234567"),
+      storage::IfGenerationMatch(1), storage::IfGenerationNotMatch(2),
+      storage::IfMetagenerationMatch(3), storage::IfMetagenerationNotMatch(4),
+      storage::IfSourceGenerationMatch(5),
+      storage::IfSourceGenerationNotMatch(6),
+      storage::IfSourceMetagenerationMatch(7),
+      storage::IfSourceMetagenerationNotMatch(8),
+      storage::MaxBytesRewrittenPerCall(123456), storage::Projection("full"),
+      storage::SourceEncryptionKey::FromBinaryKey("ABCDEFGH"),
+      storage::SourceGeneration(7), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"),
+      storage::WithObjectMetadata(
+          FullObjectMetadata().set_storage_class("STANDARD")));
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -836,21 +864,24 @@ TEST(GrpcObjectRequestParser, RewriteObjectRequestNoDestination) {
   *expected.mutable_common_object_request_params() =
       ExpectedCommonObjectRequestParams();
 
-  RewriteObjectRequest req("source-bucket", "source-object",
-                           "destination-bucket", "destination-object",
-                           "test-only-rewrite-token");
+  storage::internal::RewriteObjectRequest req(
+      "source-bucket", "source-object", "destination-bucket",
+      "destination-object", "test-only-rewrite-token");
   req.set_multiple_options(
-      DestinationPredefinedAcl("projectPrivate"),
-      EncryptionKey::FromBinaryKey("01234567"), IfGenerationMatch(1),
-      IfGenerationNotMatch(2), IfMetagenerationMatch(3),
-      IfMetagenerationNotMatch(4), IfSourceGenerationMatch(5),
-      IfSourceGenerationNotMatch(6), IfSourceMetagenerationMatch(7),
-      IfSourceMetagenerationNotMatch(8), MaxBytesRewrittenPerCall(123456),
-      Projection("full"), SourceEncryptionKey::FromBinaryKey("ABCDEFGH"),
-      SourceGeneration(7), UserProject("test-user-project"),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+      storage::DestinationPredefinedAcl("projectPrivate"),
+      storage::EncryptionKey::FromBinaryKey("01234567"),
+      storage::IfGenerationMatch(1), storage::IfGenerationNotMatch(2),
+      storage::IfMetagenerationMatch(3), storage::IfMetagenerationNotMatch(4),
+      storage::IfSourceGenerationMatch(5),
+      storage::IfSourceGenerationNotMatch(6),
+      storage::IfSourceMetagenerationMatch(7),
+      storage::IfSourceMetagenerationNotMatch(8),
+      storage::MaxBytesRewrittenPerCall(123456), storage::Projection("full"),
+      storage::SourceEncryptionKey::FromBinaryKey("ABCDEFGH"),
+      storage::SourceGeneration(7), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -870,7 +901,7 @@ TEST(GrpcObjectRequestParser, RewriteObjectResponse) {
       )pb",
       &input));
 
-  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
+  auto const actual = FromProto(input, Options{});
   EXPECT_EQ(actual.total_bytes_rewritten, 123456);
   EXPECT_EQ(actual.object_size, 1234560);
   EXPECT_FALSE(actual.done);
@@ -909,22 +940,26 @@ TEST(GrpcObjectRequestParser, CopyObjectRequestAllOptions) {
   *expected.mutable_common_object_request_params() =
       ExpectedCommonObjectRequestParams();
 
-  CopyObjectRequest req("source-bucket", "source-object", "destination-bucket",
-                        "destination-object");
+  storage::internal::CopyObjectRequest req("source-bucket", "source-object",
+                                           "destination-bucket",
+                                           "destination-object");
   req.set_multiple_options(
-      DestinationKmsKeyName("test-kms-key-name-from-option"),
-      DestinationPredefinedAcl("projectPrivate"),
-      EncryptionKey::FromBinaryKey("01234567"), IfGenerationMatch(1),
-      IfGenerationNotMatch(2), IfMetagenerationMatch(3),
-      IfMetagenerationNotMatch(4), IfSourceGenerationMatch(5),
-      IfSourceGenerationNotMatch(6), IfSourceMetagenerationMatch(7),
-      IfSourceMetagenerationNotMatch(8), Projection("full"),
-      SourceEncryptionKey::FromBinaryKey("ABCDEFGH"), SourceGeneration(7),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"),
-      WithObjectMetadata(FullObjectMetadata().set_storage_class("STANDARD")));
+      storage::DestinationKmsKeyName("test-kms-key-name-from-option"),
+      storage::DestinationPredefinedAcl("projectPrivate"),
+      storage::EncryptionKey::FromBinaryKey("01234567"),
+      storage::IfGenerationMatch(1), storage::IfGenerationNotMatch(2),
+      storage::IfMetagenerationMatch(3), storage::IfMetagenerationNotMatch(4),
+      storage::IfSourceGenerationMatch(5),
+      storage::IfSourceGenerationNotMatch(6),
+      storage::IfSourceMetagenerationMatch(7),
+      storage::IfSourceMetagenerationNotMatch(8), storage::Projection("full"),
+      storage::SourceEncryptionKey::FromBinaryKey("ABCDEFGH"),
+      storage::SourceGeneration(7), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"),
+      storage::WithObjectMetadata(
+          FullObjectMetadata().set_storage_class("STANDARD")));
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -956,20 +991,23 @@ TEST(GrpcObjectRequestParser, CopyObjectRequestNoDestination) {
   *expected.mutable_common_object_request_params() =
       ExpectedCommonObjectRequestParams();
 
-  CopyObjectRequest req("source-bucket", "source-object", "destination-bucket",
-                        "destination-object");
+  storage::internal::CopyObjectRequest req("source-bucket", "source-object",
+                                           "destination-bucket",
+                                           "destination-object");
   req.set_multiple_options(
-      DestinationPredefinedAcl("projectPrivate"),
-      EncryptionKey::FromBinaryKey("01234567"), IfGenerationMatch(1),
-      IfGenerationNotMatch(2), IfMetagenerationMatch(3),
-      IfMetagenerationNotMatch(4), IfSourceGenerationMatch(5),
-      IfSourceGenerationNotMatch(6), IfSourceMetagenerationMatch(7),
-      IfSourceMetagenerationNotMatch(8), Projection("full"),
-      SourceEncryptionKey::FromBinaryKey("ABCDEFGH"), SourceGeneration(7),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"));
+      storage::DestinationPredefinedAcl("projectPrivate"),
+      storage::EncryptionKey::FromBinaryKey("01234567"),
+      storage::IfGenerationMatch(1), storage::IfGenerationNotMatch(2),
+      storage::IfMetagenerationMatch(3), storage::IfMetagenerationNotMatch(4),
+      storage::IfSourceGenerationMatch(5),
+      storage::IfSourceGenerationNotMatch(6),
+      storage::IfSourceMetagenerationMatch(7),
+      storage::IfSourceMetagenerationNotMatch(8), storage::Projection("full"),
+      storage::SourceEncryptionKey::FromBinaryKey("ABCDEFGH"),
+      storage::SourceGeneration(7), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto const actual = GrpcObjectRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -985,9 +1023,9 @@ TEST(GrpcObjectRequestParser, ResumableUploadRequestSimple) {
       })""",
                                           &expected));
 
-  ResumableUploadRequest req("test-bucket", "test-object");
+  storage::internal::ResumableUploadRequest req("test-bucket", "test-object");
 
-  auto actual = GrpcObjectRequestParser::ToProto(req).value();
+  auto actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -1018,22 +1056,23 @@ TEST(GrpcObjectRequestParser, ResumableUploadRequestAllFields) {
   *expected.mutable_common_object_request_params() =
       ExpectedCommonObjectRequestParams();
 
-  ResumableUploadRequest req("test-bucket", "test-object");
+  storage::internal::ResumableUploadRequest req("test-bucket", "test-object");
   req.set_multiple_options(
-      ContentType("test-content-type"),
-      ContentEncoding("test-content-encoding"),
-      Crc32cChecksumValue(
-          ComputeCrc32cChecksum("The quick brown fox jumps over the lazy dog")),
-      MD5HashValue(
-          ComputeMD5Hash("The quick brown fox jumps over the lazy dog")),
-      PredefinedAcl("private"), IfGenerationMatch(0), IfGenerationNotMatch(7),
-      IfMetagenerationMatch(42), IfMetagenerationNotMatch(84),
-      Projection::Full(), UserProject("test-user-project"),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"),
-      EncryptionKey::FromBinaryKey("01234567"),
-      KmsKeyName("test-kms-key-name"));
+      storage::ContentType("test-content-type"),
+      storage::ContentEncoding("test-content-encoding"),
+      storage::Crc32cChecksumValue(storage::ComputeCrc32cChecksum(
+          "The quick brown fox jumps over the lazy dog")),
+      storage::MD5HashValue(storage::ComputeMD5Hash(
+          "The quick brown fox jumps over the lazy dog")),
+      storage::PredefinedAcl("private"), storage::IfGenerationMatch(0),
+      storage::IfGenerationNotMatch(7), storage::IfMetagenerationMatch(42),
+      storage::IfMetagenerationNotMatch(84), storage::Projection::Full(),
+      storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"),
+      storage::EncryptionKey::FromBinaryKey("01234567"),
+      storage::KmsKeyName("test-kms-key-name"));
 
-  auto actual = GrpcObjectRequestParser::ToProto(req).value();
+  auto actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -1047,11 +1086,11 @@ TEST(GrpcObjectRequestParser, ResumableUploadRequestWithObjectMetadataFields) {
   resource.set_bucket("projects/_/buckets/test-bucket");
   resource.set_storage_class("STANDARD");
 
-  ResumableUploadRequest req("test-bucket", "test-object");
-  req.set_multiple_options(
-      WithObjectMetadata(FullObjectMetadata().set_storage_class("STANDARD")));
+  storage::internal::ResumableUploadRequest req("test-bucket", "test-object");
+  req.set_multiple_options(storage::WithObjectMetadata(
+      FullObjectMetadata().set_storage_class("STANDARD")));
 
-  auto actual = GrpcObjectRequestParser::ToProto(req).value();
+  auto actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -1067,10 +1106,10 @@ TEST(GrpcObjectRequestParser, ResumableUploadRequestWithContentLength) {
       })""",
                                           &expected));
 
-  ResumableUploadRequest req("test-bucket", "test-object");
-  req.set_multiple_options(UploadContentLength(123456));
+  storage::internal::ResumableUploadRequest req("test-bucket", "test-object");
+  req.set_multiple_options(storage::UploadContentLength(123456));
 
-  auto actual = GrpcObjectRequestParser::ToProto(req).value();
+  auto actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -1082,9 +1121,9 @@ TEST(GrpcObjectRequestParser, QueryResumableUploadRequestSimple) {
       )pb",
       &expected));
 
-  QueryResumableUploadRequest req("test-upload-id");
+  storage::internal::QueryResumableUploadRequest req("test-upload-id");
 
-  auto actual = GrpcObjectRequestParser::ToProto(req);
+  auto actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -1096,7 +1135,7 @@ TEST(GrpcObjectRequestParser, QueryResumableUploadResponseSimple) {
       )pb",
       &input));
 
-  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
+  auto const actual = FromProto(input, Options{});
   EXPECT_EQ(actual.committed_size.value_or(0), 123456);
   EXPECT_FALSE(actual.payload.has_value());
 }
@@ -1112,7 +1151,7 @@ TEST(GrpcObjectRequestParser, QueryResumableUploadResponseWithResource) {
         })pb",
       &input));
 
-  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
+  auto const actual = FromProto(input, Options{});
   EXPECT_FALSE(actual.committed_size.has_value());
   ASSERT_TRUE(actual.payload.has_value());
   EXPECT_EQ(actual.payload->name(), "test-object-name");
@@ -1128,15 +1167,14 @@ TEST(GrpcObjectRequestParser, DeleteResumableUploadRequest) {
       )pb",
       &expected));
 
-  DeleteResumableUploadRequest req("test-upload-id");
+  storage::internal::DeleteResumableUploadRequest req("test-upload-id");
 
-  auto actual = GrpcObjectRequestParser::ToProto(req);
+  auto actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

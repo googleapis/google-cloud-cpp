@@ -55,7 +55,7 @@ AsyncConnectionImpl::AsyncConnectionImpl(CompletionQueue cq,
 future<storage_experimental::AsyncReadObjectRangeResponse>
 AsyncConnectionImpl::AsyncReadObjectRange(
     storage::internal::ReadObjectRangeRequest request) {
-  auto proto = storage::internal::GrpcObjectRequestParser::ToProto(request);
+  auto proto = ToProto(request);
   if (!proto) {
     auto response = storage_experimental::AsyncReadObjectRangeResponse{};
     response.status = std::move(proto).status();
@@ -78,7 +78,7 @@ AsyncConnectionImpl::AsyncReadObjectRange(
 
 future<Status> AsyncConnectionImpl::AsyncDeleteObject(
     storage::internal::DeleteObjectRequest request) {
-  auto proto = storage::internal::GrpcObjectRequestParser::ToProto(request);
+  auto proto = ToProto(request);
   auto const idempotency = idempotency_policy()->IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
@@ -95,7 +95,7 @@ future<Status> AsyncConnectionImpl::AsyncDeleteObject(
 
 future<StatusOr<std::string>> AsyncConnectionImpl::AsyncStartResumableWrite(
     storage::internal::ResumableUploadRequest request) {
-  auto proto = storage::internal::GrpcObjectRequestParser::ToProto(request);
+  auto proto = ToProto(request);
   if (!proto) {
     return make_ready_future(StatusOr<std::string>(std::move(proto).status()));
   }

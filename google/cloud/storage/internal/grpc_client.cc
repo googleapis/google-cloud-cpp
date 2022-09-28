@@ -160,8 +160,8 @@ StatusOr<QueryResumableUploadResponse> CloseWriteObjectStream(
   watchdog.cancel();
   if (watchdog.get()) return TimeoutError(timeout, "Close()");
   if (!response) return std::move(response).status();
-  return GrpcObjectRequestParser::FromProto(*std::move(response), options,
-                                            writer->GetRequestMetadata());
+  return storage_internal::FromProto(*std::move(response), options,
+                                     writer->GetRequestMetadata());
 }
 
 }  // namespace
@@ -366,7 +366,7 @@ StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
 
 StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
-  auto r = GrpcObjectRequestParser::ToProto(request);
+  auto r = storage_internal::ToProto(request);
   if (!r) return std::move(r).status();
   auto proto_request = *r;
 
@@ -460,7 +460,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
 
 StatusOr<ObjectMetadata> GrpcClient::CopyObject(
     CopyObjectRequest const& request) {
-  auto proto = GrpcObjectRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request, "resource");
   auto response = stub_->RewriteObject(context, *proto);
@@ -475,7 +475,7 @@ StatusOr<ObjectMetadata> GrpcClient::CopyObject(
 
 StatusOr<ObjectMetadata> GrpcClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
-  auto proto = GrpcObjectRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->GetObject(context, proto);
@@ -498,7 +498,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   }
   auto context = absl::make_unique<grpc::ClientContext>();
   ApplyQueryParameters(*context, request);
-  auto proto_request = GrpcObjectRequestParser::ToProto(request);
+  auto proto_request = storage_internal::ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
   auto stream = stub_->ReadObject(std::move(context), *proto_request);
 
@@ -524,17 +524,17 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
     ListObjectsRequest const& request) {
-  auto proto = GrpcObjectRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->ListObjects(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectRequestParser::FromProto(*response, CurrentOptions());
+  return storage_internal::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteObject(
     DeleteObjectRequest const& request) {
-  auto proto = GrpcObjectRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->DeleteObject(context, proto);
@@ -544,7 +544,7 @@ StatusOr<EmptyResponse> GrpcClient::DeleteObject(
 
 StatusOr<ObjectMetadata> GrpcClient::UpdateObject(
     UpdateObjectRequest const& request) {
-  auto proto = GrpcObjectRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -555,7 +555,7 @@ StatusOr<ObjectMetadata> GrpcClient::UpdateObject(
 
 StatusOr<ObjectMetadata> GrpcClient::PatchObject(
     PatchObjectRequest const& request) {
-  auto proto = GrpcObjectRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -566,7 +566,7 @@ StatusOr<ObjectMetadata> GrpcClient::PatchObject(
 
 StatusOr<ObjectMetadata> GrpcClient::ComposeObject(
     ComposeObjectRequest const& request) {
-  auto proto = GrpcObjectRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -577,18 +577,18 @@ StatusOr<ObjectMetadata> GrpcClient::ComposeObject(
 
 StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(
     RewriteObjectRequest const& request) {
-  auto proto = GrpcObjectRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
   ApplyQueryParameters(context, request, "resource");
   auto response = stub_->RewriteObject(context, *proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectRequestParser::FromProto(*response, CurrentOptions());
+  return storage_internal::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(
     ResumableUploadRequest const& request) {
-  auto proto_request = GrpcObjectRequestParser::ToProto(request);
+  auto proto_request = storage_internal::ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
 
   grpc::ClientContext context;
@@ -611,10 +611,10 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::QueryResumableUpload(
   if (timeout.count() != 0) {
     context.set_deadline(std::chrono::system_clock::now() + timeout);
   }
-  auto response = stub_->QueryWriteStatus(
-      context, GrpcObjectRequestParser::ToProto(request));
+  auto response =
+      stub_->QueryWriteStatus(context, storage_internal::ToProto(request));
   if (!response) return std::move(response).status();
-  return GrpcObjectRequestParser::FromProto(*response, options());
+  return storage_internal::FromProto(*response, options());
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
@@ -625,8 +625,8 @@ StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
   if (timeout.count() != 0) {
     context.set_deadline(std::chrono::system_clock::now() + timeout);
   }
-  auto response = stub_->CancelResumableWrite(
-      context, GrpcObjectRequestParser::ToProto(request));
+  auto response =
+      stub_->CancelResumableWrite(context, storage_internal::ToProto(request));
   if (!response) return std::move(response).status();
   return EmptyResponse{};
 }
