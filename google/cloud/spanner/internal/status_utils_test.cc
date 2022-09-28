@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/testing/status_utils.h"
+#include "google/cloud/internal/status_payload_keys.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,19 +26,29 @@ namespace {
 
 TEST(StatusUtils, SessionNotFound) {
   Status const session_not_found(StatusCode::kNotFound, "Session not found");
-  EXPECT_TRUE(IsSessionNotFound(session_not_found));
+  EXPECT_TRUE(IsSessionNotFound(session_not_found)) << session_not_found;
 
   Status const other_not_found(StatusCode::kNotFound, "Other not found");
-  EXPECT_FALSE(IsSessionNotFound(other_not_found));
+  EXPECT_FALSE(IsSessionNotFound(other_not_found)) << other_not_found;
 
   Status const not_not_found(StatusCode::kUnavailable, "Session not found");
-  EXPECT_FALSE(IsSessionNotFound(not_not_found));
+  EXPECT_FALSE(IsSessionNotFound(not_not_found)) << not_not_found;
 }
 
 TEST(StatusUtils, SessionNotFoundResourceInfo) {
   auto db = spanner::Database("project", "instance", "database");
   auto name = db.FullName() + "/sessions/session";
-  EXPECT_TRUE(IsSessionNotFound(spanner_testing::SessionNotFoundError(name)));
+  auto not_found = spanner_testing::SessionNotFoundError(std::move(name));
+  EXPECT_TRUE(IsSessionNotFound(not_found)) << not_found;
+
+  // A status with the right ResourceInfo doesn't need a particular message.
+  Status still_not_found(not_found.code(), "foo bar", not_found.error_info());
+  std::string const key = internal::kStatusPayloadGrpcProto;
+  auto payload = internal::GetPayload(not_found, key);
+  ASSERT_TRUE(payload.has_value());
+  internal::SetPayload(still_not_found, key, *std::move(payload));
+  EXPECT_NE(not_found, still_not_found);
+  EXPECT_TRUE(IsSessionNotFound(still_not_found)) << still_not_found;
 }
 
 }  // namespace
