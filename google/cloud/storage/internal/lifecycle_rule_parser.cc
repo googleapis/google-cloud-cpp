@@ -64,51 +64,61 @@ Status ParseDateCondition(absl::optional<absl::CivilDay>& field,
   return Status{};
 }
 
+StatusOr<LifecycleRuleAction> ActionFromJson(nlohmann::json const& json) {
+  auto f = json.find("action");
+  if (f == json.end()) return LifecycleRuleAction{};
+  if (!f->is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+
+  LifecycleRuleAction action;
+  action.type = f->value("type", "");
+  action.storage_class = f->value("storageClass", "");
+  return action;
+}
+
+StatusOr<LifecycleRuleCondition> ConditionFromJson(nlohmann::json const& json) {
+  auto f = json.find("condition");
+  if (f == json.end()) return LifecycleRuleCondition{};
+  if (!f->is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+
+  LifecycleRuleCondition result;
+  auto status = ParseIntCondition(result.age, *f, "age");
+  if (!status.ok()) return status;
+  status = ParseDateCondition(result.created_before, *f, "createdBefore");
+  if (!status.ok()) return status;
+  status = ParseBoolCondition(result.is_live, *f, "isLive");
+  if (!status.ok()) return status;
+  result.matches_storage_class =
+      ParseStringListCondition(*f, "matchesStorageClass");
+  status = ParseIntCondition(result.num_newer_versions, *f, "numNewerVersions");
+  if (!status.ok()) return status;
+  status = ParseIntCondition(result.days_since_noncurrent_time, *f,
+                             "daysSinceNoncurrentTime");
+  if (!status.ok()) return status;
+  status = ParseDateCondition(result.noncurrent_time_before, *f,
+                              "noncurrentTimeBefore");
+  if (!status.ok()) return status;
+  status = ParseIntCondition(result.days_since_custom_time, *f,
+                             "daysSinceCustomTime");
+  if (!status.ok()) return status;
+  status =
+      ParseDateCondition(result.custom_time_before, *f, "customTimeBefore");
+  if (!status.ok()) return status;
+  result.matches_prefix = ParseStringListCondition(*f, "matchesPrefix");
+  result.matches_suffix = ParseStringListCondition(*f, "matchesSuffix");
+  return result;
+}
+
 }  // namespace
 
 StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
     nlohmann::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  LifecycleRule result;
-  if (json.count("action") != 0) {
-    result.action_.type = json["action"].value("type", "");
-    result.action_.storage_class = json["action"].value("storageClass", "");
-  }
-  if (json.count("condition") == 0) return result;
+  if (!json.is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+  auto condition = ConditionFromJson(json);
+  if (!condition) return std::move(condition).status();
+  auto action = ActionFromJson(json);
+  if (!action) return std::move(action).status();
 
-  auto const& condition = json["condition"];
-
-  auto status = ParseIntCondition(result.condition_.age, condition, "age");
-  if (!status.ok()) return status;
-  status = ParseDateCondition(result.condition_.created_before, condition,
-                              "createdBefore");
-  if (!status.ok()) return status;
-  status = ParseBoolCondition(result.condition_.is_live, condition, "isLive");
-  if (!status.ok()) return status;
-  result.condition_.matches_storage_class =
-      ParseStringListCondition(condition, "matchesStorageClass");
-  status = ParseIntCondition(result.condition_.num_newer_versions, condition,
-                             "numNewerVersions");
-  if (!status.ok()) return status;
-  status = ParseIntCondition(result.condition_.days_since_noncurrent_time,
-                             condition, "daysSinceNoncurrentTime");
-  if (!status.ok()) return status;
-  status = ParseDateCondition(result.condition_.noncurrent_time_before,
-                              condition, "noncurrentTimeBefore");
-  if (!status.ok()) return status;
-  status = ParseIntCondition(result.condition_.days_since_custom_time,
-                             condition, "daysSinceCustomTime");
-  if (!status.ok()) return status;
-  status = ParseDateCondition(result.condition_.custom_time_before, condition,
-                              "customTimeBefore");
-  if (!status.ok()) return status;
-  result.condition_.matches_prefix =
-      ParseStringListCondition(condition, "matchesPrefix");
-  result.condition_.matches_suffix =
-      ParseStringListCondition(condition, "matchesSuffix");
-  return result;
+  return LifecycleRule(*std::move(condition), *std::move(action));
 }
 
 StatusOr<LifecycleRule> LifecycleRuleParser::FromString(
