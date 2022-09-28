@@ -22,66 +22,61 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-/// Convert JSON requests to gRPC requests and gRPC responses to JSON responses
-struct GrpcObjectRequestParser {
-  static StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
-      ComposeObjectRequest const& request);
+StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
+    storage::internal::ComposeObjectRequest const& request);
 
-  static google::storage::v2::DeleteObjectRequest ToProto(
-      DeleteObjectRequest const& request);
+google::storage::v2::DeleteObjectRequest ToProto(
+    storage::internal::DeleteObjectRequest const& request);
 
-  static google::storage::v2::GetObjectRequest ToProto(
-      GetObjectMetadataRequest const& request);
+google::storage::v2::GetObjectRequest ToProto(
+    storage::internal::GetObjectMetadataRequest const& request);
 
-  static StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
-      ReadObjectRangeRequest const& request);
+StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
+    storage::internal::ReadObjectRangeRequest const& request);
 
-  static StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
-      PatchObjectRequest const& request);
-  static StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
-      UpdateObjectRequest const& request);
+StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
+    storage::internal::PatchObjectRequest const& request);
+StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
+    storage::internal::UpdateObjectRequest const& request);
 
-  static StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
-      InsertObjectMediaRequest const& request);
-  static QueryResumableUploadResponse FromProto(
-      google::storage::v2::WriteObjectResponse const& p, Options const& options,
-      google::cloud::internal::StreamingRpcMetadata metadata);
+StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
+    storage::internal::InsertObjectMediaRequest const& request);
+storage::internal::QueryResumableUploadResponse FromProto(
+    google::storage::v2::WriteObjectResponse const& p, Options const& options,
+    google::cloud::internal::StreamingRpcMetadata metadata);
 
-  static google::storage::v2::ListObjectsRequest ToProto(
-      ListObjectsRequest const& request);
-  static ListObjectsResponse FromProto(
-      google::storage::v2::ListObjectsResponse const& response,
-      Options const& options);
+google::storage::v2::ListObjectsRequest ToProto(
+    storage::internal::ListObjectsRequest const& request);
+storage::internal::ListObjectsResponse FromProto(
+    google::storage::v2::ListObjectsResponse const& response,
+    Options const& options);
 
-  static StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
-      RewriteObjectRequest const& request);
-  static RewriteObjectResponse FromProto(
-      google::storage::v2::RewriteResponse const& response,
-      Options const& options);
+StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
+    storage::internal::RewriteObjectRequest const& request);
+storage::internal::RewriteObjectResponse FromProto(
+    google::storage::v2::RewriteResponse const& response,
+    Options const& options);
 
-  static StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
-      CopyObjectRequest const& request);
+StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
+    storage::internal::CopyObjectRequest const& request);
 
-  static StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
-      ResumableUploadRequest const& request);
+StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
+    storage::internal::ResumableUploadRequest const& request);
 
-  static google::storage::v2::QueryWriteStatusRequest ToProto(
-      QueryResumableUploadRequest const& request);
-  static QueryResumableUploadResponse FromProto(
-      google::storage::v2::QueryWriteStatusResponse const& response,
-      Options const& options);
+google::storage::v2::QueryWriteStatusRequest ToProto(
+    storage::internal::QueryResumableUploadRequest const& request);
+storage::internal::QueryResumableUploadResponse FromProto(
+    google::storage::v2::QueryWriteStatusResponse const& response,
+    Options const& options);
 
-  static google::storage::v2::CancelResumableWriteRequest ToProto(
-      DeleteResumableUploadRequest const& request);
-};
+google::storage::v2::CancelResumableWriteRequest ToProto(
+    storage::internal::DeleteResumableUploadRequest const& request);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

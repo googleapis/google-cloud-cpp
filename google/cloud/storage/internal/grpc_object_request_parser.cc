@@ -26,9 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::storage::v2::Object;
@@ -36,11 +35,11 @@ using ::google::storage::v2::Object;
 template <typename GrpcRequest, typename StorageRequest>
 Status SetCommonObjectParameters(GrpcRequest& request,
                                  StorageRequest const& req) {
-  if (req.template HasOption<EncryptionKey>()) {
-    auto data = req.template GetOption<EncryptionKey>().value();
-    auto key_bytes = Base64Decode(data.key);
+  if (req.template HasOption<storage::EncryptionKey>()) {
+    auto data = req.template GetOption<storage::EncryptionKey>().value();
+    auto key_bytes = storage::internal::Base64Decode(data.key);
     if (!key_bytes) return std::move(key_bytes).status();
-    auto key_sha256_bytes = Base64Decode(data.sha256);
+    auto key_sha256_bytes = storage::internal::Base64Decode(data.sha256);
     if (!key_sha256_bytes) return std::move(key_sha256_bytes).status();
 
     request.mutable_common_object_request_params()->set_encryption_algorithm(
@@ -67,59 +66,61 @@ template <
                          GetPredefinedAcl<GrpcRequest>, GrpcRequest>>::value,
         int>::type = 0>
 void SetPredefinedAcl(GrpcRequest& request, StorageRequest const& req) {
-  if (req.template HasOption<PredefinedAcl>()) {
-    request.set_predefined_acl(req.template GetOption<PredefinedAcl>().value());
+  if (req.template HasOption<storage::PredefinedAcl>()) {
+    request.set_predefined_acl(
+        req.template GetOption<storage::PredefinedAcl>().value());
   }
 }
 
 template <typename GrpcRequest, typename StorageRequest>
 void SetMetagenerationConditions(GrpcRequest& request,
                                  StorageRequest const& req) {
-  if (req.template HasOption<IfMetagenerationMatch>()) {
+  if (req.template HasOption<storage::IfMetagenerationMatch>()) {
     request.set_if_metageneration_match(
-        req.template GetOption<IfMetagenerationMatch>().value());
+        req.template GetOption<storage::IfMetagenerationMatch>().value());
   }
-  if (req.template HasOption<IfMetagenerationNotMatch>()) {
+  if (req.template HasOption<storage::IfMetagenerationNotMatch>()) {
     request.set_if_metageneration_not_match(
-        req.template GetOption<IfMetagenerationNotMatch>().value());
+        req.template GetOption<storage::IfMetagenerationNotMatch>().value());
   }
 }
 
 template <typename GrpcRequest, typename StorageRequest>
 void SetGenerationConditions(GrpcRequest& request, StorageRequest const& req) {
-  if (req.template HasOption<IfGenerationMatch>()) {
+  if (req.template HasOption<storage::IfGenerationMatch>()) {
     request.set_if_generation_match(
-        req.template GetOption<IfGenerationMatch>().value());
+        req.template GetOption<storage::IfGenerationMatch>().value());
   }
-  if (req.template HasOption<IfGenerationNotMatch>()) {
+  if (req.template HasOption<storage::IfGenerationNotMatch>()) {
     request.set_if_generation_not_match(
-        req.template GetOption<IfGenerationNotMatch>().value());
+        req.template GetOption<storage::IfGenerationNotMatch>().value());
   }
 }
 
 template <typename StorageRequest>
 void SetResourceOptions(google::storage::v2::Object& resource,
                         StorageRequest const& request) {
-  if (request.template HasOption<ContentEncoding>()) {
+  if (request.template HasOption<storage::ContentEncoding>()) {
     resource.set_content_encoding(
-        request.template GetOption<ContentEncoding>().value());
+        request.template GetOption<storage::ContentEncoding>().value());
   }
-  if (request.template HasOption<ContentType>()) {
+  if (request.template HasOption<storage::ContentType>()) {
     resource.set_content_type(
-        request.template GetOption<ContentType>().value());
+        request.template GetOption<storage::ContentType>().value());
   }
-  if (request.template HasOption<KmsKeyName>()) {
-    resource.set_kms_key(request.template GetOption<KmsKeyName>().value());
+  if (request.template HasOption<storage::KmsKeyName>()) {
+    resource.set_kms_key(
+        request.template GetOption<storage::KmsKeyName>().value());
   }
 }
 
 template <typename StorageRequest>
 Status SetObjectMetadata(google::storage::v2::Object& resource,
                          StorageRequest const& req) {
-  if (!req.template HasOption<WithObjectMetadata>()) {
+  if (!req.template HasOption<storage::WithObjectMetadata>()) {
     return Status{};
   }
-  auto metadata = req.template GetOption<WithObjectMetadata>().value();
+  auto metadata = req.template GetOption<storage::WithObjectMetadata>().value();
   if (!metadata.content_encoding().empty()) {
     resource.set_content_encoding(metadata.content_encoding());
   }
@@ -160,8 +161,8 @@ Status SetObjectMetadata(google::storage::v2::Object& resource,
 template <typename StorageRequest>
 void SetStorageClass(google::storage::v2::Object& resource,
                      StorageRequest const& req) {
-  if (!req.template HasOption<WithObjectMetadata>()) return;
-  auto metadata = req.template GetOption<WithObjectMetadata>().value();
+  if (!req.template HasOption<storage::WithObjectMetadata>()) return;
+  auto metadata = req.template GetOption<storage::WithObjectMetadata>().value();
   resource.set_storage_class(metadata.storage_class());
 }
 
@@ -171,7 +172,7 @@ Status PatchAcl(Object& o, nlohmann::json const& p) {
     return Status{};
   }
   for (auto const& a : p) {
-    auto acl = ObjectAccessControlParser::FromJson(a);
+    auto acl = storage::internal::ObjectAccessControlParser::FromJson(a);
     // We do not care if `o` may have been modified. It will be discarded if
     // this function (or similar functions) return a non-Okay Status.
     if (!acl) return std::move(acl).status();
@@ -211,17 +212,18 @@ Status PatchTemporaryHold(Object& o, nlohmann::json const& p) {
 
 }  // namespace
 
-StatusOr<google::storage::v2::ComposeObjectRequest>
-GrpcObjectRequestParser::ToProto(ComposeObjectRequest const& request) {
+StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
+    storage::internal::ComposeObjectRequest const& request) {
   google::storage::v2::ComposeObjectRequest result;
   auto status = SetCommonObjectParameters(result, request);
   if (!status.ok()) return status;
 
   auto& destination = *result.mutable_destination();
-  destination.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  destination.set_bucket(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
   destination.set_name(request.object_name());
-  if (request.HasOption<WithObjectMetadata>()) {
-    auto metadata = request.GetOption<WithObjectMetadata>().value();
+  if (request.HasOption<storage::WithObjectMetadata>()) {
+    auto metadata = request.GetOption<storage::WithObjectMetadata>().value();
     for (auto const& a : metadata.acl()) {
       *destination.add_acl() = storage_internal::ToProto(a);
     }
@@ -251,68 +253,70 @@ GrpcObjectRequestParser::ToProto(ComposeObjectRequest const& request) {
     }
     *result.add_source_objects() = std::move(source);
   }
-  if (request.HasOption<DestinationPredefinedAcl>()) {
+  if (request.HasOption<storage::DestinationPredefinedAcl>()) {
     result.set_destination_predefined_acl(
-        request.GetOption<DestinationPredefinedAcl>().value());
+        request.GetOption<storage::DestinationPredefinedAcl>().value());
   }
-  if (request.HasOption<IfGenerationMatch>()) {
+  if (request.HasOption<storage::IfGenerationMatch>()) {
     result.set_if_generation_match(
-        request.GetOption<IfGenerationMatch>().value());
+        request.GetOption<storage::IfGenerationMatch>().value());
   }
-  if (request.HasOption<IfMetagenerationMatch>()) {
+  if (request.HasOption<storage::IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
-        request.GetOption<IfMetagenerationMatch>().value());
+        request.GetOption<storage::IfMetagenerationMatch>().value());
   }
-  result.set_kms_key(request.GetOption<KmsKeyName>().value_or(""));
+  result.set_kms_key(request.GetOption<storage::KmsKeyName>().value_or(""));
   return result;
 }
 
-google::storage::v2::DeleteObjectRequest GrpcObjectRequestParser::ToProto(
-    DeleteObjectRequest const& request) {
+google::storage::v2::DeleteObjectRequest ToProto(
+    storage::internal::DeleteObjectRequest const& request) {
   google::storage::v2::DeleteObjectRequest result;
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
-  result.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  result.set_bucket(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
   result.set_object(request.object_name());
-  result.set_generation(request.GetOption<Generation>().value_or(0));
+  result.set_generation(request.GetOption<storage::Generation>().value_or(0));
   return result;
 }
 
-google::storage::v2::GetObjectRequest GrpcObjectRequestParser::ToProto(
-    GetObjectMetadataRequest const& request) {
+google::storage::v2::GetObjectRequest ToProto(
+    storage::internal::GetObjectMetadataRequest const& request) {
   google::storage::v2::GetObjectRequest result;
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
 
-  result.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  result.set_bucket(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
   result.set_object(request.object_name());
-  result.set_generation(request.GetOption<Generation>().value_or(0));
-  auto projection = request.GetOption<Projection>().value_or("");
+  result.set_generation(request.GetOption<storage::Generation>().value_or(0));
+  auto projection = request.GetOption<storage::Projection>().value_or("");
   if (projection == "full") result.mutable_read_mask()->add_paths("*");
   return result;
 }
 
-StatusOr<google::storage::v2::ReadObjectRequest>
-GrpcObjectRequestParser::ToProto(ReadObjectRangeRequest const& request) {
+StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
+    storage::internal::ReadObjectRangeRequest const& request) {
   google::storage::v2::ReadObjectRequest r;
   auto status = SetCommonObjectParameters(r, request);
   if (!status.ok()) return status;
   r.set_object(request.object_name());
-  r.set_bucket(GrpcBucketIdToName(request.bucket_name()));
-  if (request.HasOption<Generation>()) {
-    r.set_generation(request.GetOption<Generation>().value());
+  r.set_bucket(storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  if (request.HasOption<storage::Generation>()) {
+    r.set_generation(request.GetOption<storage::Generation>().value());
   }
-  if (request.HasOption<ReadRange>()) {
-    auto const range = request.GetOption<ReadRange>().value();
+  if (request.HasOption<storage::ReadRange>()) {
+    auto const range = request.GetOption<storage::ReadRange>().value();
     r.set_read_offset(range.begin);
     r.set_read_limit(range.end - range.begin);
   }
-  if (request.HasOption<ReadLast>()) {
-    auto const offset = request.GetOption<ReadLast>().value();
+  if (request.HasOption<storage::ReadLast>()) {
+    auto const offset = request.GetOption<storage::ReadLast>().value();
     r.set_read_offset(-offset);
   }
-  if (request.HasOption<ReadFromOffset>()) {
-    auto const offset = request.GetOption<ReadFromOffset>().value();
+  if (request.HasOption<storage::ReadFromOffset>()) {
+    auto const offset = request.GetOption<storage::ReadFromOffset>().value();
     if (offset > r.read_offset()) {
       if (r.read_limit() > 0) {
         r.set_read_limit(offset - r.read_offset());
@@ -326,8 +330,8 @@ GrpcObjectRequestParser::ToProto(ReadObjectRangeRequest const& request) {
   return r;
 }
 
-StatusOr<google::storage::v2::UpdateObjectRequest>
-GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
+StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
+    storage::internal::PatchObjectRequest const& request) {
   google::storage::v2::UpdateObjectRequest result;
   auto status = SetCommonObjectParameters(result, request);
   if (!status.ok()) return status;
@@ -336,11 +340,13 @@ GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
   SetPredefinedAcl(result, request);
 
   auto& object = *result.mutable_object();
-  object.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  object.set_bucket(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
   object.set_name(request.object_name());
-  object.set_generation(request.GetOption<Generation>().value_or(0));
+  object.set_generation(request.GetOption<storage::Generation>().value_or(0));
 
-  auto const& patch = PatchBuilderDetails::GetPatch(request.patch());
+  auto const& patch =
+      storage::internal::PatchBuilderDetails::GetPatch(request.patch());
   struct ComplexField {
     char const* json_name;
     char const* grpc_name;
@@ -360,7 +366,8 @@ GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
   }
 
   auto const& subpatch =
-      PatchBuilderDetails::GetMetadataSubPatch(request.patch());
+      storage::internal::PatchBuilderDetails::GetMetadataSubPatch(
+          request.patch());
   if (subpatch.is_null()) {
     object.clear_metadata();
     result.mutable_update_mask()->add_paths("metadata");
@@ -402,8 +409,8 @@ GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
   return result;
 }
 
-StatusOr<google::storage::v2::UpdateObjectRequest>
-GrpcObjectRequestParser::ToProto(UpdateObjectRequest const& request) {
+StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
+    storage::internal::UpdateObjectRequest const& request) {
   google::storage::v2::UpdateObjectRequest result;
   auto status = SetCommonObjectParameters(result, request);
   if (!status.ok()) return status;
@@ -412,9 +419,10 @@ GrpcObjectRequestParser::ToProto(UpdateObjectRequest const& request) {
   SetPredefinedAcl(result, request);
 
   auto& object = *result.mutable_object();
-  object.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  object.set_bucket(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
   object.set_name(request.object_name());
-  object.set_generation(request.GetOption<Generation>().value_or(0));
+  object.set_generation(request.GetOption<storage::Generation>().value_or(0));
 
   result.mutable_update_mask()->add_paths("acl");
   for (auto const& a : request.metadata().acl()) {
@@ -452,8 +460,8 @@ GrpcObjectRequestParser::ToProto(UpdateObjectRequest const& request) {
   return result;
 }
 
-StatusOr<google::storage::v2::WriteObjectRequest>
-GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
+StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
+    storage::internal::InsertObjectMediaRequest const& request) {
   google::storage::v2::WriteObjectRequest r;
   auto& object_spec = *r.mutable_write_object_spec();
   auto& resource = *object_spec.mutable_resource();
@@ -467,33 +475,35 @@ GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
   status = SetCommonObjectParameters(r, request);
   if (!status.ok()) return status;
 
-  resource.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  resource.set_bucket(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
   resource.set_name(request.object_name());
   r.set_write_offset(0);
 
   auto& checksums = *r.mutable_object_checksums();
-  if (request.HasOption<Crc32cChecksumValue>()) {
+  if (request.HasOption<storage::Crc32cChecksumValue>()) {
     // The client library accepts CRC32C checksums in the format required by the
     // REST APIs (base64-encoded big-endian, 32-bit integers). We need to
     // convert this to the format expected by proto, which is just a 32-bit
     // integer. But the value received by the application might be incorrect, so
     // we need to validate it.
     auto as_proto = storage_internal::Crc32cToProto(
-        request.GetOption<Crc32cChecksumValue>().value());
+        request.GetOption<storage::Crc32cChecksumValue>().value());
     if (!as_proto.ok()) return std::move(as_proto).status();
     checksums.set_crc32c(*as_proto);
-  } else if (request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
+  } else if (request.GetOption<storage::DisableCrc32cChecksum>().value_or(
+                 false)) {
     // Nothing to do, the option is disabled (mostly useful in tests).
   } else {
     checksums.set_crc32c(crc32c::Crc32c(request.contents()));
   }
 
-  if (request.HasOption<MD5HashValue>()) {
-    auto as_proto =
-        storage_internal::MD5ToProto(request.GetOption<MD5HashValue>().value());
+  if (request.HasOption<storage::MD5HashValue>()) {
+    auto as_proto = storage_internal::MD5ToProto(
+        request.GetOption<storage::MD5HashValue>().value());
     if (!as_proto.ok()) return std::move(as_proto).status();
     checksums.set_md5_hash(*std::move(as_proto));
-  } else if (request.GetOption<DisableMD5Hash>().value_or(false)) {
+  } else if (request.GetOption<storage::DisableMD5Hash>().value_or(false)) {
     // Nothing to do, the option is disabled.
   } else {
     checksums.set_md5_hash(
@@ -503,10 +513,10 @@ GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
   return r;
 }
 
-QueryResumableUploadResponse GrpcObjectRequestParser::FromProto(
+storage::internal::QueryResumableUploadResponse FromProto(
     google::storage::v2::WriteObjectResponse const& p, Options const& options,
     google::cloud::internal::StreamingRpcMetadata metadata) {
-  QueryResumableUploadResponse response;
+  storage::internal::QueryResumableUploadResponse response;
   if (p.has_persisted_size()) {
     response.committed_size = static_cast<std::uint64_t>(p.persisted_size());
   }
@@ -517,11 +527,12 @@ QueryResumableUploadResponse GrpcObjectRequestParser::FromProto(
   return response;
 }
 
-google::storage::v2::ListObjectsRequest GrpcObjectRequestParser::ToProto(
-    ListObjectsRequest const& request) {
+google::storage::v2::ListObjectsRequest ToProto(
+    storage::internal::ListObjectsRequest const& request) {
   google::storage::v2::ListObjectsRequest result;
-  result.set_parent(GrpcBucketIdToName(request.bucket_name()));
-  auto const page_size = request.GetOption<MaxResults>().value_or(0);
+  result.set_parent(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  auto const page_size = request.GetOption<storage::MaxResults>().value_or(0);
   // Clamp out of range values. The service will clamp to its own range
   // ([0, 1000] as of this writing) anyway.
   if (page_size < 0) {
@@ -532,20 +543,22 @@ google::storage::v2::ListObjectsRequest GrpcObjectRequestParser::ToProto(
     result.set_page_size(std::numeric_limits<std::int32_t>::max());
   }
   result.set_page_token(request.page_token());
-  result.set_delimiter(request.GetOption<Delimiter>().value_or(""));
+  result.set_delimiter(request.GetOption<storage::Delimiter>().value_or(""));
   result.set_include_trailing_delimiter(
-      request.GetOption<IncludeTrailingDelimiter>().value_or(false));
-  result.set_prefix(request.GetOption<Prefix>().value_or(""));
-  result.set_versions(request.GetOption<Versions>().value_or(""));
-  result.set_lexicographic_start(request.GetOption<StartOffset>().value_or(""));
-  result.set_lexicographic_end(request.GetOption<EndOffset>().value_or(""));
+      request.GetOption<storage::IncludeTrailingDelimiter>().value_or(false));
+  result.set_prefix(request.GetOption<storage::Prefix>().value_or(""));
+  result.set_versions(request.GetOption<storage::Versions>().value_or(""));
+  result.set_lexicographic_start(
+      request.GetOption<storage::StartOffset>().value_or(""));
+  result.set_lexicographic_end(
+      request.GetOption<storage::EndOffset>().value_or(""));
   return result;
 }
 
-ListObjectsResponse GrpcObjectRequestParser::FromProto(
+storage::internal::ListObjectsResponse FromProto(
     google::storage::v2::ListObjectsResponse const& response,
     Options const& options) {
-  ListObjectsResponse result;
+  storage::internal::ListObjectsResponse result;
   result.next_page_token = response.next_page_token();
   for (auto const& o : response.objects()) {
     result.items.push_back(storage_internal::FromProto(o, options));
@@ -554,59 +567,61 @@ ListObjectsResponse GrpcObjectRequestParser::FromProto(
   return result;
 }
 
-StatusOr<google::storage::v2::RewriteObjectRequest>
-GrpcObjectRequestParser::ToProto(RewriteObjectRequest const& request) {
+StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
+    storage::internal::RewriteObjectRequest const& request) {
   google::storage::v2::RewriteObjectRequest result;
   auto status = SetCommonObjectParameters(result, request);
   if (!status.ok()) return status;
 
   result.set_destination_name(request.destination_object());
   result.set_destination_bucket(
-      GrpcBucketIdToName(request.destination_bucket()));
+      storage::internal::GrpcBucketIdToName(request.destination_bucket()));
 
-  if (request.HasOption<WithObjectMetadata>() ||
-      request.HasOption<DestinationKmsKeyName>()) {
+  if (request.HasOption<storage::WithObjectMetadata>() ||
+      request.HasOption<storage::DestinationKmsKeyName>()) {
     auto& destination = *result.mutable_destination();
     destination.set_kms_key(
-        request.GetOption<DestinationKmsKeyName>().value_or(""));
+        request.GetOption<storage::DestinationKmsKeyName>().value_or(""));
     status = SetObjectMetadata(destination, request);
     if (!status.ok()) return status;
     SetStorageClass(destination, request);
   }
-  result.set_source_bucket(GrpcBucketIdToName(request.source_bucket()));
+  result.set_source_bucket(
+      storage::internal::GrpcBucketIdToName(request.source_bucket()));
   result.set_source_object(request.source_object());
   result.set_source_generation(
-      request.GetOption<SourceGeneration>().value_or(0));
+      request.GetOption<storage::SourceGeneration>().value_or(0));
   result.set_rewrite_token(request.rewrite_token());
-  if (request.HasOption<DestinationPredefinedAcl>()) {
+  if (request.HasOption<storage::DestinationPredefinedAcl>()) {
     result.set_destination_predefined_acl(
-        request.GetOption<DestinationPredefinedAcl>().value());
+        request.GetOption<storage::DestinationPredefinedAcl>().value());
   }
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
-  if (request.HasOption<IfSourceGenerationMatch>()) {
+  if (request.HasOption<storage::IfSourceGenerationMatch>()) {
     result.set_if_source_generation_match(
-        request.GetOption<IfSourceGenerationMatch>().value());
+        request.GetOption<storage::IfSourceGenerationMatch>().value());
   }
-  if (request.HasOption<IfSourceGenerationNotMatch>()) {
+  if (request.HasOption<storage::IfSourceGenerationNotMatch>()) {
     result.set_if_source_generation_not_match(
-        request.GetOption<IfSourceGenerationNotMatch>().value());
+        request.GetOption<storage::IfSourceGenerationNotMatch>().value());
   }
-  if (request.HasOption<IfSourceMetagenerationMatch>()) {
+  if (request.HasOption<storage::IfSourceMetagenerationMatch>()) {
     result.set_if_source_metageneration_match(
-        request.GetOption<IfSourceMetagenerationMatch>().value());
+        request.GetOption<storage::IfSourceMetagenerationMatch>().value());
   }
-  if (request.HasOption<IfSourceMetagenerationNotMatch>()) {
+  if (request.HasOption<storage::IfSourceMetagenerationNotMatch>()) {
     result.set_if_source_metageneration_not_match(
-        request.GetOption<IfSourceMetagenerationNotMatch>().value());
+        request.GetOption<storage::IfSourceMetagenerationNotMatch>().value());
   }
   result.set_max_bytes_rewritten_per_call(
-      request.GetOption<MaxBytesRewrittenPerCall>().value_or(0));
-  if (request.HasOption<SourceEncryptionKey>()) {
-    auto data = request.template GetOption<SourceEncryptionKey>().value();
-    auto key_bytes = Base64Decode(data.key);
+      request.GetOption<storage::MaxBytesRewrittenPerCall>().value_or(0));
+  if (request.HasOption<storage::SourceEncryptionKey>()) {
+    auto data =
+        request.template GetOption<storage::SourceEncryptionKey>().value();
+    auto key_bytes = storage::internal::Base64Decode(data.key);
     if (!key_bytes) return std::move(key_bytes).status();
-    auto key_sha256_bytes = Base64Decode(data.sha256);
+    auto key_sha256_bytes = storage::internal::Base64Decode(data.sha256);
     if (!key_sha256_bytes) return std::move(key_sha256_bytes).status();
 
     result.set_copy_source_encryption_algorithm(data.algorithm);
@@ -618,10 +633,10 @@ GrpcObjectRequestParser::ToProto(RewriteObjectRequest const& request) {
   return result;
 }
 
-RewriteObjectResponse GrpcObjectRequestParser::FromProto(
+storage::internal::RewriteObjectResponse FromProto(
     google::storage::v2::RewriteResponse const& response,
     Options const& options) {
-  RewriteObjectResponse result;
+  storage::internal::RewriteObjectResponse result;
   result.done = response.done();
   result.object_size = response.object_size();
   result.total_bytes_rewritten = response.total_bytes_rewritten();
@@ -632,56 +647,58 @@ RewriteObjectResponse GrpcObjectRequestParser::FromProto(
   return result;
 }
 
-StatusOr<google::storage::v2::RewriteObjectRequest>
-GrpcObjectRequestParser::ToProto(CopyObjectRequest const& request) {
+StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
+    storage::internal::CopyObjectRequest const& request) {
   google::storage::v2::RewriteObjectRequest result;
   auto status = SetCommonObjectParameters(result, request);
   if (!status.ok()) return status;
 
   result.set_destination_name(request.destination_object());
   result.set_destination_bucket(
-      GrpcBucketIdToName(request.destination_bucket()));
+      storage::internal::GrpcBucketIdToName(request.destination_bucket()));
 
-  if (request.HasOption<WithObjectMetadata>() ||
-      request.HasOption<DestinationKmsKeyName>()) {
+  if (request.HasOption<storage::WithObjectMetadata>() ||
+      request.HasOption<storage::DestinationKmsKeyName>()) {
     auto& destination = *result.mutable_destination();
     destination.set_kms_key(
-        request.GetOption<DestinationKmsKeyName>().value_or(""));
+        request.GetOption<storage::DestinationKmsKeyName>().value_or(""));
     status = SetObjectMetadata(destination, request);
     if (!status.ok()) return status;
     SetStorageClass(destination, request);
   }
-  result.set_source_bucket(GrpcBucketIdToName(request.source_bucket()));
+  result.set_source_bucket(
+      storage::internal::GrpcBucketIdToName(request.source_bucket()));
   result.set_source_object(request.source_object());
   result.set_source_generation(
-      request.GetOption<SourceGeneration>().value_or(0));
-  if (request.HasOption<DestinationPredefinedAcl>()) {
+      request.GetOption<storage::SourceGeneration>().value_or(0));
+  if (request.HasOption<storage::DestinationPredefinedAcl>()) {
     result.set_destination_predefined_acl(
-        request.GetOption<DestinationPredefinedAcl>().value());
+        request.GetOption<storage::DestinationPredefinedAcl>().value());
   }
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
-  if (request.HasOption<IfSourceGenerationMatch>()) {
+  if (request.HasOption<storage::IfSourceGenerationMatch>()) {
     result.set_if_source_generation_match(
-        request.GetOption<IfSourceGenerationMatch>().value());
+        request.GetOption<storage::IfSourceGenerationMatch>().value());
   }
-  if (request.HasOption<IfSourceGenerationNotMatch>()) {
+  if (request.HasOption<storage::IfSourceGenerationNotMatch>()) {
     result.set_if_source_generation_not_match(
-        request.GetOption<IfSourceGenerationNotMatch>().value());
+        request.GetOption<storage::IfSourceGenerationNotMatch>().value());
   }
-  if (request.HasOption<IfSourceMetagenerationMatch>()) {
+  if (request.HasOption<storage::IfSourceMetagenerationMatch>()) {
     result.set_if_source_metageneration_match(
-        request.GetOption<IfSourceMetagenerationMatch>().value());
+        request.GetOption<storage::IfSourceMetagenerationMatch>().value());
   }
-  if (request.HasOption<IfSourceMetagenerationNotMatch>()) {
+  if (request.HasOption<storage::IfSourceMetagenerationNotMatch>()) {
     result.set_if_source_metageneration_not_match(
-        request.GetOption<IfSourceMetagenerationNotMatch>().value());
+        request.GetOption<storage::IfSourceMetagenerationNotMatch>().value());
   }
-  if (request.HasOption<SourceEncryptionKey>()) {
-    auto data = request.template GetOption<SourceEncryptionKey>().value();
-    auto key_bytes = Base64Decode(data.key);
+  if (request.HasOption<storage::SourceEncryptionKey>()) {
+    auto data =
+        request.template GetOption<storage::SourceEncryptionKey>().value();
+    auto key_bytes = storage::internal::Base64Decode(data.key);
     if (!key_bytes) return std::move(key_bytes).status();
-    auto key_sha256_bytes = Base64Decode(data.sha256);
+    auto key_sha256_bytes = storage::internal::Base64Decode(data.sha256);
     if (!key_sha256_bytes) return std::move(key_sha256_bytes).status();
 
     result.set_copy_source_encryption_algorithm(data.algorithm);
@@ -693,8 +710,8 @@ GrpcObjectRequestParser::ToProto(CopyObjectRequest const& request) {
   return result;
 }
 
-StatusOr<google::storage::v2::StartResumableWriteRequest>
-GrpcObjectRequestParser::ToProto(ResumableUploadRequest const& request) {
+StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
+    storage::internal::ResumableUploadRequest const& request) {
   google::storage::v2::StartResumableWriteRequest result;
   auto status = SetCommonObjectParameters(result, request);
   if (!status.ok()) return status;
@@ -708,28 +725,29 @@ GrpcObjectRequestParser::ToProto(ResumableUploadRequest const& request) {
   SetPredefinedAcl(object_spec, request);
   SetGenerationConditions(object_spec, request);
   SetMetagenerationConditions(object_spec, request);
-  if (request.HasOption<UploadContentLength>()) {
+  if (request.HasOption<storage::UploadContentLength>()) {
     object_spec.set_object_size(static_cast<std::int64_t>(
-        request.GetOption<UploadContentLength>().value()));
+        request.GetOption<storage::UploadContentLength>().value()));
   }
 
-  resource.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  resource.set_bucket(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
   resource.set_name(request.object_name());
 
   return result;
 }
 
-google::storage::v2::QueryWriteStatusRequest GrpcObjectRequestParser::ToProto(
-    QueryResumableUploadRequest const& request) {
+google::storage::v2::QueryWriteStatusRequest ToProto(
+    storage::internal::QueryResumableUploadRequest const& request) {
   google::storage::v2::QueryWriteStatusRequest r;
   r.set_upload_id(request.upload_session_url());
   return r;
 }
 
-QueryResumableUploadResponse GrpcObjectRequestParser::FromProto(
+storage::internal::QueryResumableUploadResponse FromProto(
     google::storage::v2::QueryWriteStatusResponse const& response,
     Options const& options) {
-  QueryResumableUploadResponse result;
+  storage::internal::QueryResumableUploadResponse result;
   if (response.has_persisted_size()) {
     result.committed_size =
         static_cast<std::uint64_t>(response.persisted_size());
@@ -740,15 +758,14 @@ QueryResumableUploadResponse GrpcObjectRequestParser::FromProto(
   return result;
 }
 
-google::storage::v2::CancelResumableWriteRequest
-GrpcObjectRequestParser::ToProto(DeleteResumableUploadRequest const& request) {
+google::storage::v2::CancelResumableWriteRequest ToProto(
+    storage::internal::DeleteResumableUploadRequest const& request) {
   google::storage::v2::CancelResumableWriteRequest result;
   result.set_upload_id(request.upload_session_url());
   return result;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
