@@ -180,7 +180,7 @@ std::ostream& operator<<(std::ostream& os, BucketAccessControl const& rhs);
  * server, for example: while it is possible to express "change the value of the
  * entity field" with a PATCH request, the server rejects such changes.
  *
- * @see *
+ * @see
  * https://cloud.google.com/storage/docs/json_api/v1/how-tos/performance#patch
  *     for general information on PATCH requests for the Google Cloud Storage
  *     JSON API.
