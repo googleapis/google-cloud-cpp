@@ -70,8 +70,9 @@ function Install-Vcpkg {
     $vcpkg_version = Get-Content -Path "${project_root}\ci\etc\vcpkg-version.txt"
     $vcpkg_url = "https://github.com/microsoft/vcpkg/archive/${vcpkg_version}.zip"
     if ($vcpkg_version -match "[0-9]{4}.[0-9]{2}.[0-9]{2}" ) {
-        $vcpkg_url = "https://github.com/microsoft/vcpkg/archive/ref/tags/${vcpkg_version}.zip"
+        $vcpkg_url = "https://github.com/microsoft/vcpkg/archive/refs/tags/${vcpkg_version}.zip"
     }
+    Write-Host "$(Get-Date -Format o) Downloading vcpkg archive from $vcpkg_url"
 
     # Download the right version of `vcpkg`
     ForEach($_ in (1, 2, 3)) {
@@ -82,7 +83,7 @@ function Install-Vcpkg {
                     "${env:TEMP}/${vcpkg_version}.zip") |  Write-Host
             break
         } catch {
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error for $vcpkg_url"
         }
     }
     7z x -o"${extract_root}" "${env:TEMP}/${vcpkg_version}.zip" -aoa -bsp0 | Write-Host
