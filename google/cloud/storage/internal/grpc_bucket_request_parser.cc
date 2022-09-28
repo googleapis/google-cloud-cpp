@@ -82,7 +82,7 @@ Status PatchLifecycle(Bucket& b, nlohmann::json const& patch) {
     // We do not care if `b` may have been modified. It will be discarded if
     // this function (or similar functions) return a non-Okay Status.
     if (!lf) return std::move(lf).status();
-    *lifecycle.add_rule() = GrpcBucketMetadataParser::ToProto(*lf);
+    *lifecycle.add_rule() = storage_internal::ToProto(*lf);
   }
   return Status{};
 }
@@ -222,7 +222,7 @@ void UpdateLifecycle(Bucket& bucket, BucketMetadata const& metadata) {
   // By construction, the PatchBuilder always includes the "rule"
   // subobject.
   for (auto const& r : metadata.lifecycle().rule) {
-    *lifecycle.add_rule() = GrpcBucketMetadataParser::ToProto(r);
+    *lifecycle.add_rule() = storage_internal::ToProto(r);
   }
 }
 
@@ -346,8 +346,7 @@ google::storage::v2::CreateBucketRequest GrpcBucketRequestParser::ToProto(
     result.set_predefined_default_object_acl(
         request.GetOption<PredefinedDefaultObjectAcl>().value());
   }
-  *result.mutable_bucket() =
-      GrpcBucketMetadataParser::ToProto(request.metadata());
+  *result.mutable_bucket() = storage_internal::ToProto(request.metadata());
   // Ignore fields commonly set by ToProto().
   result.mutable_bucket()->set_name("");
   result.mutable_bucket()->set_bucket_id("");
@@ -387,7 +386,7 @@ ListBucketsResponse GrpcBucketRequestParser::FromProto(
   std::transform(response.buckets().begin(), response.buckets().end(),
                  std::back_inserter(result.items),
                  [](google::storage::v2::Bucket const& b) {
-                   return GrpcBucketMetadataParser::FromProto(b);
+                   return storage_internal::FromProto(b);
                  });
   return result;
 }
