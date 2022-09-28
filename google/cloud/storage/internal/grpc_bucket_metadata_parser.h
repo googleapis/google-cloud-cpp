@@ -21,75 +21,72 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-struct GrpcBucketMetadataParser {
-  static google::storage::v2::Bucket ToProto(BucketMetadata const& rhs);
-  static BucketMetadata FromProto(google::storage::v2::Bucket const& rhs);
+google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs);
+storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs);
 
-  static google::storage::v2::Bucket::Billing ToProto(BucketBilling const& rhs);
-  static BucketBilling FromProto(
-      google::storage::v2::Bucket::Billing const& rhs);
+google::storage::v2::Bucket::Billing ToProto(storage::BucketBilling const& rhs);
+storage::BucketBilling FromProto(
+    google::storage::v2::Bucket::Billing const& rhs);
 
-  static google::storage::v2::Bucket::Cors ToProto(CorsEntry const& rhs);
-  static CorsEntry FromProto(google::storage::v2::Bucket::Cors const& rhs);
+google::storage::v2::Bucket::Cors ToProto(storage::CorsEntry const& rhs);
+storage::CorsEntry FromProto(google::storage::v2::Bucket::Cors const& rhs);
 
-  static google::storage::v2::Bucket::Encryption ToProto(
-      BucketEncryption const& rhs);
-  static BucketEncryption FromProto(
-      google::storage::v2::Bucket::Encryption const& rhs);
+google::storage::v2::Bucket::Encryption ToProto(
+    storage::BucketEncryption const& rhs);
+storage::BucketEncryption FromProto(
+    google::storage::v2::Bucket::Encryption const& rhs);
 
-  static google::storage::v2::Bucket::IamConfig ToProto(
-      BucketIamConfiguration const& rhs);
-  static BucketIamConfiguration FromProto(
-      google::storage::v2::Bucket::IamConfig const& rhs);
+google::storage::v2::Bucket::IamConfig ToProto(
+    storage::BucketIamConfiguration const& rhs);
+storage::BucketIamConfiguration FromProto(
+    google::storage::v2::Bucket::IamConfig const& rhs);
 
-  static google::storage::v2::Bucket::Lifecycle::Rule::Action ToProto(
-      LifecycleRuleAction rhs);
-  static LifecycleRuleAction FromProto(
-      google::storage::v2::Bucket::Lifecycle::Rule::Action rhs);
+google::storage::v2::Bucket::Lifecycle::Rule::Action ToProto(
+    storage::LifecycleRuleAction rhs);
+storage::LifecycleRuleAction FromProto(
+    google::storage::v2::Bucket::Lifecycle::Rule::Action rhs);
 
-  static google::storage::v2::Bucket::Lifecycle::Rule::Condition ToProto(
-      LifecycleRuleCondition rhs);
-  static LifecycleRuleCondition FromProto(
-      google::storage::v2::Bucket::Lifecycle::Rule::Condition rhs);
+google::storage::v2::Bucket::Lifecycle::Rule::Condition ToProto(
+    storage::LifecycleRuleCondition rhs);
+storage::LifecycleRuleCondition FromProto(
+    google::storage::v2::Bucket::Lifecycle::Rule::Condition rhs);
 
-  static google::storage::v2::Bucket::Lifecycle::Rule ToProto(
-      LifecycleRule rhs);
-  static LifecycleRule FromProto(
-      google::storage::v2::Bucket::Lifecycle::Rule rhs);
+google::storage::v2::Bucket::Lifecycle::Rule ToProto(
+    storage::LifecycleRule const& rhs);
+storage::LifecycleRule FromProto(
+    google::storage::v2::Bucket::Lifecycle::Rule rhs);
 
-  static google::storage::v2::Bucket::Lifecycle ToProto(BucketLifecycle rhs);
-  static BucketLifecycle FromProto(google::storage::v2::Bucket::Lifecycle rhs);
+google::storage::v2::Bucket::Lifecycle ToProto(
+    storage::BucketLifecycle const& rhs);
+storage::BucketLifecycle FromProto(google::storage::v2::Bucket::Lifecycle rhs);
 
-  static google::storage::v2::Bucket::Logging ToProto(BucketLogging const& rhs);
-  static BucketLogging FromProto(
-      google::storage::v2::Bucket::Logging const& rhs);
+google::storage::v2::Bucket::Logging ToProto(storage::BucketLogging const& rhs);
+storage::BucketLogging FromProto(
+    google::storage::v2::Bucket::Logging const& rhs);
 
-  static google::storage::v2::Bucket::RetentionPolicy ToProto(
-      BucketRetentionPolicy const& rhs);
-  static BucketRetentionPolicy FromProto(
-      google::storage::v2::Bucket::RetentionPolicy const& rhs);
+google::storage::v2::Bucket::RetentionPolicy ToProto(
+    storage::BucketRetentionPolicy const& rhs);
+storage::BucketRetentionPolicy FromProto(
+    google::storage::v2::Bucket::RetentionPolicy const& rhs);
 
-  static google::storage::v2::Bucket::Versioning ToProto(
-      BucketVersioning const& rhs);
-  static BucketVersioning FromProto(
-      google::storage::v2::Bucket::Versioning const& rhs);
+google::storage::v2::Bucket::Versioning ToProto(
+    storage::BucketVersioning const& rhs);
+storage::BucketVersioning FromProto(
+    google::storage::v2::Bucket::Versioning const& rhs);
 
-  static google::storage::v2::Bucket::Website ToProto(BucketWebsite rhs);
-  static BucketWebsite FromProto(google::storage::v2::Bucket::Website rhs);
+google::storage::v2::Bucket::Website ToProto(storage::BucketWebsite rhs);
+storage::BucketWebsite FromProto(google::storage::v2::Bucket::Website rhs);
 
-  static google::storage::v2::Bucket::CustomPlacementConfig ToProto(
-      BucketCustomPlacementConfig rhs);
-  static BucketCustomPlacementConfig FromProto(
-      google::storage::v2::Bucket::CustomPlacementConfig rhs);
-};
+google::storage::v2::Bucket::CustomPlacementConfig ToProto(
+    storage::BucketCustomPlacementConfig rhs);
+storage::BucketCustomPlacementConfig FromProto(
+    google::storage::v2::Bucket::CustomPlacementConfig rhs);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

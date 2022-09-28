@@ -326,7 +326,6 @@ class LifecycleRule {
 
  private:
   friend struct internal::LifecycleRuleParser;
-  friend struct internal::GrpcBucketMetadataParser;
 
   LifecycleRule() = default;
 

@@ -280,7 +280,7 @@ StatusOr<BucketMetadata> GrpcClient::CreateBucket(
   ApplyQueryParameters(context, request);
   auto response = stub_->CreateBucket(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcBucketMetadataParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
@@ -290,7 +290,7 @@ StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
   ApplyQueryParameters(context, request);
   auto response = stub_->GetBucket(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcBucketMetadataParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteBucket(
@@ -310,7 +310,7 @@ StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
   ApplyQueryParameters(context, request);
   auto response = stub_->UpdateBucket(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcBucketMetadataParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<BucketMetadata> GrpcClient::PatchBucket(
@@ -321,7 +321,7 @@ StatusOr<BucketMetadata> GrpcClient::PatchBucket(
   ApplyQueryParameters(context, request);
   auto response = stub_->UpdateBucket(context, *proto);
   if (!response) return std::move(response).status();
-  return GrpcBucketMetadataParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
@@ -361,7 +361,7 @@ StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
   ApplyQueryParameters(context, request);
   auto response = stub_->LockBucketRetentionPolicy(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcBucketMetadataParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(

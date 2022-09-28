@@ -27,9 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 absl::CivilDay ToCivilDay(google::type::Date const& date) {
@@ -46,12 +45,11 @@ google::type::Date ToProtoDate(absl::CivilDay d) {
 
 }  // namespace
 
-google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
-    BucketMetadata const& rhs) {
+google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs) {
   google::storage::v2::Bucket result;
   // These are in the order of the proto fields, to make it easier to find them
   // later.
-  result.set_name(GrpcBucketIdToName(rhs.name()));
+  result.set_name(storage::internal::GrpcBucketIdToName(rhs.name()));
   result.set_bucket_id(rhs.id());
   result.set_etag(rhs.etag());
   result.set_project("projects/" + std::to_string(rhs.project_number()));
@@ -107,9 +105,8 @@ google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
   return result;
 }
 
-BucketMetadata GrpcBucketMetadataParser::FromProto(
-    google::storage::v2::Bucket const& rhs) {
-  BucketMetadata metadata;
+storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs) {
+  storage::BucketMetadata metadata;
 
   // These are sorted as the fields in the BucketMetadata class, to make them
   // easier to find in the future.
@@ -147,7 +144,7 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   metadata.set_location_type(rhs.location_type());
   if (rhs.has_logging()) metadata.set_logging(FromProto(rhs.logging()));
   metadata.set_metageneration(rhs.metageneration());
-  metadata.set_name(GrpcBucketNameToId(rhs.name()));
+  metadata.set_name(storage::internal::GrpcBucketNameToId(rhs.name()));
   if (rhs.has_owner()) {
     metadata.set_owner(storage_internal::FromProto(rhs.owner()));
   }
@@ -188,22 +185,21 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   return metadata;
 }
 
-google::storage::v2::Bucket::Billing GrpcBucketMetadataParser::ToProto(
-    BucketBilling const& rhs) {
+google::storage::v2::Bucket::Billing ToProto(
+    storage::BucketBilling const& rhs) {
   google::storage::v2::Bucket::Billing result;
   result.set_requester_pays(rhs.requester_pays);
   return result;
 }
 
-BucketBilling GrpcBucketMetadataParser::FromProto(
+storage::BucketBilling FromProto(
     google::storage::v2::Bucket::Billing const& rhs) {
-  BucketBilling result;
+  storage::BucketBilling result;
   result.requester_pays = rhs.requester_pays();
   return result;
 }
 
-google::storage::v2::Bucket::Cors GrpcBucketMetadataParser::ToProto(
-    CorsEntry const& rhs) {
+google::storage::v2::Bucket::Cors ToProto(storage::CorsEntry const& rhs) {
   google::storage::v2::Bucket::Cors result;
   for (auto const& v : rhs.origin) {
     result.add_origin(v);
@@ -220,9 +216,8 @@ google::storage::v2::Bucket::Cors GrpcBucketMetadataParser::ToProto(
   return result;
 }
 
-CorsEntry GrpcBucketMetadataParser::FromProto(
-    google::storage::v2::Bucket::Cors const& rhs) {
-  CorsEntry result;
+storage::CorsEntry FromProto(google::storage::v2::Bucket::Cors const& rhs) {
+  storage::CorsEntry result;
   absl::c_copy(rhs.origin(), std::back_inserter(result.origin));
   absl::c_copy(rhs.method(), std::back_inserter(result.method));
   absl::c_copy(rhs.response_header(),
@@ -231,22 +226,22 @@ CorsEntry GrpcBucketMetadataParser::FromProto(
   return result;
 }
 
-google::storage::v2::Bucket::Encryption GrpcBucketMetadataParser::ToProto(
-    BucketEncryption const& rhs) {
+google::storage::v2::Bucket::Encryption ToProto(
+    storage::BucketEncryption const& rhs) {
   google::storage::v2::Bucket::Encryption result;
   result.set_default_kms_key(rhs.default_kms_key_name);
   return result;
 }
 
-BucketEncryption GrpcBucketMetadataParser::FromProto(
+storage::BucketEncryption FromProto(
     google::storage::v2::Bucket::Encryption const& rhs) {
-  BucketEncryption result;
+  storage::BucketEncryption result;
   result.default_kms_key_name = rhs.default_kms_key();
   return result;
 }
 
-google::storage::v2::Bucket::IamConfig GrpcBucketMetadataParser::ToProto(
-    BucketIamConfiguration const& rhs) {
+google::storage::v2::Bucket::IamConfig ToProto(
+    storage::BucketIamConfiguration const& rhs) {
   google::storage::v2::Bucket::IamConfig result;
   if (rhs.uniform_bucket_level_access.has_value()) {
     auto& ubla = *result.mutable_uniform_bucket_level_access();
@@ -260,11 +255,11 @@ google::storage::v2::Bucket::IamConfig GrpcBucketMetadataParser::ToProto(
   return result;
 }
 
-BucketIamConfiguration GrpcBucketMetadataParser::FromProto(
+storage::BucketIamConfiguration FromProto(
     google::storage::v2::Bucket::IamConfig const& rhs) {
-  BucketIamConfiguration result;
+  storage::BucketIamConfiguration result;
   if (rhs.has_uniform_bucket_level_access()) {
-    UniformBucketLevelAccess ubla;
+    storage::UniformBucketLevelAccess ubla;
     ubla.enabled = rhs.uniform_bucket_level_access().enabled();
     ubla.locked_time = google::cloud::internal::ToChronoTimePoint(
         rhs.uniform_bucket_level_access().lock_time());
@@ -276,24 +271,24 @@ BucketIamConfiguration GrpcBucketMetadataParser::FromProto(
   return result;
 }
 
-google::storage::v2::Bucket::Lifecycle::Rule::Action
-GrpcBucketMetadataParser::ToProto(LifecycleRuleAction rhs) {
+google::storage::v2::Bucket::Lifecycle::Rule::Action ToProto(
+    storage::LifecycleRuleAction rhs) {
   google::storage::v2::Bucket::Lifecycle::Rule::Action result;
   result.set_type(std::move(rhs.type));
   result.set_storage_class(std::move(rhs.storage_class));
   return result;
 }
 
-LifecycleRuleAction GrpcBucketMetadataParser::FromProto(
+storage::LifecycleRuleAction FromProto(
     google::storage::v2::Bucket::Lifecycle::Rule::Action rhs) {
-  LifecycleRuleAction result;
+  storage::LifecycleRuleAction result;
   result.type = std::move(*rhs.mutable_type());
   result.storage_class = std::move(*rhs.mutable_storage_class());
   return result;
 }
 
-google::storage::v2::Bucket::Lifecycle::Rule::Condition
-GrpcBucketMetadataParser::ToProto(LifecycleRuleCondition rhs) {
+google::storage::v2::Bucket::Lifecycle::Rule::Condition ToProto(
+    storage::LifecycleRuleCondition rhs) {
   google::storage::v2::Bucket::Lifecycle::Rule::Condition result;
   if (rhs.age.has_value()) {
     result.set_age_days(*rhs.age);
@@ -338,9 +333,9 @@ GrpcBucketMetadataParser::ToProto(LifecycleRuleCondition rhs) {
   return result;
 }
 
-LifecycleRuleCondition GrpcBucketMetadataParser::FromProto(
+storage::LifecycleRuleCondition FromProto(
     google::storage::v2::Bucket::Lifecycle::Rule::Condition rhs) {
-  LifecycleRuleCondition result;
+  storage::LifecycleRuleCondition result;
   if (rhs.age_days() != 0) {
     result.age = rhs.age_days();
   }
@@ -389,63 +384,62 @@ LifecycleRuleCondition GrpcBucketMetadataParser::FromProto(
   return result;
 }
 
-google::storage::v2::Bucket::Lifecycle::Rule GrpcBucketMetadataParser::ToProto(
-    LifecycleRule rhs) {
+google::storage::v2::Bucket::Lifecycle::Rule ToProto(
+    storage::LifecycleRule const& rhs) {
   google::storage::v2::Bucket::Lifecycle::Rule result;
-  *result.mutable_action() = ToProto(std::move(rhs.action_));
-  *result.mutable_condition() = ToProto(std::move(rhs.condition_));
+  *result.mutable_action() = ToProto(rhs.action());
+  *result.mutable_condition() = ToProto(rhs.condition());
   return result;
 }
 
-LifecycleRule GrpcBucketMetadataParser::FromProto(
+storage::LifecycleRule FromProto(
     google::storage::v2::Bucket::Lifecycle::Rule rhs) {
-  LifecycleRuleAction action;
-  LifecycleRuleCondition condition;
+  storage::LifecycleRuleAction action;
+  storage::LifecycleRuleCondition condition;
   if (rhs.has_action()) {
     action = FromProto(std::move(*rhs.mutable_action()));
   }
   if (rhs.has_condition()) {
     condition = FromProto(std::move(*rhs.mutable_condition()));
   }
-  return LifecycleRule(std::move(condition), std::move(action));
+  return storage::LifecycleRule(std::move(condition), std::move(action));
 }
 
-google::storage::v2::Bucket::Lifecycle GrpcBucketMetadataParser::ToProto(
-    BucketLifecycle rhs) {
+google::storage::v2::Bucket::Lifecycle ToProto(
+    storage::BucketLifecycle const& rhs) {
   google::storage::v2::Bucket::Lifecycle result;
-  for (auto& v : rhs.rule) {
-    *result.add_rule() = ToProto(std::move(v));
+  for (auto const& v : rhs.rule) {
+    *result.add_rule() = ToProto(v);
   }
   return result;
 }
 
-BucketLifecycle GrpcBucketMetadataParser::FromProto(
-    google::storage::v2::Bucket::Lifecycle rhs) {
-  BucketLifecycle result;
+storage::BucketLifecycle FromProto(google::storage::v2::Bucket::Lifecycle rhs) {
+  storage::BucketLifecycle result;
   for (auto& v : *rhs.mutable_rule()) {
     result.rule.push_back(FromProto(std::move(v)));
   }
   return result;
 }
 
-google::storage::v2::Bucket::Logging GrpcBucketMetadataParser::ToProto(
-    BucketLogging const& rhs) {
+google::storage::v2::Bucket::Logging ToProto(
+    storage::BucketLogging const& rhs) {
   google::storage::v2::Bucket::Logging result;
-  result.set_log_bucket(GrpcBucketIdToName(rhs.log_bucket));
+  result.set_log_bucket(storage::internal::GrpcBucketIdToName(rhs.log_bucket));
   result.set_log_object_prefix(rhs.log_object_prefix);
   return result;
 }
 
-BucketLogging GrpcBucketMetadataParser::FromProto(
+storage::BucketLogging FromProto(
     google::storage::v2::Bucket::Logging const& rhs) {
-  BucketLogging result;
-  result.log_bucket = GrpcBucketNameToId(rhs.log_bucket());
+  storage::BucketLogging result;
+  result.log_bucket = storage::internal::GrpcBucketNameToId(rhs.log_bucket());
   result.log_object_prefix = rhs.log_object_prefix();
   return result;
 }
 
-google::storage::v2::Bucket::RetentionPolicy GrpcBucketMetadataParser::ToProto(
-    BucketRetentionPolicy const& rhs) {
+google::storage::v2::Bucket::RetentionPolicy ToProto(
+    storage::BucketRetentionPolicy const& rhs) {
   google::storage::v2::Bucket::RetentionPolicy result;
   *result.mutable_effective_time() =
       google::cloud::internal::ToProtoTimestamp(rhs.effective_time);
@@ -454,9 +448,9 @@ google::storage::v2::Bucket::RetentionPolicy GrpcBucketMetadataParser::ToProto(
   return result;
 }
 
-BucketRetentionPolicy GrpcBucketMetadataParser::FromProto(
+storage::BucketRetentionPolicy FromProto(
     google::storage::v2::Bucket::RetentionPolicy const& rhs) {
-  BucketRetentionPolicy result;
+  storage::BucketRetentionPolicy result;
   result.effective_time =
       google::cloud::internal::ToChronoTimePoint(rhs.effective_time());
   result.is_locked = rhs.is_locked();
@@ -464,38 +458,36 @@ BucketRetentionPolicy GrpcBucketMetadataParser::FromProto(
   return result;
 }
 
-google::storage::v2::Bucket::Versioning GrpcBucketMetadataParser::ToProto(
-    BucketVersioning const& rhs) {
+google::storage::v2::Bucket::Versioning ToProto(
+    storage::BucketVersioning const& rhs) {
   google::storage::v2::Bucket::Versioning result;
   result.set_enabled(rhs.enabled);
   return result;
 }
 
-BucketVersioning GrpcBucketMetadataParser::FromProto(
+storage::BucketVersioning FromProto(
     google::storage::v2::Bucket::Versioning const& rhs) {
-  BucketVersioning result;
+  storage::BucketVersioning result;
   result.enabled = rhs.enabled();
   return result;
 }
 
-google::storage::v2::Bucket::Website GrpcBucketMetadataParser::ToProto(
-    BucketWebsite rhs) {
+google::storage::v2::Bucket::Website ToProto(storage::BucketWebsite rhs) {
   google::storage::v2::Bucket::Website result;
   result.set_main_page_suffix(std::move(rhs.main_page_suffix));
   result.set_not_found_page(std::move(rhs.not_found_page));
   return result;
 }
 
-BucketWebsite GrpcBucketMetadataParser::FromProto(
-    google::storage::v2::Bucket::Website rhs) {
-  BucketWebsite result;
+storage::BucketWebsite FromProto(google::storage::v2::Bucket::Website rhs) {
+  storage::BucketWebsite result;
   result.main_page_suffix = std::move(*rhs.mutable_main_page_suffix());
   result.not_found_page = std::move(*rhs.mutable_not_found_page());
   return result;
 }
 
-google::storage::v2::Bucket::CustomPlacementConfig
-GrpcBucketMetadataParser::ToProto(BucketCustomPlacementConfig rhs) {
+google::storage::v2::Bucket::CustomPlacementConfig ToProto(
+    storage::BucketCustomPlacementConfig rhs) {
   google::storage::v2::Bucket::CustomPlacementConfig result;
   for (auto& l : rhs.data_locations) {
     *result.add_data_locations() = std::move(l);
@@ -503,17 +495,16 @@ GrpcBucketMetadataParser::ToProto(BucketCustomPlacementConfig rhs) {
   return result;
 }
 
-BucketCustomPlacementConfig GrpcBucketMetadataParser::FromProto(
+storage::BucketCustomPlacementConfig FromProto(
     google::storage::v2::Bucket::CustomPlacementConfig rhs) {
-  BucketCustomPlacementConfig result;
+  storage::BucketCustomPlacementConfig result;
   for (auto& l : *rhs.mutable_data_locations()) {
     result.data_locations.push_back(std::move(l));
   }
   return result;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
