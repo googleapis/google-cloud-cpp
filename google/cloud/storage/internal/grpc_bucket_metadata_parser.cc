@@ -64,8 +64,7 @@ google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
     *result.add_acl() = GrpcBucketAccessControlParser::ToProto(v);
   }
   for (auto const& v : rhs.default_acl()) {
-    *result.add_default_object_acl() =
-        GrpcObjectAccessControlParser::ToProto(v);
+    *result.add_default_object_acl() = storage_internal::ToProto(v);
   }
   if (rhs.has_lifecycle()) {
     *result.mutable_lifecycle() = ToProto(rhs.lifecycle());
@@ -125,9 +124,9 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
   }
   for (auto const& v : rhs.default_object_acl()) {
     metadata.mutable_default_acl().push_back(
-        GrpcObjectAccessControlParser::FromProto(v, rhs.bucket_id(),
-                                                 /*object_name*/ std::string{},
-                                                 /*generation=*/0));
+        storage_internal::FromProto(v, rhs.bucket_id(),
+                                    /*object_name*/ std::string{},
+                                    /*generation=*/0));
   }
   if (rhs.has_encryption()) {
     metadata.set_encryption(FromProto(rhs.encryption()));

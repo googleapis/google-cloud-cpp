@@ -125,9 +125,9 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
   std::vector<ObjectAccessControl> acl;
   acl.reserve(object.acl_size());
   for (auto& item : *object.mutable_acl()) {
-    acl.push_back(GrpcObjectAccessControlParser::FromProto(
-        std::move(item), metadata.bucket(), metadata.name(),
-        metadata.generation()));
+    acl.push_back(
+        storage_internal::FromProto(std::move(item), metadata.bucket(),
+                                    metadata.name(), metadata.generation()));
   }
   metadata.set_acl(std::move(acl));
   metadata.set_cache_control(std::move(*object.mutable_cache_control()));

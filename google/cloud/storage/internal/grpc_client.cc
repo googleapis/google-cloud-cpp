@@ -899,7 +899,7 @@ StatusOr<ObjectAccessControl> GrpcClient::PatchObjectAcl(
   get_request.set_option(Projection("full"));
   auto updater = [&request](std::vector<ObjectAccessControl> acl) {
     return UpsertAcl(std::move(acl), request.entity(),
-                     GrpcObjectAccessControlParser::Role(request.patch()));
+                     storage_internal::Role(request.patch()));
   };
   return FindObjectAccessControl(
       ModifyObjectAccessControl(get_request, updater), request.entity());
@@ -983,7 +983,7 @@ StatusOr<ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
   get_request.set_option(Projection("full"));
   auto updater = [&request](std::vector<ObjectAccessControl> acl) {
     return UpsertAcl(std::move(acl), request.entity(),
-                     GrpcObjectAccessControlParser::Role(request.patch()));
+                     storage_internal::Role(request.patch()));
   };
   return FindDefaultObjectAccessControl(
       ModifyDefaultAccessControl(get_request, updater), request.entity());
