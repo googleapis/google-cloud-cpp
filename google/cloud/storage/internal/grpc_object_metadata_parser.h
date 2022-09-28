@@ -22,29 +22,25 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-struct GrpcObjectMetadataParser {
-  static StatusOr<google::storage::v2::CustomerEncryption> ToProto(
-      CustomerEncryption rhs);
-  static CustomerEncryption FromProto(
-      google::storage::v2::CustomerEncryption rhs);
+StatusOr<google::storage::v2::CustomerEncryption> ToProto(
+    storage::CustomerEncryption rhs);
+storage::CustomerEncryption FromProto(
+    google::storage::v2::CustomerEncryption rhs);
 
-  static std::string Crc32cFromProto(std::uint32_t);
-  static StatusOr<std::uint32_t> Crc32cToProto(std::string const&);
-  static std::string MD5FromProto(std::string const&);
-  static StatusOr<std::string> MD5ToProto(std::string const&);
-  static std::string ComputeMD5Hash(std::string const& payload);
+std::string Crc32cFromProto(std::uint32_t);
+StatusOr<std::uint32_t> Crc32cToProto(std::string const&);
+std::string MD5FromProto(std::string const&);
+StatusOr<std::string> MD5ToProto(std::string const&);
+std::string ComputeMD5Hash(std::string const& payload);
 
-  static ObjectMetadata FromProto(google::storage::v2::Object object,
+storage::ObjectMetadata FromProto(google::storage::v2::Object object,
                                   Options const& options);
-};
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

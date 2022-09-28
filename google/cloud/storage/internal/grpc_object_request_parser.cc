@@ -478,7 +478,7 @@ GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
     // convert this to the format expected by proto, which is just a 32-bit
     // integer. But the value received by the application might be incorrect, so
     // we need to validate it.
-    auto as_proto = GrpcObjectMetadataParser::Crc32cToProto(
+    auto as_proto = storage_internal::Crc32cToProto(
         request.GetOption<Crc32cChecksumValue>().value());
     if (!as_proto.ok()) return std::move(as_proto).status();
     checksums.set_crc32c(*as_proto);
@@ -489,15 +489,15 @@ GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
   }
 
   if (request.HasOption<MD5HashValue>()) {
-    auto as_proto = GrpcObjectMetadataParser::MD5ToProto(
-        request.GetOption<MD5HashValue>().value());
+    auto as_proto =
+        storage_internal::MD5ToProto(request.GetOption<MD5HashValue>().value());
     if (!as_proto.ok()) return std::move(as_proto).status();
     checksums.set_md5_hash(*std::move(as_proto));
   } else if (request.GetOption<DisableMD5Hash>().value_or(false)) {
     // Nothing to do, the option is disabled.
   } else {
     checksums.set_md5_hash(
-        GrpcObjectMetadataParser::ComputeMD5Hash(request.contents()));
+        storage_internal::ComputeMD5Hash(request.contents()));
   }
 
   return r;
@@ -511,8 +511,7 @@ QueryResumableUploadResponse GrpcObjectRequestParser::FromProto(
     response.committed_size = static_cast<std::uint64_t>(p.persisted_size());
   }
   if (p.has_resource()) {
-    response.payload =
-        GrpcObjectMetadataParser::FromProto(p.resource(), options);
+    response.payload = storage_internal::FromProto(p.resource(), options);
   }
   response.request_metadata = std::move(metadata);
   return response;
@@ -549,7 +548,7 @@ ListObjectsResponse GrpcObjectRequestParser::FromProto(
   ListObjectsResponse result;
   result.next_page_token = response.next_page_token();
   for (auto const& o : response.objects()) {
-    result.items.push_back(GrpcObjectMetadataParser::FromProto(o, options));
+    result.items.push_back(storage_internal::FromProto(o, options));
   }
   for (auto const& p : response.prefixes()) result.prefixes.push_back(p);
   return result;
@@ -628,8 +627,7 @@ RewriteObjectResponse GrpcObjectRequestParser::FromProto(
   result.total_bytes_rewritten = response.total_bytes_rewritten();
   result.rewrite_token = response.rewrite_token();
   if (response.has_resource()) {
-    result.resource =
-        GrpcObjectMetadataParser::FromProto(response.resource(), options);
+    result.resource = storage_internal::FromProto(response.resource(), options);
   }
   return result;
 }
@@ -737,8 +735,7 @@ QueryResumableUploadResponse GrpcObjectRequestParser::FromProto(
         static_cast<std::uint64_t>(response.persisted_size());
   }
   if (response.has_resource()) {
-    result.payload =
-        GrpcObjectMetadataParser::FromProto(response.resource(), options);
+    result.payload = storage_internal::FromProto(response.resource(), options);
   }
   return result;
 }

@@ -24,9 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace storage_proto = ::google::storage::v2;
@@ -100,7 +99,7 @@ TEST(GrpcClientFromProto, ObjectSimple) {
   //     date --rfc-3339=seconds --date=@1565194924
   // The magical values for the CRC32C and MD5 are documented in
   //     hash_validator_test.cc
-  auto expected = ObjectMetadataParser::FromString(R"""({
+  auto expected = storage::internal::ObjectMetadataParser::FromString(R"""({
     "acl": [
       {"bucket": "test-bucket",
        "object": "test-object-name",
@@ -153,9 +152,8 @@ TEST(GrpcClientFromProto, ObjectSimple) {
 })""");
   ASSERT_STATUS_OK(expected);
 
-  auto actual = GrpcObjectMetadataParser::FromProto(
-      input,
-      Options{}.set<RestEndpointOption>("https://storage.googleapis.com"));
+  auto actual = FromProto(input, Options{}.set<storage::RestEndpointOption>(
+                                     "https://storage.googleapis.com"));
   EXPECT_EQ(actual, *expected);
 }
 
@@ -167,10 +165,10 @@ TEST(GrpcClientFromProto, ObjectCustomerEncryptionRoundtrip) {
   google::storage::v2::CustomerEncryption start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected =
-      CustomerEncryption{"test-encryption-algorithm", "MDEyMzQ1Njc="};
-  auto const middle = GrpcObjectMetadataParser::FromProto(start);
+      storage::CustomerEncryption{"test-encryption-algorithm", "MDEyMzQ1Njc="};
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcObjectMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   ASSERT_STATUS_OK(end);
   EXPECT_THAT(*end, IsProtoEqual(start));
 }
@@ -182,8 +180,7 @@ TEST(GrpcClientFromProto, Crc32cRoundtrip) {
       "6Y46Mg==",
   };
   for (auto const& start : values) {
-    auto const end = GrpcObjectMetadataParser::Crc32cFromProto(
-        GrpcObjectMetadataParser::Crc32cToProto(start).value());
+    auto const end = Crc32cFromProto(Crc32cToProto(start).value());
     EXPECT_EQ(start, end);
   }
 }
@@ -206,15 +203,13 @@ TEST(GrpcClientFromProto, MD5Roundtrip) {
   };
   for (auto const& test : cases) {
     auto const p = std::string{test.proto.begin(), test.proto.end()};
-    EXPECT_EQ(GrpcObjectMetadataParser::MD5FromProto(p), test.rest);
-    EXPECT_THAT(GrpcObjectMetadataParser::MD5ToProto(test.rest).value(),
-                testing::ElementsAreArray(p));
+    EXPECT_EQ(MD5FromProto(p), test.rest);
+    EXPECT_THAT(MD5ToProto(test.rest).value(), testing::ElementsAreArray(p));
   }
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

@@ -104,13 +104,13 @@ void MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
   options.set_last_message();
   auto const& hashes = request.full_object_hashes();
   if (!hashes.md5.empty()) {
-    auto md5 = GrpcObjectMetadataParser::MD5ToProto(hashes.md5);
+    auto md5 = storage_internal::MD5ToProto(hashes.md5);
     if (md5) {
       write_request.mutable_object_checksums()->set_md5_hash(*std::move(md5));
     }
   }
   if (!hashes.crc32c.empty()) {
-    auto crc32c = GrpcObjectMetadataParser::Crc32cToProto(hashes.crc32c);
+    auto crc32c = storage_internal::Crc32cToProto(hashes.crc32c);
     if (crc32c) {
       write_request.mutable_object_checksums()->set_crc32c(*std::move(crc32c));
     }
@@ -453,7 +453,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
 
   if (!response) return std::move(response).status();
   if (response->has_resource()) {
-    return GrpcObjectMetadataParser::FromProto(response->resource(), options());
+    return storage_internal::FromProto(response->resource(), options());
   }
   return ObjectMetadata{};
 }
@@ -470,8 +470,7 @@ StatusOr<ObjectMetadata> GrpcClient::CopyObject(
         StatusCode::kOutOfRange,
         "Object too large, use RewriteObject() instead of CopyObject()");
   }
-  return GrpcObjectMetadataParser::FromProto(response->resource(),
-                                             CurrentOptions());
+  return storage_internal::FromProto(response->resource(), CurrentOptions());
 }
 
 StatusOr<ObjectMetadata> GrpcClient::GetObjectMetadata(
@@ -481,7 +480,7 @@ StatusOr<ObjectMetadata> GrpcClient::GetObjectMetadata(
   ApplyQueryParameters(context, request);
   auto response = stub_->GetObject(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectMetadataParser::FromProto(*response, CurrentOptions());
+  return storage_internal::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
@@ -551,7 +550,7 @@ StatusOr<ObjectMetadata> GrpcClient::UpdateObject(
   ApplyQueryParameters(context, request);
   auto response = stub_->UpdateObject(context, *proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectMetadataParser::FromProto(*response, CurrentOptions());
+  return storage_internal::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<ObjectMetadata> GrpcClient::PatchObject(
@@ -562,7 +561,7 @@ StatusOr<ObjectMetadata> GrpcClient::PatchObject(
   ApplyQueryParameters(context, request);
   auto response = stub_->UpdateObject(context, *proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectMetadataParser::FromProto(*response, CurrentOptions());
+  return storage_internal::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<ObjectMetadata> GrpcClient::ComposeObject(
@@ -573,7 +572,7 @@ StatusOr<ObjectMetadata> GrpcClient::ComposeObject(
   ApplyQueryParameters(context, request);
   auto response = stub_->ComposeObject(context, *proto);
   if (!response) return std::move(response).status();
-  return GrpcObjectMetadataParser::FromProto(*response, CurrentOptions());
+  return storage_internal::FromProto(*response, CurrentOptions());
 }
 
 StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(
