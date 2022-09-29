@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/fake_clock.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
+#include "google/cloud/spanner/testing/status_utils.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/status.h"
@@ -488,6 +489,71 @@ TEST(SessionPool, SessionRefresh) {
   // a call to RefreshExpiringSessions(). This should refresh "s2" and
   // satisfy the AsyncExecuteSql() expectation.
   impl->SimulateCompletion(true);
+
+  // We should still be able to allocate sessions "s1" and "s2".
+  auto s1 = pool->Allocate();
+  ASSERT_STATUS_OK(s1);
+  EXPECT_EQ("s1", (*s1)->session_name());
+  auto s2 = pool->Allocate();
+  ASSERT_STATUS_OK(s2);
+  EXPECT_EQ("s2", (*s2)->session_name());
+}
+
+TEST(SessionPool, SessionRefreshNotFound) {
+  auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
+  EXPECT_CALL(*mock, BatchCreateSessions)
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
+
+  EXPECT_CALL(*mock, AsyncExecuteSql)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::spanner::v1::ExecuteSqlRequest const& request) {
+        EXPECT_EQ("s2", request.session());
+        // The "SELECT 1" refresh returns "Session not found".
+        return make_ready_future(StatusOr<google::spanner::v1::ResultSet>(
+            spanner_testing::SessionNotFoundError(request.session())));
+      });
+
+  auto db = spanner::Database("project", "instance", "database");
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto keep_alive_interval = std::chrono::seconds(1);
+  auto clock = std::make_shared<FakeSteadyClock>();
+  auto pool = MakeTestSessionPool(
+      db, {mock}, CompletionQueue(impl),
+      Options{}
+          .set<spanner::SessionPoolKeepAliveIntervalOption>(keep_alive_interval)
+          .set<SessionPoolClockOption>(clock));
+
+  // Allocate and release two session, "s1" and "s2". This will satisfy the
+  // the first two BatchCreateSessions() expectations.
+  {
+    auto s1 = pool->Allocate();
+    ASSERT_STATUS_OK(s1);
+    EXPECT_EQ("s1", (*s1)->session_name());
+    {
+      auto s2 = pool->Allocate();
+      ASSERT_STATUS_OK(s2);
+      EXPECT_EQ("s2", (*s2)->session_name());
+    }
+    // Wait for "s2" to need refreshing before releasing "s1".
+    clock->AdvanceTime(keep_alive_interval * 2);
+  }
+
+  // Simulate completion of pending operations, which will result in
+  // a call to RefreshExpiringSessions(). This should refresh "s2" and
+  // satisfy the AsyncExecuteSql() expectation, which fails the call.
+  impl->SimulateCompletion(true);
+
+  // We should still be able to allocate session "s1".
+  auto s1 = pool->Allocate();
+  ASSERT_STATUS_OK(s1);
+  EXPECT_EQ("s1", (*s1)->session_name());
+  // However "s2" will be gone now, so a new allocation will produce
+  // "s3", satisfying the final BatchCreateSessions() expectation.
+  auto s3 = pool->Allocate();
+  ASSERT_STATUS_OK(s3);
+  EXPECT_EQ("s3", (*s3)->session_name());
 }
 
 }  // namespace

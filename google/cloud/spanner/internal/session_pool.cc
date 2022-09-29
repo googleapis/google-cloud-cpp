@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/async_retry_loop.h"
@@ -84,21 +85,20 @@ void SessionPool::Initialize() {
 }
 
 SessionPool::~SessionPool() {
-  // All references to this object are via `shared_ptr`; since we're in the
+  // All references to this object are via `shared_ptr`. Since we're in the
   // destructor that implies there can be no concurrent accesses to any member
   // variables, including `current_timer_`.
   //
   // Note that it *is* possible the timer lambda in `ScheduleBackgroundWork`
-  // is executing concurrently. However, since we are in the destructor we know
-  // that the lambda must not have yet successfully finished a call to `lock()`
-  // on the `weak_ptr` to `this` it holds. Any subsequent or in-progress calls
-  // must return `nullptr`, and the lambda will not do any work nor reschedule
-  // the timer.
+  // or the response handler in `RefreshExpiringSessions` are executing
+  // concurrently. However, since we are in the destructor we know that
+  // they must not have successfully finished a call to `lock()` on the
+  // `weak_ptr` to `this` they hold. Any in-progress or subsequent `lock()`
+  // will now return `nullptr`, in which case no work is done.
   current_timer_.cancel();
 }
 
 void SessionPool::ScheduleBackgroundWork(std::chrono::seconds relative_time) {
-  // See the comment in the destructor about the thread safety of this method.
   std::weak_ptr<SessionPool> pool = shared_from_this();
   current_timer_ =
       cq_.MakeRelativeTimer(relative_time)
@@ -152,20 +152,40 @@ void SessionPool::RefreshExpiringSessions() {
       }
     }
   }
+  std::weak_ptr<SessionPool> pool = shared_from_this();
   for (auto& refresh : sessions_to_refresh) {
-    AsyncRefreshSession(cq_, refresh.first, std::move(refresh.second))
-        .then([](future<StatusOr<google::spanner::v1::ResultSet>> result) {
-          // We simply discard the response as handling IsSessionNotFound()
-          // by removing the session from the pool is problematic (and would
-          // not eliminate the possibility of IsSessionNotFound() elsewhere).
-          // The last-use time has already been updated to throttle attempts.
-          // TODO(#4026): Re-evaluate these decisions.
-          (void)result.get();
+    AsyncRefreshSession(cq_, std::move(refresh.first), refresh.second)
+        .then([pool, session_name = std::move(refresh.second)](
+                  future<StatusOr<google::spanner::v1::ResultSet>> result) {
+          auto response = result.get();
+          if (!response && IsSessionNotFound(response.status())) {
+            if (auto shared_pool = pool.lock()) {
+              // The pool still exists, but the bad session may no
+              // longer be in the pool because someone else has already
+              // tried to use it, discovered that it is bad, and so did
+              // not return it (or they are in process of doing all that).
+              // But if it is still in the pool, we remove it now.
+              shared_pool->Erase(session_name);
+            }
+          }
         });
   }
 }
 
-/**
+void SessionPool::Erase(std::string const& session_name) {
+  std::unique_ptr<Session> target;
+  std::unique_lock<std::mutex> lk(mu_);
+  for (auto& session : sessions_) {
+    if (session->session_name() == session_name) {
+      target = std::move(session);  // deferred deletion
+      session = std::move(sessions_.back());
+      sessions_.pop_back();
+      break;
+    }
+  }
+}
+
+/*
  * Grow the session pool by creating up to `sessions_to_create` sessions and
  * adding them to the pool.  Note that `lk` may be released and reacquired in
  * this method.
