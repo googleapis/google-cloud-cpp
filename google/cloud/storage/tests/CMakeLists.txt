@@ -26,6 +26,7 @@ set(storage_client_integration_tests
     curl_sign_blob_integration_test.cc
     decompressive_transcoding_integration_test.cc
     error_injection_integration_test.cc
+    error_parsing_integration_test.cc
     grpc_bucket_acl_integration_test.cc
     grpc_bucket_metadata_integration_test.cc
     grpc_default_object_acl_integration_test.cc
