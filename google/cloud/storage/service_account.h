@@ -23,10 +23,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-struct ServiceAccountParser;
-struct GrpcServiceAccountParser;
-}  // namespace internal
 
 /**
  * Represents the metadata for a Google Cloud Storage service account.
@@ -36,12 +32,22 @@ class ServiceAccount {
   ServiceAccount() = default;
 
   std::string const& email_address() const { return email_address_; }
+
+  /// @note This is only intended for mocking.
+  ServiceAccount& set_email_address(std::string v) {
+    email_address_ = std::move(v);
+    return *this;
+  }
+
   std::string const& kind() const { return kind_; }
 
- private:
-  friend struct internal::ServiceAccountParser;
-  friend struct internal::GrpcServiceAccountParser;
+  /// @note This is only intended for mocking.
+  ServiceAccount& set_kind(std::string v) {
+    kind_ = std::move(v);
+    return *this;
+  }
 
+ private:
   std::string email_address_;
   std::string kind_;
 };

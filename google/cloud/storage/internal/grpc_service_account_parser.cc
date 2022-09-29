@@ -30,8 +30,8 @@ google::storage::v2::GetServiceAccountRequest GrpcServiceAccountParser::ToProto(
 ServiceAccount GrpcServiceAccountParser::FromProto(
     google::storage::v2::ServiceAccount const& meta) {
   ServiceAccount result;
-  result.email_address_ = meta.email_address();
-  result.kind_ = "storage#serviceAccount";
+  result.set_email_address(meta.email_address());
+  result.set_kind("storage#serviceAccount");
   return result;
 }
 
