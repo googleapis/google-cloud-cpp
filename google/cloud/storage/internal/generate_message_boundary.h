@@ -17,6 +17,9 @@
 
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/invoke_result.h"
+#include <algorithm>
+#include <array>
+#include <limits>
 #include <string>
 
 namespace google {
@@ -33,9 +36,15 @@ namespace internal {
  * trivial to generate a string not found in @p message, just append some
  * characters to the message itself).
  *
- * The algorithm is to generate a short random string, and search for it in the
- * message, if the message has that string, append some more random characters
- * and keep searching.
+ * The algorithm is:
+ * - First, try using fixed strings consisting of 64 copies of any valid
+ *   boundary character. We can verify if one of those would work by searching
+ *   for the boundary character every 64 bytes in the message. If the character
+ *   never appears in that search, then there is no substring in the message
+ *   consisting of 64 copies of the character.
+ * - If that fails, generate a short random string, and search for it in the
+ *   message. If the message has that string, append some more random characters
+ *   and keep searching.
  *
  * This function is a template because the string generator is typically a
  * lambda that captures state variables (such as the random number generator),
@@ -58,6 +67,24 @@ template <typename RandomStringGenerator,
 std::string GenerateMessageBoundary(
     std::string const& message, RandomStringGenerator&& random_string_generator,
     int initial_size, int growth_size) {
+  // This is not the only place we make this assumption. Duplicating the static
+  // assertion should make it easier to find the code if we ever need to fix it.
+  static_assert(std::numeric_limits<unsigned char>::max() == 255,
+                "required for efficient GenerateMessageBoundary");
+
+  static char const kBoundaryChars[] =
+      "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  auto constexpr kSkip = std::size_t{64};
+  std::array<bool, 255> seen;
+  std::fill(seen.begin(), seen.end(), false);
+  for (auto i = kSkip - 1; i < message.size(); i += kSkip) {
+    seen[static_cast<unsigned char>(message[i])] = true;
+  }
+  for (auto c : kBoundaryChars) {
+    if (c == '\0') continue;
+    if (!seen[static_cast<unsigned char>(c)]) return std::string(kSkip, c);
+  }
+
   std::string candidate = random_string_generator(initial_size);
   for (std::string::size_type i = message.find(candidate, 0);
        i != std::string::npos; i = message.find(candidate, i)) {

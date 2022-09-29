@@ -29,6 +29,19 @@ using ::testing::Not;
 std::string const* const kChars = new std::string(
     "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
+TEST(GenerateMessageBoundaryTest, Repeats) {
+  auto sep_a = std::string(64, 'a');
+  auto sep_b = std::string(64, 'b');
+  auto message = sep_a + sep_b + sep_a;
+
+  ::testing::MockFunction<std::string(int)> generator;
+  EXPECT_CALL(generator, Call).Times(0);
+
+  auto boundary =
+      GenerateMessageBoundary(message, generator.AsStdFunction(), 16, 4);
+  EXPECT_THAT(message, Not(HasSubstr(boundary)));
+}
+
 TEST(GenerateMessageBoundaryTest, Simple) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
