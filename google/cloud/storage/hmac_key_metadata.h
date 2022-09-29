@@ -26,10 +26,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-struct HmacKeyMetadataParser;
-struct GrpcHmacKeyMetadataParser;
-}  // namespace internal
 
 /**
  * Represents the metadata for a Google Cloud Storage HmacKeyResource.
@@ -78,9 +74,46 @@ class HmacKeyMetadata {
   static std::string state_inactive() { return "INACTIVE"; }
   static std::string state_deleted() { return "DELETED"; }
 
+  ///@{
+  /**
+   * @name Testing modifiers.
+   *
+   * The following attributes cannot be changed when updating, creating, or
+   * patching an HmacKeyMetadata resource. However, it is useful to change
+   * them in tests, e.g., when mocking the results from the C++ client library.
+   */
+  HmacKeyMetadata& set_access_id(std::string v) {
+    access_id_ = std::move(v);
+    return *this;
+  }
+  HmacKeyMetadata& set_id(std::string v) {
+    id_ = std::move(v);
+    return *this;
+  }
+
+  HmacKeyMetadata& set_kind(std::string v) {
+    kind_ = std::move(v);
+    return *this;
+  }
+  HmacKeyMetadata& set_project_id(std::string v) {
+    project_id_ = std::move(v);
+    return *this;
+  }
+  HmacKeyMetadata& set_service_account_email(std::string v) {
+    service_account_email_ = std::move(v);
+    return *this;
+  }
+  HmacKeyMetadata& set_time_created(std::chrono::system_clock::time_point v) {
+    time_created_ = v;
+    return *this;
+  }
+  HmacKeyMetadata& set_updated(std::chrono::system_clock::time_point v) {
+    updated_ = v;
+    return *this;
+  }
+  ///@}
+
  private:
-  friend struct internal::HmacKeyMetadataParser;
-  friend struct internal::GrpcHmacKeyMetadataParser;
   friend std::ostream& operator<<(std::ostream& os, HmacKeyMetadata const& rhs);
 
   // Keep the fields in alphabetical order.
