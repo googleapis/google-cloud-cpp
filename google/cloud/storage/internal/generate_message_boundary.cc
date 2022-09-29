@@ -44,7 +44,7 @@ std::string MaybeGenerateMessageBoundaryImplQuick(std::string const& message) {
   auto constexpr kSeenSize =
       static_cast<std::size_t>((std::numeric_limits<unsigned char>::max)()) + 1;
   auto constexpr kSkip = std::size_t{64};
-  std::bitset<bool, kSeenSize> seen;
+  std::array<bool, kSeenSize> seen;
   std::fill(seen.begin(), seen.end(), false);
   for (auto i = kSkip - 1; i < message.size(); i += kSkip) {
     seen[static_cast<unsigned char>(message[i])] = true;
