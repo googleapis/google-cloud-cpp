@@ -22,20 +22,16 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-struct GrpcHmacKeyMetadataParser {
-  static HmacKeyMetadata FromProto(
-      google::storage::v2::HmacKeyMetadata const& rhs);
-  static google::storage::v2::HmacKeyMetadata ToProto(
-      HmacKeyMetadata const& rhs);
-};
+storage::HmacKeyMetadata FromProto(
+    google::storage::v2::HmacKeyMetadata const& rhs);
+google::storage::v2::HmacKeyMetadata ToProto(
+    storage::HmacKeyMetadata const& rhs);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

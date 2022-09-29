@@ -19,13 +19,12 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-HmacKeyMetadata GrpcHmacKeyMetadataParser::FromProto(
+storage::HmacKeyMetadata FromProto(
     google::storage::v2::HmacKeyMetadata const& rhs) {
-  HmacKeyMetadata result;
+  storage::HmacKeyMetadata result;
   result.set_id(rhs.id());
   result.set_access_id(rhs.access_id());
   // The protos use `projects/{project}` format, but the field may be absent or
@@ -45,8 +44,8 @@ HmacKeyMetadata GrpcHmacKeyMetadataParser::FromProto(
   return result;
 }
 
-google::storage::v2::HmacKeyMetadata GrpcHmacKeyMetadataParser::ToProto(
-    HmacKeyMetadata const& rhs) {
+google::storage::v2::HmacKeyMetadata ToProto(
+    storage::HmacKeyMetadata const& rhs) {
   google::storage::v2::HmacKeyMetadata result;
   result.set_id(rhs.id());
   result.set_access_id(rhs.access_id());
@@ -61,8 +60,7 @@ google::storage::v2::HmacKeyMetadata GrpcHmacKeyMetadataParser::ToProto(
   return result;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
