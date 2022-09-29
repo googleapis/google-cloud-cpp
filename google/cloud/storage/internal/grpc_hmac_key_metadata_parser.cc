@@ -26,22 +26,22 @@ namespace internal {
 HmacKeyMetadata GrpcHmacKeyMetadataParser::FromProto(
     google::storage::v2::HmacKeyMetadata const& rhs) {
   HmacKeyMetadata result;
-  result.id_ = rhs.id();
-  result.access_id_ = rhs.access_id();
+  result.set_id(rhs.id());
+  result.set_access_id(rhs.access_id());
   // The protos use `projects/{project}` format, but the field may be absent or
   // may have a project id (instead of number), so we need to do some parsing.
   // We are forgiving here. It is better to drop one field rather than dropping
   // the full message.
   absl::string_view project = rhs.project();
   absl::ConsumePrefix(&project, "projects/");
-  result.project_id_ = std::string(project);
-  result.service_account_email_ = rhs.service_account_email();
-  result.state_ = rhs.state();
-  result.time_created_ =
-      google::cloud::internal::ToChronoTimePoint(rhs.create_time());
-  result.updated_ =
-      google::cloud::internal::ToChronoTimePoint(rhs.update_time());
-  result.etag_ = rhs.etag();
+  result.set_project_id(std::string(project));
+  result.set_service_account_email(rhs.service_account_email());
+  result.set_state(rhs.state());
+  result.set_time_created(
+      google::cloud::internal::ToChronoTimePoint(rhs.create_time()));
+  result.set_updated(
+      google::cloud::internal::ToChronoTimePoint(rhs.update_time()));
+  result.set_etag(rhs.etag());
   return result;
 }
 
