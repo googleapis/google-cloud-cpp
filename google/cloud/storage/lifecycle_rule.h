@@ -31,10 +31,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-struct LifecycleRuleParser;
-struct GrpcBucketMetadataParser;
-}  // namespace internal
 
 /// Implement a wrapper for Lifecycle Rules actions.
 struct LifecycleRuleAction {
@@ -325,8 +321,6 @@ class LifecycleRule {
   }
 
  private:
-  friend struct internal::LifecycleRuleParser;
-
   LifecycleRule() = default;
 
   static void MergeConditions(LifecycleRuleCondition& result,
