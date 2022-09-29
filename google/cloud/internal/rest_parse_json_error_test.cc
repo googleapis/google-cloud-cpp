@@ -23,7 +23,7 @@ namespace {
 
 using ::testing::Pair;
 
-TEST(RestParseErrorInfoTest, Success) {
+TEST(RestParseErrorInfoTest, Example) {
   // This example payload comes from
   // https://cloud.google.com/apis/design/errors#http_mapping
   auto constexpr kJsonPayload = R"(
@@ -52,6 +52,35 @@ TEST(RestParseErrorInfoTest, Success) {
       "googleapis.com",
       {{"service", "translate.googleapis.com"}, {"http_status_code", "400"}}};
   EXPECT_THAT(ParseJsonError(400, kJsonPayload), Pair(kMessage, error_info));
+}
+
+TEST(RestParseErrorInfoTest, GcsProduction) {
+  auto constexpr kGcsProductionError = R"js({
+      "error": {
+        "code": 412,
+        "message": "At least one of the pre-conditions you specified did not hold.",
+        "errors": [
+          {
+            "message": "At least one of the pre-conditions you specified did not hold.",
+            "domain": "global",
+            "reason": "conditionNotMet",
+            "locationType": "header",
+            "location": "If-Match"
+          }
+        ]
+      }
+    })js";
+  auto constexpr kMessage =
+      "At least one of the pre-conditions you specified did not hold.";
+  auto const error_info = ErrorInfo{"conditionNotMet",
+                                    "global",
+                                    {
+                                        {"http_status_code", "412"},
+                                        {"locationType", "header"},
+                                        {"location", "If-Match"},
+                                    }};
+  EXPECT_THAT(ParseJsonError(412, kGcsProductionError),
+              Pair(kMessage, error_info));
 }
 
 TEST(RestParseErrorInfoTest, InvalidJson) {

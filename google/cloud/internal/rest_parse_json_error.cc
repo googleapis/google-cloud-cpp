@@ -24,7 +24,6 @@ namespace {
 // Makes an `ErrorInfo` from an `"error"` JSON object that looks like
 //   [
 //     {
-//       "@type": "type.googleapis.com/google.rpc.ErrorInfo",
 //       "reason": "..."
 //       "domain": "..."
 //       "metadata": {
@@ -34,6 +33,11 @@ namespace {
 //     }
 //   ]
 // See also https://cloud.google.com/apis/design/errors#http_mapping
+//
+// If there is a '@type' field then its value must be
+//     type.googleapis.com/google.rpc.ErrorInfo
+//
+// The metadata field may be absent.
 ErrorInfo MakeErrorInfo(int http_status_code, nlohmann::json const& details) {
   static auto constexpr kErrorInfoType =
       "type.googleapis.com/google.rpc.ErrorInfo";
@@ -41,20 +45,34 @@ ErrorInfo MakeErrorInfo(int http_status_code, nlohmann::json const& details) {
   for (auto const& e : details.items()) {
     auto const& v = e.value();
     if (!v.is_object()) continue;
-    if (!v.contains("@type") || !v["@type"].is_string()) continue;
-    if (v.value("@type", "") != kErrorInfoType) continue;
-    if (!v.contains("reason") || !v["reason"].is_string()) continue;
-    if (!v.contains("domain") || !v["domain"].is_string()) continue;
-    if (!v.contains("metadata") || !v["metadata"].is_object()) continue;
-    auto const& metadata_json = v["metadata"];
+    auto ty = v.find("@type");
+    if (ty != v.end() && ty->is_string() &&
+        ty->get<std::string>() != kErrorInfoType) {
+      continue;
+    }
+    auto r = v.find("reason");
+    if (r == v.end() || !r->is_string()) continue;
+    auto d = v.find("domain");
+    if (d == v.end() || !d->is_string()) continue;
+
+    auto reason = r->get<std::string>();
+    auto domain = d->get<std::string>();
     auto metadata = std::unordered_map<std::string, std::string>{};
-    for (auto const& m : metadata_json.items()) {
-      if (!m.value().is_string()) continue;
-      metadata[m.key()] = m.value();
+    auto m = v.find("metadata");
+    if (m != v.end() && m->is_object()) {
+      for (auto const& i : m->items()) {
+        if (!i.value().is_string()) continue;
+        metadata[i.key()] = i.value();
+      }
     }
     metadata["http_status_code"] = std::to_string(http_status_code);
-    return ErrorInfo{v.value("reason", ""), v.value("domain", ""),
-                     std::move(metadata)};
+    // GCS adds some attributes that look useful
+    for (auto const* key : {"locationType", "location"}) {
+      auto k = v.find(key);
+      if (k == v.end() || !k->is_string()) continue;
+      metadata[key] = k->get<std::string>();
+    }
+    return ErrorInfo{std::move(reason), std::move(domain), std::move(metadata)};
   }
   return ErrorInfo{};
 }
@@ -83,14 +101,17 @@ std::pair<std::string, ErrorInfo> ParseJsonError(int http_status_code,
   //     }
   //   }
   // See  https://cloud.google.com/apis/design/errors#http_mapping
-  if (!json.contains("error")) return err();
-  auto const& e = json["error"];
-  if (!e.is_object()) return err();
-  if (!e.contains("message") || !e.contains("details")) return err();
-  if (!e["message"].is_string()) return err();
-
-  return std::make_pair(e.value("message", ""),
-                        MakeErrorInfo(http_status_code, e["details"]));
+  auto e = json.find("error");
+  if (e == json.end() || !e->is_object()) return err();
+  auto m = e->find("message");
+  if (m == e->end() || !m->is_string()) return err();
+  for (auto const* name : {"details", "errors"}) {
+    auto details = e->find(name);
+    if (details == e->end()) continue;
+    return std::make_pair(m->get<std::string>(),
+                          MakeErrorInfo(http_status_code, *details));
+  }
+  return err();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
