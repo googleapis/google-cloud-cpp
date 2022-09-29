@@ -265,17 +265,17 @@ Options GrpcClient::options() const { return options_; }
 
 StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
     ListBucketsRequest const& request) {
-  auto proto = GrpcBucketRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->ListBuckets(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcBucketRequestParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<BucketMetadata> GrpcClient::CreateBucket(
     CreateBucketRequest const& request) {
-  auto proto = GrpcBucketRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->CreateBucket(context, proto);
@@ -285,7 +285,7 @@ StatusOr<BucketMetadata> GrpcClient::CreateBucket(
 
 StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
-  auto proto = GrpcBucketRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->GetBucket(context, proto);
@@ -295,7 +295,7 @@ StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
 
 StatusOr<EmptyResponse> GrpcClient::DeleteBucket(
     DeleteBucketRequest const& request) {
-  auto proto = GrpcBucketRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto status = stub_->DeleteBucket(context, proto);
@@ -305,7 +305,7 @@ StatusOr<EmptyResponse> GrpcClient::DeleteBucket(
 
 StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
     UpdateBucketRequest const& request) {
-  auto proto = GrpcBucketRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->UpdateBucket(context, proto);
@@ -315,7 +315,7 @@ StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
 
 StatusOr<BucketMetadata> GrpcClient::PatchBucket(
     PatchBucketRequest const& request) {
-  auto proto = GrpcBucketRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
@@ -326,37 +326,37 @@ StatusOr<BucketMetadata> GrpcClient::PatchBucket(
 
 StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
-  auto proto = GrpcBucketRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->GetIamPolicy(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcBucketRequestParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {
-  auto proto = GrpcBucketRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->SetIamPolicy(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcBucketRequestParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
-  auto proto = GrpcBucketRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->TestIamPermissions(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcBucketRequestParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
-  auto proto = GrpcBucketRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->LockBucketRetentionPolicy(context, proto);
