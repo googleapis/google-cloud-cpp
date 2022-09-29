@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace v2 = ::google::storage::v2;
@@ -44,13 +43,13 @@ TEST(GrpcBucketRequestParser, DeleteBucketMetadataAllOptions) {
       )pb",
       &expected));
 
-  DeleteBucketRequest req("test-bucket");
+  storage::internal::DeleteBucketRequest req("test-bucket");
   req.set_multiple_options(
-      IfMetagenerationMatch(1), IfMetagenerationNotMatch(2),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"));
+      storage::IfMetagenerationMatch(1), storage::IfMetagenerationNotMatch(2),
+      storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -65,13 +64,13 @@ TEST(GrpcBucketRequestParser, GetBucketMetadataAllOptions) {
       )pb",
       &expected));
 
-  GetBucketMetadataRequest req("test-bucket");
+  storage::internal::GetBucketMetadataRequest req("test-bucket");
   req.set_multiple_options(
-      IfMetagenerationMatch(1), IfMetagenerationNotMatch(2), Projection("full"),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"));
+      storage::IfMetagenerationMatch(1), storage::IfMetagenerationNotMatch(2),
+      storage::Projection("full"), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -126,45 +125,48 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
       )pb",
       &expected));
 
-  CreateBucketRequest req(
+  storage::internal::CreateBucketRequest req(
       "test-project",
-      BucketMetadata{}
+      storage::BucketMetadata{}
           .set_name("test-bucket")
           .set_storage_class("NEARLINE")
           .set_location("us-central1")
-          .set_billing(BucketBilling(true))
-          .set_rpo(RpoAsyncTurbo())
-          .set_versioning(BucketVersioning(true))
-          .set_website(BucketWebsite{"index.html", "404.html"})
+          .set_billing(storage::BucketBilling(true))
+          .set_rpo(storage::RpoAsyncTurbo())
+          .set_versioning(storage::BucketVersioning(true))
+          .set_website(storage::BucketWebsite{"index.html", "404.html"})
           .upsert_label("k0", "v0")
           .set_default_event_based_hold(true)
-          .set_cors({CorsEntry{
+          .set_cors({storage::CorsEntry{
               /*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
               /*.method=*/{"GET", "PUT"},
               /*.origin=*/{"test-origin-0", "test-origin-1"},
               /*.response_header=*/{"test-header-0", "test-header-1"},
           }})
-          .set_acl(
-              {BucketAccessControl().set_entity("allUsers").set_role("READER")})
-          .set_default_acl({ObjectAccessControl()
+          .set_acl({storage::BucketAccessControl()
+                        .set_entity("allUsers")
+                        .set_role("READER")})
+          .set_default_acl({storage::ObjectAccessControl()
                                 .set_entity("user:test-user@example.com")
                                 .set_role("READER")})
-          .set_lifecycle(BucketLifecycle{{LifecycleRule(
-              LifecycleRule::ConditionConjunction(
-                  LifecycleRule::MaxAge(90), LifecycleRule::IsLive(false),
-                  LifecycleRule::MatchesStorageClassNearline(),
-                  LifecycleRule::MatchesPrefix("p1/"),
-                  LifecycleRule::MatchesSuffix(".txt")),
-              LifecycleRule::Delete())}})
-          .set_logging(
-              BucketLogging{/*.log_bucket=*/"test-log-bucket",
-                            /*.log_object_prefix=*/"test-log-object-prefix"}));
+          .set_lifecycle(storage::BucketLifecycle{{storage::LifecycleRule(
+              storage::LifecycleRule::ConditionConjunction(
+                  storage::LifecycleRule::MaxAge(90),
+                  storage::LifecycleRule::IsLive(false),
+                  storage::LifecycleRule::MatchesStorageClassNearline(),
+                  storage::LifecycleRule::MatchesPrefix("p1/"),
+                  storage::LifecycleRule::MatchesSuffix(".txt")),
+              storage::LifecycleRule::Delete())}})
+          .set_logging(storage::BucketLogging{
+              /*.log_bucket=*/"test-log-bucket",
+              /*.log_object_prefix=*/"test-log-object-prefix"}));
   req.set_multiple_options(
-      PredefinedAcl::ProjectPrivate(), PredefinedDefaultObjectAcl::Private(),
-      Projection("full"), UserProject("test-user-project"),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+      storage::PredefinedAcl::ProjectPrivate(),
+      storage::PredefinedDefaultObjectAcl::Private(),
+      storage::Projection("full"), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -180,14 +182,14 @@ TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
       )pb",
       &expected));
 
-  ListBucketsRequest req("test-project");
+  storage::internal::ListBucketsRequest req("test-project");
   req.set_page_token("test-token");
-  req.set_multiple_options(MaxResults(123), Prefix("test-prefix"),
-                           Projection("full"), UserProject("test-user-project"),
-                           QuotaUser("test-quota-user"),
-                           UserIp("test-user-ip"));
+  req.set_multiple_options(
+      storage::MaxResults(123), storage::Prefix("test-prefix"),
+      storage::Projection("full"), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -207,12 +209,12 @@ TEST(GrpcBucketRequestParser, ListBucketsResponse) {
       )pb",
       &input));
 
-  auto const actual = GrpcBucketRequestParser::FromProto(input);
+  auto const actual = FromProto(input);
   EXPECT_EQ(actual.next_page_token, "test-token");
   std::vector<std::string> names;
   std::transform(actual.items.begin(), actual.items.end(),
                  std::back_inserter(names),
-                 [](BucketMetadata const& b) { return b.name(); });
+                 [](storage::BucketMetadata const& b) { return b.name(); });
   EXPECT_THAT(names, ElementsAre("test-bucket-1", "test-bucket-2"));
 }
 
@@ -224,12 +226,13 @@ TEST(GrpcBucketRequestParser, LockBucketRetentionPolicyRequestAllOptions) {
       )pb",
       &expected));
 
-  LockBucketRetentionPolicyRequest req("test-bucket", /*metageneration=*/7);
-  req.set_multiple_options(UserProject("test-user-project"),
-                           QuotaUser("test-quota-user"),
-                           UserIp("test-user-ip"));
+  storage::internal::LockBucketRetentionPolicyRequest req("test-bucket",
+                                                          /*metageneration=*/7);
+  req.set_multiple_options(storage::UserProject("test-user-project"),
+                           storage::QuotaUser("test-quota-user"),
+                           storage::UserIp("test-user-ip"));
 
-  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -242,11 +245,12 @@ TEST(GrpcBucketRequestParser, GetIamPolicyRequest) {
       )pb",
       &expected));
 
-  GetBucketIamPolicyRequest req("test-bucket");
-  req.set_multiple_options(
-      RequestedPolicyVersion(3), UserProject("test-user-project"),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
-  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  storage::internal::GetBucketIamPolicyRequest req("test-bucket");
+  req.set_multiple_options(storage::RequestedPolicyVersion(3),
+                           storage::UserProject("test-user-project"),
+                           storage::QuotaUser("test-quota-user"),
+                           storage::UserIp("test-user-ip"));
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -271,25 +275,27 @@ TEST(GrpcBucketRequestParser, NativeIamPolicy) {
       )pb",
       &input));
 
-  auto const actual = GrpcBucketRequestParser::FromProto(input);
+  auto const actual = FromProto(input);
   EXPECT_EQ(7, actual.version());
   EXPECT_EQ("test-etag", actual.etag());
-  NativeIamBinding b0(
+  storage::NativeIamBinding b0(
       "role/test.only", {"test-1", "test-2"},
       {"test-expression", "test-title", "test-description", "test-location"});
-  NativeIamBinding b1("role/another.test.only", {"test-3"});
+  storage::NativeIamBinding b1("role/another.test.only", {"test-3"});
 
-  auto match_expr = [](NativeExpression const& e) {
-    return AllOf(Property(&NativeExpression::expression, e.expression()),
-                 Property(&NativeExpression::title, e.title()),
-                 Property(&NativeExpression::description, e.description()),
-                 Property(&NativeExpression::location, e.location()));
-  };
-  auto match_binding = [&](NativeIamBinding const& b) {
+  auto match_expr = [](storage::NativeExpression const& e) {
     return AllOf(
-        Property(&NativeIamBinding::role, b.role()),
-        Property(&NativeIamBinding::members, ElementsAreArray(b.members())),
-        Property(&NativeIamBinding::has_condition, b.has_condition()));
+        Property(&storage::NativeExpression::expression, e.expression()),
+        Property(&storage::NativeExpression::title, e.title()),
+        Property(&storage::NativeExpression::description, e.description()),
+        Property(&storage::NativeExpression::location, e.location()));
+  };
+  auto match_binding = [&](storage::NativeIamBinding const& b) {
+    return AllOf(
+        Property(&storage::NativeIamBinding::role, b.role()),
+        Property(&storage::NativeIamBinding::members,
+                 ElementsAreArray(b.members())),
+        Property(&storage::NativeIamBinding::has_condition, b.has_condition()));
   };
   ASSERT_THAT(actual.bindings(),
               ElementsAre(match_binding(b0), match_binding(b1)));
@@ -321,17 +327,17 @@ TEST(GrpcBucketRequestParser, SetNativeBucketIamPolicyRequest) {
       )pb",
       &expected));
 
-  NativeIamBinding b0(
+  storage::NativeIamBinding b0(
       "role/test.only", {"test-1", "test-2"},
       {"test-expression", "test-title", "test-description", "test-location"});
-  NativeIamBinding b1("role/another.test.only", {"test-3"});
-  NativeIamPolicy policy({b0, b1}, "test-etag", 3);
+  storage::NativeIamBinding b1("role/another.test.only", {"test-3"});
+  storage::NativeIamPolicy policy({b0, b1}, "test-etag", 3);
 
-  SetNativeBucketIamPolicyRequest req("test-bucket", policy);
-  req.set_multiple_options(UserProject("test-user-project"),
-                           QuotaUser("test-quota-user"),
-                           UserIp("test-user-ip"));
-  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  storage::internal::SetNativeBucketIamPolicyRequest req("test-bucket", policy);
+  req.set_multiple_options(storage::UserProject("test-user-project"),
+                           storage::QuotaUser("test-quota-user"),
+                           storage::UserIp("test-user-ip"));
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -345,12 +351,12 @@ TEST(GrpcBucketRequestParser, TestBucketIamPermissionsRequest) {
       )pb",
       &expected));
 
-  TestBucketIamPermissionsRequest req(
+  storage::internal::TestBucketIamPermissionsRequest req(
       "test-bucket", {"test-only.permission.1", "test-only.permission.2"});
-  req.set_multiple_options(UserProject("test-user-project"),
-                           QuotaUser("test-quota-user"),
-                           UserIp("test-user-ip"));
-  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  req.set_multiple_options(storage::UserProject("test-user-project"),
+                           storage::QuotaUser("test-quota-user"),
+                           storage::UserIp("test-user-ip"));
+  auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -363,7 +369,7 @@ TEST(GrpcBucketRequestParser, TestBucketIamPermissionsResponse) {
       )pb",
       &input));
 
-  auto const actual = GrpcBucketRequestParser::FromProto(input);
+  auto const actual = FromProto(input);
   EXPECT_THAT(actual.permissions,
               ElementsAre("test-only.permission.1", "test-only.permission.2"));
 }
@@ -436,75 +442,80 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
       )pb",
       &expected));
 
-  PatchBucketRequest req(
+  storage::internal::PatchBucketRequest req(
       "bucket-name",
-      BucketMetadataPatchBuilder{}
+      storage::BucketMetadataPatchBuilder{}
           .SetStorageClass("NEARLINE")
-          .SetRpo(RpoAsyncTurbo())
-          .SetAcl(
-              {BucketAccessControl{}.set_entity("allUsers").set_role("READER")})
-          .SetDefaultAcl({ObjectAccessControl{}
+          .SetRpo(storage::RpoAsyncTurbo())
+          .SetAcl({storage::BucketAccessControl{}
+                       .set_entity("allUsers")
+                       .set_role("READER")})
+          .SetDefaultAcl({storage::ObjectAccessControl{}
                               .set_entity("user:test@example.com")
                               .set_role("WRITER")})
-          .SetLifecycle(BucketLifecycle{{LifecycleRule(
-              LifecycleRule::ConditionConjunction(
-                  LifecycleRule::MaxAge(90),
-                  LifecycleRule::CreatedBefore(absl::CivilDay(2022, 2, 2)),
-                  LifecycleRule::IsLive(true),
-                  LifecycleRule::NumNewerVersions(7),
-                  LifecycleRule::MatchesStorageClassStandard(),
-                  LifecycleRule::DaysSinceCustomTime(42),
-                  LifecycleRule::DaysSinceNoncurrentTime(84),
-                  LifecycleRule::NoncurrentTimeBefore(
+          .SetLifecycle(storage::BucketLifecycle{{storage::LifecycleRule(
+              storage::LifecycleRule::ConditionConjunction(
+                  storage::LifecycleRule::MaxAge(90),
+                  storage::LifecycleRule::CreatedBefore(
+                      absl::CivilDay(2022, 2, 2)),
+                  storage::LifecycleRule::IsLive(true),
+                  storage::LifecycleRule::NumNewerVersions(7),
+                  storage::LifecycleRule::MatchesStorageClassStandard(),
+                  storage::LifecycleRule::DaysSinceCustomTime(42),
+                  storage::LifecycleRule::DaysSinceNoncurrentTime(84),
+                  storage::LifecycleRule::NoncurrentTimeBefore(
                       absl::CivilDay(2022, 2, 15)),
-                  LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
-                  LifecycleRule::MatchesSuffix(".html")),
-              LifecycleRule::Delete())}})
+                  storage::LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
+                  storage::LifecycleRule::MatchesSuffix(".html")),
+              storage::LifecycleRule::Delete())}})
           .SetCors({
-              CorsEntry{
+              storage::CorsEntry{
                   /*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
                   /*.method=*/{"GET", "PUT"},
                   /*.origin=*/{"test-origin-0", "test-origin-1"},
                   /*.response_header=*/{"test-header-0", "test-header-1"}},
-              CorsEntry{/*.max_age_seconds=*/absl::nullopt,
-                        /*.method=*/{},
-                        /*.origin=*/{"test-origin-0", "test-origin-1"},
-                        /*.response_header=*/{}},
-              CorsEntry{/*.max_age_seconds=*/absl::nullopt,
-                        /*.method=*/{"GET", "PUT"},
-                        /*.origin=*/{},
-                        /*.response_header=*/{}},
-              CorsEntry{
+              storage::CorsEntry{/*.max_age_seconds=*/absl::nullopt,
+                                 /*.method=*/{},
+                                 /*.origin=*/{"test-origin-0", "test-origin-1"},
+                                 /*.response_header=*/{}},
+              storage::CorsEntry{/*.max_age_seconds=*/absl::nullopt,
+                                 /*.method=*/{"GET", "PUT"},
+                                 /*.origin=*/{},
+                                 /*.response_header=*/{}},
+              storage::CorsEntry{
                   /*.max_age_seconds=*/absl::nullopt,
                   /*.method=*/{},
                   /*.origin=*/{},
                   /*.response_header=*/{"test-header-0", "test-header-1"}},
-              CorsEntry{/*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
-                        /*.method=*/{},
-                        /*.origin=*/{},
-                        /*.response_header=*/{}},
+              storage::CorsEntry{
+                  /*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
+                  /*.method=*/{},
+                  /*.origin=*/{},
+                  /*.response_header=*/{}},
           })
           .SetDefaultEventBasedHold(true)
           .SetLabel("key0", "value0")
-          .SetWebsite(BucketWebsite{"index.html", "404.html"})
-          .SetVersioning(BucketVersioning{true})
-          .SetLogging(BucketLogging{"test-log-bucket", "test-log-prefix"})
-          .SetEncryption(
-              BucketEncryption{/*.default_kms_key=*/"test-only-kms-key"})
-          .SetBilling(BucketBilling{/*.requester_pays=*/true})
+          .SetWebsite(storage::BucketWebsite{"index.html", "404.html"})
+          .SetVersioning(storage::BucketVersioning{true})
+          .SetLogging(
+              storage::BucketLogging{"test-log-bucket", "test-log-prefix"})
+          .SetEncryption(storage::BucketEncryption{
+              /*.default_kms_key=*/"test-only-kms-key"})
+          .SetBilling(storage::BucketBilling{/*.requester_pays=*/true})
           .SetRetentionPolicy(std::chrono::seconds(123000))
-          .SetIamConfiguration(BucketIamConfiguration{
-              /*.uniform_bucket_level_access=*/UniformBucketLevelAccess{true,
-                                                                        {}},
-              /*.public_access_prevention=*/PublicAccessPreventionEnforced()}));
+          .SetIamConfiguration(storage::BucketIamConfiguration{
+              /*.uniform_bucket_level_access=*/storage::
+                  UniformBucketLevelAccess{true, {}},
+              /*.public_access_prevention=*/storage::
+                  PublicAccessPreventionEnforced()}));
   req.set_multiple_options(
-      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4),
-      PredefinedAcl("projectPrivate"),
-      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"));
+      storage::IfMetagenerationMatch(3), storage::IfMetagenerationNotMatch(4),
+      storage::PredefinedAcl("projectPrivate"),
+      storage::PredefinedDefaultObjectAcl("projectPrivate"),
+      storage::Projection("full"), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto actual = GrpcBucketRequestParser::ToProto(req);
+  auto actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
   // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
@@ -529,25 +540,26 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllResets) {
       )pb",
       &expected));
 
-  PatchBucketRequest req("bucket-name", BucketMetadataPatchBuilder{}
-                                            .SetStorageClass("NEARLINE")
-                                            .ResetAcl()
-                                            .ResetBilling()
-                                            .ResetCors()
-                                            .ResetDefaultEventBasedHold()
-                                            .ResetDefaultAcl()
-                                            .ResetIamConfiguration()
-                                            .ResetEncryption()
-                                            .ResetLabels()
-                                            .ResetLifecycle()
-                                            .ResetLogging()
-                                            .ResetRetentionPolicy()
-                                            .ResetRpo()
-                                            .ResetStorageClass()
-                                            .ResetVersioning()
-                                            .ResetWebsite());
+  storage::internal::PatchBucketRequest req(
+      "bucket-name", storage::BucketMetadataPatchBuilder{}
+                         .SetStorageClass("NEARLINE")
+                         .ResetAcl()
+                         .ResetBilling()
+                         .ResetCors()
+                         .ResetDefaultEventBasedHold()
+                         .ResetDefaultAcl()
+                         .ResetIamConfiguration()
+                         .ResetEncryption()
+                         .ResetLabels()
+                         .ResetLifecycle()
+                         .ResetLogging()
+                         .ResetRetentionPolicy()
+                         .ResetRpo()
+                         .ResetStorageClass()
+                         .ResetVersioning()
+                         .ResetWebsite());
 
-  auto actual = GrpcBucketRequestParser::ToProto(req);
+  auto actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
   // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
@@ -628,73 +640,78 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
       )pb",
       &expected));
 
-  UpdateBucketRequest req(
-      BucketMetadata{}
+  storage::internal::UpdateBucketRequest req(
+      storage::BucketMetadata{}
           .set_name("bucket-name")
           .set_storage_class("NEARLINE")
-          .set_rpo(RpoAsyncTurbo())
-          .set_acl(
-              {BucketAccessControl{}.set_entity("allUsers").set_role("READER")})
-          .set_default_acl({ObjectAccessControl{}
+          .set_rpo(storage::RpoAsyncTurbo())
+          .set_acl({storage::BucketAccessControl{}
+                        .set_entity("allUsers")
+                        .set_role("READER")})
+          .set_default_acl({storage::ObjectAccessControl{}
                                 .set_entity("user:test@example.com")
                                 .set_role("WRITER")})
-          .set_lifecycle(BucketLifecycle{{LifecycleRule(
-              LifecycleRule::ConditionConjunction(
-                  LifecycleRule::MaxAge(90),
-                  LifecycleRule::CreatedBefore(absl::CivilDay(2022, 2, 2)),
-                  LifecycleRule::IsLive(true),
-                  LifecycleRule::NumNewerVersions(7),
-                  LifecycleRule::MatchesStorageClassStandard(),
-                  LifecycleRule::DaysSinceCustomTime(42),
-                  LifecycleRule::DaysSinceNoncurrentTime(84),
-                  LifecycleRule::NoncurrentTimeBefore(
+          .set_lifecycle(storage::BucketLifecycle{{storage::LifecycleRule(
+              storage::LifecycleRule::ConditionConjunction(
+                  storage::LifecycleRule::MaxAge(90),
+                  storage::LifecycleRule::CreatedBefore(
+                      absl::CivilDay(2022, 2, 2)),
+                  storage::LifecycleRule::IsLive(true),
+                  storage::LifecycleRule::NumNewerVersions(7),
+                  storage::LifecycleRule::MatchesStorageClassStandard(),
+                  storage::LifecycleRule::DaysSinceCustomTime(42),
+                  storage::LifecycleRule::DaysSinceNoncurrentTime(84),
+                  storage::LifecycleRule::NoncurrentTimeBefore(
                       absl::CivilDay(2022, 2, 15))),
-              LifecycleRule::Delete())}})
+              storage::LifecycleRule::Delete())}})
           .set_cors({
-              CorsEntry{
+              storage::CorsEntry{
                   /*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
                   /*.method=*/{"GET", "PUT"},
                   /*.origin=*/{"test-origin-0", "test-origin-1"},
                   /*.response_header=*/{"test-header-0", "test-header-1"}},
-              CorsEntry{/*.max_age_seconds=*/absl::nullopt,
-                        /*.method=*/{},
-                        /*.origin=*/{"test-origin-0", "test-origin-1"},
-                        /*.response_header=*/{}},
-              CorsEntry{/*.max_age_seconds=*/absl::nullopt,
-                        /*.method=*/{"GET", "PUT"},
-                        /*.origin=*/{},
-                        /*.response_header=*/{}},
-              CorsEntry{
+              storage::CorsEntry{/*.max_age_seconds=*/absl::nullopt,
+                                 /*.method=*/{},
+                                 /*.origin=*/{"test-origin-0", "test-origin-1"},
+                                 /*.response_header=*/{}},
+              storage::CorsEntry{/*.max_age_seconds=*/absl::nullopt,
+                                 /*.method=*/{"GET", "PUT"},
+                                 /*.origin=*/{},
+                                 /*.response_header=*/{}},
+              storage::CorsEntry{
                   /*.max_age_seconds=*/absl::nullopt,
                   /*.method=*/{},
                   /*.origin=*/{},
                   /*.response_header=*/{"test-header-0", "test-header-1"}},
-              CorsEntry{/*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
-                        /*.method=*/{},
-                        /*.origin=*/{},
-                        /*.response_header=*/{}},
+              storage::CorsEntry{
+                  /*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
+                  /*.method=*/{},
+                  /*.origin=*/{},
+                  /*.response_header=*/{}},
           })
           .set_default_event_based_hold(true)
           .upsert_label("key0", "value0")
-          .set_website(BucketWebsite{"index.html", "404.html"})
-          .set_versioning(BucketVersioning{true})
-          .set_logging(BucketLogging{"test-log-bucket", "test-log-prefix"})
-          .set_encryption(
-              BucketEncryption{/*.default_kms_key=*/"test-only-kms-key"})
-          .set_billing(BucketBilling{/*.requester_pays=*/true})
+          .set_website(storage::BucketWebsite{"index.html", "404.html"})
+          .set_versioning(storage::BucketVersioning{true})
+          .set_logging(
+              storage::BucketLogging{"test-log-bucket", "test-log-prefix"})
+          .set_encryption(storage::BucketEncryption{
+              /*.default_kms_key=*/"test-only-kms-key"})
+          .set_billing(storage::BucketBilling{/*.requester_pays=*/true})
           .set_retention_policy(std::chrono::seconds(123000))
-          .set_iam_configuration(BucketIamConfiguration{
-              /*.uniform_bucket_level_access=*/UniformBucketLevelAccess{true,
-                                                                        {}},
-              /*.public_access_prevention=*/PublicAccessPreventionEnforced()}));
+          .set_iam_configuration(storage::BucketIamConfiguration{
+              /*.uniform_bucket_level_access=*/storage::
+                  UniformBucketLevelAccess{true, {}},
+              /*.public_access_prevention=*/storage::
+                  PublicAccessPreventionEnforced()}));
   req.set_multiple_options(
-      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4),
-      PredefinedAcl("projectPrivate"),
-      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"));
+      storage::IfMetagenerationMatch(3), storage::IfMetagenerationNotMatch(4),
+      storage::PredefinedAcl("projectPrivate"),
+      storage::PredefinedDefaultObjectAcl("projectPrivate"),
+      storage::Projection("full"), storage::UserProject("test-user-project"),
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
-  auto actual = GrpcBucketRequestParser::ToProto(req);
+  auto actual = ToProto(req);
   // First check the paths, we do not care about their order, so checking them
   // with IsProtoEqual does not work.
   EXPECT_THAT(actual.update_mask().paths(),
@@ -710,8 +727,7 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

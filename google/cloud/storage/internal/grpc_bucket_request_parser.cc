@@ -26,9 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::storage::v2::Bucket;
@@ -78,7 +77,7 @@ Status PatchLifecycle(Bucket& b, nlohmann::json const& patch) {
   // By construction, the PatchBuilder always includes the "rule"
   // subobject.
   for (auto const& r : patch["rule"]) {
-    auto lf = LifecycleRuleParser::FromJson(r);
+    auto lf = storage::internal::LifecycleRuleParser::FromJson(r);
     // We do not care if `b` may have been modified. It will be discarded if
     // this function (or similar functions) return a non-Okay Status.
     if (!lf) return std::move(lf).status();
@@ -147,7 +146,7 @@ Status PatchLogging(Bucket& b, nlohmann::json const& l) {
     b.clear_logging();
   } else {
     b.mutable_logging()->set_log_bucket(
-        GrpcBucketIdToName(l.value("logBucket", "")));
+        storage::internal::GrpcBucketIdToName(l.value("logBucket", "")));
     b.mutable_logging()->set_log_object_prefix(l.value("logObjectPrefix", ""));
   }
   return Status{};
@@ -200,7 +199,7 @@ Status PatchIamConfig(Bucket& b, nlohmann::json const& i) {
   return Status{};
 }
 
-void UpdateAcl(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateAcl(Bucket& bucket, storage::BucketMetadata const& metadata) {
   for (auto const& a : metadata.acl()) {
     auto& acl = *bucket.add_acl();
     acl.set_entity(a.entity());
@@ -208,7 +207,8 @@ void UpdateAcl(Bucket& bucket, BucketMetadata const& metadata) {
   }
 }
 
-void UpdateDefaultObjectAcl(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateDefaultObjectAcl(Bucket& bucket,
+                            storage::BucketMetadata const& metadata) {
   for (auto const& a : metadata.default_acl()) {
     auto& acl = *bucket.add_default_object_acl();
     acl.set_entity(a.entity());
@@ -216,7 +216,7 @@ void UpdateDefaultObjectAcl(Bucket& bucket, BucketMetadata const& metadata) {
   }
 }
 
-void UpdateLifecycle(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateLifecycle(Bucket& bucket, storage::BucketMetadata const& metadata) {
   if (!metadata.has_lifecycle()) return;
   auto& lifecycle = *bucket.mutable_lifecycle();
   // By construction, the PatchBuilder always includes the "rule"
@@ -226,7 +226,7 @@ void UpdateLifecycle(Bucket& bucket, BucketMetadata const& metadata) {
   }
 }
 
-void UpdateCors(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateCors(Bucket& bucket, storage::BucketMetadata const& metadata) {
   for (auto const& c : metadata.cors()) {
     auto& cors = *bucket.add_cors();
     cors.set_max_age_seconds(
@@ -243,50 +243,51 @@ void UpdateCors(Bucket& bucket, BucketMetadata const& metadata) {
   }
 }
 
-void UpdateLabels(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateLabels(Bucket& bucket, storage::BucketMetadata const& metadata) {
   for (auto const& kv : metadata.labels()) {
     (*bucket.mutable_labels())[kv.first] = kv.second;
   }
 }
 
-void UpdateWebsite(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateWebsite(Bucket& bucket, storage::BucketMetadata const& metadata) {
   if (!metadata.has_website()) return;
   auto const& w = metadata.website();
   bucket.mutable_website()->set_main_page_suffix(w.main_page_suffix);
   bucket.mutable_website()->set_not_found_page(w.not_found_page);
 }
 
-void UpdateVersioning(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateVersioning(Bucket& bucket, storage::BucketMetadata const& metadata) {
   if (!metadata.has_versioning()) return;
   bucket.mutable_versioning()->set_enabled(metadata.versioning()->enabled);
 }
 
-void UpdateLogging(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateLogging(Bucket& bucket, storage::BucketMetadata const& metadata) {
   if (!metadata.has_logging()) return;
   bucket.mutable_logging()->set_log_bucket(metadata.logging().log_bucket);
   bucket.mutable_logging()->set_log_object_prefix(
       metadata.logging().log_object_prefix);
 }
 
-void UpdateEncryption(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateEncryption(Bucket& bucket, storage::BucketMetadata const& metadata) {
   if (!metadata.has_encryption()) return;
   bucket.mutable_encryption()->set_default_kms_key(
       metadata.encryption().default_kms_key_name);
 }
 
-void UpdateBilling(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateBilling(Bucket& bucket, storage::BucketMetadata const& metadata) {
   if (!metadata.has_billing()) return;
   bucket.mutable_billing()->set_requester_pays(
       metadata.billing().requester_pays);
 }
 
-void UpdateRetentionPolicy(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateRetentionPolicy(Bucket& bucket,
+                           storage::BucketMetadata const& metadata) {
   if (!metadata.has_retention_policy()) return;
   bucket.mutable_retention_policy()->set_retention_period(
       metadata.retention_policy().retention_period.count());
 }
 
-void UpdateIamConfig(Bucket& bucket, BucketMetadata const& metadata) {
+void UpdateIamConfig(Bucket& bucket, storage::BucketMetadata const& metadata) {
   if (!metadata.has_iam_configuration()) return;
   auto& iam_config = *bucket.mutable_iam_config();
   auto const& i = metadata.iam_configuration();
@@ -302,49 +303,50 @@ void UpdateIamConfig(Bucket& bucket, BucketMetadata const& metadata) {
 
 }  // namespace
 
-google::storage::v2::DeleteBucketRequest GrpcBucketRequestParser::ToProto(
-    DeleteBucketRequest const& request) {
+google::storage::v2::DeleteBucketRequest ToProto(
+    storage::internal::DeleteBucketRequest const& request) {
   google::storage::v2::DeleteBucketRequest result;
-  result.set_name(GrpcBucketIdToName(request.bucket_name()));
-  if (request.HasOption<IfMetagenerationMatch>()) {
+  result.set_name(storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  if (request.HasOption<storage::IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
-        request.GetOption<IfMetagenerationMatch>().value());
+        request.GetOption<storage::IfMetagenerationMatch>().value());
   }
-  if (request.HasOption<IfMetagenerationNotMatch>()) {
+  if (request.HasOption<storage::IfMetagenerationNotMatch>()) {
     result.set_if_metageneration_not_match(
-        request.GetOption<IfMetagenerationNotMatch>().value());
+        request.GetOption<storage::IfMetagenerationNotMatch>().value());
   }
   return result;
 }
 
-google::storage::v2::GetBucketRequest GrpcBucketRequestParser::ToProto(
-    GetBucketMetadataRequest const& request) {
+google::storage::v2::GetBucketRequest ToProto(
+    storage::internal::GetBucketMetadataRequest const& request) {
   google::storage::v2::GetBucketRequest result;
-  result.set_name(GrpcBucketIdToName(request.bucket_name()));
-  if (request.HasOption<IfMetagenerationMatch>()) {
+  result.set_name(storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  if (request.HasOption<storage::IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
-        request.GetOption<IfMetagenerationMatch>().value());
+        request.GetOption<storage::IfMetagenerationMatch>().value());
   }
-  if (request.HasOption<IfMetagenerationNotMatch>()) {
+  if (request.HasOption<storage::IfMetagenerationNotMatch>()) {
     result.set_if_metageneration_not_match(
-        request.GetOption<IfMetagenerationNotMatch>().value());
+        request.GetOption<storage::IfMetagenerationNotMatch>().value());
   }
-  auto projection = request.GetOption<Projection>().value_or("");
+  auto projection = request.GetOption<storage::Projection>().value_or("");
   if (projection == "full") result.mutable_read_mask()->add_paths("*");
   return result;
 }
 
-google::storage::v2::CreateBucketRequest GrpcBucketRequestParser::ToProto(
-    CreateBucketRequest const& request) {
+google::storage::v2::CreateBucketRequest ToProto(
+    storage::internal::CreateBucketRequest const& request) {
   google::storage::v2::CreateBucketRequest result;
   result.set_parent("projects/" + request.project_id());
   result.set_bucket_id(request.metadata().name());
-  if (request.HasOption<PredefinedAcl>()) {
-    result.set_predefined_acl(request.GetOption<PredefinedAcl>().value());
+  if (request.HasOption<storage::PredefinedAcl>()) {
+    result.set_predefined_acl(
+        request.GetOption<storage::PredefinedAcl>().value());
   }
-  if (request.HasOption<PredefinedDefaultObjectAcl>()) {
+  if (request.HasOption<storage::PredefinedDefaultObjectAcl>()) {
     result.set_predefined_default_object_acl(
-        request.GetOption<PredefinedDefaultObjectAcl>().value());
+        request.GetOption<storage::PredefinedDefaultObjectAcl>().value());
   }
   *result.mutable_bucket() = storage_internal::ToProto(request.metadata());
   // Ignore fields commonly set by ToProto().
@@ -356,11 +358,11 @@ google::storage::v2::CreateBucketRequest GrpcBucketRequestParser::ToProto(
   return result;
 }
 
-google::storage::v2::ListBucketsRequest GrpcBucketRequestParser::ToProto(
-    ListBucketsRequest const& request) {
+google::storage::v2::ListBucketsRequest ToProto(
+    storage::internal::ListBucketsRequest const& request) {
   google::storage::v2::ListBucketsRequest result;
   result.set_parent("projects/" + request.project_id());
-  auto const page_size = request.GetOption<MaxResults>().value_or(0);
+  auto const page_size = request.GetOption<storage::MaxResults>().value_or(0);
   // Clamp out of range values. The service will clamp to its own range
   // ([0, 1000] as of this writing) anyway.
   if (page_size < 0) {
@@ -371,16 +373,16 @@ google::storage::v2::ListBucketsRequest GrpcBucketRequestParser::ToProto(
     result.set_page_size(std::numeric_limits<std::int32_t>::max());
   }
   result.set_page_token(request.page_token());
-  result.set_prefix(request.GetOption<Prefix>().value_or(""));
-  if (request.GetOption<Projection>().value_or("") == "full") {
+  result.set_prefix(request.GetOption<storage::Prefix>().value_or(""));
+  if (request.GetOption<storage::Projection>().value_or("") == "full") {
     result.mutable_read_mask()->add_paths("*");
   }
   return result;
 }
 
-ListBucketsResponse GrpcBucketRequestParser::FromProto(
+storage::internal::ListBucketsResponse FromProto(
     google::storage::v2::ListBucketsResponse const& response) {
-  ListBucketsResponse result;
+  storage::internal::ListBucketsResponse result;
   result.next_page_token = response.next_page_token();
   result.items.reserve(response.buckets_size());
   std::transform(response.buckets().begin(), response.buckets().end(),
@@ -391,53 +393,53 @@ ListBucketsResponse GrpcBucketRequestParser::FromProto(
   return result;
 }
 
-google::storage::v2::LockBucketRetentionPolicyRequest
-GrpcBucketRequestParser::ToProto(
-    LockBucketRetentionPolicyRequest const& request) {
+google::storage::v2::LockBucketRetentionPolicyRequest ToProto(
+    storage::internal::LockBucketRetentionPolicyRequest const& request) {
   google::storage::v2::LockBucketRetentionPolicyRequest result;
-  result.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  result.set_bucket(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
   result.set_if_metageneration_match(request.metageneration());
   return result;
 }
 
-google::iam::v1::GetIamPolicyRequest GrpcBucketRequestParser::ToProto(
-    GetBucketIamPolicyRequest const& request) {
+google::iam::v1::GetIamPolicyRequest ToProto(
+    storage::internal::GetBucketIamPolicyRequest const& request) {
   google::iam::v1::GetIamPolicyRequest result;
-  result.set_resource(GrpcBucketIdToName(request.bucket_name()));
-  if (request.HasOption<RequestedPolicyVersion>()) {
+  result.set_resource(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  if (request.HasOption<storage::RequestedPolicyVersion>()) {
     result.mutable_options()->set_requested_policy_version(
         static_cast<std::int32_t>(
-            request.GetOption<RequestedPolicyVersion>().value()));
+            request.GetOption<storage::RequestedPolicyVersion>().value()));
   }
   return result;
 }
 
-NativeIamBinding GrpcBucketRequestParser::FromProto(
-    google::iam::v1::Binding const& b) {
+storage::NativeIamBinding FromProto(google::iam::v1::Binding const& b) {
   std::vector<std::string> members{b.members().begin(), b.members().end()};
   if (!b.has_condition()) return {b.role(), std::move(members)};
-  NativeExpression expr(b.condition().expression(), b.condition().title(),
-                        b.condition().description(), b.condition().location());
+  storage::NativeExpression expr(
+      b.condition().expression(), b.condition().title(),
+      b.condition().description(), b.condition().location());
   return {b.role(), std::move(members), std::move(expr)};
 }
 
-NativeIamPolicy GrpcBucketRequestParser::FromProto(
-    google::iam::v1::Policy const& response) {
-  std::vector<NativeIamBinding> bindings;
+storage::NativeIamPolicy FromProto(google::iam::v1::Policy const& response) {
+  std::vector<storage::NativeIamBinding> bindings;
   std::transform(
       response.bindings().begin(), response.bindings().end(),
       std::back_inserter(bindings),
       [](google::iam::v1::Binding const& b) { return FromProto(b); });
 
-  NativeIamPolicy result(std::move(bindings), response.etag(),
-                         response.version());
-  return result;
+  return storage::NativeIamPolicy(std::move(bindings), response.etag(),
+                                  response.version());
 }
 
-google::iam::v1::SetIamPolicyRequest GrpcBucketRequestParser::ToProto(
-    SetNativeBucketIamPolicyRequest const& request) {
+google::iam::v1::SetIamPolicyRequest ToProto(
+    storage::internal::SetNativeBucketIamPolicyRequest const& request) {
   google::iam::v1::SetIamPolicyRequest result;
-  result.set_resource(GrpcBucketIdToName(request.bucket_name()));
+  result.set_resource(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
   auto& policy = *result.mutable_policy();
   policy.set_version(request.policy().version());
   policy.set_etag(request.policy().etag());
@@ -457,35 +459,37 @@ google::iam::v1::SetIamPolicyRequest GrpcBucketRequestParser::ToProto(
   return result;
 }
 
-google::iam::v1::TestIamPermissionsRequest GrpcBucketRequestParser::ToProto(
-    TestBucketIamPermissionsRequest const& request) {
+google::iam::v1::TestIamPermissionsRequest ToProto(
+    storage::internal::TestBucketIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsRequest result;
-  result.set_resource(GrpcBucketIdToName(request.bucket_name()));
+  result.set_resource(
+      storage::internal::GrpcBucketIdToName(request.bucket_name()));
   for (auto const& p : request.permissions()) {
     result.add_permissions(p);
   }
   return result;
 }
 
-TestBucketIamPermissionsResponse GrpcBucketRequestParser::FromProto(
+storage::internal::TestBucketIamPermissionsResponse FromProto(
     google::iam::v1::TestIamPermissionsResponse const& response) {
-  TestBucketIamPermissionsResponse result;
+  storage::internal::TestBucketIamPermissionsResponse result;
   for (auto const& p : response.permissions()) {
     result.permissions.push_back(p);
   }
   return result;
 }
 
-StatusOr<google::storage::v2::UpdateBucketRequest>
-GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
+StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
+    storage::internal::PatchBucketRequest const& request) {
   google::storage::v2::UpdateBucketRequest result;
 
   auto& bucket = *result.mutable_bucket();
-  bucket.set_name(GrpcBucketIdToName(request.bucket()));
+  bucket.set_name(storage::internal::GrpcBucketIdToName(request.bucket()));
 
   // The `labels` field is too special, handle separately.
   auto const& subpatch =
-      internal::PatchBuilderDetails::GetLabelsSubPatch(request.patch());
+      storage::internal::PatchBuilderDetails::GetLabelsSubPatch(
+          request.patch());
   if (subpatch.is_null()) {
     bucket.clear_labels();
     result.mutable_update_mask()->add_paths("labels");
@@ -525,7 +529,8 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
       {"iamConfiguration", "iam_config", PatchIamConfig},
   };
 
-  auto const& patch = internal::PatchBuilderDetails::GetPatch(request.patch());
+  auto const& patch =
+      storage::internal::PatchBuilderDetails::GetPatch(request.patch());
   for (auto const& field : fields) {
     if (!patch.contains(field.name)) continue;
     auto status = field.action(bucket, patch[field.name]);
@@ -534,32 +539,33 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
         field.rename.empty() ? field.name : field.rename);
   }
 
-  if (request.HasOption<IfMetagenerationMatch>()) {
+  if (request.HasOption<storage::IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
-        request.GetOption<IfMetagenerationMatch>().value());
+        request.GetOption<storage::IfMetagenerationMatch>().value());
   }
-  if (request.HasOption<IfMetagenerationNotMatch>()) {
+  if (request.HasOption<storage::IfMetagenerationNotMatch>()) {
     result.set_if_metageneration_not_match(
-        request.GetOption<IfMetagenerationNotMatch>().value());
+        request.GetOption<storage::IfMetagenerationNotMatch>().value());
   }
-  if (request.HasOption<PredefinedAcl>()) {
-    result.set_predefined_acl(request.GetOption<PredefinedAcl>().value());
+  if (request.HasOption<storage::PredefinedAcl>()) {
+    result.set_predefined_acl(
+        request.GetOption<storage::PredefinedAcl>().value());
   }
-  if (request.HasOption<PredefinedDefaultObjectAcl>()) {
+  if (request.HasOption<storage::PredefinedDefaultObjectAcl>()) {
     result.set_predefined_default_object_acl(
-        request.GetOption<PredefinedDefaultObjectAcl>().value());
+        request.GetOption<storage::PredefinedDefaultObjectAcl>().value());
   }
 
   return result;
 }
 
-google::storage::v2::UpdateBucketRequest GrpcBucketRequestParser::ToProto(
-    UpdateBucketRequest const& request) {
+google::storage::v2::UpdateBucketRequest ToProto(
+    storage::internal::UpdateBucketRequest const& request) {
   google::storage::v2::UpdateBucketRequest result;
 
   auto& bucket = *result.mutable_bucket();
   auto const& metadata = request.metadata();
-  bucket.set_name(GrpcBucketIdToName(metadata.name()));
+  bucket.set_name(storage::internal::GrpcBucketIdToName(metadata.name()));
 
   // We set the update_mask for all fields, even if not present in `metadata` as
   // "not present" implies the field should be cleared.
@@ -595,27 +601,27 @@ google::storage::v2::UpdateBucketRequest GrpcBucketRequestParser::ToProto(
   result.mutable_update_mask()->add_paths("iam_config");
   UpdateIamConfig(bucket, metadata);
 
-  if (request.HasOption<IfMetagenerationMatch>()) {
+  if (request.HasOption<storage::IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
-        request.GetOption<IfMetagenerationMatch>().value());
+        request.GetOption<storage::IfMetagenerationMatch>().value());
   }
-  if (request.HasOption<IfMetagenerationNotMatch>()) {
+  if (request.HasOption<storage::IfMetagenerationNotMatch>()) {
     result.set_if_metageneration_not_match(
-        request.GetOption<IfMetagenerationNotMatch>().value());
+        request.GetOption<storage::IfMetagenerationNotMatch>().value());
   }
-  if (request.HasOption<PredefinedAcl>()) {
-    result.set_predefined_acl(request.GetOption<PredefinedAcl>().value());
+  if (request.HasOption<storage::PredefinedAcl>()) {
+    result.set_predefined_acl(
+        request.GetOption<storage::PredefinedAcl>().value());
   }
-  if (request.HasOption<PredefinedDefaultObjectAcl>()) {
+  if (request.HasOption<storage::PredefinedDefaultObjectAcl>()) {
     result.set_predefined_default_object_acl(
-        request.GetOption<PredefinedDefaultObjectAcl>().value());
+        request.GetOption<storage::PredefinedDefaultObjectAcl>().value());
   }
 
   return result;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

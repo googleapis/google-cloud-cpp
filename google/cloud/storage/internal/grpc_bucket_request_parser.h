@@ -21,51 +21,47 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 /// Convert JSON requests to gRPC requests and gRPC responses to JSON responses
-struct GrpcBucketRequestParser {
-  static google::storage::v2::DeleteBucketRequest ToProto(
-      DeleteBucketRequest const& request);
+google::storage::v2::DeleteBucketRequest ToProto(
+    storage::internal::DeleteBucketRequest const& request);
 
-  static google::storage::v2::GetBucketRequest ToProto(
-      GetBucketMetadataRequest const& request);
+google::storage::v2::GetBucketRequest ToProto(
+    storage::internal::GetBucketMetadataRequest const& request);
 
-  static google::storage::v2::CreateBucketRequest ToProto(
-      CreateBucketRequest const& request);
+google::storage::v2::CreateBucketRequest ToProto(
+    storage::internal::CreateBucketRequest const& request);
 
-  static google::storage::v2::ListBucketsRequest ToProto(
-      ListBucketsRequest const& request);
-  static ListBucketsResponse FromProto(
-      google::storage::v2::ListBucketsResponse const& response);
+google::storage::v2::ListBucketsRequest ToProto(
+    storage::internal::ListBucketsRequest const& request);
+storage::internal::ListBucketsResponse FromProto(
+    google::storage::v2::ListBucketsResponse const& response);
 
-  static google::storage::v2::LockBucketRetentionPolicyRequest ToProto(
-      LockBucketRetentionPolicyRequest const& request);
+google::storage::v2::LockBucketRetentionPolicyRequest ToProto(
+    storage::internal::LockBucketRetentionPolicyRequest const& request);
 
-  static google::iam::v1::GetIamPolicyRequest ToProto(
-      GetBucketIamPolicyRequest const& request);
-  static NativeIamBinding FromProto(google::iam::v1::Binding const& b);
-  static NativeIamPolicy FromProto(google::iam::v1::Policy const& response);
+google::iam::v1::GetIamPolicyRequest ToProto(
+    storage::internal::GetBucketIamPolicyRequest const& request);
+storage::NativeIamBinding FromProto(google::iam::v1::Binding const& b);
+storage::NativeIamPolicy FromProto(google::iam::v1::Policy const& response);
 
-  static google::iam::v1::SetIamPolicyRequest ToProto(
-      SetNativeBucketIamPolicyRequest const& request);
+google::iam::v1::SetIamPolicyRequest ToProto(
+    storage::internal::SetNativeBucketIamPolicyRequest const& request);
 
-  static google::iam::v1::TestIamPermissionsRequest ToProto(
-      TestBucketIamPermissionsRequest const& request);
-  static TestBucketIamPermissionsResponse FromProto(
-      google::iam::v1::TestIamPermissionsResponse const& response);
+google::iam::v1::TestIamPermissionsRequest ToProto(
+    storage::internal::TestBucketIamPermissionsRequest const& request);
+storage::internal::TestBucketIamPermissionsResponse FromProto(
+    google::iam::v1::TestIamPermissionsResponse const& response);
 
-  static StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
-      PatchBucketRequest const& request);
-  static google::storage::v2::UpdateBucketRequest ToProto(
-      UpdateBucketRequest const& request);
-};
+StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
+    storage::internal::PatchBucketRequest const& request);
+google::storage::v2::UpdateBucketRequest ToProto(
+    storage::internal::UpdateBucketRequest const& request);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
