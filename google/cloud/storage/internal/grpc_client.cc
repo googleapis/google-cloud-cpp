@@ -990,12 +990,12 @@ StatusOr<ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
 
 StatusOr<ServiceAccount> GrpcClient::GetServiceAccount(
     GetProjectServiceAccountRequest const& request) {
-  auto proto = GrpcServiceAccountParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->GetServiceAccount(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcServiceAccountParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<ListHmacKeysResponse> GrpcClient::ListHmacKeys(

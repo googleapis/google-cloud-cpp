@@ -16,27 +16,25 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-google::storage::v2::GetServiceAccountRequest GrpcServiceAccountParser::ToProto(
-    GetProjectServiceAccountRequest const& request) {
+google::storage::v2::GetServiceAccountRequest ToProto(
+    storage::internal::GetProjectServiceAccountRequest const& request) {
   google::storage::v2::GetServiceAccountRequest proto;
   proto.set_project("projects/" + request.project_id());
   return proto;
 }
 
-ServiceAccount GrpcServiceAccountParser::FromProto(
+storage::ServiceAccount FromProto(
     google::storage::v2::ServiceAccount const& meta) {
-  ServiceAccount result;
+  storage::ServiceAccount result;
   result.set_email_address(meta.email_address());
   result.set_kind("storage#serviceAccount");
   return result;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
