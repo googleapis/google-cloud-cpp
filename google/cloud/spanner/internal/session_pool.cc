@@ -154,9 +154,9 @@ void SessionPool::RefreshExpiringSessions() {
   }
   std::weak_ptr<SessionPool> pool = shared_from_this();
   for (auto& refresh : sessions_to_refresh) {
-    AsyncRefreshSession(cq_, std::move(refresh.first), refresh.second)
-        .then([pool, session_name = std::move(refresh.second)](
-                  future<StatusOr<google::spanner::v1::ResultSet>> result) {
+    auto handler =
+        [pool, session_name = refresh.second](
+            future<StatusOr<google::spanner::v1::ResultSet>> result) {
           auto response = result.get();
           if (!response && IsSessionNotFound(response.status())) {
             if (auto shared_pool = pool.lock()) {
@@ -168,7 +168,10 @@ void SessionPool::RefreshExpiringSessions() {
               shared_pool->Erase(session_name);
             }
           }
-        });
+        };
+    AsyncRefreshSession(cq_, std::move(refresh.first),
+                        std::move(refresh.second))
+        .then(std::move(handler));
   }
 }
 
