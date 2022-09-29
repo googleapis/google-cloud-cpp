@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace storage_proto = ::google::storage::v2;
@@ -33,13 +32,14 @@ TEST(GrpcServiceAccountParser, FromProtoServiceAccount) {
   storage_proto::ServiceAccount response;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(email_address: "test-only@example.com")pb", &response));
-  auto const expected = ServiceAccountParser::FromString(R"""({
+  auto const expected =
+      storage::internal::ServiceAccountParser::FromString(R"""({
     "email_address": "test-only@example.com",
     "kind": "storage#serviceAccount"
   })""");
   ASSERT_STATUS_OK(expected);
 
-  auto const actual = GrpcServiceAccountParser::FromProto(response);
+  auto const actual = FromProto(response);
   EXPECT_EQ(*expected, actual);
 }
 
@@ -47,15 +47,15 @@ TEST(GrpcServiceAccountParser, ToProtoGetServiceAccount) {
   storage_proto::GetServiceAccountRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(project: "projects/test-only-project-id")pb", &expected));
-  GetProjectServiceAccountRequest request("test-only-project-id");
-  request.set_multiple_options(UserProject("test-only-user-project"));
-  auto const actual = GrpcServiceAccountParser::ToProto(request);
+  storage::internal::GetProjectServiceAccountRequest request(
+      "test-only-project-id");
+  request.set_multiple_options(storage::UserProject("test-only-user-project"));
+  auto const actual = ToProto(request);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
