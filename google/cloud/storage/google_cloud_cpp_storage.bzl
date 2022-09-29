@@ -228,4 +228,5 @@ google_cloud_cpp_storage_srcs = [
     "version.cc",
     "well_known_headers.cc",
     "well_known_parameters.cc",
+    "internal/generate_message_boundary.cc",
 ]

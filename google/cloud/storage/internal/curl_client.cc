@@ -1318,8 +1318,9 @@ std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
   };
   constexpr int kCandidateInitialSize = 16;
   constexpr int kCandidateGrowthSize = 4;
-  return GenerateMessageBoundary(text_to_avoid, std::move(generate_candidate),
-                                 kCandidateInitialSize, kCandidateGrowthSize);
+  return GenerateMessageBoundaryImpl(
+      text_to_avoid, std::move(generate_candidate), kCandidateInitialSize,
+      kCandidateGrowthSize);
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(

@@ -17,10 +17,9 @@
 
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/invoke_result.h"
-#include <algorithm>
-#include <array>
-#include <limits>
+#include "absl/functional/function_ref.h"
 #include <string>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -46,10 +45,6 @@ namespace internal {
  *   message. If the message has that string, append some more random characters
  *   and keep searching.
  *
- * This function is a template because the string generator is typically a
- * lambda that captures state variables (such as the random number generator),
- * of the class that uses it.
- *
  * @param message a message body, typically the payload of a HTTP request that
  *     will need to be encoded as a MIME multipart message.
  * @param random_string_generator a callable to generate random strings.
@@ -60,6 +55,18 @@ namespace internal {
  * @param growth_size how fast to grow the random string.
  * @return a string not found in @p message.
  */
+std::string GenerateMessageBoundaryImpl(
+    std::string const& message,
+    absl::FunctionRef<std::string(int)> random_string_generator,
+    int initial_size, int growth_size);
+
+/**
+ * A backwards compatible version of `GenerateMessageBoundary()`.
+ *
+ * The original implementation of this function predates `absl::FunctionRef` (or
+ * at least its availability in `google-cloud-cpp`).  We used a template to
+ * support any callable that met the requirements.
+ */
 template <typename RandomStringGenerator,
           typename std::enable_if<google::cloud::internal::is_invocable<
                                       RandomStringGenerator, int>::value,
@@ -67,31 +74,20 @@ template <typename RandomStringGenerator,
 std::string GenerateMessageBoundary(
     std::string const& message, RandomStringGenerator&& random_string_generator,
     int initial_size, int growth_size) {
-  // This is not the only place we make this assumption. Duplicating the static
-  // assertion should make it easier to find the code if we ever need to fix it.
-  static_assert(std::numeric_limits<unsigned char>::max() == 255,
-                "required for efficient GenerateMessageBoundary");
-
-  static char const kBoundaryChars[] =
-      "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  auto constexpr kSkip = std::size_t{64};
-  std::array<bool, 255> seen;
-  std::fill(seen.begin(), seen.end(), false);
-  for (auto i = kSkip - 1; i < message.size(); i += kSkip) {
-    seen[static_cast<unsigned char>(message[i])] = true;
-  }
-  for (auto c : kBoundaryChars) {
-    if (c == '\0') continue;
-    if (!seen[static_cast<unsigned char>(c)]) return std::string(kSkip, c);
-  }
-
-  std::string candidate = random_string_generator(initial_size);
-  for (std::string::size_type i = message.find(candidate, 0);
-       i != std::string::npos; i = message.find(candidate, i)) {
-    candidate += random_string_generator(growth_size);
-  }
-  return candidate;
+  return GenerateMessageBoundaryImpl(
+      message, std::forward<RandomStringGenerator>(random_string_generator),
+      initial_size, growth_size);
 }
+
+/// Implements the slow case for `GenerateMessageBoundaryImpl()`.
+std::string GenerateMessageBoundaryImplSlow(
+    std::string const& message,
+    absl::FunctionRef<std::string(int)> random_string_generator,
+    int initial_size, int growth_size);
+
+/// Optimize the common case in `GenerateMessageBoundaryImpl()`.
+std::string MaybeGenerateMessageBoundaryImplQuick(std::string const& message);
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
