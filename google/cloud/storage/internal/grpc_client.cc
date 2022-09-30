@@ -1050,13 +1050,13 @@ StatusOr<HmacKeyMetadata> GrpcClient::UpdateHmacKey(
 
 StatusOr<SignBlobResponse> GrpcClient::SignBlob(
     SignBlobRequest const& request) {
-  auto proto = ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   // This request does not have any options that require using
   //     ApplyQueryParameters(context, request)
   auto response = iam_stub_->SignBlob(context, proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(

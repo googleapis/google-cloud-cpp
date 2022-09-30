@@ -17,31 +17,29 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 google::iam::credentials::v1::SignBlobRequest ToProto(
-    SignBlobRequest const& rhs) {
+    storage::internal::SignBlobRequest const& rhs) {
   google::iam::credentials::v1::SignBlobRequest request;
   request.set_name("projects/-/serviceAccounts/" + rhs.service_account());
   for (auto const& d : rhs.delegates()) request.add_delegates(d);
-  auto b64decoded = Base64Decode(rhs.base64_encoded_blob());
+  auto b64decoded = storage::internal::Base64Decode(rhs.base64_encoded_blob());
   if (!b64decoded) return request;
   request.mutable_payload()->assign(b64decoded->begin(), b64decoded->end());
   return request;
 }
 
-SignBlobResponse FromProto(
+storage::internal::SignBlobResponse FromProto(
     google::iam::credentials::v1::SignBlobResponse const& rhs) {
-  SignBlobResponse response;
+  storage::internal::SignBlobResponse response;
   response.key_id = rhs.key_id();
-  response.signed_blob = Base64Encode(rhs.signed_blob());
+  response.signed_blob = storage::internal::Base64Encode(rhs.signed_blob());
   return response;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

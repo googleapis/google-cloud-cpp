@@ -20,9 +20,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -38,11 +37,11 @@ TEST(GrpcSignBlobRequestParser, ToProto) {
       )pb",
       &expected));
 
-  auto b64encoded = Base64Encode("test-only-text-to-sign");
+  auto b64encoded = storage::internal::Base64Encode("test-only-text-to-sign");
 
-  auto request =
-      SignBlobRequest("test-only-sa", std::move(b64encoded),
-                      {"test-only-delegate-1", "test-only-delegate-2"});
+  auto request = storage::internal::SignBlobRequest(
+      "test-only-sa", std::move(b64encoded),
+      {"test-only-delegate-1", "test-only-delegate-2"});
   auto const actual = ToProto(request);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -56,12 +55,12 @@ TEST(GrpcSignBlobRequestParser, FromProto) {
       &input));
   auto response = FromProto(input);
   EXPECT_EQ(response.key_id, "test-only-key-id");
-  EXPECT_EQ(response.signed_blob, Base64Encode("test-only-signed-blob"));
+  EXPECT_EQ(response.signed_blob,
+            storage::internal::Base64Encode("test-only-signed-blob"));
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
