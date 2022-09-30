@@ -33,7 +33,7 @@ google::storage::v2::CreateHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
 CreateHmacKeyResponse GrpcHmacKeyRequestParser::FromProto(
     google::storage::v2::CreateHmacKeyResponse const& response) {
   CreateHmacKeyResponse result;
-  result.metadata = GrpcHmacKeyMetadataParser::FromProto(response.metadata());
+  result.metadata = storage_internal::FromProto(response.metadata());
   result.secret = internal::Base64Encode(response.secret_key_bytes());
   return result;
 }
@@ -64,7 +64,7 @@ ListHmacKeysResponse GrpcHmacKeyRequestParser::FromProto(
   ListHmacKeysResponse result;
   result.next_page_token = response.next_page_token();
   for (auto const& m : response.hmac_keys()) {
-    result.items.push_back(GrpcHmacKeyMetadataParser::FromProto(m));
+    result.items.push_back(storage_internal::FromProto(m));
   }
   return result;
 }

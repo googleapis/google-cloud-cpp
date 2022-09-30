@@ -1035,7 +1035,7 @@ StatusOr<HmacKeyMetadata> GrpcClient::GetHmacKey(
   ApplyQueryParameters(context, request);
   auto response = stub_->GetHmacKey(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcHmacKeyMetadataParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<HmacKeyMetadata> GrpcClient::UpdateHmacKey(
@@ -1045,7 +1045,7 @@ StatusOr<HmacKeyMetadata> GrpcClient::UpdateHmacKey(
   ApplyQueryParameters(context, request);
   auto response = stub_->UpdateHmacKey(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcHmacKeyMetadataParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<SignBlobResponse> GrpcClient::SignBlob(

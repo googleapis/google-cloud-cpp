@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace storage_proto = ::google::storage::v2;
@@ -44,7 +43,7 @@ TEST(GrpcHmacKeyMetadataParser, Roundtrip) {
     etag: "test-etag")pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kProtoText, &input));
 
-  auto const actual = GrpcHmacKeyMetadataParser::FromProto(input);
+  auto const actual = FromProto(input);
   EXPECT_EQ(actual.id(), "test-id");
   EXPECT_EQ(actual.access_id(), "test-access-id");
   EXPECT_EQ(actual.state(), "INACTIVE");
@@ -54,13 +53,12 @@ TEST(GrpcHmacKeyMetadataParser, Roundtrip) {
   //     date --rfc-3339=seconds --date=@1652186096  # Update
   EXPECT_EQ(FormatRfc3339(actual.time_created()), "2022-05-09T12:34:56.789Z");
   EXPECT_EQ(FormatRfc3339(actual.updated()), "2022-05-10T12:34:56.789Z");
-  auto const output = GrpcHmacKeyMetadataParser::ToProto(actual);
+  auto const output = ToProto(actual);
   EXPECT_THAT(output, IsProtoEqual(input));
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
