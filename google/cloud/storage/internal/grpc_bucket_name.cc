@@ -18,9 +18,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 std::string GrpcBucketIdToName(std::string const& id) {
   return absl::StrCat("projects/_/buckets/", id);
@@ -30,8 +29,7 @@ std::string GrpcBucketNameToId(std::string const& name) {
   return std::string{absl::StripPrefix(name, "projects/_/buckets/")};
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

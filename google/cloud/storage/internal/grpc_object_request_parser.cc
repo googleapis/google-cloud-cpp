@@ -219,8 +219,7 @@ StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
   if (!status.ok()) return status;
 
   auto& destination = *result.mutable_destination();
-  destination.set_bucket(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  destination.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   destination.set_name(request.object_name());
   if (request.HasOption<storage::WithObjectMetadata>()) {
     auto metadata = request.GetOption<storage::WithObjectMetadata>().value();
@@ -274,8 +273,7 @@ google::storage::v2::DeleteObjectRequest ToProto(
   google::storage::v2::DeleteObjectRequest result;
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
-  result.set_bucket(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  result.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   result.set_object(request.object_name());
   result.set_generation(request.GetOption<storage::Generation>().value_or(0));
   return result;
@@ -287,8 +285,7 @@ google::storage::v2::GetObjectRequest ToProto(
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
 
-  result.set_bucket(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  result.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   result.set_object(request.object_name());
   result.set_generation(request.GetOption<storage::Generation>().value_or(0));
   auto projection = request.GetOption<storage::Projection>().value_or("");
@@ -302,7 +299,7 @@ StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
   auto status = SetCommonObjectParameters(r, request);
   if (!status.ok()) return status;
   r.set_object(request.object_name());
-  r.set_bucket(storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  r.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   if (request.HasOption<storage::Generation>()) {
     r.set_generation(request.GetOption<storage::Generation>().value());
   }
@@ -340,8 +337,7 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
   SetPredefinedAcl(result, request);
 
   auto& object = *result.mutable_object();
-  object.set_bucket(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  object.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   object.set_name(request.object_name());
   object.set_generation(request.GetOption<storage::Generation>().value_or(0));
 
@@ -419,8 +415,7 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
   SetPredefinedAcl(result, request);
 
   auto& object = *result.mutable_object();
-  object.set_bucket(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  object.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   object.set_name(request.object_name());
   object.set_generation(request.GetOption<storage::Generation>().value_or(0));
 
@@ -475,8 +470,7 @@ StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
   status = SetCommonObjectParameters(r, request);
   if (!status.ok()) return status;
 
-  resource.set_bucket(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  resource.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   resource.set_name(request.object_name());
   r.set_write_offset(0);
 
@@ -530,8 +524,7 @@ storage::internal::QueryResumableUploadResponse FromProto(
 google::storage::v2::ListObjectsRequest ToProto(
     storage::internal::ListObjectsRequest const& request) {
   google::storage::v2::ListObjectsRequest result;
-  result.set_parent(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  result.set_parent(GrpcBucketIdToName(request.bucket_name()));
   auto const page_size = request.GetOption<storage::MaxResults>().value_or(0);
   // Clamp out of range values. The service will clamp to its own range
   // ([0, 1000] as of this writing) anyway.
@@ -575,7 +568,7 @@ StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
 
   result.set_destination_name(request.destination_object());
   result.set_destination_bucket(
-      storage::internal::GrpcBucketIdToName(request.destination_bucket()));
+      GrpcBucketIdToName(request.destination_bucket()));
 
   if (request.HasOption<storage::WithObjectMetadata>() ||
       request.HasOption<storage::DestinationKmsKeyName>()) {
@@ -586,8 +579,7 @@ StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
     if (!status.ok()) return status;
     SetStorageClass(destination, request);
   }
-  result.set_source_bucket(
-      storage::internal::GrpcBucketIdToName(request.source_bucket()));
+  result.set_source_bucket(GrpcBucketIdToName(request.source_bucket()));
   result.set_source_object(request.source_object());
   result.set_source_generation(
       request.GetOption<storage::SourceGeneration>().value_or(0));
@@ -655,7 +647,7 @@ StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
 
   result.set_destination_name(request.destination_object());
   result.set_destination_bucket(
-      storage::internal::GrpcBucketIdToName(request.destination_bucket()));
+      GrpcBucketIdToName(request.destination_bucket()));
 
   if (request.HasOption<storage::WithObjectMetadata>() ||
       request.HasOption<storage::DestinationKmsKeyName>()) {
@@ -666,8 +658,7 @@ StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
     if (!status.ok()) return status;
     SetStorageClass(destination, request);
   }
-  result.set_source_bucket(
-      storage::internal::GrpcBucketIdToName(request.source_bucket()));
+  result.set_source_bucket(GrpcBucketIdToName(request.source_bucket()));
   result.set_source_object(request.source_object());
   result.set_source_generation(
       request.GetOption<storage::SourceGeneration>().value_or(0));
@@ -730,8 +721,7 @@ StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
         request.GetOption<storage::UploadContentLength>().value()));
   }
 
-  resource.set_bucket(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  resource.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   resource.set_name(request.object_name());
 
   return result;
