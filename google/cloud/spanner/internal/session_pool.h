@@ -177,6 +177,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   void MaintainPoolSize();
   void RefreshExpiringSessions();
 
+  // Remove the named session from the pool (if it is present).
+  void Erase(std::string const& session_name);
+
   spanner::Database const db_;
   google::cloud::CompletionQueue cq_;
   Options const opts_;
