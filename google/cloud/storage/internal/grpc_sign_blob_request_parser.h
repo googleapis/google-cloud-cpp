@@ -21,18 +21,16 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 google::iam::credentials::v1::SignBlobRequest ToProto(
-    SignBlobRequest const& rhs);
-SignBlobResponse FromProto(
+    storage::internal::SignBlobRequest const& rhs);
+storage::internal::SignBlobResponse FromProto(
     google::iam::credentials::v1::SignBlobResponse const& rhs);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
