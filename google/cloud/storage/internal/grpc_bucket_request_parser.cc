@@ -146,7 +146,7 @@ Status PatchLogging(Bucket& b, nlohmann::json const& l) {
     b.clear_logging();
   } else {
     b.mutable_logging()->set_log_bucket(
-        storage::internal::GrpcBucketIdToName(l.value("logBucket", "")));
+        GrpcBucketIdToName(l.value("logBucket", "")));
     b.mutable_logging()->set_log_object_prefix(l.value("logObjectPrefix", ""));
   }
   return Status{};
@@ -306,7 +306,7 @@ void UpdateIamConfig(Bucket& bucket, storage::BucketMetadata const& metadata) {
 google::storage::v2::DeleteBucketRequest ToProto(
     storage::internal::DeleteBucketRequest const& request) {
   google::storage::v2::DeleteBucketRequest result;
-  result.set_name(storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  result.set_name(GrpcBucketIdToName(request.bucket_name()));
   if (request.HasOption<storage::IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
         request.GetOption<storage::IfMetagenerationMatch>().value());
@@ -321,7 +321,7 @@ google::storage::v2::DeleteBucketRequest ToProto(
 google::storage::v2::GetBucketRequest ToProto(
     storage::internal::GetBucketMetadataRequest const& request) {
   google::storage::v2::GetBucketRequest result;
-  result.set_name(storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  result.set_name(GrpcBucketIdToName(request.bucket_name()));
   if (request.HasOption<storage::IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
         request.GetOption<storage::IfMetagenerationMatch>().value());
@@ -396,8 +396,7 @@ storage::internal::ListBucketsResponse FromProto(
 google::storage::v2::LockBucketRetentionPolicyRequest ToProto(
     storage::internal::LockBucketRetentionPolicyRequest const& request) {
   google::storage::v2::LockBucketRetentionPolicyRequest result;
-  result.set_bucket(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  result.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   result.set_if_metageneration_match(request.metageneration());
   return result;
 }
@@ -405,8 +404,7 @@ google::storage::v2::LockBucketRetentionPolicyRequest ToProto(
 google::iam::v1::GetIamPolicyRequest ToProto(
     storage::internal::GetBucketIamPolicyRequest const& request) {
   google::iam::v1::GetIamPolicyRequest result;
-  result.set_resource(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  result.set_resource(GrpcBucketIdToName(request.bucket_name()));
   if (request.HasOption<storage::RequestedPolicyVersion>()) {
     result.mutable_options()->set_requested_policy_version(
         static_cast<std::int32_t>(
@@ -438,8 +436,7 @@ storage::NativeIamPolicy FromProto(google::iam::v1::Policy const& response) {
 google::iam::v1::SetIamPolicyRequest ToProto(
     storage::internal::SetNativeBucketIamPolicyRequest const& request) {
   google::iam::v1::SetIamPolicyRequest result;
-  result.set_resource(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  result.set_resource(GrpcBucketIdToName(request.bucket_name()));
   auto& policy = *result.mutable_policy();
   policy.set_version(request.policy().version());
   policy.set_etag(request.policy().etag());
@@ -462,8 +459,7 @@ google::iam::v1::SetIamPolicyRequest ToProto(
 google::iam::v1::TestIamPermissionsRequest ToProto(
     storage::internal::TestBucketIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsRequest result;
-  result.set_resource(
-      storage::internal::GrpcBucketIdToName(request.bucket_name()));
+  result.set_resource(GrpcBucketIdToName(request.bucket_name()));
   for (auto const& p : request.permissions()) {
     result.add_permissions(p);
   }
@@ -484,7 +480,7 @@ StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
   google::storage::v2::UpdateBucketRequest result;
 
   auto& bucket = *result.mutable_bucket();
-  bucket.set_name(storage::internal::GrpcBucketIdToName(request.bucket()));
+  bucket.set_name(GrpcBucketIdToName(request.bucket()));
 
   // The `labels` field is too special, handle separately.
   auto const& subpatch =
@@ -565,7 +561,7 @@ google::storage::v2::UpdateBucketRequest ToProto(
 
   auto& bucket = *result.mutable_bucket();
   auto const& metadata = request.metadata();
-  bucket.set_name(storage::internal::GrpcBucketIdToName(metadata.name()));
+  bucket.set_name(GrpcBucketIdToName(metadata.name()));
 
   // We set the update_mask for all fields, even if not present in `metadata` as
   // "not present" implies the field should be cleared.

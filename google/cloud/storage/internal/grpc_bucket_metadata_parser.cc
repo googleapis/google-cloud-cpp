@@ -49,7 +49,7 @@ google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs) {
   google::storage::v2::Bucket result;
   // These are in the order of the proto fields, to make it easier to find them
   // later.
-  result.set_name(storage::internal::GrpcBucketIdToName(rhs.name()));
+  result.set_name(GrpcBucketIdToName(rhs.name()));
   result.set_bucket_id(rhs.id());
   result.set_etag(rhs.etag());
   result.set_project("projects/" + std::to_string(rhs.project_number()));
@@ -144,7 +144,7 @@ storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs) {
   metadata.set_location_type(rhs.location_type());
   if (rhs.has_logging()) metadata.set_logging(FromProto(rhs.logging()));
   metadata.set_metageneration(rhs.metageneration());
-  metadata.set_name(storage::internal::GrpcBucketNameToId(rhs.name()));
+  metadata.set_name(GrpcBucketNameToId(rhs.name()));
   if (rhs.has_owner()) {
     metadata.set_owner(storage_internal::FromProto(rhs.owner()));
   }
@@ -425,7 +425,7 @@ storage::BucketLifecycle FromProto(google::storage::v2::Bucket::Lifecycle rhs) {
 google::storage::v2::Bucket::Logging ToProto(
     storage::BucketLogging const& rhs) {
   google::storage::v2::Bucket::Logging result;
-  result.set_log_bucket(storage::internal::GrpcBucketIdToName(rhs.log_bucket));
+  result.set_log_bucket(GrpcBucketIdToName(rhs.log_bucket));
   result.set_log_object_prefix(rhs.log_object_prefix);
   return result;
 }
@@ -433,7 +433,7 @@ google::storage::v2::Bucket::Logging ToProto(
 storage::BucketLogging FromProto(
     google::storage::v2::Bucket::Logging const& rhs) {
   storage::BucketLogging result;
-  result.log_bucket = storage::internal::GrpcBucketNameToId(rhs.log_bucket());
+  result.log_bucket = GrpcBucketNameToId(rhs.log_bucket());
   result.log_object_prefix = rhs.log_object_prefix();
   return result;
 }

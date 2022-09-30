@@ -20,9 +20,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 /**
  *  Convert from bucket ids to bucket names for the gRPC transport.
@@ -46,9 +45,8 @@ std::string GrpcBucketIdToName(std::string const& id);
  */
 std::string GrpcBucketNameToId(std::string const& name);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
