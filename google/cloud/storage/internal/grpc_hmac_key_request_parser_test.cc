@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace v2 = ::google::storage::v2;
@@ -43,10 +42,11 @@ TEST(GrpcBucketRequestParser, CreateHmacKeyRequestAllOptions) {
       )pb",
       &expected));
 
-  CreateHmacKeyRequest req("test-project-id", "test-service-account-email");
-  req.set_multiple_options(UserProject("test-user-project"));
+  storage::internal::CreateHmacKeyRequest req("test-project-id",
+                                              "test-service-account-email");
+  req.set_multiple_options(storage::UserProject("test-user-project"));
 
-  auto const actual = GrpcHmacKeyRequestParser::ToProto(req);
+  auto const actual = storage_internal::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -67,7 +67,7 @@ TEST(GrpcBucketRequestParser, CreateHmacKeyResponseFull) {
       )pb",
       &input));
 
-  auto actual = GrpcHmacKeyRequestParser::FromProto(input);
+  auto actual = storage_internal::FromProto(input);
   // Obtained the magic base64 string using:
   //     /bin/echo -n "0123456789" | openssl base64 -e
   EXPECT_EQ(actual.secret, "MDEyMzQ1Njc4OQ==");
@@ -90,10 +90,11 @@ TEST(GrpcBucketRequestParser, DeleteHmacKeyRequestAllOptions) {
       )pb",
       &expected));
 
-  DeleteHmacKeyRequest req("test-project-id", "test-access-id");
-  req.set_multiple_options(UserProject("test-user-project"));
+  storage::internal::DeleteHmacKeyRequest req("test-project-id",
+                                              "test-access-id");
+  req.set_multiple_options(storage::UserProject("test-user-project"));
 
-  auto const actual = GrpcHmacKeyRequestParser::ToProto(req);
+  auto const actual = storage_internal::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -105,10 +106,10 @@ TEST(GrpcBucketRequestParser, GetHmacKeyRequestAllOptions) {
       )pb",
       &expected));
 
-  GetHmacKeyRequest req("test-project-id", "test-access-id");
-  req.set_multiple_options(UserProject("test-user-project"));
+  storage::internal::GetHmacKeyRequest req("test-project-id", "test-access-id");
+  req.set_multiple_options(storage::UserProject("test-user-project"));
 
-  auto const actual = GrpcHmacKeyRequestParser::ToProto(req);
+  auto const actual = storage_internal::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -124,13 +125,14 @@ TEST(GrpcBucketRequestParser, ListHmacKeysRequestAllOptions) {
       )pb",
       &expected));
 
-  ListHmacKeysRequest req("test-project-id");
+  storage::internal::ListHmacKeysRequest req("test-project-id");
   req.set_page_token("test-page-token");
-  req.set_multiple_options(Deleted(true), MaxResults(42),
-                           ServiceAccountFilter("test-service-account-email"),
-                           UserProject("test-user-project"));
+  req.set_multiple_options(
+      storage::Deleted(true), storage::MaxResults(42),
+      storage::ServiceAccountFilter("test-service-account-email"),
+      storage::UserProject("test-user-project"));
 
-  auto const actual = GrpcHmacKeyRequestParser::ToProto(req);
+  auto const actual = storage_internal::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -160,7 +162,7 @@ TEST(GrpcBucketRequestParser, ListHmacKeysResponseFull) {
       )pb",
       &input));
 
-  auto actual = GrpcHmacKeyRequestParser::FromProto(input);
+  auto actual = storage_internal::FromProto(input);
   EXPECT_EQ(actual.next_page_token, "test-next-page-token");
 
   auto make_matcher = [](std::string const& expected_id,
@@ -168,20 +170,21 @@ TEST(GrpcBucketRequestParser, ListHmacKeysResponseFull) {
     // To get the dates in RFC-3339 format I used:
     //     date --rfc-3339=seconds --date=@1652099696  # Create
     //     date --rfc-3339=seconds --date=@1652186096  # Update
-    auto format_time_created = [](HmacKeyMetadata const& metadata) {
+    auto format_time_created = [](storage::HmacKeyMetadata const& metadata) {
       return FormatRfc3339(metadata.time_created());
     };
-    auto format_updated = [](HmacKeyMetadata const& metadata) {
+    auto format_updated = [](storage::HmacKeyMetadata const& metadata) {
       return FormatRfc3339(metadata.updated());
     };
-    return AllOf(Property(&HmacKeyMetadata::id, expected_id),
-                 Property(&HmacKeyMetadata::access_id, expected_access_id),
-                 Property(&HmacKeyMetadata::project_id, "test-project-id"),
-                 Property(&HmacKeyMetadata::service_account_email,
-                          "test-service-account-email"),
-                 Property(&HmacKeyMetadata::state, "ACTIVE"),
-                 ResultOf(format_time_created, "2022-05-09T12:34:56.789Z"),
-                 ResultOf(format_updated, "2022-05-10T12:34:56.789Z"));
+    return AllOf(
+        Property(&storage::HmacKeyMetadata::id, expected_id),
+        Property(&storage::HmacKeyMetadata::access_id, expected_access_id),
+        Property(&storage::HmacKeyMetadata::project_id, "test-project-id"),
+        Property(&storage::HmacKeyMetadata::service_account_email,
+                 "test-service-account-email"),
+        Property(&storage::HmacKeyMetadata::state, "ACTIVE"),
+        ResultOf(format_time_created, "2022-05-09T12:34:56.789Z"),
+        ResultOf(format_updated, "2022-05-10T12:34:56.789Z"));
   };
   EXPECT_THAT(actual.items,
               ElementsAre(make_matcher("test-id-1", "test-access-id-1"),
@@ -201,19 +204,19 @@ TEST(GrpcBucketRequestParser, UpdateHmacKeyRequestAllOptions) {
       )pb",
       &expected));
 
-  UpdateHmacKeyRequest req("test-project-id", "test-access-id",
-                           HmacKeyMetadata()
-                               .set_state(HmacKeyMetadata::state_inactive())
-                               .set_etag("test-only-etag"));
-  req.set_multiple_options(UserProject("test-user-project"));
+  storage::internal::UpdateHmacKeyRequest req(
+      "test-project-id", "test-access-id",
+      storage::HmacKeyMetadata()
+          .set_state(storage::HmacKeyMetadata::state_inactive())
+          .set_etag("test-only-etag"));
+  req.set_multiple_options(storage::UserProject("test-user-project"));
 
-  auto const actual = GrpcHmacKeyRequestParser::ToProto(req);
+  auto const actual = storage_internal::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

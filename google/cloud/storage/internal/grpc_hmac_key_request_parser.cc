@@ -18,50 +18,50 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-google::storage::v2::CreateHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
-    CreateHmacKeyRequest const& request) {
+google::storage::v2::CreateHmacKeyRequest ToProto(
+    storage::internal::CreateHmacKeyRequest const& request) {
   google::storage::v2::CreateHmacKeyRequest result;
   result.set_project("projects/" + request.project_id());
   result.set_service_account_email(request.service_account());
   return result;
 }
 
-CreateHmacKeyResponse GrpcHmacKeyRequestParser::FromProto(
+storage::internal::CreateHmacKeyResponse FromProto(
     google::storage::v2::CreateHmacKeyResponse const& response) {
-  CreateHmacKeyResponse result;
+  storage::internal::CreateHmacKeyResponse result;
   result.metadata = storage_internal::FromProto(response.metadata());
-  result.secret = internal::Base64Encode(response.secret_key_bytes());
+  result.secret = storage::internal::Base64Encode(response.secret_key_bytes());
   return result;
 }
 
-google::storage::v2::DeleteHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
-    DeleteHmacKeyRequest const& request) {
+google::storage::v2::DeleteHmacKeyRequest ToProto(
+    storage::internal::DeleteHmacKeyRequest const& request) {
   google::storage::v2::DeleteHmacKeyRequest result;
   result.set_access_id(request.access_id());
   result.set_project("projects/" + request.project_id());
   return result;
 }
 
-google::storage::v2::ListHmacKeysRequest GrpcHmacKeyRequestParser::ToProto(
-    ListHmacKeysRequest const& request) {
+google::storage::v2::ListHmacKeysRequest ToProto(
+    storage::internal::ListHmacKeysRequest const& request) {
   google::storage::v2::ListHmacKeysRequest result;
   result.set_project("projects/" + request.project_id());
   result.set_page_token(request.page_token());
-  result.set_page_size(
-      static_cast<std::int32_t>(request.GetOption<MaxResults>().value_or(0)));
+  result.set_page_size(static_cast<std::int32_t>(
+      request.GetOption<storage::MaxResults>().value_or(0)));
   result.set_service_account_email(
-      request.GetOption<ServiceAccountFilter>().value_or(""));
-  result.set_show_deleted_keys(request.GetOption<Deleted>().value_or(false));
+      request.GetOption<storage::ServiceAccountFilter>().value_or(""));
+  result.set_show_deleted_keys(
+      request.GetOption<storage::Deleted>().value_or(false));
   return result;
 }
 
-ListHmacKeysResponse GrpcHmacKeyRequestParser::FromProto(
+storage::internal::ListHmacKeysResponse FromProto(
     google::storage::v2::ListHmacKeysResponse const& response) {
-  ListHmacKeysResponse result;
+  storage::internal::ListHmacKeysResponse result;
   result.next_page_token = response.next_page_token();
   for (auto const& m : response.hmac_keys()) {
     result.items.push_back(storage_internal::FromProto(m));
@@ -69,16 +69,16 @@ ListHmacKeysResponse GrpcHmacKeyRequestParser::FromProto(
   return result;
 }
 
-google::storage::v2::GetHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
-    GetHmacKeyRequest const& request) {
+google::storage::v2::GetHmacKeyRequest ToProto(
+    storage::internal::GetHmacKeyRequest const& request) {
   google::storage::v2::GetHmacKeyRequest result;
   result.set_access_id(request.access_id());
   result.set_project("projects/" + request.project_id());
   return result;
 }
 
-google::storage::v2::UpdateHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
-    UpdateHmacKeyRequest const& request) {
+google::storage::v2::UpdateHmacKeyRequest ToProto(
+    storage::internal::UpdateHmacKeyRequest const& request) {
   google::storage::v2::UpdateHmacKeyRequest result;
   result.mutable_hmac_key()->set_access_id(request.access_id());
   result.mutable_hmac_key()->set_project("projects/" + request.project_id());
@@ -87,8 +87,7 @@ google::storage::v2::UpdateHmacKeyRequest GrpcHmacKeyRequestParser::ToProto(
   return result;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

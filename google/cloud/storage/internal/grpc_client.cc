@@ -1000,27 +1000,27 @@ StatusOr<ServiceAccount> GrpcClient::GetServiceAccount(
 
 StatusOr<ListHmacKeysResponse> GrpcClient::ListHmacKeys(
     ListHmacKeysRequest const& request) {
-  auto proto = GrpcHmacKeyRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->ListHmacKeys(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcHmacKeyRequestParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<CreateHmacKeyResponse> GrpcClient::CreateHmacKey(
     CreateHmacKeyRequest const& request) {
-  auto proto = GrpcHmacKeyRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->CreateHmacKey(context, proto);
   if (!response) return std::move(response).status();
-  return GrpcHmacKeyRequestParser::FromProto(*response);
+  return storage_internal::FromProto(*response);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteHmacKey(
     DeleteHmacKeyRequest const& request) {
-  auto proto = GrpcHmacKeyRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->DeleteHmacKey(context, proto);
@@ -1030,7 +1030,7 @@ StatusOr<EmptyResponse> GrpcClient::DeleteHmacKey(
 
 StatusOr<HmacKeyMetadata> GrpcClient::GetHmacKey(
     GetHmacKeyRequest const& request) {
-  auto proto = GrpcHmacKeyRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->GetHmacKey(context, proto);
@@ -1040,7 +1040,7 @@ StatusOr<HmacKeyMetadata> GrpcClient::GetHmacKey(
 
 StatusOr<HmacKeyMetadata> GrpcClient::UpdateHmacKey(
     UpdateHmacKeyRequest const& request) {
-  auto proto = GrpcHmacKeyRequestParser::ToProto(request);
+  auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->UpdateHmacKey(context, proto);

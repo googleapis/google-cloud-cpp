@@ -21,31 +21,26 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-/// Convert JSON requests to gRPC requests and gRPC responses to JSON responses
-struct GrpcHmacKeyRequestParser {
-  static google::storage::v2::CreateHmacKeyRequest ToProto(
-      CreateHmacKeyRequest const&);
-  static CreateHmacKeyResponse FromProto(
-      google::storage::v2::CreateHmacKeyResponse const&);
-  static google::storage::v2::DeleteHmacKeyRequest ToProto(
-      DeleteHmacKeyRequest const&);
-  static google::storage::v2::GetHmacKeyRequest ToProto(
-      GetHmacKeyRequest const&);
-  static google::storage::v2::ListHmacKeysRequest ToProto(
-      ListHmacKeysRequest const&);
-  static ListHmacKeysResponse FromProto(
-      google::storage::v2::ListHmacKeysResponse const&);
-  static google::storage::v2::UpdateHmacKeyRequest ToProto(
-      UpdateHmacKeyRequest const&);
-};
+google::storage::v2::CreateHmacKeyRequest ToProto(
+    storage::internal::CreateHmacKeyRequest const&);
+storage::internal::CreateHmacKeyResponse FromProto(
+    google::storage::v2::CreateHmacKeyResponse const&);
+google::storage::v2::DeleteHmacKeyRequest ToProto(
+    storage::internal::DeleteHmacKeyRequest const&);
+google::storage::v2::GetHmacKeyRequest ToProto(
+    storage::internal::GetHmacKeyRequest const&);
+google::storage::v2::ListHmacKeysRequest ToProto(
+    storage::internal::ListHmacKeysRequest const&);
+storage::internal::ListHmacKeysResponse FromProto(
+    google::storage::v2::ListHmacKeysResponse const&);
+google::storage::v2::UpdateHmacKeyRequest ToProto(
+    storage::internal::UpdateHmacKeyRequest const&);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
