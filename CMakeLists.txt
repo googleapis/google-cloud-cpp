@@ -21,7 +21,7 @@ set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 
 project(
     google-cloud-cpp
-    VERSION 2.3.0
+    VERSION 2.4.0
     LANGUAGES CXX)
 
 if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
