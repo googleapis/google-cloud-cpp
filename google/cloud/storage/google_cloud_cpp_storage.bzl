@@ -166,6 +166,7 @@ google_cloud_cpp_storage_srcs = [
     "internal/default_object_acl_requests.cc",
     "internal/empty_response.cc",
     "internal/error_credentials.cc",
+    "internal/generate_message_boundary.cc",
     "internal/hash_function.cc",
     "internal/hash_function_impl.cc",
     "internal/hash_validator.cc",
