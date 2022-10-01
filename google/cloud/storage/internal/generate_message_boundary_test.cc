@@ -15,6 +15,8 @@
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/internal/random.h"
 #include <gmock/gmock.h>
+#include <algorithm>
+#include <cctype>
 
 namespace google {
 namespace cloud {
@@ -24,61 +26,52 @@ namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::Return;
 
-std::string const* const kChars = new std::string(
-    "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+char constexpr kChars[] =
+    "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+TEST(GenerateMessageBoundaryTest, Candidate) {
+  auto constexpr kMaxBoundarySize = 70;
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+
+  for (int i = 0; i != 10; ++i) {
+    auto const candidate = GenerateMessageBoundaryCandidate(generator);
+    ASSERT_THAT(candidate, Not(IsEmpty()));
+    EXPECT_LE(candidate.size(), kMaxBoundarySize);
+    auto f = std::find_if(candidate.begin(), candidate.end(),
+                          [](char c) { return std::isalnum(c) == 0; });
+    EXPECT_TRUE(f == candidate.end())
+        << "found non-alphanumeric character in " << candidate;
+  }
+}
 
 TEST(GenerateMessageBoundaryTest, Simple) {
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
-
-  auto string_generator = [&generator](int n) {
-    return google::cloud::internal::Sample(generator, n, *kChars);
-  };
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
 
   // The magic constants here are uninteresting. We just want a large message
   // and a relatively short string to start searching for a boundary.
-  auto message = string_generator(1024);
-  auto boundary =
-      GenerateMessageBoundary(message, std::move(string_generator), 16, 4);
-  EXPECT_THAT(message, Not(HasSubstr(boundary)));
+  auto message = google::cloud::internal::Sample(generator, 128, kChars);
+  for (int i = 0; i != 10; ++i) {
+    auto boundary = GenerateMessageBoundary(message, [&generator]() {
+      return GenerateMessageBoundaryCandidate(generator);
+    });
+    EXPECT_THAT(message, Not(HasSubstr(boundary)));
+  }
 }
 
-TEST(GenerateMessageBoundaryTest, RequiresGrowth) {
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
+TEST(GenerateMessageBoundaryTest, RequiresMoreCandidates) {
+  ::testing::MockFunction<std::string()> candidate_generator;
+  EXPECT_CALL(candidate_generator, Call)
+      .WillOnce(Return("abc"))
+      .WillOnce(Return("abcd"))
+      .WillOnce(Return("good"));
 
-  // This test will ensure that both the message and the initial string contain
-  // at least this many common characters.
-  int constexpr kMatchedStringLength = 32;
-  int constexpr kMismatchedStringLength = 512;
-
-  auto g1 = google::cloud::internal::MakeDefaultPRNG();
-  std::string message =
-      google::cloud::internal::Sample(g1, kMismatchedStringLength, *kChars);
-  // Copy the PRNG to obtain the same sequence of random numbers that
-  // `generator` will create later.
-  g1 = generator;
-  message += google::cloud::internal::Sample(g1, kMatchedStringLength, *kChars);
-  g1 = google::cloud::internal::MakeDefaultPRNG();
-  message +=
-      google::cloud::internal::Sample(g1, kMismatchedStringLength, *kChars);
-
-  auto string_generator = [&generator](int n) {
-    return google::cloud::internal::Sample(generator, n, *kChars);
-  };
-
-  // The initial_size and growth_size parameters are set to
-  // (kMatchedStringLength / 2) and (kMatchedStringLength / 4) respectively,
-  // that forces the algorithm to find the initial string, and to grow it
-  // several times before the kMatchedStringLength common characters are
-  // exhausted.
-  auto boundary = GenerateMessageBoundary(message, std::move(string_generator),
-                                          kMatchedStringLength / 2,
-                                          kMatchedStringLength / 4);
-  EXPECT_THAT(message, Not(HasSubstr(boundary)));
-
-  // We expect that the string is longer than the common characters.
-  EXPECT_LT(kMatchedStringLength, boundary.size());
+  auto const actual = GenerateMessageBoundary(
+      "abc123abcd", candidate_generator.AsStdFunction());
+  EXPECT_EQ(actual, "good");
 }
 
 }  // namespace
