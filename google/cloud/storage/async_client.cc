@@ -30,7 +30,7 @@ AsyncClient::AsyncClient(
     : background_(std::move(background)), connection_(std::move(connection)) {}
 
 AsyncClient MakeAsyncClient(Options opts) {
-  auto options = storage::internal::DefaultOptionsGrpc(std::move(opts));
+  auto options = storage_internal::DefaultOptionsGrpc(std::move(opts));
   auto background = MakeBackgroundThreadsFactory(options)();
   auto connection = storage_internal::MakeAsyncConnection(background->cq(),
                                                           std::move(options));

@@ -27,12 +27,17 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace v2 = ::google::storage::v2;
+using ::google::cloud::storage::BucketMetadata;
+using ::google::cloud::storage::Fields;
+using ::google::cloud::storage::ObjectMetadata;
+using ::google::cloud::storage::QuotaUser;
+using ::google::cloud::storage::testing::MockInsertStream;
+using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
@@ -116,7 +121,7 @@ TEST_F(GrpcClientTest, DefaultOptionsGrpcEndpointNoEnv) {
 }
 
 TEST_F(GrpcClientTest, QueryResumableUpload) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, QueryWriteStatus)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::QueryWriteStatusRequest const& request) {
@@ -131,14 +136,14 @@ TEST_F(GrpcClientTest, QueryResumableUpload) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->QueryResumableUpload(
-      QueryResumableUploadRequest("test-only-upload-id")
+      storage::internal::QueryResumableUploadRequest("test-only-upload-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, DeleteResumableUpload) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, CancelResumableWrite)
       .WillOnce(
           [this](
@@ -154,14 +159,14 @@ TEST_F(GrpcClientTest, DeleteResumableUpload) {
           });
   auto client = CreateTestClient(mock);
   auto response = client->DeleteResumableUpload(
-      DeleteResumableUploadRequest("test-only-upload-id")
+      storage::internal::DeleteResumableUploadRequest("test-only-upload-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, UploadChunk) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject)
       .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
         auto metadata = GetMetadata(*context);
@@ -173,21 +178,22 @@ TEST_F(GrpcClientTest, UploadChunk) {
                         Pair("x-goog-request-params",
                              "bucket=projects/_/buckets/test-bucket")));
         ::testing::InSequence sequence;
-        auto stream = absl::make_unique<testing::MockInsertStream>();
+        auto stream = absl::make_unique<MockInsertStream>();
         EXPECT_CALL(*stream, Write).WillOnce(Return(false));
         EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
         return stream;
       });
   auto client = CreateTestClient(mock);
   auto response = client->UploadChunk(
-      UploadChunkRequest("projects/_/buckets/test-bucket/test-upload-id", 0, {})
+      storage::internal::UploadChunkRequest(
+          "projects/_/buckets/test-bucket/test-upload-id", 0, {})
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, CreateBucket) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, CreateBucket)
       .WillOnce([this](
                     grpc::ClientContext& context,
@@ -202,15 +208,15 @@ TEST_F(GrpcClientTest, CreateBucket) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->CreateBucket(
-      CreateBucketRequest("test-project",
-                          BucketMetadata().set_name("test-bucket"))
+      storage::internal::CreateBucketRequest(
+          "test-project", BucketMetadata().set_name("test-bucket"))
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, GetBucket) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        google::storage::v2::GetBucketRequest const& request) {
@@ -223,14 +229,14 @@ TEST_F(GrpcClientTest, GetBucket) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->GetBucketMetadata(
-      GetBucketMetadataRequest("test-bucket")
+      storage::internal::GetBucketMetadataRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, DeleteBucket) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, DeleteBucket)
       .WillOnce([this](
                     grpc::ClientContext& context,
@@ -244,14 +250,14 @@ TEST_F(GrpcClientTest, DeleteBucket) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->DeleteBucket(
-      DeleteBucketRequest("test-bucket")
+      storage::internal::DeleteBucketRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, ListBuckets) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ListBuckets)
       .WillOnce([this](grpc::ClientContext& context,
                        google::storage::v2::ListBucketsRequest const& request) {
@@ -264,14 +270,14 @@ TEST_F(GrpcClientTest, ListBuckets) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->ListBuckets(
-      ListBucketsRequest("test-project")
+      storage::internal::ListBucketsRequest("test-project")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, LockBucketRetentionPolicy) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, LockBucketRetentionPolicy)
       .WillOnce(
           [this](grpc::ClientContext& context,
@@ -285,14 +291,15 @@ TEST_F(GrpcClientTest, LockBucketRetentionPolicy) {
           });
   auto client = CreateTestClient(mock);
   auto response = client->LockBucketRetentionPolicy(
-      LockBucketRetentionPolicyRequest("test-bucket", /*metageneration=*/7)
+      storage::internal::LockBucketRetentionPolicyRequest("test-bucket",
+                                                          /*metageneration=*/7)
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, UpdateBucket) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateBucket)
       .WillOnce([this](
                     grpc::ClientContext& context,
@@ -306,14 +313,15 @@ TEST_F(GrpcClientTest, UpdateBucket) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->UpdateBucket(
-      UpdateBucketRequest(BucketMetadata{}.set_name("test-bucket"))
+      storage::internal::UpdateBucketRequest(
+          BucketMetadata{}.set_name("test-bucket"))
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, PatchBucket) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateBucket)
       .WillOnce([this](
                     grpc::ClientContext& context,
@@ -327,15 +335,16 @@ TEST_F(GrpcClientTest, PatchBucket) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->PatchBucket(
-      PatchBucketRequest("test-bucket",
-                         BucketMetadataPatchBuilder{}.SetLabel("l0", "v0"))
+      storage::internal::PatchBucketRequest(
+          "test-bucket",
+          storage::BucketMetadataPatchBuilder{}.SetLabel("l0", "v0"))
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, GetNativeBucketIamPolicy) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::GetIamPolicyRequest const& request) {
@@ -348,14 +357,14 @@ TEST_F(GrpcClientTest, GetNativeBucketIamPolicy) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->GetNativeBucketIamPolicy(
-      GetBucketIamPolicyRequest("test-bucket")
+      storage::internal::GetBucketIamPolicyRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, SetNativeBucketIamPolicy) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::SetIamPolicyRequest const& request) {
@@ -368,15 +377,15 @@ TEST_F(GrpcClientTest, SetNativeBucketIamPolicy) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->SetNativeBucketIamPolicy(
-      SetNativeBucketIamPolicyRequest(
-          "test-bucket", NativeIamPolicy(/*bindings=*/{}, /*etag=*/{}))
+      storage::internal::SetNativeBucketIamPolicyRequest(
+          "test-bucket", storage::NativeIamPolicy(/*bindings=*/{}, /*etag=*/{}))
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, TestBucketIamPermissions) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, TestIamPermissions)
       .WillOnce([this](
                     grpc::ClientContext& context,
@@ -390,7 +399,7 @@ TEST_F(GrpcClientTest, TestBucketIamPermissions) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->TestBucketIamPermissions(
-      TestBucketIamPermissionsRequest(
+      storage::internal::TestBucketIamPermissionsRequest(
           "test-bucket", {"test.permission.1", "test.permission.2"})
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -398,7 +407,7 @@ TEST_F(GrpcClientTest, TestBucketIamPermissions) {
 }
 
 TEST_F(GrpcClientTest, InsertObjectMedia) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject)
       .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
         auto metadata = GetMetadata(*context);
@@ -410,22 +419,22 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
                         Pair("x-goog-request-params",
                              "bucket=projects/_/buckets/test-bucket")));
         ::testing::InSequence sequence;
-        auto stream = absl::make_unique<testing::MockInsertStream>();
+        auto stream = absl::make_unique<MockInsertStream>();
         EXPECT_CALL(*stream, Write).WillOnce(Return(false));
         EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
         return stream;
       });
   auto client = CreateTestClient(mock);
   auto response = client->InsertObjectMedia(
-      InsertObjectMediaRequest("test-bucket", "test-object",
-                               "How vexingly quick daft zebras jump!")
+      storage::internal::InsertObjectMediaRequest(
+          "test-bucket", "test-object", "How vexingly quick daft zebras jump!")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, CopyObject) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, RewriteObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::RewriteObjectRequest const& request) {
@@ -445,15 +454,16 @@ TEST_F(GrpcClientTest, CopyObject) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->CopyObject(
-      CopyObjectRequest("test-source-bucket", "test-source-object",
-                        "test-bucket", "test-object")
+      storage::internal::CopyObjectRequest("test-source-bucket",
+                                           "test-source-object", "test-bucket",
+                                           "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, CopyObjectTooLarge) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, RewriteObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::RewriteObjectRequest const& request) {
@@ -476,15 +486,16 @@ TEST_F(GrpcClientTest, CopyObjectTooLarge) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->CopyObject(
-      CopyObjectRequest("test-source-bucket", "test-source-object",
-                        "test-bucket", "test-object")
+      storage::internal::CopyObjectRequest("test-source-bucket",
+                                           "test-source-object", "test-bucket",
+                                           "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_THAT(response.status(), StatusIs(StatusCode::kOutOfRange));
 }
 
 TEST_F(GrpcClientTest, GetObjectMetadata) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
@@ -498,14 +509,14 @@ TEST_F(GrpcClientTest, GetObjectMetadata) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->GetObjectMetadata(
-      GetObjectMetadataRequest("test-bucket", "test-object")
+      storage::internal::GetObjectMetadataRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, ReadObject) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ReadObject)
       .WillOnce([this](std::unique_ptr<grpc::ClientContext> context,
                        v2::ReadObjectRequest const& request) {
@@ -515,17 +526,17 @@ TEST_F(GrpcClientTest, ReadObject) {
                                   Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
         EXPECT_THAT(request.object(), "test-object");
-        return absl::make_unique<testing::MockObjectMediaStream>();
+        return absl::make_unique<storage::testing::MockObjectMediaStream>();
       });
   auto client = CreateTestClient(mock);
   auto stream = client->ReadObject(
-      ReadObjectRangeRequest("test-bucket", "test-object")
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
 }
 
 TEST_F(GrpcClientTest, ListObjects) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ListObjects)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::ListObjectsRequest const& request) {
@@ -538,14 +549,14 @@ TEST_F(GrpcClientTest, ListObjects) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->ListObjects(
-      ListObjectsRequest("test-bucket")
+      storage::internal::ListObjectsRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, DeleteObject) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, DeleteObject)
       .WillOnce([this](
                     grpc::ClientContext& context,
@@ -560,14 +571,14 @@ TEST_F(GrpcClientTest, DeleteObject) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->DeleteObject(
-      DeleteObjectRequest("test-bucket", "test-object")
+      storage::internal::DeleteObjectRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, UpdateObject) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateObject)
       .WillOnce([this](
                     grpc::ClientContext& context,
@@ -583,18 +594,19 @@ TEST_F(GrpcClientTest, UpdateObject) {
       });
   auto client = GrpcClient::CreateMock(mock);
   auto response = client->UpdateObject(
-      UpdateObjectRequest("test-bucket", "test-object",
-                          // Typically, the metadata is first read from the
-                          // service as part of an OCC loop. For this test, just
-                          // use the default values for all fields
-                          ObjectMetadata{})
+      storage::internal::UpdateObjectRequest(
+          "test-bucket", "test-object",
+          // Typically, the metadata is first read from the
+          // service as part of an OCC loop. For this test, just
+          // use the default values for all fields
+          ObjectMetadata{})
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, PatchObject) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::UpdateObjectRequest const& request) {
@@ -609,16 +621,16 @@ TEST_F(GrpcClientTest, PatchObject) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->PatchObject(
-      PatchObjectRequest(
+      storage::internal::PatchObjectRequest(
           "test-source-bucket", "test-source-object",
-          ObjectMetadataPatchBuilder{}.SetCacheControl("no-cache"))
+          storage::ObjectMetadataPatchBuilder{}.SetCacheControl("no-cache"))
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, ComposeObject) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ComposeObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::ComposeObjectRequest const& request) {
@@ -633,14 +645,15 @@ TEST_F(GrpcClientTest, ComposeObject) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->ComposeObject(
-      ComposeObjectRequest("test-source-bucket", {}, "test-source-object")
+      storage::internal::ComposeObjectRequest("test-source-bucket", {},
+                                              "test-source-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, RewriteObject) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, RewriteObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::RewriteObjectRequest const& request) {
@@ -660,15 +673,16 @@ TEST_F(GrpcClientTest, RewriteObject) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->RewriteObject(
-      RewriteObjectRequest("test-source-bucket", "test-source-object",
-                           "test-bucket", "test-object", "test-token")
+      storage::internal::RewriteObjectRequest(
+          "test-source-bucket", "test-source-object", "test-bucket",
+          "test-object", "test-token")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, CreateResumableUpload) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, StartResumableWrite)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::StartResumableWriteRequest const& request) {
@@ -686,14 +700,14 @@ TEST_F(GrpcClientTest, CreateResumableUpload) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->CreateResumableUpload(
-      ResumableUploadRequest("test-bucket", "test-object")
+      storage::internal::ResumableUploadRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, GetServiceAccount) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetServiceAccount)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetServiceAccountRequest const& request) {
@@ -706,14 +720,14 @@ TEST_F(GrpcClientTest, GetServiceAccount) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->GetServiceAccount(
-      GetProjectServiceAccountRequest("test-project-id")
+      storage::internal::GetProjectServiceAccountRequest("test-project-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, CreateHmacKey) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, CreateHmacKey)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::CreateHmacKeyRequest const& request) {
@@ -726,14 +740,15 @@ TEST_F(GrpcClientTest, CreateHmacKey) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->CreateHmacKey(
-      CreateHmacKeyRequest("test-project-id", "test-service-account-email")
+      storage::internal::CreateHmacKeyRequest("test-project-id",
+                                              "test-service-account-email")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, DeleteHmacKey) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, DeleteHmacKey)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::DeleteHmacKeyRequest const& request) {
@@ -746,14 +761,15 @@ TEST_F(GrpcClientTest, DeleteHmacKey) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->DeleteHmacKey(
-      DeleteHmacKeyRequest("test-project-id", "test-access-id")
+      storage::internal::DeleteHmacKeyRequest("test-project-id",
+                                              "test-access-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, GetHmacKey) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetHmacKey)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetHmacKeyRequest const& request) {
@@ -766,14 +782,14 @@ TEST_F(GrpcClientTest, GetHmacKey) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->GetHmacKey(
-      GetHmacKeyRequest("test-project-id", "test-access-id")
+      storage::internal::GetHmacKeyRequest("test-project-id", "test-access-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, ListHmacKeys) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ListHmacKeys)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::ListHmacKeysRequest const& request) {
@@ -786,14 +802,14 @@ TEST_F(GrpcClientTest, ListHmacKeys) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->ListHmacKeys(
-      ListHmacKeysRequest("test-project-id")
+      storage::internal::ListHmacKeysRequest("test-project-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, UpdateHmacKey) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateHmacKey)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::UpdateHmacKeyRequest const& request) {
@@ -806,16 +822,17 @@ TEST_F(GrpcClientTest, UpdateHmacKey) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->UpdateHmacKey(
-      UpdateHmacKeyRequest(
+      storage::internal::UpdateHmacKeyRequest(
           "test-project-id", "test-access-id",
-          HmacKeyMetadata().set_state(HmacKeyMetadata::state_deleted()))
+          storage::HmacKeyMetadata().set_state(
+              storage::HmacKeyMetadata::state_deleted()))
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, ListNotifications) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ListNotifications)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::ListNotificationsRequest const& request) {
@@ -828,14 +845,14 @@ TEST_F(GrpcClientTest, ListNotifications) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->ListNotifications(
-      ListNotificationsRequest("test-bucket-name")
+      storage::internal::ListNotificationsRequest("test-bucket-name")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, CreateNotification) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, CreateNotification)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::CreateNotificationRequest const& request) {
@@ -848,14 +865,15 @@ TEST_F(GrpcClientTest, CreateNotification) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->CreateNotification(
-      CreateNotificationRequest("test-bucket-name", NotificationMetadata())
+      storage::internal::CreateNotificationRequest(
+          "test-bucket-name", storage::NotificationMetadata())
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, GetNotification) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetNotification)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetNotificationRequest const& request) {
@@ -870,14 +888,15 @@ TEST_F(GrpcClientTest, GetNotification) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->GetNotification(
-      GetNotificationRequest("test-bucket-name", "test-notification-id")
+      storage::internal::GetNotificationRequest("test-bucket-name",
+                                                "test-notification-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST_F(GrpcClientTest, DeleteNotification) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, DeleteNotification)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::DeleteNotificationRequest const& request) {
@@ -892,15 +911,15 @@ TEST_F(GrpcClientTest, DeleteNotification) {
       });
   auto client = CreateTestClient(mock);
   auto response = client->DeleteNotification(
-      DeleteNotificationRequest("test-bucket-name", "test-notification-id")
+      storage::internal::DeleteNotificationRequest("test-bucket-name",
+                                                   "test-notification-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

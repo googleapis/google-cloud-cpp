@@ -25,12 +25,19 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace v2 = ::google::storage::v2;
+using ::google::cloud::storage::BucketAccessControl;
+using ::google::cloud::storage::BucketAccessControlPatchBuilder;
+using ::google::cloud::storage::Fields;
+using ::google::cloud::storage::ObjectAccessControl;
+using ::google::cloud::storage::ObjectAccessControlPatchBuilder;
+using ::google::cloud::storage::QuotaUser;
+using ::google::cloud::storage::UserProject;
+using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
@@ -184,7 +191,7 @@ std::shared_ptr<GrpcClient> CreateTestClient(
 }
 
 TEST_F(GrpcClientAclTest, ListBucketAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -198,7 +205,7 @@ TEST_F(GrpcClientAclTest, ListBucketAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->ListBucketAcl(
-      ListBucketAclRequest("test-bucket-name")
+      storage::internal::ListBucketAclRequest("test-bucket-name")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -206,7 +213,7 @@ TEST_F(GrpcClientAclTest, ListBucketAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, ListBucketAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -217,7 +224,8 @@ TEST_F(GrpcClientAclTest, ListBucketAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->ListBucketAcl(ListBucketAclRequest("test-bucket-id"));
+  auto response = client->ListBucketAcl(
+      storage::internal::ListBucketAclRequest("test-bucket-id"));
   ASSERT_STATUS_OK(response);
   auto make_matcher = [](std::string const& role, std::string const& entity) {
     auto get_role = [](BucketAccessControl const& acl) { return acl.role(); };
@@ -236,7 +244,7 @@ TEST_F(GrpcClientAclTest, ListBucketAclSuccess) {
 }
 
 TEST_F(GrpcClientAclTest, GetBucketAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -250,14 +258,14 @@ TEST_F(GrpcClientAclTest, GetBucketAclSuccess) {
 
   auto client = CreateTestClient(mock);
   auto response = client->GetBucketAcl(
-      GetBucketAclRequest("test-bucket-id", "test-entity1"));
+      storage::internal::GetBucketAclRequest("test-bucket-id", "test-entity1"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "test-role1");
   EXPECT_EQ(response->bucket(), "test-bucket-id");
 
-  response =
-      client->GetBucketAcl(GetBucketAclRequest("test-bucket-id", "test-alt1"));
+  response = client->GetBucketAcl(
+      storage::internal::GetBucketAclRequest("test-bucket-id", "test-alt1"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "test-role1");
@@ -265,7 +273,7 @@ TEST_F(GrpcClientAclTest, GetBucketAclSuccess) {
 }
 
 TEST_F(GrpcClientAclTest, GetBucketAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -279,7 +287,7 @@ TEST_F(GrpcClientAclTest, GetBucketAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->GetBucketAcl(
-      GetBucketAclRequest("test-bucket-name", "test-entity1")
+      storage::internal::GetBucketAclRequest("test-bucket-name", "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -287,7 +295,7 @@ TEST_F(GrpcClientAclTest, GetBucketAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, GetBucketAclNotFound) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -298,13 +306,13 @@ TEST_F(GrpcClientAclTest, GetBucketAclNotFound) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetBucketAcl(
-      GetBucketAclRequest("test-bucket-id", "test-not-found"));
+  auto response = client->GetBucketAcl(storage::internal::GetBucketAclRequest(
+      "test-bucket-id", "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(GrpcClientAclTest, CreateBucketAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -333,14 +341,15 @@ TEST_F(GrpcClientAclTest, CreateBucketAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->CreateBucketAcl(CreateBucketAclRequest(
-      "test-bucket-id", "test-new-entity", "test-new-role"));
+  auto response =
+      client->CreateBucketAcl(storage::internal::CreateBucketAclRequest(
+          "test-bucket-id", "test-new-entity", "test-new-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-new-entity");
 }
 
 TEST_F(GrpcClientAclTest, CreateBucketAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -355,7 +364,8 @@ TEST_F(GrpcClientAclTest, CreateBucketAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->CreateBucketAcl(
-      CreateBucketAclRequest("test-bucket-name", "test-entity1", "test-role1")
+      storage::internal::CreateBucketAclRequest("test-bucket-name",
+                                                "test-entity1", "test-role1")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -363,7 +373,7 @@ TEST_F(GrpcClientAclTest, CreateBucketAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, CreateBucketAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -385,13 +395,14 @@ TEST_F(GrpcClientAclTest, CreateBucketAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->CreateBucketAcl(CreateBucketAclRequest(
-      "test-bucket-id", "test-new-entity", "test-new-role"));
+  auto response =
+      client->CreateBucketAcl(storage::internal::CreateBucketAclRequest(
+          "test-bucket-id", "test-new-entity", "test-new-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, DeleteBucketAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -417,17 +428,18 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->DeleteBucketAcl(
-      DeleteBucketAclRequest("test-bucket-id", "test-entity1"));
+  auto response =
+      client->DeleteBucketAcl(storage::internal::DeleteBucketAclRequest(
+          "test-bucket-id", "test-entity1"));
   EXPECT_STATUS_OK(response);
 
   response = client->DeleteBucketAcl(
-      DeleteBucketAclRequest("test-bucket-id", "test-alt1"));
+      storage::internal::DeleteBucketAclRequest("test-bucket-id", "test-alt1"));
   EXPECT_STATUS_OK(response);
 }
 
 TEST_F(GrpcClientAclTest, DeleteBucketAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -442,7 +454,8 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->DeleteBucketAcl(
-      DeleteBucketAclRequest("test-bucket-name", "test-entity1")
+      storage::internal::DeleteBucketAclRequest("test-bucket-name",
+                                                "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -450,7 +463,7 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, DeleteBucketAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -473,13 +486,14 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->DeleteBucketAcl(
-      DeleteBucketAclRequest("test-bucket-id", "test-entity1"));
+  auto response =
+      client->DeleteBucketAcl(storage::internal::DeleteBucketAclRequest(
+          "test-bucket-id", "test-entity1"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, DeleteBucketAclNotFound) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -491,13 +505,14 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclNotFound) {
   EXPECT_CALL(*mock, UpdateBucket).Times(0);
 
   auto client = CreateTestClient(mock);
-  auto response = client->DeleteBucketAcl(
-      DeleteBucketAclRequest("test-bucket-id", "test-not-found"));
+  auto response =
+      client->DeleteBucketAcl(storage::internal::DeleteBucketAclRequest(
+          "test-bucket-id", "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(GrpcClientAclTest, UpdateBucketSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -525,21 +540,22 @@ TEST_F(GrpcClientAclTest, UpdateBucketSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->UpdateBucketAcl(
-      UpdateBucketAclRequest("test-bucket-id", "test-entity1", "updated-role"));
+  auto response =
+      client->UpdateBucketAcl(storage::internal::UpdateBucketAclRequest(
+          "test-bucket-id", "test-entity1", "updated-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
 
-  response = client->UpdateBucketAcl(
-      UpdateBucketAclRequest("test-bucket-id", "test-alt1", "updated-role"));
+  response = client->UpdateBucketAcl(storage::internal::UpdateBucketAclRequest(
+      "test-bucket-id", "test-alt1", "updated-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
 }
 
 TEST_F(GrpcClientAclTest, UpdateBucketAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -554,7 +570,8 @@ TEST_F(GrpcClientAclTest, UpdateBucketAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->UpdateBucketAcl(
-      UpdateBucketAclRequest("test-bucket-name", "test-entity1", "updated-role")
+      storage::internal::UpdateBucketAclRequest("test-bucket-name",
+                                                "test-entity1", "updated-role")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -562,7 +579,7 @@ TEST_F(GrpcClientAclTest, UpdateBucketAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, UpdateBucketAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -584,13 +601,14 @@ TEST_F(GrpcClientAclTest, UpdateBucketAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->UpdateBucketAcl(
-      UpdateBucketAclRequest("test-bucket-id", "test-entity1", "updated-role"));
+  auto response =
+      client->UpdateBucketAcl(storage::internal::UpdateBucketAclRequest(
+          "test-bucket-id", "test-entity1", "updated-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, PatchBucketAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -618,14 +636,15 @@ TEST_F(GrpcClientAclTest, PatchBucketAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->PatchBucketAcl(PatchBucketAclRequest(
-      "test-bucket-id", "test-entity1",
-      BucketAccessControlPatchBuilder().set_role("updated-role")));
+  auto response =
+      client->PatchBucketAcl(storage::internal::PatchBucketAclRequest(
+          "test-bucket-id", "test-entity1",
+          BucketAccessControlPatchBuilder().set_role("updated-role")));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
 
-  response = client->PatchBucketAcl(PatchBucketAclRequest(
+  response = client->PatchBucketAcl(storage::internal::PatchBucketAclRequest(
       "test-bucket-id", "test-alt1",
       BucketAccessControlPatchBuilder().set_role("updated-role")));
   ASSERT_STATUS_OK(response);
@@ -634,7 +653,7 @@ TEST_F(GrpcClientAclTest, PatchBucketAclSuccess) {
 }
 
 TEST_F(GrpcClientAclTest, PatchBucketAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -648,7 +667,7 @@ TEST_F(GrpcClientAclTest, PatchBucketAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->PatchBucketAcl(
-      PatchBucketAclRequest(
+      storage::internal::PatchBucketAclRequest(
           "test-bucket-name", "test-entity1",
           BucketAccessControlPatchBuilder().set_role("updated-role"))
           .set_multiple_options(Fields("field1,field2"),
@@ -658,7 +677,7 @@ TEST_F(GrpcClientAclTest, PatchBucketAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, PatchBucketAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -680,14 +699,15 @@ TEST_F(GrpcClientAclTest, PatchBucketAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->PatchBucketAcl(PatchBucketAclRequest(
-      "test-bucket-id", "test-entity1",
-      BucketAccessControlPatchBuilder().set_role("updated-role")));
+  auto response =
+      client->PatchBucketAcl(storage::internal::PatchBucketAclRequest(
+          "test-bucket-id", "test-entity1",
+          BucketAccessControlPatchBuilder().set_role("updated-role")));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, ListObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
@@ -702,7 +722,8 @@ TEST_F(GrpcClientAclTest, ListObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->ListObjectAcl(
-      ListObjectAclRequest("test-bucket-name", "test-object-id")
+      storage::internal::ListObjectAclRequest("test-bucket-name",
+                                              "test-object-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -710,7 +731,7 @@ TEST_F(GrpcClientAclTest, ListObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, ListObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -721,8 +742,8 @@ TEST_F(GrpcClientAclTest, ListObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->ListObjectAcl(
-      ListObjectAclRequest("test-bucket-id", "test-object-id"));
+  auto response = client->ListObjectAcl(storage::internal::ListObjectAclRequest(
+      "test-bucket-id", "test-object-id"));
   ASSERT_STATUS_OK(response);
   auto make_matcher = [](std::string const& role, std::string const& entity) {
     auto get_role = [](ObjectAccessControl const& acl) { return acl.role(); };
@@ -745,7 +766,7 @@ TEST_F(GrpcClientAclTest, ListObjectAclSuccess) {
 }
 
 TEST_F(GrpcClientAclTest, GetObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -758,15 +779,15 @@ TEST_F(GrpcClientAclTest, GetObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetObjectAcl(
-      GetObjectAclRequest("test-bucket-id", "test-object-id", "test-entity1"));
+  auto response = client->GetObjectAcl(storage::internal::GetObjectAclRequest(
+      "test-bucket-id", "test-object-id", "test-entity1"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "test-role1");
   EXPECT_EQ(response->object(), "test-object-id");
 
-  response = client->GetObjectAcl(
-      GetObjectAclRequest("test-bucket-id", "test-object-id", "test-alt1"));
+  response = client->GetObjectAcl(storage::internal::GetObjectAclRequest(
+      "test-bucket-id", "test-object-id", "test-alt1"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "test-role1");
@@ -774,7 +795,7 @@ TEST_F(GrpcClientAclTest, GetObjectAclSuccess) {
 }
 
 TEST_F(GrpcClientAclTest, GetObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
@@ -789,7 +810,8 @@ TEST_F(GrpcClientAclTest, GetObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->GetObjectAcl(
-      GetObjectAclRequest("test-bucket-id", "test-object-id", "test-entity1")
+      storage::internal::GetObjectAclRequest("test-bucket-id", "test-object-id",
+                                             "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -797,7 +819,7 @@ TEST_F(GrpcClientAclTest, GetObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, GetObjectAclNotFound) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -808,13 +830,13 @@ TEST_F(GrpcClientAclTest, GetObjectAclNotFound) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetObjectAcl(GetObjectAclRequest(
+  auto response = client->GetObjectAcl(storage::internal::GetObjectAclRequest(
       "test-bucket-id", "test-object-id", "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(GrpcClientAclTest, CreateObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -845,14 +867,16 @@ TEST_F(GrpcClientAclTest, CreateObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->CreateObjectAcl(CreateObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-new-entity", "test-new-role"));
+  auto response =
+      client->CreateObjectAcl(storage::internal::CreateObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-new-entity",
+          "test-new-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-new-entity");
 }
 
 TEST_F(GrpcClientAclTest, CreateObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
@@ -867,8 +891,8 @@ TEST_F(GrpcClientAclTest, CreateObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->CreateObjectAcl(
-      CreateObjectAclRequest("test-bucket-name", "test-object-id",
-                             "test-entity1", "test-role1")
+      storage::internal::CreateObjectAclRequest(
+          "test-bucket-name", "test-object-id", "test-entity1", "test-role1")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -876,7 +900,7 @@ TEST_F(GrpcClientAclTest, CreateObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, CreateObjectAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -900,13 +924,15 @@ TEST_F(GrpcClientAclTest, CreateObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->CreateObjectAcl(CreateObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-new-entity", "test-new-role"));
+  auto response =
+      client->CreateObjectAcl(storage::internal::CreateObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-new-entity",
+          "test-new-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, DeleteObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -933,17 +959,18 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->DeleteObjectAcl(DeleteObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-entity1"));
+  auto response =
+      client->DeleteObjectAcl(storage::internal::DeleteObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-entity1"));
   EXPECT_STATUS_OK(response);
 
-  response = client->DeleteObjectAcl(
-      DeleteObjectAclRequest("test-bucket-id", "test-object-id", "test-alt2"));
+  response = client->DeleteObjectAcl(storage::internal::DeleteObjectAclRequest(
+      "test-bucket-id", "test-object-id", "test-alt2"));
   EXPECT_STATUS_OK(response);
 }
 
 TEST_F(GrpcClientAclTest, DeleteObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
@@ -958,7 +985,8 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->DeleteObjectAcl(
-      DeleteObjectAclRequest("test-bucket-id", "test-object-id", "test-entity1")
+      storage::internal::DeleteObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -966,7 +994,7 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, DeleteObjectAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -991,13 +1019,14 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclPatchFails) {
           });
 
   auto client = CreateTestClient(mock);
-  auto response = client->DeleteObjectAcl(DeleteObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-entity1"));
+  auto response =
+      client->DeleteObjectAcl(storage::internal::DeleteObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-entity1"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, DeleteObjectAclNotFound) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1009,13 +1038,14 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclNotFound) {
   EXPECT_CALL(*mock, UpdateObject).Times(0);
 
   auto client = CreateTestClient(mock);
-  auto response = client->DeleteObjectAcl(DeleteObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-not-found"));
+  auto response =
+      client->DeleteObjectAcl(storage::internal::DeleteObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(GrpcClientAclTest, UpdateObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -1044,13 +1074,14 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->UpdateObjectAcl(UpdateObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-entity1", "updated-role"));
+  auto response =
+      client->UpdateObjectAcl(storage::internal::UpdateObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-entity1", "updated-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
 
-  response = client->UpdateObjectAcl(UpdateObjectAclRequest(
+  response = client->UpdateObjectAcl(storage::internal::UpdateObjectAclRequest(
       "test-bucket-id", "test-object-id", "test-alt1", "updated-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
@@ -1058,7 +1089,7 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclSuccess) {
 }
 
 TEST_F(GrpcClientAclTest, UpdateObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
@@ -1073,8 +1104,8 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->UpdateObjectAcl(
-      UpdateObjectAclRequest("test-bucket-id", "test-object-id", "test-entity1",
-                             "updated-role")
+      storage::internal::UpdateObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-entity1", "updated-role")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -1082,7 +1113,7 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, UpdateObjectAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1106,13 +1137,14 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->UpdateObjectAcl(UpdateObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-entity1", "updated-role"));
+  auto response =
+      client->UpdateObjectAcl(storage::internal::UpdateObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-entity1", "updated-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, PatchObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -1141,14 +1173,15 @@ TEST_F(GrpcClientAclTest, PatchObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->PatchObjectAcl(PatchObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-entity1",
-      ObjectAccessControlPatchBuilder().set_role("updated-role")));
+  auto response =
+      client->PatchObjectAcl(storage::internal::PatchObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-entity1",
+          ObjectAccessControlPatchBuilder().set_role("updated-role")));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
 
-  response = client->PatchObjectAcl(PatchObjectAclRequest(
+  response = client->PatchObjectAcl(storage::internal::PatchObjectAclRequest(
       "test-bucket-id", "test-object-id", "test-alt1",
       ObjectAccessControlPatchBuilder().set_role("updated-role")));
   ASSERT_STATUS_OK(response);
@@ -1157,7 +1190,7 @@ TEST_F(GrpcClientAclTest, PatchObjectAclSuccess) {
 }
 
 TEST_F(GrpcClientAclTest, PatchObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
@@ -1172,7 +1205,7 @@ TEST_F(GrpcClientAclTest, PatchObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->PatchObjectAcl(
-      PatchObjectAclRequest(
+      storage::internal::PatchObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-entity1",
           ObjectAccessControlPatchBuilder().set_role("updated-role"))
           .set_multiple_options(Fields("field1,field2"),
@@ -1182,7 +1215,7 @@ TEST_F(GrpcClientAclTest, PatchObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, PatchObjectAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1206,14 +1239,15 @@ TEST_F(GrpcClientAclTest, PatchObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->PatchObjectAcl(PatchObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-entity1",
-      ObjectAccessControlPatchBuilder().set_role("updated-role")));
+  auto response =
+      client->PatchObjectAcl(storage::internal::PatchObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-entity1",
+          ObjectAccessControlPatchBuilder().set_role("updated-role")));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, ListDefaultObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -1227,7 +1261,7 @@ TEST_F(GrpcClientAclTest, ListDefaultObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->ListDefaultObjectAcl(
-      ListDefaultObjectAclRequest("test-bucket-name")
+      storage::internal::ListDefaultObjectAclRequest("test-bucket-name")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -1235,7 +1269,7 @@ TEST_F(GrpcClientAclTest, ListDefaultObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, ListDefaultObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1247,7 +1281,7 @@ TEST_F(GrpcClientAclTest, ListDefaultObjectAclSuccess) {
 
   auto client = CreateTestClient(mock);
   auto response = client->ListDefaultObjectAcl(
-      ListDefaultObjectAclRequest("test-bucket-id"));
+      storage::internal::ListDefaultObjectAclRequest("test-bucket-id"));
   ASSERT_STATUS_OK(response);
   auto make_matcher = [](std::string const& role, std::string const& entity) {
     auto get_role = [](ObjectAccessControl const& acl) { return acl.role(); };
@@ -1266,7 +1300,7 @@ TEST_F(GrpcClientAclTest, ListDefaultObjectAclSuccess) {
 }
 
 TEST_F(GrpcClientAclTest, GetDefaultObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -1279,15 +1313,17 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetDefaultObjectAcl(
-      GetDefaultObjectAclRequest("test-bucket-id", "test-entity3"));
+  auto response =
+      client->GetDefaultObjectAcl(storage::internal::GetDefaultObjectAclRequest(
+          "test-bucket-id", "test-entity3"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity3");
   EXPECT_EQ(response->role(), "test-role3");
   EXPECT_EQ(response->bucket(), "test-bucket-id");
 
-  response = client->GetDefaultObjectAcl(
-      GetDefaultObjectAclRequest("test-bucket-id", "test-alt3"));
+  response =
+      client->GetDefaultObjectAcl(storage::internal::GetDefaultObjectAclRequest(
+          "test-bucket-id", "test-alt3"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity3");
   EXPECT_EQ(response->role(), "test-role3");
@@ -1295,7 +1331,7 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclSuccess) {
 }
 
 TEST_F(GrpcClientAclTest, GetDefaultObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -1309,7 +1345,8 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->GetDefaultObjectAcl(
-      GetDefaultObjectAclRequest("test-bucket-name", "test-entity1")
+      storage::internal::GetDefaultObjectAclRequest("test-bucket-name",
+                                                    "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -1317,7 +1354,7 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, GetDefaultObjectAclNotFound) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1328,13 +1365,14 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclNotFound) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetDefaultObjectAcl(
-      GetDefaultObjectAclRequest("test-bucket-id", "test-not-found"));
+  auto response =
+      client->GetDefaultObjectAcl(storage::internal::GetDefaultObjectAclRequest(
+          "test-bucket-id", "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(GrpcClientAclTest, CreateDefaultObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1359,15 +1397,16 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->CreateDefaultObjectAcl(CreateDefaultObjectAclRequest(
-      "test-bucket-id", "test-new-entity", "test-new-role"));
+  auto response = client->CreateDefaultObjectAcl(
+      storage::internal::CreateDefaultObjectAclRequest(
+          "test-bucket-id", "test-new-entity", "test-new-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-new-entity");
   EXPECT_EQ(response->role(), "test-new-role");
 }
 
 TEST_F(GrpcClientAclTest, CreateDefaultObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -1381,8 +1420,8 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->CreateDefaultObjectAcl(
-      CreateDefaultObjectAclRequest("test-bucket-name", "test-entity3",
-                                    "test-role3")
+      storage::internal::CreateDefaultObjectAclRequest(
+          "test-bucket-name", "test-entity3", "test-role3")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -1390,7 +1429,7 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, CreateDefaultObjectAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1414,13 +1453,14 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->CreateDefaultObjectAcl(CreateDefaultObjectAclRequest(
-      "test-bucket-id", "test-new-entity", "test-new-role"));
+  auto response = client->CreateDefaultObjectAcl(
+      storage::internal::CreateDefaultObjectAclRequest(
+          "test-bucket-id", "test-new-entity", "test-new-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -1449,15 +1489,17 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclSuccess) {
 
   auto client = CreateTestClient(mock);
   auto response = client->DeleteDefaultObjectAcl(
-      DeleteDefaultObjectAclRequest("test-bucket-id", "test-entity3"));
+      storage::internal::DeleteDefaultObjectAclRequest("test-bucket-id",
+                                                       "test-entity3"));
   EXPECT_STATUS_OK(response);
   response = client->DeleteDefaultObjectAcl(
-      DeleteDefaultObjectAclRequest("test-bucket-id", "test-alt3"));
+      storage::internal::DeleteDefaultObjectAclRequest("test-bucket-id",
+                                                       "test-alt3"));
   EXPECT_STATUS_OK(response);
 }
 
 TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -1471,7 +1513,8 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->DeleteDefaultObjectAcl(
-      DeleteDefaultObjectAclRequest("test-bucket-name", "test-entity1")
+      storage::internal::DeleteDefaultObjectAclRequest("test-bucket-name",
+                                                       "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -1479,7 +1522,7 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1504,12 +1547,13 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclPatchFails) {
 
   auto client = CreateTestClient(mock);
   auto response = client->DeleteDefaultObjectAcl(
-      DeleteDefaultObjectAclRequest("test-bucket-id", "test-entity3"));
+      storage::internal::DeleteDefaultObjectAclRequest("test-bucket-id",
+                                                       "test-entity3"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclNotFound) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1522,12 +1566,13 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclNotFound) {
 
   auto client = CreateTestClient(mock);
   auto response = client->DeleteDefaultObjectAcl(
-      DeleteDefaultObjectAclRequest("test-bucket-id", "test-not-found"));
+      storage::internal::DeleteDefaultObjectAclRequest("test-bucket-id",
+                                                       "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -1556,19 +1601,21 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->UpdateDefaultObjectAcl(UpdateDefaultObjectAclRequest(
-      "test-bucket-id", "test-entity3", "updated-role"));
+  auto response = client->UpdateDefaultObjectAcl(
+      storage::internal::UpdateDefaultObjectAclRequest(
+          "test-bucket-id", "test-entity3", "updated-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity3");
   EXPECT_EQ(response->role(), "updated-role");
 
-  response = client->UpdateDefaultObjectAcl(UpdateDefaultObjectAclRequest(
-      "test-bucket-id", "test-alt3", "updated-role"));
+  response = client->UpdateDefaultObjectAcl(
+      storage::internal::UpdateDefaultObjectAclRequest(
+          "test-bucket-id", "test-alt3", "updated-role"));
   ASSERT_STATUS_OK(response);
 }
 
 TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -1582,8 +1629,8 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->UpdateDefaultObjectAcl(
-      UpdateDefaultObjectAclRequest("test-bucket-name", "test-entity3",
-                                    "updated-role")
+      storage::internal::UpdateDefaultObjectAclRequest(
+          "test-bucket-name", "test-entity3", "updated-role")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
                                 UserProject("test-user-project")));
@@ -1591,7 +1638,7 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1615,13 +1662,14 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->UpdateDefaultObjectAcl(UpdateDefaultObjectAclRequest(
-      "test-bucket-id", "test-entity3", "updated-role"));
+  auto response = client->UpdateDefaultObjectAcl(
+      storage::internal::UpdateDefaultObjectAclRequest(
+          "test-bucket-id", "test-entity3", "updated-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(GrpcClientAclTest, PatchDefaultObjectAclSuccess) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
       .WillRepeatedly([&](grpc::ClientContext&,
@@ -1650,23 +1698,25 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest(
-      "test-bucket-id", "test-entity3",
-      ObjectAccessControlPatchBuilder().set_role("updated-role")));
+  auto response = client->PatchDefaultObjectAcl(
+      storage::internal::PatchDefaultObjectAclRequest(
+          "test-bucket-id", "test-entity3",
+          ObjectAccessControlPatchBuilder().set_role("updated-role")));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity3");
   EXPECT_EQ(response->role(), "updated-role");
 
-  response = client->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest(
-      "test-bucket-id", "test-alt3",
-      ObjectAccessControlPatchBuilder().set_role("updated-role")));
+  response = client->PatchDefaultObjectAcl(
+      storage::internal::PatchDefaultObjectAclRequest(
+          "test-bucket-id", "test-alt3",
+          ObjectAccessControlPatchBuilder().set_role("updated-role")));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity3");
   EXPECT_EQ(response->role(), "updated-role");
 }
 
 TEST_F(GrpcClientAclTest, PatchDefaultObjectAclFailure) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
@@ -1680,7 +1730,7 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclFailure) {
 
   auto client = CreateTestClient(mock);
   auto response = client->PatchDefaultObjectAcl(
-      PatchDefaultObjectAclRequest(
+      storage::internal::PatchDefaultObjectAclRequest(
           "test-bucket-name", "test-entity3",
           ObjectAccessControlPatchBuilder().set_role("updated-role"))
           .set_multiple_options(Fields("field1,field2"),
@@ -1690,7 +1740,7 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, PatchDefaultObjectAclPatchFails) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
+  auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
@@ -1714,15 +1764,15 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest(
-      "test-bucket-id", "test-entity3",
-      ObjectAccessControlPatchBuilder().set_role("updated-role")));
+  auto response = client->PatchDefaultObjectAcl(
+      storage::internal::PatchDefaultObjectAclRequest(
+          "test-bucket-id", "test-entity3",
+          ObjectAccessControlPatchBuilder().set_role("updated-role")));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

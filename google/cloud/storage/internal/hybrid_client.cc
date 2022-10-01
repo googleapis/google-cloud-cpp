@@ -28,8 +28,7 @@ std::shared_ptr<storage::internal::RawClient> HybridClient::Create(
 }
 
 HybridClient::HybridClient(Options const& options)
-    : grpc_(storage::internal::GrpcClient::Create(
-          storage::internal::DefaultOptionsGrpc(options))),
+    : grpc_(GrpcClient::Create(DefaultOptionsGrpc(options))),
       rest_(storage::internal::RestClient::Create(
           storage::internal::DefaultOptionsWithCredentials(options))) {}
 

@@ -24,11 +24,13 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
+using ::google::cloud::storage::TransferStallTimeoutOption;
+using ::google::cloud::storage::internal::ConstBuffer;
+using ::google::cloud::storage::internal::UploadChunkRequest;
 using ::google::cloud::storage::testing::MockInsertStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
@@ -152,8 +154,7 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutClose) {
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
