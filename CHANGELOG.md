@@ -116,7 +116,7 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 </details>
 
-## v2.3.0 - TBD
+## v2.3.0 - 2022-10
 
 ### New Libraries
 
@@ -125,6 +125,32 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Distributed Cloud Edge Container API](/google/cloud/edgecontainer/README.md)
 - [Network Connectivity API](/google/cloud/networkconnectivity/README.md)
+
+### [BigQuery](/google/cloud/bigquery/README.md)
+
+The library has been expanded to include [Analytics Hub][bq-analytics-hub], an
+API that facilitates data sharing within and across organizations.
+([#9882](https://github.com/googleapis/google-cloud-cpp/pull/9882))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- fix(spanner): remove session from pool upon "not found" refresh failure ([#9954](https://github.com/googleapis/google-cloud-cpp/pull/9954))
+- feat(spanner): add support for Customer Managed Multi-Region (CMMR) read-only replicas at instance creation time ([#9872](https://github.com/googleapis/google-cloud-cpp/pull/9872))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): easier mocks for `HmacKeyMetadata` ([#9949](https://github.com/googleapis/google-cloud-cpp/pull/9949))
+- feat(storage): easier mocks for `*AccessControl` ([#9910](https://github.com/googleapis/google-cloud-cpp/pull/9910))
+- feat(storage): easier mocks with `ObjectMetadata` ([#9899](https://github.com/googleapis/google-cloud-cpp/pull/9899))
+- fix(storage): decay type before testing supported-options membership ([#9893](https://github.com/googleapis/google-cloud-cpp/pull/9893))
+- feat(storage): easier mocks with `BucketMetadata` ([#9886](https://github.com/googleapis/google-cloud-cpp/pull/9886))
+- fix(storage): error message for resumable uploads ([#9855](https://github.com/googleapis/google-cloud-cpp/pull/9855))
+- feat(storage): release `*StallMinimumThroughputOption` ([#9813](https://github.com/googleapis/google-cloud-cpp/pull/9813))
+- fix(storage): no workaround needed with libc++ and MSVC ([#9768](https://github.com/googleapis/google-cloud-cpp/pull/9768))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(common): better defaults for curl initialization ([#9798](https://github.com/googleapis/google-cloud-cpp/pull/9798))
 
 ## v2.2.0 - 2022-09
 
@@ -3170,6 +3196,7 @@ releases.  The relevant notes are:
 [#9659]: https://github.com/googleapis/google-cloud-cpp/issues/9659
 [architecture design]: /ARCHITECTURE.md#the-client-classes
 [architecture-connection]: /ARCHITECTURE.md#the-connection-classes
+[bq-analytics-hub]: https://cloud.google.com/bigquery/docs/analytics-hub-introduction
 [cbt-dataclient-migration]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/migrating-from-dataclient.html
 [cloud bigtable admin api]: https://cloud.google.com/bigtable/docs/reference/admin/rpc
 [cloud tasks]: /google/cloud/tasks/README.md
