@@ -135,7 +135,7 @@ API that facilitates data sharing within and across organizations.
 ### [Spanner](/google/cloud/spanner/README.md)
 
 - fix(spanner): remove session from pool upon "not found" refresh failure ([#9954](https://github.com/googleapis/google-cloud-cpp/pull/9954))
-- feat(spanner): add support for CMMR phase 2 ([#9872](https://github.com/googleapis/google-cloud-cpp/pull/9872))
+- feat(spanner): add support for Customer Managed Multi-Region (CMMR) read-only replicas at instance creation time ([#9872](https://github.com/googleapis/google-cloud-cpp/pull/9872))
 
 ### [Storage](/google/cloud/storage/README.md)
 
