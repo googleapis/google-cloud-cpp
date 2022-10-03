@@ -83,6 +83,7 @@ add_library(
     internal/empty_response.h
     internal/error_credentials.cc
     internal/error_credentials.h
+    internal/generate_message_boundary.cc
     internal/generate_message_boundary.h
     internal/generic_object_request.h
     internal/generic_request.h
@@ -529,10 +530,30 @@ if (BUILD_TESTING)
         endif ()
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
-
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("storage_client_unit_tests.bzl"
                          "storage_client_unit_tests" YEAR "2018")
+
+    find_package(benchmark CONFIG REQUIRED)
+
+    set(google_cloud_cpp_storage_benchmarks
+        # cmake-format: sort
+        internal/generate_message_boundary_benchmark.cc)
+
+    # Export the list of benchmarks to a .bzl file so we do not need to maintain
+    # the list in two places.
+    export_list_to_bazel("google_cloud_cpp_storage_benchmarks.bzl"
+                         "google_cloud_cpp_storage_benchmarks" YEAR "2022")
+
+    # Generate a target for each benchmark.
+    foreach (fname ${google_cloud_cpp_storage_benchmarks})
+        google_cloud_cpp_add_executable(target "storage" "${fname}")
+        add_test(NAME ${target} COMMAND ${target})
+        target_link_libraries(
+            ${target} PRIVATE absl::memory google-cloud-cpp::storage
+                              benchmark::benchmark_main)
+        google_cloud_cpp_add_common_options(${target})
+    endforeach ()
 
     add_subdirectory(tests)
     add_subdirectory(benchmarks)
