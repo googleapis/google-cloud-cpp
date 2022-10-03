@@ -30,10 +30,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using BaseBigtableStubFactory = std::function<std::shared_ptr<BigtableStub>(
     std::shared_ptr<grpc::Channel>)>;
 
-std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
-    Options const& options,
-    std::function<std::shared_ptr<BigtableStub>(int)> child_factory);
-
 /// Used in testing to create decorated mocks.
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,

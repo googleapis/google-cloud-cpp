@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BIGTABLE_CHANNEL_REFRESH_H
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
-#include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/bigtable/version.h"
 
 namespace google {
@@ -25,22 +24,17 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A container that holds the shared state of timer futures involved in
- * channel refreshing.
+ * A container responsible for channel refreshing.
  */
-class BigtableChannelRefresh : public BigtableStub {
+class BigtableChannelRefresh
+    : public BigtableStub,
+      public std::enable_shared_from_this<BigtableChannelRefresh> {
  public:
-  explicit BigtableChannelRefresh(
-      std::shared_ptr<BigtableStub> child,
-      std::shared_ptr<ConnectionRefreshState> refresh_state)
-      : child_(std::move(child)), refresh_state_(std::move(refresh_state)) {}
+  ~BigtableChannelRefresh() override = default;
 
-  ~BigtableChannelRefresh() override {
-    // Eventually the channel refresh chain will terminate after this class is
-    // destroyed. But only after the timer futures expire on the CompletionQueue
-    // performing this work. We might as well cancel those timer futures now.
-    refresh_state_->timers().CancelAll();
-  }
+  static std::shared_ptr<BigtableChannelRefresh> Create(
+      std::shared_ptr<BigtableStub> child, CompletionQueue cq,
+      std::vector<std::shared_ptr<grpc::Channel>> channels);
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>
@@ -112,8 +106,23 @@ class BigtableChannelRefresh : public BigtableStub {
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) override;
 
  private:
+  explicit BigtableChannelRefresh(
+      std::shared_ptr<BigtableStub> child,
+      std::vector<std::shared_ptr<grpc::Channel>> channels)
+      : child_(std::move(child)), channels_(std::move(channels)) {}
+
+  std::weak_ptr<BigtableChannelRefresh> WeakFromThis() {
+    return shared_from_this();
+  }
+  void Refresh(std::size_t index,
+               std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq);
+  void OnRefresh(
+      std::size_t index,
+      std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq, bool ok);
+  void StartRefreshLoop(CompletionQueue cq);
+
   std::shared_ptr<BigtableStub> child_;
-  std::shared_ptr<ConnectionRefreshState> refresh_state_;
+  std::vector<std::shared_ptr<grpc::Channel>> channels_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/internal/bigtable_logging_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_metadata_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_round_robin.h"
-#include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -43,36 +42,23 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 
 }  // namespace
 
-std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
-    Options const& options,
-    std::function<std::shared_ptr<BigtableStub>(int)> child_factory) {
-  std::vector<std::shared_ptr<BigtableStub>> children(
-      (std::max)(1, options.get<GrpcNumChannelsOption>()));
-  int id = 0;
-  std::generate(children.begin(), children.end(),
-                [&id, &child_factory] { return child_factory(id++); });
-  return std::make_shared<BigtableRoundRobin>(std::move(children));
-}
-
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
     BaseBigtableStubFactory const& base_factory) {
-  auto cq_impl = internal::GetCompletionQueueImpl(cq);
-  auto refresh = std::make_shared<ConnectionRefreshState>(
-      cq_impl, options.get<bigtable::MinConnectionRefreshOption>(),
-      options.get<bigtable::MaxConnectionRefreshOption>());
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      std::move(cq), options);
-  auto child_factory = [base_factory, cq_impl, refresh, &auth,
-                        options](int id) {
-    auto channel = CreateGrpcChannel(*auth, options, id);
-    if (refresh->enabled()) ScheduleChannelRefresh(cq_impl, refresh, channel);
-    return base_factory(std::move(channel));
-  };
-  auto stub = CreateBigtableStubRoundRobin(options, std::move(child_factory));
-  if (refresh->enabled()) {
-    stub = std::make_shared<BigtableChannelRefresh>(std::move(stub),
-                                                    std::move(refresh));
+  auto auth = internal::CreateAuthenticationStrategy(cq, options);
+  std::vector<std::shared_ptr<grpc::Channel>> channels(
+      (std::max)(1, options.get<GrpcNumChannelsOption>()));
+  int id = 0;
+  std::generate(channels.begin(), channels.end(),
+                [&] { return CreateGrpcChannel(*auth, options, id++); });
+  std::vector<std::shared_ptr<BigtableStub>> children(channels.size());
+  std::transform(channels.begin(), channels.end(), children.begin(),
+                 base_factory);
+  std::shared_ptr<BigtableStub> stub =
+      std::make_shared<BigtableRoundRobin>(std::move(children));
+  if (options.get<bigtable::MaxConnectionRefreshOption>().count() != 0) {
+    stub = BigtableChannelRefresh::Create(std::move(stub), std::move(cq),
+                                          std::move(channels));
   }
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<BigtableAuth>(std::move(auth), std::move(stub));

@@ -13,11 +13,24 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/bigtable_channel_refresh.h"
+#include "google/cloud/internal/async_connection_ready.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+auto constexpr kRefreshPeriod = std::chrono::hours(1);
+
+std::shared_ptr<BigtableChannelRefresh> BigtableChannelRefresh::Create(
+    std::shared_ptr<BigtableStub> child, CompletionQueue cq,
+    std::vector<std::shared_ptr<grpc::Channel>> channels) {
+  auto stub = std::shared_ptr<BigtableChannelRefresh>(
+      new BigtableChannelRefresh(std::move(child), std::move(channels)));
+  stub->StartRefreshLoop(std::move(cq));
+  return stub;
+}
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
@@ -120,6 +133,37 @@ BigtableChannelRefresh::AsyncReadModifyWriteRow(
     std::unique_ptr<grpc::ClientContext> context,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   return child_->AsyncReadModifyWriteRow(cq, std::move(context), request);
+}
+
+void BigtableChannelRefresh::Refresh(
+    std::size_t index,
+    std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq) {
+  auto cq = wcq.lock();
+  if (!cq) return;
+  auto deadline = std::chrono::system_clock::now() + kRefreshPeriod;
+  GCP_LOG(INFO) << "Refreshing channel [" << index << "]";
+  (void)internal::NotifyOnStateChange::Start(std::move(cq), channels_.at(index),
+                                             deadline)
+      .then(
+          [index, wcq = std::move(wcq), weak = WeakFromThis()](future<bool> f) {
+            if (auto self = weak.lock()) self->OnRefresh(index, wcq, f.get());
+          });
+}
+
+void BigtableChannelRefresh::OnRefresh(
+    std::size_t index,
+    std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq, bool ok) {
+  // The CQ is shutting down, or the channel is shutdown, stop the loop.
+  if (!ok) return;
+  Refresh(index, std::move(wcq));
+}
+
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+void BigtableChannelRefresh::StartRefreshLoop(CompletionQueue cq) {
+  // Break the ownership cycle.
+  auto wcq = std::weak_ptr<internal::CompletionQueueImpl>(
+      internal::GetCompletionQueueImpl(cq));
+  for (std::size_t i = 0; i != channels_.size(); ++i) Refresh(i, wcq);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
