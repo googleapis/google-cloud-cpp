@@ -72,9 +72,8 @@ auto RetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
     grpc::ClientContext context;
     ConfigureContext(context, CurrentOptions());
     auto result = functor(context, request);
-    if (result.ok()) {
-      return result;
-    }
+    if (result.ok()) return result;
+
     last_status = GetResultStatus(std::move(result));
     if (idempotency == Idempotency::kNonIdempotent) {
       return RetryLoopError("Error in non-idempotent operation", location,

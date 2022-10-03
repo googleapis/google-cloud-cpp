@@ -80,8 +80,6 @@ add_library(
     internal/populate_grpc_options.h
     internal/resumable_streaming_read_rpc.h
     internal/retry_loop.h
-    internal/retry_loop_helpers.cc
-    internal/retry_loop_helpers.h
     internal/routing_matcher.h
     internal/setup_context.h
     internal/streaming_read_rpc.cc
