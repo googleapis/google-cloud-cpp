@@ -90,6 +90,8 @@ add_library(
     internal/port_platform.h
     internal/random.cc
     internal/random.h
+    internal/retry_loop_helpers.cc
+    internal/retry_loop_helpers.h
     internal/retry_policy.cc
     internal/retry_policy.h
     internal/sha256_hash.cc
@@ -241,6 +243,7 @@ if (BUILD_TESTING)
         internal/parse_rfc3339_test.cc
         internal/populate_common_options_test.cc
         internal/random_test.cc
+        internal/retry_loop_helpers_test.cc
         internal/retry_policy_test.cc
         internal/sha256_hash_test.cc
         internal/status_payload_keys_test.cc
