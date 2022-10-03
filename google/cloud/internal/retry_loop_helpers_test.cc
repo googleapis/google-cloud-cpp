@@ -29,11 +29,16 @@ TEST(RetryLoopHelpersTest, IncludeErrorInfo) {
   auto const code = StatusCode::kFailedPrecondition;
   auto const message = std::string{
       "At least one of the pre-conditions you specified did not hold."};
-  auto input = Status(code, message);
+  auto const error_info = ErrorInfo("conditionNotMet", "global",
+                                    {{"locationType", "header"},
+                                     {"location", "If-Match"},
+                                     {"http_status_code", "412"}});
+  auto input = Status(code, message, error_info);
   auto actual = RetryLoopError("permanent error", "SomeFunction", input);
   EXPECT_THAT(actual, StatusIs(code, HasSubstr(message)));
   EXPECT_THAT(actual.message(), HasSubstr("permanent error"));
   EXPECT_THAT(actual.message(), HasSubstr("SomeFunction"));
+  EXPECT_EQ(actual.error_info(), error_info);
 }
 
 }  // namespace
