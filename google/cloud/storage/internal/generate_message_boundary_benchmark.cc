@@ -138,7 +138,7 @@ BENCHMARK_F(GenerateBoundaryFixture, BestCase)
   auto test = [](std::string const& message) {
     auto count = 0;
     for (std::size_t i = 0; i < message.size(); i += 64) {
-      count += static_cast<int>(message[i] == 'Z');
+      count += message[i] == 'Z' ? 1 : 0;
     }
     return std::string(count % 64, 'A');
   };
