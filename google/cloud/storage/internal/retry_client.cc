@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/match.h"
@@ -52,34 +53,21 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
     RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
     Idempotency idempotency, RawClient& client, MemberFunction function,
     typename Signature<MemberFunction>::RequestType const& request,
-    char const* error_message) {
+    char const* location) {
+  using ::google::cloud::internal::RetryLoopError;
   Status last_status(StatusCode::kDeadlineExceeded,
                      "Retry policy exhausted before first attempt was made.");
-  auto error = [&last_status](std::string const& msg) {
-    return Status(last_status.code(), msg);
-  };
-
   while (!retry_policy.IsExhausted()) {
     auto result = (client.*function)(request);
-    if (result.ok()) {
-      return result;
-    }
+    if (result.ok()) return result;
     last_status = std::move(result).status();
     if (idempotency == Idempotency::kNonIdempotent) {
-      std::ostringstream os;
-      os << "Error in non-idempotent operation " << error_message << ": "
-         << last_status.message();
-      return error(std::move(os).str());
+      return RetryLoopError("Error in non-idempotent operation", location,
+                            last_status);
     }
     if (!retry_policy.OnFailure(last_status)) {
       if (internal::StatusTraits::IsPermanentFailure(last_status)) {
-        // The last error cannot be retried, but it is not because the retry
-        // policy is exhausted, we call these "permanent errors", and they
-        // get a special message.
-        std::ostringstream os;
-        os << "Permanent error in " << error_message << ": "
-           << last_status.message();
-        return error(std::move(os).str());
+        return RetryLoopError("Permanent error", location, last_status);
       }
       // Exit the loop immediately instead of sleeping before trying again.
       break;
@@ -87,10 +75,7 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
     auto delay = backoff_policy.OnCompletion();
     std::this_thread::sleep_for(delay);
   }
-  std::ostringstream os;
-  os << "Retry policy exhausted in " << error_message << ": "
-     << last_status.message();
-  return error(std::move(os).str());
+  return RetryLoopError("Retry policy exhausted", location, last_status);
 }
 
 // Returns an error if the response contains an unexpected (or invalid)
@@ -166,17 +151,11 @@ bool UploadChunkOnFailure(RetryPolicy& retry_policy, int& count,
   return retry_policy.OnFailure(status);
 }
 
-Status RetryError(Status const& last_status, RetryPolicy const& retry_policy,
+Status RetryError(Status const& status, RetryPolicy const& retry_policy,
                   char const* function_name) {
-  std::ostringstream os;
-  if (retry_policy.IsExhausted()) {
-    os << "Retry policy exhausted in " << function_name << ": "
-       << last_status.message();
-  } else {
-    os << "Permanent error in " << function_name << ": "
-       << last_status.message();
-  }
-  return Status(last_status.code(), std::move(os).str());
+  auto const* msg =
+      retry_policy.IsExhausted() ? "Retry policy exhausted" : "Permanent error";
+  return google::cloud::internal::RetryLoopError(msg, function_name, status);
 }
 
 Status MissingCommittedSize(int error_count, int upload_count, int reset_count,
