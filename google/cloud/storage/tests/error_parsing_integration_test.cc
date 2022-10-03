@@ -30,6 +30,7 @@ namespace {
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 using ErrorParsingIntegrationTest =
@@ -56,6 +57,10 @@ TEST_F(ErrorParsingIntegrationTest, FailureContainsErrorInfo) {
   if (UsingEmulator()) return;
   EXPECT_THAT(insert.status().message(),
               HasSubstr("pre-conditions you specified did not hold"));
+  auto const& error_info = insert.status().error_info();
+  EXPECT_THAT(error_info.reason(), Not(IsEmpty()));
+  EXPECT_THAT(error_info.domain(), Not(IsEmpty()));
+  EXPECT_THAT(error_info.metadata(), Not(IsEmpty()));
 }
 
 }  // anonymous namespace
