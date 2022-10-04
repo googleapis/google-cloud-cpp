@@ -187,9 +187,10 @@ class GrpcClient : public RawClient,
       Options opts);
 
  private:
-  using BucketAclUpdater =
-      std::function<StatusOr<std::vector<BucketAccessControl>>(
-          std::vector<BucketAccessControl> acl)>;
+  using BucketAccessControlList = google::protobuf::RepeatedPtrField<
+      google::storage::v2::BucketAccessControl>;
+  using BucketAclUpdater = std::function<StatusOr<BucketAccessControlList>(
+      BucketAccessControlList acl)>;
 
   // REST has RPCs that change `BucketAccessControl` resources atomically. gRPC
   // lacks such RPCs. This function hijacks the retry loop to implement an OCC
@@ -197,9 +198,10 @@ class GrpcClient : public RawClient,
   StatusOr<BucketMetadata> ModifyBucketAccessControl(
       GetBucketMetadataRequest const& request, BucketAclUpdater const& updater);
 
-  using ObjectAclUpdater =
-      std::function<StatusOr<std::vector<ObjectAccessControl>>(
-          std::vector<ObjectAccessControl> acl)>;
+  using ObjectAccessControlList = google::protobuf::RepeatedPtrField<
+      google::storage::v2::ObjectAccessControl>;
+  using ObjectAclUpdater = std::function<StatusOr<ObjectAccessControlList>(
+      ObjectAccessControlList acl)>;
 
   // REST has RPCs that change `ObjectAccessControl` resources atomically. gRPC
   // lacks such RPCs. This function hijacks the retry loop to implement an OCC
@@ -208,8 +210,8 @@ class GrpcClient : public RawClient,
       GetObjectMetadataRequest const& request, ObjectAclUpdater const& updater);
 
   using DefaultObjectAclUpdater =
-      std::function<StatusOr<std::vector<ObjectAccessControl>>(
-          std::vector<ObjectAccessControl> acl)>;
+      std::function<StatusOr<ObjectAccessControlList>(
+          ObjectAccessControlList acl)>;
 
   // REST has RPCs that change `DefaultObjectAccessControl` resources
   // atomically. gRPC lacks such RPCs. This function hijacks the retry loop to

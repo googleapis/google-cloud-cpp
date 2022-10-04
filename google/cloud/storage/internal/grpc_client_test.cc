@@ -924,9 +924,10 @@ TEST_F(GrpcClientTest, CreateBucketAclFailure) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        // The `Field()` option is ignored, as the implementation only works
+        // correctly if key fields are present.
+        EXPECT_THAT(metadata, UnorderedElementsAre(Pair("x-goog-quota-user",
+                                                        "test-quota-user")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
         return PermanentError();
       });
@@ -974,9 +975,10 @@ TEST_F(GrpcClientTest, DeleteBucketAclFailure) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        // The `Field()` option is ignored, as the implementation only works
+        // correctly if key fields are present.
+        EXPECT_THAT(metadata, UnorderedElementsAre(Pair("x-goog-quota-user",
+                                                        "test-quota-user")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
         return PermanentError();
       });
@@ -1043,9 +1045,10 @@ TEST_F(GrpcClientTest, UpdateBucketAclFailure) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        // The `Field()` option is ignored, as the implementation only works
+        // correctly if key fields are present.
+        EXPECT_THAT(metadata, UnorderedElementsAre(Pair("x-goog-quota-user",
+                                                        "test-quota-user")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
         return PermanentError();
       });
