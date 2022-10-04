@@ -60,6 +60,49 @@ auto constexpr kDefaultKeepaliveTime = std::chrono::seconds(30);
 // for a keepalive ping.
 auto constexpr kDefaultKeepaliveTimeout = std::chrono::seconds(10);
 
+Options DefaultConnectionRefreshOptions(Options opts) {
+  auto const has_min = opts.has<MinConnectionRefreshOption>();
+  auto const has_max = opts.has<MaxConnectionRefreshOption>();
+  if (!has_min && !has_max) {
+    opts.set<MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
+    opts.set<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
+  } else if (has_min && !has_max) {
+    opts.set<MaxConnectionRefreshOption>((std::max)(
+        opts.get<MinConnectionRefreshOption>(), kDefaultMaxRefreshPeriod));
+  } else if (!has_min && has_max) {
+    opts.set<MinConnectionRefreshOption>((std::min)(
+        opts.get<MaxConnectionRefreshOption>(), kDefaultMinRefreshPeriod));
+  } else {
+    // If the range is invalid, use the greater value as both the min and max
+    auto const p = opts.get<MinConnectionRefreshOption>();
+    if (p > opts.get<MaxConnectionRefreshOption>()) {
+      opts.set<MaxConnectionRefreshOption>(std::move(p));
+    }
+  }
+  return opts;
+}
+
+Options DefaultChannelArgumentOptions(Options opts) {
+  using ::google::cloud::internal::GetIntChannelArgument;
+  auto c_arg = [](std::chrono::milliseconds ms) {
+    return static_cast<int>(ms.count());
+  };
+  auto& args = opts.lookup<GrpcChannelArgumentsNativeOption>();
+  if (!GetIntChannelArgument(args, GRPC_ARG_MAX_SEND_MESSAGE_LENGTH)) {
+    args.SetMaxSendMessageSize(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
+  }
+  if (!GetIntChannelArgument(args, GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH)) {
+    args.SetMaxReceiveMessageSize(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
+  }
+  if (!GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS)) {
+    args.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, c_arg(kDefaultKeepaliveTime));
+  }
+  if (!GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS)) {
+    args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, c_arg(kDefaultKeepaliveTimeout));
+  }
+  return opts;
+}
+
 }  // namespace
 
 int DefaultConnectionPoolSize() {
@@ -123,42 +166,9 @@ Options DefaultOptions(Options opts) {
   opts = google::cloud::internal::MergeOptions(std::move(opts),
                                                std::move(defaults));
 
-  auto const has_min = opts.has<MinConnectionRefreshOption>();
-  auto const has_max = opts.has<MaxConnectionRefreshOption>();
-  if (!has_min && !has_max) {
-    opts.set<MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
-    opts.set<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
-  } else if (has_min && !has_max) {
-    opts.set<MaxConnectionRefreshOption>((std::max)(
-        opts.get<MinConnectionRefreshOption>(), kDefaultMaxRefreshPeriod));
-  } else if (!has_min && has_max) {
-    opts.set<MinConnectionRefreshOption>((std::min)(
-        opts.get<MaxConnectionRefreshOption>(), kDefaultMinRefreshPeriod));
-  } else {
-    // If the range is invalid, use the greater value as both the min and max
-    auto const p = opts.get<MinConnectionRefreshOption>();
-    if (p > opts.get<MaxConnectionRefreshOption>()) {
-      opts.set<MaxConnectionRefreshOption>(std::move(p));
-    }
-  }
+  opts = DefaultConnectionRefreshOptions(std::move(opts));
+  opts = DefaultChannelArgumentOptions(std::move(opts));
 
-  using ::google::cloud::internal::GetIntChannelArgument;
-  auto c_arg = [](std::chrono::milliseconds ms) {
-    return static_cast<int>(ms.count());
-  };
-  auto& args = opts.lookup<GrpcChannelArgumentsNativeOption>();
-  if (!GetIntChannelArgument(args, GRPC_ARG_MAX_SEND_MESSAGE_LENGTH)) {
-    args.SetMaxSendMessageSize(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
-  }
-  if (!GetIntChannelArgument(args, GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH)) {
-    args.SetMaxReceiveMessageSize(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
-  }
-  if (!GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS)) {
-    args.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, c_arg(kDefaultKeepaliveTime));
-  }
-  if (!GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS)) {
-    args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, c_arg(kDefaultKeepaliveTimeout));
-  }
   // Inserts our user-agent string at the front.
   auto& products = opts.lookup<UserAgentProductsOption>();
   products.insert(products.begin(),
