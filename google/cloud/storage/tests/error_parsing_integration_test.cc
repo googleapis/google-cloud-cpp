@@ -54,7 +54,7 @@ TEST_F(ErrorParsingIntegrationTest, FailureContainsErrorInfo) {
   insert = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                                 IfGenerationMatch(0));
   ASSERT_THAT(insert, Not(StatusIs(StatusCode::kOk)));
-  if (UsingEmulator()) return;
+  if (UsingEmulator() || UsingGrpc()) return;
   EXPECT_THAT(insert.status().message(),
               HasSubstr("pre-conditions you specified did not hold"));
   auto const& error_info = insert.status().error_info();
