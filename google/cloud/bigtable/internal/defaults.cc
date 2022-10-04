@@ -22,6 +22,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
+#include "absl/algorithm/container.h"
+#include "absl/strings/str_split.h"
 #include <chrono>
 #include <string>
 
@@ -133,6 +135,21 @@ Options DefaultOptions(Options opts) {
     if (!opts.has<InstanceAdminEndpointOption>()) {
       opts.set<InstanceAdminEndpointOption>(ep);
     }
+  }
+
+  auto const direct_path =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
+          .value_or("");
+  if (absl::c_any_of(absl::StrSplit(direct_path, ','),
+                     [](absl::string_view v) { return v == "bigtable"; })) {
+    opts.set<DataEndpointOption>(
+            "google-c2p:///directpath-bigtable.googleapis.com")
+        .set<AuthorityOption>("directpath-bigtable.googleapis.com");
+
+    // When using DirectPath the gRPC library already does load balancing across
+    // multiple sockets, it makes little sense to perform additional load
+    // balancing in the client library.
+    if (!opts.has<GrpcNumChannelsOption>()) opts.set<GrpcNumChannelsOption>(1);
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
