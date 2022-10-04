@@ -97,7 +97,6 @@ class AsyncBenchmark {
                  google::cloud::CompletionQueue cq)
       : cq_(std::move(cq)),
         benchmark_(benchmark),
-        table_(benchmark_.MakeTable()),
         generator_(std::random_device{}()) {}
 
   ~AsyncBenchmark() {
@@ -112,8 +111,9 @@ class AsyncBenchmark {
   BenchmarkResult Run(std::chrono::seconds test_duration, int request_count);
 
  private:
-  void RunOneAsyncReadRow();
-  void OnReadRow(std::chrono::steady_clock::time_point request_start,
+  void RunOneAsyncReadRow(bigtable::Table& table);
+  void OnReadRow(bigtable::Table& table,
+                 std::chrono::steady_clock::time_point request_start,
                  google::cloud::StatusOr<std::pair<bool, bigtable::Row>>);
 
   std::mutex mu_;
@@ -121,7 +121,6 @@ class AsyncBenchmark {
   google::cloud::CompletionQueue cq_;
   std::vector<std::thread> cq_threads_;
   bigtable::benchmarks::Benchmark const& benchmark_;
-  bigtable::Table table_;
   google::cloud::internal::DefaultPRNG generator_;
   int outstanding_requests_ = 0;
   BenchmarkResult results_;
@@ -234,16 +233,17 @@ BenchmarkResult AsyncBenchmark::Run(std::chrono::seconds test_duration,
                                     int request_count) {
   results_ = BenchmarkResult{};
   deadline_ = std::chrono::steady_clock::now() + test_duration;
+  auto table = benchmark_.MakeTable();
 
   for (int i = 0; i != request_count; ++i) {
-    RunOneAsyncReadRow();
+    RunOneAsyncReadRow(table);
   }
   std::unique_lock<std::mutex> lk(mu_);
   cv_.wait(lk, [this] { return outstanding_requests_ == 0; });
   return std::move(results_);
 }
 
-void AsyncBenchmark::RunOneAsyncReadRow() {
+void AsyncBenchmark::RunOneAsyncReadRow(bigtable::Table& table) {
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
 
@@ -254,17 +254,17 @@ void AsyncBenchmark::RunOneAsyncReadRow() {
   }();
 
   auto request_start = std::chrono::steady_clock::now();
-  table_
+  table
       .AsyncReadRow(row_key, bigtable::Filter::ColumnRangeClosed(
                                  kColumnFamily, "field0", "field9"))
-      .then([this, request_start](
-                future<StatusOr<std::pair<bool, bigtable::Row>>> f) {
-        OnReadRow(request_start, f.get());
+      .then([this, request_start,
+             &table](future<StatusOr<std::pair<bool, bigtable::Row>>> f) {
+        OnReadRow(table, request_start, f.get());
       });
 }
 
 void AsyncBenchmark::OnReadRow(
-    std::chrono::steady_clock::time_point request_start,
+    bigtable::Table& table, std::chrono::steady_clock::time_point request_start,
     google::cloud::StatusOr<std::pair<bool, bigtable::Row>> row) {
   auto now = std::chrono::steady_clock::now();
   auto usecs = std::chrono::duration_cast<std::chrono::microseconds>(
@@ -276,7 +276,7 @@ void AsyncBenchmark::OnReadRow(
   ++results_.row_count;
   if (now < deadline_) {
     lk.unlock();
-    RunOneAsyncReadRow();
+    RunOneAsyncReadRow(table);
     return;
   }
   if (outstanding_requests_ == 0) {
