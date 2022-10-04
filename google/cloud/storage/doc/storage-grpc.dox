@@ -39,8 +39,8 @@ target_link_libraries(quickstart_grpc google-cloud-cpp::experimental-storage-grp
 ```
 
 If you are using Bazel to compile your application, then you need to change
-the dependencies from `@com_github_googleapis_google_cloud_cpp//:storage`
-to `@com_github_googleapis_google_cloud_cpp//:experimental-storage-grpc`.
+the dependencies from `@google_cloud_cpp//:storage`
+to `@google_cloud_cpp//:experimental-storage-grpc`.
 For example, our `grpc/quickstart uses:
 
 ```{.py}
@@ -50,7 +50,7 @@ cc_binary(
         "quickstart_grpc.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//:experimental-storage-grpc",
+        "@google_cloud_cpp//:experimental-storage-grpc",
     ],
 )
 ```
