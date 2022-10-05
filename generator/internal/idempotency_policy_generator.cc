@@ -87,6 +87,7 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
          MethodPattern(
              {
                  // clang-format off
+   // TODO(#9982) - we should pass `$request_type$ const&` here
    {"\n"
     "  virtual google::cloud::Idempotency\n"
     "  $method_name$($request_type$ request);\n"}
@@ -166,9 +167,10 @@ Idempotency $idempotency_class_name$::$method_name$(
       continue;
     }
 
+    // TODO(#9982) - we should pass `$request_type$ const&` here
     if (IsPaginated(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-Idempotency $idempotency_class_name$::$method_name$($request_type$) {
+Idempotency $idempotency_class_name$::$method_name$($request_type$) {  // NOLINT
   return Idempotency::$default_idempotency$;
 }
 )""");
