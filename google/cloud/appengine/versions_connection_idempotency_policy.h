@@ -32,26 +32,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class VersionsConnectionIdempotencyPolicy {
  public:
-  virtual ~VersionsConnectionIdempotencyPolicy() = 0;
+  virtual ~VersionsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<VersionsConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<VersionsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListVersions(
-      google::appengine::v1::ListVersionsRequest request) = 0;
+      google::appengine::v1::ListVersionsRequest request);
 
   virtual google::cloud::Idempotency GetVersion(
-      google::appengine::v1::GetVersionRequest const& request) = 0;
+      google::appengine::v1::GetVersionRequest const& request);
 
   virtual google::cloud::Idempotency CreateVersion(
-      google::appengine::v1::CreateVersionRequest const& request) = 0;
+      google::appengine::v1::CreateVersionRequest const& request);
 
   virtual google::cloud::Idempotency UpdateVersion(
-      google::appengine::v1::UpdateVersionRequest const& request) = 0;
+      google::appengine::v1::UpdateVersionRequest const& request);
 
   virtual google::cloud::Idempotency DeleteVersion(
-      google::appengine::v1::DeleteVersionRequest const& request) = 0;
+      google::appengine::v1::DeleteVersionRequest const& request);
 };
 
 std::unique_ptr<VersionsConnectionIdempotencyPolicy>

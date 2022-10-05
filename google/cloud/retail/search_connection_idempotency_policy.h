@@ -32,14 +32,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class SearchServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~SearchServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~SearchServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<SearchServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency Search(
-      google::cloud::retail::v2::SearchRequest request) = 0;
+      google::cloud::retail::v2::SearchRequest request);
 };
 
 std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>

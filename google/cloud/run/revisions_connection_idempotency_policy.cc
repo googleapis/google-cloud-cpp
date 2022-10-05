@@ -30,38 +30,29 @@ using ::google::cloud::Idempotency;
 RevisionsConnectionIdempotencyPolicy::~RevisionsConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultRevisionsConnectionIdempotencyPolicy
-    : public RevisionsConnectionIdempotencyPolicy {
- public:
-  ~DefaultRevisionsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<RevisionsConnectionIdempotencyPolicy>
+RevisionsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<RevisionsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<RevisionsConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultRevisionsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency RevisionsConnectionIdempotencyPolicy::GetRevision(
+    google::cloud::run::v2::GetRevisionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetRevision(
-      google::cloud::run::v2::GetRevisionRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RevisionsConnectionIdempotencyPolicy::ListRevisions(
+    google::cloud::run::v2::ListRevisionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListRevisions(
-      google::cloud::run::v2::ListRevisionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DeleteRevision(
-      google::cloud::run::v2::DeleteRevisionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency RevisionsConnectionIdempotencyPolicy::DeleteRevision(
+    google::cloud::run::v2::DeleteRevisionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<RevisionsConnectionIdempotencyPolicy>
 MakeDefaultRevisionsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultRevisionsConnectionIdempotencyPolicy>();
+  return absl::make_unique<RevisionsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

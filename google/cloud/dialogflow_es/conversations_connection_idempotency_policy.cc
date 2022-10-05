@@ -30,51 +30,39 @@ using ::google::cloud::Idempotency;
 ConversationsConnectionIdempotencyPolicy::
     ~ConversationsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultConversationsConnectionIdempotencyPolicy
-    : public ConversationsConnectionIdempotencyPolicy {
- public:
-  ~DefaultConversationsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ConversationsConnectionIdempotencyPolicy>
+ConversationsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ConversationsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ConversationsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultConversationsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ConversationsConnectionIdempotencyPolicy::CreateConversation(
+    google::cloud::dialogflow::v2::CreateConversationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateConversation(
-      google::cloud::dialogflow::v2::CreateConversationRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ConversationsConnectionIdempotencyPolicy::ListConversations(
+    google::cloud::dialogflow::v2::ListConversationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListConversations(
-      google::cloud::dialogflow::v2::ListConversationsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ConversationsConnectionIdempotencyPolicy::GetConversation(
+    google::cloud::dialogflow::v2::GetConversationRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetConversation(
-      google::cloud::dialogflow::v2::GetConversationRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ConversationsConnectionIdempotencyPolicy::CompleteConversation(
+    google::cloud::dialogflow::v2::CompleteConversationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CompleteConversation(
-      google::cloud::dialogflow::v2::CompleteConversationRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListMessages(
-      google::cloud::dialogflow::v2::ListMessagesRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency ConversationsConnectionIdempotencyPolicy::ListMessages(
+    google::cloud::dialogflow::v2::ListMessagesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<ConversationsConnectionIdempotencyPolicy>
 MakeDefaultConversationsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultConversationsConnectionIdempotencyPolicy>();
+  return absl::make_unique<ConversationsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

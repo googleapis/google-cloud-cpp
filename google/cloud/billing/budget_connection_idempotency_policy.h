@@ -32,29 +32,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class BudgetServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~BudgetServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~BudgetServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateBudget(
-      google::cloud::billing::budgets::v1::CreateBudgetRequest const&
-          request) = 0;
+      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request);
 
   virtual google::cloud::Idempotency UpdateBudget(
-      google::cloud::billing::budgets::v1::UpdateBudgetRequest const&
-          request) = 0;
+      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request);
 
   virtual google::cloud::Idempotency GetBudget(
-      google::cloud::billing::budgets::v1::GetBudgetRequest const& request) = 0;
+      google::cloud::billing::budgets::v1::GetBudgetRequest const& request);
 
   virtual google::cloud::Idempotency ListBudgets(
-      google::cloud::billing::budgets::v1::ListBudgetsRequest request) = 0;
+      google::cloud::billing::budgets::v1::ListBudgetsRequest request);
 
   virtual google::cloud::Idempotency DeleteBudget(
-      google::cloud::billing::budgets::v1::DeleteBudgetRequest const&
-          request) = 0;
+      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request);
 };
 
 std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy>

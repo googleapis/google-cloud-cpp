@@ -30,55 +30,49 @@ using ::google::cloud::Idempotency;
 UptimeCheckServiceConnectionIdempotencyPolicy::
     ~UptimeCheckServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultUptimeCheckServiceConnectionIdempotencyPolicy
-    : public UptimeCheckServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultUptimeCheckServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy>
+UptimeCheckServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<UptimeCheckServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultUptimeCheckServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+UptimeCheckServiceConnectionIdempotencyPolicy::ListUptimeCheckConfigs(
+    google::monitoring::v3::ListUptimeCheckConfigsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListUptimeCheckConfigs(
-      google::monitoring::v3::ListUptimeCheckConfigsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency UptimeCheckServiceConnectionIdempotencyPolicy::GetUptimeCheckConfig(
+    google::monitoring::v3::GetUptimeCheckConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetUptimeCheckConfig(
-      google::monitoring::v3::GetUptimeCheckConfigRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+UptimeCheckServiceConnectionIdempotencyPolicy::CreateUptimeCheckConfig(
+    google::monitoring::v3::CreateUptimeCheckConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateUptimeCheckConfig(
-      google::monitoring::v3::CreateUptimeCheckConfigRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+UptimeCheckServiceConnectionIdempotencyPolicy::UpdateUptimeCheckConfig(
+    google::monitoring::v3::UpdateUptimeCheckConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateUptimeCheckConfig(
-      google::monitoring::v3::UpdateUptimeCheckConfigRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+UptimeCheckServiceConnectionIdempotencyPolicy::DeleteUptimeCheckConfig(
+    google::monitoring::v3::DeleteUptimeCheckConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteUptimeCheckConfig(
-      google::monitoring::v3::DeleteUptimeCheckConfigRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListUptimeCheckIps(
-      google::monitoring::v3::ListUptimeCheckIpsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency UptimeCheckServiceConnectionIdempotencyPolicy::ListUptimeCheckIps(
+    google::monitoring::v3::ListUptimeCheckIpsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy>
 MakeDefaultUptimeCheckServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultUptimeCheckServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<UptimeCheckServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,123 +30,109 @@ using ::google::cloud::Idempotency;
 AdminServiceConnectionIdempotencyPolicy::
     ~AdminServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAdminServiceConnectionIdempotencyPolicy
-    : public AdminServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultAdminServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AdminServiceConnectionIdempotencyPolicy>
+AdminServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AdminServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AdminServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultAdminServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::CreateTopic(
+    google::cloud::pubsublite::v1::CreateTopicRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTopic(
-      google::cloud::pubsublite::v1::CreateTopicRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::GetTopic(
+    google::cloud::pubsublite::v1::GetTopicRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTopic(
-      google::cloud::pubsublite::v1::GetTopicRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::GetTopicPartitions(
+    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTopicPartitions(
-      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::ListTopics(
+    google::cloud::pubsublite::v1::ListTopicsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTopics(
-      google::cloud::pubsublite::v1::ListTopicsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::UpdateTopic(
+    google::cloud::pubsublite::v1::UpdateTopicRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateTopic(
-      google::cloud::pubsublite::v1::UpdateTopicRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::DeleteTopic(
+    google::cloud::pubsublite::v1::DeleteTopicRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteTopic(
-      google::cloud::pubsublite::v1::DeleteTopicRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::ListTopicSubscriptions(
+    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTopicSubscriptions(
-      google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::CreateSubscription(
+    google::cloud::pubsublite::v1::CreateSubscriptionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateSubscription(
-      google::cloud::pubsublite::v1::CreateSubscriptionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::GetSubscription(
+    google::cloud::pubsublite::v1::GetSubscriptionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetSubscription(
-      google::cloud::pubsublite::v1::GetSubscriptionRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::ListSubscriptions(
+    google::cloud::pubsublite::v1::ListSubscriptionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListSubscriptions(
-      google::cloud::pubsublite::v1::ListSubscriptionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::UpdateSubscription(
+    google::cloud::pubsublite::v1::UpdateSubscriptionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateSubscription(
-      google::cloud::pubsublite::v1::UpdateSubscriptionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::DeleteSubscription(
+    google::cloud::pubsublite::v1::DeleteSubscriptionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteSubscription(
-      google::cloud::pubsublite::v1::DeleteSubscriptionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::SeekSubscription(
+    google::cloud::pubsublite::v1::SeekSubscriptionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SeekSubscription(
-      google::cloud::pubsublite::v1::SeekSubscriptionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::CreateReservation(
+    google::cloud::pubsublite::v1::CreateReservationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateReservation(
-      google::cloud::pubsublite::v1::CreateReservationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::GetReservation(
+    google::cloud::pubsublite::v1::GetReservationRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetReservation(
-      google::cloud::pubsublite::v1::GetReservationRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::ListReservations(
+    google::cloud::pubsublite::v1::ListReservationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListReservations(
-      google::cloud::pubsublite::v1::ListReservationsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::UpdateReservation(
+    google::cloud::pubsublite::v1::UpdateReservationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateReservation(
-      google::cloud::pubsublite::v1::UpdateReservationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AdminServiceConnectionIdempotencyPolicy::DeleteReservation(
+    google::cloud::pubsublite::v1::DeleteReservationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteReservation(
-      google::cloud::pubsublite::v1::DeleteReservationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListReservationTopics(
-      google::cloud::pubsublite::v1::ListReservationTopicsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency AdminServiceConnectionIdempotencyPolicy::ListReservationTopics(
+    google::cloud::pubsublite::v1::ListReservationTopicsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<AdminServiceConnectionIdempotencyPolicy>
 MakeDefaultAdminServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultAdminServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<AdminServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

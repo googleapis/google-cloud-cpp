@@ -29,61 +29,46 @@ using ::google::cloud::Idempotency;
 
 GoldenKitchenSinkConnectionIdempotencyPolicy::~GoldenKitchenSinkConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultGoldenKitchenSinkConnectionIdempotencyPolicy : public GoldenKitchenSinkConnectionIdempotencyPolicy {
- public:
-  ~DefaultGoldenKitchenSinkConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>
+GoldenKitchenSinkConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<GoldenKitchenSinkConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultGoldenKitchenSinkConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::ListLogs(google::test::admin::database::v1::ListLogsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency
-  ListLogs(google::test::admin::database::v1::ListLogsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency
-  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::DoNothing(google::protobuf::Empty const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency
-  DoNothing(google::protobuf::Empty const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency
-  ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>
     MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultGoldenKitchenSinkConnectionIdempotencyPolicy>();
+  return absl::make_unique<GoldenKitchenSinkConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

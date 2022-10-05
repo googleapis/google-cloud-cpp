@@ -32,46 +32,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ConversationModelsConnectionIdempotencyPolicy {
  public:
-  virtual ~ConversationModelsConnectionIdempotencyPolicy() = 0;
+  virtual ~ConversationModelsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ConversationModelsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateConversationModel(
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetConversationModel(
       google::cloud::dialogflow::v2::GetConversationModelRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListConversationModels(
-      google::cloud::dialogflow::v2::ListConversationModelsRequest request) = 0;
+      google::cloud::dialogflow::v2::ListConversationModelsRequest request);
 
   virtual google::cloud::Idempotency DeleteConversationModel(
       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeployConversationModel(
       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UndeployConversationModel(
       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetConversationModelEvaluation(
       google::cloud::dialogflow::v2::
-          GetConversationModelEvaluationRequest const& request) = 0;
+          GetConversationModelEvaluationRequest const& request);
 
   virtual google::cloud::Idempotency ListConversationModelEvaluations(
       google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CreateConversationModelEvaluation(
       google::cloud::dialogflow::v2::
-          CreateConversationModelEvaluationRequest const& request) = 0;
+          CreateConversationModelEvaluationRequest const& request);
 };
 
 std::unique_ptr<ConversationModelsConnectionIdempotencyPolicy>

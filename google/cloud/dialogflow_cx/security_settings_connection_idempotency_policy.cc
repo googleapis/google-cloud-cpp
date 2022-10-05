@@ -30,55 +30,46 @@ using ::google::cloud::Idempotency;
 SecuritySettingsServiceConnectionIdempotencyPolicy::
     ~SecuritySettingsServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultSecuritySettingsServiceConnectionIdempotencyPolicy
-    : public SecuritySettingsServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultSecuritySettingsServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>
+SecuritySettingsServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<SecuritySettingsServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultSecuritySettingsServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+SecuritySettingsServiceConnectionIdempotencyPolicy::CreateSecuritySettings(
+    google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+SecuritySettingsServiceConnectionIdempotencyPolicy::GetSecuritySettings(
+    google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetSecuritySettings(
-      google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+SecuritySettingsServiceConnectionIdempotencyPolicy::UpdateSecuritySettings(
+    google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+SecuritySettingsServiceConnectionIdempotencyPolicy::ListSecuritySettings(
+    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListSecuritySettings(
-      google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DeleteSecuritySettings(
-      google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+SecuritySettingsServiceConnectionIdempotencyPolicy::DeleteSecuritySettings(
+    google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>
 MakeDefaultSecuritySettingsServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultSecuritySettingsServiceConnectionIdempotencyPolicy>();
+      SecuritySettingsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

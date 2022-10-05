@@ -32,15 +32,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ValidationHelperV1ConnectionIdempotencyPolicy {
  public:
-  virtual ~ValidationHelperV1ConnectionIdempotencyPolicy() = 0;
+  virtual ~ValidationHelperV1ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ValidateAttestationOccurrence(
       google::cloud::binaryauthorization::v1::
-          ValidateAttestationOccurrenceRequest const& request) = 0;
+          ValidateAttestationOccurrenceRequest const& request);
 };
 
 std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy>

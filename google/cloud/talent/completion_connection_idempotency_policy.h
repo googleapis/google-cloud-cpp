@@ -32,14 +32,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CompletionConnectionIdempotencyPolicy {
  public:
-  virtual ~CompletionConnectionIdempotencyPolicy() = 0;
+  virtual ~CompletionConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CompletionConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<CompletionConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency CompleteQuery(
-      google::cloud::talent::v4::CompleteQueryRequest const& request) = 0;
+      google::cloud::talent::v4::CompleteQueryRequest const& request);
 };
 
 std::unique_ptr<CompletionConnectionIdempotencyPolicy>

@@ -30,65 +30,54 @@ using ::google::cloud::Idempotency;
 ParticipantsConnectionIdempotencyPolicy::
     ~ParticipantsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultParticipantsConnectionIdempotencyPolicy
-    : public ParticipantsConnectionIdempotencyPolicy {
- public:
-  ~DefaultParticipantsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ParticipantsConnectionIdempotencyPolicy>
+ParticipantsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ParticipantsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ParticipantsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultParticipantsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ParticipantsConnectionIdempotencyPolicy::CreateParticipant(
+    google::cloud::dialogflow::v2::CreateParticipantRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateParticipant(
-      google::cloud::dialogflow::v2::CreateParticipantRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ParticipantsConnectionIdempotencyPolicy::GetParticipant(
+    google::cloud::dialogflow::v2::GetParticipantRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetParticipant(
-      google::cloud::dialogflow::v2::GetParticipantRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ParticipantsConnectionIdempotencyPolicy::ListParticipants(
+    google::cloud::dialogflow::v2::ListParticipantsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListParticipants(
-      google::cloud::dialogflow::v2::ListParticipantsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ParticipantsConnectionIdempotencyPolicy::UpdateParticipant(
+    google::cloud::dialogflow::v2::UpdateParticipantRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateParticipant(
-      google::cloud::dialogflow::v2::UpdateParticipantRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ParticipantsConnectionIdempotencyPolicy::AnalyzeContent(
+    google::cloud::dialogflow::v2::AnalyzeContentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AnalyzeContent(
-      google::cloud::dialogflow::v2::AnalyzeContentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ParticipantsConnectionIdempotencyPolicy::SuggestArticles(
+    google::cloud::dialogflow::v2::SuggestArticlesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SuggestArticles(
-      google::cloud::dialogflow::v2::SuggestArticlesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ParticipantsConnectionIdempotencyPolicy::SuggestFaqAnswers(
+    google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SuggestFaqAnswers(
-      google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency SuggestSmartReplies(
-      google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ParticipantsConnectionIdempotencyPolicy::SuggestSmartReplies(
+    google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ParticipantsConnectionIdempotencyPolicy>
 MakeDefaultParticipantsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultParticipantsConnectionIdempotencyPolicy>();
+  return absl::make_unique<ParticipantsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,87 +32,76 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class VideoStitcherServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~VideoStitcherServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~VideoStitcherServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency CreateCdnKey(
-      google::cloud::video::stitcher::v1::CreateCdnKeyRequest const&
-          request) = 0;
+      google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request);
 
   virtual google::cloud::Idempotency ListCdnKeys(
-      google::cloud::video::stitcher::v1::ListCdnKeysRequest request) = 0;
+      google::cloud::video::stitcher::v1::ListCdnKeysRequest request);
 
   virtual google::cloud::Idempotency GetCdnKey(
-      google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request) = 0;
+      google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request);
 
   virtual google::cloud::Idempotency DeleteCdnKey(
-      google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&
-          request) = 0;
+      google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request);
 
   virtual google::cloud::Idempotency UpdateCdnKey(
-      google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const&
-          request) = 0;
+      google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request);
 
   virtual google::cloud::Idempotency CreateVodSession(
       google::cloud::video::stitcher::v1::CreateVodSessionRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetVodSession(
-      google::cloud::video::stitcher::v1::GetVodSessionRequest const&
-          request) = 0;
+      google::cloud::video::stitcher::v1::GetVodSessionRequest const& request);
 
   virtual google::cloud::Idempotency ListVodStitchDetails(
-      google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest
-          request) = 0;
+      google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request);
 
   virtual google::cloud::Idempotency GetVodStitchDetail(
       google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListVodAdTagDetails(
-      google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest
-          request) = 0;
+      google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request);
 
   virtual google::cloud::Idempotency GetVodAdTagDetail(
       google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListLiveAdTagDetails(
-      google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest
-          request) = 0;
+      google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request);
 
   virtual google::cloud::Idempotency GetLiveAdTagDetail(
       google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CreateSlate(
-      google::cloud::video::stitcher::v1::CreateSlateRequest const&
-          request) = 0;
+      google::cloud::video::stitcher::v1::CreateSlateRequest const& request);
 
   virtual google::cloud::Idempotency ListSlates(
-      google::cloud::video::stitcher::v1::ListSlatesRequest request) = 0;
+      google::cloud::video::stitcher::v1::ListSlatesRequest request);
 
   virtual google::cloud::Idempotency GetSlate(
-      google::cloud::video::stitcher::v1::GetSlateRequest const& request) = 0;
+      google::cloud::video::stitcher::v1::GetSlateRequest const& request);
 
   virtual google::cloud::Idempotency UpdateSlate(
-      google::cloud::video::stitcher::v1::UpdateSlateRequest const&
-          request) = 0;
+      google::cloud::video::stitcher::v1::UpdateSlateRequest const& request);
 
   virtual google::cloud::Idempotency DeleteSlate(
-      google::cloud::video::stitcher::v1::DeleteSlateRequest const&
-          request) = 0;
+      google::cloud::video::stitcher::v1::DeleteSlateRequest const& request);
 
   virtual google::cloud::Idempotency CreateLiveSession(
       google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetLiveSession(
-      google::cloud::video::stitcher::v1::GetLiveSessionRequest const&
-          request) = 0;
+      google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request);
 };
 
 std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>

@@ -32,31 +32,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TransitionRouteGroupsConnectionIdempotencyPolicy {
  public:
-  virtual ~TransitionRouteGroupsConnectionIdempotencyPolicy() = 0;
+  virtual ~TransitionRouteGroupsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListTransitionRouteGroups(
       google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetTransitionRouteGroup(
       google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CreateTransitionRouteGroup(
       google::cloud::dialogflow::cx::v3::
-          CreateTransitionRouteGroupRequest const& request) = 0;
+          CreateTransitionRouteGroupRequest const& request);
 
   virtual google::cloud::Idempotency UpdateTransitionRouteGroup(
       google::cloud::dialogflow::cx::v3::
-          UpdateTransitionRouteGroupRequest const& request) = 0;
+          UpdateTransitionRouteGroupRequest const& request);
 
   virtual google::cloud::Idempotency DeleteTransitionRouteGroup(
       google::cloud::dialogflow::cx::v3::
-          DeleteTransitionRouteGroupRequest const& request) = 0;
+          DeleteTransitionRouteGroupRequest const& request);
 };
 
 std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>

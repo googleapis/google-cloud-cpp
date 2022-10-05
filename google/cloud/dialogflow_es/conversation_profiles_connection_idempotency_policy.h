@@ -32,39 +32,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ConversationProfilesConnectionIdempotencyPolicy {
  public:
-  virtual ~ConversationProfilesConnectionIdempotencyPolicy() = 0;
+  virtual ~ConversationProfilesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListConversationProfiles(
-      google::cloud::dialogflow::v2::ListConversationProfilesRequest
-          request) = 0;
+      google::cloud::dialogflow::v2::ListConversationProfilesRequest request);
 
   virtual google::cloud::Idempotency GetConversationProfile(
       google::cloud::dialogflow::v2::GetConversationProfileRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CreateConversationProfile(
       google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateConversationProfile(
       google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteConversationProfile(
       google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency SetSuggestionFeatureConfig(
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ClearSuggestionFeatureConfig(
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy>

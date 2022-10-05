@@ -30,47 +30,37 @@ using ::google::cloud::Idempotency;
 ContainerAnalysisConnectionIdempotencyPolicy::
     ~ContainerAnalysisConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultContainerAnalysisConnectionIdempotencyPolicy
-    : public ContainerAnalysisConnectionIdempotencyPolicy {
- public:
-  ~DefaultContainerAnalysisConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>
+ContainerAnalysisConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ContainerAnalysisConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultContainerAnalysisConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ContainerAnalysisConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency ContainerAnalysisConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ContainerAnalysisConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency GetVulnerabilityOccurrencesSummary(
-      google::devtools::containeranalysis::v1::
-          GetVulnerabilityOccurrencesSummaryRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency ContainerAnalysisConnectionIdempotencyPolicy::
+    GetVulnerabilityOccurrencesSummary(
+        google::devtools::containeranalysis::v1::
+            GetVulnerabilityOccurrencesSummaryRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>
 MakeDefaultContainerAnalysisConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultContainerAnalysisConnectionIdempotencyPolicy>();
+  return absl::make_unique<ContainerAnalysisConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

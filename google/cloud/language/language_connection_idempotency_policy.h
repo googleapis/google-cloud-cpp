@@ -32,30 +32,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class LanguageServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~LanguageServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~LanguageServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency AnalyzeSentiment(
-      google::cloud::language::v1::AnalyzeSentimentRequest const& request) = 0;
+      google::cloud::language::v1::AnalyzeSentimentRequest const& request);
 
   virtual google::cloud::Idempotency AnalyzeEntities(
-      google::cloud::language::v1::AnalyzeEntitiesRequest const& request) = 0;
+      google::cloud::language::v1::AnalyzeEntitiesRequest const& request);
 
   virtual google::cloud::Idempotency AnalyzeEntitySentiment(
       google::cloud::language::v1::AnalyzeEntitySentimentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency AnalyzeSyntax(
-      google::cloud::language::v1::AnalyzeSyntaxRequest const& request) = 0;
+      google::cloud::language::v1::AnalyzeSyntaxRequest const& request);
 
   virtual google::cloud::Idempotency ClassifyText(
-      google::cloud::language::v1::ClassifyTextRequest const& request) = 0;
+      google::cloud::language::v1::ClassifyTextRequest const& request);
 
   virtual google::cloud::Idempotency AnnotateText(
-      google::cloud::language::v1::AnnotateTextRequest const& request) = 0;
+      google::cloud::language::v1::AnnotateTextRequest const& request);
 };
 
 std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy>

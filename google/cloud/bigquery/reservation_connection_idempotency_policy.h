@@ -32,95 +32,94 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ReservationServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ReservationServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ReservationServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateReservation(
       google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListReservations(
       google::cloud::bigquery::reservation::v1::ListReservationsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetReservation(
       google::cloud::bigquery::reservation::v1::GetReservationRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteReservation(
       google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateReservation(
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CreateCapacityCommitment(
       google::cloud::bigquery::reservation::v1::
-          CreateCapacityCommitmentRequest const& request) = 0;
+          CreateCapacityCommitmentRequest const& request);
 
   virtual google::cloud::Idempotency ListCapacityCommitments(
       google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetCapacityCommitment(
       google::cloud::bigquery::reservation::v1::
-          GetCapacityCommitmentRequest const& request) = 0;
+          GetCapacityCommitmentRequest const& request);
 
   virtual google::cloud::Idempotency DeleteCapacityCommitment(
       google::cloud::bigquery::reservation::v1::
-          DeleteCapacityCommitmentRequest const& request) = 0;
+          DeleteCapacityCommitmentRequest const& request);
 
   virtual google::cloud::Idempotency UpdateCapacityCommitment(
       google::cloud::bigquery::reservation::v1::
-          UpdateCapacityCommitmentRequest const& request) = 0;
+          UpdateCapacityCommitmentRequest const& request);
 
   virtual google::cloud::Idempotency SplitCapacityCommitment(
       google::cloud::bigquery::reservation::v1::
-          SplitCapacityCommitmentRequest const& request) = 0;
+          SplitCapacityCommitmentRequest const& request);
 
   virtual google::cloud::Idempotency MergeCapacityCommitments(
       google::cloud::bigquery::reservation::v1::
-          MergeCapacityCommitmentsRequest const& request) = 0;
+          MergeCapacityCommitmentsRequest const& request);
 
   virtual google::cloud::Idempotency CreateAssignment(
       google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListAssignments(
-      google::cloud::bigquery::reservation::v1::ListAssignmentsRequest
-          request) = 0;
+      google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request);
 
   virtual google::cloud::Idempotency DeleteAssignment(
       google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency SearchAssignments(
       google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency SearchAllAssignments(
       google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency MoveAssignment(
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateAssignment(
       google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetBiReservation(
       google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateBiReservation(
       google::cloud::bigquery::reservation::v1::
-          UpdateBiReservationRequest const& request) = 0;
+          UpdateBiReservationRequest const& request);
 };
 
 std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy>

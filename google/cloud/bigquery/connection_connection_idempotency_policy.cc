@@ -30,71 +30,56 @@ using ::google::cloud::Idempotency;
 ConnectionServiceConnectionIdempotencyPolicy::
     ~ConnectionServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultConnectionServiceConnectionIdempotencyPolicy
-    : public ConnectionServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultConnectionServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
+ConnectionServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ConnectionServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultConnectionServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ConnectionServiceConnectionIdempotencyPolicy::CreateConnection(
+    google::cloud::bigquery::connection::v1::CreateConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateConnection(
-      google::cloud::bigquery::connection::v1::CreateConnectionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ConnectionServiceConnectionIdempotencyPolicy::GetConnection(
+    google::cloud::bigquery::connection::v1::GetConnectionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetConnection(
-      google::cloud::bigquery::connection::v1::GetConnectionRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ConnectionServiceConnectionIdempotencyPolicy::ListConnections(
+    google::cloud::bigquery::connection::v1::
+        ListConnectionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListConnections(
-      google::cloud::bigquery::connection::v1::ListConnectionsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ConnectionServiceConnectionIdempotencyPolicy::UpdateConnection(
+    google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateConnection(
-      google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ConnectionServiceConnectionIdempotencyPolicy::DeleteConnection(
+    google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteConnection(
-      google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ConnectionServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ConnectionServiceConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
-
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ConnectionServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
 MakeDefaultConnectionServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultConnectionServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<ConnectionServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

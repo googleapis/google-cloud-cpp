@@ -30,54 +30,45 @@ using ::google::cloud::Idempotency;
 AuthorizedCertificatesConnectionIdempotencyPolicy::
     ~AuthorizedCertificatesConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAuthorizedCertificatesConnectionIdempotencyPolicy
-    : public AuthorizedCertificatesConnectionIdempotencyPolicy {
- public:
-  ~DefaultAuthorizedCertificatesConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
+AuthorizedCertificatesConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AuthorizedCertificatesConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultAuthorizedCertificatesConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+AuthorizedCertificatesConnectionIdempotencyPolicy::ListAuthorizedCertificates(
+    google::appengine::v1::ListAuthorizedCertificatesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAuthorizedCertificates(
-      google::appengine::v1::ListAuthorizedCertificatesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+AuthorizedCertificatesConnectionIdempotencyPolicy::GetAuthorizedCertificate(
+    google::appengine::v1::GetAuthorizedCertificateRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAuthorizedCertificate(
-      google::appengine::v1::GetAuthorizedCertificateRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+AuthorizedCertificatesConnectionIdempotencyPolicy::CreateAuthorizedCertificate(
+    google::appengine::v1::CreateAuthorizedCertificateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateAuthorizedCertificate(
-      google::appengine::v1::CreateAuthorizedCertificateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AuthorizedCertificatesConnectionIdempotencyPolicy::UpdateAuthorizedCertificate(
+    google::appengine::v1::UpdateAuthorizedCertificateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateAuthorizedCertificate(
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteAuthorizedCertificate(
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+AuthorizedCertificatesConnectionIdempotencyPolicy::DeleteAuthorizedCertificate(
+    google::appengine::v1::DeleteAuthorizedCertificateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
 MakeDefaultAuthorizedCertificatesConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultAuthorizedCertificatesConnectionIdempotencyPolicy>();
+  return absl::make_unique<AuthorizedCertificatesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

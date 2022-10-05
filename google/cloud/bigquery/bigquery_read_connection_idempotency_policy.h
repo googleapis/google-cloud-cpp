@@ -32,19 +32,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class BigQueryReadConnectionIdempotencyPolicy {
  public:
-  virtual ~BigQueryReadConnectionIdempotencyPolicy() = 0;
+  virtual ~BigQueryReadConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateReadSession(
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency SplitReadStream(
       google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>

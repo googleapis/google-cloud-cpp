@@ -30,41 +30,34 @@ using ::google::cloud::Idempotency;
 PolicyTagManagerSerializationConnectionIdempotencyPolicy::
     ~PolicyTagManagerSerializationConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy
-    : public PolicyTagManagerSerializationConnectionIdempotencyPolicy {
- public:
-  ~DefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<
+      PolicyTagManagerSerializationConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
-  clone() const override {
-    return absl::make_unique<
-        DefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::ReplaceTaxonomy(
+    google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ReplaceTaxonomy(
-      google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::ImportTaxonomies(
+    google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportTaxonomies(
-      google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ExportTaxonomies(
-      google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::ExportTaxonomies(
+    google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
 MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy>();
+      PolicyTagManagerSerializationConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

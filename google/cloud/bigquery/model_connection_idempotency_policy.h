@@ -32,23 +32,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ModelServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ModelServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ModelServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ModelServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency GetModel(
-      google::cloud::bigquery::v2::GetModelRequest const& request) = 0;
+      google::cloud::bigquery::v2::GetModelRequest const& request);
 
   virtual google::cloud::Idempotency ListModels(
-      google::cloud::bigquery::v2::ListModelsRequest const& request) = 0;
+      google::cloud::bigquery::v2::ListModelsRequest const& request);
 
   virtual google::cloud::Idempotency PatchModel(
-      google::cloud::bigquery::v2::PatchModelRequest const& request) = 0;
+      google::cloud::bigquery::v2::PatchModelRequest const& request);
 
   virtual google::cloud::Idempotency DeleteModel(
-      google::cloud::bigquery::v2::DeleteModelRequest const& request) = 0;
+      google::cloud::bigquery::v2::DeleteModelRequest const& request);
 };
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>

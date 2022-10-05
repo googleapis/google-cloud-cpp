@@ -32,20 +32,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class RevisionsConnectionIdempotencyPolicy {
  public:
-  virtual ~RevisionsConnectionIdempotencyPolicy() = 0;
+  virtual ~RevisionsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RevisionsConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<RevisionsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency GetRevision(
-      google::cloud::run::v2::GetRevisionRequest const& request) = 0;
+      google::cloud::run::v2::GetRevisionRequest const& request);
 
   virtual google::cloud::Idempotency ListRevisions(
-      google::cloud::run::v2::ListRevisionsRequest request) = 0;
+      google::cloud::run::v2::ListRevisionsRequest request);
 
   virtual google::cloud::Idempotency DeleteRevision(
-      google::cloud::run::v2::DeleteRevisionRequest const& request) = 0;
+      google::cloud::run::v2::DeleteRevisionRequest const& request);
 };
 
 std::unique_ptr<RevisionsConnectionIdempotencyPolicy>

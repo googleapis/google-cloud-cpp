@@ -29,73 +29,64 @@ using ::google::cloud::Idempotency;
 
 FlowsConnectionIdempotencyPolicy::~FlowsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultFlowsConnectionIdempotencyPolicy
-    : public FlowsConnectionIdempotencyPolicy {
- public:
-  ~DefaultFlowsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<FlowsConnectionIdempotencyPolicy>
+FlowsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<FlowsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<FlowsConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultFlowsConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency FlowsConnectionIdempotencyPolicy::CreateFlow(
+    google::cloud::dialogflow::cx::v3::CreateFlowRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateFlow(
-      google::cloud::dialogflow::cx::v3::CreateFlowRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency FlowsConnectionIdempotencyPolicy::DeleteFlow(
+    google::cloud::dialogflow::cx::v3::DeleteFlowRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteFlow(
-      google::cloud::dialogflow::cx::v3::DeleteFlowRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency FlowsConnectionIdempotencyPolicy::ListFlows(
+    google::cloud::dialogflow::cx::v3::ListFlowsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListFlows(
-      google::cloud::dialogflow::cx::v3::ListFlowsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency FlowsConnectionIdempotencyPolicy::GetFlow(
+    google::cloud::dialogflow::cx::v3::GetFlowRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetFlow(
-      google::cloud::dialogflow::cx::v3::GetFlowRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency FlowsConnectionIdempotencyPolicy::UpdateFlow(
+    google::cloud::dialogflow::cx::v3::UpdateFlowRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateFlow(
-      google::cloud::dialogflow::cx::v3::UpdateFlowRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency FlowsConnectionIdempotencyPolicy::TrainFlow(
+    google::cloud::dialogflow::cx::v3::TrainFlowRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TrainFlow(
-      google::cloud::dialogflow::cx::v3::TrainFlowRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency FlowsConnectionIdempotencyPolicy::ValidateFlow(
+    google::cloud::dialogflow::cx::v3::ValidateFlowRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ValidateFlow(
-      google::cloud::dialogflow::cx::v3::ValidateFlowRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency FlowsConnectionIdempotencyPolicy::GetFlowValidationResult(
+    google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetFlowValidationResult(
-      google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency FlowsConnectionIdempotencyPolicy::ImportFlow(
+    google::cloud::dialogflow::cx::v3::ImportFlowRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportFlow(
-      google::cloud::dialogflow::cx::v3::ImportFlowRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ExportFlow(
-      google::cloud::dialogflow::cx::v3::ExportFlowRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency FlowsConnectionIdempotencyPolicy::ExportFlow(
+    google::cloud::dialogflow::cx::v3::ExportFlowRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<FlowsConnectionIdempotencyPolicy>
 MakeDefaultFlowsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultFlowsConnectionIdempotencyPolicy>();
+  return absl::make_unique<FlowsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

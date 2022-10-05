@@ -30,55 +30,44 @@ using ::google::cloud::Idempotency;
 LanguageServiceConnectionIdempotencyPolicy::
     ~LanguageServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultLanguageServiceConnectionIdempotencyPolicy
-    : public LanguageServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultLanguageServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy>
+LanguageServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<LanguageServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultLanguageServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency LanguageServiceConnectionIdempotencyPolicy::AnalyzeSentiment(
+    google::cloud::language::v1::AnalyzeSentimentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AnalyzeSentiment(
-      google::cloud::language::v1::AnalyzeSentimentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency LanguageServiceConnectionIdempotencyPolicy::AnalyzeEntities(
+    google::cloud::language::v1::AnalyzeEntitiesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AnalyzeEntities(
-      google::cloud::language::v1::AnalyzeEntitiesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency LanguageServiceConnectionIdempotencyPolicy::AnalyzeEntitySentiment(
+    google::cloud::language::v1::AnalyzeEntitySentimentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AnalyzeEntitySentiment(
-      google::cloud::language::v1::AnalyzeEntitySentimentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency LanguageServiceConnectionIdempotencyPolicy::AnalyzeSyntax(
+    google::cloud::language::v1::AnalyzeSyntaxRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AnalyzeSyntax(
-      google::cloud::language::v1::AnalyzeSyntaxRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency LanguageServiceConnectionIdempotencyPolicy::ClassifyText(
+    google::cloud::language::v1::ClassifyTextRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ClassifyText(
-      google::cloud::language::v1::ClassifyTextRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency AnnotateText(
-      google::cloud::language::v1::AnnotateTextRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency LanguageServiceConnectionIdempotencyPolicy::AnnotateText(
+    google::cloud::language::v1::AnnotateTextRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy>
 MakeDefaultLanguageServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultLanguageServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<LanguageServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

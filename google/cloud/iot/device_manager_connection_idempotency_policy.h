@@ -32,71 +32,68 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class DeviceManagerConnectionIdempotencyPolicy {
  public:
-  virtual ~DeviceManagerConnectionIdempotencyPolicy() = 0;
+  virtual ~DeviceManagerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<DeviceManagerConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateDeviceRegistry(
-      google::cloud::iot::v1::CreateDeviceRegistryRequest const& request) = 0;
+      google::cloud::iot::v1::CreateDeviceRegistryRequest const& request);
 
   virtual google::cloud::Idempotency GetDeviceRegistry(
-      google::cloud::iot::v1::GetDeviceRegistryRequest const& request) = 0;
+      google::cloud::iot::v1::GetDeviceRegistryRequest const& request);
 
   virtual google::cloud::Idempotency UpdateDeviceRegistry(
-      google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request) = 0;
+      google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request);
 
   virtual google::cloud::Idempotency DeleteDeviceRegistry(
-      google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request) = 0;
+      google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request);
 
   virtual google::cloud::Idempotency ListDeviceRegistries(
-      google::cloud::iot::v1::ListDeviceRegistriesRequest request) = 0;
+      google::cloud::iot::v1::ListDeviceRegistriesRequest request);
 
   virtual google::cloud::Idempotency CreateDevice(
-      google::cloud::iot::v1::CreateDeviceRequest const& request) = 0;
+      google::cloud::iot::v1::CreateDeviceRequest const& request);
 
   virtual google::cloud::Idempotency GetDevice(
-      google::cloud::iot::v1::GetDeviceRequest const& request) = 0;
+      google::cloud::iot::v1::GetDeviceRequest const& request);
 
   virtual google::cloud::Idempotency UpdateDevice(
-      google::cloud::iot::v1::UpdateDeviceRequest const& request) = 0;
+      google::cloud::iot::v1::UpdateDeviceRequest const& request);
 
   virtual google::cloud::Idempotency DeleteDevice(
-      google::cloud::iot::v1::DeleteDeviceRequest const& request) = 0;
+      google::cloud::iot::v1::DeleteDeviceRequest const& request);
 
   virtual google::cloud::Idempotency ListDevices(
-      google::cloud::iot::v1::ListDevicesRequest request) = 0;
+      google::cloud::iot::v1::ListDevicesRequest request);
 
   virtual google::cloud::Idempotency ModifyCloudToDeviceConfig(
-      google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const&
-          request) = 0;
+      google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request);
 
   virtual google::cloud::Idempotency ListDeviceConfigVersions(
-      google::cloud::iot::v1::ListDeviceConfigVersionsRequest const&
-          request) = 0;
+      google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request);
 
   virtual google::cloud::Idempotency ListDeviceStates(
-      google::cloud::iot::v1::ListDeviceStatesRequest const& request) = 0;
+      google::cloud::iot::v1::ListDeviceStatesRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual google::cloud::Idempotency SendCommandToDevice(
-      google::cloud::iot::v1::SendCommandToDeviceRequest const& request) = 0;
+      google::cloud::iot::v1::SendCommandToDeviceRequest const& request);
 
   virtual google::cloud::Idempotency BindDeviceToGateway(
-      google::cloud::iot::v1::BindDeviceToGatewayRequest const& request) = 0;
+      google::cloud::iot::v1::BindDeviceToGatewayRequest const& request);
 
   virtual google::cloud::Idempotency UnbindDeviceFromGateway(
-      google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const&
-          request) = 0;
+      google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request);
 };
 
 std::unique_ptr<DeviceManagerConnectionIdempotencyPolicy>

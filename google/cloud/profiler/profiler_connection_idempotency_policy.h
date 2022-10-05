@@ -32,23 +32,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ProfilerServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ProfilerServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ProfilerServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ProfilerServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateProfile(
-      google::devtools::cloudprofiler::v2::CreateProfileRequest const&
-          request) = 0;
+      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request);
 
   virtual google::cloud::Idempotency CreateOfflineProfile(
       google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateProfile(
-      google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
-          request) = 0;
+      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request);
 };
 
 std::unique_ptr<ProfilerServiceConnectionIdempotencyPolicy>

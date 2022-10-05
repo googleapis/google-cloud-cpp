@@ -30,34 +30,24 @@ using ::google::cloud::Idempotency;
 DeploymentsConnectionIdempotencyPolicy::
     ~DeploymentsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultDeploymentsConnectionIdempotencyPolicy
-    : public DeploymentsConnectionIdempotencyPolicy {
- public:
-  ~DefaultDeploymentsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<DeploymentsConnectionIdempotencyPolicy>
+DeploymentsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<DeploymentsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<DeploymentsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultDeploymentsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency DeploymentsConnectionIdempotencyPolicy::ListDeployments(
+    google::cloud::dialogflow::cx::v3::ListDeploymentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDeployments(
-      google::cloud::dialogflow::cx::v3::ListDeploymentsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency GetDeployment(
-      google::cloud::dialogflow::cx::v3::GetDeploymentRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency DeploymentsConnectionIdempotencyPolicy::GetDeployment(
+    google::cloud::dialogflow::cx::v3::GetDeploymentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<DeploymentsConnectionIdempotencyPolicy>
 MakeDefaultDeploymentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultDeploymentsConnectionIdempotencyPolicy>();
+  return absl::make_unique<DeploymentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

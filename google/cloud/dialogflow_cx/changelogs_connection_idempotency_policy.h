@@ -32,18 +32,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ChangelogsConnectionIdempotencyPolicy {
  public:
-  virtual ~ChangelogsConnectionIdempotencyPolicy() = 0;
+  virtual ~ChangelogsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ChangelogsConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<ChangelogsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListChangelogs(
-      google::cloud::dialogflow::cx::v3::ListChangelogsRequest request) = 0;
+      google::cloud::dialogflow::cx::v3::ListChangelogsRequest request);
 
   virtual google::cloud::Idempotency GetChangelog(
-      google::cloud::dialogflow::cx::v3::GetChangelogRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request);
 };
 
 std::unique_ptr<ChangelogsConnectionIdempotencyPolicy>

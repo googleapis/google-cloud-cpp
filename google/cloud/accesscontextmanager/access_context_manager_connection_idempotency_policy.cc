@@ -30,160 +30,163 @@ using ::google::cloud::Idempotency;
 AccessContextManagerConnectionIdempotencyPolicy::
     ~AccessContextManagerConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAccessContextManagerConnectionIdempotencyPolicy
-    : public AccessContextManagerConnectionIdempotencyPolicy {
- public:
-  ~DefaultAccessContextManagerConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AccessContextManagerConnectionIdempotencyPolicy>
+AccessContextManagerConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AccessContextManagerConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AccessContextManagerConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultAccessContextManagerConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::ListAccessPolicies(
+    google::identity::accesscontextmanager::v1::
+        ListAccessPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAccessPolicies(
-      google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::GetAccessPolicy(
+    google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAccessPolicy(
-      google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::CreateAccessPolicy(
+    google::identity::accesscontextmanager::v1::AccessPolicy const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateAccessPolicy(
-      google::identity::accesscontextmanager::v1::AccessPolicy const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::UpdateAccessPolicy(
+    google::identity::accesscontextmanager::v1::
+        UpdateAccessPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateAccessPolicy(
-      google::identity::accesscontextmanager::v1::
-          UpdateAccessPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::DeleteAccessPolicy(
+    google::identity::accesscontextmanager::v1::
+        DeleteAccessPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteAccessPolicy(
-      google::identity::accesscontextmanager::v1::
-          DeleteAccessPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::ListAccessLevels(
+    google::identity::accesscontextmanager::v1::
+        ListAccessLevelsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAccessLevels(
-      google::identity::accesscontextmanager::v1::ListAccessLevelsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::GetAccessLevel(
+    google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAccessLevel(
-      google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::CreateAccessLevel(
+    google::identity::accesscontextmanager::v1::
+        CreateAccessLevelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateAccessLevel(google::identity::accesscontextmanager::v1::
-                                    CreateAccessLevelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::UpdateAccessLevel(
+    google::identity::accesscontextmanager::v1::
+        UpdateAccessLevelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateAccessLevel(google::identity::accesscontextmanager::v1::
-                                    UpdateAccessLevelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::DeleteAccessLevel(
+    google::identity::accesscontextmanager::v1::
+        DeleteAccessLevelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteAccessLevel(google::identity::accesscontextmanager::v1::
-                                    DeleteAccessLevelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::ReplaceAccessLevels(
+    google::identity::accesscontextmanager::v1::
+        ReplaceAccessLevelsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ReplaceAccessLevels(
-      google::identity::accesscontextmanager::v1::
-          ReplaceAccessLevelsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::ListServicePerimeters(
+    google::identity::accesscontextmanager::v1::
+        ListServicePerimetersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListServicePerimeters(
-      google::identity::accesscontextmanager::v1::ListServicePerimetersRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::GetServicePerimeter(
+    google::identity::accesscontextmanager::v1::
+        GetServicePerimeterRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetServicePerimeter(
-      google::identity::accesscontextmanager::v1::
-          GetServicePerimeterRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::CreateServicePerimeter(
+    google::identity::accesscontextmanager::v1::
+        CreateServicePerimeterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateServicePerimeter(
-      google::identity::accesscontextmanager::v1::
-          CreateServicePerimeterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::UpdateServicePerimeter(
+    google::identity::accesscontextmanager::v1::
+        UpdateServicePerimeterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateServicePerimeter(
-      google::identity::accesscontextmanager::v1::
-          UpdateServicePerimeterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::DeleteServicePerimeter(
+    google::identity::accesscontextmanager::v1::
+        DeleteServicePerimeterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteServicePerimeter(
-      google::identity::accesscontextmanager::v1::
-          DeleteServicePerimeterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::ReplaceServicePerimeters(
+    google::identity::accesscontextmanager::v1::
+        ReplaceServicePerimetersRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ReplaceServicePerimeters(
-      google::identity::accesscontextmanager::v1::
-          ReplaceServicePerimetersRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::CommitServicePerimeters(
+    google::identity::accesscontextmanager::v1::
+        CommitServicePerimetersRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CommitServicePerimeters(
-      google::identity::accesscontextmanager::v1::
-          CommitServicePerimetersRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::ListGcpUserAccessBindings(
+    google::identity::accesscontextmanager::v1::
+        ListGcpUserAccessBindingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListGcpUserAccessBindings(
-      google::identity::accesscontextmanager::v1::
-          ListGcpUserAccessBindingsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::GetGcpUserAccessBinding(
+    google::identity::accesscontextmanager::v1::
+        GetGcpUserAccessBindingRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::
-          GetGcpUserAccessBindingRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::CreateGcpUserAccessBinding(
+    google::identity::accesscontextmanager::v1::
+        CreateGcpUserAccessBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::
-          CreateGcpUserAccessBindingRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::UpdateGcpUserAccessBinding(
+    google::identity::accesscontextmanager::v1::
+        UpdateGcpUserAccessBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::
-          UpdateGcpUserAccessBindingRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::
-          DeleteGcpUserAccessBindingRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+AccessContextManagerConnectionIdempotencyPolicy::DeleteGcpUserAccessBinding(
+    google::identity::accesscontextmanager::v1::
+        DeleteGcpUserAccessBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<AccessContextManagerConnectionIdempotencyPolicy>
 MakeDefaultAccessContextManagerConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultAccessContextManagerConnectionIdempotencyPolicy>();
+  return absl::make_unique<AccessContextManagerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

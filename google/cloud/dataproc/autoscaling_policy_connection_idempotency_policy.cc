@@ -30,55 +30,46 @@ using ::google::cloud::Idempotency;
 AutoscalingPolicyServiceConnectionIdempotencyPolicy::
     ~AutoscalingPolicyServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy
-    : public AutoscalingPolicyServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>
+AutoscalingPolicyServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AutoscalingPolicyServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+AutoscalingPolicyServiceConnectionIdempotencyPolicy::CreateAutoscalingPolicy(
+    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateAutoscalingPolicy(
-      google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AutoscalingPolicyServiceConnectionIdempotencyPolicy::UpdateAutoscalingPolicy(
+    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency UpdateAutoscalingPolicy(
-      google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+AutoscalingPolicyServiceConnectionIdempotencyPolicy::GetAutoscalingPolicy(
+    google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAutoscalingPolicy(
-      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+AutoscalingPolicyServiceConnectionIdempotencyPolicy::ListAutoscalingPolicies(
+    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAutoscalingPolicies(
-      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DeleteAutoscalingPolicy(
-      google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+AutoscalingPolicyServiceConnectionIdempotencyPolicy::DeleteAutoscalingPolicy(
+    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>
 MakeDefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy>();
+      AutoscalingPolicyServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

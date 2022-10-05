@@ -32,35 +32,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CloudSchedulerConnectionIdempotencyPolicy {
  public:
-  virtual ~CloudSchedulerConnectionIdempotencyPolicy() = 0;
+  virtual ~CloudSchedulerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListJobs(
-      google::cloud::scheduler::v1::ListJobsRequest request) = 0;
+      google::cloud::scheduler::v1::ListJobsRequest request);
 
   virtual google::cloud::Idempotency GetJob(
-      google::cloud::scheduler::v1::GetJobRequest const& request) = 0;
+      google::cloud::scheduler::v1::GetJobRequest const& request);
 
   virtual google::cloud::Idempotency CreateJob(
-      google::cloud::scheduler::v1::CreateJobRequest const& request) = 0;
+      google::cloud::scheduler::v1::CreateJobRequest const& request);
 
   virtual google::cloud::Idempotency UpdateJob(
-      google::cloud::scheduler::v1::UpdateJobRequest const& request) = 0;
+      google::cloud::scheduler::v1::UpdateJobRequest const& request);
 
   virtual google::cloud::Idempotency DeleteJob(
-      google::cloud::scheduler::v1::DeleteJobRequest const& request) = 0;
+      google::cloud::scheduler::v1::DeleteJobRequest const& request);
 
   virtual google::cloud::Idempotency PauseJob(
-      google::cloud::scheduler::v1::PauseJobRequest const& request) = 0;
+      google::cloud::scheduler::v1::PauseJobRequest const& request);
 
   virtual google::cloud::Idempotency ResumeJob(
-      google::cloud::scheduler::v1::ResumeJobRequest const& request) = 0;
+      google::cloud::scheduler::v1::ResumeJobRequest const& request);
 
   virtual google::cloud::Idempotency RunJob(
-      google::cloud::scheduler::v1::RunJobRequest const& request) = 0;
+      google::cloud::scheduler::v1::RunJobRequest const& request);
 };
 
 std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>

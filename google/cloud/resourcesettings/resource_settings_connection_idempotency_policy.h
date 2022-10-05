@@ -32,22 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ResourceSettingsServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ResourceSettingsServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ResourceSettingsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListSettings(
-      google::cloud::resourcesettings::v1::ListSettingsRequest request) = 0;
+      google::cloud::resourcesettings::v1::ListSettingsRequest request);
 
   virtual google::cloud::Idempotency GetSetting(
-      google::cloud::resourcesettings::v1::GetSettingRequest const&
-          request) = 0;
+      google::cloud::resourcesettings::v1::GetSettingRequest const& request);
 
   virtual google::cloud::Idempotency UpdateSetting(
-      google::cloud::resourcesettings::v1::UpdateSettingRequest const&
-          request) = 0;
+      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request);
 };
 
 std::unique_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>

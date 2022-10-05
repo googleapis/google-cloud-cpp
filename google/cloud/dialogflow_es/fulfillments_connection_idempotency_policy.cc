@@ -30,34 +30,24 @@ using ::google::cloud::Idempotency;
 FulfillmentsConnectionIdempotencyPolicy::
     ~FulfillmentsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultFulfillmentsConnectionIdempotencyPolicy
-    : public FulfillmentsConnectionIdempotencyPolicy {
- public:
-  ~DefaultFulfillmentsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<FulfillmentsConnectionIdempotencyPolicy>
+FulfillmentsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<FulfillmentsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<FulfillmentsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultFulfillmentsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency FulfillmentsConnectionIdempotencyPolicy::GetFulfillment(
+    google::cloud::dialogflow::v2::GetFulfillmentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetFulfillment(
-      google::cloud::dialogflow::v2::GetFulfillmentRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency UpdateFulfillment(
-      google::cloud::dialogflow::v2::UpdateFulfillmentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency FulfillmentsConnectionIdempotencyPolicy::UpdateFulfillment(
+    google::cloud::dialogflow::v2::UpdateFulfillmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<FulfillmentsConnectionIdempotencyPolicy>
 MakeDefaultFulfillmentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultFulfillmentsConnectionIdempotencyPolicy>();
+  return absl::make_unique<FulfillmentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

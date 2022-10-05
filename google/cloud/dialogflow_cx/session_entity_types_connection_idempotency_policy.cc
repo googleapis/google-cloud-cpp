@@ -30,55 +30,45 @@ using ::google::cloud::Idempotency;
 SessionEntityTypesConnectionIdempotencyPolicy::
     ~SessionEntityTypesConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultSessionEntityTypesConnectionIdempotencyPolicy
-    : public SessionEntityTypesConnectionIdempotencyPolicy {
- public:
-  ~DefaultSessionEntityTypesConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy>
+SessionEntityTypesConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<SessionEntityTypesConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultSessionEntityTypesConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+SessionEntityTypesConnectionIdempotencyPolicy::ListSessionEntityTypes(
+    google::cloud::dialogflow::cx::v3::
+        ListSessionEntityTypesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListSessionEntityTypes(
-      google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency SessionEntityTypesConnectionIdempotencyPolicy::GetSessionEntityType(
+    google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetSessionEntityType(
-      google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+SessionEntityTypesConnectionIdempotencyPolicy::CreateSessionEntityType(
+    google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateSessionEntityType(
-      google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+SessionEntityTypesConnectionIdempotencyPolicy::UpdateSessionEntityType(
+    google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateSessionEntityType(
-      google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteSessionEntityType(
-      google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+SessionEntityTypesConnectionIdempotencyPolicy::DeleteSessionEntityType(
+    google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy>
 MakeDefaultSessionEntityTypesConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultSessionEntityTypesConnectionIdempotencyPolicy>();
+  return absl::make_unique<SessionEntityTypesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

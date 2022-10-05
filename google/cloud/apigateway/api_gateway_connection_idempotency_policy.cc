@@ -30,100 +30,89 @@ using ::google::cloud::Idempotency;
 ApiGatewayServiceConnectionIdempotencyPolicy::
     ~ApiGatewayServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultApiGatewayServiceConnectionIdempotencyPolicy
-    : public ApiGatewayServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultApiGatewayServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ApiGatewayServiceConnectionIdempotencyPolicy>
+ApiGatewayServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ApiGatewayServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ApiGatewayServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultApiGatewayServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListGateways(
+    google::cloud::apigateway::v1::ListGatewaysRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListGateways(
-      google::cloud::apigateway::v1::ListGatewaysRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::GetGateway(
+    google::cloud::apigateway::v1::GetGatewayRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetGateway(
-      google::cloud::apigateway::v1::GetGatewayRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::CreateGateway(
+    google::cloud::apigateway::v1::CreateGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateGateway(
-      google::cloud::apigateway::v1::CreateGatewayRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::UpdateGateway(
+    google::cloud::apigateway::v1::UpdateGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateGateway(
-      google::cloud::apigateway::v1::UpdateGatewayRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteGateway(
+    google::cloud::apigateway::v1::DeleteGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteGateway(
-      google::cloud::apigateway::v1::DeleteGatewayRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListApis(
+    google::cloud::apigateway::v1::ListApisRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListApis(
-      google::cloud::apigateway::v1::ListApisRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::GetApi(
+    google::cloud::apigateway::v1::GetApiRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetApi(
-      google::cloud::apigateway::v1::GetApiRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::CreateApi(
+    google::cloud::apigateway::v1::CreateApiRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateApi(
-      google::cloud::apigateway::v1::CreateApiRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::UpdateApi(
+    google::cloud::apigateway::v1::UpdateApiRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateApi(
-      google::cloud::apigateway::v1::UpdateApiRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteApi(
+    google::cloud::apigateway::v1::DeleteApiRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteApi(
-      google::cloud::apigateway::v1::DeleteApiRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListApiConfigs(
+    google::cloud::apigateway::v1::ListApiConfigsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListApiConfigs(
-      google::cloud::apigateway::v1::ListApiConfigsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::GetApiConfig(
+    google::cloud::apigateway::v1::GetApiConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetApiConfig(
-      google::cloud::apigateway::v1::GetApiConfigRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::CreateApiConfig(
+    google::cloud::apigateway::v1::CreateApiConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateApiConfig(
-      google::cloud::apigateway::v1::CreateApiConfigRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::UpdateApiConfig(
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateApiConfig(
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteApiConfig(
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteApiConfig(
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ApiGatewayServiceConnectionIdempotencyPolicy>
 MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultApiGatewayServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<ApiGatewayServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

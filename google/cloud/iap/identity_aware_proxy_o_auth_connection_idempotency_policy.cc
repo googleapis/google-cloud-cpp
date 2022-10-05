@@ -30,71 +30,65 @@ using ::google::cloud::Idempotency;
 IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::
     ~IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy
-    : public IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>
+IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<
+      IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>
-  clone() const override {
-    return absl::make_unique<
-        DefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency
+IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::ListBrands(
+    google::cloud::iap::v1::ListBrandsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListBrands(
-      google::cloud::iap::v1::ListBrandsRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::CreateBrand(
+    google::cloud::iap::v1::CreateBrandRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateBrand(
-      google::cloud::iap::v1::CreateBrandRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::GetBrand(
+    google::cloud::iap::v1::GetBrandRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetBrand(
-      google::cloud::iap::v1::GetBrandRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::
+    CreateIdentityAwareProxyClient(
+        google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateIdentityAwareProxyClient(
-      google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::
+    ListIdentityAwareProxyClients(
+        google::cloud::iap::v1::
+            ListIdentityAwareProxyClientsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListIdentityAwareProxyClients(
-      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::
+    GetIdentityAwareProxyClient(
+        google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetIdentityAwareProxyClient(
-      google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::
+    ResetIdentityAwareProxyClientSecret(
+        google::cloud::iap::v1::
+            ResetIdentityAwareProxyClientSecretRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ResetIdentityAwareProxyClientSecret(
-      google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteIdentityAwareProxyClient(
-      google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::
+    DeleteIdentityAwareProxyClient(
+        google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>
 MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>();
+      IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

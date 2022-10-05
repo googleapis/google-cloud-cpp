@@ -32,29 +32,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class OsLoginServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~OsLoginServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~OsLoginServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<OsLoginServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency DeletePosixAccount(
-      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) = 0;
+      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request);
 
   virtual google::cloud::Idempotency DeleteSshPublicKey(
-      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) = 0;
+      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request);
 
   virtual google::cloud::Idempotency GetLoginProfile(
-      google::cloud::oslogin::v1::GetLoginProfileRequest const& request) = 0;
+      google::cloud::oslogin::v1::GetLoginProfileRequest const& request);
 
   virtual google::cloud::Idempotency GetSshPublicKey(
-      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) = 0;
+      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request);
 
   virtual google::cloud::Idempotency ImportSshPublicKey(
-      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) = 0;
+      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request);
 
   virtual google::cloud::Idempotency UpdateSshPublicKey(
-      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) = 0;
+      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request);
 };
 
 std::unique_ptr<OsLoginServiceConnectionIdempotencyPolicy>

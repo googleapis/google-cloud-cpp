@@ -32,48 +32,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class HubServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~HubServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~HubServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<HubServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<HubServiceConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListHubs(
-      google::cloud::networkconnectivity::v1::ListHubsRequest request) = 0;
+      google::cloud::networkconnectivity::v1::ListHubsRequest request);
 
   virtual google::cloud::Idempotency GetHub(
-      google::cloud::networkconnectivity::v1::GetHubRequest const& request) = 0;
+      google::cloud::networkconnectivity::v1::GetHubRequest const& request);
 
   virtual google::cloud::Idempotency CreateHub(
-      google::cloud::networkconnectivity::v1::CreateHubRequest const&
-          request) = 0;
+      google::cloud::networkconnectivity::v1::CreateHubRequest const& request);
 
   virtual google::cloud::Idempotency UpdateHub(
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const&
-          request) = 0;
+      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request);
 
   virtual google::cloud::Idempotency DeleteHub(
-      google::cloud::networkconnectivity::v1::DeleteHubRequest const&
-          request) = 0;
+      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
 
   virtual google::cloud::Idempotency ListSpokes(
-      google::cloud::networkconnectivity::v1::ListSpokesRequest request) = 0;
+      google::cloud::networkconnectivity::v1::ListSpokesRequest request);
 
   virtual google::cloud::Idempotency GetSpoke(
-      google::cloud::networkconnectivity::v1::GetSpokeRequest const&
-          request) = 0;
+      google::cloud::networkconnectivity::v1::GetSpokeRequest const& request);
 
   virtual google::cloud::Idempotency CreateSpoke(
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateSpoke(
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteSpoke(
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<HubServiceConnectionIdempotencyPolicy>

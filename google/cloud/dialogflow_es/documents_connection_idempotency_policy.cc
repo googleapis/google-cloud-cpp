@@ -30,63 +30,54 @@ using ::google::cloud::Idempotency;
 DocumentsConnectionIdempotencyPolicy::~DocumentsConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultDocumentsConnectionIdempotencyPolicy
-    : public DocumentsConnectionIdempotencyPolicy {
- public:
-  ~DefaultDocumentsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<DocumentsConnectionIdempotencyPolicy>
+DocumentsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<DocumentsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<DocumentsConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultDocumentsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency DocumentsConnectionIdempotencyPolicy::ListDocuments(
+    google::cloud::dialogflow::v2::ListDocumentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDocuments(
-      google::cloud::dialogflow::v2::ListDocumentsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DocumentsConnectionIdempotencyPolicy::GetDocument(
+    google::cloud::dialogflow::v2::GetDocumentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetDocument(
-      google::cloud::dialogflow::v2::GetDocumentRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DocumentsConnectionIdempotencyPolicy::CreateDocument(
+    google::cloud::dialogflow::v2::CreateDocumentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateDocument(
-      google::cloud::dialogflow::v2::CreateDocumentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DocumentsConnectionIdempotencyPolicy::ImportDocuments(
+    google::cloud::dialogflow::v2::ImportDocumentsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportDocuments(
-      google::cloud::dialogflow::v2::ImportDocumentsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DocumentsConnectionIdempotencyPolicy::DeleteDocument(
+    google::cloud::dialogflow::v2::DeleteDocumentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteDocument(
-      google::cloud::dialogflow::v2::DeleteDocumentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DocumentsConnectionIdempotencyPolicy::UpdateDocument(
+    google::cloud::dialogflow::v2::UpdateDocumentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateDocument(
-      google::cloud::dialogflow::v2::UpdateDocumentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DocumentsConnectionIdempotencyPolicy::ReloadDocument(
+    google::cloud::dialogflow::v2::ReloadDocumentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ReloadDocument(
-      google::cloud::dialogflow::v2::ReloadDocumentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ExportDocument(
-      google::cloud::dialogflow::v2::ExportDocumentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency DocumentsConnectionIdempotencyPolicy::ExportDocument(
+    google::cloud::dialogflow::v2::ExportDocumentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<DocumentsConnectionIdempotencyPolicy>
 MakeDefaultDocumentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultDocumentsConnectionIdempotencyPolicy>();
+  return absl::make_unique<DocumentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

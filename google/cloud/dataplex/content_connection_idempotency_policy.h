@@ -32,35 +32,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ContentServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ContentServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ContentServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ContentServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateContent(
-      google::cloud::dataplex::v1::CreateContentRequest const& request) = 0;
+      google::cloud::dataplex::v1::CreateContentRequest const& request);
 
   virtual google::cloud::Idempotency UpdateContent(
-      google::cloud::dataplex::v1::UpdateContentRequest const& request) = 0;
+      google::cloud::dataplex::v1::UpdateContentRequest const& request);
 
   virtual google::cloud::Idempotency DeleteContent(
-      google::cloud::dataplex::v1::DeleteContentRequest const& request) = 0;
+      google::cloud::dataplex::v1::DeleteContentRequest const& request);
 
   virtual google::cloud::Idempotency GetContent(
-      google::cloud::dataplex::v1::GetContentRequest const& request) = 0;
+      google::cloud::dataplex::v1::GetContentRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual google::cloud::Idempotency ListContent(
-      google::cloud::dataplex::v1::ListContentRequest request) = 0;
+      google::cloud::dataplex::v1::ListContentRequest request);
 };
 
 std::unique_ptr<ContentServiceConnectionIdempotencyPolicy>

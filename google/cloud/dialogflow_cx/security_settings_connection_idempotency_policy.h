@@ -32,31 +32,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class SecuritySettingsServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~SecuritySettingsServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~SecuritySettingsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency CreateSecuritySettings(
       google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetSecuritySettings(
       google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateSecuritySettings(
       google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListSecuritySettings(
-      google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request);
 
   virtual google::cloud::Idempotency DeleteSecuritySettings(
       google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>

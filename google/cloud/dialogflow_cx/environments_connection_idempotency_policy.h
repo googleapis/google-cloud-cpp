@@ -32,45 +32,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class EnvironmentsConnectionIdempotencyPolicy {
  public:
-  virtual ~EnvironmentsConnectionIdempotencyPolicy() = 0;
+  virtual ~EnvironmentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListEnvironments(
-      google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request) = 0;
+      google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request);
 
   virtual google::cloud::Idempotency GetEnvironment(
-      google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency CreateEnvironment(
       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateEnvironment(
       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteEnvironment(
       google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency LookupEnvironmentHistory(
       google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency RunContinuousTest(
       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListContinuousTestResults(
       google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeployFlow(
-      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request);
 };
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>

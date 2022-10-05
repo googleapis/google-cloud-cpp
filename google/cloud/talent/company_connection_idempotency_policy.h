@@ -32,26 +32,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CompanyServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~CompanyServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~CompanyServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateCompany(
-      google::cloud::talent::v4::CreateCompanyRequest const& request) = 0;
+      google::cloud::talent::v4::CreateCompanyRequest const& request);
 
   virtual google::cloud::Idempotency GetCompany(
-      google::cloud::talent::v4::GetCompanyRequest const& request) = 0;
+      google::cloud::talent::v4::GetCompanyRequest const& request);
 
   virtual google::cloud::Idempotency UpdateCompany(
-      google::cloud::talent::v4::UpdateCompanyRequest const& request) = 0;
+      google::cloud::talent::v4::UpdateCompanyRequest const& request);
 
   virtual google::cloud::Idempotency DeleteCompany(
-      google::cloud::talent::v4::DeleteCompanyRequest const& request) = 0;
+      google::cloud::talent::v4::DeleteCompanyRequest const& request);
 
   virtual google::cloud::Idempotency ListCompanies(
-      google::cloud::talent::v4::ListCompaniesRequest request) = 0;
+      google::cloud::talent::v4::ListCompaniesRequest request);
 };
 
 std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>

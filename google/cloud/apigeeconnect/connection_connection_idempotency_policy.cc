@@ -30,30 +30,19 @@ using ::google::cloud::Idempotency;
 ConnectionServiceConnectionIdempotencyPolicy::
     ~ConnectionServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultConnectionServiceConnectionIdempotencyPolicy
-    : public ConnectionServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultConnectionServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
+ConnectionServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ConnectionServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultConnectionServiceConnectionIdempotencyPolicy>(*this);
-  }
-
-  Idempotency ListConnections(
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency ConnectionServiceConnectionIdempotencyPolicy::ListConnections(
+    google::cloud::apigeeconnect::v1::ListConnectionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
 MakeDefaultConnectionServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultConnectionServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<ConnectionServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

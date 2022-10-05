@@ -30,48 +30,40 @@ using ::google::cloud::Idempotency;
 LoggingServiceV2ConnectionIdempotencyPolicy::
     ~LoggingServiceV2ConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultLoggingServiceV2ConnectionIdempotencyPolicy
-    : public LoggingServiceV2ConnectionIdempotencyPolicy {
- public:
-  ~DefaultLoggingServiceV2ConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
+LoggingServiceV2ConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<LoggingServiceV2ConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultLoggingServiceV2ConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::DeleteLog(
+    google::logging::v2::DeleteLogRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteLog(google::logging::v2::DeleteLogRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::WriteLogEntries(
+    google::logging::v2::WriteLogEntriesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency WriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::ListLogEntries(
+    google::logging::v2::ListLogEntriesRequest) {  // NOLINT
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ListLogEntries(
-      google::logging::v2::ListLogEntriesRequest) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+LoggingServiceV2ConnectionIdempotencyPolicy::ListMonitoredResourceDescriptors(
+    google::logging::v2::ListMonitoredResourceDescriptorsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListMonitoredResourceDescriptors(
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency ListLogs(google::logging::v2::ListLogsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::ListLogs(
+    google::logging::v2::ListLogsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
 MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultLoggingServiceV2ConnectionIdempotencyPolicy>();
+  return absl::make_unique<LoggingServiceV2ConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

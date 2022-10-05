@@ -32,18 +32,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class DeploymentsConnectionIdempotencyPolicy {
  public:
-  virtual ~DeploymentsConnectionIdempotencyPolicy() = 0;
+  virtual ~DeploymentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DeploymentsConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<DeploymentsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListDeployments(
-      google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request) = 0;
+      google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request);
 
   virtual google::cloud::Idempotency GetDeployment(
-      google::cloud::dialogflow::cx::v3::GetDeploymentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request);
 };
 
 std::unique_ptr<DeploymentsConnectionIdempotencyPolicy>

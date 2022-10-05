@@ -30,80 +30,64 @@ using ::google::cloud::Idempotency;
 HubServiceConnectionIdempotencyPolicy::
     ~HubServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultHubServiceConnectionIdempotencyPolicy
-    : public HubServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultHubServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<HubServiceConnectionIdempotencyPolicy>
+HubServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<HubServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<HubServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultHubServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency HubServiceConnectionIdempotencyPolicy::ListHubs(
+    google::cloud::networkconnectivity::v1::ListHubsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListHubs(
-      google::cloud::networkconnectivity::v1::ListHubsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency HubServiceConnectionIdempotencyPolicy::GetHub(
+    google::cloud::networkconnectivity::v1::GetHubRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetHub(
-      google::cloud::networkconnectivity::v1::GetHubRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency HubServiceConnectionIdempotencyPolicy::CreateHub(
+    google::cloud::networkconnectivity::v1::CreateHubRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateHub(
-      google::cloud::networkconnectivity::v1::CreateHubRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency HubServiceConnectionIdempotencyPolicy::UpdateHub(
+    google::cloud::networkconnectivity::v1::UpdateHubRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateHub(
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency HubServiceConnectionIdempotencyPolicy::DeleteHub(
+    google::cloud::networkconnectivity::v1::DeleteHubRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteHub(
-      google::cloud::networkconnectivity::v1::DeleteHubRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency HubServiceConnectionIdempotencyPolicy::ListSpokes(
+    google::cloud::networkconnectivity::v1::ListSpokesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListSpokes(
-      google::cloud::networkconnectivity::v1::ListSpokesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency HubServiceConnectionIdempotencyPolicy::GetSpoke(
+    google::cloud::networkconnectivity::v1::GetSpokeRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetSpoke(
-      google::cloud::networkconnectivity::v1::GetSpokeRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency HubServiceConnectionIdempotencyPolicy::CreateSpoke(
+    google::cloud::networkconnectivity::v1::CreateSpokeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateSpoke(
-      google::cloud::networkconnectivity::v1::CreateSpokeRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency HubServiceConnectionIdempotencyPolicy::UpdateSpoke(
+    google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateSpoke(
-      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteSpoke(
-      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency HubServiceConnectionIdempotencyPolicy::DeleteSpoke(
+    google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<HubServiceConnectionIdempotencyPolicy>
 MakeDefaultHubServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultHubServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<HubServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

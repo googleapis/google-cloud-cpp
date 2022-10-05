@@ -32,24 +32,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ContainerAnalysisConnectionIdempotencyPolicy {
  public:
-  virtual ~ContainerAnalysisConnectionIdempotencyPolicy() = 0;
+  virtual ~ContainerAnalysisConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual google::cloud::Idempotency GetVulnerabilityOccurrencesSummary(
       google::devtools::containeranalysis::v1::
-          GetVulnerabilityOccurrencesSummaryRequest const& request) = 0;
+          GetVulnerabilityOccurrencesSummaryRequest const& request);
 };
 
 std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>

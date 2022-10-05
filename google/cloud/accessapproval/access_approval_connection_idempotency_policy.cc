@@ -30,77 +30,69 @@ using ::google::cloud::Idempotency;
 AccessApprovalConnectionIdempotencyPolicy::
     ~AccessApprovalConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAccessApprovalConnectionIdempotencyPolicy
-    : public AccessApprovalConnectionIdempotencyPolicy {
- public:
-  ~DefaultAccessApprovalConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
+AccessApprovalConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AccessApprovalConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultAccessApprovalConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency AccessApprovalConnectionIdempotencyPolicy::ListApprovalRequests(
+    google::cloud::accessapproval::v1::ListApprovalRequestsMessage) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListApprovalRequests(
-      google::cloud::accessapproval::v1::ListApprovalRequestsMessage) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AccessApprovalConnectionIdempotencyPolicy::GetApprovalRequest(
+    google::cloud::accessapproval::v1::GetApprovalRequestMessage const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetApprovalRequest(
-      google::cloud::accessapproval::v1::GetApprovalRequestMessage const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AccessApprovalConnectionIdempotencyPolicy::ApproveApprovalRequest(
+    google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ApproveApprovalRequest(
-      google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AccessApprovalConnectionIdempotencyPolicy::DismissApprovalRequest(
+    google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DismissApprovalRequest(
-      google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessApprovalConnectionIdempotencyPolicy::InvalidateApprovalRequest(
+    google::cloud::accessapproval::v1::
+        InvalidateApprovalRequestMessage const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency InvalidateApprovalRequest(
-      google::cloud::accessapproval::v1::
-          InvalidateApprovalRequestMessage const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessApprovalConnectionIdempotencyPolicy::GetAccessApprovalSettings(
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalSettingsMessage const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          GetAccessApprovalSettingsMessage const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+AccessApprovalConnectionIdempotencyPolicy::UpdateAccessApprovalSettings(
+    google::cloud::accessapproval::v1::
+        UpdateAccessApprovalSettingsMessage const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          UpdateAccessApprovalSettingsMessage const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+AccessApprovalConnectionIdempotencyPolicy::DeleteAccessApprovalSettings(
+    google::cloud::accessapproval::v1::
+        DeleteAccessApprovalSettingsMessage const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          DeleteAccessApprovalSettingsMessage const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency GetAccessApprovalServiceAccount(
-      google::cloud::accessapproval::v1::
-          GetAccessApprovalServiceAccountMessage const&) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+AccessApprovalConnectionIdempotencyPolicy::GetAccessApprovalServiceAccount(
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalServiceAccountMessage const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
 MakeDefaultAccessApprovalConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultAccessApprovalConnectionIdempotencyPolicy>();
+  return absl::make_unique<AccessApprovalConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

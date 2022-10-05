@@ -30,51 +30,40 @@ using ::google::cloud::Idempotency;
 OrganizationsConnectionIdempotencyPolicy::
     ~OrganizationsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultOrganizationsConnectionIdempotencyPolicy
-    : public OrganizationsConnectionIdempotencyPolicy {
- public:
-  ~DefaultOrganizationsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<OrganizationsConnectionIdempotencyPolicy>
+OrganizationsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<OrganizationsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<OrganizationsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultOrganizationsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency OrganizationsConnectionIdempotencyPolicy::GetOrganization(
+    google::cloud::resourcemanager::v3::GetOrganizationRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetOrganization(
-      google::cloud::resourcemanager::v3::GetOrganizationRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency OrganizationsConnectionIdempotencyPolicy::SearchOrganizations(
+    google::cloud::resourcemanager::v3::SearchOrganizationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency SearchOrganizations(
-      google::cloud::resourcemanager::v3::SearchOrganizationsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency OrganizationsConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency OrganizationsConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
-
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency OrganizationsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<OrganizationsConnectionIdempotencyPolicy>
 MakeDefaultOrganizationsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultOrganizationsConnectionIdempotencyPolicy>();
+  return absl::make_unique<OrganizationsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

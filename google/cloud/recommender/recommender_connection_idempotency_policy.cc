@@ -30,93 +30,74 @@ using ::google::cloud::Idempotency;
 RecommenderConnectionIdempotencyPolicy::
     ~RecommenderConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultRecommenderConnectionIdempotencyPolicy
-    : public RecommenderConnectionIdempotencyPolicy {
- public:
-  ~DefaultRecommenderConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<RecommenderConnectionIdempotencyPolicy>
+RecommenderConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<RecommenderConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<RecommenderConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultRecommenderConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::ListInsights(
+    google::cloud::recommender::v1::ListInsightsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListInsights(
-      google::cloud::recommender::v1::ListInsightsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::GetInsight(
+    google::cloud::recommender::v1::GetInsightRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetInsight(
-      google::cloud::recommender::v1::GetInsightRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::MarkInsightAccepted(
+    google::cloud::recommender::v1::MarkInsightAcceptedRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency MarkInsightAccepted(
-      google::cloud::recommender::v1::MarkInsightAcceptedRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::ListRecommendations(
+    google::cloud::recommender::v1::ListRecommendationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListRecommendations(
-      google::cloud::recommender::v1::ListRecommendationsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::GetRecommendation(
+    google::cloud::recommender::v1::GetRecommendationRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetRecommendation(
-      google::cloud::recommender::v1::GetRecommendationRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::MarkRecommendationClaimed(
+    google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency MarkRecommendationClaimed(
-      google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::MarkRecommendationSucceeded(
+    google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency MarkRecommendationSucceeded(
-      google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::MarkRecommendationFailed(
+    google::cloud::recommender::v1::MarkRecommendationFailedRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency MarkRecommendationFailed(
-      google::cloud::recommender::v1::MarkRecommendationFailedRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::GetRecommenderConfig(
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetRecommenderConfig(
-      google::cloud::recommender::v1::GetRecommenderConfigRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::UpdateRecommenderConfig(
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateRecommenderConfig(
-      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RecommenderConnectionIdempotencyPolicy::GetInsightTypeConfig(
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetInsightTypeConfig(
-      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency UpdateInsightTypeConfig(
-      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency RecommenderConnectionIdempotencyPolicy::UpdateInsightTypeConfig(
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<RecommenderConnectionIdempotencyPolicy>
 MakeDefaultRecommenderConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultRecommenderConnectionIdempotencyPolicy>();
+  return absl::make_unique<RecommenderConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

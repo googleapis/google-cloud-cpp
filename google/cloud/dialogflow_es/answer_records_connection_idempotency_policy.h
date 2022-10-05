@@ -32,18 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AnswerRecordsConnectionIdempotencyPolicy {
  public:
-  virtual ~AnswerRecordsConnectionIdempotencyPolicy() = 0;
+  virtual ~AnswerRecordsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AnswerRecordsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListAnswerRecords(
-      google::cloud::dialogflow::v2::ListAnswerRecordsRequest request) = 0;
+      google::cloud::dialogflow::v2::ListAnswerRecordsRequest request);
 
   virtual google::cloud::Idempotency UpdateAnswerRecord(
-      google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request);
 };
 
 std::unique_ptr<AnswerRecordsConnectionIdempotencyPolicy>

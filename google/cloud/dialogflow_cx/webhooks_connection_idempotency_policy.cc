@@ -30,47 +30,39 @@ using ::google::cloud::Idempotency;
 WebhooksConnectionIdempotencyPolicy::~WebhooksConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultWebhooksConnectionIdempotencyPolicy
-    : public WebhooksConnectionIdempotencyPolicy {
- public:
-  ~DefaultWebhooksConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<WebhooksConnectionIdempotencyPolicy>
+WebhooksConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<WebhooksConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<WebhooksConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultWebhooksConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency WebhooksConnectionIdempotencyPolicy::ListWebhooks(
+    google::cloud::dialogflow::cx::v3::ListWebhooksRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListWebhooks(
-      google::cloud::dialogflow::cx::v3::ListWebhooksRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WebhooksConnectionIdempotencyPolicy::GetWebhook(
+    google::cloud::dialogflow::cx::v3::GetWebhookRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetWebhook(
-      google::cloud::dialogflow::cx::v3::GetWebhookRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WebhooksConnectionIdempotencyPolicy::CreateWebhook(
+    google::cloud::dialogflow::cx::v3::CreateWebhookRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateWebhook(
-      google::cloud::dialogflow::cx::v3::CreateWebhookRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency WebhooksConnectionIdempotencyPolicy::UpdateWebhook(
+    google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateWebhook(
-      google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteWebhook(
-      google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency WebhooksConnectionIdempotencyPolicy::DeleteWebhook(
+    google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<WebhooksConnectionIdempotencyPolicy>
 MakeDefaultWebhooksConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultWebhooksConnectionIdempotencyPolicy>();
+  return absl::make_unique<WebhooksConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

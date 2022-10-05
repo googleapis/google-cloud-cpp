@@ -32,35 +32,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AppConnectorsServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~AppConnectorsServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~AppConnectorsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AppConnectorsServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListAppConnectors(
       google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetAppConnector(
       google::cloud::beyondcorp::appconnectors::v1::
-          GetAppConnectorRequest const& request) = 0;
+          GetAppConnectorRequest const& request);
 
   virtual google::cloud::Idempotency CreateAppConnector(
       google::cloud::beyondcorp::appconnectors::v1::
-          CreateAppConnectorRequest const& request) = 0;
+          CreateAppConnectorRequest const& request);
 
   virtual google::cloud::Idempotency UpdateAppConnector(
       google::cloud::beyondcorp::appconnectors::v1::
-          UpdateAppConnectorRequest const& request) = 0;
+          UpdateAppConnectorRequest const& request);
 
   virtual google::cloud::Idempotency DeleteAppConnector(
       google::cloud::beyondcorp::appconnectors::v1::
-          DeleteAppConnectorRequest const& request) = 0;
+          DeleteAppConnectorRequest const& request);
 
   virtual google::cloud::Idempotency ReportStatus(
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<AppConnectorsServiceConnectionIdempotencyPolicy>

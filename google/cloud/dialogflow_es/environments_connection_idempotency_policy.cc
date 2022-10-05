@@ -30,54 +30,44 @@ using ::google::cloud::Idempotency;
 EnvironmentsConnectionIdempotencyPolicy::
     ~EnvironmentsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultEnvironmentsConnectionIdempotencyPolicy
-    : public EnvironmentsConnectionIdempotencyPolicy {
- public:
-  ~DefaultEnvironmentsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
+EnvironmentsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<EnvironmentsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultEnvironmentsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListEnvironments(
+    google::cloud::dialogflow::v2::ListEnvironmentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListEnvironments(
-      google::cloud::dialogflow::v2::ListEnvironmentsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetEnvironment(
+    google::cloud::dialogflow::v2::GetEnvironmentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetEnvironment(
-      google::cloud::dialogflow::v2::GetEnvironmentRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency EnvironmentsConnectionIdempotencyPolicy::CreateEnvironment(
+    google::cloud::dialogflow::v2::CreateEnvironmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateEnvironment(
-      google::cloud::dialogflow::v2::CreateEnvironmentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency EnvironmentsConnectionIdempotencyPolicy::UpdateEnvironment(
+    google::cloud::dialogflow::v2::UpdateEnvironmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateEnvironment(
-      google::cloud::dialogflow::v2::UpdateEnvironmentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteEnvironment(
+    google::cloud::dialogflow::v2::DeleteEnvironmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteEnvironment(
-      google::cloud::dialogflow::v2::DeleteEnvironmentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency GetEnvironmentHistory(
-      google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetEnvironmentHistory(
+    google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
 MakeDefaultEnvironmentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultEnvironmentsConnectionIdempotencyPolicy>();
+  return absl::make_unique<EnvironmentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

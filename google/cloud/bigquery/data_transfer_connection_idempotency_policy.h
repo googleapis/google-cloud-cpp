@@ -32,71 +32,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class DataTransferServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~DataTransferServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~DataTransferServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency GetDataSource(
       google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListDataSources(
       google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CreateTransferConfig(
       google::cloud::bigquery::datatransfer::v1::
-          CreateTransferConfigRequest const& request) = 0;
+          CreateTransferConfigRequest const& request);
 
   virtual google::cloud::Idempotency UpdateTransferConfig(
       google::cloud::bigquery::datatransfer::v1::
-          UpdateTransferConfigRequest const& request) = 0;
+          UpdateTransferConfigRequest const& request);
 
   virtual google::cloud::Idempotency DeleteTransferConfig(
       google::cloud::bigquery::datatransfer::v1::
-          DeleteTransferConfigRequest const& request) = 0;
+          DeleteTransferConfigRequest const& request);
 
   virtual google::cloud::Idempotency GetTransferConfig(
       google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListTransferConfigs(
       google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ScheduleTransferRuns(
       google::cloud::bigquery::datatransfer::v1::
-          ScheduleTransferRunsRequest const& request) = 0;
+          ScheduleTransferRunsRequest const& request);
 
   virtual google::cloud::Idempotency StartManualTransferRuns(
       google::cloud::bigquery::datatransfer::v1::
-          StartManualTransferRunsRequest const& request) = 0;
+          StartManualTransferRunsRequest const& request);
 
   virtual google::cloud::Idempotency GetTransferRun(
       google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteTransferRun(
       google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListTransferRuns(
       google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListTransferLogs(
       google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CheckValidCreds(
       google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency EnrollDataSources(
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>

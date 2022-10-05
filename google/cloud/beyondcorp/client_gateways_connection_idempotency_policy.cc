@@ -31,48 +31,42 @@ using ::google::cloud::Idempotency;
 ClientGatewaysServiceConnectionIdempotencyPolicy::
     ~ClientGatewaysServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultClientGatewaysServiceConnectionIdempotencyPolicy
-    : public ClientGatewaysServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultClientGatewaysServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ClientGatewaysServiceConnectionIdempotencyPolicy>
+ClientGatewaysServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ClientGatewaysServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ClientGatewaysServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultClientGatewaysServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+ClientGatewaysServiceConnectionIdempotencyPolicy::ListClientGateways(
+    google::cloud::beyondcorp::clientgateways::v1::
+        ListClientGatewaysRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListClientGateways(
-      google::cloud::beyondcorp::clientgateways::v1::ListClientGatewaysRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClientGatewaysServiceConnectionIdempotencyPolicy::GetClientGateway(
+    google::cloud::beyondcorp::clientgateways::v1::
+        GetClientGatewayRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetClientGateway(google::cloud::beyondcorp::clientgateways::v1::
-                                   GetClientGatewayRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ClientGatewaysServiceConnectionIdempotencyPolicy::CreateClientGateway(
+    google::cloud::beyondcorp::clientgateways::v1::
+        CreateClientGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateClientGateway(
-      google::cloud::beyondcorp::clientgateways::v1::
-          CreateClientGatewayRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteClientGateway(
-      google::cloud::beyondcorp::clientgateways::v1::
-          DeleteClientGatewayRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+ClientGatewaysServiceConnectionIdempotencyPolicy::DeleteClientGateway(
+    google::cloud::beyondcorp::clientgateways::v1::
+        DeleteClientGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ClientGatewaysServiceConnectionIdempotencyPolicy>
 MakeDefaultClientGatewaysServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultClientGatewaysServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<ClientGatewaysServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

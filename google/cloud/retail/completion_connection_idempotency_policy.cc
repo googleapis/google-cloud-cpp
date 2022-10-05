@@ -30,35 +30,24 @@ using ::google::cloud::Idempotency;
 CompletionServiceConnectionIdempotencyPolicy::
     ~CompletionServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCompletionServiceConnectionIdempotencyPolicy
-    : public CompletionServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultCompletionServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
+CompletionServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CompletionServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultCompletionServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency CompletionServiceConnectionIdempotencyPolicy::CompleteQuery(
+    google::cloud::retail::v2::CompleteQueryRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency CompleteQuery(
-      google::cloud::retail::v2::CompleteQueryRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency ImportCompletionData(
-      google::cloud::retail::v2::ImportCompletionDataRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency CompletionServiceConnectionIdempotencyPolicy::ImportCompletionData(
+    google::cloud::retail::v2::ImportCompletionDataRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
 MakeDefaultCompletionServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultCompletionServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<CompletionServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

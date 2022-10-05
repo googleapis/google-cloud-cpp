@@ -30,54 +30,41 @@ using ::google::cloud::Idempotency;
 AssuredWorkloadsServiceConnectionIdempotencyPolicy::
     ~AssuredWorkloadsServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy
-    : public AssuredWorkloadsServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
+AssuredWorkloadsServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AssuredWorkloadsServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::CreateWorkload(
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateWorkload(
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::UpdateWorkload(
+    google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateWorkload(
-      google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::DeleteWorkload(
+    google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteWorkload(
-      google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetWorkload(
+    google::cloud::assuredworkloads::v1::GetWorkloadRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetWorkload(
-      google::cloud::assuredworkloads::v1::GetWorkloadRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency ListWorkloads(
-      google::cloud::assuredworkloads::v1::ListWorkloadsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListWorkloads(
+    google::cloud::assuredworkloads::v1::ListWorkloadsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
 MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy>();
+      AssuredWorkloadsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

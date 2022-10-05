@@ -30,103 +30,95 @@ using ::google::cloud::Idempotency;
 CloudTasksConnectionIdempotencyPolicy::
     ~CloudTasksConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCloudTasksConnectionIdempotencyPolicy
-    : public CloudTasksConnectionIdempotencyPolicy {
- public:
-  ~DefaultCloudTasksConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CloudTasksConnectionIdempotencyPolicy>
+CloudTasksConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CloudTasksConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CloudTasksConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultCloudTasksConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::ListQueues(
+    google::cloud::tasks::v2::ListQueuesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListQueues(google::cloud::tasks::v2::ListQueuesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::GetQueue(
+    google::cloud::tasks::v2::GetQueueRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetQueue(
-      google::cloud::tasks::v2::GetQueueRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::CreateQueue(
+    google::cloud::tasks::v2::CreateQueueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateQueue(
-      google::cloud::tasks::v2::CreateQueueRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::UpdateQueue(
+    google::cloud::tasks::v2::UpdateQueueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateQueue(
-      google::cloud::tasks::v2::UpdateQueueRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::DeleteQueue(
+    google::cloud::tasks::v2::DeleteQueueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteQueue(
-      google::cloud::tasks::v2::DeleteQueueRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::PurgeQueue(
+    google::cloud::tasks::v2::PurgeQueueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency PurgeQueue(
-      google::cloud::tasks::v2::PurgeQueueRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::PauseQueue(
+    google::cloud::tasks::v2::PauseQueueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency PauseQueue(
-      google::cloud::tasks::v2::PauseQueueRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::ResumeQueue(
+    google::cloud::tasks::v2::ResumeQueueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ResumeQueue(
-      google::cloud::tasks::v2::ResumeQueueRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::ListTasks(
+    google::cloud::tasks::v2::ListTasksRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTasks(google::cloud::tasks::v2::ListTasksRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::GetTask(
+    google::cloud::tasks::v2::GetTaskRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTask(
-      google::cloud::tasks::v2::GetTaskRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::CreateTask(
+    google::cloud::tasks::v2::CreateTaskRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTask(
-      google::cloud::tasks::v2::CreateTaskRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudTasksConnectionIdempotencyPolicy::DeleteTask(
+    google::cloud::tasks::v2::DeleteTaskRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteTask(
-      google::cloud::tasks::v2::DeleteTaskRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency RunTask(
-      google::cloud::tasks::v2::RunTaskRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency CloudTasksConnectionIdempotencyPolicy::RunTask(
+    google::cloud::tasks::v2::RunTaskRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<CloudTasksConnectionIdempotencyPolicy>
 MakeDefaultCloudTasksConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultCloudTasksConnectionIdempotencyPolicy>();
+  return absl::make_unique<CloudTasksConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

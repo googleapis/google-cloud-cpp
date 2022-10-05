@@ -32,29 +32,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class GroupServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~GroupServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~GroupServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<GroupServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListGroups(
-      google::monitoring::v3::ListGroupsRequest request) = 0;
+      google::monitoring::v3::ListGroupsRequest request);
 
   virtual google::cloud::Idempotency GetGroup(
-      google::monitoring::v3::GetGroupRequest const& request) = 0;
+      google::monitoring::v3::GetGroupRequest const& request);
 
   virtual google::cloud::Idempotency CreateGroup(
-      google::monitoring::v3::CreateGroupRequest const& request) = 0;
+      google::monitoring::v3::CreateGroupRequest const& request);
 
   virtual google::cloud::Idempotency UpdateGroup(
-      google::monitoring::v3::UpdateGroupRequest const& request) = 0;
+      google::monitoring::v3::UpdateGroupRequest const& request);
 
   virtual google::cloud::Idempotency DeleteGroup(
-      google::monitoring::v3::DeleteGroupRequest const& request) = 0;
+      google::monitoring::v3::DeleteGroupRequest const& request);
 
   virtual google::cloud::Idempotency ListGroupMembers(
-      google::monitoring::v3::ListGroupMembersRequest request) = 0;
+      google::monitoring::v3::ListGroupMembersRequest request);
 };
 
 std::unique_ptr<GroupServiceConnectionIdempotencyPolicy>

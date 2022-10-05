@@ -29,47 +29,39 @@ using ::google::cloud::Idempotency;
 
 PagesConnectionIdempotencyPolicy::~PagesConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultPagesConnectionIdempotencyPolicy
-    : public PagesConnectionIdempotencyPolicy {
- public:
-  ~DefaultPagesConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<PagesConnectionIdempotencyPolicy>
+PagesConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<PagesConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<PagesConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultPagesConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency PagesConnectionIdempotencyPolicy::ListPages(
+    google::cloud::dialogflow::cx::v3::ListPagesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListPages(
-      google::cloud::dialogflow::cx::v3::ListPagesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency PagesConnectionIdempotencyPolicy::GetPage(
+    google::cloud::dialogflow::cx::v3::GetPageRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetPage(
-      google::cloud::dialogflow::cx::v3::GetPageRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency PagesConnectionIdempotencyPolicy::CreatePage(
+    google::cloud::dialogflow::cx::v3::CreatePageRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreatePage(
-      google::cloud::dialogflow::cx::v3::CreatePageRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency PagesConnectionIdempotencyPolicy::UpdatePage(
+    google::cloud::dialogflow::cx::v3::UpdatePageRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdatePage(
-      google::cloud::dialogflow::cx::v3::UpdatePageRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeletePage(
-      google::cloud::dialogflow::cx::v3::DeletePageRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency PagesConnectionIdempotencyPolicy::DeletePage(
+    google::cloud::dialogflow::cx::v3::DeletePageRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<PagesConnectionIdempotencyPolicy>
 MakeDefaultPagesConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultPagesConnectionIdempotencyPolicy>();
+  return absl::make_unique<PagesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

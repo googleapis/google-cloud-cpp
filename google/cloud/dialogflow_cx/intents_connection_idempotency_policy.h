@@ -32,28 +32,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class IntentsConnectionIdempotencyPolicy {
  public:
-  virtual ~IntentsConnectionIdempotencyPolicy() = 0;
+  virtual ~IntentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<IntentsConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<IntentsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListIntents(
-      google::cloud::dialogflow::cx::v3::ListIntentsRequest request) = 0;
+      google::cloud::dialogflow::cx::v3::ListIntentsRequest request);
 
   virtual google::cloud::Idempotency GetIntent(
-      google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::GetIntentRequest const& request);
 
   virtual google::cloud::Idempotency CreateIntent(
-      google::cloud::dialogflow::cx::v3::CreateIntentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request);
 
   virtual google::cloud::Idempotency UpdateIntent(
-      google::cloud::dialogflow::cx::v3::UpdateIntentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request);
 
   virtual google::cloud::Idempotency DeleteIntent(
-      google::cloud::dialogflow::cx::v3::DeleteIntentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request);
 };
 
 std::unique_ptr<IntentsConnectionIdempotencyPolicy>

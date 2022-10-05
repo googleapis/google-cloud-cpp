@@ -30,81 +30,69 @@ using ::google::cloud::Idempotency;
 ProductServiceConnectionIdempotencyPolicy::
     ~ProductServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultProductServiceConnectionIdempotencyPolicy
-    : public ProductServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultProductServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ProductServiceConnectionIdempotencyPolicy>
+ProductServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ProductServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ProductServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultProductServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ProductServiceConnectionIdempotencyPolicy::CreateProduct(
+    google::cloud::retail::v2::CreateProductRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateProduct(
-      google::cloud::retail::v2::CreateProductRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductServiceConnectionIdempotencyPolicy::GetProduct(
+    google::cloud::retail::v2::GetProductRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetProduct(
-      google::cloud::retail::v2::GetProductRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProductServiceConnectionIdempotencyPolicy::ListProducts(
+    google::cloud::retail::v2::ListProductsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListProducts(
-      google::cloud::retail::v2::ListProductsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProductServiceConnectionIdempotencyPolicy::UpdateProduct(
+    google::cloud::retail::v2::UpdateProductRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateProduct(
-      google::cloud::retail::v2::UpdateProductRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductServiceConnectionIdempotencyPolicy::DeleteProduct(
+    google::cloud::retail::v2::DeleteProductRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteProduct(
-      google::cloud::retail::v2::DeleteProductRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductServiceConnectionIdempotencyPolicy::ImportProducts(
+    google::cloud::retail::v2::ImportProductsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportProducts(
-      google::cloud::retail::v2::ImportProductsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductServiceConnectionIdempotencyPolicy::SetInventory(
+    google::cloud::retail::v2::SetInventoryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetInventory(
-      google::cloud::retail::v2::SetInventoryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductServiceConnectionIdempotencyPolicy::AddFulfillmentPlaces(
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AddFulfillmentPlaces(
-      google::cloud::retail::v2::AddFulfillmentPlacesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductServiceConnectionIdempotencyPolicy::RemoveFulfillmentPlaces(
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RemoveFulfillmentPlaces(
-      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductServiceConnectionIdempotencyPolicy::AddLocalInventories(
+    google::cloud::retail::v2::AddLocalInventoriesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AddLocalInventories(
-      google::cloud::retail::v2::AddLocalInventoriesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency RemoveLocalInventories(
-      google::cloud::retail::v2::RemoveLocalInventoriesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ProductServiceConnectionIdempotencyPolicy::RemoveLocalInventories(
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ProductServiceConnectionIdempotencyPolicy>
 MakeDefaultProductServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultProductServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<ProductServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

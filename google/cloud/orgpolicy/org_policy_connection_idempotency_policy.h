@@ -32,33 +32,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class OrgPolicyConnectionIdempotencyPolicy {
  public:
-  virtual ~OrgPolicyConnectionIdempotencyPolicy() = 0;
+  virtual ~OrgPolicyConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListConstraints(
-      google::cloud::orgpolicy::v2::ListConstraintsRequest request) = 0;
+      google::cloud::orgpolicy::v2::ListConstraintsRequest request);
 
   virtual google::cloud::Idempotency ListPolicies(
-      google::cloud::orgpolicy::v2::ListPoliciesRequest request) = 0;
+      google::cloud::orgpolicy::v2::ListPoliciesRequest request);
 
   virtual google::cloud::Idempotency GetPolicy(
-      google::cloud::orgpolicy::v2::GetPolicyRequest const& request) = 0;
+      google::cloud::orgpolicy::v2::GetPolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetEffectivePolicy(
-      google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const&
-          request) = 0;
+      google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request);
 
   virtual google::cloud::Idempotency CreatePolicy(
-      google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) = 0;
+      google::cloud::orgpolicy::v2::CreatePolicyRequest const& request);
 
   virtual google::cloud::Idempotency UpdatePolicy(
-      google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) = 0;
+      google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request);
 
   virtual google::cloud::Idempotency DeletePolicy(
-      google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) = 0;
+      google::cloud::orgpolicy::v2::DeletePolicyRequest const& request);
 };
 
 std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy>

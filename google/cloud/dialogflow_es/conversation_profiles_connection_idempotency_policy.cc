@@ -30,66 +30,57 @@ using ::google::cloud::Idempotency;
 ConversationProfilesConnectionIdempotencyPolicy::
     ~ConversationProfilesConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultConversationProfilesConnectionIdempotencyPolicy
-    : public ConversationProfilesConnectionIdempotencyPolicy {
- public:
-  ~DefaultConversationProfilesConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy>
+ConversationProfilesConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ConversationProfilesConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultConversationProfilesConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+ConversationProfilesConnectionIdempotencyPolicy::ListConversationProfiles(
+    google::cloud::dialogflow::v2::ListConversationProfilesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListConversationProfiles(
-      google::cloud::dialogflow::v2::ListConversationProfilesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ConversationProfilesConnectionIdempotencyPolicy::GetConversationProfile(
+    google::cloud::dialogflow::v2::GetConversationProfileRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetConversationProfile(
-      google::cloud::dialogflow::v2::GetConversationProfileRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ConversationProfilesConnectionIdempotencyPolicy::CreateConversationProfile(
+    google::cloud::dialogflow::v2::CreateConversationProfileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateConversationProfile(
-      google::cloud::dialogflow::v2::CreateConversationProfileRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ConversationProfilesConnectionIdempotencyPolicy::UpdateConversationProfile(
+    google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateConversationProfile(
-      google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ConversationProfilesConnectionIdempotencyPolicy::DeleteConversationProfile(
+    google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteConversationProfile(
-      google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ConversationProfilesConnectionIdempotencyPolicy::SetSuggestionFeatureConfig(
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetSuggestionFeatureConfig(
-      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ClearSuggestionFeatureConfig(
-      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+ConversationProfilesConnectionIdempotencyPolicy::ClearSuggestionFeatureConfig(
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy>
 MakeDefaultConversationProfilesConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultConversationProfilesConnectionIdempotencyPolicy>();
+  return absl::make_unique<ConversationProfilesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

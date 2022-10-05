@@ -33,27 +33,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ClientGatewaysServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ClientGatewaysServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ClientGatewaysServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ClientGatewaysServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListClientGateways(
       google::cloud::beyondcorp::clientgateways::v1::ListClientGatewaysRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetClientGateway(
       google::cloud::beyondcorp::clientgateways::v1::
-          GetClientGatewayRequest const& request) = 0;
+          GetClientGatewayRequest const& request);
 
   virtual google::cloud::Idempotency CreateClientGateway(
       google::cloud::beyondcorp::clientgateways::v1::
-          CreateClientGatewayRequest const& request) = 0;
+          CreateClientGatewayRequest const& request);
 
   virtual google::cloud::Idempotency DeleteClientGateway(
       google::cloud::beyondcorp::clientgateways::v1::
-          DeleteClientGatewayRequest const& request) = 0;
+          DeleteClientGatewayRequest const& request);
 };
 
 std::unique_ptr<ClientGatewaysServiceConnectionIdempotencyPolicy>

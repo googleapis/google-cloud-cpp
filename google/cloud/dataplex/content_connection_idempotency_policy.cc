@@ -30,65 +30,55 @@ using ::google::cloud::Idempotency;
 ContentServiceConnectionIdempotencyPolicy::
     ~ContentServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultContentServiceConnectionIdempotencyPolicy
-    : public ContentServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultContentServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ContentServiceConnectionIdempotencyPolicy>
+ContentServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ContentServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ContentServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultContentServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ContentServiceConnectionIdempotencyPolicy::CreateContent(
+    google::cloud::dataplex::v1::CreateContentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateContent(
-      google::cloud::dataplex::v1::CreateContentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ContentServiceConnectionIdempotencyPolicy::UpdateContent(
+    google::cloud::dataplex::v1::UpdateContentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateContent(
-      google::cloud::dataplex::v1::UpdateContentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ContentServiceConnectionIdempotencyPolicy::DeleteContent(
+    google::cloud::dataplex::v1::DeleteContentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteContent(
-      google::cloud::dataplex::v1::DeleteContentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ContentServiceConnectionIdempotencyPolicy::GetContent(
+    google::cloud::dataplex::v1::GetContentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetContent(
-      google::cloud::dataplex::v1::GetContentRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ContentServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ContentServiceConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency ContentServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListContent(
-      google::cloud::dataplex::v1::ListContentRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency ContentServiceConnectionIdempotencyPolicy::ListContent(
+    google::cloud::dataplex::v1::ListContentRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<ContentServiceConnectionIdempotencyPolicy>
 MakeDefaultContentServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultContentServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<ContentServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

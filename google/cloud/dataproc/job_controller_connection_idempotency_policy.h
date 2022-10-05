@@ -32,32 +32,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class JobControllerConnectionIdempotencyPolicy {
  public:
-  virtual ~JobControllerConnectionIdempotencyPolicy() = 0;
+  virtual ~JobControllerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<JobControllerConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency SubmitJob(
-      google::cloud::dataproc::v1::SubmitJobRequest const& request) = 0;
+      google::cloud::dataproc::v1::SubmitJobRequest const& request);
 
   virtual google::cloud::Idempotency SubmitJobAsOperation(
-      google::cloud::dataproc::v1::SubmitJobRequest const& request) = 0;
+      google::cloud::dataproc::v1::SubmitJobRequest const& request);
 
   virtual google::cloud::Idempotency GetJob(
-      google::cloud::dataproc::v1::GetJobRequest const& request) = 0;
+      google::cloud::dataproc::v1::GetJobRequest const& request);
 
   virtual google::cloud::Idempotency ListJobs(
-      google::cloud::dataproc::v1::ListJobsRequest request) = 0;
+      google::cloud::dataproc::v1::ListJobsRequest request);
 
   virtual google::cloud::Idempotency UpdateJob(
-      google::cloud::dataproc::v1::UpdateJobRequest const& request) = 0;
+      google::cloud::dataproc::v1::UpdateJobRequest const& request);
 
   virtual google::cloud::Idempotency CancelJob(
-      google::cloud::dataproc::v1::CancelJobRequest const& request) = 0;
+      google::cloud::dataproc::v1::CancelJobRequest const& request);
 
   virtual google::cloud::Idempotency DeleteJob(
-      google::cloud::dataproc::v1::DeleteJobRequest const& request) = 0;
+      google::cloud::dataproc::v1::DeleteJobRequest const& request);
 };
 
 std::unique_ptr<JobControllerConnectionIdempotencyPolicy>

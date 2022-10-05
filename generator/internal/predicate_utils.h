@@ -33,6 +33,12 @@ namespace generator_internal {
 bool IsPaginated(google::protobuf::MethodDescriptor const& method);
 
 /**
+ * Determines if the given method has either client-side streaming,
+ * or server-side streaming, or both.
+ */
+bool IsStreaming(google::protobuf::MethodDescriptor const& method);
+
+/**
  * Determines if the given method has neither client-side streaming, server-side
  * streaming, nor bidirectional streaming.
  */

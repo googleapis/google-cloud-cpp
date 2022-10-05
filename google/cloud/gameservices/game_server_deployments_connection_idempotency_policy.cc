@@ -30,78 +30,73 @@ using ::google::cloud::Idempotency;
 GameServerDeploymentsServiceConnectionIdempotencyPolicy::
     ~GameServerDeploymentsServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy
-    : public GameServerDeploymentsServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<GameServerDeploymentsServiceConnectionIdempotencyPolicy>
+GameServerDeploymentsServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<
+      GameServerDeploymentsServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<GameServerDeploymentsServiceConnectionIdempotencyPolicy>
-  clone() const override {
-    return absl::make_unique<
-        DefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency GameServerDeploymentsServiceConnectionIdempotencyPolicy::
+    ListGameServerDeployments(google::cloud::gaming::v1::
+                                  ListGameServerDeploymentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListGameServerDeployments(
-      google::cloud::gaming::v1::ListGameServerDeploymentsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GameServerDeploymentsServiceConnectionIdempotencyPolicy::
+    GetGameServerDeployment(
+        google::cloud::gaming::v1::GetGameServerDeploymentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetGameServerDeployment(
-      google::cloud::gaming::v1::GetGameServerDeploymentRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GameServerDeploymentsServiceConnectionIdempotencyPolicy::
+    CreateGameServerDeployment(
+        google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateGameServerDeployment(
-      google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GameServerDeploymentsServiceConnectionIdempotencyPolicy::
+    DeleteGameServerDeployment(
+        google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteGameServerDeployment(
-      google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GameServerDeploymentsServiceConnectionIdempotencyPolicy::
+    UpdateGameServerDeployment(
+        google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateGameServerDeployment(
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GameServerDeploymentsServiceConnectionIdempotencyPolicy::
+    GetGameServerDeploymentRollout(
+        google::cloud::gaming::v1::
+            GetGameServerDeploymentRolloutRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetGameServerDeploymentRollout(
-      google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GameServerDeploymentsServiceConnectionIdempotencyPolicy::
+    UpdateGameServerDeploymentRollout(
+        google::cloud::gaming::v1::
+            UpdateGameServerDeploymentRolloutRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateGameServerDeploymentRollout(
-      google::cloud::gaming::v1::
-          UpdateGameServerDeploymentRolloutRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GameServerDeploymentsServiceConnectionIdempotencyPolicy::
+    PreviewGameServerDeploymentRollout(
+        google::cloud::gaming::v1::
+            PreviewGameServerDeploymentRolloutRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency PreviewGameServerDeploymentRollout(
-      google::cloud::gaming::v1::
-          PreviewGameServerDeploymentRolloutRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency FetchDeploymentState(
-      google::cloud::gaming::v1::FetchDeploymentStateRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+GameServerDeploymentsServiceConnectionIdempotencyPolicy::FetchDeploymentState(
+    google::cloud::gaming::v1::FetchDeploymentStateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<GameServerDeploymentsServiceConnectionIdempotencyPolicy>
 MakeDefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy>();
+      GameServerDeploymentsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

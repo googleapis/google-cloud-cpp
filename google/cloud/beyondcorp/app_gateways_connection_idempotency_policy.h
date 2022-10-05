@@ -32,27 +32,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AppGatewaysServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~AppGatewaysServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~AppGatewaysServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListAppGateways(
       google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetAppGateway(
       google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CreateAppGateway(
       google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteAppGateway(
       google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>

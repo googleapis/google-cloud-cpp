@@ -30,47 +30,38 @@ using ::google::cloud::Idempotency;
 AppGatewaysServiceConnectionIdempotencyPolicy::
     ~AppGatewaysServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAppGatewaysServiceConnectionIdempotencyPolicy
-    : public AppGatewaysServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultAppGatewaysServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>
+AppGatewaysServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultAppGatewaysServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListAppGateways(
+    google::cloud::beyondcorp::appgateways::v1::
+        ListAppGatewaysRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAppGateways(
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::CreateAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::
+        CreateAppGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::
-                                   CreateAppGatewayRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::
-                                   DeleteAppGatewayRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::DeleteAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::
+        DeleteAppGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>
 MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultAppGatewaysServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

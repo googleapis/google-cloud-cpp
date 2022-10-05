@@ -30,43 +30,34 @@ using ::google::cloud::Idempotency;
 InstancesConnectionIdempotencyPolicy::~InstancesConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultInstancesConnectionIdempotencyPolicy
-    : public InstancesConnectionIdempotencyPolicy {
- public:
-  ~DefaultInstancesConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<InstancesConnectionIdempotencyPolicy>
+InstancesConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<InstancesConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<InstancesConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultInstancesConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency InstancesConnectionIdempotencyPolicy::ListInstances(
+    google::appengine::v1::ListInstancesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListInstances(
-      google::appengine::v1::ListInstancesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency InstancesConnectionIdempotencyPolicy::GetInstance(
+    google::appengine::v1::GetInstanceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetInstance(
-      google::appengine::v1::GetInstanceRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency InstancesConnectionIdempotencyPolicy::DeleteInstance(
+    google::appengine::v1::DeleteInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteInstance(
-      google::appengine::v1::DeleteInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DebugInstance(
-      google::appengine::v1::DebugInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency InstancesConnectionIdempotencyPolicy::DebugInstance(
+    google::appengine::v1::DebugInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<InstancesConnectionIdempotencyPolicy>
 MakeDefaultInstancesConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultInstancesConnectionIdempotencyPolicy>();
+  return absl::make_unique<InstancesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

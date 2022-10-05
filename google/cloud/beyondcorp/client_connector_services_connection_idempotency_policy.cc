@@ -31,57 +31,51 @@ using ::google::cloud::Idempotency;
 ClientConnectorServicesServiceConnectionIdempotencyPolicy::
     ~ClientConnectorServicesServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultClientConnectorServicesServiceConnectionIdempotencyPolicy
-    : public ClientConnectorServicesServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultClientConnectorServicesServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<ClientConnectorServicesServiceConnectionIdempotencyPolicy>
+ClientConnectorServicesServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<
+      ClientConnectorServicesServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ClientConnectorServicesServiceConnectionIdempotencyPolicy>
-  clone() const override {
-    return absl::make_unique<
-        DefaultClientConnectorServicesServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ClientConnectorServicesServiceConnectionIdempotencyPolicy::
+    ListClientConnectorServices(
+        google::cloud::beyondcorp::clientconnectorservices::v1::
+            ListClientConnectorServicesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListClientConnectorServices(
-      google::cloud::beyondcorp::clientconnectorservices::v1::
-          ListClientConnectorServicesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClientConnectorServicesServiceConnectionIdempotencyPolicy::
+    GetClientConnectorService(
+        google::cloud::beyondcorp::clientconnectorservices::v1::
+            GetClientConnectorServiceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetClientConnectorService(
-      google::cloud::beyondcorp::clientconnectorservices::v1::
-          GetClientConnectorServiceRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClientConnectorServicesServiceConnectionIdempotencyPolicy::
+    CreateClientConnectorService(
+        google::cloud::beyondcorp::clientconnectorservices::v1::
+            CreateClientConnectorServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateClientConnectorService(
-      google::cloud::beyondcorp::clientconnectorservices::v1::
-          CreateClientConnectorServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClientConnectorServicesServiceConnectionIdempotencyPolicy::
+    UpdateClientConnectorService(
+        google::cloud::beyondcorp::clientconnectorservices::v1::
+            UpdateClientConnectorServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateClientConnectorService(
-      google::cloud::beyondcorp::clientconnectorservices::v1::
-          UpdateClientConnectorServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteClientConnectorService(
-      google::cloud::beyondcorp::clientconnectorservices::v1::
-          DeleteClientConnectorServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ClientConnectorServicesServiceConnectionIdempotencyPolicy::
+    DeleteClientConnectorService(
+        google::cloud::beyondcorp::clientconnectorservices::v1::
+            DeleteClientConnectorServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ClientConnectorServicesServiceConnectionIdempotencyPolicy>
 MakeDefaultClientConnectorServicesServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultClientConnectorServicesServiceConnectionIdempotencyPolicy>();
+      ClientConnectorServicesServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

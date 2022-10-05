@@ -32,38 +32,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AgentsConnectionIdempotencyPolicy {
  public:
-  virtual ~AgentsConnectionIdempotencyPolicy() = 0;
+  virtual ~AgentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AgentsConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<AgentsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency GetAgent(
-      google::cloud::dialogflow::v2::GetAgentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::GetAgentRequest const& request);
 
   virtual google::cloud::Idempotency SetAgent(
-      google::cloud::dialogflow::v2::SetAgentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::SetAgentRequest const& request);
 
   virtual google::cloud::Idempotency DeleteAgent(
-      google::cloud::dialogflow::v2::DeleteAgentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::DeleteAgentRequest const& request);
 
   virtual google::cloud::Idempotency SearchAgents(
-      google::cloud::dialogflow::v2::SearchAgentsRequest request) = 0;
+      google::cloud::dialogflow::v2::SearchAgentsRequest request);
 
   virtual google::cloud::Idempotency TrainAgent(
-      google::cloud::dialogflow::v2::TrainAgentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::TrainAgentRequest const& request);
 
   virtual google::cloud::Idempotency ExportAgent(
-      google::cloud::dialogflow::v2::ExportAgentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::ExportAgentRequest const& request);
 
   virtual google::cloud::Idempotency ImportAgent(
-      google::cloud::dialogflow::v2::ImportAgentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::ImportAgentRequest const& request);
 
   virtual google::cloud::Idempotency RestoreAgent(
-      google::cloud::dialogflow::v2::RestoreAgentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::RestoreAgentRequest const& request);
 
   virtual google::cloud::Idempotency GetValidationResult(
-      google::cloud::dialogflow::v2::GetValidationResultRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::GetValidationResultRequest const& request);
 };
 
 std::unique_ptr<AgentsConnectionIdempotencyPolicy>

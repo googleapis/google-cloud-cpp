@@ -30,29 +30,19 @@ using ::google::cloud::Idempotency;
 QuotaControllerConnectionIdempotencyPolicy::
     ~QuotaControllerConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultQuotaControllerConnectionIdempotencyPolicy
-    : public QuotaControllerConnectionIdempotencyPolicy {
- public:
-  ~DefaultQuotaControllerConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy>
+QuotaControllerConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<QuotaControllerConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultQuotaControllerConnectionIdempotencyPolicy>(
-        *this);
-  }
-
-  Idempotency AllocateQuota(
-      google::api::servicecontrol::v1::AllocateQuotaRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency QuotaControllerConnectionIdempotencyPolicy::AllocateQuota(
+    google::api::servicecontrol::v1::AllocateQuotaRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy>
 MakeDefaultQuotaControllerConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultQuotaControllerConnectionIdempotencyPolicy>();
+  return absl::make_unique<QuotaControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

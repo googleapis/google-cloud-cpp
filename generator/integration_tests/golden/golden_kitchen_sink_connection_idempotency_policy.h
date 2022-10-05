@@ -32,34 +32,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class GoldenKitchenSinkConnectionIdempotencyPolicy {
  public:
-  virtual ~GoldenKitchenSinkConnectionIdempotencyPolicy() = 0;
+  virtual ~GoldenKitchenSinkConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency
-  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) = 0;
+  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request);
 
   virtual google::cloud::Idempotency
-  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
+  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request);
 
   virtual google::cloud::Idempotency
-  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
+  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request);
 
   virtual google::cloud::Idempotency
-  ListLogs(google::test::admin::database::v1::ListLogsRequest request) = 0;
+  ListLogs(google::test::admin::database::v1::ListLogsRequest request);
 
   virtual google::cloud::Idempotency
-  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
+  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);
 
   virtual google::cloud::Idempotency
-  DoNothing(google::protobuf::Empty const& request) = 0;
+  DoNothing(google::protobuf::Empty const& request);
 
   virtual google::cloud::Idempotency
-  ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
+  ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request);
 
   virtual google::cloud::Idempotency
-  ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
+  ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request);
 };
 
 std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>

@@ -32,85 +32,77 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class BareMetalSolutionConnectionIdempotencyPolicy {
  public:
-  virtual ~BareMetalSolutionConnectionIdempotencyPolicy() = 0;
+  virtual ~BareMetalSolutionConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListInstances(
-      google::cloud::baremetalsolution::v2::ListInstancesRequest request) = 0;
+      google::cloud::baremetalsolution::v2::ListInstancesRequest request);
 
   virtual google::cloud::Idempotency GetInstance(
-      google::cloud::baremetalsolution::v2::GetInstanceRequest const&
-          request) = 0;
+      google::cloud::baremetalsolution::v2::GetInstanceRequest const& request);
 
   virtual google::cloud::Idempotency UpdateInstance(
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ResetInstance(
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency StartInstance(
       google::cloud::baremetalsolution::v2::StartInstanceRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency StopInstance(
-      google::cloud::baremetalsolution::v2::StopInstanceRequest const&
-          request) = 0;
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request);
 
   virtual google::cloud::Idempotency DetachLun(
-      google::cloud::baremetalsolution::v2::DetachLunRequest const&
-          request) = 0;
+      google::cloud::baremetalsolution::v2::DetachLunRequest const& request);
 
   virtual google::cloud::Idempotency ListVolumes(
-      google::cloud::baremetalsolution::v2::ListVolumesRequest request) = 0;
+      google::cloud::baremetalsolution::v2::ListVolumesRequest request);
 
   virtual google::cloud::Idempotency GetVolume(
-      google::cloud::baremetalsolution::v2::GetVolumeRequest const&
-          request) = 0;
+      google::cloud::baremetalsolution::v2::GetVolumeRequest const& request);
 
   virtual google::cloud::Idempotency UpdateVolume(
-      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
-          request) = 0;
+      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request);
 
   virtual google::cloud::Idempotency ResizeVolume(
-      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&
-          request) = 0;
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request);
 
   virtual google::cloud::Idempotency ListNetworks(
-      google::cloud::baremetalsolution::v2::ListNetworksRequest request) = 0;
+      google::cloud::baremetalsolution::v2::ListNetworksRequest request);
 
   virtual google::cloud::Idempotency ListNetworkUsage(
       google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetNetwork(
-      google::cloud::baremetalsolution::v2::GetNetworkRequest const&
-          request) = 0;
+      google::cloud::baremetalsolution::v2::GetNetworkRequest const& request);
 
   virtual google::cloud::Idempotency UpdateNetwork(
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetLun(
-      google::cloud::baremetalsolution::v2::GetLunRequest const& request) = 0;
+      google::cloud::baremetalsolution::v2::GetLunRequest const& request);
 
   virtual google::cloud::Idempotency ListLuns(
-      google::cloud::baremetalsolution::v2::ListLunsRequest request) = 0;
+      google::cloud::baremetalsolution::v2::ListLunsRequest request);
 
   virtual google::cloud::Idempotency GetNfsShare(
-      google::cloud::baremetalsolution::v2::GetNfsShareRequest const&
-          request) = 0;
+      google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request);
 
   virtual google::cloud::Idempotency ListNfsShares(
-      google::cloud::baremetalsolution::v2::ListNfsSharesRequest request) = 0;
+      google::cloud::baremetalsolution::v2::ListNfsSharesRequest request);
 
   virtual google::cloud::Idempotency UpdateNfsShare(
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy>

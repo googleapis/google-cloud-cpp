@@ -32,18 +32,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class FleetRoutingConnectionIdempotencyPolicy {
  public:
-  virtual ~FleetRoutingConnectionIdempotencyPolicy() = 0;
+  virtual ~FleetRoutingConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency OptimizeTours(
-      google::cloud::optimization::v1::OptimizeToursRequest const& request) = 0;
+      google::cloud::optimization::v1::OptimizeToursRequest const& request);
 
   virtual google::cloud::Idempotency BatchOptimizeTours(
       google::cloud::optimization::v1::BatchOptimizeToursRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy>

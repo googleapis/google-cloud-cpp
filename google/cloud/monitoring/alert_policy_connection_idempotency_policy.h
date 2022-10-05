@@ -32,26 +32,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AlertPolicyServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~AlertPolicyServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~AlertPolicyServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListAlertPolicies(
-      google::monitoring::v3::ListAlertPoliciesRequest request) = 0;
+      google::monitoring::v3::ListAlertPoliciesRequest request);
 
   virtual google::cloud::Idempotency GetAlertPolicy(
-      google::monitoring::v3::GetAlertPolicyRequest const& request) = 0;
+      google::monitoring::v3::GetAlertPolicyRequest const& request);
 
   virtual google::cloud::Idempotency CreateAlertPolicy(
-      google::monitoring::v3::CreateAlertPolicyRequest const& request) = 0;
+      google::monitoring::v3::CreateAlertPolicyRequest const& request);
 
   virtual google::cloud::Idempotency DeleteAlertPolicy(
-      google::monitoring::v3::DeleteAlertPolicyRequest const& request) = 0;
+      google::monitoring::v3::DeleteAlertPolicyRequest const& request);
 
   virtual google::cloud::Idempotency UpdateAlertPolicy(
-      google::monitoring::v3::UpdateAlertPolicyRequest const& request) = 0;
+      google::monitoring::v3::UpdateAlertPolicyRequest const& request);
 };
 
 std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy>

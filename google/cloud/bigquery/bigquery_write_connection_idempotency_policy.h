@@ -32,31 +32,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class BigQueryWriteConnectionIdempotencyPolicy {
  public:
-  virtual ~BigQueryWriteConnectionIdempotencyPolicy() = 0;
+  virtual ~BigQueryWriteConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateWriteStream(
       google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetWriteStream(
       google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency FinalizeWriteStream(
       google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency BatchCommitWriteStreams(
       google::cloud::bigquery::storage::v1::
-          BatchCommitWriteStreamsRequest const& request) = 0;
+          BatchCommitWriteStreamsRequest const& request);
 
   virtual google::cloud::Idempotency FlushRows(
-      google::cloud::bigquery::storage::v1::FlushRowsRequest const&
-          request) = 0;
+      google::cloud::bigquery::storage::v1::FlushRowsRequest const& request);
 };
 
 std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy>

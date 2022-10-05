@@ -32,22 +32,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class IDSConnectionIdempotencyPolicy {
  public:
-  virtual ~IDSConnectionIdempotencyPolicy() = 0;
+  virtual ~IDSConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<IDSConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<IDSConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListEndpoints(
-      google::cloud::ids::v1::ListEndpointsRequest request) = 0;
+      google::cloud::ids::v1::ListEndpointsRequest request);
 
   virtual google::cloud::Idempotency GetEndpoint(
-      google::cloud::ids::v1::GetEndpointRequest const& request) = 0;
+      google::cloud::ids::v1::GetEndpointRequest const& request);
 
   virtual google::cloud::Idempotency CreateEndpoint(
-      google::cloud::ids::v1::CreateEndpointRequest const& request) = 0;
+      google::cloud::ids::v1::CreateEndpointRequest const& request);
 
   virtual google::cloud::Idempotency DeleteEndpoint(
-      google::cloud::ids::v1::DeleteEndpointRequest const& request) = 0;
+      google::cloud::ids::v1::DeleteEndpointRequest const& request);
 };
 
 std::unique_ptr<IDSConnectionIdempotencyPolicy>

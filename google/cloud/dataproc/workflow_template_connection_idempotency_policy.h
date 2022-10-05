@@ -32,38 +32,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class WorkflowTemplateServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~WorkflowTemplateServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~WorkflowTemplateServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency CreateWorkflowTemplate(
       google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetWorkflowTemplate(
-      google::cloud::dataproc::v1::GetWorkflowTemplateRequest const&
-          request) = 0;
+      google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request);
 
   virtual google::cloud::Idempotency InstantiateWorkflowTemplate(
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency InstantiateInlineWorkflowTemplate(
       google::cloud::dataproc::v1::
-          InstantiateInlineWorkflowTemplateRequest const& request) = 0;
+          InstantiateInlineWorkflowTemplateRequest const& request);
 
   virtual google::cloud::Idempotency UpdateWorkflowTemplate(
       google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListWorkflowTemplates(
-      google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request) = 0;
+      google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request);
 
   virtual google::cloud::Idempotency DeleteWorkflowTemplate(
       google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>
