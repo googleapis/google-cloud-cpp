@@ -32,40 +32,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MetricServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~MetricServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~MetricServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<MetricServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListMonitoredResourceDescriptors(
-      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest
-          request) = 0;
+      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request);
 
   virtual google::cloud::Idempotency GetMonitoredResourceDescriptor(
       google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListMetricDescriptors(
-      google::monitoring::v3::ListMetricDescriptorsRequest request) = 0;
+      google::monitoring::v3::ListMetricDescriptorsRequest request);
 
   virtual google::cloud::Idempotency GetMetricDescriptor(
-      google::monitoring::v3::GetMetricDescriptorRequest const& request) = 0;
+      google::monitoring::v3::GetMetricDescriptorRequest const& request);
 
   virtual google::cloud::Idempotency CreateMetricDescriptor(
-      google::monitoring::v3::CreateMetricDescriptorRequest const& request) = 0;
+      google::monitoring::v3::CreateMetricDescriptorRequest const& request);
 
   virtual google::cloud::Idempotency DeleteMetricDescriptor(
-      google::monitoring::v3::DeleteMetricDescriptorRequest const& request) = 0;
+      google::monitoring::v3::DeleteMetricDescriptorRequest const& request);
 
   virtual google::cloud::Idempotency ListTimeSeries(
-      google::monitoring::v3::ListTimeSeriesRequest request) = 0;
+      google::monitoring::v3::ListTimeSeriesRequest request);
 
   virtual google::cloud::Idempotency CreateTimeSeries(
-      google::monitoring::v3::CreateTimeSeriesRequest const& request) = 0;
+      google::monitoring::v3::CreateTimeSeriesRequest const& request);
 
   virtual google::cloud::Idempotency CreateServiceTimeSeries(
-      google::monitoring::v3::CreateTimeSeriesRequest const& request) = 0;
+      google::monitoring::v3::CreateTimeSeriesRequest const& request);
 };
 
 std::unique_ptr<MetricServiceConnectionIdempotencyPolicy>

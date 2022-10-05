@@ -32,26 +32,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class VersionsConnectionIdempotencyPolicy {
  public:
-  virtual ~VersionsConnectionIdempotencyPolicy() = 0;
+  virtual ~VersionsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<VersionsConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<VersionsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListVersions(
-      google::cloud::dialogflow::v2::ListVersionsRequest request) = 0;
+      google::cloud::dialogflow::v2::ListVersionsRequest request);
 
   virtual google::cloud::Idempotency GetVersion(
-      google::cloud::dialogflow::v2::GetVersionRequest const& request) = 0;
+      google::cloud::dialogflow::v2::GetVersionRequest const& request);
 
   virtual google::cloud::Idempotency CreateVersion(
-      google::cloud::dialogflow::v2::CreateVersionRequest const& request) = 0;
+      google::cloud::dialogflow::v2::CreateVersionRequest const& request);
 
   virtual google::cloud::Idempotency UpdateVersion(
-      google::cloud::dialogflow::v2::UpdateVersionRequest const& request) = 0;
+      google::cloud::dialogflow::v2::UpdateVersionRequest const& request);
 
   virtual google::cloud::Idempotency DeleteVersion(
-      google::cloud::dialogflow::v2::DeleteVersionRequest const& request) = 0;
+      google::cloud::dialogflow::v2::DeleteVersionRequest const& request);
 };
 
 std::unique_ptr<VersionsConnectionIdempotencyPolicy>

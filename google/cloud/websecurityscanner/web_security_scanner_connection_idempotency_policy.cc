@@ -30,99 +30,80 @@ using ::google::cloud::Idempotency;
 WebSecurityScannerConnectionIdempotencyPolicy::
     ~WebSecurityScannerConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultWebSecurityScannerConnectionIdempotencyPolicy
-    : public WebSecurityScannerConnectionIdempotencyPolicy {
- public:
-  ~DefaultWebSecurityScannerConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy>
+WebSecurityScannerConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<WebSecurityScannerConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultWebSecurityScannerConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::CreateScanConfig(
+    google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateScanConfig(
-      google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::DeleteScanConfig(
+    google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteScanConfig(
-      google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetScanConfig(
+    google::cloud::websecurityscanner::v1::GetScanConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetScanConfig(
-      google::cloud::websecurityscanner::v1::GetScanConfigRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListScanConfigs(
+    google::cloud::websecurityscanner::v1::ListScanConfigsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListScanConfigs(
-      google::cloud::websecurityscanner::v1::ListScanConfigsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::UpdateScanConfig(
+    google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateScanConfig(
-      google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::StartScanRun(
+    google::cloud::websecurityscanner::v1::StartScanRunRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StartScanRun(
-      google::cloud::websecurityscanner::v1::StartScanRunRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetScanRun(
+    google::cloud::websecurityscanner::v1::GetScanRunRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetScanRun(
-      google::cloud::websecurityscanner::v1::GetScanRunRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListScanRuns(
+    google::cloud::websecurityscanner::v1::ListScanRunsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListScanRuns(
-      google::cloud::websecurityscanner::v1::ListScanRunsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::StopScanRun(
+    google::cloud::websecurityscanner::v1::StopScanRunRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StopScanRun(
-      google::cloud::websecurityscanner::v1::StopScanRunRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListCrawledUrls(
+    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCrawledUrls(
-      google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetFinding(
+    google::cloud::websecurityscanner::v1::GetFindingRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetFinding(
-      google::cloud::websecurityscanner::v1::GetFindingRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListFindings(
+    google::cloud::websecurityscanner::v1::ListFindingsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListFindings(
-      google::cloud::websecurityscanner::v1::ListFindingsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency ListFindingTypeStats(
-      google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListFindingTypeStats(
+    google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy>
 MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultWebSecurityScannerConnectionIdempotencyPolicy>();
+  return absl::make_unique<WebSecurityScannerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

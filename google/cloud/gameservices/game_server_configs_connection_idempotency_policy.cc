@@ -30,48 +30,40 @@ using ::google::cloud::Idempotency;
 GameServerConfigsServiceConnectionIdempotencyPolicy::
     ~GameServerConfigsServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultGameServerConfigsServiceConnectionIdempotencyPolicy
-    : public GameServerConfigsServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultGameServerConfigsServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>
+GameServerConfigsServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<GameServerConfigsServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultGameServerConfigsServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+GameServerConfigsServiceConnectionIdempotencyPolicy::ListGameServerConfigs(
+    google::cloud::gaming::v1::ListGameServerConfigsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListGameServerConfigs(
-      google::cloud::gaming::v1::ListGameServerConfigsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+GameServerConfigsServiceConnectionIdempotencyPolicy::GetGameServerConfig(
+    google::cloud::gaming::v1::GetGameServerConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetGameServerConfig(
-      google::cloud::gaming::v1::GetGameServerConfigRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+GameServerConfigsServiceConnectionIdempotencyPolicy::CreateGameServerConfig(
+    google::cloud::gaming::v1::CreateGameServerConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateGameServerConfig(
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteGameServerConfig(
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+GameServerConfigsServiceConnectionIdempotencyPolicy::DeleteGameServerConfig(
+    google::cloud::gaming::v1::DeleteGameServerConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>
 MakeDefaultGameServerConfigsServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultGameServerConfigsServiceConnectionIdempotencyPolicy>();
+      GameServerConfigsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

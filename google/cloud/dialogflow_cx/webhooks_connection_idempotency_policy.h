@@ -32,29 +32,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class WebhooksConnectionIdempotencyPolicy {
  public:
-  virtual ~WebhooksConnectionIdempotencyPolicy() = 0;
+  virtual ~WebhooksConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<WebhooksConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<WebhooksConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListWebhooks(
-      google::cloud::dialogflow::cx::v3::ListWebhooksRequest request) = 0;
+      google::cloud::dialogflow::cx::v3::ListWebhooksRequest request);
 
   virtual google::cloud::Idempotency GetWebhook(
-      google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request);
 
   virtual google::cloud::Idempotency CreateWebhook(
-      google::cloud::dialogflow::cx::v3::CreateWebhookRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request);
 
   virtual google::cloud::Idempotency UpdateWebhook(
-      google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request);
 
   virtual google::cloud::Idempotency DeleteWebhook(
-      google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request);
 };
 
 std::unique_ptr<WebhooksConnectionIdempotencyPolicy>

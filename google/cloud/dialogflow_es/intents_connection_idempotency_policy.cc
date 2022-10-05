@@ -30,59 +30,49 @@ using ::google::cloud::Idempotency;
 IntentsConnectionIdempotencyPolicy::~IntentsConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultIntentsConnectionIdempotencyPolicy
-    : public IntentsConnectionIdempotencyPolicy {
- public:
-  ~DefaultIntentsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<IntentsConnectionIdempotencyPolicy>
+IntentsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<IntentsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<IntentsConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultIntentsConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency IntentsConnectionIdempotencyPolicy::ListIntents(
+    google::cloud::dialogflow::v2::ListIntentsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListIntents(
-      google::cloud::dialogflow::v2::ListIntentsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IntentsConnectionIdempotencyPolicy::GetIntent(
+    google::cloud::dialogflow::v2::GetIntentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetIntent(
-      google::cloud::dialogflow::v2::GetIntentRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IntentsConnectionIdempotencyPolicy::CreateIntent(
+    google::cloud::dialogflow::v2::CreateIntentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateIntent(
-      google::cloud::dialogflow::v2::CreateIntentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IntentsConnectionIdempotencyPolicy::UpdateIntent(
+    google::cloud::dialogflow::v2::UpdateIntentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateIntent(
-      google::cloud::dialogflow::v2::UpdateIntentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IntentsConnectionIdempotencyPolicy::DeleteIntent(
+    google::cloud::dialogflow::v2::DeleteIntentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteIntent(
-      google::cloud::dialogflow::v2::DeleteIntentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IntentsConnectionIdempotencyPolicy::BatchUpdateIntents(
+    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchUpdateIntents(
-      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency BatchDeleteIntents(
-      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency IntentsConnectionIdempotencyPolicy::BatchDeleteIntents(
+    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<IntentsConnectionIdempotencyPolicy>
 MakeDefaultIntentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultIntentsConnectionIdempotencyPolicy>();
+  return absl::make_unique<IntentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

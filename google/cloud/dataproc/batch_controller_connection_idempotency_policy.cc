@@ -30,44 +30,34 @@ using ::google::cloud::Idempotency;
 BatchControllerConnectionIdempotencyPolicy::
     ~BatchControllerConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultBatchControllerConnectionIdempotencyPolicy
-    : public BatchControllerConnectionIdempotencyPolicy {
- public:
-  ~DefaultBatchControllerConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<BatchControllerConnectionIdempotencyPolicy>
+BatchControllerConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<BatchControllerConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<BatchControllerConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultBatchControllerConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency BatchControllerConnectionIdempotencyPolicy::CreateBatch(
+    google::cloud::dataproc::v1::CreateBatchRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateBatch(
-      google::cloud::dataproc::v1::CreateBatchRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BatchControllerConnectionIdempotencyPolicy::GetBatch(
+    google::cloud::dataproc::v1::GetBatchRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetBatch(
-      google::cloud::dataproc::v1::GetBatchRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BatchControllerConnectionIdempotencyPolicy::ListBatches(
+    google::cloud::dataproc::v1::ListBatchesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListBatches(
-      google::cloud::dataproc::v1::ListBatchesRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DeleteBatch(
-      google::cloud::dataproc::v1::DeleteBatchRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency BatchControllerConnectionIdempotencyPolicy::DeleteBatch(
+    google::cloud::dataproc::v1::DeleteBatchRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<BatchControllerConnectionIdempotencyPolicy>
 MakeDefaultBatchControllerConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultBatchControllerConnectionIdempotencyPolicy>();
+  return absl::make_unique<BatchControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

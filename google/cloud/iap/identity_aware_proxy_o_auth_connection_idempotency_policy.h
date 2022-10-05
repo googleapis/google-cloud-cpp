@@ -32,40 +32,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<
       IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListBrands(
-      google::cloud::iap::v1::ListBrandsRequest const& request) = 0;
+      google::cloud::iap::v1::ListBrandsRequest const& request);
 
   virtual google::cloud::Idempotency CreateBrand(
-      google::cloud::iap::v1::CreateBrandRequest const& request) = 0;
+      google::cloud::iap::v1::CreateBrandRequest const& request);
 
   virtual google::cloud::Idempotency GetBrand(
-      google::cloud::iap::v1::GetBrandRequest const& request) = 0;
+      google::cloud::iap::v1::GetBrandRequest const& request);
 
   virtual google::cloud::Idempotency CreateIdentityAwareProxyClient(
       google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListIdentityAwareProxyClients(
-      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) = 0;
+      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request);
 
   virtual google::cloud::Idempotency GetIdentityAwareProxyClient(
       google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ResetIdentityAwareProxyClientSecret(
       google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteIdentityAwareProxyClient(
       google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>

@@ -30,32 +30,21 @@ using ::google::cloud::Idempotency;
 VideoIntelligenceServiceConnectionIdempotencyPolicy::
     ~VideoIntelligenceServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultVideoIntelligenceServiceConnectionIdempotencyPolicy
-    : public VideoIntelligenceServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultVideoIntelligenceServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
+VideoIntelligenceServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<VideoIntelligenceServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultVideoIntelligenceServiceConnectionIdempotencyPolicy>(*this);
-  }
-
-  Idempotency AnnotateVideo(
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency VideoIntelligenceServiceConnectionIdempotencyPolicy::AnnotateVideo(
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
 MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultVideoIntelligenceServiceConnectionIdempotencyPolicy>();
+      VideoIntelligenceServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

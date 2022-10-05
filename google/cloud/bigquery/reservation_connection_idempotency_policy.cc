@@ -30,151 +30,134 @@ using ::google::cloud::Idempotency;
 ReservationServiceConnectionIdempotencyPolicy::
     ~ReservationServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultReservationServiceConnectionIdempotencyPolicy
-    : public ReservationServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultReservationServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy>
+ReservationServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ReservationServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultReservationServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::CreateReservation(
+    google::cloud::bigquery::reservation::v1::CreateReservationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateReservation(
-      google::cloud::bigquery::reservation::v1::CreateReservationRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::ListReservations(
+    google::cloud::bigquery::reservation::v1::ListReservationsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListReservations(
-      google::cloud::bigquery::reservation::v1::ListReservationsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::GetReservation(
+    google::cloud::bigquery::reservation::v1::GetReservationRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetReservation(
-      google::cloud::bigquery::reservation::v1::GetReservationRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::DeleteReservation(
+    google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteReservation(
-      google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::UpdateReservation(
+    google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateReservation(
-      google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::CreateCapacityCommitment(
+    google::cloud::bigquery::reservation::v1::
+        CreateCapacityCommitmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCapacityCommitment(
-      google::cloud::bigquery::reservation::v1::
-          CreateCapacityCommitmentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::ListCapacityCommitments(
+    google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCapacityCommitments(
-      google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::GetCapacityCommitment(
+    google::cloud::bigquery::reservation::v1::
+        GetCapacityCommitmentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCapacityCommitment(
-      google::cloud::bigquery::reservation::v1::
-          GetCapacityCommitmentRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::DeleteCapacityCommitment(
+    google::cloud::bigquery::reservation::v1::
+        DeleteCapacityCommitmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteCapacityCommitment(
-      google::cloud::bigquery::reservation::v1::
-          DeleteCapacityCommitmentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::UpdateCapacityCommitment(
+    google::cloud::bigquery::reservation::v1::
+        UpdateCapacityCommitmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCapacityCommitment(
-      google::cloud::bigquery::reservation::v1::
-          UpdateCapacityCommitmentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::SplitCapacityCommitment(
+    google::cloud::bigquery::reservation::v1::
+        SplitCapacityCommitmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SplitCapacityCommitment(
-      google::cloud::bigquery::reservation::v1::
-          SplitCapacityCommitmentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::MergeCapacityCommitments(
+    google::cloud::bigquery::reservation::v1::
+        MergeCapacityCommitmentsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency MergeCapacityCommitments(
-      google::cloud::bigquery::reservation::v1::
-          MergeCapacityCommitmentsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::CreateAssignment(
+    google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateAssignment(
-      google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::ListAssignments(
+    google::cloud::bigquery::reservation::v1::ListAssignmentsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAssignments(
-      google::cloud::bigquery::reservation::v1::ListAssignmentsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::DeleteAssignment(
+    google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteAssignment(
-      google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::SearchAssignments(
+    google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency SearchAssignments(
-      google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::SearchAllAssignments(
+    google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency SearchAllAssignments(
-      google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::MoveAssignment(
+    google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency MoveAssignment(
-      google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::UpdateAssignment(
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateAssignment(
-      google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ReservationServiceConnectionIdempotencyPolicy::GetBiReservation(
+    google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetBiReservation(
-      google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency UpdateBiReservation(
-      google::cloud::bigquery::reservation::v1::
-          UpdateBiReservationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ReservationServiceConnectionIdempotencyPolicy::UpdateBiReservation(
+    google::cloud::bigquery::reservation::v1::
+        UpdateBiReservationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy>
 MakeDefaultReservationServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultReservationServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<ReservationServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

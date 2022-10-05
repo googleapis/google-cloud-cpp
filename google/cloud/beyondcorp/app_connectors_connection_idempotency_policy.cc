@@ -30,60 +30,49 @@ using ::google::cloud::Idempotency;
 AppConnectorsServiceConnectionIdempotencyPolicy::
     ~AppConnectorsServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAppConnectorsServiceConnectionIdempotencyPolicy
-    : public AppConnectorsServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultAppConnectorsServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AppConnectorsServiceConnectionIdempotencyPolicy>
+AppConnectorsServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AppConnectorsServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AppConnectorsServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultAppConnectorsServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency AppConnectorsServiceConnectionIdempotencyPolicy::ListAppConnectors(
+    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAppConnectors(
-      google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AppConnectorsServiceConnectionIdempotencyPolicy::GetAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::
+        GetAppConnectorRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::
-                                  GetAppConnectorRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AppConnectorsServiceConnectionIdempotencyPolicy::CreateAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateAppConnector(
-      google::cloud::beyondcorp::appconnectors::v1::
-          CreateAppConnectorRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AppConnectorsServiceConnectionIdempotencyPolicy::UpdateAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateAppConnector(
-      google::cloud::beyondcorp::appconnectors::v1::
-          UpdateAppConnectorRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AppConnectorsServiceConnectionIdempotencyPolicy::DeleteAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteAppConnector(
-      google::cloud::beyondcorp::appconnectors::v1::
-          DeleteAppConnectorRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ReportStatus(
-      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency AppConnectorsServiceConnectionIdempotencyPolicy::ReportStatus(
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<AppConnectorsServiceConnectionIdempotencyPolicy>
 MakeDefaultAppConnectorsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultAppConnectorsServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<AppConnectorsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

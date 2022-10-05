@@ -32,30 +32,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ContextsConnectionIdempotencyPolicy {
  public:
-  virtual ~ContextsConnectionIdempotencyPolicy() = 0;
+  virtual ~ContextsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ContextsConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<ContextsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListContexts(
-      google::cloud::dialogflow::v2::ListContextsRequest request) = 0;
+      google::cloud::dialogflow::v2::ListContextsRequest request);
 
   virtual google::cloud::Idempotency GetContext(
-      google::cloud::dialogflow::v2::GetContextRequest const& request) = 0;
+      google::cloud::dialogflow::v2::GetContextRequest const& request);
 
   virtual google::cloud::Idempotency CreateContext(
-      google::cloud::dialogflow::v2::CreateContextRequest const& request) = 0;
+      google::cloud::dialogflow::v2::CreateContextRequest const& request);
 
   virtual google::cloud::Idempotency UpdateContext(
-      google::cloud::dialogflow::v2::UpdateContextRequest const& request) = 0;
+      google::cloud::dialogflow::v2::UpdateContextRequest const& request);
 
   virtual google::cloud::Idempotency DeleteContext(
-      google::cloud::dialogflow::v2::DeleteContextRequest const& request) = 0;
+      google::cloud::dialogflow::v2::DeleteContextRequest const& request);
 
   virtual google::cloud::Idempotency DeleteAllContexts(
-      google::cloud::dialogflow::v2::DeleteAllContextsRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request);
 };
 
 std::unique_ptr<ContextsConnectionIdempotencyPolicy>

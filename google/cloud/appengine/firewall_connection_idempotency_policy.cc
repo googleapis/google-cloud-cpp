@@ -30,52 +30,44 @@ using ::google::cloud::Idempotency;
 FirewallConnectionIdempotencyPolicy::~FirewallConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultFirewallConnectionIdempotencyPolicy
-    : public FirewallConnectionIdempotencyPolicy {
- public:
-  ~DefaultFirewallConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<FirewallConnectionIdempotencyPolicy>
+FirewallConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<FirewallConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<FirewallConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultFirewallConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency FirewallConnectionIdempotencyPolicy::ListIngressRules(
+    google::appengine::v1::ListIngressRulesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListIngressRules(
-      google::appengine::v1::ListIngressRulesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency FirewallConnectionIdempotencyPolicy::BatchUpdateIngressRules(
+    google::appengine::v1::BatchUpdateIngressRulesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchUpdateIngressRules(
-      google::appengine::v1::BatchUpdateIngressRulesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency FirewallConnectionIdempotencyPolicy::CreateIngressRule(
+    google::appengine::v1::CreateIngressRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateIngressRule(
-      google::appengine::v1::CreateIngressRuleRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency FirewallConnectionIdempotencyPolicy::GetIngressRule(
+    google::appengine::v1::GetIngressRuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetIngressRule(
-      google::appengine::v1::GetIngressRuleRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency FirewallConnectionIdempotencyPolicy::UpdateIngressRule(
+    google::appengine::v1::UpdateIngressRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateIngressRule(
-      google::appengine::v1::UpdateIngressRuleRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteIngressRule(
-      google::appengine::v1::DeleteIngressRuleRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency FirewallConnectionIdempotencyPolicy::DeleteIngressRule(
+    google::appengine::v1::DeleteIngressRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<FirewallConnectionIdempotencyPolicy>
 MakeDefaultFirewallConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultFirewallConnectionIdempotencyPolicy>();
+  return absl::make_unique<FirewallConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

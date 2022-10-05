@@ -30,91 +30,74 @@ using ::google::cloud::Idempotency;
 TestCasesConnectionIdempotencyPolicy::~TestCasesConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultTestCasesConnectionIdempotencyPolicy
-    : public TestCasesConnectionIdempotencyPolicy {
- public:
-  ~DefaultTestCasesConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<TestCasesConnectionIdempotencyPolicy>
+TestCasesConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<TestCasesConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<TestCasesConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultTestCasesConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::ListTestCases(
+    google::cloud::dialogflow::cx::v3::ListTestCasesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTestCases(
-      google::cloud::dialogflow::cx::v3::ListTestCasesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::BatchDeleteTestCases(
+    google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchDeleteTestCases(
-      google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::GetTestCase(
+    google::cloud::dialogflow::cx::v3::GetTestCaseRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTestCase(
-      google::cloud::dialogflow::cx::v3::GetTestCaseRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::CreateTestCase(
+    google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTestCase(
-      google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::UpdateTestCase(
+    google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateTestCase(
-      google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::RunTestCase(
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RunTestCase(
-      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::BatchRunTestCases(
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchRunTestCases(
-      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::CalculateCoverage(
+    google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency CalculateCoverage(
-      google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::ImportTestCases(
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportTestCases(
-      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::ExportTestCases(
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ExportTestCases(
-      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TestCasesConnectionIdempotencyPolicy::ListTestCaseResults(
+    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTestCaseResults(
-      google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency GetTestCaseResult(
-      google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency TestCasesConnectionIdempotencyPolicy::GetTestCaseResult(
+    google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<TestCasesConnectionIdempotencyPolicy>
 MakeDefaultTestCasesConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultTestCasesConnectionIdempotencyPolicy>();
+  return absl::make_unique<TestCasesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

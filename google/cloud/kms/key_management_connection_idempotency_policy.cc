@@ -30,153 +30,154 @@ using ::google::cloud::Idempotency;
 KeyManagementServiceConnectionIdempotencyPolicy::
     ~KeyManagementServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultKeyManagementServiceConnectionIdempotencyPolicy
-    : public KeyManagementServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultKeyManagementServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy>
+KeyManagementServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<KeyManagementServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultKeyManagementServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListKeyRings(
+    google::cloud::kms::v1::ListKeyRingsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListKeyRings(
-      google::cloud::kms::v1::ListKeyRingsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListCryptoKeys(
+    google::cloud::kms::v1::ListCryptoKeysRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCryptoKeys(
-      google::cloud::kms::v1::ListCryptoKeysRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::ListCryptoKeyVersions(
+    google::cloud::kms::v1::ListCryptoKeyVersionsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCryptoKeyVersions(
-      google::cloud::kms::v1::ListCryptoKeyVersionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListImportJobs(
+    google::cloud::kms::v1::ListImportJobsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListImportJobs(
-      google::cloud::kms::v1::ListImportJobsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetKeyRing(
+    google::cloud::kms::v1::GetKeyRingRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetKeyRing(
-      google::cloud::kms::v1::GetKeyRingRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetCryptoKey(
+    google::cloud::kms::v1::GetCryptoKeyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCryptoKey(
-      google::cloud::kms::v1::GetCryptoKeyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::GetCryptoKeyVersion(
+    google::cloud::kms::v1::GetCryptoKeyVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCryptoKeyVersion(
-      google::cloud::kms::v1::GetCryptoKeyVersionRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetPublicKey(
+    google::cloud::kms::v1::GetPublicKeyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetPublicKey(
-      google::cloud::kms::v1::GetPublicKeyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetImportJob(
+    google::cloud::kms::v1::GetImportJobRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetImportJob(
-      google::cloud::kms::v1::GetImportJobRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateKeyRing(
+    google::cloud::kms::v1::CreateKeyRingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateKeyRing(
-      google::cloud::kms::v1::CreateKeyRingRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateCryptoKey(
+    google::cloud::kms::v1::CreateCryptoKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCryptoKey(
-      google::cloud::kms::v1::CreateCryptoKeyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::CreateCryptoKeyVersion(
+    google::cloud::kms::v1::CreateCryptoKeyVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCryptoKeyVersion(
-      google::cloud::kms::v1::CreateCryptoKeyVersionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::ImportCryptoKeyVersion(
+    google::cloud::kms::v1::ImportCryptoKeyVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportCryptoKeyVersion(
-      google::cloud::kms::v1::ImportCryptoKeyVersionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateImportJob(
+    google::cloud::kms::v1::CreateImportJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateImportJob(
-      google::cloud::kms::v1::CreateImportJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::UpdateCryptoKey(
+    google::cloud::kms::v1::UpdateCryptoKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCryptoKey(
-      google::cloud::kms::v1::UpdateCryptoKeyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::UpdateCryptoKeyVersion(
+    google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCryptoKeyVersion(
-      google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::UpdateCryptoKeyPrimaryVersion(
+    google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCryptoKeyPrimaryVersion(
-      google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::DestroyCryptoKeyVersion(
+    google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DestroyCryptoKeyVersion(
-      google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::RestoreCryptoKeyVersion(
+    google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RestoreCryptoKeyVersion(
-      google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::Encrypt(
+    google::cloud::kms::v1::EncryptRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency Encrypt(google::cloud::kms::v1::EncryptRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::Decrypt(
+    google::cloud::kms::v1::DecryptRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency Decrypt(google::cloud::kms::v1::DecryptRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::AsymmetricSign(
+    google::cloud::kms::v1::AsymmetricSignRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AsymmetricSign(
-      google::cloud::kms::v1::AsymmetricSignRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::AsymmetricDecrypt(
+    google::cloud::kms::v1::AsymmetricDecryptRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AsymmetricDecrypt(
-      google::cloud::kms::v1::AsymmetricDecryptRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::MacSign(
+    google::cloud::kms::v1::MacSignRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency MacSign(google::cloud::kms::v1::MacSignRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::MacVerify(
+    google::cloud::kms::v1::MacVerifyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency MacVerify(
-      google::cloud::kms::v1::MacVerifyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency GenerateRandomBytes(
-      google::cloud::kms::v1::GenerateRandomBytesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::GenerateRandomBytes(
+    google::cloud::kms::v1::GenerateRandomBytesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy>
 MakeDefaultKeyManagementServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultKeyManagementServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<KeyManagementServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

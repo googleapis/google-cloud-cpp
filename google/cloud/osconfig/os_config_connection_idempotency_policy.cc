@@ -30,90 +30,75 @@ using ::google::cloud::Idempotency;
 OsConfigServiceConnectionIdempotencyPolicy::
     ~OsConfigServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultOsConfigServiceConnectionIdempotencyPolicy
-    : public OsConfigServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultOsConfigServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<OsConfigServiceConnectionIdempotencyPolicy>
+OsConfigServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<OsConfigServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<OsConfigServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultOsConfigServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::ExecutePatchJob(
+    google::cloud::osconfig::v1::ExecutePatchJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ExecutePatchJob(
-      google::cloud::osconfig::v1::ExecutePatchJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::GetPatchJob(
+    google::cloud::osconfig::v1::GetPatchJobRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetPatchJob(
-      google::cloud::osconfig::v1::GetPatchJobRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::CancelPatchJob(
+    google::cloud::osconfig::v1::CancelPatchJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CancelPatchJob(
-      google::cloud::osconfig::v1::CancelPatchJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::ListPatchJobs(
+    google::cloud::osconfig::v1::ListPatchJobsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListPatchJobs(
-      google::cloud::osconfig::v1::ListPatchJobsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+OsConfigServiceConnectionIdempotencyPolicy::ListPatchJobInstanceDetails(
+    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListPatchJobInstanceDetails(
-      google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::CreatePatchDeployment(
+    google::cloud::osconfig::v1::CreatePatchDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreatePatchDeployment(
-      google::cloud::osconfig::v1::CreatePatchDeploymentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::GetPatchDeployment(
+    google::cloud::osconfig::v1::GetPatchDeploymentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetPatchDeployment(
-      google::cloud::osconfig::v1::GetPatchDeploymentRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::ListPatchDeployments(
+    google::cloud::osconfig::v1::ListPatchDeploymentsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListPatchDeployments(
-      google::cloud::osconfig::v1::ListPatchDeploymentsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::DeletePatchDeployment(
+    google::cloud::osconfig::v1::DeletePatchDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeletePatchDeployment(
-      google::cloud::osconfig::v1::DeletePatchDeploymentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::UpdatePatchDeployment(
+    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdatePatchDeployment(
-      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::PausePatchDeployment(
+    google::cloud::osconfig::v1::PausePatchDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency PausePatchDeployment(
-      google::cloud::osconfig::v1::PausePatchDeploymentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ResumePatchDeployment(
-      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency OsConfigServiceConnectionIdempotencyPolicy::ResumePatchDeployment(
+    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<OsConfigServiceConnectionIdempotencyPolicy>
 MakeDefaultOsConfigServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultOsConfigServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<OsConfigServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,56 +32,54 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class RecommenderConnectionIdempotencyPolicy {
  public:
-  virtual ~RecommenderConnectionIdempotencyPolicy() = 0;
+  virtual ~RecommenderConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RecommenderConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<RecommenderConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListInsights(
-      google::cloud::recommender::v1::ListInsightsRequest request) = 0;
+      google::cloud::recommender::v1::ListInsightsRequest request);
 
   virtual google::cloud::Idempotency GetInsight(
-      google::cloud::recommender::v1::GetInsightRequest const& request) = 0;
+      google::cloud::recommender::v1::GetInsightRequest const& request);
 
   virtual google::cloud::Idempotency MarkInsightAccepted(
       google::cloud::recommender::v1::MarkInsightAcceptedRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListRecommendations(
-      google::cloud::recommender::v1::ListRecommendationsRequest request) = 0;
+      google::cloud::recommender::v1::ListRecommendationsRequest request);
 
   virtual google::cloud::Idempotency GetRecommendation(
-      google::cloud::recommender::v1::GetRecommendationRequest const&
-          request) = 0;
+      google::cloud::recommender::v1::GetRecommendationRequest const& request);
 
   virtual google::cloud::Idempotency MarkRecommendationClaimed(
       google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency MarkRecommendationSucceeded(
       google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency MarkRecommendationFailed(
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetRecommenderConfig(
       google::cloud::recommender::v1::GetRecommenderConfigRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateRecommenderConfig(
       google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetInsightTypeConfig(
       google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateInsightTypeConfig(
       google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<RecommenderConnectionIdempotencyPolicy>

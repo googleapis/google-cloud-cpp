@@ -30,199 +30,195 @@ using ::google::cloud::Idempotency;
 CertificateAuthorityServiceConnectionIdempotencyPolicy::
     ~CertificateAuthorityServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCertificateAuthorityServiceConnectionIdempotencyPolicy
-    : public CertificateAuthorityServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultCertificateAuthorityServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>
+CertificateAuthorityServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<
+      CertificateAuthorityServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>
-  clone() const override {
-    return absl::make_unique<
-        DefaultCertificateAuthorityServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::CreateCertificate(
+    google::cloud::security::privateca::v1::CreateCertificateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCertificate(
-      google::cloud::security::privateca::v1::CreateCertificateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificate(
+    google::cloud::security::privateca::v1::GetCertificateRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCertificate(
-      google::cloud::security::privateca::v1::GetCertificateRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCertificates(
+    google::cloud::security::privateca::v1::ListCertificatesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCertificates(
-      google::cloud::security::privateca::v1::ListCertificatesRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::RevokeCertificate(
+    google::cloud::security::privateca::v1::RevokeCertificateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RevokeCertificate(
-      google::cloud::security::privateca::v1::RevokeCertificateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::UpdateCertificate(
+    google::cloud::security::privateca::v1::UpdateCertificateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCertificate(
-      google::cloud::security::privateca::v1::UpdateCertificateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    ActivateCertificateAuthority(
+        google::cloud::security::privateca::v1::
+            ActivateCertificateAuthorityRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ActivateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          ActivateCertificateAuthorityRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    CreateCertificateAuthority(google::cloud::security::privateca::v1::
+                                   CreateCertificateAuthorityRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          CreateCertificateAuthorityRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    DisableCertificateAuthority(google::cloud::security::privateca::v1::
+                                    DisableCertificateAuthorityRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DisableCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          DisableCertificateAuthorityRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    EnableCertificateAuthority(google::cloud::security::privateca::v1::
+                                   EnableCertificateAuthorityRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency EnableCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          EnableCertificateAuthorityRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    FetchCertificateAuthorityCsr(
+        google::cloud::security::privateca::v1::
+            FetchCertificateAuthorityCsrRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency FetchCertificateAuthorityCsr(
-      google::cloud::security::privateca::v1::
-          FetchCertificateAuthorityCsrRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificateAuthority(
+    google::cloud::security::privateca::v1::
+        GetCertificateAuthorityRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          GetCertificateAuthorityRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    ListCertificateAuthorities(google::cloud::security::privateca::v1::
+                                   ListCertificateAuthoritiesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCertificateAuthorities(
-      google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    UndeleteCertificateAuthority(
+        google::cloud::security::privateca::v1::
+            UndeleteCertificateAuthorityRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UndeleteCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          UndeleteCertificateAuthorityRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    DeleteCertificateAuthority(google::cloud::security::privateca::v1::
+                                   DeleteCertificateAuthorityRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          DeleteCertificateAuthorityRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    UpdateCertificateAuthority(google::cloud::security::privateca::v1::
+                                   UpdateCertificateAuthorityRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateAuthorityRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::CreateCaPool(
+    google::cloud::security::privateca::v1::CreateCaPoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCaPool(
-      google::cloud::security::privateca::v1::CreateCaPoolRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::UpdateCaPool(
+    google::cloud::security::privateca::v1::UpdateCaPoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCaPool(
-      google::cloud::security::privateca::v1::UpdateCaPoolRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCaPool(
+    google::cloud::security::privateca::v1::GetCaPoolRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCaPool(
-      google::cloud::security::privateca::v1::GetCaPoolRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCaPools(
+    google::cloud::security::privateca::v1::ListCaPoolsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCaPools(
-      google::cloud::security::privateca::v1::ListCaPoolsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::DeleteCaPool(
+    google::cloud::security::privateca::v1::DeleteCaPoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteCaPool(
-      google::cloud::security::privateca::v1::DeleteCaPoolRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::FetchCaCerts(
+    google::cloud::security::privateca::v1::FetchCaCertsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency FetchCaCerts(
-      google::cloud::security::privateca::v1::FetchCaCertsRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    GetCertificateRevocationList(
+        google::cloud::security::privateca::v1::
+            GetCertificateRevocationListRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCertificateRevocationList(
-      google::cloud::security::privateca::v1::
-          GetCertificateRevocationListRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    ListCertificateRevocationLists(google::cloud::security::privateca::v1::
+                                       ListCertificateRevocationListsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCertificateRevocationLists(
-      google::cloud::security::privateca::v1::
-          ListCertificateRevocationListsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    UpdateCertificateRevocationList(
+        google::cloud::security::privateca::v1::
+            UpdateCertificateRevocationListRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCertificateRevocationList(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateRevocationListRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    CreateCertificateTemplate(google::cloud::security::privateca::v1::
+                                  CreateCertificateTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          CreateCertificateTemplateRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    DeleteCertificateTemplate(google::cloud::security::privateca::v1::
+                                  DeleteCertificateTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          DeleteCertificateTemplateRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificateTemplate(
+    google::cloud::security::privateca::v1::
+        GetCertificateTemplateRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          GetCertificateTemplateRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    ListCertificateTemplates(google::cloud::security::privateca::v1::
+                                 ListCertificateTemplatesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCertificateTemplates(
-      google::cloud::security::privateca::v1::ListCertificateTemplatesRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency UpdateCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateTemplateRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    UpdateCertificateTemplate(google::cloud::security::privateca::v1::
+                                  UpdateCertificateTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>
 MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultCertificateAuthorityServiceConnectionIdempotencyPolicy>();
+      CertificateAuthorityServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

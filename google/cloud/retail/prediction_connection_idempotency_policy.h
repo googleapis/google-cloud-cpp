@@ -32,14 +32,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class PredictionServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~PredictionServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~PredictionServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency Predict(
-      google::cloud::retail::v2::PredictRequest const& request) = 0;
+      google::cloud::retail::v2::PredictRequest const& request);
 };
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>

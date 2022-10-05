@@ -32,31 +32,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ConversationDatasetsConnectionIdempotencyPolicy {
  public:
-  virtual ~ConversationDatasetsConnectionIdempotencyPolicy() = 0;
+  virtual ~ConversationDatasetsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ConversationDatasetsConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency CreateConversationDataset(
       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetConversationDataset(
       google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListConversationDatasets(
-      google::cloud::dialogflow::v2::ListConversationDatasetsRequest
-          request) = 0;
+      google::cloud::dialogflow::v2::ListConversationDatasetsRequest request);
 
   virtual google::cloud::Idempotency DeleteConversationDataset(
       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ImportConversationData(
       google::cloud::dialogflow::v2::ImportConversationDataRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<ConversationDatasetsConnectionIdempotencyPolicy>

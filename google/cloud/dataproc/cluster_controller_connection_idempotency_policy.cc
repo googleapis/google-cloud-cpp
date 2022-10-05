@@ -30,65 +30,54 @@ using ::google::cloud::Idempotency;
 ClusterControllerConnectionIdempotencyPolicy::
     ~ClusterControllerConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultClusterControllerConnectionIdempotencyPolicy
-    : public ClusterControllerConnectionIdempotencyPolicy {
- public:
-  ~DefaultClusterControllerConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ClusterControllerConnectionIdempotencyPolicy>
+ClusterControllerConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ClusterControllerConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ClusterControllerConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultClusterControllerConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ClusterControllerConnectionIdempotencyPolicy::CreateCluster(
+    google::cloud::dataproc::v1::CreateClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCluster(
-      google::cloud::dataproc::v1::CreateClusterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterControllerConnectionIdempotencyPolicy::UpdateCluster(
+    google::cloud::dataproc::v1::UpdateClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCluster(
-      google::cloud::dataproc::v1::UpdateClusterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterControllerConnectionIdempotencyPolicy::StopCluster(
+    google::cloud::dataproc::v1::StopClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StopCluster(
-      google::cloud::dataproc::v1::StopClusterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterControllerConnectionIdempotencyPolicy::StartCluster(
+    google::cloud::dataproc::v1::StartClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StartCluster(
-      google::cloud::dataproc::v1::StartClusterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterControllerConnectionIdempotencyPolicy::DeleteCluster(
+    google::cloud::dataproc::v1::DeleteClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteCluster(
-      google::cloud::dataproc::v1::DeleteClusterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterControllerConnectionIdempotencyPolicy::GetCluster(
+    google::cloud::dataproc::v1::GetClusterRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCluster(
-      google::cloud::dataproc::v1::GetClusterRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterControllerConnectionIdempotencyPolicy::ListClusters(
+    google::cloud::dataproc::v1::ListClustersRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListClusters(
-      google::cloud::dataproc::v1::ListClustersRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DiagnoseCluster(
-      google::cloud::dataproc::v1::DiagnoseClusterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ClusterControllerConnectionIdempotencyPolicy::DiagnoseCluster(
+    google::cloud::dataproc::v1::DiagnoseClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ClusterControllerConnectionIdempotencyPolicy>
 MakeDefaultClusterControllerConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultClusterControllerConnectionIdempotencyPolicy>();
+  return absl::make_unique<ClusterControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

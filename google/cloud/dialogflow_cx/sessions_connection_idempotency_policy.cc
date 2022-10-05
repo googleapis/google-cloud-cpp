@@ -30,37 +30,29 @@ using ::google::cloud::Idempotency;
 SessionsConnectionIdempotencyPolicy::~SessionsConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultSessionsConnectionIdempotencyPolicy
-    : public SessionsConnectionIdempotencyPolicy {
- public:
-  ~DefaultSessionsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<SessionsConnectionIdempotencyPolicy>
+SessionsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<SessionsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<SessionsConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultSessionsConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency SessionsConnectionIdempotencyPolicy::DetectIntent(
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DetectIntent(
-      google::cloud::dialogflow::cx::v3::DetectIntentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency SessionsConnectionIdempotencyPolicy::MatchIntent(
+    google::cloud::dialogflow::cx::v3::MatchIntentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency MatchIntent(
-      google::cloud::dialogflow::cx::v3::MatchIntentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency FulfillIntent(
-      google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency SessionsConnectionIdempotencyPolicy::FulfillIntent(
+    google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<SessionsConnectionIdempotencyPolicy>
 MakeDefaultSessionsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultSessionsConnectionIdempotencyPolicy>();
+  return absl::make_unique<SessionsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

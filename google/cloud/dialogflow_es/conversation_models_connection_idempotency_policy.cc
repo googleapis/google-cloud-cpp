@@ -30,78 +30,70 @@ using ::google::cloud::Idempotency;
 ConversationModelsConnectionIdempotencyPolicy::
     ~ConversationModelsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultConversationModelsConnectionIdempotencyPolicy
-    : public ConversationModelsConnectionIdempotencyPolicy {
- public:
-  ~DefaultConversationModelsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ConversationModelsConnectionIdempotencyPolicy>
+ConversationModelsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ConversationModelsConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ConversationModelsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultConversationModelsConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+ConversationModelsConnectionIdempotencyPolicy::CreateConversationModel(
+    google::cloud::dialogflow::v2::CreateConversationModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateConversationModel(
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ConversationModelsConnectionIdempotencyPolicy::GetConversationModel(
+    google::cloud::dialogflow::v2::GetConversationModelRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetConversationModel(
-      google::cloud::dialogflow::v2::GetConversationModelRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ConversationModelsConnectionIdempotencyPolicy::ListConversationModels(
+    google::cloud::dialogflow::v2::ListConversationModelsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListConversationModels(
-      google::cloud::dialogflow::v2::ListConversationModelsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ConversationModelsConnectionIdempotencyPolicy::DeleteConversationModel(
+    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteConversationModel(
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ConversationModelsConnectionIdempotencyPolicy::DeployConversationModel(
+    google::cloud::dialogflow::v2::DeployConversationModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeployConversationModel(
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ConversationModelsConnectionIdempotencyPolicy::UndeployConversationModel(
+    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UndeployConversationModel(
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ConversationModelsConnectionIdempotencyPolicy::GetConversationModelEvaluation(
+    google::cloud::dialogflow::v2::
+        GetConversationModelEvaluationRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetConversationModelEvaluation(
-      google::cloud::dialogflow::v2::
-          GetConversationModelEvaluationRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ConversationModelsConnectionIdempotencyPolicy::ListConversationModelEvaluations(
+    google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListConversationModelEvaluations(
-      google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency CreateConversationModelEvaluation(
-      google::cloud::dialogflow::v2::
-          CreateConversationModelEvaluationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ConversationModelsConnectionIdempotencyPolicy::
+    CreateConversationModelEvaluation(
+        google::cloud::dialogflow::v2::
+            CreateConversationModelEvaluationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ConversationModelsConnectionIdempotencyPolicy>
 MakeDefaultConversationModelsConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultConversationModelsConnectionIdempotencyPolicy>();
+  return absl::make_unique<ConversationModelsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

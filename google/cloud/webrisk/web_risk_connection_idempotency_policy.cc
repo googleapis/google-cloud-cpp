@@ -30,45 +30,34 @@ using ::google::cloud::Idempotency;
 WebRiskServiceConnectionIdempotencyPolicy::
     ~WebRiskServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultWebRiskServiceConnectionIdempotencyPolicy
-    : public WebRiskServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultWebRiskServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
+WebRiskServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<WebRiskServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultWebRiskServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::ComputeThreatListDiff(
+    google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ComputeThreatListDiff(
-      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::SearchUris(
+    google::cloud::webrisk::v1::SearchUrisRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency SearchUris(
-      google::cloud::webrisk::v1::SearchUrisRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::SearchHashes(
+    google::cloud::webrisk::v1::SearchHashesRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency SearchHashes(
-      google::cloud::webrisk::v1::SearchHashesRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency CreateSubmission(
-      google::cloud::webrisk::v1::CreateSubmissionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::CreateSubmission(
+    google::cloud::webrisk::v1::CreateSubmissionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
 MakeDefaultWebRiskServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultWebRiskServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<WebRiskServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

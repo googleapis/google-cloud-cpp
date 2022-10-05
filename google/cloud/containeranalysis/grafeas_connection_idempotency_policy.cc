@@ -30,85 +30,84 @@ using ::google::cloud::Idempotency;
 GrafeasConnectionIdempotencyPolicy::~GrafeasConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultGrafeasConnectionIdempotencyPolicy
-    : public GrafeasConnectionIdempotencyPolicy {
- public:
-  ~DefaultGrafeasConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<GrafeasConnectionIdempotencyPolicy>
+GrafeasConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<GrafeasConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<GrafeasConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultGrafeasConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::GetOccurrence(
+    grafeas::v1::GetOccurrenceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetOccurrence(grafeas::v1::GetOccurrenceRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::ListOccurrences(
+    grafeas::v1::ListOccurrencesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListOccurrences(grafeas::v1::ListOccurrencesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::DeleteOccurrence(
+    grafeas::v1::DeleteOccurrenceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteOccurrence(
-      grafeas::v1::DeleteOccurrenceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::CreateOccurrence(
+    grafeas::v1::CreateOccurrenceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateOccurrence(
-      grafeas::v1::CreateOccurrenceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::BatchCreateOccurrences(
+    grafeas::v1::BatchCreateOccurrencesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchCreateOccurrences(
-      grafeas::v1::BatchCreateOccurrencesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::UpdateOccurrence(
+    grafeas::v1::UpdateOccurrenceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateOccurrence(
-      grafeas::v1::UpdateOccurrenceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::GetOccurrenceNote(
+    grafeas::v1::GetOccurrenceNoteRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetOccurrenceNote(
-      grafeas::v1::GetOccurrenceNoteRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::GetNote(
+    grafeas::v1::GetNoteRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetNote(grafeas::v1::GetNoteRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::ListNotes(
+    grafeas::v1::ListNotesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListNotes(grafeas::v1::ListNotesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::DeleteNote(
+    grafeas::v1::DeleteNoteRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteNote(grafeas::v1::DeleteNoteRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::CreateNote(
+    grafeas::v1::CreateNoteRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateNote(grafeas::v1::CreateNoteRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::BatchCreateNotes(
+    grafeas::v1::BatchCreateNotesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchCreateNotes(
-      grafeas::v1::BatchCreateNotesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GrafeasConnectionIdempotencyPolicy::UpdateNote(
+    grafeas::v1::UpdateNoteRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateNote(grafeas::v1::UpdateNoteRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListNoteOccurrences(
-      grafeas::v1::ListNoteOccurrencesRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency GrafeasConnectionIdempotencyPolicy::ListNoteOccurrences(
+    grafeas::v1::ListNoteOccurrencesRequest) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<GrafeasConnectionIdempotencyPolicy>
 MakeDefaultGrafeasConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultGrafeasConnectionIdempotencyPolicy>();
+  return absl::make_unique<GrafeasConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,52 +30,39 @@ using ::google::cloud::Idempotency;
 BudgetServiceConnectionIdempotencyPolicy::
     ~BudgetServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultBudgetServiceConnectionIdempotencyPolicy
-    : public BudgetServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultBudgetServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy>
+BudgetServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<BudgetServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultBudgetServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency BudgetServiceConnectionIdempotencyPolicy::CreateBudget(
+    google::cloud::billing::budgets::v1::CreateBudgetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateBudget(
-      google::cloud::billing::budgets::v1::CreateBudgetRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BudgetServiceConnectionIdempotencyPolicy::UpdateBudget(
+    google::cloud::billing::budgets::v1::UpdateBudgetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateBudget(
-      google::cloud::billing::budgets::v1::UpdateBudgetRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BudgetServiceConnectionIdempotencyPolicy::GetBudget(
+    google::cloud::billing::budgets::v1::GetBudgetRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetBudget(
-      google::cloud::billing::budgets::v1::GetBudgetRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BudgetServiceConnectionIdempotencyPolicy::ListBudgets(
+    google::cloud::billing::budgets::v1::ListBudgetsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListBudgets(
-      google::cloud::billing::budgets::v1::ListBudgetsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DeleteBudget(
-      google::cloud::billing::budgets::v1::DeleteBudgetRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency BudgetServiceConnectionIdempotencyPolicy::DeleteBudget(
+    google::cloud::billing::budgets::v1::DeleteBudgetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy>
 MakeDefaultBudgetServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultBudgetServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<BudgetServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,47 +30,39 @@ using ::google::cloud::Idempotency;
 VersionsConnectionIdempotencyPolicy::~VersionsConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultVersionsConnectionIdempotencyPolicy
-    : public VersionsConnectionIdempotencyPolicy {
- public:
-  ~DefaultVersionsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<VersionsConnectionIdempotencyPolicy>
+VersionsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<VersionsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<VersionsConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultVersionsConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency VersionsConnectionIdempotencyPolicy::ListVersions(
+    google::appengine::v1::ListVersionsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListVersions(
-      google::appengine::v1::ListVersionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VersionsConnectionIdempotencyPolicy::GetVersion(
+    google::appengine::v1::GetVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetVersion(
-      google::appengine::v1::GetVersionRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VersionsConnectionIdempotencyPolicy::CreateVersion(
+    google::appengine::v1::CreateVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateVersion(
-      google::appengine::v1::CreateVersionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VersionsConnectionIdempotencyPolicy::UpdateVersion(
+    google::appengine::v1::UpdateVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateVersion(
-      google::appengine::v1::UpdateVersionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteVersion(
-      google::appengine::v1::DeleteVersionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency VersionsConnectionIdempotencyPolicy::DeleteVersion(
+    google::appengine::v1::DeleteVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<VersionsConnectionIdempotencyPolicy>
 MakeDefaultVersionsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultVersionsConnectionIdempotencyPolicy>();
+  return absl::make_unique<VersionsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

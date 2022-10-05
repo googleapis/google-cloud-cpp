@@ -30,79 +30,67 @@ using ::google::cloud::Idempotency;
 TranslationServiceConnectionIdempotencyPolicy::
     ~TranslationServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultTranslationServiceConnectionIdempotencyPolicy
-    : public TranslationServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultTranslationServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>
+TranslationServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<TranslationServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultTranslationServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency TranslationServiceConnectionIdempotencyPolicy::TranslateText(
+    google::cloud::translation::v3::TranslateTextRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TranslateText(
-      google::cloud::translation::v3::TranslateTextRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DetectLanguage(
+    google::cloud::translation::v3::DetectLanguageRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DetectLanguage(
-      google::cloud::translation::v3::DetectLanguageRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+TranslationServiceConnectionIdempotencyPolicy::GetSupportedLanguages(
+    google::cloud::translation::v3::GetSupportedLanguagesRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetSupportedLanguages(
-      google::cloud::translation::v3::GetSupportedLanguagesRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency TranslationServiceConnectionIdempotencyPolicy::TranslateDocument(
+    google::cloud::translation::v3::TranslateDocumentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TranslateDocument(
-      google::cloud::translation::v3::TranslateDocumentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TranslationServiceConnectionIdempotencyPolicy::BatchTranslateText(
+    google::cloud::translation::v3::BatchTranslateTextRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchTranslateText(
-      google::cloud::translation::v3::BatchTranslateTextRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+TranslationServiceConnectionIdempotencyPolicy::BatchTranslateDocument(
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchTranslateDocument(
-      google::cloud::translation::v3::BatchTranslateDocumentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateGlossary(
+    google::cloud::translation::v3::CreateGlossaryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateGlossary(
-      google::cloud::translation::v3::CreateGlossaryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListGlossaries(
+    google::cloud::translation::v3::ListGlossariesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListGlossaries(
-      google::cloud::translation::v3::ListGlossariesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetGlossary(
+    google::cloud::translation::v3::GetGlossaryRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetGlossary(
-      google::cloud::translation::v3::GetGlossaryRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DeleteGlossary(
-      google::cloud::translation::v3::DeleteGlossaryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteGlossary(
+    google::cloud::translation::v3::DeleteGlossaryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>
 MakeDefaultTranslationServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultTranslationServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<TranslationServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

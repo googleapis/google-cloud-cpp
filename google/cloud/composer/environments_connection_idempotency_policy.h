@@ -32,31 +32,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class EnvironmentsConnectionIdempotencyPolicy {
  public:
-  virtual ~EnvironmentsConnectionIdempotencyPolicy() = 0;
+  virtual ~EnvironmentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateEnvironment(
       google::cloud::orchestration::airflow::service::v1::
-          CreateEnvironmentRequest const& request) = 0;
+          CreateEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency GetEnvironment(
       google::cloud::orchestration::airflow::service::v1::
-          GetEnvironmentRequest const& request) = 0;
+          GetEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency ListEnvironments(
       google::cloud::orchestration::airflow::service::v1::
-          ListEnvironmentsRequest request) = 0;
+          ListEnvironmentsRequest request);
 
   virtual google::cloud::Idempotency UpdateEnvironment(
       google::cloud::orchestration::airflow::service::v1::
-          UpdateEnvironmentRequest const& request) = 0;
+          UpdateEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency DeleteEnvironment(
       google::cloud::orchestration::airflow::service::v1::
-          DeleteEnvironmentRequest const& request) = 0;
+          DeleteEnvironmentRequest const& request);
 };
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>

@@ -30,44 +30,34 @@ using ::google::cloud::Idempotency;
 EkmServiceConnectionIdempotencyPolicy::
     ~EkmServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultEkmServiceConnectionIdempotencyPolicy
-    : public EkmServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultEkmServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>
+EkmServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<EkmServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<EkmServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultEkmServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency EkmServiceConnectionIdempotencyPolicy::ListEkmConnections(
+    google::cloud::kms::v1::ListEkmConnectionsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListEkmConnections(
-      google::cloud::kms::v1::ListEkmConnectionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency EkmServiceConnectionIdempotencyPolicy::GetEkmConnection(
+    google::cloud::kms::v1::GetEkmConnectionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetEkmConnection(
-      google::cloud::kms::v1::GetEkmConnectionRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency EkmServiceConnectionIdempotencyPolicy::CreateEkmConnection(
+    google::cloud::kms::v1::CreateEkmConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateEkmConnection(
-      google::cloud::kms::v1::CreateEkmConnectionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency UpdateEkmConnection(
-      google::cloud::kms::v1::UpdateEkmConnectionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency EkmServiceConnectionIdempotencyPolicy::UpdateEkmConnection(
+    google::cloud::kms::v1::UpdateEkmConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>
 MakeDefaultEkmServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultEkmServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<EkmServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

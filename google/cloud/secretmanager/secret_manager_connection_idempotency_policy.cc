@@ -30,107 +30,95 @@ using ::google::cloud::Idempotency;
 SecretManagerServiceConnectionIdempotencyPolicy::
     ~SecretManagerServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultSecretManagerServiceConnectionIdempotencyPolicy
-    : public SecretManagerServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultSecretManagerServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<SecretManagerServiceConnectionIdempotencyPolicy>
+SecretManagerServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<SecretManagerServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<SecretManagerServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultSecretManagerServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::ListSecrets(
+    google::cloud::secretmanager::v1::ListSecretsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListSecrets(
-      google::cloud::secretmanager::v1::ListSecretsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::CreateSecret(
+    google::cloud::secretmanager::v1::CreateSecretRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateSecret(
-      google::cloud::secretmanager::v1::CreateSecretRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::AddSecretVersion(
+    google::cloud::secretmanager::v1::AddSecretVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AddSecretVersion(
-      google::cloud::secretmanager::v1::AddSecretVersionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::GetSecret(
+    google::cloud::secretmanager::v1::GetSecretRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetSecret(
-      google::cloud::secretmanager::v1::GetSecretRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::UpdateSecret(
+    google::cloud::secretmanager::v1::UpdateSecretRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateSecret(
-      google::cloud::secretmanager::v1::UpdateSecretRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::DeleteSecret(
+    google::cloud::secretmanager::v1::DeleteSecretRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteSecret(
-      google::cloud::secretmanager::v1::DeleteSecretRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::ListSecretVersions(
+    google::cloud::secretmanager::v1::ListSecretVersionsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListSecretVersions(
-      google::cloud::secretmanager::v1::ListSecretVersionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::GetSecretVersion(
+    google::cloud::secretmanager::v1::GetSecretVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetSecretVersion(
-      google::cloud::secretmanager::v1::GetSecretVersionRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+SecretManagerServiceConnectionIdempotencyPolicy::AccessSecretVersion(
+    google::cloud::secretmanager::v1::AccessSecretVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency AccessSecretVersion(
-      google::cloud::secretmanager::v1::AccessSecretVersionRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+SecretManagerServiceConnectionIdempotencyPolicy::DisableSecretVersion(
+    google::cloud::secretmanager::v1::DisableSecretVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DisableSecretVersion(
-      google::cloud::secretmanager::v1::DisableSecretVersionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+SecretManagerServiceConnectionIdempotencyPolicy::EnableSecretVersion(
+    google::cloud::secretmanager::v1::EnableSecretVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency EnableSecretVersion(
-      google::cloud::secretmanager::v1::EnableSecretVersionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+SecretManagerServiceConnectionIdempotencyPolicy::DestroySecretVersion(
+    google::cloud::secretmanager::v1::DestroySecretVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DestroySecretVersion(
-      google::cloud::secretmanager::v1::DestroySecretVersionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<SecretManagerServiceConnectionIdempotencyPolicy>
 MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultSecretManagerServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<SecretManagerServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

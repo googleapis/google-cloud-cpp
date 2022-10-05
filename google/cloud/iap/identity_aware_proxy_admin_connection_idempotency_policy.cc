@@ -30,78 +30,77 @@ using ::google::cloud::Idempotency;
 IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::
     ~IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy
-    : public IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
+IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<
+      IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
-  clone() const override {
-    return absl::make_unique<
-        DefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency
+IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency
+IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::GetIapSettings(
+    google::cloud::iap::v1::GetIapSettingsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetIapSettings(
-      google::cloud::iap::v1::GetIapSettingsRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::UpdateIapSettings(
+    google::cloud::iap::v1::UpdateIapSettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateIapSettings(
-      google::cloud::iap::v1::UpdateIapSettingsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::ListTunnelDestGroups(
+    google::cloud::iap::v1::ListTunnelDestGroupsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTunnelDestGroups(
-      google::cloud::iap::v1::ListTunnelDestGroupsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::
+    CreateTunnelDestGroup(
+        google::cloud::iap::v1::CreateTunnelDestGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTunnelDestGroup(
-      google::cloud::iap::v1::CreateTunnelDestGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::GetTunnelDestGroup(
+    google::cloud::iap::v1::GetTunnelDestGroupRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTunnelDestGroup(
-      google::cloud::iap::v1::GetTunnelDestGroupRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::
+    DeleteTunnelDestGroup(
+        google::cloud::iap::v1::DeleteTunnelDestGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteTunnelDestGroup(
-      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency UpdateTunnelDestGroup(
-      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::
+    UpdateTunnelDestGroup(
+        google::cloud::iap::v1::UpdateTunnelDestGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
 MakeDefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>();
+      IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

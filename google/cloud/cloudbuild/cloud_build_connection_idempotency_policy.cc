@@ -30,123 +30,104 @@ using ::google::cloud::Idempotency;
 CloudBuildConnectionIdempotencyPolicy::
     ~CloudBuildConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCloudBuildConnectionIdempotencyPolicy
-    : public CloudBuildConnectionIdempotencyPolicy {
- public:
-  ~DefaultCloudBuildConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CloudBuildConnectionIdempotencyPolicy>
+CloudBuildConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CloudBuildConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CloudBuildConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultCloudBuildConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::CreateBuild(
+    google::devtools::cloudbuild::v1::CreateBuildRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateBuild(
-      google::devtools::cloudbuild::v1::CreateBuildRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::GetBuild(
+    google::devtools::cloudbuild::v1::GetBuildRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetBuild(
-      google::devtools::cloudbuild::v1::GetBuildRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::ListBuilds(
+    google::devtools::cloudbuild::v1::ListBuildsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListBuilds(
-      google::devtools::cloudbuild::v1::ListBuildsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::CancelBuild(
+    google::devtools::cloudbuild::v1::CancelBuildRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CancelBuild(
-      google::devtools::cloudbuild::v1::CancelBuildRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::RetryBuild(
+    google::devtools::cloudbuild::v1::RetryBuildRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RetryBuild(
-      google::devtools::cloudbuild::v1::RetryBuildRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::ApproveBuild(
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ApproveBuild(
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::CreateBuildTrigger(
+    google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateBuildTrigger(
-      google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::GetBuildTrigger(
+    google::devtools::cloudbuild::v1::GetBuildTriggerRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetBuildTrigger(
-      google::devtools::cloudbuild::v1::GetBuildTriggerRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::ListBuildTriggers(
+    google::devtools::cloudbuild::v1::ListBuildTriggersRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListBuildTriggers(
-      google::devtools::cloudbuild::v1::ListBuildTriggersRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::DeleteBuildTrigger(
+    google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteBuildTrigger(
-      google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::UpdateBuildTrigger(
+    google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateBuildTrigger(
-      google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::RunBuildTrigger(
+    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RunBuildTrigger(
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::ReceiveTriggerWebhook(
+    google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ReceiveTriggerWebhook(
-      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::CreateWorkerPool(
+    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateWorkerPool(
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::GetWorkerPool(
+    google::devtools::cloudbuild::v1::GetWorkerPoolRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetWorkerPool(
-      google::devtools::cloudbuild::v1::GetWorkerPoolRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::DeleteWorkerPool(
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteWorkerPool(
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBuildConnectionIdempotencyPolicy::UpdateWorkerPool(
+    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateWorkerPool(
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListWorkerPools(
-      google::devtools::cloudbuild::v1::ListWorkerPoolsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency CloudBuildConnectionIdempotencyPolicy::ListWorkerPools(
+    google::devtools::cloudbuild::v1::ListWorkerPoolsRequest) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<CloudBuildConnectionIdempotencyPolicy>
 MakeDefaultCloudBuildConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultCloudBuildConnectionIdempotencyPolicy>();
+  return absl::make_unique<CloudBuildConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

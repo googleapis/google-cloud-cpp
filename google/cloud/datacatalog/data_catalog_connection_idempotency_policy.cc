@@ -30,195 +30,177 @@ using ::google::cloud::Idempotency;
 DataCatalogConnectionIdempotencyPolicy::
     ~DataCatalogConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultDataCatalogConnectionIdempotencyPolicy
-    : public DataCatalogConnectionIdempotencyPolicy {
- public:
-  ~DefaultDataCatalogConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<DataCatalogConnectionIdempotencyPolicy>
+DataCatalogConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<DataCatalogConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<DataCatalogConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultDataCatalogConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::SearchCatalog(
+    google::cloud::datacatalog::v1::SearchCatalogRequest) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SearchCatalog(
-      google::cloud::datacatalog::v1::SearchCatalogRequest) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::CreateEntryGroup(
+    google::cloud::datacatalog::v1::CreateEntryGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateEntryGroup(
-      google::cloud::datacatalog::v1::CreateEntryGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::GetEntryGroup(
+    google::cloud::datacatalog::v1::GetEntryGroupRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetEntryGroup(
-      google::cloud::datacatalog::v1::GetEntryGroupRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateEntryGroup(
+    google::cloud::datacatalog::v1::UpdateEntryGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateEntryGroup(
-      google::cloud::datacatalog::v1::UpdateEntryGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteEntryGroup(
+    google::cloud::datacatalog::v1::DeleteEntryGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteEntryGroup(
-      google::cloud::datacatalog::v1::DeleteEntryGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::ListEntryGroups(
+    google::cloud::datacatalog::v1::ListEntryGroupsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListEntryGroups(
-      google::cloud::datacatalog::v1::ListEntryGroupsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::CreateEntry(
+    google::cloud::datacatalog::v1::CreateEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateEntry(
-      google::cloud::datacatalog::v1::CreateEntryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateEntry(
+    google::cloud::datacatalog::v1::UpdateEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateEntry(
-      google::cloud::datacatalog::v1::UpdateEntryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteEntry(
+    google::cloud::datacatalog::v1::DeleteEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteEntry(
-      google::cloud::datacatalog::v1::DeleteEntryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::GetEntry(
+    google::cloud::datacatalog::v1::GetEntryRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetEntry(
-      google::cloud::datacatalog::v1::GetEntryRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::LookupEntry(
+    google::cloud::datacatalog::v1::LookupEntryRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency LookupEntry(
-      google::cloud::datacatalog::v1::LookupEntryRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::ListEntries(
+    google::cloud::datacatalog::v1::ListEntriesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListEntries(
-      google::cloud::datacatalog::v1::ListEntriesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::ModifyEntryOverview(
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ModifyEntryOverview(
-      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::ModifyEntryContacts(
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ModifyEntryContacts(
-      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::CreateTagTemplate(
+    google::cloud::datacatalog::v1::CreateTagTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTagTemplate(
-      google::cloud::datacatalog::v1::CreateTagTemplateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::GetTagTemplate(
+    google::cloud::datacatalog::v1::GetTagTemplateRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTagTemplate(
-      google::cloud::datacatalog::v1::GetTagTemplateRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateTagTemplate(
+    google::cloud::datacatalog::v1::UpdateTagTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateTagTemplate(
-      google::cloud::datacatalog::v1::UpdateTagTemplateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteTagTemplate(
+    google::cloud::datacatalog::v1::DeleteTagTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteTagTemplate(
-      google::cloud::datacatalog::v1::DeleteTagTemplateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::CreateTagTemplateField(
+    google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTagTemplateField(
-      google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateTagTemplateField(
+    google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateTagTemplateField(
-      google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::RenameTagTemplateField(
+    google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RenameTagTemplateField(
-      google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+DataCatalogConnectionIdempotencyPolicy::RenameTagTemplateFieldEnumValue(
+    google::cloud::datacatalog::v1::
+        RenameTagTemplateFieldEnumValueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RenameTagTemplateFieldEnumValue(
-      google::cloud::datacatalog::v1::
-          RenameTagTemplateFieldEnumValueRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteTagTemplateField(
+    google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteTagTemplateField(
-      google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::CreateTag(
+    google::cloud::datacatalog::v1::CreateTagRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTag(
-      google::cloud::datacatalog::v1::CreateTagRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateTag(
+    google::cloud::datacatalog::v1::UpdateTagRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateTag(
-      google::cloud::datacatalog::v1::UpdateTagRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteTag(
+    google::cloud::datacatalog::v1::DeleteTagRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteTag(
-      google::cloud::datacatalog::v1::DeleteTagRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::ListTags(
+    google::cloud::datacatalog::v1::ListTagsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTags(
-      google::cloud::datacatalog::v1::ListTagsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::StarEntry(
+    google::cloud::datacatalog::v1::StarEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StarEntry(
-      google::cloud::datacatalog::v1::StarEntryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::UnstarEntry(
+    google::cloud::datacatalog::v1::UnstarEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UnstarEntry(
-      google::cloud::datacatalog::v1::UnstarEntryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency DataCatalogConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency DataCatalogConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<DataCatalogConnectionIdempotencyPolicy>
 MakeDefaultDataCatalogConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultDataCatalogConnectionIdempotencyPolicy>();
+  return absl::make_unique<DataCatalogConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

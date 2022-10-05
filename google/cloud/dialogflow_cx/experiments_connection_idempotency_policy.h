@@ -32,38 +32,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ExperimentsConnectionIdempotencyPolicy {
  public:
-  virtual ~ExperimentsConnectionIdempotencyPolicy() = 0;
+  virtual ~ExperimentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ExperimentsConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<ExperimentsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListExperiments(
-      google::cloud::dialogflow::cx::v3::ListExperimentsRequest request) = 0;
+      google::cloud::dialogflow::cx::v3::ListExperimentsRequest request);
 
   virtual google::cloud::Idempotency GetExperiment(
-      google::cloud::dialogflow::cx::v3::GetExperimentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request);
 
   virtual google::cloud::Idempotency CreateExperiment(
       google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateExperiment(
       google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteExperiment(
       google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency StartExperiment(
-      google::cloud::dialogflow::cx::v3::StartExperimentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request);
 
   virtual google::cloud::Idempotency StopExperiment(
-      google::cloud::dialogflow::cx::v3::StopExperimentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request);
 };
 
 std::unique_ptr<ExperimentsConnectionIdempotencyPolicy>

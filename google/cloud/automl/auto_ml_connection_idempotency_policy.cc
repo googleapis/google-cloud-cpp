@@ -30,112 +30,104 @@ using ::google::cloud::Idempotency;
 AutoMlConnectionIdempotencyPolicy::~AutoMlConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultAutoMlConnectionIdempotencyPolicy
-    : public AutoMlConnectionIdempotencyPolicy {
- public:
-  ~DefaultAutoMlConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AutoMlConnectionIdempotencyPolicy>
+AutoMlConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AutoMlConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AutoMlConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultAutoMlConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::CreateDataset(
+    google::cloud::automl::v1::CreateDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateDataset(
-      google::cloud::automl::v1::CreateDatasetRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::GetDataset(
+    google::cloud::automl::v1::GetDatasetRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetDataset(
-      google::cloud::automl::v1::GetDatasetRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::ListDatasets(
+    google::cloud::automl::v1::ListDatasetsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDatasets(
-      google::cloud::automl::v1::ListDatasetsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::UpdateDataset(
+    google::cloud::automl::v1::UpdateDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateDataset(
-      google::cloud::automl::v1::UpdateDatasetRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::DeleteDataset(
+    google::cloud::automl::v1::DeleteDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteDataset(
-      google::cloud::automl::v1::DeleteDatasetRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::ImportData(
+    google::cloud::automl::v1::ImportDataRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportData(
-      google::cloud::automl::v1::ImportDataRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::ExportData(
+    google::cloud::automl::v1::ExportDataRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ExportData(
-      google::cloud::automl::v1::ExportDataRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::GetAnnotationSpec(
+    google::cloud::automl::v1::GetAnnotationSpecRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAnnotationSpec(
-      google::cloud::automl::v1::GetAnnotationSpecRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::CreateModel(
+    google::cloud::automl::v1::CreateModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateModel(
-      google::cloud::automl::v1::CreateModelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::GetModel(
+    google::cloud::automl::v1::GetModelRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetModel(
-      google::cloud::automl::v1::GetModelRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::ListModels(
+    google::cloud::automl::v1::ListModelsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListModels(
-      google::cloud::automl::v1::ListModelsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::DeleteModel(
+    google::cloud::automl::v1::DeleteModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteModel(
-      google::cloud::automl::v1::DeleteModelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::UpdateModel(
+    google::cloud::automl::v1::UpdateModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateModel(
-      google::cloud::automl::v1::UpdateModelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::DeployModel(
+    google::cloud::automl::v1::DeployModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeployModel(
-      google::cloud::automl::v1::DeployModelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::UndeployModel(
+    google::cloud::automl::v1::UndeployModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UndeployModel(
-      google::cloud::automl::v1::UndeployModelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::ExportModel(
+    google::cloud::automl::v1::ExportModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ExportModel(
-      google::cloud::automl::v1::ExportModelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AutoMlConnectionIdempotencyPolicy::GetModelEvaluation(
+    google::cloud::automl::v1::GetModelEvaluationRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetModelEvaluation(
-      google::cloud::automl::v1::GetModelEvaluationRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency ListModelEvaluations(
-      google::cloud::automl::v1::ListModelEvaluationsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency AutoMlConnectionIdempotencyPolicy::ListModelEvaluations(
+    google::cloud::automl::v1::ListModelEvaluationsRequest) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<AutoMlConnectionIdempotencyPolicy>
 MakeDefaultAutoMlConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultAutoMlConnectionIdempotencyPolicy>();
+  return absl::make_unique<AutoMlConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

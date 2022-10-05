@@ -30,30 +30,19 @@ using ::google::cloud::Idempotency;
 AuthorizedDomainsConnectionIdempotencyPolicy::
     ~AuthorizedDomainsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAuthorizedDomainsConnectionIdempotencyPolicy
-    : public AuthorizedDomainsConnectionIdempotencyPolicy {
- public:
-  ~DefaultAuthorizedDomainsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
+AuthorizedDomainsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AuthorizedDomainsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultAuthorizedDomainsConnectionIdempotencyPolicy>(*this);
-  }
-
-  Idempotency ListAuthorizedDomains(
-      google::appengine::v1::ListAuthorizedDomainsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency AuthorizedDomainsConnectionIdempotencyPolicy::ListAuthorizedDomains(
+    google::appengine::v1::ListAuthorizedDomainsRequest) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
 MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultAuthorizedDomainsConnectionIdempotencyPolicy>();
+  return absl::make_unique<AuthorizedDomainsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

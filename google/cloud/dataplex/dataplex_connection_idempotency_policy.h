@@ -32,107 +32,107 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class DataplexServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~DataplexServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~DataplexServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<DataplexServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateLake(
-      google::cloud::dataplex::v1::CreateLakeRequest const& request) = 0;
+      google::cloud::dataplex::v1::CreateLakeRequest const& request);
 
   virtual google::cloud::Idempotency UpdateLake(
-      google::cloud::dataplex::v1::UpdateLakeRequest const& request) = 0;
+      google::cloud::dataplex::v1::UpdateLakeRequest const& request);
 
   virtual google::cloud::Idempotency DeleteLake(
-      google::cloud::dataplex::v1::DeleteLakeRequest const& request) = 0;
+      google::cloud::dataplex::v1::DeleteLakeRequest const& request);
 
   virtual google::cloud::Idempotency ListLakes(
-      google::cloud::dataplex::v1::ListLakesRequest request) = 0;
+      google::cloud::dataplex::v1::ListLakesRequest request);
 
   virtual google::cloud::Idempotency GetLake(
-      google::cloud::dataplex::v1::GetLakeRequest const& request) = 0;
+      google::cloud::dataplex::v1::GetLakeRequest const& request);
 
   virtual google::cloud::Idempotency ListLakeActions(
-      google::cloud::dataplex::v1::ListLakeActionsRequest request) = 0;
+      google::cloud::dataplex::v1::ListLakeActionsRequest request);
 
   virtual google::cloud::Idempotency CreateZone(
-      google::cloud::dataplex::v1::CreateZoneRequest const& request) = 0;
+      google::cloud::dataplex::v1::CreateZoneRequest const& request);
 
   virtual google::cloud::Idempotency UpdateZone(
-      google::cloud::dataplex::v1::UpdateZoneRequest const& request) = 0;
+      google::cloud::dataplex::v1::UpdateZoneRequest const& request);
 
   virtual google::cloud::Idempotency DeleteZone(
-      google::cloud::dataplex::v1::DeleteZoneRequest const& request) = 0;
+      google::cloud::dataplex::v1::DeleteZoneRequest const& request);
 
   virtual google::cloud::Idempotency ListZones(
-      google::cloud::dataplex::v1::ListZonesRequest request) = 0;
+      google::cloud::dataplex::v1::ListZonesRequest request);
 
   virtual google::cloud::Idempotency GetZone(
-      google::cloud::dataplex::v1::GetZoneRequest const& request) = 0;
+      google::cloud::dataplex::v1::GetZoneRequest const& request);
 
   virtual google::cloud::Idempotency ListZoneActions(
-      google::cloud::dataplex::v1::ListZoneActionsRequest request) = 0;
+      google::cloud::dataplex::v1::ListZoneActionsRequest request);
 
   virtual google::cloud::Idempotency CreateAsset(
-      google::cloud::dataplex::v1::CreateAssetRequest const& request) = 0;
+      google::cloud::dataplex::v1::CreateAssetRequest const& request);
 
   virtual google::cloud::Idempotency UpdateAsset(
-      google::cloud::dataplex::v1::UpdateAssetRequest const& request) = 0;
+      google::cloud::dataplex::v1::UpdateAssetRequest const& request);
 
   virtual google::cloud::Idempotency DeleteAsset(
-      google::cloud::dataplex::v1::DeleteAssetRequest const& request) = 0;
+      google::cloud::dataplex::v1::DeleteAssetRequest const& request);
 
   virtual google::cloud::Idempotency ListAssets(
-      google::cloud::dataplex::v1::ListAssetsRequest request) = 0;
+      google::cloud::dataplex::v1::ListAssetsRequest request);
 
   virtual google::cloud::Idempotency GetAsset(
-      google::cloud::dataplex::v1::GetAssetRequest const& request) = 0;
+      google::cloud::dataplex::v1::GetAssetRequest const& request);
 
   virtual google::cloud::Idempotency ListAssetActions(
-      google::cloud::dataplex::v1::ListAssetActionsRequest request) = 0;
+      google::cloud::dataplex::v1::ListAssetActionsRequest request);
 
   virtual google::cloud::Idempotency CreateTask(
-      google::cloud::dataplex::v1::CreateTaskRequest const& request) = 0;
+      google::cloud::dataplex::v1::CreateTaskRequest const& request);
 
   virtual google::cloud::Idempotency UpdateTask(
-      google::cloud::dataplex::v1::UpdateTaskRequest const& request) = 0;
+      google::cloud::dataplex::v1::UpdateTaskRequest const& request);
 
   virtual google::cloud::Idempotency DeleteTask(
-      google::cloud::dataplex::v1::DeleteTaskRequest const& request) = 0;
+      google::cloud::dataplex::v1::DeleteTaskRequest const& request);
 
   virtual google::cloud::Idempotency ListTasks(
-      google::cloud::dataplex::v1::ListTasksRequest request) = 0;
+      google::cloud::dataplex::v1::ListTasksRequest request);
 
   virtual google::cloud::Idempotency GetTask(
-      google::cloud::dataplex::v1::GetTaskRequest const& request) = 0;
+      google::cloud::dataplex::v1::GetTaskRequest const& request);
 
   virtual google::cloud::Idempotency ListJobs(
-      google::cloud::dataplex::v1::ListJobsRequest request) = 0;
+      google::cloud::dataplex::v1::ListJobsRequest request);
 
   virtual google::cloud::Idempotency GetJob(
-      google::cloud::dataplex::v1::GetJobRequest const& request) = 0;
+      google::cloud::dataplex::v1::GetJobRequest const& request);
 
   virtual google::cloud::Idempotency CancelJob(
-      google::cloud::dataplex::v1::CancelJobRequest const& request) = 0;
+      google::cloud::dataplex::v1::CancelJobRequest const& request);
 
   virtual google::cloud::Idempotency CreateEnvironment(
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) = 0;
+      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency UpdateEnvironment(
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) = 0;
+      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency DeleteEnvironment(
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) = 0;
+      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency ListEnvironments(
-      google::cloud::dataplex::v1::ListEnvironmentsRequest request) = 0;
+      google::cloud::dataplex::v1::ListEnvironmentsRequest request);
 
   virtual google::cloud::Idempotency GetEnvironment(
-      google::cloud::dataplex::v1::GetEnvironmentRequest const& request) = 0;
+      google::cloud::dataplex::v1::GetEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency ListSessions(
-      google::cloud::dataplex::v1::ListSessionsRequest request) = 0;
+      google::cloud::dataplex::v1::ListSessionsRequest request);
 };
 
 std::unique_ptr<DataplexServiceConnectionIdempotencyPolicy>

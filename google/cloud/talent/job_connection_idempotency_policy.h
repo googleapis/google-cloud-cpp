@@ -32,41 +32,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class JobServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~JobServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~JobServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<JobServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<JobServiceConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency CreateJob(
-      google::cloud::talent::v4::CreateJobRequest const& request) = 0;
+      google::cloud::talent::v4::CreateJobRequest const& request);
 
   virtual google::cloud::Idempotency BatchCreateJobs(
-      google::cloud::talent::v4::BatchCreateJobsRequest const& request) = 0;
+      google::cloud::talent::v4::BatchCreateJobsRequest const& request);
 
   virtual google::cloud::Idempotency GetJob(
-      google::cloud::talent::v4::GetJobRequest const& request) = 0;
+      google::cloud::talent::v4::GetJobRequest const& request);
 
   virtual google::cloud::Idempotency UpdateJob(
-      google::cloud::talent::v4::UpdateJobRequest const& request) = 0;
+      google::cloud::talent::v4::UpdateJobRequest const& request);
 
   virtual google::cloud::Idempotency BatchUpdateJobs(
-      google::cloud::talent::v4::BatchUpdateJobsRequest const& request) = 0;
+      google::cloud::talent::v4::BatchUpdateJobsRequest const& request);
 
   virtual google::cloud::Idempotency DeleteJob(
-      google::cloud::talent::v4::DeleteJobRequest const& request) = 0;
+      google::cloud::talent::v4::DeleteJobRequest const& request);
 
   virtual google::cloud::Idempotency BatchDeleteJobs(
-      google::cloud::talent::v4::BatchDeleteJobsRequest const& request) = 0;
+      google::cloud::talent::v4::BatchDeleteJobsRequest const& request);
 
   virtual google::cloud::Idempotency ListJobs(
-      google::cloud::talent::v4::ListJobsRequest request) = 0;
+      google::cloud::talent::v4::ListJobsRequest request);
 
   virtual google::cloud::Idempotency SearchJobs(
-      google::cloud::talent::v4::SearchJobsRequest const& request) = 0;
+      google::cloud::talent::v4::SearchJobsRequest const& request);
 
   virtual google::cloud::Idempotency SearchJobsForAlert(
-      google::cloud::talent::v4::SearchJobsRequest const& request) = 0;
+      google::cloud::talent::v4::SearchJobsRequest const& request);
 };
 
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>

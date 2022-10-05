@@ -30,30 +30,19 @@ using ::google::cloud::Idempotency;
 SystemPolicyV1ConnectionIdempotencyPolicy::
     ~SystemPolicyV1ConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultSystemPolicyV1ConnectionIdempotencyPolicy
-    : public SystemPolicyV1ConnectionIdempotencyPolicy {
- public:
-  ~DefaultSystemPolicyV1ConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>
+SystemPolicyV1ConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<SystemPolicyV1ConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultSystemPolicyV1ConnectionIdempotencyPolicy>(
-        *this);
-  }
-
-  Idempotency GetSystemPolicy(
-      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency SystemPolicyV1ConnectionIdempotencyPolicy::GetSystemPolicy(
+    google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>
 MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultSystemPolicyV1ConnectionIdempotencyPolicy>();
+  return absl::make_unique<SystemPolicyV1ConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

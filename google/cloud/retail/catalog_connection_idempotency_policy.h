@@ -32,48 +32,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CatalogServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~CatalogServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~CatalogServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<CatalogServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListCatalogs(
-      google::cloud::retail::v2::ListCatalogsRequest request) = 0;
+      google::cloud::retail::v2::ListCatalogsRequest request);
 
   virtual google::cloud::Idempotency UpdateCatalog(
-      google::cloud::retail::v2::UpdateCatalogRequest const& request) = 0;
+      google::cloud::retail::v2::UpdateCatalogRequest const& request);
 
   virtual google::cloud::Idempotency SetDefaultBranch(
-      google::cloud::retail::v2::SetDefaultBranchRequest const& request) = 0;
+      google::cloud::retail::v2::SetDefaultBranchRequest const& request);
 
   virtual google::cloud::Idempotency GetDefaultBranch(
-      google::cloud::retail::v2::GetDefaultBranchRequest const& request) = 0;
+      google::cloud::retail::v2::GetDefaultBranchRequest const& request);
 
   virtual google::cloud::Idempotency GetCompletionConfig(
-      google::cloud::retail::v2::GetCompletionConfigRequest const& request) = 0;
+      google::cloud::retail::v2::GetCompletionConfigRequest const& request);
 
   virtual google::cloud::Idempotency UpdateCompletionConfig(
-      google::cloud::retail::v2::UpdateCompletionConfigRequest const&
-          request) = 0;
+      google::cloud::retail::v2::UpdateCompletionConfigRequest const& request);
 
   virtual google::cloud::Idempotency GetAttributesConfig(
-      google::cloud::retail::v2::GetAttributesConfigRequest const& request) = 0;
+      google::cloud::retail::v2::GetAttributesConfigRequest const& request);
 
   virtual google::cloud::Idempotency UpdateAttributesConfig(
-      google::cloud::retail::v2::UpdateAttributesConfigRequest const&
-          request) = 0;
+      google::cloud::retail::v2::UpdateAttributesConfigRequest const& request);
 
   virtual google::cloud::Idempotency AddCatalogAttribute(
-      google::cloud::retail::v2::AddCatalogAttributeRequest const& request) = 0;
+      google::cloud::retail::v2::AddCatalogAttributeRequest const& request);
 
   virtual google::cloud::Idempotency RemoveCatalogAttribute(
-      google::cloud::retail::v2::RemoveCatalogAttributeRequest const&
-          request) = 0;
+      google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request);
 
   virtual google::cloud::Idempotency ReplaceCatalogAttribute(
-      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&
-          request) = 0;
+      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request);
 };
 
 std::unique_ptr<CatalogServiceConnectionIdempotencyPolicy>

@@ -32,25 +32,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class PagesConnectionIdempotencyPolicy {
  public:
-  virtual ~PagesConnectionIdempotencyPolicy() = 0;
+  virtual ~PagesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PagesConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<PagesConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListPages(
-      google::cloud::dialogflow::cx::v3::ListPagesRequest request) = 0;
+      google::cloud::dialogflow::cx::v3::ListPagesRequest request);
 
   virtual google::cloud::Idempotency GetPage(
-      google::cloud::dialogflow::cx::v3::GetPageRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::GetPageRequest const& request);
 
   virtual google::cloud::Idempotency CreatePage(
-      google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::CreatePageRequest const& request);
 
   virtual google::cloud::Idempotency UpdatePage(
-      google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request);
 
   virtual google::cloud::Idempotency DeletePage(
-      google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::DeletePageRequest const& request);
 };
 
 std::unique_ptr<PagesConnectionIdempotencyPolicy>

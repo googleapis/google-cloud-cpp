@@ -32,70 +32,69 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class BigtableTableAdminConnectionIdempotencyPolicy {
  public:
-  virtual ~BigtableTableAdminConnectionIdempotencyPolicy() = 0;
+  virtual ~BigtableTableAdminConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateTable(
-      google::bigtable::admin::v2::CreateTableRequest const& request) = 0;
+      google::bigtable::admin::v2::CreateTableRequest const& request);
 
   virtual google::cloud::Idempotency ListTables(
-      google::bigtable::admin::v2::ListTablesRequest request) = 0;
+      google::bigtable::admin::v2::ListTablesRequest request);
 
   virtual google::cloud::Idempotency GetTable(
-      google::bigtable::admin::v2::GetTableRequest const& request) = 0;
+      google::bigtable::admin::v2::GetTableRequest const& request);
 
   virtual google::cloud::Idempotency UpdateTable(
-      google::bigtable::admin::v2::UpdateTableRequest const& request) = 0;
+      google::bigtable::admin::v2::UpdateTableRequest const& request);
 
   virtual google::cloud::Idempotency DeleteTable(
-      google::bigtable::admin::v2::DeleteTableRequest const& request) = 0;
+      google::bigtable::admin::v2::DeleteTableRequest const& request);
 
   virtual google::cloud::Idempotency UndeleteTable(
-      google::bigtable::admin::v2::UndeleteTableRequest const& request) = 0;
+      google::bigtable::admin::v2::UndeleteTableRequest const& request);
 
   virtual google::cloud::Idempotency ModifyColumnFamilies(
-      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&
-          request) = 0;
+      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request);
 
   virtual google::cloud::Idempotency DropRowRange(
-      google::bigtable::admin::v2::DropRowRangeRequest const& request) = 0;
+      google::bigtable::admin::v2::DropRowRangeRequest const& request);
 
   virtual google::cloud::Idempotency GenerateConsistencyToken(
       google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CheckConsistency(
-      google::bigtable::admin::v2::CheckConsistencyRequest const& request) = 0;
+      google::bigtable::admin::v2::CheckConsistencyRequest const& request);
 
   virtual google::cloud::Idempotency CreateBackup(
-      google::bigtable::admin::v2::CreateBackupRequest const& request) = 0;
+      google::bigtable::admin::v2::CreateBackupRequest const& request);
 
   virtual google::cloud::Idempotency GetBackup(
-      google::bigtable::admin::v2::GetBackupRequest const& request) = 0;
+      google::bigtable::admin::v2::GetBackupRequest const& request);
 
   virtual google::cloud::Idempotency UpdateBackup(
-      google::bigtable::admin::v2::UpdateBackupRequest const& request) = 0;
+      google::bigtable::admin::v2::UpdateBackupRequest const& request);
 
   virtual google::cloud::Idempotency DeleteBackup(
-      google::bigtable::admin::v2::DeleteBackupRequest const& request) = 0;
+      google::bigtable::admin::v2::DeleteBackupRequest const& request);
 
   virtual google::cloud::Idempotency ListBackups(
-      google::bigtable::admin::v2::ListBackupsRequest request) = 0;
+      google::bigtable::admin::v2::ListBackupsRequest request);
 
   virtual google::cloud::Idempotency RestoreTable(
-      google::bigtable::admin::v2::RestoreTableRequest const& request) = 0;
+      google::bigtable::admin::v2::RestoreTableRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+      google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy>

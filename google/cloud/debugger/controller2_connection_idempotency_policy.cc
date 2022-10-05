@@ -30,42 +30,29 @@ using ::google::cloud::Idempotency;
 Controller2ConnectionIdempotencyPolicy::
     ~Controller2ConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultController2ConnectionIdempotencyPolicy
-    : public Controller2ConnectionIdempotencyPolicy {
- public:
-  ~DefaultController2ConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<Controller2ConnectionIdempotencyPolicy>
+Controller2ConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<Controller2ConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<Controller2ConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultController2ConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency Controller2ConnectionIdempotencyPolicy::RegisterDebuggee(
+    google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RegisterDebuggee(
-      google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency Controller2ConnectionIdempotencyPolicy::ListActiveBreakpoints(
+    google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListActiveBreakpoints(
-      google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency UpdateActiveBreakpoint(
-      google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency Controller2ConnectionIdempotencyPolicy::UpdateActiveBreakpoint(
+    google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<Controller2ConnectionIdempotencyPolicy>
 MakeDefaultController2ConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultController2ConnectionIdempotencyPolicy>();
+  return absl::make_unique<Controller2ConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

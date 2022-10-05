@@ -30,68 +30,59 @@ using ::google::cloud::Idempotency;
 AgentsConnectionIdempotencyPolicy::~AgentsConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultAgentsConnectionIdempotencyPolicy
-    : public AgentsConnectionIdempotencyPolicy {
- public:
-  ~DefaultAgentsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AgentsConnectionIdempotencyPolicy>
+AgentsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AgentsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AgentsConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultAgentsConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency AgentsConnectionIdempotencyPolicy::ListAgents(
+    google::cloud::dialogflow::cx::v3::ListAgentsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAgents(
-      google::cloud::dialogflow::cx::v3::ListAgentsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AgentsConnectionIdempotencyPolicy::GetAgent(
+    google::cloud::dialogflow::cx::v3::GetAgentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAgent(
-      google::cloud::dialogflow::cx::v3::GetAgentRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AgentsConnectionIdempotencyPolicy::CreateAgent(
+    google::cloud::dialogflow::cx::v3::CreateAgentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateAgent(
-      google::cloud::dialogflow::cx::v3::CreateAgentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AgentsConnectionIdempotencyPolicy::UpdateAgent(
+    google::cloud::dialogflow::cx::v3::UpdateAgentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateAgent(
-      google::cloud::dialogflow::cx::v3::UpdateAgentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AgentsConnectionIdempotencyPolicy::DeleteAgent(
+    google::cloud::dialogflow::cx::v3::DeleteAgentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteAgent(
-      google::cloud::dialogflow::cx::v3::DeleteAgentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AgentsConnectionIdempotencyPolicy::ExportAgent(
+    google::cloud::dialogflow::cx::v3::ExportAgentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ExportAgent(
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AgentsConnectionIdempotencyPolicy::RestoreAgent(
+    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RestoreAgent(
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AgentsConnectionIdempotencyPolicy::ValidateAgent(
+    google::cloud::dialogflow::cx::v3::ValidateAgentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ValidateAgent(
-      google::cloud::dialogflow::cx::v3::ValidateAgentRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency GetAgentValidationResult(
-      google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency AgentsConnectionIdempotencyPolicy::GetAgentValidationResult(
+    google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<AgentsConnectionIdempotencyPolicy>
 MakeDefaultAgentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultAgentsConnectionIdempotencyPolicy>();
+  return absl::make_unique<AgentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

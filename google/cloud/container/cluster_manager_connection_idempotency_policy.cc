@@ -30,189 +30,179 @@ using ::google::cloud::Idempotency;
 ClusterManagerConnectionIdempotencyPolicy::
     ~ClusterManagerConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultClusterManagerConnectionIdempotencyPolicy
-    : public ClusterManagerConnectionIdempotencyPolicy {
- public:
-  ~DefaultClusterManagerConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>
+ClusterManagerConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ClusterManagerConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultClusterManagerConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::ListClusters(
+    google::container::v1::ListClustersRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListClusters(
-      google::container::v1::ListClustersRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::GetCluster(
+    google::container::v1::GetClusterRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCluster(
-      google::container::v1::GetClusterRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::CreateCluster(
+    google::container::v1::CreateClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCluster(
-      google::container::v1::CreateClusterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::UpdateCluster(
+    google::container::v1::UpdateClusterRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency UpdateCluster(
-      google::container::v1::UpdateClusterRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::UpdateNodePool(
+    google::container::v1::UpdateNodePoolRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency UpdateNodePool(
-      google::container::v1::UpdateNodePoolRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetNodePoolAutoscaling(
+    google::container::v1::SetNodePoolAutoscalingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetNodePoolAutoscaling(
-      google::container::v1::SetNodePoolAutoscalingRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetLoggingService(
+    google::container::v1::SetLoggingServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetLoggingService(
-      google::container::v1::SetLoggingServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetMonitoringService(
+    google::container::v1::SetMonitoringServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetMonitoringService(
-      google::container::v1::SetMonitoringServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetAddonsConfig(
+    google::container::v1::SetAddonsConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetAddonsConfig(
-      google::container::v1::SetAddonsConfigRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetLocations(
+    google::container::v1::SetLocationsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetLocations(
-      google::container::v1::SetLocationsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::UpdateMaster(
+    google::container::v1::UpdateMasterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateMaster(
-      google::container::v1::UpdateMasterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetMasterAuth(
+    google::container::v1::SetMasterAuthRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetMasterAuth(
-      google::container::v1::SetMasterAuthRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::DeleteCluster(
+    google::container::v1::DeleteClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteCluster(
-      google::container::v1::DeleteClusterRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::ListOperations(
+    google::container::v1::ListOperationsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListOperations(
-      google::container::v1::ListOperationsRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::GetOperation(
+    google::container::v1::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetOperation(
-      google::container::v1::GetOperationRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::CancelOperation(
+    google::container::v1::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CancelOperation(
-      google::container::v1::CancelOperationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::GetServerConfig(
+    google::container::v1::GetServerConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetServerConfig(
-      google::container::v1::GetServerConfigRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::GetJSONWebKeys(
+    google::container::v1::GetJSONWebKeysRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetJSONWebKeys(
-      google::container::v1::GetJSONWebKeysRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::ListNodePools(
+    google::container::v1::ListNodePoolsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListNodePools(
-      google::container::v1::ListNodePoolsRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::GetNodePool(
+    google::container::v1::GetNodePoolRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetNodePool(
-      google::container::v1::GetNodePoolRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::CreateNodePool(
+    google::container::v1::CreateNodePoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateNodePool(
-      google::container::v1::CreateNodePoolRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::DeleteNodePool(
+    google::container::v1::DeleteNodePoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteNodePool(
-      google::container::v1::DeleteNodePoolRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::CompleteNodePoolUpgrade(
+    google::container::v1::CompleteNodePoolUpgradeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CompleteNodePoolUpgrade(
-      google::container::v1::CompleteNodePoolUpgradeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::RollbackNodePoolUpgrade(
+    google::container::v1::RollbackNodePoolUpgradeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RollbackNodePoolUpgrade(
-      google::container::v1::RollbackNodePoolUpgradeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetNodePoolManagement(
+    google::container::v1::SetNodePoolManagementRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetNodePoolManagement(
-      google::container::v1::SetNodePoolManagementRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetLabels(
+    google::container::v1::SetLabelsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetLabels(
-      google::container::v1::SetLabelsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetLegacyAbac(
+    google::container::v1::SetLegacyAbacRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetLegacyAbac(
-      google::container::v1::SetLegacyAbacRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::StartIPRotation(
+    google::container::v1::StartIPRotationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StartIPRotation(
-      google::container::v1::StartIPRotationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::CompleteIPRotation(
+    google::container::v1::CompleteIPRotationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CompleteIPRotation(
-      google::container::v1::CompleteIPRotationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetNodePoolSize(
+    google::container::v1::SetNodePoolSizeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetNodePoolSize(
-      google::container::v1::SetNodePoolSizeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetNetworkPolicy(
+    google::container::v1::SetNetworkPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetNetworkPolicy(
-      google::container::v1::SetNetworkPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ClusterManagerConnectionIdempotencyPolicy::SetMaintenancePolicy(
+    google::container::v1::SetMaintenancePolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetMaintenancePolicy(
-      google::container::v1::SetMaintenancePolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListUsableSubnetworks(
-      google::container::v1::ListUsableSubnetworksRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency ClusterManagerConnectionIdempotencyPolicy::ListUsableSubnetworks(
+    google::container::v1::ListUsableSubnetworksRequest) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>
 MakeDefaultClusterManagerConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultClusterManagerConnectionIdempotencyPolicy>();
+  return absl::make_unique<ClusterManagerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

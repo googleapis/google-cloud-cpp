@@ -30,136 +30,114 @@ using ::google::cloud::Idempotency;
 BareMetalSolutionConnectionIdempotencyPolicy::
     ~BareMetalSolutionConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultBareMetalSolutionConnectionIdempotencyPolicy
-    : public BareMetalSolutionConnectionIdempotencyPolicy {
- public:
-  ~DefaultBareMetalSolutionConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy>
+BareMetalSolutionConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<BareMetalSolutionConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultBareMetalSolutionConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListInstances(
+    google::cloud::baremetalsolution::v2::ListInstancesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListInstances(
-      google::cloud::baremetalsolution::v2::ListInstancesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::GetInstance(
+    google::cloud::baremetalsolution::v2::GetInstanceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetInstance(
-      google::cloud::baremetalsolution::v2::GetInstanceRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::UpdateInstance(
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateInstance(
-      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ResetInstance(
+    google::cloud::baremetalsolution::v2::ResetInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ResetInstance(
-      google::cloud::baremetalsolution::v2::ResetInstanceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::StartInstance(
+    google::cloud::baremetalsolution::v2::StartInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StartInstance(
-      google::cloud::baremetalsolution::v2::StartInstanceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::StopInstance(
+    google::cloud::baremetalsolution::v2::StopInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StopInstance(
-      google::cloud::baremetalsolution::v2::StopInstanceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::DetachLun(
+    google::cloud::baremetalsolution::v2::DetachLunRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DetachLun(
-      google::cloud::baremetalsolution::v2::DetachLunRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListVolumes(
+    google::cloud::baremetalsolution::v2::ListVolumesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListVolumes(
-      google::cloud::baremetalsolution::v2::ListVolumesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::GetVolume(
+    google::cloud::baremetalsolution::v2::GetVolumeRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetVolume(
-      google::cloud::baremetalsolution::v2::GetVolumeRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::UpdateVolume(
+    google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateVolume(
-      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ResizeVolume(
+    google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ResizeVolume(
-      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListNetworks(
+    google::cloud::baremetalsolution::v2::ListNetworksRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListNetworks(
-      google::cloud::baremetalsolution::v2::ListNetworksRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListNetworkUsage(
+    google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListNetworkUsage(
-      google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::GetNetwork(
+    google::cloud::baremetalsolution::v2::GetNetworkRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetNetwork(
-      google::cloud::baremetalsolution::v2::GetNetworkRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::UpdateNetwork(
+    google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateNetwork(
-      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::GetLun(
+    google::cloud::baremetalsolution::v2::GetLunRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetLun(
-      google::cloud::baremetalsolution::v2::GetLunRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListLuns(
+    google::cloud::baremetalsolution::v2::ListLunsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListLuns(
-      google::cloud::baremetalsolution::v2::ListLunsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::GetNfsShare(
+    google::cloud::baremetalsolution::v2::GetNfsShareRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetNfsShare(
-      google::cloud::baremetalsolution::v2::GetNfsShareRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListNfsShares(
+    google::cloud::baremetalsolution::v2::ListNfsSharesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListNfsShares(
-      google::cloud::baremetalsolution::v2::ListNfsSharesRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency UpdateNfsShare(
-      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::UpdateNfsShare(
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy>
 MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultBareMetalSolutionConnectionIdempotencyPolicy>();
+  return absl::make_unique<BareMetalSolutionConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

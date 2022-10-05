@@ -30,64 +30,49 @@ using ::google::cloud::Idempotency;
 ExperimentsConnectionIdempotencyPolicy::
     ~ExperimentsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultExperimentsConnectionIdempotencyPolicy
-    : public ExperimentsConnectionIdempotencyPolicy {
- public:
-  ~DefaultExperimentsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ExperimentsConnectionIdempotencyPolicy>
+ExperimentsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ExperimentsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ExperimentsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultExperimentsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ExperimentsConnectionIdempotencyPolicy::ListExperiments(
+    google::cloud::dialogflow::cx::v3::ListExperimentsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListExperiments(
-      google::cloud::dialogflow::cx::v3::ListExperimentsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ExperimentsConnectionIdempotencyPolicy::GetExperiment(
+    google::cloud::dialogflow::cx::v3::GetExperimentRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetExperiment(
-      google::cloud::dialogflow::cx::v3::GetExperimentRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ExperimentsConnectionIdempotencyPolicy::CreateExperiment(
+    google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateExperiment(
-      google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ExperimentsConnectionIdempotencyPolicy::UpdateExperiment(
+    google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateExperiment(
-      google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ExperimentsConnectionIdempotencyPolicy::DeleteExperiment(
+    google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteExperiment(
-      google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ExperimentsConnectionIdempotencyPolicy::StartExperiment(
+    google::cloud::dialogflow::cx::v3::StartExperimentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StartExperiment(
-      google::cloud::dialogflow::cx::v3::StartExperimentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency StopExperiment(
-      google::cloud::dialogflow::cx::v3::StopExperimentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ExperimentsConnectionIdempotencyPolicy::StopExperiment(
+    google::cloud::dialogflow::cx::v3::StopExperimentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ExperimentsConnectionIdempotencyPolicy>
 MakeDefaultExperimentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultExperimentsConnectionIdempotencyPolicy>();
+  return absl::make_unique<ExperimentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,26 +32,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class WorkflowsConnectionIdempotencyPolicy {
  public:
-  virtual ~WorkflowsConnectionIdempotencyPolicy() = 0;
+  virtual ~WorkflowsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<WorkflowsConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<WorkflowsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListWorkflows(
-      google::cloud::workflows::v1::ListWorkflowsRequest request) = 0;
+      google::cloud::workflows::v1::ListWorkflowsRequest request);
 
   virtual google::cloud::Idempotency GetWorkflow(
-      google::cloud::workflows::v1::GetWorkflowRequest const& request) = 0;
+      google::cloud::workflows::v1::GetWorkflowRequest const& request);
 
   virtual google::cloud::Idempotency CreateWorkflow(
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request) = 0;
+      google::cloud::workflows::v1::CreateWorkflowRequest const& request);
 
   virtual google::cloud::Idempotency DeleteWorkflow(
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request) = 0;
+      google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
 
   virtual google::cloud::Idempotency UpdateWorkflow(
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request) = 0;
+      google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 };
 
 std::unique_ptr<WorkflowsConnectionIdempotencyPolicy>

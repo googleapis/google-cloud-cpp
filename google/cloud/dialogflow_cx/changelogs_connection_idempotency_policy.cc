@@ -30,34 +30,24 @@ using ::google::cloud::Idempotency;
 ChangelogsConnectionIdempotencyPolicy::
     ~ChangelogsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultChangelogsConnectionIdempotencyPolicy
-    : public ChangelogsConnectionIdempotencyPolicy {
- public:
-  ~DefaultChangelogsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ChangelogsConnectionIdempotencyPolicy>
+ChangelogsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ChangelogsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ChangelogsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultChangelogsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ChangelogsConnectionIdempotencyPolicy::ListChangelogs(
+    google::cloud::dialogflow::cx::v3::ListChangelogsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListChangelogs(
-      google::cloud::dialogflow::cx::v3::ListChangelogsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency GetChangelog(
-      google::cloud::dialogflow::cx::v3::GetChangelogRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency ChangelogsConnectionIdempotencyPolicy::GetChangelog(
+    google::cloud::dialogflow::cx::v3::GetChangelogRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<ChangelogsConnectionIdempotencyPolicy>
 MakeDefaultChangelogsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultChangelogsConnectionIdempotencyPolicy>();
+  return absl::make_unique<ChangelogsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,126 +30,106 @@ using ::google::cloud::Idempotency;
 RegistrationServiceConnectionIdempotencyPolicy::
     ~RegistrationServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultRegistrationServiceConnectionIdempotencyPolicy
-    : public RegistrationServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultRegistrationServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>
+RegistrationServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<RegistrationServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultRegistrationServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateNamespace(
+    google::cloud::servicedirectory::v1::CreateNamespaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateNamespace(
-      google::cloud::servicedirectory::v1::CreateNamespaceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListNamespaces(
+    google::cloud::servicedirectory::v1::ListNamespacesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListNamespaces(
-      google::cloud::servicedirectory::v1::ListNamespacesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetNamespace(
+    google::cloud::servicedirectory::v1::GetNamespaceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetNamespace(
-      google::cloud::servicedirectory::v1::GetNamespaceRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::UpdateNamespace(
+    google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateNamespace(
-      google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::DeleteNamespace(
+    google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteNamespace(
-      google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateService(
+    google::cloud::servicedirectory::v1::CreateServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateService(
-      google::cloud::servicedirectory::v1::CreateServiceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListServices(
+    google::cloud::servicedirectory::v1::ListServicesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListServices(
-      google::cloud::servicedirectory::v1::ListServicesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetService(
+    google::cloud::servicedirectory::v1::GetServiceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetService(
-      google::cloud::servicedirectory::v1::GetServiceRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::UpdateService(
+    google::cloud::servicedirectory::v1::UpdateServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateService(
-      google::cloud::servicedirectory::v1::UpdateServiceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::DeleteService(
+    google::cloud::servicedirectory::v1::DeleteServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteService(
-      google::cloud::servicedirectory::v1::DeleteServiceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateEndpoint(
+    google::cloud::servicedirectory::v1::CreateEndpointRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateEndpoint(
-      google::cloud::servicedirectory::v1::CreateEndpointRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListEndpoints(
+    google::cloud::servicedirectory::v1::ListEndpointsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListEndpoints(
-      google::cloud::servicedirectory::v1::ListEndpointsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetEndpoint(
+    google::cloud::servicedirectory::v1::GetEndpointRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetEndpoint(
-      google::cloud::servicedirectory::v1::GetEndpointRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::UpdateEndpoint(
+    google::cloud::servicedirectory::v1::UpdateEndpointRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateEndpoint(
-      google::cloud::servicedirectory::v1::UpdateEndpointRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::DeleteEndpoint(
+    google::cloud::servicedirectory::v1::DeleteEndpointRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteEndpoint(
-      google::cloud::servicedirectory::v1::DeleteEndpointRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
-
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>
 MakeDefaultRegistrationServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultRegistrationServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<RegistrationServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

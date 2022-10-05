@@ -32,82 +32,74 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class DatabaseAdminConnectionIdempotencyPolicy {
  public:
-  virtual ~DatabaseAdminConnectionIdempotencyPolicy() = 0;
+  virtual ~DatabaseAdminConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListDatabases(
-      google::spanner::admin::database::v1::ListDatabasesRequest request) = 0;
+      google::spanner::admin::database::v1::ListDatabasesRequest request);
 
   virtual google::cloud::Idempotency CreateDatabase(
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetDatabase(
-      google::spanner::admin::database::v1::GetDatabaseRequest const&
-          request) = 0;
+      google::spanner::admin::database::v1::GetDatabaseRequest const& request);
 
   virtual google::cloud::Idempotency UpdateDatabaseDdl(
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DropDatabase(
-      google::spanner::admin::database::v1::DropDatabaseRequest const&
-          request) = 0;
+      google::spanner::admin::database::v1::DropDatabaseRequest const& request);
 
   virtual google::cloud::Idempotency GetDatabaseDdl(
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual google::cloud::Idempotency CreateBackup(
-      google::spanner::admin::database::v1::CreateBackupRequest const&
-          request) = 0;
+      google::spanner::admin::database::v1::CreateBackupRequest const& request);
 
   virtual google::cloud::Idempotency CopyBackup(
-      google::spanner::admin::database::v1::CopyBackupRequest const&
-          request) = 0;
+      google::spanner::admin::database::v1::CopyBackupRequest const& request);
 
   virtual google::cloud::Idempotency GetBackup(
-      google::spanner::admin::database::v1::GetBackupRequest const&
-          request) = 0;
+      google::spanner::admin::database::v1::GetBackupRequest const& request);
 
   virtual google::cloud::Idempotency UpdateBackup(
-      google::spanner::admin::database::v1::UpdateBackupRequest const&
-          request) = 0;
+      google::spanner::admin::database::v1::UpdateBackupRequest const& request);
 
   virtual google::cloud::Idempotency DeleteBackup(
-      google::spanner::admin::database::v1::DeleteBackupRequest const&
-          request) = 0;
+      google::spanner::admin::database::v1::DeleteBackupRequest const& request);
 
   virtual google::cloud::Idempotency ListBackups(
-      google::spanner::admin::database::v1::ListBackupsRequest request) = 0;
+      google::spanner::admin::database::v1::ListBackupsRequest request);
 
   virtual google::cloud::Idempotency RestoreDatabase(
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListDatabaseOperations(
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListDatabaseRoles(
-      google::spanner::admin::database::v1::ListDatabaseRolesRequest
-          request) = 0;
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest request);
 };
 
 std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy>

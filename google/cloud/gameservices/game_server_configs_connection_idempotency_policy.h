@@ -32,25 +32,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class GameServerConfigsServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~GameServerConfigsServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~GameServerConfigsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListGameServerConfigs(
-      google::cloud::gaming::v1::ListGameServerConfigsRequest request) = 0;
+      google::cloud::gaming::v1::ListGameServerConfigsRequest request);
 
   virtual google::cloud::Idempotency GetGameServerConfig(
-      google::cloud::gaming::v1::GetGameServerConfigRequest const& request) = 0;
+      google::cloud::gaming::v1::GetGameServerConfigRequest const& request);
 
   virtual google::cloud::Idempotency CreateGameServerConfig(
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const&
-          request) = 0;
+      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request);
 
   virtual google::cloud::Idempotency DeleteGameServerConfig(
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const&
-          request) = 0;
+      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request);
 };
 
 std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>

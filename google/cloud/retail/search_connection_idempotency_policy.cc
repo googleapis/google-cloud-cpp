@@ -30,28 +30,19 @@ using ::google::cloud::Idempotency;
 SearchServiceConnectionIdempotencyPolicy::
     ~SearchServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultSearchServiceConnectionIdempotencyPolicy
-    : public SearchServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultSearchServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
+SearchServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<SearchServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<SearchServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultSearchServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
-
-  Idempotency Search(google::cloud::retail::v2::SearchRequest) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency SearchServiceConnectionIdempotencyPolicy::Search(
+    google::cloud::retail::v2::SearchRequest) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
 MakeDefaultSearchServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultSearchServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<SearchServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

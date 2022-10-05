@@ -30,54 +30,44 @@ using ::google::cloud::Idempotency;
 RealmsServiceConnectionIdempotencyPolicy::
     ~RealmsServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultRealmsServiceConnectionIdempotencyPolicy
-    : public RealmsServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultRealmsServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy>
+RealmsServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<RealmsServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultRealmsServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency RealmsServiceConnectionIdempotencyPolicy::ListRealms(
+    google::cloud::gaming::v1::ListRealmsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListRealms(
-      google::cloud::gaming::v1::ListRealmsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RealmsServiceConnectionIdempotencyPolicy::GetRealm(
+    google::cloud::gaming::v1::GetRealmRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetRealm(
-      google::cloud::gaming::v1::GetRealmRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency RealmsServiceConnectionIdempotencyPolicy::CreateRealm(
+    google::cloud::gaming::v1::CreateRealmRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateRealm(
-      google::cloud::gaming::v1::CreateRealmRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RealmsServiceConnectionIdempotencyPolicy::DeleteRealm(
+    google::cloud::gaming::v1::DeleteRealmRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteRealm(
-      google::cloud::gaming::v1::DeleteRealmRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency RealmsServiceConnectionIdempotencyPolicy::UpdateRealm(
+    google::cloud::gaming::v1::UpdateRealmRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateRealm(
-      google::cloud::gaming::v1::UpdateRealmRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency PreviewRealmUpdate(
-      google::cloud::gaming::v1::PreviewRealmUpdateRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency RealmsServiceConnectionIdempotencyPolicy::PreviewRealmUpdate(
+    google::cloud::gaming::v1::PreviewRealmUpdateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy>
 MakeDefaultRealmsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultRealmsServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<RealmsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

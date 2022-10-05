@@ -32,28 +32,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ConversationsConnectionIdempotencyPolicy {
  public:
-  virtual ~ConversationsConnectionIdempotencyPolicy() = 0;
+  virtual ~ConversationsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ConversationsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateConversation(
-      google::cloud::dialogflow::v2::CreateConversationRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::CreateConversationRequest const& request);
 
   virtual google::cloud::Idempotency ListConversations(
-      google::cloud::dialogflow::v2::ListConversationsRequest request) = 0;
+      google::cloud::dialogflow::v2::ListConversationsRequest request);
 
   virtual google::cloud::Idempotency GetConversation(
-      google::cloud::dialogflow::v2::GetConversationRequest const& request) = 0;
+      google::cloud::dialogflow::v2::GetConversationRequest const& request);
 
   virtual google::cloud::Idempotency CompleteConversation(
       google::cloud::dialogflow::v2::CompleteConversationRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListMessages(
-      google::cloud::dialogflow::v2::ListMessagesRequest request) = 0;
+      google::cloud::dialogflow::v2::ListMessagesRequest request);
 };
 
 std::unique_ptr<ConversationsConnectionIdempotencyPolicy>

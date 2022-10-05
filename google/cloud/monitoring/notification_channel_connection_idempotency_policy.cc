@@ -30,84 +30,79 @@ using ::google::cloud::Idempotency;
 NotificationChannelServiceConnectionIdempotencyPolicy::
     ~NotificationChannelServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultNotificationChannelServiceConnectionIdempotencyPolicy
-    : public NotificationChannelServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultNotificationChannelServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<NotificationChannelServiceConnectionIdempotencyPolicy>
+NotificationChannelServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<
+      NotificationChannelServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<NotificationChannelServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultNotificationChannelServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
+    ListNotificationChannelDescriptors(
+        google::monitoring::v3::ListNotificationChannelDescriptorsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListNotificationChannelDescriptors(
-      google::monitoring::v3::ListNotificationChannelDescriptorsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
+    GetNotificationChannelDescriptor(
+        google::monitoring::v3::
+            GetNotificationChannelDescriptorRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetNotificationChannelDescriptor(
-      google::monitoring::v3::GetNotificationChannelDescriptorRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+NotificationChannelServiceConnectionIdempotencyPolicy::ListNotificationChannels(
+    google::monitoring::v3::ListNotificationChannelsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListNotificationChannels(
-      google::monitoring::v3::ListNotificationChannelsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+NotificationChannelServiceConnectionIdempotencyPolicy::GetNotificationChannel(
+    google::monitoring::v3::GetNotificationChannelRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetNotificationChannel(
-      google::monitoring::v3::GetNotificationChannelRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
+    CreateNotificationChannel(
+        google::monitoring::v3::CreateNotificationChannelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateNotificationChannel(
-      google::monitoring::v3::CreateNotificationChannelRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
+    UpdateNotificationChannel(
+        google::monitoring::v3::UpdateNotificationChannelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateNotificationChannel(
-      google::monitoring::v3::UpdateNotificationChannelRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
+    DeleteNotificationChannel(
+        google::monitoring::v3::DeleteNotificationChannelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteNotificationChannel(
-      google::monitoring::v3::DeleteNotificationChannelRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
+    SendNotificationChannelVerificationCode(
+        google::monitoring::v3::
+            SendNotificationChannelVerificationCodeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SendNotificationChannelVerificationCode(
-      google::monitoring::v3::
-          SendNotificationChannelVerificationCodeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
+    GetNotificationChannelVerificationCode(
+        google::monitoring::v3::
+            GetNotificationChannelVerificationCodeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetNotificationChannelVerificationCode(
-      google::monitoring::v3::
-          GetNotificationChannelVerificationCodeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency VerifyNotificationChannel(
-      google::monitoring::v3::VerifyNotificationChannelRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
+    VerifyNotificationChannel(
+        google::monitoring::v3::VerifyNotificationChannelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<NotificationChannelServiceConnectionIdempotencyPolicy>
 MakeDefaultNotificationChannelServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultNotificationChannelServiceConnectionIdempotencyPolicy>();
+      NotificationChannelServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

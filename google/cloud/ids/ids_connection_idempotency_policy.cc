@@ -29,42 +29,34 @@ using ::google::cloud::Idempotency;
 
 IDSConnectionIdempotencyPolicy::~IDSConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultIDSConnectionIdempotencyPolicy
-    : public IDSConnectionIdempotencyPolicy {
- public:
-  ~DefaultIDSConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<IDSConnectionIdempotencyPolicy>
+IDSConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<IDSConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<IDSConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultIDSConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency IDSConnectionIdempotencyPolicy::ListEndpoints(
+    google::cloud::ids::v1::ListEndpointsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListEndpoints(
-      google::cloud::ids::v1::ListEndpointsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IDSConnectionIdempotencyPolicy::GetEndpoint(
+    google::cloud::ids::v1::GetEndpointRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetEndpoint(
-      google::cloud::ids::v1::GetEndpointRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IDSConnectionIdempotencyPolicy::CreateEndpoint(
+    google::cloud::ids::v1::CreateEndpointRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateEndpoint(
-      google::cloud::ids::v1::CreateEndpointRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteEndpoint(
-      google::cloud::ids::v1::DeleteEndpointRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency IDSConnectionIdempotencyPolicy::DeleteEndpoint(
+    google::cloud::ids::v1::DeleteEndpointRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<IDSConnectionIdempotencyPolicy>
 MakeDefaultIDSConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultIDSConnectionIdempotencyPolicy>();
+  return absl::make_unique<IDSConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

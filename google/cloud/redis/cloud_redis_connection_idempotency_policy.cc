@@ -30,79 +30,69 @@ using ::google::cloud::Idempotency;
 CloudRedisConnectionIdempotencyPolicy::
     ~CloudRedisConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCloudRedisConnectionIdempotencyPolicy
-    : public CloudRedisConnectionIdempotencyPolicy {
- public:
-  ~DefaultCloudRedisConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CloudRedisConnectionIdempotencyPolicy>
+CloudRedisConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CloudRedisConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CloudRedisConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultCloudRedisConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency CloudRedisConnectionIdempotencyPolicy::ListInstances(
+    google::cloud::redis::v1::ListInstancesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListInstances(
-      google::cloud::redis::v1::ListInstancesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudRedisConnectionIdempotencyPolicy::GetInstance(
+    google::cloud::redis::v1::GetInstanceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetInstance(
-      google::cloud::redis::v1::GetInstanceRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudRedisConnectionIdempotencyPolicy::GetInstanceAuthString(
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetInstanceAuthString(
-      google::cloud::redis::v1::GetInstanceAuthStringRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudRedisConnectionIdempotencyPolicy::CreateInstance(
+    google::cloud::redis::v1::CreateInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateInstance(
-      google::cloud::redis::v1::CreateInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudRedisConnectionIdempotencyPolicy::UpdateInstance(
+    google::cloud::redis::v1::UpdateInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateInstance(
-      google::cloud::redis::v1::UpdateInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudRedisConnectionIdempotencyPolicy::UpgradeInstance(
+    google::cloud::redis::v1::UpgradeInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpgradeInstance(
-      google::cloud::redis::v1::UpgradeInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudRedisConnectionIdempotencyPolicy::ImportInstance(
+    google::cloud::redis::v1::ImportInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportInstance(
-      google::cloud::redis::v1::ImportInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudRedisConnectionIdempotencyPolicy::ExportInstance(
+    google::cloud::redis::v1::ExportInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ExportInstance(
-      google::cloud::redis::v1::ExportInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudRedisConnectionIdempotencyPolicy::FailoverInstance(
+    google::cloud::redis::v1::FailoverInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency FailoverInstance(
-      google::cloud::redis::v1::FailoverInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudRedisConnectionIdempotencyPolicy::DeleteInstance(
+    google::cloud::redis::v1::DeleteInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteInstance(
-      google::cloud::redis::v1::DeleteInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency RescheduleMaintenance(
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency CloudRedisConnectionIdempotencyPolicy::RescheduleMaintenance(
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<CloudRedisConnectionIdempotencyPolicy>
 MakeDefaultCloudRedisConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultCloudRedisConnectionIdempotencyPolicy>();
+  return absl::make_unique<CloudRedisConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

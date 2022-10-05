@@ -30,49 +30,39 @@ using ::google::cloud::Idempotency;
 TenantServiceConnectionIdempotencyPolicy::
     ~TenantServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultTenantServiceConnectionIdempotencyPolicy
-    : public TenantServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultTenantServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
+TenantServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<TenantServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<TenantServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultTenantServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency TenantServiceConnectionIdempotencyPolicy::CreateTenant(
+    google::cloud::talent::v4::CreateTenantRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTenant(
-      google::cloud::talent::v4::CreateTenantRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TenantServiceConnectionIdempotencyPolicy::GetTenant(
+    google::cloud::talent::v4::GetTenantRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTenant(
-      google::cloud::talent::v4::GetTenantRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency TenantServiceConnectionIdempotencyPolicy::UpdateTenant(
+    google::cloud::talent::v4::UpdateTenantRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateTenant(
-      google::cloud::talent::v4::UpdateTenantRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TenantServiceConnectionIdempotencyPolicy::DeleteTenant(
+    google::cloud::talent::v4::DeleteTenantRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteTenant(
-      google::cloud::talent::v4::DeleteTenantRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListTenants(
-      google::cloud::talent::v4::ListTenantsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency TenantServiceConnectionIdempotencyPolicy::ListTenants(
+    google::cloud::talent::v4::ListTenantsRequest) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
 MakeDefaultTenantServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultTenantServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<TenantServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

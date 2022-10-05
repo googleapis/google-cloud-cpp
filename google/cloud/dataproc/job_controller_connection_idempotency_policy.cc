@@ -30,58 +30,49 @@ using ::google::cloud::Idempotency;
 JobControllerConnectionIdempotencyPolicy::
     ~JobControllerConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultJobControllerConnectionIdempotencyPolicy
-    : public JobControllerConnectionIdempotencyPolicy {
- public:
-  ~DefaultJobControllerConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<JobControllerConnectionIdempotencyPolicy>
+JobControllerConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<JobControllerConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<JobControllerConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultJobControllerConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency JobControllerConnectionIdempotencyPolicy::SubmitJob(
+    google::cloud::dataproc::v1::SubmitJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SubmitJob(
-      google::cloud::dataproc::v1::SubmitJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency JobControllerConnectionIdempotencyPolicy::SubmitJobAsOperation(
+    google::cloud::dataproc::v1::SubmitJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SubmitJobAsOperation(
-      google::cloud::dataproc::v1::SubmitJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency JobControllerConnectionIdempotencyPolicy::GetJob(
+    google::cloud::dataproc::v1::GetJobRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetJob(
-      google::cloud::dataproc::v1::GetJobRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency JobControllerConnectionIdempotencyPolicy::ListJobs(
+    google::cloud::dataproc::v1::ListJobsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListJobs(google::cloud::dataproc::v1::ListJobsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency JobControllerConnectionIdempotencyPolicy::UpdateJob(
+    google::cloud::dataproc::v1::UpdateJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateJob(
-      google::cloud::dataproc::v1::UpdateJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency JobControllerConnectionIdempotencyPolicy::CancelJob(
+    google::cloud::dataproc::v1::CancelJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CancelJob(
-      google::cloud::dataproc::v1::CancelJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteJob(
-      google::cloud::dataproc::v1::DeleteJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency JobControllerConnectionIdempotencyPolicy::DeleteJob(
+    google::cloud::dataproc::v1::DeleteJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<JobControllerConnectionIdempotencyPolicy>
 MakeDefaultJobControllerConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultJobControllerConnectionIdempotencyPolicy>();
+  return absl::make_unique<JobControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

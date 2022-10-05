@@ -30,266 +30,267 @@ using ::google::cloud::Idempotency;
 CloudChannelServiceConnectionIdempotencyPolicy::
     ~CloudChannelServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCloudChannelServiceConnectionIdempotencyPolicy
-    : public CloudChannelServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultCloudChannelServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CloudChannelServiceConnectionIdempotencyPolicy>
+CloudChannelServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CloudChannelServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CloudChannelServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultCloudChannelServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListCustomers(
+    google::cloud::channel::v1::ListCustomersRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCustomers(
-      google::cloud::channel::v1::ListCustomersRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::GetCustomer(
+    google::cloud::channel::v1::GetCustomerRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCustomer(
-      google::cloud::channel::v1::GetCustomerRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::CheckCloudIdentityAccountsExist(
+    google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CheckCloudIdentityAccountsExist(
-      google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::CreateCustomer(
+    google::cloud::channel::v1::CreateCustomerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCustomer(
-      google::cloud::channel::v1::CreateCustomerRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::UpdateCustomer(
+    google::cloud::channel::v1::UpdateCustomerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCustomer(
-      google::cloud::channel::v1::UpdateCustomerRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::DeleteCustomer(
+    google::cloud::channel::v1::DeleteCustomerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteCustomer(
-      google::cloud::channel::v1::DeleteCustomerRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ImportCustomer(
+    google::cloud::channel::v1::ImportCustomerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportCustomer(
-      google::cloud::channel::v1::ImportCustomerRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::ProvisionCloudIdentity(
+    google::cloud::channel::v1::ProvisionCloudIdentityRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ProvisionCloudIdentity(
-      google::cloud::channel::v1::ProvisionCloudIdentityRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListEntitlements(
+    google::cloud::channel::v1::ListEntitlementsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListEntitlements(
-      google::cloud::channel::v1::ListEntitlementsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::ListTransferableSkus(
+    google::cloud::channel::v1::ListTransferableSkusRequest) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ListTransferableSkus(
-      google::cloud::channel::v1::ListTransferableSkusRequest) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::ListTransferableOffers(
+    google::cloud::channel::v1::ListTransferableOffersRequest) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ListTransferableOffers(
-      google::cloud::channel::v1::ListTransferableOffersRequest) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::GetEntitlement(
+    google::cloud::channel::v1::GetEntitlementRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetEntitlement(
-      google::cloud::channel::v1::GetEntitlementRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::CreateEntitlement(
+    google::cloud::channel::v1::CreateEntitlementRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateEntitlement(
-      google::cloud::channel::v1::CreateEntitlementRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ChangeParameters(
+    google::cloud::channel::v1::ChangeParametersRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ChangeParameters(
-      google::cloud::channel::v1::ChangeParametersRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::ChangeRenewalSettings(
+    google::cloud::channel::v1::ChangeRenewalSettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ChangeRenewalSettings(
-      google::cloud::channel::v1::ChangeRenewalSettingsRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ChangeOffer(
+    google::cloud::channel::v1::ChangeOfferRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ChangeOffer(
-      google::cloud::channel::v1::ChangeOfferRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::StartPaidService(
+    google::cloud::channel::v1::StartPaidServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StartPaidService(
-      google::cloud::channel::v1::StartPaidServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::SuspendEntitlement(
+    google::cloud::channel::v1::SuspendEntitlementRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SuspendEntitlement(
-      google::cloud::channel::v1::SuspendEntitlementRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::CancelEntitlement(
+    google::cloud::channel::v1::CancelEntitlementRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CancelEntitlement(
-      google::cloud::channel::v1::CancelEntitlementRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ActivateEntitlement(
+    google::cloud::channel::v1::ActivateEntitlementRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ActivateEntitlement(
-      google::cloud::channel::v1::ActivateEntitlementRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::TransferEntitlements(
+    google::cloud::channel::v1::TransferEntitlementsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TransferEntitlements(
-      google::cloud::channel::v1::TransferEntitlementsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::TransferEntitlementsToGoogle(
+    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TransferEntitlementsToGoogle(
-      google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::ListChannelPartnerLinks(
+    google::cloud::channel::v1::ListChannelPartnerLinksRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListChannelPartnerLinks(
-      google::cloud::channel::v1::ListChannelPartnerLinksRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::GetChannelPartnerLink(
+    google::cloud::channel::v1::GetChannelPartnerLinkRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetChannelPartnerLink(
-      google::cloud::channel::v1::GetChannelPartnerLinkRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::CreateChannelPartnerLink(
+    google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateChannelPartnerLink(
-      google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::UpdateChannelPartnerLink(
+    google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateChannelPartnerLink(
-      google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::GetCustomerRepricingConfig(
+    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCustomerRepricingConfig(
-      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::ListCustomerRepricingConfigs(
+    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCustomerRepricingConfigs(
-      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::CreateCustomerRepricingConfig(
+    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCustomerRepricingConfig(
-      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::UpdateCustomerRepricingConfig(
+    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCustomerRepricingConfig(
-      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::DeleteCustomerRepricingConfig(
+    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteCustomerRepricingConfig(
-      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::
+    GetChannelPartnerRepricingConfig(
+        google::cloud::channel::v1::
+            GetChannelPartnerRepricingConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          GetChannelPartnerRepricingConfigRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::
+    ListChannelPartnerRepricingConfigs(
+        google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListChannelPartnerRepricingConfigs(
-      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::
+    CreateChannelPartnerRepricingConfig(
+        google::cloud::channel::v1::
+            CreateChannelPartnerRepricingConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          CreateChannelPartnerRepricingConfigRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::
+    UpdateChannelPartnerRepricingConfig(
+        google::cloud::channel::v1::
+            UpdateChannelPartnerRepricingConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          UpdateChannelPartnerRepricingConfigRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::
+    DeleteChannelPartnerRepricingConfig(
+        google::cloud::channel::v1::
+            DeleteChannelPartnerRepricingConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          DeleteChannelPartnerRepricingConfigRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::LookupOffer(
+    google::cloud::channel::v1::LookupOfferRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency LookupOffer(
-      google::cloud::channel::v1::LookupOfferRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListProducts(
+    google::cloud::channel::v1::ListProductsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListProducts(
-      google::cloud::channel::v1::ListProductsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListSkus(
+    google::cloud::channel::v1::ListSkusRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListSkus(google::cloud::channel::v1::ListSkusRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListOffers(
+    google::cloud::channel::v1::ListOffersRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListOffers(
-      google::cloud::channel::v1::ListOffersRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListPurchasableSkus(
+    google::cloud::channel::v1::ListPurchasableSkusRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListPurchasableSkus(
-      google::cloud::channel::v1::ListPurchasableSkusRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::ListPurchasableOffers(
+    google::cloud::channel::v1::ListPurchasableOffersRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListPurchasableOffers(
-      google::cloud::channel::v1::ListPurchasableOffersRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::RegisterSubscriber(
+    google::cloud::channel::v1::RegisterSubscriberRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RegisterSubscriber(
-      google::cloud::channel::v1::RegisterSubscriberRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::UnregisterSubscriber(
+    google::cloud::channel::v1::UnregisterSubscriberRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UnregisterSubscriber(
-      google::cloud::channel::v1::UnregisterSubscriberRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListSubscribers(
-      google::cloud::channel::v1::ListSubscribersRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListSubscribers(
+    google::cloud::channel::v1::ListSubscribersRequest) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<CloudChannelServiceConnectionIdempotencyPolicy>
 MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultCloudChannelServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<CloudChannelServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

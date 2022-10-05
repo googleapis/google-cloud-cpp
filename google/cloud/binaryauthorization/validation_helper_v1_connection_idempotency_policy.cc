@@ -30,31 +30,22 @@ using ::google::cloud::Idempotency;
 ValidationHelperV1ConnectionIdempotencyPolicy::
     ~ValidationHelperV1ConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultValidationHelperV1ConnectionIdempotencyPolicy
-    : public ValidationHelperV1ConnectionIdempotencyPolicy {
- public:
-  ~DefaultValidationHelperV1ConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy>
+ValidationHelperV1ConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ValidationHelperV1ConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultValidationHelperV1ConnectionIdempotencyPolicy>(*this);
-  }
-
-  Idempotency ValidateAttestationOccurrence(
-      google::cloud::binaryauthorization::v1::
-          ValidateAttestationOccurrenceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+ValidationHelperV1ConnectionIdempotencyPolicy::ValidateAttestationOccurrence(
+    google::cloud::binaryauthorization::v1::
+        ValidateAttestationOccurrenceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy>
 MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultValidationHelperV1ConnectionIdempotencyPolicy>();
+  return absl::make_unique<ValidationHelperV1ConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

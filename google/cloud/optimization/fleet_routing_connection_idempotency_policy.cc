@@ -30,35 +30,24 @@ using ::google::cloud::Idempotency;
 FleetRoutingConnectionIdempotencyPolicy::
     ~FleetRoutingConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultFleetRoutingConnectionIdempotencyPolicy
-    : public FleetRoutingConnectionIdempotencyPolicy {
- public:
-  ~DefaultFleetRoutingConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy>
+FleetRoutingConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<FleetRoutingConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultFleetRoutingConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency FleetRoutingConnectionIdempotencyPolicy::OptimizeTours(
+    google::cloud::optimization::v1::OptimizeToursRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency OptimizeTours(
-      google::cloud::optimization::v1::OptimizeToursRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency BatchOptimizeTours(
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency FleetRoutingConnectionIdempotencyPolicy::BatchOptimizeTours(
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy>
 MakeDefaultFleetRoutingConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultFleetRoutingConnectionIdempotencyPolicy>();
+  return absl::make_unique<FleetRoutingConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

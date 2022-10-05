@@ -30,82 +30,73 @@ using ::google::cloud::Idempotency;
 CloudFunctionsServiceConnectionIdempotencyPolicy::
     ~CloudFunctionsServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCloudFunctionsServiceConnectionIdempotencyPolicy
-    : public CloudFunctionsServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultCloudFunctionsServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy>
+CloudFunctionsServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CloudFunctionsServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultCloudFunctionsServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::ListFunctions(
+    google::cloud::functions::v1::ListFunctionsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListFunctions(
-      google::cloud::functions::v1::ListFunctionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::GetFunction(
+    google::cloud::functions::v1::GetFunctionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetFunction(
-      google::cloud::functions::v1::GetFunctionRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::CreateFunction(
+    google::cloud::functions::v1::CreateFunctionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateFunction(
-      google::cloud::functions::v1::CreateFunctionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::UpdateFunction(
+    google::cloud::functions::v1::UpdateFunctionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateFunction(
-      google::cloud::functions::v1::UpdateFunctionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::DeleteFunction(
+    google::cloud::functions::v1::DeleteFunctionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteFunction(
-      google::cloud::functions::v1::DeleteFunctionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::CallFunction(
+    google::cloud::functions::v1::CallFunctionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CallFunction(
-      google::cloud::functions::v1::CallFunctionRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::GenerateUploadUrl(
+    google::cloud::functions::v1::GenerateUploadUrlRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GenerateUploadUrl(
-      google::cloud::functions::v1::GenerateUploadUrlRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+CloudFunctionsServiceConnectionIdempotencyPolicy::GenerateDownloadUrl(
+    google::cloud::functions::v1::GenerateDownloadUrlRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GenerateDownloadUrl(
-      google::cloud::functions::v1::GenerateDownloadUrlRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+CloudFunctionsServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy>
 MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultCloudFunctionsServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<CloudFunctionsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

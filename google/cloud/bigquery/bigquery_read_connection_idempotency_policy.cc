@@ -30,36 +30,24 @@ using ::google::cloud::Idempotency;
 BigQueryReadConnectionIdempotencyPolicy::
     ~BigQueryReadConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultBigQueryReadConnectionIdempotencyPolicy
-    : public BigQueryReadConnectionIdempotencyPolicy {
- public:
-  ~DefaultBigQueryReadConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
+BigQueryReadConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<BigQueryReadConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultBigQueryReadConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency BigQueryReadConnectionIdempotencyPolicy::CreateReadSession(
+    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateReadSession(
-      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency SplitReadStream(
-      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency BigQueryReadConnectionIdempotencyPolicy::SplitReadStream(
+    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
 MakeDefaultBigQueryReadConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultBigQueryReadConnectionIdempotencyPolicy>();
+  return absl::make_unique<BigQueryReadConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

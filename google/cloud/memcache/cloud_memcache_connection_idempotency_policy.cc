@@ -30,59 +30,49 @@ using ::google::cloud::Idempotency;
 CloudMemcacheConnectionIdempotencyPolicy::
     ~CloudMemcacheConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCloudMemcacheConnectionIdempotencyPolicy
-    : public CloudMemcacheConnectionIdempotencyPolicy {
- public:
-  ~DefaultCloudMemcacheConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy>
+CloudMemcacheConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CloudMemcacheConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultCloudMemcacheConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency CloudMemcacheConnectionIdempotencyPolicy::ListInstances(
+    google::cloud::memcache::v1::ListInstancesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListInstances(
-      google::cloud::memcache::v1::ListInstancesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudMemcacheConnectionIdempotencyPolicy::GetInstance(
+    google::cloud::memcache::v1::GetInstanceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetInstance(
-      google::cloud::memcache::v1::GetInstanceRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudMemcacheConnectionIdempotencyPolicy::CreateInstance(
+    google::cloud::memcache::v1::CreateInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateInstance(
-      google::cloud::memcache::v1::CreateInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudMemcacheConnectionIdempotencyPolicy::UpdateInstance(
+    google::cloud::memcache::v1::UpdateInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateInstance(
-      google::cloud::memcache::v1::UpdateInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudMemcacheConnectionIdempotencyPolicy::UpdateParameters(
+    google::cloud::memcache::v1::UpdateParametersRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateParameters(
-      google::cloud::memcache::v1::UpdateParametersRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudMemcacheConnectionIdempotencyPolicy::DeleteInstance(
+    google::cloud::memcache::v1::DeleteInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteInstance(
-      google::cloud::memcache::v1::DeleteInstanceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ApplyParameters(
-      google::cloud::memcache::v1::ApplyParametersRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency CloudMemcacheConnectionIdempotencyPolicy::ApplyParameters(
+    google::cloud::memcache::v1::ApplyParametersRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy>
 MakeDefaultCloudMemcacheConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultCloudMemcacheConnectionIdempotencyPolicy>();
+  return absl::make_unique<CloudMemcacheConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

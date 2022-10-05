@@ -30,123 +30,112 @@ using ::google::cloud::Idempotency;
 BigtableTableAdminConnectionIdempotencyPolicy::
     ~BigtableTableAdminConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultBigtableTableAdminConnectionIdempotencyPolicy
-    : public BigtableTableAdminConnectionIdempotencyPolicy {
- public:
-  ~DefaultBigtableTableAdminConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy>
+BigtableTableAdminConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<BigtableTableAdminConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultBigtableTableAdminConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::CreateTable(
+    google::bigtable::admin::v2::CreateTableRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTable(
-      google::bigtable::admin::v2::CreateTableRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::ListTables(
+    google::bigtable::admin::v2::ListTablesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTables(
-      google::bigtable::admin::v2::ListTablesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::GetTable(
+    google::bigtable::admin::v2::GetTableRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTable(
-      google::bigtable::admin::v2::GetTableRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::UpdateTable(
+    google::bigtable::admin::v2::UpdateTableRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateTable(
-      google::bigtable::admin::v2::UpdateTableRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::DeleteTable(
+    google::bigtable::admin::v2::DeleteTableRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteTable(
-      google::bigtable::admin::v2::DeleteTableRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::UndeleteTable(
+    google::bigtable::admin::v2::UndeleteTableRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UndeleteTable(
-      google::bigtable::admin::v2::UndeleteTableRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::ModifyColumnFamilies(
+    google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ModifyColumnFamilies(
-      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::DropRowRange(
+    google::bigtable::admin::v2::DropRowRangeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DropRowRange(
-      google::bigtable::admin::v2::DropRowRangeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+BigtableTableAdminConnectionIdempotencyPolicy::GenerateConsistencyToken(
+    google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GenerateConsistencyToken(
-      google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::CheckConsistency(
+    google::bigtable::admin::v2::CheckConsistencyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CheckConsistency(
-      google::bigtable::admin::v2::CheckConsistencyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::CreateBackup(
+    google::bigtable::admin::v2::CreateBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateBackup(
-      google::bigtable::admin::v2::CreateBackupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::GetBackup(
+    google::bigtable::admin::v2::GetBackupRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetBackup(
-      google::bigtable::admin::v2::GetBackupRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::UpdateBackup(
+    google::bigtable::admin::v2::UpdateBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateBackup(
-      google::bigtable::admin::v2::UpdateBackupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::DeleteBackup(
+    google::bigtable::admin::v2::DeleteBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteBackup(
-      google::bigtable::admin::v2::DeleteBackupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::ListBackups(
+    google::bigtable::admin::v2::ListBackupsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListBackups(
-      google::bigtable::admin::v2::ListBackupsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::RestoreTable(
+    google::bigtable::admin::v2::RestoreTableRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RestoreTable(
-      google::bigtable::admin::v2::RestoreTableRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
-
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy>
 MakeDefaultBigtableTableAdminConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultBigtableTableAdminConnectionIdempotencyPolicy>();
+  return absl::make_unique<BigtableTableAdminConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,39 +32,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ParticipantsConnectionIdempotencyPolicy {
  public:
-  virtual ~ParticipantsConnectionIdempotencyPolicy() = 0;
+  virtual ~ParticipantsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ParticipantsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateParticipant(
-      google::cloud::dialogflow::v2::CreateParticipantRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::CreateParticipantRequest const& request);
 
   virtual google::cloud::Idempotency GetParticipant(
-      google::cloud::dialogflow::v2::GetParticipantRequest const& request) = 0;
+      google::cloud::dialogflow::v2::GetParticipantRequest const& request);
 
   virtual google::cloud::Idempotency ListParticipants(
-      google::cloud::dialogflow::v2::ListParticipantsRequest request) = 0;
+      google::cloud::dialogflow::v2::ListParticipantsRequest request);
 
   virtual google::cloud::Idempotency UpdateParticipant(
-      google::cloud::dialogflow::v2::UpdateParticipantRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::UpdateParticipantRequest const& request);
 
   virtual google::cloud::Idempotency AnalyzeContent(
-      google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::AnalyzeContentRequest const& request);
 
   virtual google::cloud::Idempotency SuggestArticles(
-      google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) = 0;
+      google::cloud::dialogflow::v2::SuggestArticlesRequest const& request);
 
   virtual google::cloud::Idempotency SuggestFaqAnswers(
-      google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request);
 
   virtual google::cloud::Idempotency SuggestSmartReplies(
-      google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request);
 };
 
 std::unique_ptr<ParticipantsConnectionIdempotencyPolicy>

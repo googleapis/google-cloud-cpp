@@ -32,23 +32,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class EkmServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~EkmServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~EkmServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<EkmServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<EkmServiceConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListEkmConnections(
-      google::cloud::kms::v1::ListEkmConnectionsRequest request) = 0;
+      google::cloud::kms::v1::ListEkmConnectionsRequest request);
 
   virtual google::cloud::Idempotency GetEkmConnection(
-      google::cloud::kms::v1::GetEkmConnectionRequest const& request) = 0;
+      google::cloud::kms::v1::GetEkmConnectionRequest const& request);
 
   virtual google::cloud::Idempotency CreateEkmConnection(
-      google::cloud::kms::v1::CreateEkmConnectionRequest const& request) = 0;
+      google::cloud::kms::v1::CreateEkmConnectionRequest const& request);
 
   virtual google::cloud::Idempotency UpdateEkmConnection(
-      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) = 0;
+      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request);
 };
 
 std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>

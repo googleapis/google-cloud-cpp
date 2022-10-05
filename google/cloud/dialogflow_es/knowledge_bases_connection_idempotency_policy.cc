@@ -30,52 +30,39 @@ using ::google::cloud::Idempotency;
 KnowledgeBasesConnectionIdempotencyPolicy::
     ~KnowledgeBasesConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultKnowledgeBasesConnectionIdempotencyPolicy
-    : public KnowledgeBasesConnectionIdempotencyPolicy {
- public:
-  ~DefaultKnowledgeBasesConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<KnowledgeBasesConnectionIdempotencyPolicy>
+KnowledgeBasesConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<KnowledgeBasesConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<KnowledgeBasesConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultKnowledgeBasesConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::ListKnowledgeBases(
+    google::cloud::dialogflow::v2::ListKnowledgeBasesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListKnowledgeBases(
-      google::cloud::dialogflow::v2::ListKnowledgeBasesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::GetKnowledgeBase(
+    google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetKnowledgeBase(
-      google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::CreateKnowledgeBase(
+    google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateKnowledgeBase(
-      google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::DeleteKnowledgeBase(
+    google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteKnowledgeBase(
-      google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency UpdateKnowledgeBase(
-      google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::UpdateKnowledgeBase(
+    google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<KnowledgeBasesConnectionIdempotencyPolicy>
 MakeDefaultKnowledgeBasesConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultKnowledgeBasesConnectionIdempotencyPolicy>();
+  return absl::make_unique<KnowledgeBasesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

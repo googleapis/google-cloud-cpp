@@ -32,23 +32,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class Controller2ConnectionIdempotencyPolicy {
  public:
-  virtual ~Controller2ConnectionIdempotencyPolicy() = 0;
+  virtual ~Controller2ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<Controller2ConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<Controller2ConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency RegisterDebuggee(
       google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListActiveBreakpoints(
       google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateActiveBreakpoint(
       google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<Controller2ConnectionIdempotencyPolicy>

@@ -32,29 +32,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class RealmsServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~RealmsServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~RealmsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListRealms(
-      google::cloud::gaming::v1::ListRealmsRequest request) = 0;
+      google::cloud::gaming::v1::ListRealmsRequest request);
 
   virtual google::cloud::Idempotency GetRealm(
-      google::cloud::gaming::v1::GetRealmRequest const& request) = 0;
+      google::cloud::gaming::v1::GetRealmRequest const& request);
 
   virtual google::cloud::Idempotency CreateRealm(
-      google::cloud::gaming::v1::CreateRealmRequest const& request) = 0;
+      google::cloud::gaming::v1::CreateRealmRequest const& request);
 
   virtual google::cloud::Idempotency DeleteRealm(
-      google::cloud::gaming::v1::DeleteRealmRequest const& request) = 0;
+      google::cloud::gaming::v1::DeleteRealmRequest const& request);
 
   virtual google::cloud::Idempotency UpdateRealm(
-      google::cloud::gaming::v1::UpdateRealmRequest const& request) = 0;
+      google::cloud::gaming::v1::UpdateRealmRequest const& request);
 
   virtual google::cloud::Idempotency PreviewRealmUpdate(
-      google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) = 0;
+      google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request);
 };
 
 std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy>

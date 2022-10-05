@@ -32,19 +32,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class PublisherConnectionIdempotencyPolicy {
  public:
-  virtual ~PublisherConnectionIdempotencyPolicy() = 0;
+  virtual ~PublisherConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PublisherConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<PublisherConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency PublishChannelConnectionEvents(
       google::cloud::eventarc::publishing::v1::
-          PublishChannelConnectionEventsRequest const& request) = 0;
+          PublishChannelConnectionEventsRequest const& request);
 
   virtual google::cloud::Idempotency PublishEvents(
       google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<PublisherConnectionIdempotencyPolicy>

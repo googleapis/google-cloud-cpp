@@ -30,60 +30,54 @@ using ::google::cloud::Idempotency;
 ApiKeysConnectionIdempotencyPolicy::~ApiKeysConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultApiKeysConnectionIdempotencyPolicy
-    : public ApiKeysConnectionIdempotencyPolicy {
- public:
-  ~DefaultApiKeysConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ApiKeysConnectionIdempotencyPolicy>
+ApiKeysConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ApiKeysConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ApiKeysConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultApiKeysConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ApiKeysConnectionIdempotencyPolicy::CreateKey(
+    google::api::apikeys::v2::CreateKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateKey(
-      google::api::apikeys::v2::CreateKeyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ApiKeysConnectionIdempotencyPolicy::ListKeys(
+    google::api::apikeys::v2::ListKeysRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListKeys(google::api::apikeys::v2::ListKeysRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ApiKeysConnectionIdempotencyPolicy::GetKey(
+    google::api::apikeys::v2::GetKeyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetKey(google::api::apikeys::v2::GetKeyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ApiKeysConnectionIdempotencyPolicy::GetKeyString(
+    google::api::apikeys::v2::GetKeyStringRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetKeyString(
-      google::api::apikeys::v2::GetKeyStringRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ApiKeysConnectionIdempotencyPolicy::UpdateKey(
+    google::api::apikeys::v2::UpdateKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateKey(
-      google::api::apikeys::v2::UpdateKeyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ApiKeysConnectionIdempotencyPolicy::DeleteKey(
+    google::api::apikeys::v2::DeleteKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteKey(
-      google::api::apikeys::v2::DeleteKeyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ApiKeysConnectionIdempotencyPolicy::UndeleteKey(
+    google::api::apikeys::v2::UndeleteKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UndeleteKey(
-      google::api::apikeys::v2::UndeleteKeyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency LookupKey(
-      google::api::apikeys::v2::LookupKeyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency ApiKeysConnectionIdempotencyPolicy::LookupKey(
+    google::api::apikeys::v2::LookupKeyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<ApiKeysConnectionIdempotencyPolicy>
 MakeDefaultApiKeysConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultApiKeysConnectionIdempotencyPolicy>();
+  return absl::make_unique<ApiKeysConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

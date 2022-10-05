@@ -32,14 +32,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class SessionsConnectionIdempotencyPolicy {
  public:
-  virtual ~SessionsConnectionIdempotencyPolicy() = 0;
+  virtual ~SessionsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SessionsConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<SessionsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency DetectIntent(
-      google::cloud::dialogflow::v2::DetectIntentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::DetectIntentRequest const& request);
 };
 
 std::unique_ptr<SessionsConnectionIdempotencyPolicy>

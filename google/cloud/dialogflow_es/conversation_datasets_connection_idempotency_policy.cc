@@ -30,54 +30,45 @@ using ::google::cloud::Idempotency;
 ConversationDatasetsConnectionIdempotencyPolicy::
     ~ConversationDatasetsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultConversationDatasetsConnectionIdempotencyPolicy
-    : public ConversationDatasetsConnectionIdempotencyPolicy {
- public:
-  ~DefaultConversationDatasetsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ConversationDatasetsConnectionIdempotencyPolicy>
+ConversationDatasetsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ConversationDatasetsConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ConversationDatasetsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultConversationDatasetsConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+ConversationDatasetsConnectionIdempotencyPolicy::CreateConversationDataset(
+    google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateConversationDataset(
-      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ConversationDatasetsConnectionIdempotencyPolicy::GetConversationDataset(
+    google::cloud::dialogflow::v2::GetConversationDatasetRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetConversationDataset(
-      google::cloud::dialogflow::v2::GetConversationDatasetRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ConversationDatasetsConnectionIdempotencyPolicy::ListConversationDatasets(
+    google::cloud::dialogflow::v2::ListConversationDatasetsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListConversationDatasets(
-      google::cloud::dialogflow::v2::ListConversationDatasetsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ConversationDatasetsConnectionIdempotencyPolicy::DeleteConversationDataset(
+    google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteConversationDataset(
-      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ImportConversationData(
-      google::cloud::dialogflow::v2::ImportConversationDataRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+ConversationDatasetsConnectionIdempotencyPolicy::ImportConversationData(
+    google::cloud::dialogflow::v2::ImportConversationDataRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ConversationDatasetsConnectionIdempotencyPolicy>
 MakeDefaultConversationDatasetsConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultConversationDatasetsConnectionIdempotencyPolicy>();
+  return absl::make_unique<ConversationDatasetsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

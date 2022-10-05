@@ -30,48 +30,39 @@ using ::google::cloud::Idempotency;
 WorkflowsConnectionIdempotencyPolicy::~WorkflowsConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultWorkflowsConnectionIdempotencyPolicy
-    : public WorkflowsConnectionIdempotencyPolicy {
- public:
-  ~DefaultWorkflowsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<WorkflowsConnectionIdempotencyPolicy>
+WorkflowsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<WorkflowsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<WorkflowsConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultWorkflowsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency WorkflowsConnectionIdempotencyPolicy::ListWorkflows(
+    google::cloud::workflows::v1::ListWorkflowsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListWorkflows(
-      google::cloud::workflows::v1::ListWorkflowsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WorkflowsConnectionIdempotencyPolicy::GetWorkflow(
+    google::cloud::workflows::v1::GetWorkflowRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetWorkflow(
-      google::cloud::workflows::v1::GetWorkflowRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency WorkflowsConnectionIdempotencyPolicy::CreateWorkflow(
+    google::cloud::workflows::v1::CreateWorkflowRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateWorkflow(
-      google::cloud::workflows::v1::CreateWorkflowRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency WorkflowsConnectionIdempotencyPolicy::DeleteWorkflow(
+    google::cloud::workflows::v1::DeleteWorkflowRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteWorkflow(
-      google::cloud::workflows::v1::DeleteWorkflowRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency UpdateWorkflow(
-      google::cloud::workflows::v1::UpdateWorkflowRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency WorkflowsConnectionIdempotencyPolicy::UpdateWorkflow(
+    google::cloud::workflows::v1::UpdateWorkflowRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<WorkflowsConnectionIdempotencyPolicy>
 MakeDefaultWorkflowsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultWorkflowsConnectionIdempotencyPolicy>();
+  return absl::make_unique<WorkflowsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

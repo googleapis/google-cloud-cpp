@@ -30,260 +30,234 @@ using ::google::cloud::Idempotency;
 VmMigrationConnectionIdempotencyPolicy::
     ~VmMigrationConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultVmMigrationConnectionIdempotencyPolicy
-    : public VmMigrationConnectionIdempotencyPolicy {
- public:
-  ~DefaultVmMigrationConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<VmMigrationConnectionIdempotencyPolicy>
+VmMigrationConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<VmMigrationConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<VmMigrationConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultVmMigrationConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListSources(
+    google::cloud::vmmigration::v1::ListSourcesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListSources(
-      google::cloud::vmmigration::v1::ListSourcesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetSource(
+    google::cloud::vmmigration::v1::GetSourceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetSource(
-      google::cloud::vmmigration::v1::GetSourceRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::CreateSource(
+    google::cloud::vmmigration::v1::CreateSourceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateSource(
-      google::cloud::vmmigration::v1::CreateSourceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::UpdateSource(
+    google::cloud::vmmigration::v1::UpdateSourceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateSource(
-      google::cloud::vmmigration::v1::UpdateSourceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::DeleteSource(
+    google::cloud::vmmigration::v1::DeleteSourceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteSource(
-      google::cloud::vmmigration::v1::DeleteSourceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::FetchInventory(
+    google::cloud::vmmigration::v1::FetchInventoryRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency FetchInventory(
-      google::cloud::vmmigration::v1::FetchInventoryRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListUtilizationReports(
+    google::cloud::vmmigration::v1::ListUtilizationReportsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListUtilizationReports(
-      google::cloud::vmmigration::v1::ListUtilizationReportsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetUtilizationReport(
+    google::cloud::vmmigration::v1::GetUtilizationReportRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetUtilizationReport(
-      google::cloud::vmmigration::v1::GetUtilizationReportRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::CreateUtilizationReport(
+    google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateUtilizationReport(
-      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::DeleteUtilizationReport(
+    google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteUtilizationReport(
-      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListDatacenterConnectors(
+    google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDatacenterConnectors(
-      google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetDatacenterConnector(
+    google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetDatacenterConnector(
-      google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::CreateDatacenterConnector(
+    google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateDatacenterConnector(
-      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::DeleteDatacenterConnector(
+    google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteDatacenterConnector(
-      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::UpgradeAppliance(
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpgradeAppliance(
-      google::cloud::vmmigration::v1::UpgradeApplianceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::CreateMigratingVm(
+    google::cloud::vmmigration::v1::CreateMigratingVmRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateMigratingVm(
-      google::cloud::vmmigration::v1::CreateMigratingVmRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListMigratingVms(
+    google::cloud::vmmigration::v1::ListMigratingVmsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListMigratingVms(
-      google::cloud::vmmigration::v1::ListMigratingVmsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetMigratingVm(
+    google::cloud::vmmigration::v1::GetMigratingVmRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetMigratingVm(
-      google::cloud::vmmigration::v1::GetMigratingVmRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::UpdateMigratingVm(
+    google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateMigratingVm(
-      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::DeleteMigratingVm(
+    google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteMigratingVm(
-      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::StartMigration(
+    google::cloud::vmmigration::v1::StartMigrationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StartMigration(
-      google::cloud::vmmigration::v1::StartMigrationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::ResumeMigration(
+    google::cloud::vmmigration::v1::ResumeMigrationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ResumeMigration(
-      google::cloud::vmmigration::v1::ResumeMigrationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::PauseMigration(
+    google::cloud::vmmigration::v1::PauseMigrationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency PauseMigration(
-      google::cloud::vmmigration::v1::PauseMigrationRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::FinalizeMigration(
+    google::cloud::vmmigration::v1::FinalizeMigrationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency FinalizeMigration(
-      google::cloud::vmmigration::v1::FinalizeMigrationRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::CreateCloneJob(
+    google::cloud::vmmigration::v1::CreateCloneJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCloneJob(
-      google::cloud::vmmigration::v1::CreateCloneJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::CancelCloneJob(
+    google::cloud::vmmigration::v1::CancelCloneJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CancelCloneJob(
-      google::cloud::vmmigration::v1::CancelCloneJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListCloneJobs(
+    google::cloud::vmmigration::v1::ListCloneJobsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCloneJobs(
-      google::cloud::vmmigration::v1::ListCloneJobsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetCloneJob(
+    google::cloud::vmmigration::v1::GetCloneJobRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCloneJob(
-      google::cloud::vmmigration::v1::GetCloneJobRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::CreateCutoverJob(
+    google::cloud::vmmigration::v1::CreateCutoverJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCutoverJob(
-      google::cloud::vmmigration::v1::CreateCutoverJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::CancelCutoverJob(
+    google::cloud::vmmigration::v1::CancelCutoverJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CancelCutoverJob(
-      google::cloud::vmmigration::v1::CancelCutoverJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListCutoverJobs(
+    google::cloud::vmmigration::v1::ListCutoverJobsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListCutoverJobs(
-      google::cloud::vmmigration::v1::ListCutoverJobsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetCutoverJob(
+    google::cloud::vmmigration::v1::GetCutoverJobRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCutoverJob(
-      google::cloud::vmmigration::v1::GetCutoverJobRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListGroups(
+    google::cloud::vmmigration::v1::ListGroupsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListGroups(
-      google::cloud::vmmigration::v1::ListGroupsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetGroup(
+    google::cloud::vmmigration::v1::GetGroupRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetGroup(
-      google::cloud::vmmigration::v1::GetGroupRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::CreateGroup(
+    google::cloud::vmmigration::v1::CreateGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateGroup(
-      google::cloud::vmmigration::v1::CreateGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::UpdateGroup(
+    google::cloud::vmmigration::v1::UpdateGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateGroup(
-      google::cloud::vmmigration::v1::UpdateGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::DeleteGroup(
+    google::cloud::vmmigration::v1::DeleteGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteGroup(
-      google::cloud::vmmigration::v1::DeleteGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::AddGroupMigration(
+    google::cloud::vmmigration::v1::AddGroupMigrationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AddGroupMigration(
-      google::cloud::vmmigration::v1::AddGroupMigrationRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::RemoveGroupMigration(
+    google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RemoveGroupMigration(
-      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListTargetProjects(
+    google::cloud::vmmigration::v1::ListTargetProjectsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTargetProjects(
-      google::cloud::vmmigration::v1::ListTargetProjectsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetTargetProject(
+    google::cloud::vmmigration::v1::GetTargetProjectRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTargetProject(
-      google::cloud::vmmigration::v1::GetTargetProjectRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::CreateTargetProject(
+    google::cloud::vmmigration::v1::CreateTargetProjectRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTargetProject(
-      google::cloud::vmmigration::v1::CreateTargetProjectRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VmMigrationConnectionIdempotencyPolicy::UpdateTargetProject(
+    google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateTargetProject(
-      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteTargetProject(
-      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency VmMigrationConnectionIdempotencyPolicy::DeleteTargetProject(
+    google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<VmMigrationConnectionIdempotencyPolicy>
 MakeDefaultVmMigrationConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultVmMigrationConnectionIdempotencyPolicy>();
+  return absl::make_unique<VmMigrationConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

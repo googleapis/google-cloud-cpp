@@ -32,30 +32,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class SessionEntityTypesConnectionIdempotencyPolicy {
  public:
-  virtual ~SessionEntityTypesConnectionIdempotencyPolicy() = 0;
+  virtual ~SessionEntityTypesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListSessionEntityTypes(
-      google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request) = 0;
+      google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request);
 
   virtual google::cloud::Idempotency GetSessionEntityType(
       google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CreateSessionEntityType(
       google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateSessionEntityType(
       google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteSessionEntityType(
       google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy>

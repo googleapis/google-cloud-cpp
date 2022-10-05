@@ -32,42 +32,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class FlowsConnectionIdempotencyPolicy {
  public:
-  virtual ~FlowsConnectionIdempotencyPolicy() = 0;
+  virtual ~FlowsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<FlowsConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<FlowsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency CreateFlow(
-      google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request);
 
   virtual google::cloud::Idempotency DeleteFlow(
-      google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request);
 
   virtual google::cloud::Idempotency ListFlows(
-      google::cloud::dialogflow::cx::v3::ListFlowsRequest request) = 0;
+      google::cloud::dialogflow::cx::v3::ListFlowsRequest request);
 
   virtual google::cloud::Idempotency GetFlow(
-      google::cloud::dialogflow::cx::v3::GetFlowRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::GetFlowRequest const& request);
 
   virtual google::cloud::Idempotency UpdateFlow(
-      google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request);
 
   virtual google::cloud::Idempotency TrainFlow(
-      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request);
 
   virtual google::cloud::Idempotency ValidateFlow(
-      google::cloud::dialogflow::cx::v3::ValidateFlowRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request);
 
   virtual google::cloud::Idempotency GetFlowValidationResult(
       google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ImportFlow(
-      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request);
 
   virtual google::cloud::Idempotency ExportFlow(
-      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) = 0;
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request);
 };
 
 std::unique_ptr<FlowsConnectionIdempotencyPolicy>

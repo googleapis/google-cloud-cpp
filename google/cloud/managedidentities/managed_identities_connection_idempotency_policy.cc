@@ -30,84 +30,70 @@ using ::google::cloud::Idempotency;
 ManagedIdentitiesServiceConnectionIdempotencyPolicy::
     ~ManagedIdentitiesServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultManagedIdentitiesServiceConnectionIdempotencyPolicy
-    : public ManagedIdentitiesServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultManagedIdentitiesServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>
+ManagedIdentitiesServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ManagedIdentitiesServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultManagedIdentitiesServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+ManagedIdentitiesServiceConnectionIdempotencyPolicy::CreateMicrosoftAdDomain(
+    google::cloud::managedidentities::v1::
+        CreateMicrosoftAdDomainRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateMicrosoftAdDomain(
-      google::cloud::managedidentities::v1::
-          CreateMicrosoftAdDomainRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ManagedIdentitiesServiceConnectionIdempotencyPolicy::ResetAdminPassword(
+    google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ResetAdminPassword(
-      google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::ListDomains(
+    google::cloud::managedidentities::v1::ListDomainsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDomains(
-      google::cloud::managedidentities::v1::ListDomainsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::GetDomain(
+    google::cloud::managedidentities::v1::GetDomainRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetDomain(
-      google::cloud::managedidentities::v1::GetDomainRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::UpdateDomain(
+    google::cloud::managedidentities::v1::UpdateDomainRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateDomain(
-      google::cloud::managedidentities::v1::UpdateDomainRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::DeleteDomain(
+    google::cloud::managedidentities::v1::DeleteDomainRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteDomain(
-      google::cloud::managedidentities::v1::DeleteDomainRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::AttachTrust(
+    google::cloud::managedidentities::v1::AttachTrustRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AttachTrust(
-      google::cloud::managedidentities::v1::AttachTrustRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ManagedIdentitiesServiceConnectionIdempotencyPolicy::ReconfigureTrust(
+    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ReconfigureTrust(
-      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::DetachTrust(
+    google::cloud::managedidentities::v1::DetachTrustRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DetachTrust(
-      google::cloud::managedidentities::v1::DetachTrustRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ValidateTrust(
-      google::cloud::managedidentities::v1::ValidateTrustRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::ValidateTrust(
+    google::cloud::managedidentities::v1::ValidateTrustRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>
 MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultManagedIdentitiesServiceConnectionIdempotencyPolicy>();
+      ManagedIdentitiesServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

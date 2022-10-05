@@ -30,35 +30,24 @@ using ::google::cloud::Idempotency;
 AnswerRecordsConnectionIdempotencyPolicy::
     ~AnswerRecordsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAnswerRecordsConnectionIdempotencyPolicy
-    : public AnswerRecordsConnectionIdempotencyPolicy {
- public:
-  ~DefaultAnswerRecordsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AnswerRecordsConnectionIdempotencyPolicy>
+AnswerRecordsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AnswerRecordsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AnswerRecordsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultAnswerRecordsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency AnswerRecordsConnectionIdempotencyPolicy::ListAnswerRecords(
+    google::cloud::dialogflow::v2::ListAnswerRecordsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAnswerRecords(
-      google::cloud::dialogflow::v2::ListAnswerRecordsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency UpdateAnswerRecord(
-      google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency AnswerRecordsConnectionIdempotencyPolicy::UpdateAnswerRecord(
+    google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<AnswerRecordsConnectionIdempotencyPolicy>
 MakeDefaultAnswerRecordsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultAnswerRecordsConnectionIdempotencyPolicy>();
+  return absl::make_unique<AnswerRecordsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

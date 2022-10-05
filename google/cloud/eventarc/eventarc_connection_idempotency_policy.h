@@ -32,62 +32,60 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class EventarcConnectionIdempotencyPolicy {
  public:
-  virtual ~EventarcConnectionIdempotencyPolicy() = 0;
+  virtual ~EventarcConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<EventarcConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<EventarcConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency GetTrigger(
-      google::cloud::eventarc::v1::GetTriggerRequest const& request) = 0;
+      google::cloud::eventarc::v1::GetTriggerRequest const& request);
 
   virtual google::cloud::Idempotency ListTriggers(
-      google::cloud::eventarc::v1::ListTriggersRequest request) = 0;
+      google::cloud::eventarc::v1::ListTriggersRequest request);
 
   virtual google::cloud::Idempotency CreateTrigger(
-      google::cloud::eventarc::v1::CreateTriggerRequest const& request) = 0;
+      google::cloud::eventarc::v1::CreateTriggerRequest const& request);
 
   virtual google::cloud::Idempotency UpdateTrigger(
-      google::cloud::eventarc::v1::UpdateTriggerRequest const& request) = 0;
+      google::cloud::eventarc::v1::UpdateTriggerRequest const& request);
 
   virtual google::cloud::Idempotency DeleteTrigger(
-      google::cloud::eventarc::v1::DeleteTriggerRequest const& request) = 0;
+      google::cloud::eventarc::v1::DeleteTriggerRequest const& request);
 
   virtual google::cloud::Idempotency GetChannel(
-      google::cloud::eventarc::v1::GetChannelRequest const& request) = 0;
+      google::cloud::eventarc::v1::GetChannelRequest const& request);
 
   virtual google::cloud::Idempotency ListChannels(
-      google::cloud::eventarc::v1::ListChannelsRequest request) = 0;
+      google::cloud::eventarc::v1::ListChannelsRequest request);
 
   virtual google::cloud::Idempotency CreateChannel(
-      google::cloud::eventarc::v1::CreateChannelRequest const& request) = 0;
+      google::cloud::eventarc::v1::CreateChannelRequest const& request);
 
   virtual google::cloud::Idempotency UpdateChannel(
-      google::cloud::eventarc::v1::UpdateChannelRequest const& request) = 0;
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request);
 
   virtual google::cloud::Idempotency DeleteChannel(
-      google::cloud::eventarc::v1::DeleteChannelRequest const& request) = 0;
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request);
 
   virtual google::cloud::Idempotency GetProvider(
-      google::cloud::eventarc::v1::GetProviderRequest const& request) = 0;
+      google::cloud::eventarc::v1::GetProviderRequest const& request);
 
   virtual google::cloud::Idempotency ListProviders(
-      google::cloud::eventarc::v1::ListProvidersRequest request) = 0;
+      google::cloud::eventarc::v1::ListProvidersRequest request);
 
   virtual google::cloud::Idempotency GetChannelConnection(
-      google::cloud::eventarc::v1::GetChannelConnectionRequest const&
-          request) = 0;
+      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request);
 
   virtual google::cloud::Idempotency ListChannelConnections(
-      google::cloud::eventarc::v1::ListChannelConnectionsRequest request) = 0;
+      google::cloud::eventarc::v1::ListChannelConnectionsRequest request);
 
   virtual google::cloud::Idempotency CreateChannelConnection(
       google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteChannelConnection(
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<EventarcConnectionIdempotencyPolicy>

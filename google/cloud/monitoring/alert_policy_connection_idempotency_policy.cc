@@ -30,50 +30,40 @@ using ::google::cloud::Idempotency;
 AlertPolicyServiceConnectionIdempotencyPolicy::
     ~AlertPolicyServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAlertPolicyServiceConnectionIdempotencyPolicy
-    : public AlertPolicyServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultAlertPolicyServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy>
+AlertPolicyServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AlertPolicyServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultAlertPolicyServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::ListAlertPolicies(
+    google::monitoring::v3::ListAlertPoliciesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAlertPolicies(
-      google::monitoring::v3::ListAlertPoliciesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::GetAlertPolicy(
+    google::monitoring::v3::GetAlertPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAlertPolicy(
-      google::monitoring::v3::GetAlertPolicyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::CreateAlertPolicy(
+    google::monitoring::v3::CreateAlertPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateAlertPolicy(
-      google::monitoring::v3::CreateAlertPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::DeleteAlertPolicy(
+    google::monitoring::v3::DeleteAlertPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteAlertPolicy(
-      google::monitoring::v3::DeleteAlertPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency UpdateAlertPolicy(
-      google::monitoring::v3::UpdateAlertPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::UpdateAlertPolicy(
+    google::monitoring::v3::UpdateAlertPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy>
 MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultAlertPolicyServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<AlertPolicyServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

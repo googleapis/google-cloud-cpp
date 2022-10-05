@@ -32,74 +32,73 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AssetServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~AssetServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~AssetServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AssetServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ExportAssets(
-      google::cloud::asset::v1::ExportAssetsRequest const& request) = 0;
+      google::cloud::asset::v1::ExportAssetsRequest const& request);
 
   virtual google::cloud::Idempotency ListAssets(
-      google::cloud::asset::v1::ListAssetsRequest request) = 0;
+      google::cloud::asset::v1::ListAssetsRequest request);
 
   virtual google::cloud::Idempotency BatchGetAssetsHistory(
-      google::cloud::asset::v1::BatchGetAssetsHistoryRequest const&
-          request) = 0;
+      google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request);
 
   virtual google::cloud::Idempotency CreateFeed(
-      google::cloud::asset::v1::CreateFeedRequest const& request) = 0;
+      google::cloud::asset::v1::CreateFeedRequest const& request);
 
   virtual google::cloud::Idempotency GetFeed(
-      google::cloud::asset::v1::GetFeedRequest const& request) = 0;
+      google::cloud::asset::v1::GetFeedRequest const& request);
 
   virtual google::cloud::Idempotency ListFeeds(
-      google::cloud::asset::v1::ListFeedsRequest const& request) = 0;
+      google::cloud::asset::v1::ListFeedsRequest const& request);
 
   virtual google::cloud::Idempotency UpdateFeed(
-      google::cloud::asset::v1::UpdateFeedRequest const& request) = 0;
+      google::cloud::asset::v1::UpdateFeedRequest const& request);
 
   virtual google::cloud::Idempotency DeleteFeed(
-      google::cloud::asset::v1::DeleteFeedRequest const& request) = 0;
+      google::cloud::asset::v1::DeleteFeedRequest const& request);
 
   virtual google::cloud::Idempotency SearchAllResources(
-      google::cloud::asset::v1::SearchAllResourcesRequest request) = 0;
+      google::cloud::asset::v1::SearchAllResourcesRequest request);
 
   virtual google::cloud::Idempotency SearchAllIamPolicies(
-      google::cloud::asset::v1::SearchAllIamPoliciesRequest request) = 0;
+      google::cloud::asset::v1::SearchAllIamPoliciesRequest request);
 
   virtual google::cloud::Idempotency AnalyzeIamPolicy(
-      google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) = 0;
+      google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency AnalyzeIamPolicyLongrunning(
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency AnalyzeMove(
-      google::cloud::asset::v1::AnalyzeMoveRequest const& request) = 0;
+      google::cloud::asset::v1::AnalyzeMoveRequest const& request);
 
   virtual google::cloud::Idempotency QueryAssets(
-      google::cloud::asset::v1::QueryAssetsRequest const& request) = 0;
+      google::cloud::asset::v1::QueryAssetsRequest const& request);
 
   virtual google::cloud::Idempotency CreateSavedQuery(
-      google::cloud::asset::v1::CreateSavedQueryRequest const& request) = 0;
+      google::cloud::asset::v1::CreateSavedQueryRequest const& request);
 
   virtual google::cloud::Idempotency GetSavedQuery(
-      google::cloud::asset::v1::GetSavedQueryRequest const& request) = 0;
+      google::cloud::asset::v1::GetSavedQueryRequest const& request);
 
   virtual google::cloud::Idempotency ListSavedQueries(
-      google::cloud::asset::v1::ListSavedQueriesRequest request) = 0;
+      google::cloud::asset::v1::ListSavedQueriesRequest request);
 
   virtual google::cloud::Idempotency UpdateSavedQuery(
-      google::cloud::asset::v1::UpdateSavedQueryRequest const& request) = 0;
+      google::cloud::asset::v1::UpdateSavedQueryRequest const& request);
 
   virtual google::cloud::Idempotency DeleteSavedQuery(
-      google::cloud::asset::v1::DeleteSavedQueryRequest const& request) = 0;
+      google::cloud::asset::v1::DeleteSavedQueryRequest const& request);
 
   virtual google::cloud::Idempotency BatchGetEffectiveIamPolicies(
       google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>

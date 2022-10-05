@@ -30,79 +30,64 @@ using ::google::cloud::Idempotency;
 EntityTypesConnectionIdempotencyPolicy::
     ~EntityTypesConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultEntityTypesConnectionIdempotencyPolicy
-    : public EntityTypesConnectionIdempotencyPolicy {
- public:
-  ~DefaultEntityTypesConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>
+EntityTypesConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<EntityTypesConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<EntityTypesConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultEntityTypesConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency EntityTypesConnectionIdempotencyPolicy::ListEntityTypes(
+    google::cloud::dialogflow::v2::ListEntityTypesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListEntityTypes(
-      google::cloud::dialogflow::v2::ListEntityTypesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency EntityTypesConnectionIdempotencyPolicy::GetEntityType(
+    google::cloud::dialogflow::v2::GetEntityTypeRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetEntityType(
-      google::cloud::dialogflow::v2::GetEntityTypeRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency EntityTypesConnectionIdempotencyPolicy::CreateEntityType(
+    google::cloud::dialogflow::v2::CreateEntityTypeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateEntityType(
-      google::cloud::dialogflow::v2::CreateEntityTypeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency EntityTypesConnectionIdempotencyPolicy::UpdateEntityType(
+    google::cloud::dialogflow::v2::UpdateEntityTypeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateEntityType(
-      google::cloud::dialogflow::v2::UpdateEntityTypeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency EntityTypesConnectionIdempotencyPolicy::DeleteEntityType(
+    google::cloud::dialogflow::v2::DeleteEntityTypeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteEntityType(
-      google::cloud::dialogflow::v2::DeleteEntityTypeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency EntityTypesConnectionIdempotencyPolicy::BatchUpdateEntityTypes(
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchUpdateEntityTypes(
-      google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency EntityTypesConnectionIdempotencyPolicy::BatchDeleteEntityTypes(
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchDeleteEntityTypes(
-      google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency EntityTypesConnectionIdempotencyPolicy::BatchCreateEntities(
+    google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchCreateEntities(
-      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency EntityTypesConnectionIdempotencyPolicy::BatchUpdateEntities(
+    google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchUpdateEntities(
-      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency BatchDeleteEntities(
-      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency EntityTypesConnectionIdempotencyPolicy::BatchDeleteEntities(
+    google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>
 MakeDefaultEntityTypesConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultEntityTypesConnectionIdempotencyPolicy>();
+  return absl::make_unique<EntityTypesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

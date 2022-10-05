@@ -32,47 +32,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AccessApprovalConnectionIdempotencyPolicy {
  public:
-  virtual ~AccessApprovalConnectionIdempotencyPolicy() = 0;
+  virtual ~AccessApprovalConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListApprovalRequests(
-      google::cloud::accessapproval::v1::ListApprovalRequestsMessage
-          request) = 0;
+      google::cloud::accessapproval::v1::ListApprovalRequestsMessage request);
 
   virtual google::cloud::Idempotency GetApprovalRequest(
       google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ApproveApprovalRequest(
       google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DismissApprovalRequest(
       google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency InvalidateApprovalRequest(
       google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetAccessApprovalSettings(
       google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateAccessApprovalSettings(
       google::cloud::accessapproval::v1::
-          UpdateAccessApprovalSettingsMessage const& request) = 0;
+          UpdateAccessApprovalSettingsMessage const& request);
 
   virtual google::cloud::Idempotency DeleteAccessApprovalSettings(
       google::cloud::accessapproval::v1::
-          DeleteAccessApprovalSettingsMessage const& request) = 0;
+          DeleteAccessApprovalSettingsMessage const& request);
 
   virtual google::cloud::Idempotency GetAccessApprovalServiceAccount(
       google::cloud::accessapproval::v1::
-          GetAccessApprovalServiceAccountMessage const& request) = 0;
+          GetAccessApprovalServiceAccountMessage const& request);
 };
 
 std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>

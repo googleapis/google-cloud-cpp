@@ -32,41 +32,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TranscoderServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~TranscoderServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~TranscoderServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<TranscoderServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateJob(
-      google::cloud::video::transcoder::v1::CreateJobRequest const&
-          request) = 0;
+      google::cloud::video::transcoder::v1::CreateJobRequest const& request);
 
   virtual google::cloud::Idempotency ListJobs(
-      google::cloud::video::transcoder::v1::ListJobsRequest request) = 0;
+      google::cloud::video::transcoder::v1::ListJobsRequest request);
 
   virtual google::cloud::Idempotency GetJob(
-      google::cloud::video::transcoder::v1::GetJobRequest const& request) = 0;
+      google::cloud::video::transcoder::v1::GetJobRequest const& request);
 
   virtual google::cloud::Idempotency DeleteJob(
-      google::cloud::video::transcoder::v1::DeleteJobRequest const&
-          request) = 0;
+      google::cloud::video::transcoder::v1::DeleteJobRequest const& request);
 
   virtual google::cloud::Idempotency CreateJobTemplate(
       google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListJobTemplates(
-      google::cloud::video::transcoder::v1::ListJobTemplatesRequest
-          request) = 0;
+      google::cloud::video::transcoder::v1::ListJobTemplatesRequest request);
 
   virtual google::cloud::Idempotency GetJobTemplate(
       google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteJobTemplate(
       google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<TranscoderServiceConnectionIdempotencyPolicy>

@@ -30,120 +30,110 @@ using ::google::cloud::Idempotency;
 DeviceManagerConnectionIdempotencyPolicy::
     ~DeviceManagerConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultDeviceManagerConnectionIdempotencyPolicy
-    : public DeviceManagerConnectionIdempotencyPolicy {
- public:
-  ~DefaultDeviceManagerConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<DeviceManagerConnectionIdempotencyPolicy>
+DeviceManagerConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<DeviceManagerConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<DeviceManagerConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultDeviceManagerConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::CreateDeviceRegistry(
+    google::cloud::iot::v1::CreateDeviceRegistryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateDeviceRegistry(
-      google::cloud::iot::v1::CreateDeviceRegistryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::GetDeviceRegistry(
+    google::cloud::iot::v1::GetDeviceRegistryRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetDeviceRegistry(
-      google::cloud::iot::v1::GetDeviceRegistryRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::UpdateDeviceRegistry(
+    google::cloud::iot::v1::UpdateDeviceRegistryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateDeviceRegistry(
-      google::cloud::iot::v1::UpdateDeviceRegistryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::DeleteDeviceRegistry(
+    google::cloud::iot::v1::DeleteDeviceRegistryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteDeviceRegistry(
-      google::cloud::iot::v1::DeleteDeviceRegistryRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::ListDeviceRegistries(
+    google::cloud::iot::v1::ListDeviceRegistriesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDeviceRegistries(
-      google::cloud::iot::v1::ListDeviceRegistriesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::CreateDevice(
+    google::cloud::iot::v1::CreateDeviceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateDevice(
-      google::cloud::iot::v1::CreateDeviceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::GetDevice(
+    google::cloud::iot::v1::GetDeviceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetDevice(
-      google::cloud::iot::v1::GetDeviceRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::UpdateDevice(
+    google::cloud::iot::v1::UpdateDeviceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateDevice(
-      google::cloud::iot::v1::UpdateDeviceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::DeleteDevice(
+    google::cloud::iot::v1::DeleteDeviceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteDevice(
-      google::cloud::iot::v1::DeleteDeviceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::ListDevices(
+    google::cloud::iot::v1::ListDevicesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDevices(google::cloud::iot::v1::ListDevicesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::ModifyCloudToDeviceConfig(
+    google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ModifyCloudToDeviceConfig(
-      google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::ListDeviceConfigVersions(
+    google::cloud::iot::v1::ListDeviceConfigVersionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDeviceConfigVersions(
-      google::cloud::iot::v1::ListDeviceConfigVersionsRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::ListDeviceStates(
+    google::cloud::iot::v1::ListDeviceStatesRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDeviceStates(
-      google::cloud::iot::v1::ListDeviceStatesRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::SendCommandToDevice(
+    google::cloud::iot::v1::SendCommandToDeviceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SendCommandToDevice(
-      google::cloud::iot::v1::SendCommandToDeviceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DeviceManagerConnectionIdempotencyPolicy::BindDeviceToGateway(
+    google::cloud::iot::v1::BindDeviceToGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BindDeviceToGateway(
-      google::cloud::iot::v1::BindDeviceToGatewayRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency UnbindDeviceFromGateway(
-      google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency DeviceManagerConnectionIdempotencyPolicy::UnbindDeviceFromGateway(
+    google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<DeviceManagerConnectionIdempotencyPolicy>
 MakeDefaultDeviceManagerConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultDeviceManagerConnectionIdempotencyPolicy>();
+  return absl::make_unique<DeviceManagerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

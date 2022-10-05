@@ -30,53 +30,39 @@ using ::google::cloud::Idempotency;
 DashboardsServiceConnectionIdempotencyPolicy::
     ~DashboardsServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultDashboardsServiceConnectionIdempotencyPolicy
-    : public DashboardsServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultDashboardsServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy>
+DashboardsServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<DashboardsServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultDashboardsServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency DashboardsServiceConnectionIdempotencyPolicy::CreateDashboard(
+    google::monitoring::dashboard::v1::CreateDashboardRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateDashboard(
-      google::monitoring::dashboard::v1::CreateDashboardRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DashboardsServiceConnectionIdempotencyPolicy::ListDashboards(
+    google::monitoring::dashboard::v1::ListDashboardsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDashboards(
-      google::monitoring::dashboard::v1::ListDashboardsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DashboardsServiceConnectionIdempotencyPolicy::GetDashboard(
+    google::monitoring::dashboard::v1::GetDashboardRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetDashboard(
-      google::monitoring::dashboard::v1::GetDashboardRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DashboardsServiceConnectionIdempotencyPolicy::DeleteDashboard(
+    google::monitoring::dashboard::v1::DeleteDashboardRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteDashboard(
-      google::monitoring::dashboard::v1::DeleteDashboardRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency UpdateDashboard(
-      google::monitoring::dashboard::v1::UpdateDashboardRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency DashboardsServiceConnectionIdempotencyPolicy::UpdateDashboard(
+    google::monitoring::dashboard::v1::UpdateDashboardRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy>
 MakeDefaultDashboardsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultDashboardsServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<DashboardsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

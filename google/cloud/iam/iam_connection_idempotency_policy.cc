@@ -29,151 +29,145 @@ using ::google::cloud::Idempotency;
 
 IAMConnectionIdempotencyPolicy::~IAMConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultIAMConnectionIdempotencyPolicy
-    : public IAMConnectionIdempotencyPolicy {
- public:
-  ~DefaultIAMConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<IAMConnectionIdempotencyPolicy>
+IAMConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<IAMConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<IAMConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultIAMConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency IAMConnectionIdempotencyPolicy::ListServiceAccounts(
+    google::iam::admin::v1::ListServiceAccountsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListServiceAccounts(
-      google::iam::admin::v1::ListServiceAccountsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::GetServiceAccount(
+    google::iam::admin::v1::GetServiceAccountRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetServiceAccount(
-      google::iam::admin::v1::GetServiceAccountRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::CreateServiceAccount(
+    google::iam::admin::v1::CreateServiceAccountRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateServiceAccount(
-      google::iam::admin::v1::CreateServiceAccountRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::PatchServiceAccount(
+    google::iam::admin::v1::PatchServiceAccountRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency PatchServiceAccount(
-      google::iam::admin::v1::PatchServiceAccountRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::DeleteServiceAccount(
+    google::iam::admin::v1::DeleteServiceAccountRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteServiceAccount(
-      google::iam::admin::v1::DeleteServiceAccountRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::UndeleteServiceAccount(
+    google::iam::admin::v1::UndeleteServiceAccountRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UndeleteServiceAccount(
-      google::iam::admin::v1::UndeleteServiceAccountRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::EnableServiceAccount(
+    google::iam::admin::v1::EnableServiceAccountRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency EnableServiceAccount(
-      google::iam::admin::v1::EnableServiceAccountRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::DisableServiceAccount(
+    google::iam::admin::v1::DisableServiceAccountRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DisableServiceAccount(
-      google::iam::admin::v1::DisableServiceAccountRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::ListServiceAccountKeys(
+    google::iam::admin::v1::ListServiceAccountKeysRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListServiceAccountKeys(
-      google::iam::admin::v1::ListServiceAccountKeysRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::GetServiceAccountKey(
+    google::iam::admin::v1::GetServiceAccountKeyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetServiceAccountKey(
-      google::iam::admin::v1::GetServiceAccountKeyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::CreateServiceAccountKey(
+    google::iam::admin::v1::CreateServiceAccountKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateServiceAccountKey(
-      google::iam::admin::v1::CreateServiceAccountKeyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::UploadServiceAccountKey(
+    google::iam::admin::v1::UploadServiceAccountKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UploadServiceAccountKey(
-      google::iam::admin::v1::UploadServiceAccountKeyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::DeleteServiceAccountKey(
+    google::iam::admin::v1::DeleteServiceAccountKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteServiceAccountKey(
-      google::iam::admin::v1::DeleteServiceAccountKeyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::QueryGrantableRoles(
+    google::iam::admin::v1::QueryGrantableRolesRequest) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency QueryGrantableRoles(
-      google::iam::admin::v1::QueryGrantableRolesRequest) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::ListRoles(
+    google::iam::admin::v1::ListRolesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListRoles(google::iam::admin::v1::ListRolesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::GetRole(
+    google::iam::admin::v1::GetRoleRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetRole(google::iam::admin::v1::GetRoleRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::CreateRole(
+    google::iam::admin::v1::CreateRoleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateRole(
-      google::iam::admin::v1::CreateRoleRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::UpdateRole(
+    google::iam::admin::v1::UpdateRoleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateRole(
-      google::iam::admin::v1::UpdateRoleRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::DeleteRole(
+    google::iam::admin::v1::DeleteRoleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteRole(
-      google::iam::admin::v1::DeleteRoleRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::UndeleteRole(
+    google::iam::admin::v1::UndeleteRoleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UndeleteRole(
-      google::iam::admin::v1::UndeleteRoleRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::QueryTestablePermissions(
+    google::iam::admin::v1::QueryTestablePermissionsRequest) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency QueryTestablePermissions(
-      google::iam::admin::v1::QueryTestablePermissionsRequest) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMConnectionIdempotencyPolicy::QueryAuditableServices(
+    google::iam::admin::v1::QueryAuditableServicesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency QueryAuditableServices(
-      google::iam::admin::v1::QueryAuditableServicesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency LintPolicy(
-      google::iam::admin::v1::LintPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency IAMConnectionIdempotencyPolicy::LintPolicy(
+    google::iam::admin::v1::LintPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<IAMConnectionIdempotencyPolicy>
 MakeDefaultIAMConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultIAMConnectionIdempotencyPolicy>();
+  return absl::make_unique<IAMConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

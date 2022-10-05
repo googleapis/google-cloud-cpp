@@ -32,29 +32,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class FirewallConnectionIdempotencyPolicy {
  public:
-  virtual ~FirewallConnectionIdempotencyPolicy() = 0;
+  virtual ~FirewallConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<FirewallConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<FirewallConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListIngressRules(
-      google::appengine::v1::ListIngressRulesRequest request) = 0;
+      google::appengine::v1::ListIngressRulesRequest request);
 
   virtual google::cloud::Idempotency BatchUpdateIngressRules(
-      google::appengine::v1::BatchUpdateIngressRulesRequest const& request) = 0;
+      google::appengine::v1::BatchUpdateIngressRulesRequest const& request);
 
   virtual google::cloud::Idempotency CreateIngressRule(
-      google::appengine::v1::CreateIngressRuleRequest const& request) = 0;
+      google::appengine::v1::CreateIngressRuleRequest const& request);
 
   virtual google::cloud::Idempotency GetIngressRule(
-      google::appengine::v1::GetIngressRuleRequest const& request) = 0;
+      google::appengine::v1::GetIngressRuleRequest const& request);
 
   virtual google::cloud::Idempotency UpdateIngressRule(
-      google::appengine::v1::UpdateIngressRuleRequest const& request) = 0;
+      google::appengine::v1::UpdateIngressRuleRequest const& request);
 
   virtual google::cloud::Idempotency DeleteIngressRule(
-      google::appengine::v1::DeleteIngressRuleRequest const& request) = 0;
+      google::appengine::v1::DeleteIngressRuleRequest const& request);
 };
 
 std::unique_ptr<FirewallConnectionIdempotencyPolicy>

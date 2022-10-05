@@ -33,32 +33,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ClientConnectorServicesServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ClientConnectorServicesServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ClientConnectorServicesServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<
       ClientConnectorServicesServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListClientConnectorServices(
       google::cloud::beyondcorp::clientconnectorservices::v1::
-          ListClientConnectorServicesRequest request) = 0;
+          ListClientConnectorServicesRequest request);
 
   virtual google::cloud::Idempotency GetClientConnectorService(
       google::cloud::beyondcorp::clientconnectorservices::v1::
-          GetClientConnectorServiceRequest const& request) = 0;
+          GetClientConnectorServiceRequest const& request);
 
   virtual google::cloud::Idempotency CreateClientConnectorService(
       google::cloud::beyondcorp::clientconnectorservices::v1::
-          CreateClientConnectorServiceRequest const& request) = 0;
+          CreateClientConnectorServiceRequest const& request);
 
   virtual google::cloud::Idempotency UpdateClientConnectorService(
       google::cloud::beyondcorp::clientconnectorservices::v1::
-          UpdateClientConnectorServiceRequest const& request) = 0;
+          UpdateClientConnectorServiceRequest const& request);
 
   virtual google::cloud::Idempotency DeleteClientConnectorService(
       google::cloud::beyondcorp::clientconnectorservices::v1::
-          DeleteClientConnectorServiceRequest const& request) = 0;
+          DeleteClientConnectorServiceRequest const& request);
 };
 
 std::unique_ptr<ClientConnectorServicesServiceConnectionIdempotencyPolicy>

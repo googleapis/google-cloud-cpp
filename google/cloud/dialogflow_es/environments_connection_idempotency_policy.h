@@ -32,32 +32,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class EnvironmentsConnectionIdempotencyPolicy {
  public:
-  virtual ~EnvironmentsConnectionIdempotencyPolicy() = 0;
+  virtual ~EnvironmentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListEnvironments(
-      google::cloud::dialogflow::v2::ListEnvironmentsRequest request) = 0;
+      google::cloud::dialogflow::v2::ListEnvironmentsRequest request);
 
   virtual google::cloud::Idempotency GetEnvironment(
-      google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::GetEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency CreateEnvironment(
-      google::cloud::dialogflow::v2::CreateEnvironmentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency UpdateEnvironment(
-      google::cloud::dialogflow::v2::UpdateEnvironmentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency DeleteEnvironment(
-      google::cloud::dialogflow::v2::DeleteEnvironmentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request);
 
   virtual google::cloud::Idempotency GetEnvironmentHistory(
-      google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request) = 0;
+      google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request);
 };
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>

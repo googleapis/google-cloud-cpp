@@ -30,114 +30,107 @@ using ::google::cloud::Idempotency;
 DataMigrationServiceConnectionIdempotencyPolicy::
     ~DataMigrationServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultDataMigrationServiceConnectionIdempotencyPolicy
-    : public DataMigrationServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultDataMigrationServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy>
+DataMigrationServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<DataMigrationServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultDataMigrationServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::ListMigrationJobs(
+    google::cloud::clouddms::v1::ListMigrationJobsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListMigrationJobs(
-      google::cloud::clouddms::v1::ListMigrationJobsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::GetMigrationJob(
+    google::cloud::clouddms::v1::GetMigrationJobRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetMigrationJob(
-      google::cloud::clouddms::v1::GetMigrationJobRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::CreateMigrationJob(
+    google::cloud::clouddms::v1::CreateMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateMigrationJob(
-      google::cloud::clouddms::v1::CreateMigrationJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::UpdateMigrationJob(
+    google::cloud::clouddms::v1::UpdateMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateMigrationJob(
-      google::cloud::clouddms::v1::UpdateMigrationJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::DeleteMigrationJob(
+    google::cloud::clouddms::v1::DeleteMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteMigrationJob(
-      google::cloud::clouddms::v1::DeleteMigrationJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::StartMigrationJob(
+    google::cloud::clouddms::v1::StartMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StartMigrationJob(
-      google::cloud::clouddms::v1::StartMigrationJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::StopMigrationJob(
+    google::cloud::clouddms::v1::StopMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StopMigrationJob(
-      google::cloud::clouddms::v1::StopMigrationJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::ResumeMigrationJob(
+    google::cloud::clouddms::v1::ResumeMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ResumeMigrationJob(
-      google::cloud::clouddms::v1::ResumeMigrationJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::PromoteMigrationJob(
+    google::cloud::clouddms::v1::PromoteMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency PromoteMigrationJob(
-      google::cloud::clouddms::v1::PromoteMigrationJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::VerifyMigrationJob(
+    google::cloud::clouddms::v1::VerifyMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency VerifyMigrationJob(
-      google::cloud::clouddms::v1::VerifyMigrationJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::RestartMigrationJob(
+    google::cloud::clouddms::v1::RestartMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RestartMigrationJob(
-      google::cloud::clouddms::v1::RestartMigrationJobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::GenerateSshScript(
+    google::cloud::clouddms::v1::GenerateSshScriptRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GenerateSshScript(
-      google::cloud::clouddms::v1::GenerateSshScriptRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::ListConnectionProfiles(
+    google::cloud::clouddms::v1::ListConnectionProfilesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListConnectionProfiles(
-      google::cloud::clouddms::v1::ListConnectionProfilesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::GetConnectionProfile(
+    google::cloud::clouddms::v1::GetConnectionProfileRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetConnectionProfile(
-      google::cloud::clouddms::v1::GetConnectionProfileRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::CreateConnectionProfile(
+    google::cloud::clouddms::v1::CreateConnectionProfileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateConnectionProfile(
-      google::cloud::clouddms::v1::CreateConnectionProfileRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::UpdateConnectionProfile(
+    google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateConnectionProfile(
-      google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteConnectionProfile(
-      google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::DeleteConnectionProfile(
+    google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy>
 MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultDataMigrationServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<DataMigrationServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

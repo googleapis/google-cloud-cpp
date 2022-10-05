@@ -30,41 +30,29 @@ using ::google::cloud::Idempotency;
 TopicStatsServiceConnectionIdempotencyPolicy::
     ~TopicStatsServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultTopicStatsServiceConnectionIdempotencyPolicy
-    : public TopicStatsServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultTopicStatsServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy>
+TopicStatsServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<TopicStatsServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultTopicStatsServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeMessageStats(
+    google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ComputeMessageStats(
-      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeHeadCursor(
+    google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ComputeHeadCursor(
-      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ComputeTimeCursor(
-      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeTimeCursor(
+    google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy>
 MakeDefaultTopicStatsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultTopicStatsServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<TopicStatsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

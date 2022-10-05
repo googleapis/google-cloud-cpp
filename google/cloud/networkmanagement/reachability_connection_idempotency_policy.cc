@@ -30,61 +30,53 @@ using ::google::cloud::Idempotency;
 ReachabilityServiceConnectionIdempotencyPolicy::
     ~ReachabilityServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultReachabilityServiceConnectionIdempotencyPolicy
-    : public ReachabilityServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultReachabilityServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
+ReachabilityServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ReachabilityServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultReachabilityServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+ReachabilityServiceConnectionIdempotencyPolicy::ListConnectivityTests(
+    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListConnectivityTests(
-      google::cloud::networkmanagement::v1::ListConnectivityTestsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ReachabilityServiceConnectionIdempotencyPolicy::GetConnectivityTest(
+    google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetConnectivityTest(
-      google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ReachabilityServiceConnectionIdempotencyPolicy::CreateConnectivityTest(
+    google::cloud::networkmanagement::v1::
+        CreateConnectivityTestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateConnectivityTest(
-      google::cloud::networkmanagement::v1::
-          CreateConnectivityTestRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ReachabilityServiceConnectionIdempotencyPolicy::UpdateConnectivityTest(
+    google::cloud::networkmanagement::v1::
+        UpdateConnectivityTestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateConnectivityTest(
-      google::cloud::networkmanagement::v1::
-          UpdateConnectivityTestRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ReachabilityServiceConnectionIdempotencyPolicy::RerunConnectivityTest(
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RerunConnectivityTest(
-      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteConnectivityTest(
-      google::cloud::networkmanagement::v1::
-          DeleteConnectivityTestRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+ReachabilityServiceConnectionIdempotencyPolicy::DeleteConnectivityTest(
+    google::cloud::networkmanagement::v1::
+        DeleteConnectivityTestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
 MakeDefaultReachabilityServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultReachabilityServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<ReachabilityServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

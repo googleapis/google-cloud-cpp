@@ -30,30 +30,19 @@ using ::google::cloud::Idempotency;
 LookupServiceConnectionIdempotencyPolicy::
     ~LookupServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultLookupServiceConnectionIdempotencyPolicy
-    : public LookupServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultLookupServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>
+LookupServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<LookupServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<LookupServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultLookupServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
-
-  Idempotency ResolveService(
-      google::cloud::servicedirectory::v1::ResolveServiceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency LookupServiceConnectionIdempotencyPolicy::ResolveService(
+    google::cloud::servicedirectory::v1::ResolveServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>
 MakeDefaultLookupServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultLookupServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<LookupServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

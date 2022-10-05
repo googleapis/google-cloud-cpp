@@ -32,27 +32,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MetricsScopesConnectionIdempotencyPolicy {
  public:
-  virtual ~MetricsScopesConnectionIdempotencyPolicy() = 0;
+  virtual ~MetricsScopesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency GetMetricsScope(
       google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListMetricsScopesByMonitoredProject(
       google::monitoring::metricsscope::v1::
-          ListMetricsScopesByMonitoredProjectRequest const& request) = 0;
+          ListMetricsScopesByMonitoredProjectRequest const& request);
 
   virtual google::cloud::Idempotency CreateMonitoredProject(
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteMonitoredProject(
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy>

@@ -32,23 +32,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class BatchControllerConnectionIdempotencyPolicy {
  public:
-  virtual ~BatchControllerConnectionIdempotencyPolicy() = 0;
+  virtual ~BatchControllerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<BatchControllerConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateBatch(
-      google::cloud::dataproc::v1::CreateBatchRequest const& request) = 0;
+      google::cloud::dataproc::v1::CreateBatchRequest const& request);
 
   virtual google::cloud::Idempotency GetBatch(
-      google::cloud::dataproc::v1::GetBatchRequest const& request) = 0;
+      google::cloud::dataproc::v1::GetBatchRequest const& request);
 
   virtual google::cloud::Idempotency ListBatches(
-      google::cloud::dataproc::v1::ListBatchesRequest request) = 0;
+      google::cloud::dataproc::v1::ListBatchesRequest request);
 
   virtual google::cloud::Idempotency DeleteBatch(
-      google::cloud::dataproc::v1::DeleteBatchRequest const& request) = 0;
+      google::cloud::dataproc::v1::DeleteBatchRequest const& request);
 };
 
 std::unique_ptr<BatchControllerConnectionIdempotencyPolicy>

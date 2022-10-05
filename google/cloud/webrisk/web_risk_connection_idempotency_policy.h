@@ -32,24 +32,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class WebRiskServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~WebRiskServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~WebRiskServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ComputeThreatListDiff(
-      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&
-          request) = 0;
+      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request);
 
   virtual google::cloud::Idempotency SearchUris(
-      google::cloud::webrisk::v1::SearchUrisRequest const& request) = 0;
+      google::cloud::webrisk::v1::SearchUrisRequest const& request);
 
   virtual google::cloud::Idempotency SearchHashes(
-      google::cloud::webrisk::v1::SearchHashesRequest const& request) = 0;
+      google::cloud::webrisk::v1::SearchHashesRequest const& request);
 
   virtual google::cloud::Idempotency CreateSubmission(
-      google::cloud::webrisk::v1::CreateSubmissionRequest const& request) = 0;
+      google::cloud::webrisk::v1::CreateSubmissionRequest const& request);
 };
 
 std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>

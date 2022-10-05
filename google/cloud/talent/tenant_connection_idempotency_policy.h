@@ -32,26 +32,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TenantServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~TenantServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~TenantServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<TenantServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateTenant(
-      google::cloud::talent::v4::CreateTenantRequest const& request) = 0;
+      google::cloud::talent::v4::CreateTenantRequest const& request);
 
   virtual google::cloud::Idempotency GetTenant(
-      google::cloud::talent::v4::GetTenantRequest const& request) = 0;
+      google::cloud::talent::v4::GetTenantRequest const& request);
 
   virtual google::cloud::Idempotency UpdateTenant(
-      google::cloud::talent::v4::UpdateTenantRequest const& request) = 0;
+      google::cloud::talent::v4::UpdateTenantRequest const& request);
 
   virtual google::cloud::Idempotency DeleteTenant(
-      google::cloud::talent::v4::DeleteTenantRequest const& request) = 0;
+      google::cloud::talent::v4::DeleteTenantRequest const& request);
 
   virtual google::cloud::Idempotency ListTenants(
-      google::cloud::talent::v4::ListTenantsRequest request) = 0;
+      google::cloud::talent::v4::ListTenantsRequest request);
 };
 
 std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>

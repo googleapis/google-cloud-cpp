@@ -32,43 +32,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TpuConnectionIdempotencyPolicy {
  public:
-  virtual ~TpuConnectionIdempotencyPolicy() = 0;
+  virtual ~TpuConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TpuConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<TpuConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListNodes(
-      google::cloud::tpu::v1::ListNodesRequest request) = 0;
+      google::cloud::tpu::v1::ListNodesRequest request);
 
   virtual google::cloud::Idempotency GetNode(
-      google::cloud::tpu::v1::GetNodeRequest const& request) = 0;
+      google::cloud::tpu::v1::GetNodeRequest const& request);
 
   virtual google::cloud::Idempotency CreateNode(
-      google::cloud::tpu::v1::CreateNodeRequest const& request) = 0;
+      google::cloud::tpu::v1::CreateNodeRequest const& request);
 
   virtual google::cloud::Idempotency DeleteNode(
-      google::cloud::tpu::v1::DeleteNodeRequest const& request) = 0;
+      google::cloud::tpu::v1::DeleteNodeRequest const& request);
 
   virtual google::cloud::Idempotency ReimageNode(
-      google::cloud::tpu::v1::ReimageNodeRequest const& request) = 0;
+      google::cloud::tpu::v1::ReimageNodeRequest const& request);
 
   virtual google::cloud::Idempotency StopNode(
-      google::cloud::tpu::v1::StopNodeRequest const& request) = 0;
+      google::cloud::tpu::v1::StopNodeRequest const& request);
 
   virtual google::cloud::Idempotency StartNode(
-      google::cloud::tpu::v1::StartNodeRequest const& request) = 0;
+      google::cloud::tpu::v1::StartNodeRequest const& request);
 
   virtual google::cloud::Idempotency ListTensorFlowVersions(
-      google::cloud::tpu::v1::ListTensorFlowVersionsRequest request) = 0;
+      google::cloud::tpu::v1::ListTensorFlowVersionsRequest request);
 
   virtual google::cloud::Idempotency GetTensorFlowVersion(
-      google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) = 0;
+      google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request);
 
   virtual google::cloud::Idempotency ListAcceleratorTypes(
-      google::cloud::tpu::v1::ListAcceleratorTypesRequest request) = 0;
+      google::cloud::tpu::v1::ListAcceleratorTypesRequest request);
 
   virtual google::cloud::Idempotency GetAcceleratorType(
-      google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) = 0;
+      google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request);
 };
 
 std::unique_ptr<TpuConnectionIdempotencyPolicy>

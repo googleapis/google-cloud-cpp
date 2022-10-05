@@ -32,49 +32,42 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class EntityTypesConnectionIdempotencyPolicy {
  public:
-  virtual ~EntityTypesConnectionIdempotencyPolicy() = 0;
+  virtual ~EntityTypesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<EntityTypesConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<EntityTypesConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency ListEntityTypes(
-      google::cloud::dialogflow::v2::ListEntityTypesRequest request) = 0;
+      google::cloud::dialogflow::v2::ListEntityTypesRequest request);
 
   virtual google::cloud::Idempotency GetEntityType(
-      google::cloud::dialogflow::v2::GetEntityTypeRequest const& request) = 0;
+      google::cloud::dialogflow::v2::GetEntityTypeRequest const& request);
 
   virtual google::cloud::Idempotency CreateEntityType(
-      google::cloud::dialogflow::v2::CreateEntityTypeRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request);
 
   virtual google::cloud::Idempotency UpdateEntityType(
-      google::cloud::dialogflow::v2::UpdateEntityTypeRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request);
 
   virtual google::cloud::Idempotency DeleteEntityType(
-      google::cloud::dialogflow::v2::DeleteEntityTypeRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request);
 
   virtual google::cloud::Idempotency BatchUpdateEntityTypes(
       google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency BatchDeleteEntityTypes(
       google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency BatchCreateEntities(
-      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request);
 
   virtual google::cloud::Idempotency BatchUpdateEntities(
-      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request);
 
   virtual google::cloud::Idempotency BatchDeleteEntities(
-      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request);
 };
 
 std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>

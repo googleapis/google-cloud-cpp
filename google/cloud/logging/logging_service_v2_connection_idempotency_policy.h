@@ -32,26 +32,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class LoggingServiceV2ConnectionIdempotencyPolicy {
  public:
-  virtual ~LoggingServiceV2ConnectionIdempotencyPolicy() = 0;
+  virtual ~LoggingServiceV2ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency DeleteLog(
-      google::logging::v2::DeleteLogRequest const& request) = 0;
+      google::logging::v2::DeleteLogRequest const& request);
 
   virtual google::cloud::Idempotency WriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request) = 0;
+      google::logging::v2::WriteLogEntriesRequest const& request);
 
   virtual google::cloud::Idempotency ListLogEntries(
-      google::logging::v2::ListLogEntriesRequest request) = 0;
+      google::logging::v2::ListLogEntriesRequest request);
 
   virtual google::cloud::Idempotency ListMonitoredResourceDescriptors(
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest request) = 0;
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
 
   virtual google::cloud::Idempotency ListLogs(
-      google::logging::v2::ListLogsRequest request) = 0;
+      google::logging::v2::ListLogsRequest request);
 };
 
 std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>

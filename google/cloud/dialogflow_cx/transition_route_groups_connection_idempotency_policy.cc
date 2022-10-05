@@ -30,55 +30,48 @@ using ::google::cloud::Idempotency;
 TransitionRouteGroupsConnectionIdempotencyPolicy::
     ~TransitionRouteGroupsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultTransitionRouteGroupsConnectionIdempotencyPolicy
-    : public TransitionRouteGroupsConnectionIdempotencyPolicy {
- public:
-  ~DefaultTransitionRouteGroupsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>
+TransitionRouteGroupsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<TransitionRouteGroupsConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultTransitionRouteGroupsConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+TransitionRouteGroupsConnectionIdempotencyPolicy::ListTransitionRouteGroups(
+    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTransitionRouteGroups(
-      google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+TransitionRouteGroupsConnectionIdempotencyPolicy::GetTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+TransitionRouteGroupsConnectionIdempotencyPolicy::CreateTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::
+        CreateTransitionRouteGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          CreateTransitionRouteGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+TransitionRouteGroupsConnectionIdempotencyPolicy::UpdateTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::
+        UpdateTransitionRouteGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          UpdateTransitionRouteGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          DeleteTransitionRouteGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+TransitionRouteGroupsConnectionIdempotencyPolicy::DeleteTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::
+        DeleteTransitionRouteGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>
 MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultTransitionRouteGroupsConnectionIdempotencyPolicy>();
+  return absl::make_unique<TransitionRouteGroupsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

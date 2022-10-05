@@ -30,82 +30,70 @@ using ::google::cloud::Idempotency;
 ProjectsConnectionIdempotencyPolicy::~ProjectsConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultProjectsConnectionIdempotencyPolicy
-    : public ProjectsConnectionIdempotencyPolicy {
- public:
-  ~DefaultProjectsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
+ProjectsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ProjectsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ProjectsConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultProjectsConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ProjectsConnectionIdempotencyPolicy::GetProject(
+    google::cloud::resourcemanager::v3::GetProjectRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetProject(
-      google::cloud::resourcemanager::v3::GetProjectRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProjectsConnectionIdempotencyPolicy::ListProjects(
+    google::cloud::resourcemanager::v3::ListProjectsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListProjects(
-      google::cloud::resourcemanager::v3::ListProjectsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProjectsConnectionIdempotencyPolicy::SearchProjects(
+    google::cloud::resourcemanager::v3::SearchProjectsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency SearchProjects(
-      google::cloud::resourcemanager::v3::SearchProjectsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProjectsConnectionIdempotencyPolicy::CreateProject(
+    google::cloud::resourcemanager::v3::CreateProjectRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateProject(
-      google::cloud::resourcemanager::v3::CreateProjectRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProjectsConnectionIdempotencyPolicy::UpdateProject(
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateProject(
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProjectsConnectionIdempotencyPolicy::MoveProject(
+    google::cloud::resourcemanager::v3::MoveProjectRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency MoveProject(
-      google::cloud::resourcemanager::v3::MoveProjectRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProjectsConnectionIdempotencyPolicy::DeleteProject(
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteProject(
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProjectsConnectionIdempotencyPolicy::UndeleteProject(
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UndeleteProject(
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProjectsConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProjectsConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
-
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ProjectsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
 MakeDefaultProjectsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultProjectsConnectionIdempotencyPolicy>();
+  return absl::make_unique<ProjectsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

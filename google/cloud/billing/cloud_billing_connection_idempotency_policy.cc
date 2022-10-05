@@ -30,77 +30,65 @@ using ::google::cloud::Idempotency;
 CloudBillingConnectionIdempotencyPolicy::
     ~CloudBillingConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCloudBillingConnectionIdempotencyPolicy
-    : public CloudBillingConnectionIdempotencyPolicy {
- public:
-  ~DefaultCloudBillingConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CloudBillingConnectionIdempotencyPolicy>
+CloudBillingConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CloudBillingConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CloudBillingConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultCloudBillingConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency CloudBillingConnectionIdempotencyPolicy::GetBillingAccount(
+    google::cloud::billing::v1::GetBillingAccountRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetBillingAccount(
-      google::cloud::billing::v1::GetBillingAccountRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBillingConnectionIdempotencyPolicy::ListBillingAccounts(
+    google::cloud::billing::v1::ListBillingAccountsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListBillingAccounts(
-      google::cloud::billing::v1::ListBillingAccountsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBillingConnectionIdempotencyPolicy::UpdateBillingAccount(
+    google::cloud::billing::v1::UpdateBillingAccountRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateBillingAccount(
-      google::cloud::billing::v1::UpdateBillingAccountRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBillingConnectionIdempotencyPolicy::CreateBillingAccount(
+    google::cloud::billing::v1::CreateBillingAccountRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateBillingAccount(
-      google::cloud::billing::v1::CreateBillingAccountRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CloudBillingConnectionIdempotencyPolicy::ListProjectBillingInfo(
+    google::cloud::billing::v1::ListProjectBillingInfoRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListProjectBillingInfo(
-      google::cloud::billing::v1::ListProjectBillingInfoRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBillingConnectionIdempotencyPolicy::GetProjectBillingInfo(
+    google::cloud::billing::v1::GetProjectBillingInfoRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetProjectBillingInfo(
-      google::cloud::billing::v1::GetProjectBillingInfoRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBillingConnectionIdempotencyPolicy::UpdateProjectBillingInfo(
+    google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency UpdateProjectBillingInfo(
-      google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBillingConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CloudBillingConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
-
-  Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency CloudBillingConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<CloudBillingConnectionIdempotencyPolicy>
 MakeDefaultCloudBillingConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultCloudBillingConnectionIdempotencyPolicy>();
+  return absl::make_unique<CloudBillingConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

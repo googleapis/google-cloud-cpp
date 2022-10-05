@@ -32,18 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class FulfillmentsConnectionIdempotencyPolicy {
  public:
-  virtual ~FulfillmentsConnectionIdempotencyPolicy() = 0;
+  virtual ~FulfillmentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<FulfillmentsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency GetFulfillment(
-      google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) = 0;
+      google::cloud::dialogflow::v2::GetFulfillmentRequest const& request);
 
   virtual google::cloud::Idempotency UpdateFulfillment(
-      google::cloud::dialogflow::v2::UpdateFulfillmentRequest const&
-          request) = 0;
+      google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request);
 };
 
 std::unique_ptr<FulfillmentsConnectionIdempotencyPolicy>

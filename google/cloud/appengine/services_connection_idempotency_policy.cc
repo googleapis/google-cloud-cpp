@@ -30,42 +30,34 @@ using ::google::cloud::Idempotency;
 ServicesConnectionIdempotencyPolicy::~ServicesConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultServicesConnectionIdempotencyPolicy
-    : public ServicesConnectionIdempotencyPolicy {
- public:
-  ~DefaultServicesConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ServicesConnectionIdempotencyPolicy>
+ServicesConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ServicesConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ServicesConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultServicesConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ServicesConnectionIdempotencyPolicy::ListServices(
+    google::appengine::v1::ListServicesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListServices(
-      google::appengine::v1::ListServicesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ServicesConnectionIdempotencyPolicy::GetService(
+    google::appengine::v1::GetServiceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetService(
-      google::appengine::v1::GetServiceRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ServicesConnectionIdempotencyPolicy::UpdateService(
+    google::appengine::v1::UpdateServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateService(
-      google::appengine::v1::UpdateServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteService(
-      google::appengine::v1::DeleteServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ServicesConnectionIdempotencyPolicy::DeleteService(
+    google::appengine::v1::DeleteServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ServicesConnectionIdempotencyPolicy>
 MakeDefaultServicesConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultServicesConnectionIdempotencyPolicy>();
+  return absl::make_unique<ServicesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

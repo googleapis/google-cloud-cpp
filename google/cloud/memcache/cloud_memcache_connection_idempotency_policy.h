@@ -32,32 +32,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CloudMemcacheConnectionIdempotencyPolicy {
  public:
-  virtual ~CloudMemcacheConnectionIdempotencyPolicy() = 0;
+  virtual ~CloudMemcacheConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListInstances(
-      google::cloud::memcache::v1::ListInstancesRequest request) = 0;
+      google::cloud::memcache::v1::ListInstancesRequest request);
 
   virtual google::cloud::Idempotency GetInstance(
-      google::cloud::memcache::v1::GetInstanceRequest const& request) = 0;
+      google::cloud::memcache::v1::GetInstanceRequest const& request);
 
   virtual google::cloud::Idempotency CreateInstance(
-      google::cloud::memcache::v1::CreateInstanceRequest const& request) = 0;
+      google::cloud::memcache::v1::CreateInstanceRequest const& request);
 
   virtual google::cloud::Idempotency UpdateInstance(
-      google::cloud::memcache::v1::UpdateInstanceRequest const& request) = 0;
+      google::cloud::memcache::v1::UpdateInstanceRequest const& request);
 
   virtual google::cloud::Idempotency UpdateParameters(
-      google::cloud::memcache::v1::UpdateParametersRequest const& request) = 0;
+      google::cloud::memcache::v1::UpdateParametersRequest const& request);
 
   virtual google::cloud::Idempotency DeleteInstance(
-      google::cloud::memcache::v1::DeleteInstanceRequest const& request) = 0;
+      google::cloud::memcache::v1::DeleteInstanceRequest const& request);
 
   virtual google::cloud::Idempotency ApplyParameters(
-      google::cloud::memcache::v1::ApplyParametersRequest const& request) = 0;
+      google::cloud::memcache::v1::ApplyParametersRequest const& request);
 };
 
 std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy>

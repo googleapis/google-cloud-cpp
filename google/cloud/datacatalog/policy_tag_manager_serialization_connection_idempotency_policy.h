@@ -32,24 +32,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class PolicyTagManagerSerializationConnectionIdempotencyPolicy {
  public:
-  virtual ~PolicyTagManagerSerializationConnectionIdempotencyPolicy() = 0;
+  virtual ~PolicyTagManagerSerializationConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<
       PolicyTagManagerSerializationConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ReplaceTaxonomy(
-      google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&
-          request) = 0;
+      google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request);
 
   virtual google::cloud::Idempotency ImportTaxonomies(
-      google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&
-          request) = 0;
+      google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request);
 
   virtual google::cloud::Idempotency ExportTaxonomies(
-      google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&
-          request) = 0;
+      google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request);
 };
 
 std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
