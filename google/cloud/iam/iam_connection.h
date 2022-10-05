@@ -108,6 +108,12 @@ class IAMConnection {
   virtual Status DeleteServiceAccountKey(
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
 
+  virtual Status DisableServiceAccountKey(
+      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request);
+
+  virtual Status EnableServiceAccountKey(
+      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request);
+
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
 

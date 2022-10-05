@@ -99,6 +99,14 @@ class IAMConnectionImpl : public iam::IAMConnection {
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request)
       override;
 
+  Status DisableServiceAccountKey(
+      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request)
+      override;
+
+  Status EnableServiceAccountKey(
+      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request)
+      override;
+
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override;
 

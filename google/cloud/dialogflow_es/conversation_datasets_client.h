@@ -252,12 +252,12 @@ class ConversationDatasetsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L313}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L318}
   ///
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L247}
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L313}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L318}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>
@@ -280,12 +280,12 @@ class ConversationDatasetsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L313}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L318}
   ///
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L247}
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L313}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L318}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>

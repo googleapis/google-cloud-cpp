@@ -58,6 +58,16 @@ AssuredWorkloadsServiceAuth::UpdateWorkload(
   return child_->UpdateWorkload(context, request);
 }
 
+StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+AssuredWorkloadsServiceAuth::RestrictAllowedResources(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestrictAllowedResources(context, request);
+}
+
 Status AssuredWorkloadsServiceAuth::DeleteWorkload(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
@@ -82,6 +92,34 @@ AssuredWorkloadsServiceAuth::ListWorkloads(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListWorkloads(context, request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
+AssuredWorkloadsServiceAuth::ListViolations(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListViolations(context, request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::Violation>
+AssuredWorkloadsServiceAuth::GetViolation(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetViolation(context, request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+AssuredWorkloadsServiceAuth::AcknowledgeViolation(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AcknowledgeViolation(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

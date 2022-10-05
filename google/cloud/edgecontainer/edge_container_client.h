@@ -328,12 +328,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   /// [google.cloud.edgecontainer.v1.ListNodePoolsRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L364}
   /// [google.cloud.edgecontainer.v1.NodePool]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   StreamRange<google::cloud::edgecontainer::v1::NodePool> ListNodePools(
       std::string const& parent, Options opts = {});
@@ -346,12 +346,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   /// [google.cloud.edgecontainer.v1.ListNodePoolsRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L364}
   /// [google.cloud.edgecontainer.v1.NodePool]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   StreamRange<google::cloud::edgecontainer::v1::NodePool> ListNodePools(
       google::cloud::edgecontainer::v1::ListNodePoolsRequest request,
@@ -364,12 +364,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   /// [google.cloud.edgecontainer.v1.GetNodePoolRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L399}
   /// [google.cloud.edgecontainer.v1.NodePool]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   StatusOr<google::cloud::edgecontainer::v1::NodePool> GetNodePool(
       std::string const& name, Options opts = {});
@@ -382,12 +382,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   /// [google.cloud.edgecontainer.v1.GetNodePoolRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L399}
   /// [google.cloud.edgecontainer.v1.NodePool]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   StatusOr<google::cloud::edgecontainer::v1::NodePool> GetNodePool(
       google::cloud::edgecontainer::v1::GetNodePoolRequest const& request,
@@ -404,12 +404,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   /// [google.cloud.edgecontainer.v1.CreateNodePoolRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L410}
   /// [google.cloud.edgecontainer.v1.NodePool]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> CreateNodePool(
       std::string const& parent,
@@ -424,12 +424,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   /// [google.cloud.edgecontainer.v1.CreateNodePoolRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L410}
   /// [google.cloud.edgecontainer.v1.NodePool]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> CreateNodePool(
       google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request,
@@ -448,12 +448,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   /// [google.cloud.edgecontainer.v1.UpdateNodePoolRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L432}
   /// [google.cloud.edgecontainer.v1.NodePool]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
       google::cloud::edgecontainer::v1::NodePool const& node_pool,
@@ -467,12 +467,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   /// [google.cloud.edgecontainer.v1.UpdateNodePoolRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L432}
   /// [google.cloud.edgecontainer.v1.NodePool]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L157}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
       google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request,
@@ -523,12 +523,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::Machine,google/cloud/edgecontainer/v1/resources.proto#L236}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::Machine,google/cloud/edgecontainer/v1/resources.proto#L226}
   ///
   /// [google.cloud.edgecontainer.v1.ListMachinesRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L466}
   /// [google.cloud.edgecontainer.v1.Machine]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L236}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L226}
   ///
   StreamRange<google::cloud::edgecontainer::v1::Machine> ListMachines(
       std::string const& parent, Options opts = {});
@@ -541,12 +541,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::Machine,google/cloud/edgecontainer/v1/resources.proto#L236}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::Machine,google/cloud/edgecontainer/v1/resources.proto#L226}
   ///
   /// [google.cloud.edgecontainer.v1.ListMachinesRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L466}
   /// [google.cloud.edgecontainer.v1.Machine]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L236}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L226}
   ///
   StreamRange<google::cloud::edgecontainer::v1::Machine> ListMachines(
       google::cloud::edgecontainer::v1::ListMachinesRequest request,
@@ -559,12 +559,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::Machine,google/cloud/edgecontainer/v1/resources.proto#L236}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::Machine,google/cloud/edgecontainer/v1/resources.proto#L226}
   ///
   /// [google.cloud.edgecontainer.v1.GetMachineRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L501}
   /// [google.cloud.edgecontainer.v1.Machine]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L236}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L226}
   ///
   StatusOr<google::cloud::edgecontainer::v1::Machine> GetMachine(
       std::string const& name, Options opts = {});
@@ -577,12 +577,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::Machine,google/cloud/edgecontainer/v1/resources.proto#L236}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::Machine,google/cloud/edgecontainer/v1/resources.proto#L226}
   ///
   /// [google.cloud.edgecontainer.v1.GetMachineRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L501}
   /// [google.cloud.edgecontainer.v1.Machine]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L236}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L226}
   ///
   StatusOr<google::cloud::edgecontainer::v1::Machine> GetMachine(
       google::cloud::edgecontainer::v1::GetMachineRequest const& request,
@@ -596,12 +596,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   /// [google.cloud.edgecontainer.v1.ListVpnConnectionsRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L512}
   /// [google.cloud.edgecontainer.v1.VpnConnection]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   StreamRange<google::cloud::edgecontainer::v1::VpnConnection>
   ListVpnConnections(std::string const& parent, Options opts = {});
@@ -614,12 +614,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   /// [google.cloud.edgecontainer.v1.ListVpnConnectionsRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L512}
   /// [google.cloud.edgecontainer.v1.VpnConnection]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   StreamRange<google::cloud::edgecontainer::v1::VpnConnection>
   ListVpnConnections(
@@ -633,12 +633,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   /// [google.cloud.edgecontainer.v1.GetVpnConnectionRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L547}
   /// [google.cloud.edgecontainer.v1.VpnConnection]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   StatusOr<google::cloud::edgecontainer::v1::VpnConnection> GetVpnConnection(
       std::string const& name, Options opts = {});
@@ -651,12 +651,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   /// [google.cloud.edgecontainer.v1.GetVpnConnectionRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L547}
   /// [google.cloud.edgecontainer.v1.VpnConnection]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   StatusOr<google::cloud::edgecontainer::v1::VpnConnection> GetVpnConnection(
       google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request,
@@ -672,12 +672,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   /// [google.cloud.edgecontainer.v1.CreateVpnConnectionRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L558}
   /// [google.cloud.edgecontainer.v1.VpnConnection]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
   CreateVpnConnection(
@@ -693,12 +693,12 @@ class EdgeContainerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_link{google::cloud::edgecontainer::v1::VpnConnection,google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   /// [google.cloud.edgecontainer.v1.CreateVpnConnectionRequest]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L558}
   /// [google.cloud.edgecontainer.v1.VpnConnection]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L273}
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
   CreateVpnConnection(

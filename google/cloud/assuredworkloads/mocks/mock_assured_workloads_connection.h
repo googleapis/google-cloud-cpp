@@ -59,6 +59,13 @@ class MockAssuredWorkloadsServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::
+                           RestrictAllowedResourcesResponse>,
+              RestrictAllowedResources,
+              (google::cloud::assuredworkloads::v1::
+                   RestrictAllowedResourcesRequest const& request),
+              (override));
+
   MOCK_METHOD(Status, DeleteWorkload,
               (google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
                    request),
@@ -72,6 +79,25 @@ class MockAssuredWorkloadsServiceConnection
   MOCK_METHOD(
       StreamRange<google::cloud::assuredworkloads::v1::Workload>, ListWorkloads,
       (google::cloud::assuredworkloads::v1::ListWorkloadsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::assuredworkloads::v1::Violation>,
+      ListViolations,
+      (google::cloud::assuredworkloads::v1::ListViolationsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::assuredworkloads::v1::Violation>, GetViolation,
+      (google::cloud::assuredworkloads::v1::GetViolationRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>,
+      AcknowledgeViolation,
+      (google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+           request),
       (override));
 };
 

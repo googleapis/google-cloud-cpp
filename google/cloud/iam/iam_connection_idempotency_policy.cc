@@ -99,6 +99,16 @@ Idempotency IAMConnectionIdempotencyPolicy::DeleteServiceAccountKey(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency IAMConnectionIdempotencyPolicy::DisableServiceAccountKey(
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency IAMConnectionIdempotencyPolicy::EnableServiceAccountKey(
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency IAMConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;

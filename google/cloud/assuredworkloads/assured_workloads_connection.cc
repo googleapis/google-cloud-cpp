@@ -50,6 +50,13 @@ AssuredWorkloadsServiceConnection::UpdateWorkload(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+AssuredWorkloadsServiceConnection::RestrictAllowedResources(
+    google::cloud::assuredworkloads::v1::
+        RestrictAllowedResourcesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 Status AssuredWorkloadsServiceConnection::DeleteWorkload(
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -67,6 +74,26 @@ AssuredWorkloadsServiceConnection::ListWorkloads(
         ListWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::assuredworkloads::v1::Workload>>();
+}
+
+StreamRange<google::cloud::assuredworkloads::v1::Violation>
+AssuredWorkloadsServiceConnection::ListViolations(
+    google::cloud::assuredworkloads::v1::
+        ListViolationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::assuredworkloads::v1::Violation>>();
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::Violation>
+AssuredWorkloadsServiceConnection::GetViolation(
+    google::cloud::assuredworkloads::v1::GetViolationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+AssuredWorkloadsServiceConnection::AcknowledgeViolation(
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<AssuredWorkloadsServiceConnection>

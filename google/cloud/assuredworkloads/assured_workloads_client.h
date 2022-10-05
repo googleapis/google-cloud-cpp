@@ -98,12 +98,12 @@ class AssuredWorkloadsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   /// [google.cloud.assuredworkloads.v1.CreateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L101}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L133}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(std::string const& parent,
@@ -114,16 +114,16 @@ class AssuredWorkloadsServiceClient {
   /// Creates Assured Workload.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::CreateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L101}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::CreateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L133}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   /// [google.cloud.assuredworkloads.v1.CreateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L101}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L133}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(
@@ -137,19 +137,19 @@ class AssuredWorkloadsServiceClient {
   /// Only one update operation per workload can be in progress.
   ///
   /// @param workload  Required. The workload to update.
-  ///  The workload’s `name` field is used to identify the workload to be
+  ///  The workload's `name` field is used to identify the workload to be
   ///  updated. Format:
   ///  organizations/{org_id}/locations/{location_id}/workloads/{workload_id}
   /// @param update_mask  Required. The list of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   /// [google.cloud.assuredworkloads.v1.UpdateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L122}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L154}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
       google::cloud::assuredworkloads::v1::Workload const& workload,
@@ -162,20 +162,46 @@ class AssuredWorkloadsServiceClient {
   /// Only one update operation per workload can be in progress.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::UpdateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L122}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::UpdateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L154}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   /// [google.cloud.assuredworkloads.v1.UpdateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L122}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L154}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request,
       Options opts = {});
+
+  ///
+  /// Restrict the list of resources allowed in the Workload environment.
+  /// The current list of allowed products can be found at
+  /// https://cloud.google.com/assured-workloads/docs/supported-products
+  /// In addition to assuredworkloads.workload.update permission, the user
+  /// should also have orgpolicy.policy.set permission on the folder resource to
+  /// use this functionality.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L526}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L555}
+  ///
+  /// [google.cloud.assuredworkloads.v1.RestrictAllowedResourcesRequest]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L526}
+  /// [google.cloud.assuredworkloads.v1.RestrictAllowedResourcesResponse]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L555}
+  ///
+  StatusOr<
+      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(google::cloud::assuredworkloads::v1::
+                               RestrictAllowedResourcesRequest const& request,
+                           Options opts = {});
 
   ///
   /// Deletes the workload. Make sure that workload's direct children are
@@ -189,7 +215,7 @@ class AssuredWorkloadsServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L135}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L166}
   ///
   Status DeleteWorkload(std::string const& name, Options opts = {});
 
@@ -199,12 +225,12 @@ class AssuredWorkloadsServiceClient {
   /// FAILED_PRECONDITION error.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::DeleteWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L135}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::DeleteWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L166}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L135}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L166}
   ///
   Status DeleteWorkload(
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request,
@@ -214,20 +240,20 @@ class AssuredWorkloadsServiceClient {
   /// Gets Assured Workload associated with a CRM Node
   ///
   /// @param name  Required. The resource name of the Workload to fetch. This is
-  /// the
-  ///  workloads's relative path in the API, formatted as
+  /// the workloads's
+  ///  relative path in the API, formatted as
   ///  "organizations/{organization_id}/locations/{location_id}/workloads/{workload_id}".
   ///  For example,
   ///  "organizations/123/locations/us-east1/workloads/assured-workload-1".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   /// [google.cloud.assuredworkloads.v1.GetWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L152}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L183}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
       std::string const& name, Options opts = {});
@@ -236,16 +262,16 @@ class AssuredWorkloadsServiceClient {
   /// Gets Assured Workload associated with a CRM Node
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::GetWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L152}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::GetWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L183}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   /// [google.cloud.assuredworkloads.v1.GetWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L152}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L183}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
       google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request,
@@ -259,12 +285,12 @@ class AssuredWorkloadsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   /// [google.cloud.assuredworkloads.v1.ListWorkloadsRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L167}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
       std::string const& parent, Options opts = {});
@@ -273,19 +299,128 @@ class AssuredWorkloadsServiceClient {
   /// Lists Assured Workloads under a CRM Node.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::ListWorkloadsRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L167}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::ListWorkloadsRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   /// [google.cloud.assuredworkloads.v1.ListWorkloadsRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L167}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
       google::cloud::assuredworkloads::v1::ListWorkloadsRequest request,
+      Options opts = {});
+
+  ///
+  /// Lists the Violations in the AssuredWorkload Environment.
+  /// Callers may also choose to read across multiple Workloads as per
+  /// [AIP-159](https://google.aip.dev/159) by using '-' (the hyphen or dash
+  /// character) as a wildcard character instead of workload-id in the parent.
+  /// Format `organizations/{org_id}/locations/{location}/workloads/-`
+  ///
+  /// @param parent  Required. The Workload name.
+  ///  Format
+  ///  `organizations/{org_id}/locations/{location}/workloads/{workload}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Violation,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L642}
+  ///
+  /// [google.cloud.assuredworkloads.v1.ListViolationsRequest]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L594}
+  /// [google.cloud.assuredworkloads.v1.Violation]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L642}
+  ///
+  StreamRange<google::cloud::assuredworkloads::v1::Violation> ListViolations(
+      std::string const& parent, Options opts = {});
+
+  ///
+  /// Lists the Violations in the AssuredWorkload Environment.
+  /// Callers may also choose to read across multiple Workloads as per
+  /// [AIP-159](https://google.aip.dev/159) by using '-' (the hyphen or dash
+  /// character) as a wildcard character instead of workload-id in the parent.
+  /// Format `organizations/{org_id}/locations/{location}/workloads/-`
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::ListViolationsRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L594}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Violation,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L642}
+  ///
+  /// [google.cloud.assuredworkloads.v1.ListViolationsRequest]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L594}
+  /// [google.cloud.assuredworkloads.v1.Violation]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L642}
+  ///
+  StreamRange<google::cloud::assuredworkloads::v1::Violation> ListViolations(
+      google::cloud::assuredworkloads::v1::ListViolationsRequest request,
+      Options opts = {});
+
+  ///
+  /// Retrieves Assured Workload Violation based on ID.
+  ///
+  /// @param name  Required. The resource name of the Violation to fetch (ie.
+  /// Violation.name).
+  ///  Format:
+  ///  organizations/{organization}/locations/{location}/workloads/{workload}/violations/{violation}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Violation,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L642}
+  ///
+  /// [google.cloud.assuredworkloads.v1.GetViolationRequest]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L629}
+  /// [google.cloud.assuredworkloads.v1.Violation]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L642}
+  ///
+  StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Retrieves Assured Workload Violation based on ID.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::GetViolationRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L629}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Violation,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L642}
+  ///
+  /// [google.cloud.assuredworkloads.v1.GetViolationRequest]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L629}
+  /// [google.cloud.assuredworkloads.v1.Violation]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L642}
+  ///
+  StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
+      google::cloud::assuredworkloads::v1::GetViolationRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Acknowledges an existing violation. By acknowledging a violation, users
+  /// acknowledge the existence of a compliance violation in their workload and
+  /// decide to ignore it due to a valid business justification. Acknowledgement
+  /// is a permanent operation and it cannot be reverted.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L561}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L580}
+  ///
+  /// [google.cloud.assuredworkloads.v1.AcknowledgeViolationRequest]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L561}
+  /// [google.cloud.assuredworkloads.v1.AcknowledgeViolationResponse]:
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L580}
+  ///
+  StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+  AcknowledgeViolation(
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request,
       Options opts = {});
 
  private:

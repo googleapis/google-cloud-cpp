@@ -140,6 +140,22 @@ Status IAMAuth::DeleteServiceAccountKey(
   return child_->DeleteServiceAccountKey(context, request);
 }
 
+Status IAMAuth::DisableServiceAccountKey(
+    grpc::ClientContext& context,
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DisableServiceAccountKey(context, request);
+}
+
+Status IAMAuth::EnableServiceAccountKey(
+    grpc::ClientContext& context,
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->EnableServiceAccountKey(context, request);
+}
+
 StatusOr<google::iam::v1::Policy> IAMAuth::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {

@@ -133,6 +133,20 @@ Status IAMMetadata::DeleteServiceAccountKey(
   return child_->DeleteServiceAccountKey(context, request);
 }
 
+Status IAMMetadata::DisableServiceAccountKey(
+    grpc::ClientContext& context,
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DisableServiceAccountKey(context, request);
+}
+
+Status IAMMetadata::EnableServiceAccountKey(
+    grpc::ClientContext& context,
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->EnableServiceAccountKey(context, request);
+}
+
 StatusOr<google::iam::v1::Policy> IAMMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {

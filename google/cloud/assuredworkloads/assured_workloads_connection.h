@@ -79,6 +79,11 @@ class AssuredWorkloadsServiceConnection {
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
           request);
 
+  virtual StatusOr<
+      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(google::cloud::assuredworkloads::v1::
+                               RestrictAllowedResourcesRequest const& request);
+
   virtual Status DeleteWorkload(
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
           request);
@@ -89,6 +94,19 @@ class AssuredWorkloadsServiceConnection {
   virtual StreamRange<google::cloud::assuredworkloads::v1::Workload>
   ListWorkloads(
       google::cloud::assuredworkloads::v1::ListWorkloadsRequest request);
+
+  virtual StreamRange<google::cloud::assuredworkloads::v1::Violation>
+  ListViolations(
+      google::cloud::assuredworkloads::v1::ListViolationsRequest request);
+
+  virtual StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
+      google::cloud::assuredworkloads::v1::GetViolationRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+  AcknowledgeViolation(
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request);
 };
 
 /**
