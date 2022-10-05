@@ -187,6 +187,15 @@ class GrpcClient : public RawClient,
       Options opts);
 
  private:
+  StatusOr<google::storage::v2::Bucket> GetBucketMetadataImpl(
+      GetBucketMetadataRequest const& request);
+  StatusOr<google::storage::v2::Bucket> PatchBucketImpl(
+      PatchBucketRequest const& request);
+  StatusOr<google::storage::v2::Object> GetObjectMetadataImpl(
+      GetObjectMetadataRequest const& request);
+  StatusOr<google::storage::v2::Object> PatchObjectImpl(
+      PatchObjectRequest const& request);
+
   using BucketAccessControlList = google::protobuf::RepeatedPtrField<
       google::storage::v2::BucketAccessControl>;
   using BucketAclUpdater = std::function<StatusOr<BucketAccessControlList>(
