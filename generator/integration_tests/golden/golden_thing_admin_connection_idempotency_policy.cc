@@ -29,112 +29,88 @@ using ::google::cloud::Idempotency;
 
 GoldenThingAdminConnectionIdempotencyPolicy::~GoldenThingAdminConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultGoldenThingAdminConnectionIdempotencyPolicy : public GoldenThingAdminConnectionIdempotencyPolicy {
- public:
-  ~DefaultGoldenThingAdminConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy>
+GoldenThingAdminConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<GoldenThingAdminConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultGoldenThingAdminConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency
-  ListDatabases(google::test::admin::database::v1::ListDatabasesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency
-  GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency
-  GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 
-  Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::CreateBackup(google::test::admin::database::v1::CreateBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  CreateBackup(google::test::admin::database::v1::CreateBackupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::GetBackup(google::test::admin::database::v1::GetBackupRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency
-  GetBackup(google::test::admin::database::v1::GetBackupRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListBackups(google::test::admin::database::v1::ListBackupsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency
-  ListBackups(google::test::admin::database::v1::ListBackupsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency
-  RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency
-  ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency
-  ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency
-  LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy>
     MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultGoldenThingAdminConnectionIdempotencyPolicy>();
+  return absl::make_unique<GoldenThingAdminConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
