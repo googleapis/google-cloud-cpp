@@ -46,7 +46,7 @@ Idempotency VpcAccessServiceConnectionIdempotencyPolicy::GetConnector(
 }
 
 Idempotency VpcAccessServiceConnectionIdempotencyPolicy::ListConnectors(
-    google::cloud::vpcaccess::v1::ListConnectorsRequest) {
+    google::cloud::vpcaccess::v1::ListConnectorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -46,7 +46,7 @@ Idempotency AutoMlConnectionIdempotencyPolicy::GetDataset(
 }
 
 Idempotency AutoMlConnectionIdempotencyPolicy::ListDatasets(
-    google::cloud::automl::v1::ListDatasetsRequest) {
+    google::cloud::automl::v1::ListDatasetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -86,7 +86,7 @@ Idempotency AutoMlConnectionIdempotencyPolicy::GetModel(
 }
 
 Idempotency AutoMlConnectionIdempotencyPolicy::ListModels(
-    google::cloud::automl::v1::ListModelsRequest) {
+    google::cloud::automl::v1::ListModelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -121,7 +121,7 @@ Idempotency AutoMlConnectionIdempotencyPolicy::GetModelEvaluation(
 }
 
 Idempotency AutoMlConnectionIdempotencyPolicy::ListModelEvaluations(
-    google::cloud::automl::v1::ListModelEvaluationsRequest) {
+    google::cloud::automl::v1::ListModelEvaluationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

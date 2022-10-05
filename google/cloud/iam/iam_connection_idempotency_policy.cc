@@ -35,7 +35,7 @@ IAMConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency IAMConnectionIdempotencyPolicy::ListServiceAccounts(
-    google::iam::admin::v1::ListServiceAccountsRequest) {
+    google::iam::admin::v1::ListServiceAccountsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -116,12 +116,12 @@ Idempotency IAMConnectionIdempotencyPolicy::TestIamPermissions(
 }
 
 Idempotency IAMConnectionIdempotencyPolicy::QueryGrantableRoles(
-    google::iam::admin::v1::QueryGrantableRolesRequest) {
+    google::iam::admin::v1::QueryGrantableRolesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency IAMConnectionIdempotencyPolicy::ListRoles(
-    google::iam::admin::v1::ListRolesRequest) {
+    google::iam::admin::v1::ListRolesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -151,7 +151,7 @@ Idempotency IAMConnectionIdempotencyPolicy::UndeleteRole(
 }
 
 Idempotency IAMConnectionIdempotencyPolicy::QueryTestablePermissions(
-    google::iam::admin::v1::QueryTestablePermissionsRequest) {
+    google::iam::admin::v1::QueryTestablePermissionsRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 

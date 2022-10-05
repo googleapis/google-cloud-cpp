@@ -36,7 +36,7 @@ AuthorizedDomainsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency AuthorizedDomainsConnectionIdempotencyPolicy::ListAuthorizedDomains(
-    google::appengine::v1::ListAuthorizedDomainsRequest) {
+    google::appengine::v1::ListAuthorizedDomainsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

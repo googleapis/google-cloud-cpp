@@ -46,7 +46,7 @@ Idempotency ParticipantsConnectionIdempotencyPolicy::GetParticipant(
 }
 
 Idempotency ParticipantsConnectionIdempotencyPolicy::ListParticipants(
-    google::cloud::dialogflow::v2::ListParticipantsRequest) {
+    google::cloud::dialogflow::v2::ListParticipantsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

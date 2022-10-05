@@ -42,7 +42,7 @@ Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateNamespace(
 }
 
 Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListNamespaces(
-    google::cloud::servicedirectory::v1::ListNamespacesRequest) {
+    google::cloud::servicedirectory::v1::ListNamespacesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -67,7 +67,7 @@ Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateService(
 }
 
 Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListServices(
-    google::cloud::servicedirectory::v1::ListServicesRequest) {
+    google::cloud::servicedirectory::v1::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -92,7 +92,7 @@ Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateEndpoint(
 }
 
 Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListEndpoints(
-    google::cloud::servicedirectory::v1::ListEndpointsRequest) {
+    google::cloud::servicedirectory::v1::ListEndpointsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

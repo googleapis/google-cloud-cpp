@@ -36,7 +36,7 @@ ContextsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ContextsConnectionIdempotencyPolicy::ListContexts(
-    google::cloud::dialogflow::v2::ListContextsRequest) {
+    google::cloud::dialogflow::v2::ListContextsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

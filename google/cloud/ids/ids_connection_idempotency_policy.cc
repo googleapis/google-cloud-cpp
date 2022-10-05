@@ -35,7 +35,7 @@ IDSConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency IDSConnectionIdempotencyPolicy::ListEndpoints(
-    google::cloud::ids::v1::ListEndpointsRequest) {
+    google::cloud::ids::v1::ListEndpointsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

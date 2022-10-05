@@ -36,7 +36,7 @@ CloudMemcacheConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency CloudMemcacheConnectionIdempotencyPolicy::ListInstances(
-    google::cloud::memcache::v1::ListInstancesRequest) {
+    google::cloud::memcache::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

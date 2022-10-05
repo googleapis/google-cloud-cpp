@@ -37,7 +37,7 @@ AlertPolicyServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::ListAlertPolicies(
-    google::monitoring::v3::ListAlertPoliciesRequest) {
+    google::monitoring::v3::ListAlertPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -41,12 +41,12 @@ Idempotency FoldersConnectionIdempotencyPolicy::GetFolder(
 }
 
 Idempotency FoldersConnectionIdempotencyPolicy::ListFolders(
-    google::cloud::resourcemanager::v3::ListFoldersRequest) {
+    google::cloud::resourcemanager::v3::ListFoldersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency FoldersConnectionIdempotencyPolicy::SearchFolders(
-    google::cloud::resourcemanager::v3::SearchFoldersRequest) {
+    google::cloud::resourcemanager::v3::SearchFoldersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

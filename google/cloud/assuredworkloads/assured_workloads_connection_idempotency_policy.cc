@@ -57,7 +57,7 @@ Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetWorkload(
 }
 
 Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListWorkloads(
-    google::cloud::assuredworkloads::v1::ListWorkloadsRequest) {
+    google::cloud::assuredworkloads::v1::ListWorkloadsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ ConnectionServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ConnectionServiceConnectionIdempotencyPolicy::ListConnections(
-    google::cloud::apigeeconnect::v1::ListConnectionsRequest) {
+    google::cloud::apigeeconnect::v1::ListConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

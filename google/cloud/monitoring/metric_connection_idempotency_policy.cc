@@ -37,7 +37,8 @@ MetricServiceConnectionIdempotencyPolicy::clone() const {
 
 Idempotency
 MetricServiceConnectionIdempotencyPolicy::ListMonitoredResourceDescriptors(
-    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest) {
+    google::monitoring::v3::
+        ListMonitoredResourceDescriptorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -48,7 +49,7 @@ MetricServiceConnectionIdempotencyPolicy::GetMonitoredResourceDescriptor(
 }
 
 Idempotency MetricServiceConnectionIdempotencyPolicy::ListMetricDescriptors(
-    google::monitoring::v3::ListMetricDescriptorsRequest) {
+    google::monitoring::v3::ListMetricDescriptorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -68,7 +69,7 @@ Idempotency MetricServiceConnectionIdempotencyPolicy::DeleteMetricDescriptor(
 }
 
 Idempotency MetricServiceConnectionIdempotencyPolicy::ListTimeSeries(
-    google::monitoring::v3::ListTimeSeriesRequest) {
+    google::monitoring::v3::ListTimeSeriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

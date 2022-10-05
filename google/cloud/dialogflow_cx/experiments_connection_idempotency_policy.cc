@@ -36,7 +36,7 @@ ExperimentsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ExperimentsConnectionIdempotencyPolicy::ListExperiments(
-    google::cloud::dialogflow::cx::v3::ListExperimentsRequest) {
+    google::cloud::dialogflow::cx::v3::ListExperimentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -61,7 +61,8 @@ Idempotency IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::
 
 Idempotency IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy::
     ListIdentityAwareProxyClients(
-        google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest) {
+        google::cloud::iap::v1::
+            ListIdentityAwareProxyClientsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

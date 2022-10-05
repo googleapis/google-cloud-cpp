@@ -36,7 +36,7 @@ GroupServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency GroupServiceConnectionIdempotencyPolicy::ListGroups(
-    google::monitoring::v3::ListGroupsRequest) {
+    google::monitoring::v3::ListGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -61,7 +61,7 @@ Idempotency GroupServiceConnectionIdempotencyPolicy::DeleteGroup(
 }
 
 Idempotency GroupServiceConnectionIdempotencyPolicy::ListGroupMembers(
-    google::monitoring::v3::ListGroupMembersRequest) {
+    google::monitoring::v3::ListGroupMembersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

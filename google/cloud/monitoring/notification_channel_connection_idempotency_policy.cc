@@ -38,7 +38,8 @@ NotificationChannelServiceConnectionIdempotencyPolicy::clone() const {
 
 Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
     ListNotificationChannelDescriptors(
-        google::monitoring::v3::ListNotificationChannelDescriptorsRequest) {
+        google::monitoring::v3::
+            ListNotificationChannelDescriptorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -51,7 +52,7 @@ Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
 
 Idempotency
 NotificationChannelServiceConnectionIdempotencyPolicy::ListNotificationChannels(
-    google::monitoring::v3::ListNotificationChannelsRequest) {
+    google::monitoring::v3::ListNotificationChannelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

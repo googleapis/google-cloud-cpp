@@ -36,7 +36,7 @@ WorkflowsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency WorkflowsConnectionIdempotencyPolicy::ListWorkflows(
-    google::cloud::workflows::v1::ListWorkflowsRequest) {
+    google::cloud::workflows::v1::ListWorkflowsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

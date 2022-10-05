@@ -46,7 +46,8 @@ Idempotency ConnectionServiceConnectionIdempotencyPolicy::GetConnection(
 }
 
 Idempotency ConnectionServiceConnectionIdempotencyPolicy::ListConnections(
-    google::cloud::bigquery::connection::v1::ListConnectionsRequest) {
+    google::cloud::bigquery::connection::v1::
+        ListConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

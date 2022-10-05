@@ -50,7 +50,8 @@ CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificate(
 
 Idempotency
 CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCertificates(
-    google::cloud::security::privateca::v1::ListCertificatesRequest) {
+    google::cloud::security::privateca::v1::
+        ListCertificatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -106,8 +107,9 @@ CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificateAuthority(
 }
 
 Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
-    ListCertificateAuthorities(google::cloud::security::privateca::v1::
-                                   ListCertificateAuthoritiesRequest) {
+    ListCertificateAuthorities(
+        google::cloud::security::privateca::v1::
+            ListCertificateAuthoritiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -148,7 +150,7 @@ Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCaPool(
 }
 
 Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCaPools(
-    google::cloud::security::privateca::v1::ListCaPoolsRequest) {
+    google::cloud::security::privateca::v1::ListCaPoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -172,8 +174,9 @@ Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
 }
 
 Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
-    ListCertificateRevocationLists(google::cloud::security::privateca::v1::
-                                       ListCertificateRevocationListsRequest) {
+    ListCertificateRevocationLists(
+        google::cloud::security::privateca::v1::
+            ListCertificateRevocationListsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -205,7 +208,7 @@ CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificateTemplate(
 
 Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
     ListCertificateTemplates(google::cloud::security::privateca::v1::
-                                 ListCertificateTemplatesRequest) {
+                                 ListCertificateTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

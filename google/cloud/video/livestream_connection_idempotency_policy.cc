@@ -41,7 +41,7 @@ Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateChannel(
 }
 
 Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListChannels(
-    google::cloud::video::livestream::v1::ListChannelsRequest) {
+    google::cloud::video::livestream::v1::ListChannelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -76,7 +76,7 @@ Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateInput(
 }
 
 Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListInputs(
-    google::cloud::video::livestream::v1::ListInputsRequest) {
+    google::cloud::video::livestream::v1::ListInputsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -101,7 +101,7 @@ Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateEvent(
 }
 
 Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListEvents(
-    google::cloud::video::livestream::v1::ListEventsRequest) {
+    google::cloud::video::livestream::v1::ListEventsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

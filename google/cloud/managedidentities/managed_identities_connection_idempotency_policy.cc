@@ -50,7 +50,7 @@ ManagedIdentitiesServiceConnectionIdempotencyPolicy::ResetAdminPassword(
 }
 
 Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::ListDomains(
-    google::cloud::managedidentities::v1::ListDomainsRequest) {
+    google::cloud::managedidentities::v1::ListDomainsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ EkmServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency EkmServiceConnectionIdempotencyPolicy::ListEkmConnections(
-    google::cloud::kms::v1::ListEkmConnectionsRequest) {
+    google::cloud::kms::v1::ListEkmConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

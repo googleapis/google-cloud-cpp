@@ -42,7 +42,8 @@ Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetDataSource(
 }
 
 Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListDataSources(
-    google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest) {
+    google::cloud::bigquery::datatransfer::v1::
+        ListDataSourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -74,7 +75,8 @@ Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetTransferConfig(
 }
 
 Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListTransferConfigs(
-    google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest) {
+    google::cloud::bigquery::datatransfer::v1::
+        ListTransferConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -104,12 +106,14 @@ Idempotency DataTransferServiceConnectionIdempotencyPolicy::DeleteTransferRun(
 }
 
 Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListTransferRuns(
-    google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest) {
+    google::cloud::bigquery::datatransfer::v1::
+        ListTransferRunsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListTransferLogs(
-    google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest) {
+    google::cloud::bigquery::datatransfer::v1::
+        ListTransferLogsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ AnswerRecordsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency AnswerRecordsConnectionIdempotencyPolicy::ListAnswerRecords(
-    google::cloud::dialogflow::v2::ListAnswerRecordsRequest) {
+    google::cloud::dialogflow::v2::ListAnswerRecordsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

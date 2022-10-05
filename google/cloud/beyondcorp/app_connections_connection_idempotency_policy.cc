@@ -39,7 +39,8 @@ AppConnectionsServiceConnectionIdempotencyPolicy::clone() const {
 
 Idempotency
 AppConnectionsServiceConnectionIdempotencyPolicy::ListAppConnections(
-    google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsRequest) {
+    google::cloud::beyondcorp::appconnections::v1::
+        ListAppConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -73,7 +74,7 @@ AppConnectionsServiceConnectionIdempotencyPolicy::DeleteAppConnection(
 Idempotency
 AppConnectionsServiceConnectionIdempotencyPolicy::ResolveAppConnections(
     google::cloud::beyondcorp::appconnections::v1::
-        ResolveAppConnectionsRequest) {
+        ResolveAppConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

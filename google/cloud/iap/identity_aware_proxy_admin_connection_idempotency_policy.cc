@@ -69,7 +69,7 @@ IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::UpdateIapSettings(
 
 Idempotency
 IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::ListTunnelDestGroups(
-    google::cloud::iap::v1::ListTunnelDestGroupsRequest) {
+    google::cloud::iap::v1::ListTunnelDestGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -35,7 +35,7 @@ PagesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency PagesConnectionIdempotencyPolicy::ListPages(
-    google::cloud::dialogflow::cx::v3::ListPagesRequest) {
+    google::cloud::dialogflow::cx::v3::ListPagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ VersionsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency VersionsConnectionIdempotencyPolicy::ListVersions(
-    google::cloud::dialogflow::v2::ListVersionsRequest) {
+    google::cloud::dialogflow::v2::ListVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

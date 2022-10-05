@@ -36,7 +36,7 @@ AccessApprovalConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency AccessApprovalConnectionIdempotencyPolicy::ListApprovalRequests(
-    google::cloud::accessapproval::v1::ListApprovalRequestsMessage) {
+    google::cloud::accessapproval::v1::ListApprovalRequestsMessage) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

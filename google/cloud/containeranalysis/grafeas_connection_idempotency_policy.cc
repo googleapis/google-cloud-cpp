@@ -41,7 +41,7 @@ Idempotency GrafeasConnectionIdempotencyPolicy::GetOccurrence(
 }
 
 Idempotency GrafeasConnectionIdempotencyPolicy::ListOccurrences(
-    grafeas::v1::ListOccurrencesRequest) {
+    grafeas::v1::ListOccurrencesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -76,7 +76,7 @@ Idempotency GrafeasConnectionIdempotencyPolicy::GetNote(
 }
 
 Idempotency GrafeasConnectionIdempotencyPolicy::ListNotes(
-    grafeas::v1::ListNotesRequest) {
+    grafeas::v1::ListNotesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -101,7 +101,7 @@ Idempotency GrafeasConnectionIdempotencyPolicy::UpdateNote(
 }
 
 Idempotency GrafeasConnectionIdempotencyPolicy::ListNoteOccurrences(
-    grafeas::v1::ListNoteOccurrencesRequest) {
+    grafeas::v1::ListNoteOccurrencesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

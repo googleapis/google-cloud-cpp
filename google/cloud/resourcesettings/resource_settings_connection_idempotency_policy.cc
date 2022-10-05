@@ -37,7 +37,7 @@ ResourceSettingsServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ResourceSettingsServiceConnectionIdempotencyPolicy::ListSettings(
-    google::cloud::resourcesettings::v1::ListSettingsRequest) {
+    google::cloud::resourcesettings::v1::ListSettingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

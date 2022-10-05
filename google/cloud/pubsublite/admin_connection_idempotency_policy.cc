@@ -51,7 +51,7 @@ Idempotency AdminServiceConnectionIdempotencyPolicy::GetTopicPartitions(
 }
 
 Idempotency AdminServiceConnectionIdempotencyPolicy::ListTopics(
-    google::cloud::pubsublite::v1::ListTopicsRequest) {
+    google::cloud::pubsublite::v1::ListTopicsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -66,7 +66,7 @@ Idempotency AdminServiceConnectionIdempotencyPolicy::DeleteTopic(
 }
 
 Idempotency AdminServiceConnectionIdempotencyPolicy::ListTopicSubscriptions(
-    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest) {
+    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -81,7 +81,7 @@ Idempotency AdminServiceConnectionIdempotencyPolicy::GetSubscription(
 }
 
 Idempotency AdminServiceConnectionIdempotencyPolicy::ListSubscriptions(
-    google::cloud::pubsublite::v1::ListSubscriptionsRequest) {
+    google::cloud::pubsublite::v1::ListSubscriptionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -111,7 +111,7 @@ Idempotency AdminServiceConnectionIdempotencyPolicy::GetReservation(
 }
 
 Idempotency AdminServiceConnectionIdempotencyPolicy::ListReservations(
-    google::cloud::pubsublite::v1::ListReservationsRequest) {
+    google::cloud::pubsublite::v1::ListReservationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -126,7 +126,7 @@ Idempotency AdminServiceConnectionIdempotencyPolicy::DeleteReservation(
 }
 
 Idempotency AdminServiceConnectionIdempotencyPolicy::ListReservationTopics(
-    google::cloud::pubsublite::v1::ListReservationTopicsRequest) {
+    google::cloud::pubsublite::v1::ListReservationTopicsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

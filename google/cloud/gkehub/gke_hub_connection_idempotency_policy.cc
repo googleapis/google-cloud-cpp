@@ -36,12 +36,12 @@ GkeHubConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency GkeHubConnectionIdempotencyPolicy::ListMemberships(
-    google::cloud::gkehub::v1::ListMembershipsRequest) {
+    google::cloud::gkehub::v1::ListMembershipsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency GkeHubConnectionIdempotencyPolicy::ListFeatures(
-    google::cloud::gkehub::v1::ListFeaturesRequest) {
+    google::cloud::gkehub::v1::ListFeaturesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ EdgeContainerConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency EdgeContainerConnectionIdempotencyPolicy::ListClusters(
-    google::cloud::edgecontainer::v1::ListClustersRequest) {
+    google::cloud::edgecontainer::v1::ListClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -66,7 +66,7 @@ Idempotency EdgeContainerConnectionIdempotencyPolicy::GenerateAccessToken(
 }
 
 Idempotency EdgeContainerConnectionIdempotencyPolicy::ListNodePools(
-    google::cloud::edgecontainer::v1::ListNodePoolsRequest) {
+    google::cloud::edgecontainer::v1::ListNodePoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -91,7 +91,7 @@ Idempotency EdgeContainerConnectionIdempotencyPolicy::DeleteNodePool(
 }
 
 Idempotency EdgeContainerConnectionIdempotencyPolicy::ListMachines(
-    google::cloud::edgecontainer::v1::ListMachinesRequest) {
+    google::cloud::edgecontainer::v1::ListMachinesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -101,7 +101,7 @@ Idempotency EdgeContainerConnectionIdempotencyPolicy::GetMachine(
 }
 
 Idempotency EdgeContainerConnectionIdempotencyPolicy::ListVpnConnections(
-    google::cloud::edgecontainer::v1::ListVpnConnectionsRequest) {
+    google::cloud::edgecontainer::v1::ListVpnConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

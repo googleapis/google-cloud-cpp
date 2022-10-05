@@ -36,12 +36,12 @@ OrgPolicyConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency OrgPolicyConnectionIdempotencyPolicy::ListConstraints(
-    google::cloud::orgpolicy::v2::ListConstraintsRequest) {
+    google::cloud::orgpolicy::v2::ListConstraintsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency OrgPolicyConnectionIdempotencyPolicy::ListPolicies(
-    google::cloud::orgpolicy::v2::ListPoliciesRequest) {
+    google::cloud::orgpolicy::v2::ListPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

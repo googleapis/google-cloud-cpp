@@ -41,7 +41,7 @@ Idempotency ProductSearchConnectionIdempotencyPolicy::CreateProductSet(
 }
 
 Idempotency ProductSearchConnectionIdempotencyPolicy::ListProductSets(
-    google::cloud::vision::v1::ListProductSetsRequest) {
+    google::cloud::vision::v1::ListProductSetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -66,7 +66,7 @@ Idempotency ProductSearchConnectionIdempotencyPolicy::CreateProduct(
 }
 
 Idempotency ProductSearchConnectionIdempotencyPolicy::ListProducts(
-    google::cloud::vision::v1::ListProductsRequest) {
+    google::cloud::vision::v1::ListProductsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -96,7 +96,7 @@ Idempotency ProductSearchConnectionIdempotencyPolicy::DeleteReferenceImage(
 }
 
 Idempotency ProductSearchConnectionIdempotencyPolicy::ListReferenceImages(
-    google::cloud::vision::v1::ListReferenceImagesRequest) {
+    google::cloud::vision::v1::ListReferenceImagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -117,7 +117,7 @@ ProductSearchConnectionIdempotencyPolicy::RemoveProductFromProductSet(
 }
 
 Idempotency ProductSearchConnectionIdempotencyPolicy::ListProductsInProductSet(
-    google::cloud::vision::v1::ListProductsInProductSetRequest) {
+    google::cloud::vision::v1::ListProductsInProductSetRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

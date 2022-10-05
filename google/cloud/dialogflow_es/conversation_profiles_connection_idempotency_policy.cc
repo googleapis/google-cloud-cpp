@@ -38,7 +38,7 @@ ConversationProfilesConnectionIdempotencyPolicy::clone() const {
 
 Idempotency
 ConversationProfilesConnectionIdempotencyPolicy::ListConversationProfiles(
-    google::cloud::dialogflow::v2::ListConversationProfilesRequest) {
+    google::cloud::dialogflow::v2::ListConversationProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

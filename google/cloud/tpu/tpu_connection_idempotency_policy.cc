@@ -35,7 +35,7 @@ TpuConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency TpuConnectionIdempotencyPolicy::ListNodes(
-    google::cloud::tpu::v1::ListNodesRequest) {
+    google::cloud::tpu::v1::ListNodesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -70,7 +70,7 @@ Idempotency TpuConnectionIdempotencyPolicy::StartNode(
 }
 
 Idempotency TpuConnectionIdempotencyPolicy::ListTensorFlowVersions(
-    google::cloud::tpu::v1::ListTensorFlowVersionsRequest) {
+    google::cloud::tpu::v1::ListTensorFlowVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -80,7 +80,7 @@ Idempotency TpuConnectionIdempotencyPolicy::GetTensorFlowVersion(
 }
 
 Idempotency TpuConnectionIdempotencyPolicy::ListAcceleratorTypes(
-    google::cloud::tpu::v1::ListAcceleratorTypesRequest) {
+    google::cloud::tpu::v1::ListAcceleratorTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

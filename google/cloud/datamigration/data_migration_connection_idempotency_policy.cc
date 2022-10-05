@@ -37,7 +37,7 @@ DataMigrationServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency DataMigrationServiceConnectionIdempotencyPolicy::ListMigrationJobs(
-    google::cloud::clouddms::v1::ListMigrationJobsRequest) {
+    google::cloud::clouddms::v1::ListMigrationJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -100,7 +100,7 @@ Idempotency DataMigrationServiceConnectionIdempotencyPolicy::GenerateSshScript(
 
 Idempotency
 DataMigrationServiceConnectionIdempotencyPolicy::ListConnectionProfiles(
-    google::cloud::clouddms::v1::ListConnectionProfilesRequest) {
+    google::cloud::clouddms::v1::ListConnectionProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

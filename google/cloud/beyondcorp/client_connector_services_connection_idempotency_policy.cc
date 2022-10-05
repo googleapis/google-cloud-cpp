@@ -40,7 +40,7 @@ ClientConnectorServicesServiceConnectionIdempotencyPolicy::clone() const {
 Idempotency ClientConnectorServicesServiceConnectionIdempotencyPolicy::
     ListClientConnectorServices(
         google::cloud::beyondcorp::clientconnectorservices::v1::
-            ListClientConnectorServicesRequest) {
+            ListClientConnectorServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

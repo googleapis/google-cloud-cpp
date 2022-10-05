@@ -56,7 +56,7 @@ SecuritySettingsServiceConnectionIdempotencyPolicy::UpdateSecuritySettings(
 
 Idempotency
 SecuritySettingsServiceConnectionIdempotencyPolicy::ListSecuritySettings(
-    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest) {
+    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

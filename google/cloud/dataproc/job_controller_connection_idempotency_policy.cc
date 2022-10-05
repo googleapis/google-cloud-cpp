@@ -51,7 +51,7 @@ Idempotency JobControllerConnectionIdempotencyPolicy::GetJob(
 }
 
 Idempotency JobControllerConnectionIdempotencyPolicy::ListJobs(
-    google::cloud::dataproc::v1::ListJobsRequest) {
+    google::cloud::dataproc::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

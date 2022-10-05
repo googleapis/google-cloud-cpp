@@ -38,7 +38,8 @@ TransitionRouteGroupsConnectionIdempotencyPolicy::clone() const {
 
 Idempotency
 TransitionRouteGroupsConnectionIdempotencyPolicy::ListTransitionRouteGroups(
-    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest) {
+    google::cloud::dialogflow::cx::v3::
+        ListTransitionRouteGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

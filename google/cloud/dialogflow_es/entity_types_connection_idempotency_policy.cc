@@ -36,7 +36,7 @@ EntityTypesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency EntityTypesConnectionIdempotencyPolicy::ListEntityTypes(
-    google::cloud::dialogflow::v2::ListEntityTypesRequest) {
+    google::cloud::dialogflow::v2::ListEntityTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

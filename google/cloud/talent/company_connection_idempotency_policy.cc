@@ -56,7 +56,7 @@ Idempotency CompanyServiceConnectionIdempotencyPolicy::DeleteCompany(
 }
 
 Idempotency CompanyServiceConnectionIdempotencyPolicy::ListCompanies(
-    google::cloud::talent::v4::ListCompaniesRequest) {
+    google::cloud::talent::v4::ListCompaniesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

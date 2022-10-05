@@ -69,7 +69,7 @@ WorkflowTemplateServiceConnectionIdempotencyPolicy::UpdateWorkflowTemplate(
 
 Idempotency
 WorkflowTemplateServiceConnectionIdempotencyPolicy::ListWorkflowTemplates(
-    google::cloud::dataproc::v1::ListWorkflowTemplatesRequest) {
+    google::cloud::dataproc::v1::ListWorkflowTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ CloudTasksConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency CloudTasksConnectionIdempotencyPolicy::ListQueues(
-    google::cloud::tasks::v2::ListQueuesRequest) {
+    google::cloud::tasks::v2::ListQueuesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -92,7 +92,7 @@ Idempotency CloudTasksConnectionIdempotencyPolicy::TestIamPermissions(
 }
 
 Idempotency CloudTasksConnectionIdempotencyPolicy::ListTasks(
-    google::cloud::tasks::v2::ListTasksRequest) {
+    google::cloud::tasks::v2::ListTasksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

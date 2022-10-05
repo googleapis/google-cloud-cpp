@@ -36,7 +36,7 @@ VersionsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency VersionsConnectionIdempotencyPolicy::ListVersions(
-    google::appengine::v1::ListVersionsRequest) {
+    google::appengine::v1::ListVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

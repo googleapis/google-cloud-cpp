@@ -109,7 +109,7 @@ Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::GetAppProfile(
 }
 
 Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::ListAppProfiles(
-    google::bigtable::admin::v2::ListAppProfilesRequest) {
+    google::bigtable::admin::v2::ListAppProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -141,7 +141,7 @@ BigtableInstanceAdminConnectionIdempotencyPolicy::TestIamPermissions(
 }
 
 Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::ListHotTablets(
-    google::bigtable::admin::v2::ListHotTabletsRequest) {
+    google::bigtable::admin::v2::ListHotTabletsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

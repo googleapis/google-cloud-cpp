@@ -51,7 +51,7 @@ Idempotency PolicyTagManagerConnectionIdempotencyPolicy::UpdateTaxonomy(
 }
 
 Idempotency PolicyTagManagerConnectionIdempotencyPolicy::ListTaxonomies(
-    google::cloud::datacatalog::v1::ListTaxonomiesRequest) {
+    google::cloud::datacatalog::v1::ListTaxonomiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -76,7 +76,7 @@ Idempotency PolicyTagManagerConnectionIdempotencyPolicy::UpdatePolicyTag(
 }
 
 Idempotency PolicyTagManagerConnectionIdempotencyPolicy::ListPolicyTags(
-    google::cloud::datacatalog::v1::ListPolicyTagsRequest) {
+    google::cloud::datacatalog::v1::ListPolicyTagsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

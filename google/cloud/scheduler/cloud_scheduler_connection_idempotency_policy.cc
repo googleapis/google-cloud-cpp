@@ -36,7 +36,7 @@ CloudSchedulerConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency CloudSchedulerConnectionIdempotencyPolicy::ListJobs(
-    google::cloud::scheduler::v1::ListJobsRequest) {
+    google::cloud::scheduler::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

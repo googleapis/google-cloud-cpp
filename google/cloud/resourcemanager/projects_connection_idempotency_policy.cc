@@ -41,12 +41,12 @@ Idempotency ProjectsConnectionIdempotencyPolicy::GetProject(
 }
 
 Idempotency ProjectsConnectionIdempotencyPolicy::ListProjects(
-    google::cloud::resourcemanager::v3::ListProjectsRequest) {
+    google::cloud::resourcemanager::v3::ListProjectsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency ProjectsConnectionIdempotencyPolicy::SearchProjects(
-    google::cloud::resourcemanager::v3::SearchProjectsRequest) {
+    google::cloud::resourcemanager::v3::SearchProjectsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

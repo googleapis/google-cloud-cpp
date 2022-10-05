@@ -36,7 +36,7 @@ QueryServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency QueryServiceConnectionIdempotencyPolicy::QueryTimeSeries(
-    google::monitoring::v3::QueryTimeSeriesRequest) {
+    google::monitoring::v3::QueryTimeSeriesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 

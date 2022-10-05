@@ -38,7 +38,7 @@ AuthorizedCertificatesConnectionIdempotencyPolicy::clone() const {
 
 Idempotency
 AuthorizedCertificatesConnectionIdempotencyPolicy::ListAuthorizedCertificates(
-    google::appengine::v1::ListAuthorizedCertificatesRequest) {
+    google::appengine::v1::ListAuthorizedCertificatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

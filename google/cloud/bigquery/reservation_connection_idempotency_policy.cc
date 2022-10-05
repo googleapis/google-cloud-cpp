@@ -42,7 +42,8 @@ Idempotency ReservationServiceConnectionIdempotencyPolicy::CreateReservation(
 }
 
 Idempotency ReservationServiceConnectionIdempotencyPolicy::ListReservations(
-    google::cloud::bigquery::reservation::v1::ListReservationsRequest) {
+    google::cloud::bigquery::reservation::v1::
+        ListReservationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -70,7 +71,8 @@ ReservationServiceConnectionIdempotencyPolicy::CreateCapacityCommitment(
 
 Idempotency
 ReservationServiceConnectionIdempotencyPolicy::ListCapacityCommitments(
-    google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest) {
+    google::cloud::bigquery::reservation::v1::
+        ListCapacityCommitmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -115,7 +117,8 @@ Idempotency ReservationServiceConnectionIdempotencyPolicy::CreateAssignment(
 }
 
 Idempotency ReservationServiceConnectionIdempotencyPolicy::ListAssignments(
-    google::cloud::bigquery::reservation::v1::ListAssignmentsRequest) {
+    google::cloud::bigquery::reservation::v1::
+        ListAssignmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -125,12 +128,14 @@ Idempotency ReservationServiceConnectionIdempotencyPolicy::DeleteAssignment(
 }
 
 Idempotency ReservationServiceConnectionIdempotencyPolicy::SearchAssignments(
-    google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest) {
+    google::cloud::bigquery::reservation::v1::
+        SearchAssignmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency ReservationServiceConnectionIdempotencyPolicy::SearchAllAssignments(
-    google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest) {
+    google::cloud::bigquery::reservation::v1::
+        SearchAllAssignmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

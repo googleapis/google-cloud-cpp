@@ -46,7 +46,7 @@ Idempotency ProductServiceConnectionIdempotencyPolicy::GetProduct(
 }
 
 Idempotency ProductServiceConnectionIdempotencyPolicy::ListProducts(
-    google::cloud::retail::v2::ListProductsRequest) {
+    google::cloud::retail::v2::ListProductsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ IntentsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency IntentsConnectionIdempotencyPolicy::ListIntents(
-    google::cloud::dialogflow::cx::v3::ListIntentsRequest) {
+    google::cloud::dialogflow::cx::v3::ListIntentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

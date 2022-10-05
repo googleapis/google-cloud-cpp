@@ -36,12 +36,12 @@ CloudCatalogConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency CloudCatalogConnectionIdempotencyPolicy::ListServices(
-    google::cloud::billing::v1::ListServicesRequest) {
+    google::cloud::billing::v1::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency CloudCatalogConnectionIdempotencyPolicy::ListSkus(
-    google::cloud::billing::v1::ListSkusRequest) {
+    google::cloud::billing::v1::ListSkusRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

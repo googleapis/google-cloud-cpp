@@ -41,7 +41,7 @@ Idempotency OrganizationsConnectionIdempotencyPolicy::GetOrganization(
 }
 
 Idempotency OrganizationsConnectionIdempotencyPolicy::SearchOrganizations(
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest) {
+    google::cloud::resourcemanager::v3::SearchOrganizationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

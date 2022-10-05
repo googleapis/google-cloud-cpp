@@ -71,7 +71,7 @@ Idempotency JobServiceConnectionIdempotencyPolicy::BatchDeleteJobs(
 }
 
 Idempotency JobServiceConnectionIdempotencyPolicy::ListJobs(
-    google::cloud::talent::v4::ListJobsRequest) {
+    google::cloud::talent::v4::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

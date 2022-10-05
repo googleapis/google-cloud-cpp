@@ -51,7 +51,7 @@ Idempotency ServiceUsageConnectionIdempotencyPolicy::GetService(
 }
 
 Idempotency ServiceUsageConnectionIdempotencyPolicy::ListServices(
-    google::api::serviceusage::v1::ListServicesRequest) {
+    google::api::serviceusage::v1::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

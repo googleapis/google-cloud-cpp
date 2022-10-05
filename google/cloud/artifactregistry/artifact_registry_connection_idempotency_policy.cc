@@ -36,7 +36,8 @@ ArtifactRegistryConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListDockerImages(
-    google::devtools::artifactregistry::v1::ListDockerImagesRequest) {
+    google::devtools::artifactregistry::v1::
+        ListDockerImagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -56,7 +57,8 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ImportYumArtifacts(
 }
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListRepositories(
-    google::devtools::artifactregistry::v1::ListRepositoriesRequest) {
+    google::devtools::artifactregistry::v1::
+        ListRepositoriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -81,7 +83,7 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteRepository(
 }
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListPackages(
-    google::devtools::artifactregistry::v1::ListPackagesRequest) {
+    google::devtools::artifactregistry::v1::ListPackagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -96,7 +98,7 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeletePackage(
 }
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListVersions(
-    google::devtools::artifactregistry::v1::ListVersionsRequest) {
+    google::devtools::artifactregistry::v1::ListVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -111,7 +113,7 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteVersion(
 }
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListFiles(
-    google::devtools::artifactregistry::v1::ListFilesRequest) {
+    google::devtools::artifactregistry::v1::ListFilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -121,7 +123,7 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetFile(
 }
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListTags(
-    google::devtools::artifactregistry::v1::ListTagsRequest) {
+    google::devtools::artifactregistry::v1::ListTagsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

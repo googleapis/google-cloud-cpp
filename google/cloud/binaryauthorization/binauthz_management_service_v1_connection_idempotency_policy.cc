@@ -66,7 +66,7 @@ BinauthzManagementServiceV1ConnectionIdempotencyPolicy::UpdateAttestor(
 
 Idempotency
 BinauthzManagementServiceV1ConnectionIdempotencyPolicy::ListAttestors(
-    google::cloud::binaryauthorization::v1::ListAttestorsRequest) {
+    google::cloud::binaryauthorization::v1::ListAttestorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

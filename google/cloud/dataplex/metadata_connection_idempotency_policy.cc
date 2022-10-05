@@ -56,7 +56,7 @@ Idempotency MetadataServiceConnectionIdempotencyPolicy::GetEntity(
 }
 
 Idempotency MetadataServiceConnectionIdempotencyPolicy::ListEntities(
-    google::cloud::dataplex::v1::ListEntitiesRequest) {
+    google::cloud::dataplex::v1::ListEntitiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -76,7 +76,7 @@ Idempotency MetadataServiceConnectionIdempotencyPolicy::GetPartition(
 }
 
 Idempotency MetadataServiceConnectionIdempotencyPolicy::ListPartitions(
-    google::cloud::dataplex::v1::ListPartitionsRequest) {
+    google::cloud::dataplex::v1::ListPartitionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

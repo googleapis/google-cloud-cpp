@@ -37,23 +37,23 @@ KeyManagementServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListKeyRings(
-    google::cloud::kms::v1::ListKeyRingsRequest) {
+    google::cloud::kms::v1::ListKeyRingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListCryptoKeys(
-    google::cloud::kms::v1::ListCryptoKeysRequest) {
+    google::cloud::kms::v1::ListCryptoKeysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency
 KeyManagementServiceConnectionIdempotencyPolicy::ListCryptoKeyVersions(
-    google::cloud::kms::v1::ListCryptoKeyVersionsRequest) {
+    google::cloud::kms::v1::ListCryptoKeyVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListImportJobs(
-    google::cloud::kms::v1::ListImportJobsRequest) {
+    google::cloud::kms::v1::ListImportJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

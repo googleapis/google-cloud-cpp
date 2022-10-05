@@ -36,7 +36,7 @@ WebhooksConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency WebhooksConnectionIdempotencyPolicy::ListWebhooks(
-    google::cloud::dialogflow::cx::v3::ListWebhooksRequest) {
+    google::cloud::dialogflow::cx::v3::ListWebhooksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

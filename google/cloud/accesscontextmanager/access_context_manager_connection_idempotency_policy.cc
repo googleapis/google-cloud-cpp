@@ -37,7 +37,8 @@ AccessContextManagerConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency AccessContextManagerConnectionIdempotencyPolicy::ListAccessPolicies(
-    google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest) {
+    google::identity::accesscontextmanager::v1::
+        ListAccessPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -64,7 +65,8 @@ Idempotency AccessContextManagerConnectionIdempotencyPolicy::DeleteAccessPolicy(
 }
 
 Idempotency AccessContextManagerConnectionIdempotencyPolicy::ListAccessLevels(
-    google::identity::accesscontextmanager::v1::ListAccessLevelsRequest) {
+    google::identity::accesscontextmanager::v1::
+        ListAccessLevelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -100,7 +102,8 @@ AccessContextManagerConnectionIdempotencyPolicy::ReplaceAccessLevels(
 
 Idempotency
 AccessContextManagerConnectionIdempotencyPolicy::ListServicePerimeters(
-    google::identity::accesscontextmanager::v1::ListServicePerimetersRequest) {
+    google::identity::accesscontextmanager::v1::
+        ListServicePerimetersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -149,7 +152,7 @@ AccessContextManagerConnectionIdempotencyPolicy::CommitServicePerimeters(
 Idempotency
 AccessContextManagerConnectionIdempotencyPolicy::ListGcpUserAccessBindings(
     google::identity::accesscontextmanager::v1::
-        ListGcpUserAccessBindingsRequest) {
+        ListGcpUserAccessBindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

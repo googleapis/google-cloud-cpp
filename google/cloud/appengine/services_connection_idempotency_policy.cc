@@ -36,7 +36,7 @@ ServicesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ServicesConnectionIdempotencyPolicy::ListServices(
-    google::appengine::v1::ListServicesRequest) {
+    google::appengine::v1::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ RealmsServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency RealmsServiceConnectionIdempotencyPolicy::ListRealms(
-    google::cloud::gaming::v1::ListRealmsRequest) {
+    google::cloud::gaming::v1::ListRealmsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

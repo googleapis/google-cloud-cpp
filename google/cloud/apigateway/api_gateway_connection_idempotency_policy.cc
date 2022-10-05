@@ -36,7 +36,7 @@ ApiGatewayServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListGateways(
-    google::cloud::apigateway::v1::ListGatewaysRequest) {
+    google::cloud::apigateway::v1::ListGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -61,7 +61,7 @@ Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteGateway(
 }
 
 Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListApis(
-    google::cloud::apigateway::v1::ListApisRequest) {
+    google::cloud::apigateway::v1::ListApisRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -86,7 +86,7 @@ Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteApi(
 }
 
 Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListApiConfigs(
-    google::cloud::apigateway::v1::ListApiConfigsRequest) {
+    google::cloud::apigateway::v1::ListApiConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

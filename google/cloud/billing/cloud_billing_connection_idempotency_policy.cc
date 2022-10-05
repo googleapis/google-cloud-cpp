@@ -41,7 +41,7 @@ Idempotency CloudBillingConnectionIdempotencyPolicy::GetBillingAccount(
 }
 
 Idempotency CloudBillingConnectionIdempotencyPolicy::ListBillingAccounts(
-    google::cloud::billing::v1::ListBillingAccountsRequest) {
+    google::cloud::billing::v1::ListBillingAccountsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -56,7 +56,7 @@ Idempotency CloudBillingConnectionIdempotencyPolicy::CreateBillingAccount(
 }
 
 Idempotency CloudBillingConnectionIdempotencyPolicy::ListProjectBillingInfo(
-    google::cloud::billing::v1::ListProjectBillingInfoRequest) {
+    google::cloud::billing::v1::ListProjectBillingInfoRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

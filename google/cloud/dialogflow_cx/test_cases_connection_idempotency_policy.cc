@@ -36,7 +36,7 @@ TestCasesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency TestCasesConnectionIdempotencyPolicy::ListTestCases(
-    google::cloud::dialogflow::cx::v3::ListTestCasesRequest) {
+    google::cloud::dialogflow::cx::v3::ListTestCasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -86,7 +86,7 @@ Idempotency TestCasesConnectionIdempotencyPolicy::ExportTestCases(
 }
 
 Idempotency TestCasesConnectionIdempotencyPolicy::ListTestCaseResults(
-    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest) {
+    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

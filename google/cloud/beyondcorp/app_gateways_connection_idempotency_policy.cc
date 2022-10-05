@@ -37,7 +37,8 @@ AppGatewaysServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListAppGateways(
-    google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest) {
+    google::cloud::beyondcorp::appgateways::v1::
+        ListAppGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

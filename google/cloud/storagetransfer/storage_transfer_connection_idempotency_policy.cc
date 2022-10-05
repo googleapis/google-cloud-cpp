@@ -60,7 +60,7 @@ Idempotency StorageTransferServiceConnectionIdempotencyPolicy::GetTransferJob(
 }
 
 Idempotency StorageTransferServiceConnectionIdempotencyPolicy::ListTransferJobs(
-    google::storagetransfer::v1::ListTransferJobsRequest) {
+    google::storagetransfer::v1::ListTransferJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -103,7 +103,7 @@ Idempotency StorageTransferServiceConnectionIdempotencyPolicy::GetAgentPool(
 }
 
 Idempotency StorageTransferServiceConnectionIdempotencyPolicy::ListAgentPools(
-    google::storagetransfer::v1::ListAgentPoolsRequest) {
+    google::storagetransfer::v1::ListAgentPoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

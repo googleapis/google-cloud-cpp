@@ -41,7 +41,7 @@ Idempotency DashboardsServiceConnectionIdempotencyPolicy::CreateDashboard(
 }
 
 Idempotency DashboardsServiceConnectionIdempotencyPolicy::ListDashboards(
-    google::monitoring::dashboard::v1::ListDashboardsRequest) {
+    google::monitoring::dashboard::v1::ListDashboardsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

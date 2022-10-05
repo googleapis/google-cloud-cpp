@@ -36,7 +36,7 @@ CatalogServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency CatalogServiceConnectionIdempotencyPolicy::ListCatalogs(
-    google::cloud::retail::v2::ListCatalogsRequest) {
+    google::cloud::retail::v2::ListCatalogsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -41,7 +41,7 @@ Idempotency ApiKeysConnectionIdempotencyPolicy::CreateKey(
 }
 
 Idempotency ApiKeysConnectionIdempotencyPolicy::ListKeys(
-    google::api::apikeys::v2::ListKeysRequest) {
+    google::api::apikeys::v2::ListKeysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

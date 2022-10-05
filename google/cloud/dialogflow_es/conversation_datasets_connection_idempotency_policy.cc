@@ -50,7 +50,7 @@ ConversationDatasetsConnectionIdempotencyPolicy::GetConversationDataset(
 
 Idempotency
 ConversationDatasetsConnectionIdempotencyPolicy::ListConversationDatasets(
-    google::cloud::dialogflow::v2::ListConversationDatasetsRequest) {
+    google::cloud::dialogflow::v2::ListConversationDatasetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

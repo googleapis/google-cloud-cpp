@@ -38,7 +38,7 @@ UptimeCheckServiceConnectionIdempotencyPolicy::clone() const {
 
 Idempotency
 UptimeCheckServiceConnectionIdempotencyPolicy::ListUptimeCheckConfigs(
-    google::monitoring::v3::ListUptimeCheckConfigsRequest) {
+    google::monitoring::v3::ListUptimeCheckConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -66,7 +66,7 @@ UptimeCheckServiceConnectionIdempotencyPolicy::DeleteUptimeCheckConfig(
 }
 
 Idempotency UptimeCheckServiceConnectionIdempotencyPolicy::ListUptimeCheckIps(
-    google::monitoring::v3::ListUptimeCheckIpsRequest) {
+    google::monitoring::v3::ListUptimeCheckIpsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -38,7 +38,7 @@ SessionEntityTypesConnectionIdempotencyPolicy::clone() const {
 
 Idempotency
 SessionEntityTypesConnectionIdempotencyPolicy::ListSessionEntityTypes(
-    google::cloud::dialogflow::v2::ListSessionEntityTypesRequest) {
+    google::cloud::dialogflow::v2::ListSessionEntityTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

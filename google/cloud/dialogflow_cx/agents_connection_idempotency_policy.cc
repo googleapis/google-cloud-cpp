@@ -36,7 +36,7 @@ AgentsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency AgentsConnectionIdempotencyPolicy::ListAgents(
-    google::cloud::dialogflow::cx::v3::ListAgentsRequest) {
+    google::cloud::dialogflow::cx::v3::ListAgentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

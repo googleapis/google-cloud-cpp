@@ -42,7 +42,7 @@ Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateCdnKey(
 }
 
 Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListCdnKeys(
-    google::cloud::video::stitcher::v1::ListCdnKeysRequest) {
+    google::cloud::video::stitcher::v1::ListCdnKeysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -73,7 +73,8 @@ Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodSession(
 
 Idempotency
 VideoStitcherServiceConnectionIdempotencyPolicy::ListVodStitchDetails(
-    google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest) {
+    google::cloud::video::stitcher::v1::
+        ListVodStitchDetailsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -84,7 +85,7 @@ Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodStitchDetail(
 
 Idempotency
 VideoStitcherServiceConnectionIdempotencyPolicy::ListVodAdTagDetails(
-    google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest) {
+    google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -95,7 +96,8 @@ Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodAdTagDetail(
 
 Idempotency
 VideoStitcherServiceConnectionIdempotencyPolicy::ListLiveAdTagDetails(
-    google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest) {
+    google::cloud::video::stitcher::v1::
+        ListLiveAdTagDetailsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -110,7 +112,7 @@ Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateSlate(
 }
 
 Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListSlates(
-    google::cloud::video::stitcher::v1::ListSlatesRequest) {
+    google::cloud::video::stitcher::v1::ListSlatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

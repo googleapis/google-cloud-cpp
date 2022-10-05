@@ -37,8 +37,8 @@ GameServerDeploymentsServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency GameServerDeploymentsServiceConnectionIdempotencyPolicy::
-    ListGameServerDeployments(
-        google::cloud::gaming::v1::ListGameServerDeploymentsRequest) {
+    ListGameServerDeployments(google::cloud::gaming::v1::
+                                  ListGameServerDeploymentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

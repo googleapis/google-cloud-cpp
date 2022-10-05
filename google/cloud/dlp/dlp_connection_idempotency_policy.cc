@@ -76,7 +76,7 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::GetInspectTemplate(
 }
 
 Idempotency DlpServiceConnectionIdempotencyPolicy::ListInspectTemplates(
-    google::privacy::dlp::v2::ListInspectTemplatesRequest) {
+    google::privacy::dlp::v2::ListInspectTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -101,7 +101,7 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::GetDeidentifyTemplate(
 }
 
 Idempotency DlpServiceConnectionIdempotencyPolicy::ListDeidentifyTemplates(
-    google::privacy::dlp::v2::ListDeidentifyTemplatesRequest) {
+    google::privacy::dlp::v2::ListDeidentifyTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -131,7 +131,7 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::GetJobTrigger(
 }
 
 Idempotency DlpServiceConnectionIdempotencyPolicy::ListJobTriggers(
-    google::privacy::dlp::v2::ListJobTriggersRequest) {
+    google::privacy::dlp::v2::ListJobTriggersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -151,7 +151,7 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::CreateDlpJob(
 }
 
 Idempotency DlpServiceConnectionIdempotencyPolicy::ListDlpJobs(
-    google::privacy::dlp::v2::ListDlpJobsRequest) {
+    google::privacy::dlp::v2::ListDlpJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -186,7 +186,7 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::GetStoredInfoType(
 }
 
 Idempotency DlpServiceConnectionIdempotencyPolicy::ListStoredInfoTypes(
-    google::privacy::dlp::v2::ListStoredInfoTypesRequest) {
+    google::privacy::dlp::v2::ListStoredInfoTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

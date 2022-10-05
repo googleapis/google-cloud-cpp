@@ -36,7 +36,7 @@ VmMigrationConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListSources(
-    google::cloud::vmmigration::v1::ListSourcesRequest) {
+    google::cloud::vmmigration::v1::ListSourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -66,7 +66,7 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::FetchInventory(
 }
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListUtilizationReports(
-    google::cloud::vmmigration::v1::ListUtilizationReportsRequest) {
+    google::cloud::vmmigration::v1::ListUtilizationReportsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -86,7 +86,8 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::DeleteUtilizationReport(
 }
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListDatacenterConnectors(
-    google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest) {
+    google::cloud::vmmigration::v1::
+        ListDatacenterConnectorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -116,7 +117,7 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::CreateMigratingVm(
 }
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListMigratingVms(
-    google::cloud::vmmigration::v1::ListMigratingVmsRequest) {
+    google::cloud::vmmigration::v1::ListMigratingVmsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -166,7 +167,7 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::CancelCloneJob(
 }
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListCloneJobs(
-    google::cloud::vmmigration::v1::ListCloneJobsRequest) {
+    google::cloud::vmmigration::v1::ListCloneJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -186,7 +187,7 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::CancelCutoverJob(
 }
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListCutoverJobs(
-    google::cloud::vmmigration::v1::ListCutoverJobsRequest) {
+    google::cloud::vmmigration::v1::ListCutoverJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -196,7 +197,7 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::GetCutoverJob(
 }
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListGroups(
-    google::cloud::vmmigration::v1::ListGroupsRequest) {
+    google::cloud::vmmigration::v1::ListGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -231,7 +232,7 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::RemoveGroupMigration(
 }
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListTargetProjects(
-    google::cloud::vmmigration::v1::ListTargetProjectsRequest) {
+    google::cloud::vmmigration::v1::ListTargetProjectsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

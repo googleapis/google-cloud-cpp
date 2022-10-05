@@ -66,7 +66,7 @@ Idempotency ClusterControllerConnectionIdempotencyPolicy::GetCluster(
 }
 
 Idempotency ClusterControllerConnectionIdempotencyPolicy::ListClusters(
-    google::cloud::dataproc::v1::ListClustersRequest) {
+    google::cloud::dataproc::v1::ListClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

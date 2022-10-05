@@ -37,13 +37,15 @@ AnalyticsHubServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListDataExchanges(
-    google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest) {
+    google::cloud::bigquery::analyticshub::v1::
+        ListDataExchangesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency
 AnalyticsHubServiceConnectionIdempotencyPolicy::ListOrgDataExchanges(
-    google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest) {
+    google::cloud::bigquery::analyticshub::v1::
+        ListOrgDataExchangesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -71,7 +73,7 @@ Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::DeleteDataExchange(
 }
 
 Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListListings(
-    google::cloud::bigquery::analyticshub::v1::ListListingsRequest) {
+    google::cloud::bigquery::analyticshub::v1::ListListingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

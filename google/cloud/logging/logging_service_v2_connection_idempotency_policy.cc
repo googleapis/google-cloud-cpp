@@ -46,18 +46,18 @@ Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::WriteLogEntries(
 }
 
 Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::ListLogEntries(
-    google::logging::v2::ListLogEntriesRequest) {
+    google::logging::v2::ListLogEntriesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
 LoggingServiceV2ConnectionIdempotencyPolicy::ListMonitoredResourceDescriptors(
-    google::logging::v2::ListMonitoredResourceDescriptorsRequest) {
+    google::logging::v2::ListMonitoredResourceDescriptorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::ListLogs(
-    google::logging::v2::ListLogsRequest) {
+    google::logging::v2::ListLogsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

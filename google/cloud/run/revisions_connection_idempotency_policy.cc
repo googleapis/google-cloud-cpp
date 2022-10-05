@@ -41,7 +41,7 @@ Idempotency RevisionsConnectionIdempotencyPolicy::GetRevision(
 }
 
 Idempotency RevisionsConnectionIdempotencyPolicy::ListRevisions(
-    google::cloud::run::v2::ListRevisionsRequest) {
+    google::cloud::run::v2::ListRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

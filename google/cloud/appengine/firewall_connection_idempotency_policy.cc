@@ -36,7 +36,7 @@ FirewallConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency FirewallConnectionIdempotencyPolicy::ListIngressRules(
-    google::appengine::v1::ListIngressRulesRequest) {
+    google::appengine::v1::ListIngressRulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

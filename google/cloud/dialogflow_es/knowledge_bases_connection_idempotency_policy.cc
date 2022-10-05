@@ -36,7 +36,7 @@ KnowledgeBasesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency KnowledgeBasesConnectionIdempotencyPolicy::ListKnowledgeBases(
-    google::cloud::dialogflow::v2::ListKnowledgeBasesRequest) {
+    google::cloud::dialogflow::v2::ListKnowledgeBasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

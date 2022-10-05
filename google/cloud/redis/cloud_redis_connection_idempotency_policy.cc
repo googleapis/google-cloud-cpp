@@ -36,7 +36,7 @@ CloudRedisConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency CloudRedisConnectionIdempotencyPolicy::ListInstances(
-    google::cloud::redis::v1::ListInstancesRequest) {
+    google::cloud::redis::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

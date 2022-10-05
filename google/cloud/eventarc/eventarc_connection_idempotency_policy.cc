@@ -41,7 +41,7 @@ Idempotency EventarcConnectionIdempotencyPolicy::GetTrigger(
 }
 
 Idempotency EventarcConnectionIdempotencyPolicy::ListTriggers(
-    google::cloud::eventarc::v1::ListTriggersRequest) {
+    google::cloud::eventarc::v1::ListTriggersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -66,7 +66,7 @@ Idempotency EventarcConnectionIdempotencyPolicy::GetChannel(
 }
 
 Idempotency EventarcConnectionIdempotencyPolicy::ListChannels(
-    google::cloud::eventarc::v1::ListChannelsRequest) {
+    google::cloud::eventarc::v1::ListChannelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -91,7 +91,7 @@ Idempotency EventarcConnectionIdempotencyPolicy::GetProvider(
 }
 
 Idempotency EventarcConnectionIdempotencyPolicy::ListProviders(
-    google::cloud::eventarc::v1::ListProvidersRequest) {
+    google::cloud::eventarc::v1::ListProvidersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -101,7 +101,7 @@ Idempotency EventarcConnectionIdempotencyPolicy::GetChannelConnection(
 }
 
 Idempotency EventarcConnectionIdempotencyPolicy::ListChannelConnections(
-    google::cloud::eventarc::v1::ListChannelConnectionsRequest) {
+    google::cloud::eventarc::v1::ListChannelConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

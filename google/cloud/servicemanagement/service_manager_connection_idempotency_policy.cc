@@ -36,7 +36,7 @@ ServiceManagerConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ServiceManagerConnectionIdempotencyPolicy::ListServices(
-    google::api::servicemanagement::v1::ListServicesRequest) {
+    google::api::servicemanagement::v1::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -61,7 +61,7 @@ Idempotency ServiceManagerConnectionIdempotencyPolicy::UndeleteService(
 }
 
 Idempotency ServiceManagerConnectionIdempotencyPolicy::ListServiceConfigs(
-    google::api::servicemanagement::v1::ListServiceConfigsRequest) {
+    google::api::servicemanagement::v1::ListServiceConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -81,7 +81,7 @@ Idempotency ServiceManagerConnectionIdempotencyPolicy::SubmitConfigSource(
 }
 
 Idempotency ServiceManagerConnectionIdempotencyPolicy::ListServiceRollouts(
-    google::api::servicemanagement::v1::ListServiceRolloutsRequest) {
+    google::api::servicemanagement::v1::ListServiceRolloutsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ RecommenderConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency RecommenderConnectionIdempotencyPolicy::ListInsights(
-    google::cloud::recommender::v1::ListInsightsRequest) {
+    google::cloud::recommender::v1::ListInsightsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -51,7 +51,7 @@ Idempotency RecommenderConnectionIdempotencyPolicy::MarkInsightAccepted(
 }
 
 Idempotency RecommenderConnectionIdempotencyPolicy::ListRecommendations(
-    google::cloud::recommender::v1::ListRecommendationsRequest) {
+    google::cloud::recommender::v1::ListRecommendationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

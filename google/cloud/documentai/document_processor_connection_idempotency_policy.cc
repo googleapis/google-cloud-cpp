@@ -56,12 +56,12 @@ DocumentProcessorServiceConnectionIdempotencyPolicy::FetchProcessorTypes(
 
 Idempotency
 DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessorTypes(
-    google::cloud::documentai::v1::ListProcessorTypesRequest) {
+    google::cloud::documentai::v1::ListProcessorTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessors(
-    google::cloud::documentai::v1::ListProcessorsRequest) {
+    google::cloud::documentai::v1::ListProcessorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -78,7 +78,7 @@ DocumentProcessorServiceConnectionIdempotencyPolicy::GetProcessorVersion(
 
 Idempotency
 DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessorVersions(
-    google::cloud::documentai::v1::ListProcessorVersionsRequest) {
+    google::cloud::documentai::v1::ListProcessorVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

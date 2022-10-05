@@ -36,7 +36,7 @@ BareMetalSolutionConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListInstances(
-    google::cloud::baremetalsolution::v2::ListInstancesRequest) {
+    google::cloud::baremetalsolution::v2::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -71,7 +71,7 @@ Idempotency BareMetalSolutionConnectionIdempotencyPolicy::DetachLun(
 }
 
 Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListVolumes(
-    google::cloud::baremetalsolution::v2::ListVolumesRequest) {
+    google::cloud::baremetalsolution::v2::ListVolumesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -91,7 +91,7 @@ Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ResizeVolume(
 }
 
 Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListNetworks(
-    google::cloud::baremetalsolution::v2::ListNetworksRequest) {
+    google::cloud::baremetalsolution::v2::ListNetworksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -116,7 +116,7 @@ Idempotency BareMetalSolutionConnectionIdempotencyPolicy::GetLun(
 }
 
 Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListLuns(
-    google::cloud::baremetalsolution::v2::ListLunsRequest) {
+    google::cloud::baremetalsolution::v2::ListLunsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -126,7 +126,7 @@ Idempotency BareMetalSolutionConnectionIdempotencyPolicy::GetNfsShare(
 }
 
 Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListNfsShares(
-    google::cloud::baremetalsolution::v2::ListNfsSharesRequest) {
+    google::cloud::baremetalsolution::v2::ListNfsSharesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

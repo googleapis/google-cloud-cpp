@@ -56,7 +56,7 @@ Idempotency TenantServiceConnectionIdempotencyPolicy::DeleteTenant(
 }
 
 Idempotency TenantServiceConnectionIdempotencyPolicy::ListTenants(
-    google::cloud::talent::v4::ListTenantsRequest) {
+    google::cloud::talent::v4::ListTenantsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

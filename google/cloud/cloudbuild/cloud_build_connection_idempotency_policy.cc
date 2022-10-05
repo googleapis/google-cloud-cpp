@@ -46,7 +46,7 @@ Idempotency CloudBuildConnectionIdempotencyPolicy::GetBuild(
 }
 
 Idempotency CloudBuildConnectionIdempotencyPolicy::ListBuilds(
-    google::devtools::cloudbuild::v1::ListBuildsRequest) {
+    google::devtools::cloudbuild::v1::ListBuildsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -76,7 +76,7 @@ Idempotency CloudBuildConnectionIdempotencyPolicy::GetBuildTrigger(
 }
 
 Idempotency CloudBuildConnectionIdempotencyPolicy::ListBuildTriggers(
-    google::devtools::cloudbuild::v1::ListBuildTriggersRequest) {
+    google::devtools::cloudbuild::v1::ListBuildTriggersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -121,7 +121,7 @@ Idempotency CloudBuildConnectionIdempotencyPolicy::UpdateWorkerPool(
 }
 
 Idempotency CloudBuildConnectionIdempotencyPolicy::ListWorkerPools(
-    google::devtools::cloudbuild::v1::ListWorkerPoolsRequest) {
+    google::devtools::cloudbuild::v1::ListWorkerPoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

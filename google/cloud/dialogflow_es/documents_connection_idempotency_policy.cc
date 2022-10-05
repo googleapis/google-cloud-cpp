@@ -36,7 +36,7 @@ DocumentsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency DocumentsConnectionIdempotencyPolicy::ListDocuments(
-    google::cloud::dialogflow::v2::ListDocumentsRequest) {
+    google::cloud::dialogflow::v2::ListDocumentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

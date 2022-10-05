@@ -49,7 +49,7 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::GetEnvironment(
 
 Idempotency EnvironmentsConnectionIdempotencyPolicy::ListEnvironments(
     google::cloud::orchestration::airflow::service::v1::
-        ListEnvironmentsRequest) {
+        ListEnvironmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

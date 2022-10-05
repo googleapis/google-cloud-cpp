@@ -37,7 +37,7 @@ CloudFilestoreManagerConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListInstances(
-    google::cloud::filestore::v1::ListInstancesRequest) {
+    google::cloud::filestore::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -67,7 +67,7 @@ Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteInstance(
 }
 
 Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListBackups(
-    google::cloud::filestore::v1::ListBackupsRequest) {
+    google::cloud::filestore::v1::ListBackupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

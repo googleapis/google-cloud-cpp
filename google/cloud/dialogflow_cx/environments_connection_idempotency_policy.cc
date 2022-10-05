@@ -36,7 +36,7 @@ EnvironmentsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency EnvironmentsConnectionIdempotencyPolicy::ListEnvironments(
-    google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest) {
+    google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -61,7 +61,8 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteEnvironment(
 }
 
 Idempotency EnvironmentsConnectionIdempotencyPolicy::LookupEnvironmentHistory(
-    google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest) {
+    google::cloud::dialogflow::cx::v3::
+        LookupEnvironmentHistoryRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -71,7 +72,8 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::RunContinuousTest(
 }
 
 Idempotency EnvironmentsConnectionIdempotencyPolicy::ListContinuousTestResults(
-    google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest) {
+    google::cloud::dialogflow::cx::v3::
+        ListContinuousTestResultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

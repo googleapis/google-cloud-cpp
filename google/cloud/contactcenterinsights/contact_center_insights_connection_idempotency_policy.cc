@@ -56,7 +56,8 @@ Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetConversation(
 }
 
 Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListConversations(
-    google::cloud::contactcenterinsights::v1::ListConversationsRequest) {
+    google::cloud::contactcenterinsights::v1::
+        ListConversationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -78,7 +79,7 @@ Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetAnalysis(
 }
 
 Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListAnalyses(
-    google::cloud::contactcenterinsights::v1::ListAnalysesRequest) {
+    google::cloud::contactcenterinsights::v1::ListAnalysesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -167,7 +168,8 @@ Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetPhraseMatcher(
 
 Idempotency
 ContactCenterInsightsConnectionIdempotencyPolicy::ListPhraseMatchers(
-    google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest) {
+    google::cloud::contactcenterinsights::v1::
+        ListPhraseMatchersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -211,7 +213,7 @@ Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetView(
 }
 
 Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListViews(
-    google::cloud::contactcenterinsights::v1::ListViewsRequest) {
+    google::cloud::contactcenterinsights::v1::ListViewsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

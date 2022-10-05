@@ -51,7 +51,7 @@ Idempotency BatchServiceConnectionIdempotencyPolicy::DeleteJob(
 }
 
 Idempotency BatchServiceConnectionIdempotencyPolicy::ListJobs(
-    google::cloud::batch::v1::ListJobsRequest) {
+    google::cloud::batch::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -61,7 +61,7 @@ Idempotency BatchServiceConnectionIdempotencyPolicy::GetTask(
 }
 
 Idempotency BatchServiceConnectionIdempotencyPolicy::ListTasks(
-    google::cloud::batch::v1::ListTasksRequest) {
+    google::cloud::batch::v1::ListTasksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

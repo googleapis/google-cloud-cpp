@@ -36,7 +36,7 @@ DatabaseAdminConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListDatabases(
-    google::spanner::admin::database::v1::ListDatabasesRequest) {
+    google::spanner::admin::database::v1::ListDatabasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -107,7 +107,7 @@ Idempotency DatabaseAdminConnectionIdempotencyPolicy::DeleteBackup(
 }
 
 Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListBackups(
-    google::spanner::admin::database::v1::ListBackupsRequest) {
+    google::spanner::admin::database::v1::ListBackupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -117,17 +117,19 @@ Idempotency DatabaseAdminConnectionIdempotencyPolicy::RestoreDatabase(
 }
 
 Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListDatabaseOperations(
-    google::spanner::admin::database::v1::ListDatabaseOperationsRequest) {
+    google::spanner::admin::database::v1::
+        ListDatabaseOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListBackupOperations(
-    google::spanner::admin::database::v1::ListBackupOperationsRequest) {
+    google::spanner::admin::database::v1::
+        ListBackupOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListDatabaseRoles(
-    google::spanner::admin::database::v1::ListDatabaseRolesRequest) {
+    google::spanner::admin::database::v1::ListDatabaseRolesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

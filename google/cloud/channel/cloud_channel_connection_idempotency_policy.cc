@@ -37,7 +37,7 @@ CloudChannelServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListCustomers(
-    google::cloud::channel::v1::ListCustomersRequest) {
+    google::cloud::channel::v1::ListCustomersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -79,19 +79,19 @@ CloudChannelServiceConnectionIdempotencyPolicy::ProvisionCloudIdentity(
 }
 
 Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListEntitlements(
-    google::cloud::channel::v1::ListEntitlementsRequest) {
+    google::cloud::channel::v1::ListEntitlementsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency
 CloudChannelServiceConnectionIdempotencyPolicy::ListTransferableSkus(
-    google::cloud::channel::v1::ListTransferableSkusRequest) {
+    google::cloud::channel::v1::ListTransferableSkusRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
 CloudChannelServiceConnectionIdempotencyPolicy::ListTransferableOffers(
-    google::cloud::channel::v1::ListTransferableOffersRequest) {
+    google::cloud::channel::v1::ListTransferableOffersRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
@@ -155,7 +155,7 @@ CloudChannelServiceConnectionIdempotencyPolicy::TransferEntitlementsToGoogle(
 
 Idempotency
 CloudChannelServiceConnectionIdempotencyPolicy::ListChannelPartnerLinks(
-    google::cloud::channel::v1::ListChannelPartnerLinksRequest) {
+    google::cloud::channel::v1::ListChannelPartnerLinksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -185,7 +185,8 @@ CloudChannelServiceConnectionIdempotencyPolicy::GetCustomerRepricingConfig(
 
 Idempotency
 CloudChannelServiceConnectionIdempotencyPolicy::ListCustomerRepricingConfigs(
-    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest) {
+    google::cloud::channel::v1::
+        ListCustomerRepricingConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -216,7 +217,8 @@ Idempotency CloudChannelServiceConnectionIdempotencyPolicy::
 
 Idempotency CloudChannelServiceConnectionIdempotencyPolicy::
     ListChannelPartnerRepricingConfigs(
-        google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest) {
+        google::cloud::channel::v1::
+            ListChannelPartnerRepricingConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -247,28 +249,28 @@ Idempotency CloudChannelServiceConnectionIdempotencyPolicy::LookupOffer(
 }
 
 Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListProducts(
-    google::cloud::channel::v1::ListProductsRequest) {
+    google::cloud::channel::v1::ListProductsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListSkus(
-    google::cloud::channel::v1::ListSkusRequest) {
+    google::cloud::channel::v1::ListSkusRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListOffers(
-    google::cloud::channel::v1::ListOffersRequest) {
+    google::cloud::channel::v1::ListOffersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListPurchasableSkus(
-    google::cloud::channel::v1::ListPurchasableSkusRequest) {
+    google::cloud::channel::v1::ListPurchasableSkusRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency
 CloudChannelServiceConnectionIdempotencyPolicy::ListPurchasableOffers(
-    google::cloud::channel::v1::ListPurchasableOffersRequest) {
+    google::cloud::channel::v1::ListPurchasableOffersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -284,7 +286,7 @@ CloudChannelServiceConnectionIdempotencyPolicy::UnregisterSubscriber(
 }
 
 Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListSubscribers(
-    google::cloud::channel::v1::ListSubscribersRequest) {
+    google::cloud::channel::v1::ListSubscribersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

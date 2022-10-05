@@ -46,7 +46,7 @@ Idempotency ServicesConnectionIdempotencyPolicy::GetService(
 }
 
 Idempotency ServicesConnectionIdempotencyPolicy::ListServices(
-    google::cloud::run::v2::ListServicesRequest) {
+    google::cloud::run::v2::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

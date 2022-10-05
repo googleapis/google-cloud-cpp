@@ -51,7 +51,7 @@ Idempotency AgentsConnectionIdempotencyPolicy::DeleteAgent(
 }
 
 Idempotency AgentsConnectionIdempotencyPolicy::SearchAgents(
-    google::cloud::dialogflow::v2::SearchAgentsRequest) {
+    google::cloud::dialogflow::v2::SearchAgentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

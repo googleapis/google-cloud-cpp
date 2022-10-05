@@ -38,7 +38,8 @@ ReachabilityServiceConnectionIdempotencyPolicy::clone() const {
 
 Idempotency
 ReachabilityServiceConnectionIdempotencyPolicy::ListConnectivityTests(
-    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest) {
+    google::cloud::networkmanagement::v1::
+        ListConnectivityTestsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

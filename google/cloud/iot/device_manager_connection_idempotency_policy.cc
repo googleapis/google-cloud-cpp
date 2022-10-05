@@ -56,7 +56,7 @@ Idempotency DeviceManagerConnectionIdempotencyPolicy::DeleteDeviceRegistry(
 }
 
 Idempotency DeviceManagerConnectionIdempotencyPolicy::ListDeviceRegistries(
-    google::cloud::iot::v1::ListDeviceRegistriesRequest) {
+    google::cloud::iot::v1::ListDeviceRegistriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -81,7 +81,7 @@ Idempotency DeviceManagerConnectionIdempotencyPolicy::DeleteDevice(
 }
 
 Idempotency DeviceManagerConnectionIdempotencyPolicy::ListDevices(
-    google::cloud::iot::v1::ListDevicesRequest) {
+    google::cloud::iot::v1::ListDevicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

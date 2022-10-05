@@ -101,37 +101,38 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::GetSource(
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::GroupAssets(
-    google::cloud::securitycenter::v1::GroupAssetsRequest) {
+    google::cloud::securitycenter::v1::GroupAssetsRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::GroupFindings(
-    google::cloud::securitycenter::v1::GroupFindingsRequest) {
+    google::cloud::securitycenter::v1::GroupFindingsRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::ListAssets(
-    google::cloud::securitycenter::v1::ListAssetsRequest) {
+    google::cloud::securitycenter::v1::ListAssetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::ListFindings(
-    google::cloud::securitycenter::v1::ListFindingsRequest) {
+    google::cloud::securitycenter::v1::ListFindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::ListMuteConfigs(
-    google::cloud::securitycenter::v1::ListMuteConfigsRequest) {
+    google::cloud::securitycenter::v1::ListMuteConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::ListNotificationConfigs(
-    google::cloud::securitycenter::v1::ListNotificationConfigsRequest) {
+    google::cloud::securitycenter::v1::
+        ListNotificationConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::ListSources(
-    google::cloud::securitycenter::v1::ListSourcesRequest) {
+    google::cloud::securitycenter::v1::ListSourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -214,7 +215,7 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateBigQueryExport(
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::ListBigQueryExports(
-    google::cloud::securitycenter::v1::ListBigQueryExportsRequest) {
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

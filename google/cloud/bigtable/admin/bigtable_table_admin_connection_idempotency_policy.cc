@@ -42,7 +42,7 @@ Idempotency BigtableTableAdminConnectionIdempotencyPolicy::CreateTable(
 }
 
 Idempotency BigtableTableAdminConnectionIdempotencyPolicy::ListTables(
-    google::bigtable::admin::v2::ListTablesRequest) {
+    google::bigtable::admin::v2::ListTablesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -108,7 +108,7 @@ Idempotency BigtableTableAdminConnectionIdempotencyPolicy::DeleteBackup(
 }
 
 Idempotency BigtableTableAdminConnectionIdempotencyPolicy::ListBackups(
-    google::bigtable::admin::v2::ListBackupsRequest) {
+    google::bigtable::admin::v2::ListBackupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

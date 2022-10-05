@@ -34,7 +34,7 @@ GoldenThingAdminConnectionIdempotencyPolicy::clone() const {
   return absl::make_unique<GoldenThingAdminConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest) {
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -88,7 +88,7 @@ Idempotency GoldenThingAdminConnectionIdempotencyPolicy::DeleteBackup(google::te
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListBackups(google::test::admin::database::v1::ListBackupsRequest) {
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListBackups(google::test::admin::database::v1::ListBackupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -96,11 +96,11 @@ Idempotency GoldenThingAdminConnectionIdempotencyPolicy::RestoreDatabase(google:
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest) {
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest) {
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

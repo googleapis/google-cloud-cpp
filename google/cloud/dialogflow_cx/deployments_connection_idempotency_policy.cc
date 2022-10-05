@@ -36,7 +36,7 @@ DeploymentsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency DeploymentsConnectionIdempotencyPolicy::ListDeployments(
-    google::cloud::dialogflow::cx::v3::ListDeploymentsRequest) {
+    google::cloud::dialogflow::cx::v3::ListDeploymentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

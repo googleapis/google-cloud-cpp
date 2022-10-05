@@ -36,7 +36,8 @@ InstanceAdminConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency InstanceAdminConnectionIdempotencyPolicy::ListInstanceConfigs(
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest) {
+    google::spanner::admin::instance::v1::
+        ListInstanceConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -62,12 +63,13 @@ Idempotency InstanceAdminConnectionIdempotencyPolicy::DeleteInstanceConfig(
 
 Idempotency
 InstanceAdminConnectionIdempotencyPolicy::ListInstanceConfigOperations(
-    google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest) {
+    google::spanner::admin::instance::v1::
+        ListInstanceConfigOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency InstanceAdminConnectionIdempotencyPolicy::ListInstances(
-    google::spanner::admin::instance::v1::ListInstancesRequest) {
+    google::spanner::admin::instance::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

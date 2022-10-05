@@ -36,7 +36,7 @@ SearchServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency SearchServiceConnectionIdempotencyPolicy::Search(
-    google::cloud::retail::v2::SearchRequest) {
+    google::cloud::retail::v2::SearchRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 

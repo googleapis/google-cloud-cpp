@@ -47,7 +47,7 @@ Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::GetService(
 }
 
 Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::ListServices(
-    google::monitoring::v3::ListServicesRequest) {
+    google::monitoring::v3::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -75,7 +75,7 @@ ServiceMonitoringServiceConnectionIdempotencyPolicy::GetServiceLevelObjective(
 
 Idempotency
 ServiceMonitoringServiceConnectionIdempotencyPolicy::ListServiceLevelObjectives(
-    google::monitoring::v3::ListServiceLevelObjectivesRequest) {
+    google::monitoring::v3::ListServiceLevelObjectivesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ NotebookServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency NotebookServiceConnectionIdempotencyPolicy::ListInstances(
-    google::cloud::notebooks::v1::ListInstancesRequest) {
+    google::cloud::notebooks::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -138,7 +138,7 @@ Idempotency NotebookServiceConnectionIdempotencyPolicy::UpgradeInstanceInternal(
 }
 
 Idempotency NotebookServiceConnectionIdempotencyPolicy::ListEnvironments(
-    google::cloud::notebooks::v1::ListEnvironmentsRequest) {
+    google::cloud::notebooks::v1::ListEnvironmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -158,7 +158,7 @@ Idempotency NotebookServiceConnectionIdempotencyPolicy::DeleteEnvironment(
 }
 
 Idempotency NotebookServiceConnectionIdempotencyPolicy::ListSchedules(
-    google::cloud::notebooks::v1::ListSchedulesRequest) {
+    google::cloud::notebooks::v1::ListSchedulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -183,7 +183,7 @@ Idempotency NotebookServiceConnectionIdempotencyPolicy::TriggerSchedule(
 }
 
 Idempotency NotebookServiceConnectionIdempotencyPolicy::ListExecutions(
-    google::cloud::notebooks::v1::ListExecutionsRequest) {
+    google::cloud::notebooks::v1::ListExecutionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

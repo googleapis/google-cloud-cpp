@@ -36,7 +36,7 @@ InstancesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency InstancesConnectionIdempotencyPolicy::ListInstances(
-    google::appengine::v1::ListInstancesRequest) {
+    google::appengine::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

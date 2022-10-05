@@ -37,7 +37,7 @@ ManagedNotebookServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ListRuntimes(
-    google::cloud::notebooks::v1::ListRuntimesRequest) {
+    google::cloud::notebooks::v1::ListRuntimesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

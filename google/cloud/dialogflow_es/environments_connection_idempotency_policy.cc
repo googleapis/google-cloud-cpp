@@ -36,7 +36,7 @@ EnvironmentsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency EnvironmentsConnectionIdempotencyPolicy::ListEnvironments(
-    google::cloud::dialogflow::v2::ListEnvironmentsRequest) {
+    google::cloud::dialogflow::v2::ListEnvironmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -61,7 +61,7 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteEnvironment(
 }
 
 Idempotency EnvironmentsConnectionIdempotencyPolicy::GetEnvironmentHistory(
-    google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest) {
+    google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

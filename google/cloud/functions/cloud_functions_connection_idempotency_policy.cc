@@ -37,7 +37,7 @@ CloudFunctionsServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::ListFunctions(
-    google::cloud::functions::v1::ListFunctionsRequest) {
+    google::cloud::functions::v1::ListFunctionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -37,7 +37,7 @@ ImageVersionsConnectionIdempotencyPolicy::clone() const {
 
 Idempotency ImageVersionsConnectionIdempotencyPolicy::ListImageVersions(
     google::cloud::orchestration::airflow::service::v1::
-        ListImageVersionsRequest) {
+        ListImageVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

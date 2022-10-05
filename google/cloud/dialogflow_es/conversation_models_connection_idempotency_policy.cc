@@ -49,7 +49,7 @@ Idempotency ConversationModelsConnectionIdempotencyPolicy::GetConversationModel(
 
 Idempotency
 ConversationModelsConnectionIdempotencyPolicy::ListConversationModels(
-    google::cloud::dialogflow::v2::ListConversationModelsRequest) {
+    google::cloud::dialogflow::v2::ListConversationModelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -80,7 +80,8 @@ ConversationModelsConnectionIdempotencyPolicy::GetConversationModelEvaluation(
 
 Idempotency
 ConversationModelsConnectionIdempotencyPolicy::ListConversationModelEvaluations(
-    google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest) {
+    google::cloud::dialogflow::v2::
+        ListConversationModelEvaluationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

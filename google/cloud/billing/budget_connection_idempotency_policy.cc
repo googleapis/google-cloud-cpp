@@ -51,7 +51,7 @@ Idempotency BudgetServiceConnectionIdempotencyPolicy::GetBudget(
 }
 
 Idempotency BudgetServiceConnectionIdempotencyPolicy::ListBudgets(
-    google::cloud::billing::budgets::v1::ListBudgetsRequest) {
+    google::cloud::billing::budgets::v1::ListBudgetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

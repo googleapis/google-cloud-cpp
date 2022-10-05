@@ -51,13 +51,14 @@ Idempotency OsConfigServiceConnectionIdempotencyPolicy::CancelPatchJob(
 }
 
 Idempotency OsConfigServiceConnectionIdempotencyPolicy::ListPatchJobs(
-    google::cloud::osconfig::v1::ListPatchJobsRequest) {
+    google::cloud::osconfig::v1::ListPatchJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency
 OsConfigServiceConnectionIdempotencyPolicy::ListPatchJobInstanceDetails(
-    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest) {
+    google::cloud::osconfig::v1::
+        ListPatchJobInstanceDetailsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -72,7 +73,7 @@ Idempotency OsConfigServiceConnectionIdempotencyPolicy::GetPatchDeployment(
 }
 
 Idempotency OsConfigServiceConnectionIdempotencyPolicy::ListPatchDeployments(
-    google::cloud::osconfig::v1::ListPatchDeploymentsRequest) {
+    google::cloud::osconfig::v1::ListPatchDeploymentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

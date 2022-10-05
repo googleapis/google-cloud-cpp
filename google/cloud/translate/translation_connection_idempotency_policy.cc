@@ -74,7 +74,7 @@ Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateGlossary(
 }
 
 Idempotency TranslationServiceConnectionIdempotencyPolicy::ListGlossaries(
-    google::cloud::translation::v3::ListGlossariesRequest) {
+    google::cloud::translation::v3::ListGlossariesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

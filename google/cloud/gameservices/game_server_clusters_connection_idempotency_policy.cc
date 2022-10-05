@@ -38,7 +38,7 @@ GameServerClustersServiceConnectionIdempotencyPolicy::clone() const {
 
 Idempotency
 GameServerClustersServiceConnectionIdempotencyPolicy::ListGameServerClusters(
-    google::cloud::gaming::v1::ListGameServerClustersRequest) {
+    google::cloud::gaming::v1::ListGameServerClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -41,7 +41,7 @@ Idempotency ConversationsConnectionIdempotencyPolicy::CreateConversation(
 }
 
 Idempotency ConversationsConnectionIdempotencyPolicy::ListConversations(
-    google::cloud::dialogflow::v2::ListConversationsRequest) {
+    google::cloud::dialogflow::v2::ListConversationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -56,7 +56,7 @@ Idempotency ConversationsConnectionIdempotencyPolicy::CompleteConversation(
 }
 
 Idempotency ConversationsConnectionIdempotencyPolicy::ListMessages(
-    google::cloud::dialogflow::v2::ListMessagesRequest) {
+    google::cloud::dialogflow::v2::ListMessagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

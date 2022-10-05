@@ -36,7 +36,7 @@ DomainMappingsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency DomainMappingsConnectionIdempotencyPolicy::ListDomainMappings(
-    google::appengine::v1::ListDomainMappingsRequest) {
+    google::appengine::v1::ListDomainMappingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

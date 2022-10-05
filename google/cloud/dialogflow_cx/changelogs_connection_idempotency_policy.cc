@@ -36,7 +36,7 @@ ChangelogsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ChangelogsConnectionIdempotencyPolicy::ListChangelogs(
-    google::cloud::dialogflow::cx::v3::ListChangelogsRequest) {
+    google::cloud::dialogflow::cx::v3::ListChangelogsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -45,7 +45,7 @@ Idempotency FlowsConnectionIdempotencyPolicy::DeleteFlow(
 }
 
 Idempotency FlowsConnectionIdempotencyPolicy::ListFlows(
-    google::cloud::dialogflow::cx::v3::ListFlowsRequest) {
+    google::cloud::dialogflow::cx::v3::ListFlowsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

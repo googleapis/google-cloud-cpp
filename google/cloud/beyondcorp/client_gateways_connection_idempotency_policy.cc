@@ -39,7 +39,8 @@ ClientGatewaysServiceConnectionIdempotencyPolicy::clone() const {
 
 Idempotency
 ClientGatewaysServiceConnectionIdempotencyPolicy::ListClientGateways(
-    google::cloud::beyondcorp::clientgateways::v1::ListClientGatewaysRequest) {
+    google::cloud::beyondcorp::clientgateways::v1::
+        ListClientGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

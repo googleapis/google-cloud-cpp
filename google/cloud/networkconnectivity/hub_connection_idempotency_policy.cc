@@ -36,7 +36,7 @@ HubServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency HubServiceConnectionIdempotencyPolicy::ListHubs(
-    google::cloud::networkconnectivity::v1::ListHubsRequest) {
+    google::cloud::networkconnectivity::v1::ListHubsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -61,7 +61,7 @@ Idempotency HubServiceConnectionIdempotencyPolicy::DeleteHub(
 }
 
 Idempotency HubServiceConnectionIdempotencyPolicy::ListSpokes(
-    google::cloud::networkconnectivity::v1::ListSpokesRequest) {
+    google::cloud::networkconnectivity::v1::ListSpokesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

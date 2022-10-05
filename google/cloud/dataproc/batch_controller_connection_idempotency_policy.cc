@@ -46,7 +46,7 @@ Idempotency BatchControllerConnectionIdempotencyPolicy::GetBatch(
 }
 
 Idempotency BatchControllerConnectionIdempotencyPolicy::ListBatches(
-    google::cloud::dataproc::v1::ListBatchesRequest) {
+    google::cloud::dataproc::v1::ListBatchesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

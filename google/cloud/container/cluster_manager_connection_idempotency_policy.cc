@@ -196,7 +196,7 @@ Idempotency ClusterManagerConnectionIdempotencyPolicy::SetMaintenancePolicy(
 }
 
 Idempotency ClusterManagerConnectionIdempotencyPolicy::ListUsableSubnetworks(
-    google::container::v1::ListUsableSubnetworksRequest) {
+    google::container::v1::ListUsableSubnetworksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

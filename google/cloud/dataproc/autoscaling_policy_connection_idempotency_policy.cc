@@ -56,7 +56,7 @@ AutoscalingPolicyServiceConnectionIdempotencyPolicy::GetAutoscalingPolicy(
 
 Idempotency
 AutoscalingPolicyServiceConnectionIdempotencyPolicy::ListAutoscalingPolicies(
-    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest) {
+    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -37,7 +37,7 @@ SecretManagerServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency SecretManagerServiceConnectionIdempotencyPolicy::ListSecrets(
-    google::cloud::secretmanager::v1::ListSecretsRequest) {
+    google::cloud::secretmanager::v1::ListSecretsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -67,7 +67,7 @@ Idempotency SecretManagerServiceConnectionIdempotencyPolicy::DeleteSecret(
 }
 
 Idempotency SecretManagerServiceConnectionIdempotencyPolicy::ListSecretVersions(
-    google::cloud::secretmanager::v1::ListSecretVersionsRequest) {
+    google::cloud::secretmanager::v1::ListSecretVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

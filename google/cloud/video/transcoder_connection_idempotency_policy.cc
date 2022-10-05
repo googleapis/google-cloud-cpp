@@ -41,7 +41,7 @@ Idempotency TranscoderServiceConnectionIdempotencyPolicy::CreateJob(
 }
 
 Idempotency TranscoderServiceConnectionIdempotencyPolicy::ListJobs(
-    google::cloud::video::transcoder::v1::ListJobsRequest) {
+    google::cloud::video::transcoder::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -61,7 +61,7 @@ Idempotency TranscoderServiceConnectionIdempotencyPolicy::CreateJobTemplate(
 }
 
 Idempotency TranscoderServiceConnectionIdempotencyPolicy::ListJobTemplates(
-    google::cloud::video::transcoder::v1::ListJobTemplatesRequest) {
+    google::cloud::video::transcoder::v1::ListJobTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

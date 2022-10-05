@@ -37,7 +37,8 @@ AppConnectorsServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency AppConnectorsServiceConnectionIdempotencyPolicy::ListAppConnectors(
-    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest) {
+    google::cloud::beyondcorp::appconnectors::v1::
+        ListAppConnectorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -41,7 +41,7 @@ Idempotency AssetServiceConnectionIdempotencyPolicy::ExportAssets(
 }
 
 Idempotency AssetServiceConnectionIdempotencyPolicy::ListAssets(
-    google::cloud::asset::v1::ListAssetsRequest) {
+    google::cloud::asset::v1::ListAssetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -76,12 +76,12 @@ Idempotency AssetServiceConnectionIdempotencyPolicy::DeleteFeed(
 }
 
 Idempotency AssetServiceConnectionIdempotencyPolicy::SearchAllResources(
-    google::cloud::asset::v1::SearchAllResourcesRequest) {
+    google::cloud::asset::v1::SearchAllResourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 Idempotency AssetServiceConnectionIdempotencyPolicy::SearchAllIamPolicies(
-    google::cloud::asset::v1::SearchAllIamPoliciesRequest) {
+    google::cloud::asset::v1::SearchAllIamPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -117,7 +117,7 @@ Idempotency AssetServiceConnectionIdempotencyPolicy::GetSavedQuery(
 }
 
 Idempotency AssetServiceConnectionIdempotencyPolicy::ListSavedQueries(
-    google::cloud::asset::v1::ListSavedQueriesRequest) {
+    google::cloud::asset::v1::ListSavedQueriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

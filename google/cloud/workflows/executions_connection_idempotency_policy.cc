@@ -36,7 +36,8 @@ ExecutionsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency ExecutionsConnectionIdempotencyPolicy::ListExecutions(
-    google::cloud::workflows::executions::v1::ListExecutionsRequest) {
+    google::cloud::workflows::executions::v1::
+        ListExecutionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -36,7 +36,7 @@ DataCatalogConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency DataCatalogConnectionIdempotencyPolicy::SearchCatalog(
-    google::cloud::datacatalog::v1::SearchCatalogRequest) {
+    google::cloud::datacatalog::v1::SearchCatalogRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
@@ -61,7 +61,7 @@ Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteEntryGroup(
 }
 
 Idempotency DataCatalogConnectionIdempotencyPolicy::ListEntryGroups(
-    google::cloud::datacatalog::v1::ListEntryGroupsRequest) {
+    google::cloud::datacatalog::v1::ListEntryGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -91,7 +91,7 @@ Idempotency DataCatalogConnectionIdempotencyPolicy::LookupEntry(
 }
 
 Idempotency DataCatalogConnectionIdempotencyPolicy::ListEntries(
-    google::cloud::datacatalog::v1::ListEntriesRequest) {
+    google::cloud::datacatalog::v1::ListEntriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -168,7 +168,7 @@ Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteTag(
 }
 
 Idempotency DataCatalogConnectionIdempotencyPolicy::ListTags(
-    google::cloud::datacatalog::v1::ListTagsRequest) {
+    google::cloud::datacatalog::v1::ListTagsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

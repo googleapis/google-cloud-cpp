@@ -52,7 +52,7 @@ Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetScanConfig(
 }
 
 Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListScanConfigs(
-    google::cloud::websecurityscanner::v1::ListScanConfigsRequest) {
+    google::cloud::websecurityscanner::v1::ListScanConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -72,7 +72,7 @@ Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetScanRun(
 }
 
 Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListScanRuns(
-    google::cloud::websecurityscanner::v1::ListScanRunsRequest) {
+    google::cloud::websecurityscanner::v1::ListScanRunsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -82,7 +82,7 @@ Idempotency WebSecurityScannerConnectionIdempotencyPolicy::StopScanRun(
 }
 
 Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListCrawledUrls(
-    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest) {
+    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -92,7 +92,7 @@ Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetFinding(
 }
 
 Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListFindings(
-    google::cloud::websecurityscanner::v1::ListFindingsRequest) {
+    google::cloud::websecurityscanner::v1::ListFindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

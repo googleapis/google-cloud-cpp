@@ -72,7 +72,7 @@ Idempotency ContentServiceConnectionIdempotencyPolicy::TestIamPermissions(
 }
 
 Idempotency ContentServiceConnectionIdempotencyPolicy::ListContent(
-    google::cloud::dataplex::v1::ListContentRequest) {
+    google::cloud::dataplex::v1::ListContentRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
