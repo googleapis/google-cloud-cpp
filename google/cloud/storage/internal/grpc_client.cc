@@ -304,10 +304,7 @@ StatusOr<BucketMetadata> GrpcClient::CreateBucket(
 
 StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
-  auto proto = storage_internal::ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->GetBucket(context, proto);
+  auto response = GetBucketMetadataImpl(request);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
 }
@@ -334,11 +331,7 @@ StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
 
 StatusOr<BucketMetadata> GrpcClient::PatchBucket(
     PatchBucketRequest const& request) {
-  auto proto = storage_internal::ToProto(request);
-  if (!proto) return std::move(proto).status();
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->UpdateBucket(context, *proto);
+  auto response = PatchBucketImpl(request);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
 }
@@ -494,10 +487,7 @@ StatusOr<ObjectMetadata> GrpcClient::CopyObject(
 
 StatusOr<ObjectMetadata> GrpcClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
-  auto proto = storage_internal::ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->GetObject(context, proto);
+  auto response = GetObjectMetadataImpl(request);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response, CurrentOptions());
 }
@@ -574,11 +564,7 @@ StatusOr<ObjectMetadata> GrpcClient::UpdateObject(
 
 StatusOr<ObjectMetadata> GrpcClient::PatchObject(
     PatchObjectRequest const& request) {
-  auto proto = storage_internal::ToProto(request);
-  if (!proto) return std::move(proto).status();
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->UpdateObject(context, *proto);
+  auto response = PatchObjectImpl(request);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response, CurrentOptions());
 }
@@ -1118,12 +1104,43 @@ StatusOr<EmptyResponse> GrpcClient::DeleteNotification(
   return EmptyResponse{};
 }
 
+StatusOr<google::storage::v2::Bucket> GrpcClient::GetBucketMetadataImpl(
+    GetBucketMetadataRequest const& request) {
+  auto proto = storage_internal::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  return stub_->GetBucket(context, proto);
+}
+
+StatusOr<google::storage::v2::Bucket> GrpcClient::PatchBucketImpl(
+    PatchBucketRequest const& request) {
+  auto proto = storage_internal::ToProto(request);
+  if (!proto) return std::move(proto).status();
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  return stub_->UpdateBucket(context, *proto);
+}
+
+StatusOr<google::storage::v2::Object> GrpcClient::GetObjectMetadataImpl(
+    GetObjectMetadataRequest const& request) {
+  auto proto = storage_internal::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  return stub_->GetObject(context, proto);
+}
+
+StatusOr<google::storage::v2::Object> GrpcClient::PatchObjectImpl(
+    PatchObjectRequest const& request) {
+  auto proto = storage_internal::ToProto(request);
+  if (!proto) return std::move(proto).status();
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  return stub_->UpdateObject(context, *proto);
+}
+
 StatusOr<BucketMetadata> GrpcClient::ModifyBucketAccessControl(
     GetBucketMetadataRequest const& request, BucketAclUpdater const& updater) {
-  auto proto = storage_internal::ToProto(request);
-  grpc::ClientContext get_context;
-  ApplyQueryParameters(get_context, request);
-  auto response = stub_->GetBucket(get_context, proto);
+  auto response = GetBucketMetadataImpl(request);
   if (!response) return std::move(response).status();
   auto acl = updater(std::move(*response->mutable_acl()));
   if (!acl) return std::move(acl).status();
@@ -1151,10 +1168,7 @@ StatusOr<BucketMetadata> GrpcClient::ModifyBucketAccessControl(
 
 StatusOr<ObjectMetadata> GrpcClient::ModifyObjectAccessControl(
     GetObjectMetadataRequest const& request, ObjectAclUpdater const& updater) {
-  auto proto = storage_internal::ToProto(request);
-  grpc::ClientContext get_context;
-  ApplyQueryParameters(get_context, request);
-  auto response = stub_->GetObject(get_context, proto);
+  auto response = GetObjectMetadataImpl(request);
   if (!response) return std::move(response).status();
   auto acl = updater(std::move(*response->mutable_acl()));
   if (!acl) return std::move(acl).status();
@@ -1171,7 +1185,7 @@ StatusOr<ObjectMetadata> GrpcClient::ModifyObjectAccessControl(
   patch_request.set_multiple_options(
       Generation(response->generation()),
       IfMetagenerationMatch(response->metageneration()));
-  auto patch = PatchObject(patch_request);
+  auto patch = PatchObjectImpl(patch_request);
   // Retry on failed preconditions
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
     return Status(
@@ -1179,16 +1193,13 @@ StatusOr<ObjectMetadata> GrpcClient::ModifyObjectAccessControl(
         "retrying ObjectAccessControl change due to conflict, bucket=" +
             request.bucket_name() + ", object=" + request.object_name());
   }
-  return patch;
+  return storage_internal::FromProto(*patch, CurrentOptions());
 }
 
 StatusOr<BucketMetadata> GrpcClient::ModifyDefaultAccessControl(
     GetBucketMetadataRequest const& request,
     DefaultObjectAclUpdater const& updater) {
-  auto proto = storage_internal::ToProto(request);
-  grpc::ClientContext get_context;
-  ApplyQueryParameters(get_context, request);
-  auto response = stub_->GetBucket(get_context, proto);
+  auto response = GetBucketMetadataImpl(request);
   if (!response) return std::move(response).status();
   auto acl = updater(std::move(*response->mutable_default_object_acl()));
   if (!acl) return std::move(acl).status();
@@ -1205,7 +1216,7 @@ StatusOr<BucketMetadata> GrpcClient::ModifyDefaultAccessControl(
       BucketMetadataPatchBuilder().SetDefaultAcl(std::move(updated)));
   request.ForEachOption(CopyCommonOptions(patch_request));
   patch_request.set_option(IfMetagenerationMatch(response->metageneration()));
-  auto patch = PatchBucket(patch_request);
+  auto patch = PatchBucketImpl(patch_request);
   // Retry on failed preconditions
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
     return Status(
@@ -1213,7 +1224,7 @@ StatusOr<BucketMetadata> GrpcClient::ModifyDefaultAccessControl(
         "retrying BucketAccessControl change due to conflict, bucket=" +
             request.bucket_name());
   }
-  return patch;
+  return storage_internal::FromProto(*patch);
 }
 
 }  // namespace internal
