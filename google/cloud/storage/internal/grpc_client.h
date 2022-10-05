@@ -204,7 +204,7 @@ class GrpcClient : public RawClient,
   // REST has RPCs that change `BucketAccessControl` resources atomically. gRPC
   // lacks such RPCs. This function hijacks the retry loop to implement an OCC
   // loop to make such changes.
-  StatusOr<BucketMetadata> ModifyBucketAccessControl(
+  StatusOr<google::storage::v2::Bucket> ModifyBucketAccessControl(
       GetBucketMetadataRequest const& request, BucketAclUpdater const& updater);
 
   using ObjectAccessControlList = google::protobuf::RepeatedPtrField<
@@ -215,7 +215,7 @@ class GrpcClient : public RawClient,
   // REST has RPCs that change `ObjectAccessControl` resources atomically. gRPC
   // lacks such RPCs. This function hijacks the retry loop to implement an OCC
   // loop to make such changes.
-  StatusOr<ObjectMetadata> ModifyObjectAccessControl(
+  StatusOr<google::storage::v2::Object> ModifyObjectAccessControl(
       GetObjectMetadataRequest const& request, ObjectAclUpdater const& updater);
 
   using DefaultObjectAclUpdater =
@@ -225,7 +225,7 @@ class GrpcClient : public RawClient,
   // REST has RPCs that change `DefaultObjectAccessControl` resources
   // atomically. gRPC lacks such RPCs. This function hijacks the retry loop to
   // implement an OCC loop to make such changes.
-  StatusOr<BucketMetadata> ModifyDefaultAccessControl(
+  StatusOr<google::storage::v2::Bucket> ModifyDefaultAccessControl(
       GetBucketMetadataRequest const& request,
       DefaultObjectAclUpdater const& updater);
 
