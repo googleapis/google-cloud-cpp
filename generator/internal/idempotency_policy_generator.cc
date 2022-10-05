@@ -1,3 +1,4 @@
+
 // Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -62,13 +63,13 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
     "\n"
     "class $idempotency_class_name$ {\n"
     " public:\n"
-    "  virtual ~$idempotency_class_name$() = 0;\n");
+    "  virtual ~$idempotency_class_name$();\n");
   // clang-format on
 
   HeaderPrint(  // clang-format off
     "\n"
     "  /// Create a new copy of this object.\n"
-    "  virtual std::unique_ptr<$idempotency_class_name$> clone() const = 0;\n");
+    "  virtual std::unique_ptr<$idempotency_class_name$> clone() const;\n");
   // clang-format on
 
   for (auto const& method : methods()) {
@@ -79,7 +80,7 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
                  // clang-format off
    {"\n"
     "  virtual google::cloud::Idempotency\n"
-    "  $method_name$($request_type$ const& request) = 0;\n"}
+    "  $method_name$($request_type$ const& request);\n"}
                  // clang-format on
              },
              All(IsNonStreaming, Not(IsPaginated))),
@@ -88,7 +89,7 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
                  // clang-format off
    {"\n"
     "  virtual google::cloud::Idempotency\n"
-    "  $method_name$($request_type$ request) = 0;\n"}
+    "  $method_name$($request_type$ request);\n"}
                  // clang-format on
              },
              All(IsNonStreaming, IsPaginated))},
@@ -130,86 +131,62 @@ Status IdempotencyPolicyGenerator::GenerateCc() {
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
-  CcPrint("\nusing ::google::cloud::Idempotency;\n");
-
-  CcPrint(  // clang-format off
-    "\n$idempotency_class_name$::~$idempotency_class_name$() = default;\n");
-  // clang-format on
-
-  // open anonymous namespace
-  CcPrint("\nnamespace {\n");
-
-  CcPrint(  // clang_format off
-      "class Default$idempotency_class_name$ : public "
-      "$idempotency_class_name$ {\n"
-      " public:\n"
-      "  ~Default$idempotency_class_name$() override = default;\n"
-      //  clang-format on
-  );
-
-  CcPrint(  // clang-format off
-    "\n"
-    "  /// Create a new copy of this object.\n"
-    "  std::unique_ptr<$idempotency_class_name$> clone() const override {\n"
-    "    return absl::make_unique<Default$idempotency_class_name$>(*this);\n"
-    "  }\n");
-  // clang-format on
-
   auto is_set_iam_policy = [](google::protobuf::MethodDescriptor const& m) {
     return m.output_type()->full_name() == "google.iam.v1.Policy" &&
            m.input_type()->full_name() == "google.iam.v1.SetIamPolicyRequest";
   };
+
+  CcPrint(R"""(
+using ::google::cloud::Idempotency;
+
+$idempotency_class_name$::~$idempotency_class_name$() = default;
+
+std::unique_ptr<$idempotency_class_name$>
+$idempotency_class_name$::clone() const {
+  return absl::make_unique<$idempotency_class_name$>(*this);
+}
+)""");
+
   for (auto const& method : methods()) {
+    // Streaming RPCs do not get an idempotency check. They typically need a
+    // resume (as opposed to "retry") loop, and this is often custom.
+    if (IsStreaming(method)) continue;
+
     // SetIamPolicy() methods are common. They are idempotent if the request
     // has an `ETag` pre-condition.  This is one of the few (only?) cases where
     // a policy based on the request contents is known.
     if (is_set_iam_policy(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  Idempotency
-  $method_name$(google::iam::v1::SetIamPolicyRequest const& request) override {
-    return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                           : Idempotency::kIdempotent;
-  }
+Idempotency $idempotency_class_name$::$method_name$(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
 )""");
       continue;
     }
 
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-             {
-                 // clang-format off
-   {"\n"
-    "  Idempotency\n"
-    "  $method_name$($request_type$ const&) override {\n"
-    "    return Idempotency::$default_idempotency$;\n"
-    "  }\n",}
-                 // clang-format on
-             },
-             All(IsNonStreaming, Not(IsPaginated))),
-         MethodPattern(
-             {
-                 // clang-format off
-   {"\n"
-    "  Idempotency\n"
-    "  $method_name$($request_type$) override {\n"
-    "    return Idempotency::$default_idempotency$;\n"
-    "  }\n",}
-                 // clang-format on
-             },
-             All(IsNonStreaming, IsPaginated))},
-        __FILE__, __LINE__);
+    if (IsPaginated(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+Idempotency $idempotency_class_name$::$method_name$($request_type$) {
+  return Idempotency::$default_idempotency$;
+}
+)""");
+      continue;
+    }
+
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+Idempotency $idempotency_class_name$::$method_name$($request_type$ const&) {
+  return Idempotency::$default_idempotency$;
+}
+)""");
   }
-  CcPrint(  // clang-format off
-    "};\n"
-    "}  // namespace\n");
-  // clang-format on
 
   CcPrint(  // clang-format off
       "\n"
       "std::unique_ptr<$idempotency_class_name$>\n"
       "    MakeDefault$idempotency_class_name$() {\n"
-      "  return absl::make_unique<Default$idempotency_class_name$>();\n"
+      "  return absl::make_unique<$idempotency_class_name$>();\n"
       "}\n");
   // clang-format on
 

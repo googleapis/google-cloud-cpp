@@ -92,8 +92,12 @@ bool IsPaginated(MethodDescriptor const& method) {
   return DeterminePagination(method).has_value();
 }
 
+bool IsStreaming(MethodDescriptor const& method) {
+  return method.client_streaming() || method.server_streaming();
+}
+
 bool IsNonStreaming(MethodDescriptor const& method) {
-  return !method.client_streaming() && !method.server_streaming();
+  return !IsStreaming(method);
 }
 
 bool IsStreamingRead(MethodDescriptor const& method) {
