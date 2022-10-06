@@ -46,6 +46,10 @@ class AssuredWorkloadsServiceConnectionIdempotencyPolicy {
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
           request);
 
+  virtual google::cloud::Idempotency RestrictAllowedResources(
+      google::cloud::assuredworkloads::v1::
+          RestrictAllowedResourcesRequest const& request);
+
   virtual google::cloud::Idempotency DeleteWorkload(
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
           request);
@@ -55,6 +59,16 @@ class AssuredWorkloadsServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListWorkloads(
       google::cloud::assuredworkloads::v1::ListWorkloadsRequest request);
+
+  virtual google::cloud::Idempotency ListViolations(
+      google::cloud::assuredworkloads::v1::ListViolationsRequest request);
+
+  virtual google::cloud::Idempotency GetViolation(
+      google::cloud::assuredworkloads::v1::GetViolationRequest const& request);
+
+  virtual google::cloud::Idempotency AcknowledgeViolation(
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request);
 };
 
 std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>

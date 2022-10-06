@@ -999,12 +999,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L299}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L323}
   ///
   /// [google.cloud.dataplex.v1.ListJobsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L919}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L299}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L323}
   ///
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       std::string const& parent, Options opts = {});
@@ -1017,12 +1017,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L299}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L323}
   ///
   /// [google.cloud.dataplex.v1.ListJobsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L919}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L299}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L323}
   ///
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       google::cloud::dataplex::v1::ListJobsRequest request, Options opts = {});
@@ -1035,12 +1035,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L299}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L323}
   ///
   /// [google.cloud.dataplex.v1.GetJobRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L907}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L299}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L323}
   ///
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(std::string const& name,
                                                     Options opts = {});
@@ -1053,12 +1053,12 @@ class DataplexServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L299}
+  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L323}
   ///
   /// [google.cloud.dataplex.v1.GetJobRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L907}
   /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L299}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L323}
   ///
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(
       google::cloud::dataplex::v1::GetJobRequest const& request,

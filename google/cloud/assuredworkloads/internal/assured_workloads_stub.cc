@@ -57,6 +57,21 @@ DefaultAssuredWorkloadsServiceStub::UpdateWorkload(
   return response;
 }
 
+StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+DefaultAssuredWorkloadsServiceStub::RestrictAllowedResources(
+    grpc::ClientContext& client_context,
+    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
+        request) {
+  google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse
+      response;
+  auto status =
+      grpc_stub_->RestrictAllowedResources(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultAssuredWorkloadsServiceStub::DeleteWorkload(
     grpc::ClientContext& client_context,
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
@@ -86,6 +101,44 @@ DefaultAssuredWorkloadsServiceStub::ListWorkloads(
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) {
   google::cloud::assuredworkloads::v1::ListWorkloadsResponse response;
   auto status = grpc_stub_->ListWorkloads(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
+DefaultAssuredWorkloadsServiceStub::ListViolations(
+    grpc::ClientContext& client_context,
+    google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
+  google::cloud::assuredworkloads::v1::ListViolationsResponse response;
+  auto status = grpc_stub_->ListViolations(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::Violation>
+DefaultAssuredWorkloadsServiceStub::GetViolation(
+    grpc::ClientContext& client_context,
+    google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
+  google::cloud::assuredworkloads::v1::Violation response;
+  auto status = grpc_stub_->GetViolation(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+DefaultAssuredWorkloadsServiceStub::AcknowledgeViolation(
+    grpc::ClientContext& client_context,
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+        request) {
+  google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse response;
+  auto status =
+      grpc_stub_->AcknowledgeViolation(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -74,14 +74,36 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::GetBucket(
 StatusOr<google::storage::v2::Bucket> StorageMetadata::CreateBucket(
     grpc::ClientContext& context,
     google::storage::v2::CreateBucketRequest const& request) {
-  SetMetadata(context);
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.parent().empty()) {
+    params.push_back("project=" + request.parent());
+  }
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->CreateBucket(context, request);
 }
 
 StatusOr<google::storage::v2::ListBucketsResponse> StorageMetadata::ListBuckets(
     grpc::ClientContext& context,
     google::storage::v2::ListBucketsRequest const& request) {
-  SetMetadata(context);
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.parent().empty()) {
+    params.push_back("project=" + request.parent());
+  }
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->ListBuckets(context, request);
 }
 
@@ -524,7 +546,18 @@ StatusOr<google::storage::v2::ServiceAccount>
 StorageMetadata::GetServiceAccount(
     grpc::ClientContext& context,
     google::storage::v2::GetServiceAccountRequest const& request) {
-  SetMetadata(context);
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.project().empty()) {
+    params.push_back("project=" + request.project());
+  }
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->GetServiceAccount(context, request);
 }
 
@@ -532,21 +565,54 @@ StatusOr<google::storage::v2::CreateHmacKeyResponse>
 StorageMetadata::CreateHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::CreateHmacKeyRequest const& request) {
-  SetMetadata(context);
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.project().empty()) {
+    params.push_back("project=" + request.project());
+  }
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->CreateHmacKey(context, request);
 }
 
 Status StorageMetadata::DeleteHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::DeleteHmacKeyRequest const& request) {
-  SetMetadata(context);
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.project().empty()) {
+    params.push_back("project=" + request.project());
+  }
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->DeleteHmacKey(context, request);
 }
 
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::GetHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::GetHmacKeyRequest const& request) {
-  SetMetadata(context);
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.project().empty()) {
+    params.push_back("project=" + request.project());
+  }
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->GetHmacKey(context, request);
 }
 
@@ -554,14 +620,36 @@ StatusOr<google::storage::v2::ListHmacKeysResponse>
 StorageMetadata::ListHmacKeys(
     grpc::ClientContext& context,
     google::storage::v2::ListHmacKeysRequest const& request) {
-  SetMetadata(context);
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.project().empty()) {
+    params.push_back("project=" + request.project());
+  }
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->ListHmacKeys(context, request);
 }
 
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::UpdateHmacKey(
     grpc::ClientContext& context,
     google::storage::v2::UpdateHmacKeyRequest const& request) {
-  SetMetadata(context);
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.hmac_key().project().empty()) {
+    params.push_back("project=" + request.hmac_key().project());
+  }
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->UpdateHmacKey(context, request);
 }
 

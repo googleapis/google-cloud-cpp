@@ -76,6 +76,12 @@ class IAMConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteServiceAccountKey(
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
 
+  virtual google::cloud::Idempotency DisableServiceAccountKey(
+      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request);
+
+  virtual google::cloud::Idempotency EnableServiceAccountKey(
+      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request);
+
   virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
 

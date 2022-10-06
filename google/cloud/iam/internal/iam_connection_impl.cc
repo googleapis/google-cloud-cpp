@@ -233,6 +233,32 @@ Status IAMConnectionImpl::DeleteServiceAccountKey(
       request, __func__);
 }
 
+Status IAMConnectionImpl::DisableServiceAccountKey(
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DisableServiceAccountKey(request),
+      [this](grpc::ClientContext& context,
+             google::iam::admin::v1::DisableServiceAccountKeyRequest const&
+                 request) {
+        return stub_->DisableServiceAccountKey(context, request);
+      },
+      request, __func__);
+}
+
+Status IAMConnectionImpl::EnableServiceAccountKey(
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->EnableServiceAccountKey(request),
+      [this](grpc::ClientContext& context,
+             google::iam::admin::v1::EnableServiceAccountKeyRequest const&
+                 request) {
+        return stub_->EnableServiceAccountKey(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::iam::v1::Policy> IAMConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::RetryLoop(

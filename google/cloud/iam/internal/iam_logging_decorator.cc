@@ -197,6 +197,30 @@ Status IAMLogging::DeleteServiceAccountKey(
       context, request, __func__, tracing_options_);
 }
 
+Status IAMLogging::DisableServiceAccountKey(
+    grpc::ClientContext& context,
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::admin::v1::DisableServiceAccountKeyRequest const&
+                 request) {
+        return child_->DisableServiceAccountKey(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status IAMLogging::EnableServiceAccountKey(
+    grpc::ClientContext& context,
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::admin::v1::EnableServiceAccountKeyRequest const&
+                 request) {
+        return child_->EnableServiceAccountKey(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::iam::v1::Policy> IAMLogging::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {

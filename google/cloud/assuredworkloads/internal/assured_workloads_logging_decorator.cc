@@ -60,6 +60,20 @@ AssuredWorkloadsServiceLogging::UpdateWorkload(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+AssuredWorkloadsServiceLogging::RestrictAllowedResources(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::assuredworkloads::v1::
+                 RestrictAllowedResourcesRequest const& request) {
+        return child_->RestrictAllowedResources(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 Status AssuredWorkloadsServiceLogging::DeleteWorkload(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
@@ -89,6 +103,42 @@ AssuredWorkloadsServiceLogging::ListWorkloads(
       [this](grpc::ClientContext& context,
              google::cloud::assuredworkloads::v1::ListWorkloadsRequest const&
                  request) { return child_->ListWorkloads(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
+AssuredWorkloadsServiceLogging::ListViolations(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::assuredworkloads::v1::ListViolationsRequest const&
+                 request) { return child_->ListViolations(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::Violation>
+AssuredWorkloadsServiceLogging::GetViolation(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::assuredworkloads::v1::GetViolationRequest const&
+                 request) { return child_->GetViolation(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+AssuredWorkloadsServiceLogging::AcknowledgeViolation(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::assuredworkloads::v1::
+                 AcknowledgeViolationRequest const& request) {
+        return child_->AcknowledgeViolation(context, request);
+      },
       context, request, __func__, tracing_options_);
 }
 

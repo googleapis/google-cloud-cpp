@@ -62,6 +62,12 @@ class AssuredWorkloadsServiceConnectionImpl
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request)
       override;
 
+  StatusOr<
+      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(
+      google::cloud::assuredworkloads::v1::
+          RestrictAllowedResourcesRequest const& request) override;
+
   Status DeleteWorkload(
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request)
       override;
@@ -73,6 +79,19 @@ class AssuredWorkloadsServiceConnectionImpl
   StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
       google::cloud::assuredworkloads::v1::ListWorkloadsRequest request)
       override;
+
+  StreamRange<google::cloud::assuredworkloads::v1::Violation> ListViolations(
+      google::cloud::assuredworkloads::v1::ListViolationsRequest request)
+      override;
+
+  StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
+      google::cloud::assuredworkloads::v1::GetViolationRequest const& request)
+      override;
+
+  StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+  AcknowledgeViolation(
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request) override;
 
  private:
   std::unique_ptr<assuredworkloads::AssuredWorkloadsServiceRetryPolicy>

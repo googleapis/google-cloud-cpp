@@ -46,6 +46,13 @@ Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::UpdateWorkload(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+AssuredWorkloadsServiceConnectionIdempotencyPolicy::RestrictAllowedResources(
+    google::cloud::assuredworkloads::v1::
+        RestrictAllowedResourcesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::DeleteWorkload(
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -59,6 +66,22 @@ Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetWorkload(
 Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListWorkloads(
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
+}
+
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListViolations(
+    google::cloud::assuredworkloads::v1::ListViolationsRequest) {  // NOLINT
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetViolation(
+    google::cloud::assuredworkloads::v1::GetViolationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+AssuredWorkloadsServiceConnectionIdempotencyPolicy::AcknowledgeViolation(
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>

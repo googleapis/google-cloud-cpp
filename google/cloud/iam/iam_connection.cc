@@ -111,6 +111,16 @@ Status IAMConnection::DeleteServiceAccountKey(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+Status IAMConnection::DisableServiceAccountKey(
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status IAMConnection::EnableServiceAccountKey(
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::iam::v1::Policy> IAMConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

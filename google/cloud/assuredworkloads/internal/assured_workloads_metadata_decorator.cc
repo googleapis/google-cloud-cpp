@@ -51,6 +51,15 @@ AssuredWorkloadsServiceMetadata::UpdateWorkload(
   return child_->UpdateWorkload(context, request);
 }
 
+StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+AssuredWorkloadsServiceMetadata::RestrictAllowedResources(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->RestrictAllowedResources(context, request);
+}
+
 Status AssuredWorkloadsServiceMetadata::DeleteWorkload(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
@@ -72,6 +81,31 @@ AssuredWorkloadsServiceMetadata::ListWorkloads(
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListWorkloads(context, request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
+AssuredWorkloadsServiceMetadata::ListViolations(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
+  SetMetadata(context);
+  return child_->ListViolations(context, request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::Violation>
+AssuredWorkloadsServiceMetadata::GetViolation(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
+  SetMetadata(context);
+  return child_->GetViolation(context, request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+AssuredWorkloadsServiceMetadata::AcknowledgeViolation(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+        request) {
+  SetMetadata(context);
+  return child_->AcknowledgeViolation(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
