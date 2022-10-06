@@ -19,8 +19,7 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// A helper callable to handle a response, it is a bit large for a lambda, and
-// we need move-capture anyways.
+// A helper callable to handle a response, it is a bit large for a lambda.
 struct Batch {
   std::vector<promise<StatusOr<std::string>>> waiters;
   std::weak_ptr<BatchingPublisherConnection> weak;
@@ -48,6 +47,10 @@ struct Batch {
     for (auto& w : waiters) w.set_value(status);
   }
 };
+
+BatchingPublisherConnection::~BatchingPublisherConnection() {
+  if (timer_.valid()) timer_.cancel();
+}
 
 future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     PublishParams p) {
@@ -134,8 +137,8 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
     return;
   }
   // If the batch is empty obviously we do not need a timer, and if it has more
-  // than one element then we have setup a timer previously and there is no need
-  // to set it again.
+  // than one element then we have set up a timer previously and there is no
+  // need to set it again.
   if (pending_.messages_size() != 1) return;
   auto const expiration = batch_expiration_ =
       std::chrono::system_clock::now() + opts_.get<pubsub::MaxHoldTimeOption>();
@@ -146,11 +149,16 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
   // `weak_from_this()`.
   auto weak = std::weak_ptr<BatchingPublisherConnection>(shared_from_this());
   // Note that at this point the lock is released, so whether the timer
-  // schedules later on schedules in this thread has no effect.
-  cq_.MakeDeadlineTimer(expiration)
-      .then([weak](future<StatusOr<std::chrono::system_clock::time_point>>) {
-        if (auto self = weak.lock()) self->OnTimer();
-      });
+  // schedules later on schedules in this thread has no effect.  In addition,
+  // the assignment to `timer_` is safe.  It is only used from the destructor,
+  // and if the destructor and this function are running at the same time, then
+  // we had a massive problem already.
+  timer_ =
+      cq_.MakeDeadlineTimer(expiration)
+          .then(
+              [weak](future<StatusOr<std::chrono::system_clock::time_point>>) {
+                if (auto self = weak.lock()) self->OnTimer();
+              });
 }
 
 void BatchingPublisherConnection::OnTimer() {
