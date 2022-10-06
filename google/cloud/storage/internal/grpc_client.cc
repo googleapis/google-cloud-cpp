@@ -65,21 +65,6 @@ StatusOr<google::protobuf::RepeatedPtrField<AccessControl>> UpsertAcl(
   return acl;
 }
 
-template <typename AccessControl>
-StatusOr<std::vector<AccessControl>> UpsertAcl(std::vector<AccessControl> acl,
-                                               std::string const& entity,
-                                               std::string const& role) {
-  auto i = std::find_if(
-      acl.begin(), acl.end(),
-      [&](AccessControl const& entry) { return entry.entity() == entity; });
-  if (i != acl.end()) {
-    i->set_role(role);
-    return acl;
-  }
-  acl.push_back(AccessControl().set_entity(entity).set_role(role));
-  return acl;
-}
-
 // Used in the implementation of `*BucketAcl()`.
 StatusOr<BucketAccessControl> FindBucketAccessControl(
     StatusOr<google::storage::v2::Bucket> response, std::string const& entity) {
