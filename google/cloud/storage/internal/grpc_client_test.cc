@@ -33,127 +33,12 @@ namespace internal {
 namespace {
 
 namespace v2 = ::google::storage::v2;
-using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
-using ::google::protobuf::TextFormat;
-using ::testing::AllOf;
-using ::testing::Contains;
-using ::testing::ElementsAre;
 using ::testing::Pair;
-using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
-
-auto constexpr kBucketProtoText = R"pb(
-  name: "projects/_/buckets/test-bucket-id"
-  bucket_id: "test-bucket-id"
-  project: "projects/123456"
-  metageneration: 1234567
-  location: "test-location"
-  location_type: "REGIONAL"
-  storage_class: "test-storage-class"
-  rpo: "test-rpo"
-  acl: { role: "test-role1" entity: "test-entity1" }
-  acl: { role: "test-role2" entity: "test-entity2" }
-  default_object_acl: { role: "test-role3" entity: "test-entity3" }
-  default_object_acl: { role: "test-role4" entity: "test-entity4" }
-  lifecycle {
-    rule {
-      action { type: "Delete" }
-      condition {
-        age_days: 90
-        is_live: false
-        matches_storage_class: "NEARLINE"
-      }
-    }
-    rule {
-      action { type: "SetStorageClass" storage_class: "NEARLINE" }
-      condition { age_days: 7 is_live: true matches_storage_class: "STANDARD" }
-    }
-  }
-  create_time: { seconds: 1565194924 nanos: 123456000 }
-  cors: {
-    origin: "test-origin-0"
-    origin: "test-origin-1"
-    method: "GET"
-    method: "PUT"
-    response_header: "test-header-0"
-    response_header: "test-header-1"
-    max_age_seconds: 1800
-  }
-  cors: {
-    origin: "test-origin-2"
-    origin: "test-origin-3"
-    method: "POST"
-    response_header: "test-header-3"
-    max_age_seconds: 3600
-  }
-  update_time: { seconds: 1565194925 nanos: 123456000 }
-  default_event_based_hold: true
-  labels: { key: "test-key-1" value: "test-value-1" }
-  labels: { key: "test-key-2" value: "test-value-2" }
-  website { main_page_suffix: "index.html" not_found_page: "404.html" }
-  versioning { enabled: true }
-  logging {
-    log_bucket: "test-log-bucket"
-    log_object_prefix: "test-log-object-prefix"
-  }
-  owner { entity: "test-entity" entity_id: "test-entity-id" }
-  encryption { default_kms_key: "test-default-kms-key-name" }
-  billing { requester_pays: true }
-  retention_policy {
-    effective_time { seconds: 1565194926 nanos: 123456000 }
-    is_locked: true
-    retention_period: 86400
-  }
-  iam_config {
-    uniform_bucket_level_access {
-      enabled: true
-      lock_time { seconds: 1565194927 nanos: 123456000 }
-    }
-    public_access_prevention: "inherited"
-  }
-)pb";
-
-auto constexpr kObjectProtoText = R"pb(
-  name: "test-object-id"
-  bucket: "test-bucket-id"
-  acl: { role: "test-role1" entity: "test-entity1" }
-  acl: { role: "test-role2" entity: "test-entity2" }
-  content_encoding: "test-content-encoding"
-  content_disposition: "test-content-disposition"
-  cache_control: "test-cache-control"
-  content_language: "test-content-language"
-  metageneration: 42
-  delete_time: { seconds: 1565194924 nanos: 123456789 }
-  content_type: "test-content-type"
-  size: 123456
-  create_time: { seconds: 1565194924 nanos: 234567890 }
-  # These magic numbers can be obtained using `gsutil hash` and then
-  # transforming the output from base64 to binary using tools like xxd(1).
-  checksums {
-    crc32c: 576848900
-    md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-  }
-  component_count: 7
-  update_time: { seconds: 1565194924 nanos: 345678901 }
-  storage_class: "test-storage-class"
-  kms_key: "test-kms-key-name"
-  update_storage_class_time: { seconds: 1565194924 nanos: 456789012 }
-  temporary_hold: true
-  retention_expire_time: { seconds: 1565194924 nanos: 567890123 }
-  metadata: { key: "test-key-1" value: "test-value-1" }
-  metadata: { key: "test-key-2" value: "test-value-2" }
-  event_based_hold: true
-  generation: 2345
-  owner: { entity: "test-entity" entity_id: "test-entity-id" }
-  customer_encryption: {
-    encryption_algorithm: "test-encryption-algorithm"
-    key_sha256_bytes: "01234567"
-  }
-)pb";
 
 class GrpcClientTest : public ::testing::Test {
  protected:

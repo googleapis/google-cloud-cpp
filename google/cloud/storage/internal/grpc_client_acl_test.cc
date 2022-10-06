@@ -16,10 +16,8 @@
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
@@ -34,7 +32,6 @@ namespace {
 
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
@@ -43,7 +40,6 @@ using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Pair;
 using ::testing::ResultOf;
-using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
 auto constexpr kBucketProtoText = R"pb(
