@@ -82,35 +82,45 @@ StatusOr<std::vector<AccessControl>> UpsertAcl(std::vector<AccessControl> acl,
 
 // Used in the implementation of `*BucketAcl()`.
 StatusOr<BucketAccessControl> FindBucketAccessControl(
-    StatusOr<BucketMetadata> response, std::string const& entity) {
+    StatusOr<google::storage::v2::Bucket> response, std::string const& entity) {
   if (!response) return std::move(response).status();
   for (auto const& acl : response->acl()) {
-    if (acl.entity() == entity) return acl;
+    if (acl.entity() != entity) continue;
+    return storage_internal::FromProto(acl, response->bucket_id());
   }
-  return Status(StatusCode::kNotFound, "cannot find entity <" + entity +
-                                           "> in bucket " + response->name());
+  return Status(
+      StatusCode::kNotFound,
+      "cannot find entity <" + entity + "> in bucket " + response->bucket_id());
 }
 
 // Used in the implementation of `*ObjectAcl()`.
 StatusOr<ObjectAccessControl> FindObjectAccessControl(
-    StatusOr<ObjectMetadata> response, std::string const& entity) {
+    StatusOr<google::storage::v2::Object> response, std::string const& entity) {
   if (!response) return std::move(response).status();
+  auto bucket_id = storage_internal::GrpcBucketNameToId(response->bucket());
   for (auto const& acl : response->acl()) {
-    if (acl.entity() == entity) return acl;
+    if (acl.entity() != entity) continue;
+    return storage_internal::FromProto(acl, bucket_id, response->name(),
+                                       response->generation());
   }
   return Status(StatusCode::kNotFound, "cannot find entity <" + entity +
-                                           "> in object id " + response->id());
+                                           "> in bucket/object " + bucket_id +
+                                           "/" + response->name());
 }
 
 // Used in the implementation of `*DefaultObjectAcl()`.
 StatusOr<ObjectAccessControl> FindDefaultObjectAccessControl(
-    StatusOr<BucketMetadata> response, std::string const& entity) {
+    StatusOr<google::storage::v2::Bucket> response, std::string const& entity) {
   if (!response) return std::move(response).status();
-  for (auto const& acl : response->default_acl()) {
-    if (acl.entity() == entity) return acl;
+  for (auto const& acl : response->default_object_acl()) {
+    if (acl.entity() != entity) continue;
+    return storage_internal::FromProto(acl, response->bucket_id(),
+                                       /*object_name=*/std::string{},
+                                       /*generation=*/0);
   }
-  return Status(StatusCode::kNotFound, "cannot find entity <" + entity +
-                                           "> in object id " + response->id());
+  return Status(
+      StatusCode::kNotFound,
+      "cannot find entity <" + entity + "> in bucket " + response->bucket_id());
 }
 
 // If this is the last `Write()` call of the last `UploadChunk()` set the flags
@@ -754,7 +764,7 @@ StatusOr<BucketAccessControl> GrpcClient::GetBucketAcl(
   auto get_request = GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(Projection("full"));
-  auto get = GetBucketMetadata(get_request);
+  auto get = GetBucketMetadataImpl(get_request);
   return FindBucketAccessControl(std::move(get), request.entity());
 }
 
@@ -878,7 +888,7 @@ StatusOr<ObjectAccessControl> GrpcClient::GetObjectAcl(
       GetObjectMetadataRequest(request.bucket_name(), request.object_name());
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(Projection("full"));
-  auto get = GetObjectMetadata(get_request);
+  auto get = GetObjectMetadataImpl(get_request);
   return FindObjectAccessControl(std::move(get), request.entity());
 }
 
@@ -963,8 +973,7 @@ StatusOr<ObjectAccessControl> GrpcClient::GetDefaultObjectAcl(
   auto get_request = GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(Projection("full"));
-  auto get = GetBucketMetadata(get_request);
-  if (!get) return std::move(get).status();
+  auto get = GetBucketMetadataImpl(get_request);
   return FindDefaultObjectAccessControl(std::move(get), request.entity());
 }
 
@@ -1138,7 +1147,7 @@ StatusOr<google::storage::v2::Object> GrpcClient::PatchObjectImpl(
   return stub_->UpdateObject(context, *proto);
 }
 
-StatusOr<BucketMetadata> GrpcClient::ModifyBucketAccessControl(
+StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyBucketAccessControl(
     GetBucketMetadataRequest const& request, BucketAclUpdater const& updater) {
   auto response = GetBucketMetadataImpl(request);
   if (!response) return std::move(response).status();
@@ -1155,7 +1164,7 @@ StatusOr<BucketMetadata> GrpcClient::ModifyBucketAccessControl(
       BucketMetadataPatchBuilder().SetAcl(std::move(updated)));
   request.ForEachOption(CopyCommonOptions(patch_request));
   patch_request.set_option(IfMetagenerationMatch(response->metageneration()));
-  auto patch = PatchBucket(patch_request);
+  auto patch = PatchBucketImpl(patch_request);
   // Retry on failed preconditions
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
     return Status(
@@ -1166,7 +1175,7 @@ StatusOr<BucketMetadata> GrpcClient::ModifyBucketAccessControl(
   return patch;
 }
 
-StatusOr<ObjectMetadata> GrpcClient::ModifyObjectAccessControl(
+StatusOr<google::storage::v2::Object> GrpcClient::ModifyObjectAccessControl(
     GetObjectMetadataRequest const& request, ObjectAclUpdater const& updater) {
   auto response = GetObjectMetadataImpl(request);
   if (!response) return std::move(response).status();
@@ -1193,10 +1202,10 @@ StatusOr<ObjectMetadata> GrpcClient::ModifyObjectAccessControl(
         "retrying ObjectAccessControl change due to conflict, bucket=" +
             request.bucket_name() + ", object=" + request.object_name());
   }
-  return storage_internal::FromProto(*patch, CurrentOptions());
+  return patch;
 }
 
-StatusOr<BucketMetadata> GrpcClient::ModifyDefaultAccessControl(
+StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyDefaultAccessControl(
     GetBucketMetadataRequest const& request,
     DefaultObjectAclUpdater const& updater) {
   auto response = GetBucketMetadataImpl(request);
@@ -1224,7 +1233,7 @@ StatusOr<BucketMetadata> GrpcClient::ModifyDefaultAccessControl(
         "retrying BucketAccessControl change due to conflict, bucket=" +
             request.bucket_name());
   }
-  return storage_internal::FromProto(*patch);
+  return *patch;
 }
 
 }  // namespace internal
