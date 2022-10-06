@@ -171,6 +171,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_bucket_metadata_parser_test.cc
         internal/grpc_bucket_name_test.cc
         internal/grpc_bucket_request_parser_test.cc
+        internal/grpc_client_acl_test.cc
         internal/grpc_client_failures_test.cc
         internal/grpc_client_insert_object_media_test.cc
         internal/grpc_client_read_object_test.cc
