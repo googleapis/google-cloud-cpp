@@ -53,6 +53,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/utility_test.cc",
     "kms_key_name_test.cc",
     "log_test.cc",
+    "mocks/mock_stream_range_test.cc",
     "options_test.cc",
     "polling_policy_test.cc",
     "project_test.cc",
