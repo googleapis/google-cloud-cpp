@@ -149,7 +149,7 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
   // `weak_from_this()`.
   auto weak = std::weak_ptr<BatchingPublisherConnection>(shared_from_this());
   // Note that at this point the lock is released, so whether the timer
-  // schedules later on schedules in this thread has no effect.
+  // schedules later or schedules in this thread has no effect.
   auto timer =
       cq_.MakeDeadlineTimer(expiration)
           .then(
@@ -159,7 +159,7 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
   lk.lock();
   // Assignment without a lock is not safe, as it is not an atomic assignment.
   // If the timer already expired, there is no problem. The only place where
-  // it is used is in the destructor and a cancel request on a expired timer is
+  // it is used is in the destructor and a cancel request on an expired timer is
   // harmless.
   timer_ = std::move(timer);
 }
