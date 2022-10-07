@@ -25,8 +25,24 @@ add_library(
     auto_finalize.h
     bucket_access_control.cc
     bucket_access_control.h
+    bucket_billing.h
+    bucket_cors_entry.cc
+    bucket_cors_entry.h
+    bucket_custom_placement_config.cc
+    bucket_custom_placement_config.h
+    bucket_encryption.h
+    bucket_iam_configuration.cc
+    bucket_iam_configuration.h
+    bucket_lifecycle.h
+    bucket_logging.cc
+    bucket_logging.h
     bucket_metadata.cc
     bucket_metadata.h
+    bucket_retention_policy.cc
+    bucket_retention_policy.h
+    bucket_rpo.h
+    bucket_versioning.h
+    bucket_website.h
     client.cc
     client.h
     client_options.cc
