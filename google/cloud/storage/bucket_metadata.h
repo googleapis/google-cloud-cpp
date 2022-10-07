@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_METADATA_H
 
 #include "google/cloud/storage/bucket_access_control.h"
+#include "google/cloud/storage/bucket_autoclass.h"
 #include "google/cloud/storage/bucket_billing.h"
 #include "google/cloud/storage/bucket_cors_entry.h"
 #include "google/cloud/storage/bucket_custom_placement_config.h"
@@ -65,6 +66,23 @@ class BucketMetadata {
   std::vector<BucketAccessControl>& mutable_acl() { return acl_; }
   BucketMetadata& set_acl(std::vector<BucketAccessControl> acl) {
     acl_ = std::move(acl);
+    return *this;
+  }
+  ///@}
+
+  /// @name Accessors and modifiers for Autoclass configuration.
+  ///@{
+  bool has_autoclass() const { return autoclass_.has_value(); }
+  BucketAutoclass const& autoclass() const { return *autoclass_; }
+  absl::optional<BucketAutoclass> const& autoclass_as_optional() const {
+    return autoclass_;
+  }
+  BucketMetadata& set_autoclass(BucketAutoclass v) {
+    autoclass_ = std::move(v);
+    return *this;
+  }
+  BucketMetadata& reset_autoclass() {
+    autoclass_.reset();
     return *this;
   }
   ///@}
@@ -549,6 +567,7 @@ class BucketMetadata {
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<BucketAccessControl> acl_;
+  absl::optional<BucketAutoclass> autoclass_;
   absl::optional<BucketBilling> billing_;
   std::vector<CorsEntry> cors_;
   absl::optional<BucketCustomPlacementConfig> custom_placement_config_;
@@ -606,6 +625,9 @@ class BucketMetadataPatchBuilder {
    * @warning Currently the server ignores requests to reset the full ACL.
    */
   BucketMetadataPatchBuilder& ResetAcl();
+
+  BucketMetadataPatchBuilder& SetAutoclass(BucketAutoclass const& v);
+  BucketMetadataPatchBuilder& ResetAutoclass();
 
   BucketMetadataPatchBuilder& SetBilling(BucketBilling const& v);
   BucketMetadataPatchBuilder& ResetBilling();

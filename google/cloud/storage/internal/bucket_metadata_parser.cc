@@ -81,6 +81,17 @@ Status ParseAcl(BucketMetadata& meta, nlohmann::json const& json) {
   return Status{};
 }
 
+Status ParseAutoclass(BucketMetadata& meta, nlohmann::json const& json) {
+  auto f = json.find("autoclass");
+  if (f == json.end()) return Status{};
+  auto enabled = internal::ParseBoolField(*f, "enabled");
+  if (!enabled) return std::move(enabled).status();
+  auto toggle = internal::ParseTimestampField(*f, "toggleTime");
+  if (!toggle) return std::move(toggle).status();
+  meta.set_autoclass(BucketAutoclass{*enabled, *toggle});
+  return Status{};
+}
+
 Status ParseBilling(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("billing")) return Status{};
   auto const& b = json["billing"];
@@ -287,6 +298,13 @@ void ToJsonCors(nlohmann::json& json, BucketMetadata const& meta) {
   json["cors"] = std::move(value);
 }
 
+void ToJsonAutoclass(nlohmann::json& json, BucketMetadata const& meta) {
+  if (!meta.has_autoclass()) return;
+  json["autoclass"] = nlohmann::json{
+      {"enabled", meta.autoclass().enabled},
+  };
+}
+
 void ToJsonBilling(nlohmann::json& json, BucketMetadata const& meta) {
   if (!meta.has_billing()) return;
   json["billing"] = nlohmann::json{
@@ -453,6 +471,7 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
   using Parser = std::function<Status(BucketMetadata&, nlohmann::json const&)>;
   Parser parsers[] = {
       ParseAcl,
+      ParseAutoclass,
       ParseBilling,
       ParseCorsList,
       ParseCustomPlacementConfig,
@@ -550,6 +569,7 @@ std::string ToJsonString(absl::CivilDay date) {
 std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   nlohmann::json json;
   ToJsonAcl(json, meta);
+  ToJsonAutoclass(json, meta);
   ToJsonBilling(json, meta);
   ToJsonCors(json, meta);
   ToJsonDefaultEventBasedHold(json, meta);
