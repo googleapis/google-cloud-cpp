@@ -55,8 +55,6 @@ git add .
 
 ```shell
 bazel build //google/cloud/...
-# CMake caches the old protos, clear them before compiling
-rm -fr build-out/*/cmake-out
 ci/cloudbuild/build.sh -t cmake-install-pr
 ```
 

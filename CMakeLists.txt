@@ -120,6 +120,35 @@ option(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS
        "Use main as the version part for refdoc relative links" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS)
 
+set(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL
+    ""
+    CACHE
+        STRING
+        [==[
+Override the default URL for the googleapis protos. google-cloud-cpp needs the
+proto and gRPC definitions for most Google Cloud services. By default these
+definitions are downloaded from GitHub. In some environments, this may not be
+possible. This variable can be used to use a local directory, or a local
+tarball, with the proto definitions.
+
+If you override this variable, you must ensure the proto definitions match the
+expectations in google-cloud-cpp. Using the same SHA is the recommended
+practice. Using older SHAs is **NOT** supported, and will almost certainly
+result in build problems. You may be able to use a more recent SHA of the
+protos, but do not expect that new features will become exposed via the C++
+client libraries.
+]==])
+mark_as_advanced(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL)
+set(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH
+    ""
+    CACHE
+        STRING
+        [==[
+Override the hash for the googleapis protos tarball. See
+GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL for details.
+]==])
+mark_as_advanced(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH)
+
 include(CMakeDependentOption)
 
 option(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE "Enable building the Bigtable library."
