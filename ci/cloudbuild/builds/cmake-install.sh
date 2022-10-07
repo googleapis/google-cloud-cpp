@@ -75,6 +75,7 @@ expected_dirs+=(
   ./include/google/cloud/gkehub/v1/multiclusteringress
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
+  ./include/google/cloud/mocks
   # orgpolicy/v1 is not automatically added. It is used by
   # google/cloud/asset, while google/cloud/orgpolicy uses
   # the **v2** protos.

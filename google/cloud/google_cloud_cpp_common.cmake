@@ -214,6 +214,34 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common"
     COMPONENT google_cloud_cpp_development)
 
+# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
+# for these, a regular library would not work on macOS (where the library needs
+# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
+# that they need absolute paths for their sources.
+set(relative_mock_files mocks/mock_stream_range.h)
+set(mock_files)
+foreach (file IN LISTS relative_mock_files)
+    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+endforeach ()
+add_library(google_cloud_cpp_mocks INTERFACE)
+target_sources(google_cloud_cpp_mocks INTERFACE ${mock_files})
+target_link_libraries(google_cloud_cpp_mocks INTERFACE google-cloud-cpp::common)
+set_target_properties(google_cloud_cpp_mocks PROPERTIES EXPORT_NAME
+                                                        google-cloud-cpp::mocks)
+target_include_directories(
+    google_cloud_cpp_mocks
+    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+              $<INSTALL_INTERFACE:include>)
+target_compile_options(google_cloud_cpp_mocks
+                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+add_library(google-cloud-cpp::mocks ALIAS google_cloud_cpp_mocks)
+
+create_bazel_config(google_cloud_cpp_mocks YEAR "2022")
+
+google_cloud_cpp_install_headers("google_cloud_cpp_mocks"
+                                 "include/google/cloud")
+
 if (BUILD_TESTING)
     find_package(benchmark CONFIG REQUIRED)
 
@@ -255,6 +283,7 @@ if (BUILD_TESTING)
         internal/utility_test.cc
         kms_key_name_test.cc
         log_test.cc
+        mocks/mock_stream_range_test.cc
         options_test.cc
         polling_policy_test.cc
         project_test.cc
@@ -272,8 +301,13 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing google-cloud-cpp::common
-                    absl::variant GTest::gmock_main GTest::gmock GTest::gtest)
+            PRIVATE google_cloud_cpp_testing
+                    google-cloud-cpp::common
+                    google-cloud-cpp::mocks
+                    absl::variant
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
