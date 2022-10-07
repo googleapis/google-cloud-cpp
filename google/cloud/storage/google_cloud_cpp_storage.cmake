@@ -42,6 +42,7 @@ add_library(
     bucket_retention_policy.h
     bucket_rpo.h
     bucket_versioning.h
+    bucket_website.h
     client.cc
     client.h
     client_options.cc

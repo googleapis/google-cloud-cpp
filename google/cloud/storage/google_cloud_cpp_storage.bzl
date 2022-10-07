@@ -30,6 +30,7 @@ google_cloud_cpp_storage_hdrs = [
     "bucket_retention_policy.h",
     "bucket_rpo.h",
     "bucket_versioning.h",
+    "bucket_website.h",
     "client.h",
     "client_options.h",
     "download_options.h",
