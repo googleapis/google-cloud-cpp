@@ -17,9 +17,19 @@
 include(GoogleapisConfig)
 
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/${GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
-    "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/${GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
+    "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
 )
+set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH
+    "${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}")
+if (GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL)
+    set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
+        ${GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL})
+endif ()
+if (GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH)
+    set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH
+        "${GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH}")
+endif ()
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE
     "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
@@ -110,7 +120,7 @@ externalproject_add(
     EXCLUDE_FROM_ALL ON
     PREFIX "${PROJECT_BINARY_DIR}/external/googleapis"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
-    URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
+    URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH}
     PATCH_COMMAND
         ""
         # ~~~

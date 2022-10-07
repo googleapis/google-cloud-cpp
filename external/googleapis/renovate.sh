@@ -38,11 +38,11 @@ EOT
 
 # Update the CMake dependency.
 sed -i -f - cmake/GoogleapisConfig.cmake <<EOT
-  /^set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA$/ {
+  /^set(_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA$/ {
     n
     s/".*"/"${COMMIT}"/
   }
-  /^set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256$/ {
+  /^set(_GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256$/ {
     n
     s/".*"/"${SHA256}"/
   }
