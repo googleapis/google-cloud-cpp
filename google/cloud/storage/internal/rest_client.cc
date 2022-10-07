@@ -355,8 +355,8 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
                               request.GetOption<UserIp>().value());
   }
 
-  // 2. Pick a separator that does not conflict with the request contents.
-  auto boundary = MakeBoundary();
+  // 2. create a random separator which is unlikely to exist in the payload.
+  auto const boundary = MakeBoundary();
   builder.AddHeader("content-type", "multipart/related; boundary=" + boundary);
   builder.AddQueryParameter("uploadType", "multipart");
   builder.AddQueryParameter("name", request.object_name());
