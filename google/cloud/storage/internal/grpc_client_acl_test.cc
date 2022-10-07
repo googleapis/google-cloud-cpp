@@ -51,10 +51,18 @@ auto constexpr kBucketProtoText = R"pb(
   location_type: "REGIONAL"
   storage_class: "test-storage-class"
   rpo: "test-rpo"
-  acl: { role: "test-role1" entity: "test-entity1" }
-  acl: { role: "test-role2" entity: "test-entity2" }
-  default_object_acl: { role: "test-role3" entity: "test-entity3" }
-  default_object_acl: { role: "test-role4" entity: "test-entity4" }
+  acl: { role: "test-role1" entity: "test-entity1" entity_alt: "test-alt1" }
+  acl: { role: "test-role2" entity: "test-entity2" entity_alt: "test-alt2" }
+  default_object_acl: {
+    role: "test-role3"
+    entity: "test-entity3"
+    entity_alt: "test-alt3"
+  }
+  default_object_acl: {
+    role: "test-role4"
+    entity: "test-entity4"
+    entity_alt: "test-alt4"
+  }
   lifecycle {
     rule {
       action { type: "Delete" }
@@ -116,8 +124,8 @@ auto constexpr kBucketProtoText = R"pb(
 auto constexpr kObjectProtoText = R"pb(
   name: "test-object-id"
   bucket: "test-bucket-id"
-  acl: { role: "test-role1" entity: "test-entity1" }
-  acl: { role: "test-role2" entity: "test-entity2" }
+  acl: { role: "test-role1" entity: "test-entity1" entity_alt: "test-alt1" }
+  acl: { role: "test-role2" entity: "test-entity2" entity_alt: "test-alt2" }
   content_encoding: "test-content-encoding"
   content_disposition: "test-content-disposition"
   cache_control: "test-cache-control"
@@ -227,6 +235,35 @@ TEST_F(GrpcClientAclTest, ListBucketAclSuccess) {
                                    make_matcher("test-role2", "test-entity2")));
 }
 
+TEST_F(GrpcClientAclTest, GetBucketAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetBucketRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->GetBucketAcl(
+      GetBucketAclRequest("test-bucket-id", "test-entity1"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "test-role1");
+  EXPECT_EQ(response->bucket(), "test-bucket-id");
+
+  response =
+      client->GetBucketAcl(GetBucketAclRequest("test-bucket-id", "test-alt1"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "test-role1");
+  EXPECT_EQ(response->bucket(), "test-bucket-id");
+}
+
 TEST_F(GrpcClientAclTest, GetBucketAclFailure) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
@@ -266,7 +303,7 @@ TEST_F(GrpcClientAclTest, GetBucketAclNotFound) {
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
-TEST_F(GrpcClientAclTest, GetBucketAclSuccess) {
+TEST_F(GrpcClientAclTest, CreateBucketAclSuccess) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
@@ -276,14 +313,30 @@ TEST_F(GrpcClientAclTest, GetBucketAclSuccess) {
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
         return response;
       });
+  EXPECT_CALL(*mock, UpdateBucket)
+      .WillOnce([](grpc::ClientContext&,
+                   v2::UpdateBucketRequest const& request) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+
+        EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
+        auto expected = v2::BucketAccessControl();
+        expected.set_entity("test-new-entity");
+        expected.set_role("test-new-role");
+        EXPECT_THAT(request.bucket().acl(), Contains(IsProtoEqual(expected)));
+        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+
+        *response.mutable_acl() = request.bucket().acl();
+        response.set_metageneration(response.metageneration() + 1);
+        return response;
+      });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetBucketAcl(
-      GetBucketAclRequest("test-bucket-id", "test-entity1"));
+  auto response = client->CreateBucketAcl(CreateBucketAclRequest(
+      "test-bucket-id", "test-new-entity", "test-new-role"));
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->entity(), "test-entity1");
-  EXPECT_EQ(response->role(), "test-role1");
-  EXPECT_EQ(response->bucket(), "test-bucket-id");
+  EXPECT_EQ(response->entity(), "test-new-entity");
 }
 
 TEST_F(GrpcClientAclTest, CreateBucketAclFailure) {
@@ -335,6 +388,42 @@ TEST_F(GrpcClientAclTest, CreateBucketAclPatchFails) {
   auto response = client->CreateBucketAcl(CreateBucketAclRequest(
       "test-bucket-id", "test-new-entity", "test-new-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(GrpcClientAclTest, DeleteBucketAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetBucketRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateBucket)
+      .Times(2)
+      .WillRepeatedly([](grpc::ClientContext&,
+                         v2::UpdateBucketRequest const& request) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+
+        EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
+        *response.mutable_acl() = request.bucket().acl();
+        response.set_metageneration(response.metageneration() + 1);
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->DeleteBucketAcl(
+      DeleteBucketAclRequest("test-bucket-id", "test-entity1"));
+  EXPECT_STATUS_OK(response);
+
+  response = client->DeleteBucketAcl(
+      DeleteBucketAclRequest("test-bucket-id", "test-alt1"));
+  EXPECT_STATUS_OK(response);
 }
 
 TEST_F(GrpcClientAclTest, DeleteBucketAclFailure) {
@@ -407,6 +496,48 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclNotFound) {
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
+TEST_F(GrpcClientAclTest, UpdateBucketSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetBucketRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateBucket)
+      .Times(2)
+      .WillRepeatedly([](grpc::ClientContext&,
+                         v2::UpdateBucketRequest const& request) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
+        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        for (auto& a : *response.mutable_acl()) {
+          if (a.entity() == "test-entity1") a.set_role("updated-role");
+        }
+        response.set_metageneration(response.metageneration() + 1);
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->UpdateBucketAcl(
+      UpdateBucketAclRequest("test-bucket-id", "test-entity1", "updated-role"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "updated-role");
+
+  response = client->UpdateBucketAcl(
+      UpdateBucketAclRequest("test-bucket-id", "test-alt1", "updated-role"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "updated-role");
+}
+
 TEST_F(GrpcClientAclTest, UpdateBucketAclFailure) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
@@ -456,6 +587,50 @@ TEST_F(GrpcClientAclTest, UpdateBucketAclPatchFails) {
   auto response = client->UpdateBucketAcl(
       UpdateBucketAclRequest("test-bucket-id", "test-entity1", "updated-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(GrpcClientAclTest, PatchBucketAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetBucketRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateBucket)
+      .Times(2)
+      .WillRepeatedly([](grpc::ClientContext&,
+                         v2::UpdateBucketRequest const& request) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
+        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        for (auto& a : *response.mutable_acl()) {
+          if (a.entity() == "test-entity1") a.set_role("updated-role");
+        }
+        response.set_metageneration(response.metageneration() + 1);
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->PatchBucketAcl(PatchBucketAclRequest(
+      "test-bucket-id", "test-entity1",
+      BucketAccessControlPatchBuilder().set_role("updated-role")));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "updated-role");
+
+  response = client->PatchBucketAcl(PatchBucketAclRequest(
+      "test-bucket-id", "test-alt1",
+      BucketAccessControlPatchBuilder().set_role("updated-role")));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "updated-role");
 }
 
 TEST_F(GrpcClientAclTest, PatchBucketAclFailure) {
@@ -569,6 +744,35 @@ TEST_F(GrpcClientAclTest, ListObjectAclSuccess) {
                                    make_matcher("test-role2", "test-entity2")));
 }
 
+TEST_F(GrpcClientAclTest, GetObjectAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetObject)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetObjectRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Object response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->GetObjectAcl(
+      GetObjectAclRequest("test-bucket-id", "test-object-id", "test-entity1"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "test-role1");
+  EXPECT_EQ(response->object(), "test-object-id");
+
+  response = client->GetObjectAcl(
+      GetObjectAclRequest("test-bucket-id", "test-object-id", "test-alt1"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "test-role1");
+  EXPECT_EQ(response->object(), "test-object-id");
+}
+
 TEST_F(GrpcClientAclTest, GetObjectAclFailure) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
@@ -609,7 +813,7 @@ TEST_F(GrpcClientAclTest, GetObjectAclNotFound) {
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
-TEST_F(GrpcClientAclTest, GetObjectAclSuccess) {
+TEST_F(GrpcClientAclTest, CreateObjectAclSuccess) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
@@ -619,14 +823,32 @@ TEST_F(GrpcClientAclTest, GetObjectAclSuccess) {
         EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
         return response;
       });
+  EXPECT_CALL(*mock, UpdateObject)
+      .WillOnce([](grpc::ClientContext&,
+                   v2::UpdateObjectRequest const& request) {
+        v2::Object response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
+
+        EXPECT_EQ(request.object().bucket(),
+                  "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.object().name(), "test-object-id");
+        EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
+        auto expected = v2::ObjectAccessControl();
+        expected.set_entity("test-new-entity");
+        expected.set_role("test-new-role");
+        EXPECT_THAT(request.object().acl(), Contains(IsProtoEqual(expected)));
+        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+
+        *response.mutable_acl() = request.object().acl();
+        response.set_metageneration(response.metageneration() + 1);
+        return response;
+      });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetObjectAcl(
-      GetObjectAclRequest("test-bucket-id", "test-object-id", "test-entity1"));
+  auto response = client->CreateObjectAcl(CreateObjectAclRequest(
+      "test-bucket-id", "test-object-id", "test-new-entity", "test-new-role"));
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->entity(), "test-entity1");
-  EXPECT_EQ(response->role(), "test-role1");
-  EXPECT_EQ(response->object(), "test-object-id");
+  EXPECT_EQ(response->entity(), "test-new-entity");
 }
 
 TEST_F(GrpcClientAclTest, CreateObjectAclFailure) {
@@ -681,6 +903,43 @@ TEST_F(GrpcClientAclTest, CreateObjectAclPatchFails) {
   auto response = client->CreateObjectAcl(CreateObjectAclRequest(
       "test-bucket-id", "test-object-id", "test-new-entity", "test-new-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(GrpcClientAclTest, DeleteObjectAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetObject)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetObjectRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Object response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateObject)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::UpdateObjectRequest const& request) {
+        v2::Object response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
+        EXPECT_EQ(request.object().bucket(),
+                  "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.object().name(), "test-object-id");
+        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        *response.mutable_acl() = request.object().acl();
+        response.set_metageneration(response.metageneration());
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->DeleteObjectAcl(DeleteObjectAclRequest(
+      "test-bucket-id", "test-object-id", "test-entity1"));
+  EXPECT_STATUS_OK(response);
+
+  response = client->DeleteObjectAcl(
+      DeleteObjectAclRequest("test-bucket-id", "test-object-id", "test-alt2"));
+  EXPECT_STATUS_OK(response);
 }
 
 TEST_F(GrpcClientAclTest, DeleteObjectAclFailure) {
@@ -755,6 +1014,49 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclNotFound) {
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
+TEST_F(GrpcClientAclTest, UpdateObjectAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetObject)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetObjectRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Object response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateObject)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::UpdateObjectRequest const& request) {
+        v2::Object response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
+        EXPECT_EQ(request.object().bucket(),
+                  "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.object().name(), "test-object-id");
+        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        for (auto& a : *response.mutable_acl()) {
+          if (a.entity() == "test-entity1") a.set_role("updated-role");
+        }
+        response.set_metageneration(response.metageneration());
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->UpdateObjectAcl(UpdateObjectAclRequest(
+      "test-bucket-id", "test-object-id", "test-entity1", "updated-role"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "updated-role");
+
+  response = client->UpdateObjectAcl(UpdateObjectAclRequest(
+      "test-bucket-id", "test-object-id", "test-alt1", "updated-role"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "updated-role");
+}
+
 TEST_F(GrpcClientAclTest, UpdateObjectAclFailure) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
@@ -807,6 +1109,51 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclPatchFails) {
   auto response = client->UpdateObjectAcl(UpdateObjectAclRequest(
       "test-bucket-id", "test-object-id", "test-entity1", "updated-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(GrpcClientAclTest, PatchObjectAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetObject)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetObjectRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Object response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateObject)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::UpdateObjectRequest const& request) {
+        v2::Object response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
+        EXPECT_EQ(request.object().bucket(),
+                  "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.object().name(), "test-object-id");
+        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        for (auto& a : *response.mutable_acl()) {
+          if (a.entity() == "test-entity1") a.set_role("updated-role");
+        }
+        response.set_metageneration(response.metageneration());
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->PatchObjectAcl(PatchObjectAclRequest(
+      "test-bucket-id", "test-object-id", "test-entity1",
+      ObjectAccessControlPatchBuilder().set_role("updated-role")));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "updated-role");
+
+  response = client->PatchObjectAcl(PatchObjectAclRequest(
+      "test-bucket-id", "test-object-id", "test-alt1",
+      ObjectAccessControlPatchBuilder().set_role("updated-role")));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity1");
+  EXPECT_EQ(response->role(), "updated-role");
 }
 
 TEST_F(GrpcClientAclTest, PatchObjectAclFailure) {
@@ -918,6 +1265,35 @@ TEST_F(GrpcClientAclTest, ListDefaultObjectAclSuccess) {
                                    make_matcher("test-role4", "test-entity4")));
 }
 
+TEST_F(GrpcClientAclTest, GetDefaultObjectAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetBucketRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->GetDefaultObjectAcl(
+      GetDefaultObjectAclRequest("test-bucket-id", "test-entity3"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity3");
+  EXPECT_EQ(response->role(), "test-role3");
+  EXPECT_EQ(response->bucket(), "test-bucket-id");
+
+  response = client->GetDefaultObjectAcl(
+      GetDefaultObjectAclRequest("test-bucket-id", "test-alt3"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity3");
+  EXPECT_EQ(response->role(), "test-role3");
+  EXPECT_EQ(response->bucket(), "test-bucket-id");
+}
+
 TEST_F(GrpcClientAclTest, GetDefaultObjectAclFailure) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
@@ -957,7 +1333,7 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclNotFound) {
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
-TEST_F(GrpcClientAclTest, GetDefaultObjectAclSuccess) {
+TEST_F(GrpcClientAclTest, CreateDefaultObjectAclSuccess) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
@@ -967,14 +1343,27 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclSuccess) {
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
         return response;
       });
+  EXPECT_CALL(*mock, UpdateBucket)
+      .WillOnce([](grpc::ClientContext&,
+                   v2::UpdateBucketRequest const& request) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("default_object_acl"));
+        *response.mutable_default_object_acl() =
+            request.bucket().default_object_acl();
+        response.set_metageneration(response.metageneration() + 1);
+        return response;
+      });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetDefaultObjectAcl(
-      GetDefaultObjectAclRequest("test-bucket-id", "test-entity3"));
+  auto response = client->CreateDefaultObjectAcl(CreateDefaultObjectAclRequest(
+      "test-bucket-id", "test-new-entity", "test-new-role"));
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->entity(), "test-entity3");
-  EXPECT_EQ(response->role(), "test-role3");
-  EXPECT_EQ(response->bucket(), "test-bucket-id");
+  EXPECT_EQ(response->entity(), "test-new-entity");
+  EXPECT_EQ(response->role(), "test-new-role");
 }
 
 TEST_F(GrpcClientAclTest, CreateDefaultObjectAclFailure) {
@@ -1028,6 +1417,43 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclPatchFails) {
   auto response = client->CreateDefaultObjectAcl(CreateDefaultObjectAclRequest(
       "test-bucket-id", "test-new-entity", "test-new-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetBucketRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateBucket)
+      .Times(2)
+      .WillRepeatedly([](grpc::ClientContext&,
+                         v2::UpdateBucketRequest const& request) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("default_object_acl"));
+        *response.mutable_default_object_acl() =
+            request.bucket().default_object_acl();
+        response.set_metageneration(response.metageneration() + 1);
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->DeleteDefaultObjectAcl(
+      DeleteDefaultObjectAclRequest("test-bucket-id", "test-entity3"));
+  EXPECT_STATUS_OK(response);
+  response = client->DeleteDefaultObjectAcl(
+      DeleteDefaultObjectAclRequest("test-bucket-id", "test-alt3"));
+  EXPECT_STATUS_OK(response);
 }
 
 TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclFailure) {
@@ -1100,6 +1526,47 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclNotFound) {
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
+TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetBucketRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateBucket)
+      .Times(2)
+      .WillRepeatedly([](grpc::ClientContext&,
+                         v2::UpdateBucketRequest const& request) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("default_object_acl"));
+        for (auto& a : *response.mutable_default_object_acl()) {
+          if (a.entity() == "test-entity3") a.set_role("updated-role");
+        }
+        response.set_metageneration(response.metageneration() + 1);
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->UpdateDefaultObjectAcl(UpdateDefaultObjectAclRequest(
+      "test-bucket-id", "test-entity3", "updated-role"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity3");
+  EXPECT_EQ(response->role(), "updated-role");
+
+  response = client->UpdateDefaultObjectAcl(UpdateDefaultObjectAclRequest(
+      "test-bucket-id", "test-alt3", "updated-role"));
+  ASSERT_STATUS_OK(response);
+}
+
 TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclFailure) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
@@ -1151,6 +1618,51 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclPatchFails) {
   auto response = client->UpdateDefaultObjectAcl(UpdateDefaultObjectAclRequest(
       "test-bucket-id", "test-entity3", "updated-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(GrpcClientAclTest, PatchDefaultObjectAclSuccess) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .Times(2)
+      .WillRepeatedly([&](grpc::ClientContext&,
+                          v2::GetBucketRequest const& request) {
+        EXPECT_TRUE(request.has_read_mask());
+        EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        return response;
+      });
+  EXPECT_CALL(*mock, UpdateBucket)
+      .Times(2)
+      .WillRepeatedly([](grpc::ClientContext&,
+                         v2::UpdateBucketRequest const& request) {
+        v2::Bucket response;
+        EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
+        EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("default_object_acl"));
+        for (auto& a : *response.mutable_default_object_acl()) {
+          if (a.entity() == "test-entity3") a.set_role("updated-role");
+        }
+        response.set_metageneration(response.metageneration() + 1);
+        return response;
+      });
+
+  auto client = CreateTestClient(mock);
+  auto response = client->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest(
+      "test-bucket-id", "test-entity3",
+      ObjectAccessControlPatchBuilder().set_role("updated-role")));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity3");
+  EXPECT_EQ(response->role(), "updated-role");
+
+  response = client->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest(
+      "test-bucket-id", "test-alt3",
+      ObjectAccessControlPatchBuilder().set_role("updated-role")));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->entity(), "test-entity3");
+  EXPECT_EQ(response->role(), "updated-role");
 }
 
 TEST_F(GrpcClientAclTest, PatchDefaultObjectAclFailure) {

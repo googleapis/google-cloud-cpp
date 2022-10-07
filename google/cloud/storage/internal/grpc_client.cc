@@ -51,9 +51,10 @@ template <typename AccessControl>
 StatusOr<google::protobuf::RepeatedPtrField<AccessControl>> UpsertAcl(
     google::protobuf::RepeatedPtrField<AccessControl> acl,
     std::string const& entity, std::string const& role) {
-  auto i = std::find_if(
-      acl.begin(), acl.end(),
-      [&](AccessControl const& entry) { return entry.entity() == entity; });
+  auto i =
+      std::find_if(acl.begin(), acl.end(), [&](AccessControl const& entry) {
+        return entry.entity() == entity || entry.entity_alt() == entity;
+      });
   if (i != acl.end()) {
     i->set_role(role);
     return acl;
@@ -70,7 +71,7 @@ StatusOr<BucketAccessControl> FindBucketAccessControl(
     StatusOr<google::storage::v2::Bucket> response, std::string const& entity) {
   if (!response) return std::move(response).status();
   for (auto const& acl : response->acl()) {
-    if (acl.entity() != entity) continue;
+    if (acl.entity() != entity && acl.entity_alt() != entity) continue;
     return storage_internal::FromProto(acl, response->bucket_id());
   }
   return Status(
@@ -84,7 +85,7 @@ StatusOr<ObjectAccessControl> FindObjectAccessControl(
   if (!response) return std::move(response).status();
   auto bucket_id = storage_internal::GrpcBucketNameToId(response->bucket());
   for (auto const& acl : response->acl()) {
-    if (acl.entity() != entity) continue;
+    if (acl.entity() != entity && acl.entity_alt() != entity) continue;
     return storage_internal::FromProto(acl, bucket_id, response->name(),
                                        response->generation());
   }
@@ -98,7 +99,7 @@ StatusOr<ObjectAccessControl> FindDefaultObjectAccessControl(
     StatusOr<google::storage::v2::Bucket> response, std::string const& entity) {
   if (!response) return std::move(response).status();
   for (auto const& acl : response->default_object_acl()) {
-    if (acl.entity() != entity) continue;
+    if (acl.entity() != entity && acl.entity_alt() != entity) continue;
     return storage_internal::FromProto(acl, response->bucket_id(),
                                        /*object_name=*/std::string{},
                                        /*generation=*/0);
@@ -773,9 +774,10 @@ StatusOr<EmptyResponse> GrpcClient::DeleteBucketAcl(
   auto updater =
       [&request](
           BucketAccessControlList acl) -> StatusOr<BucketAccessControlList> {
-    auto i = std::remove_if(acl.begin(), acl.end(), [&](auto const& entry) {
-      return entry.entity() == request.entity();
-    });
+    auto i = std::remove_if(
+        acl.begin(), acl.end(), [&entity = request.entity()](auto const& a) {
+          return a.entity() == entity || a.entity_alt() == entity;
+        });
     if (i == acl.end()) {
       return Status(StatusCode::kNotFound,
                     "the entity <" + request.entity() +
@@ -850,9 +852,10 @@ StatusOr<EmptyResponse> GrpcClient::DeleteObjectAcl(
   auto updater =
       [&request](
           ObjectAccessControlList acl) -> StatusOr<ObjectAccessControlList> {
-    auto i = std::remove_if(acl.begin(), acl.end(), [&](auto const& entry) {
-      return entry.entity() == request.entity();
-    });
+    auto i = std::remove_if(
+        acl.begin(), acl.end(), [&entity = request.entity()](auto const& a) {
+          return a.entity() == entity || a.entity_alt() == entity;
+        });
     if (i == acl.end()) {
       return Status(StatusCode::kNotFound,
                     "the entity <" + request.entity() +
@@ -936,9 +939,10 @@ StatusOr<EmptyResponse> GrpcClient::DeleteDefaultObjectAcl(
   auto updater =
       [&request](
           ObjectAccessControlList acl) -> StatusOr<ObjectAccessControlList> {
-    auto i = std::remove_if(acl.begin(), acl.end(), [&](auto const& entry) {
-      return entry.entity() == request.entity();
-    });
+    auto i = std::remove_if(
+        acl.begin(), acl.end(), [&entity = request.entity()](auto const& a) {
+          return a.entity() == entity || a.entity_alt() == entity;
+        });
     if (i == acl.end()) {
       return Status(StatusCode::kNotFound,
                     "the entity <" + request.entity() +
