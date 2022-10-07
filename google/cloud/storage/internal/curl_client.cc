@@ -1250,7 +1250,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   request.ForEachOption(no_content_type);
 
   // 2. Pick a separator that does not conflict with the request contents.
-  auto boundary = PickBoundary(request.contents());
+  auto boundary = MakeBoundary();
   builder.AddHeader("content-type: multipart/related; boundary=" + boundary);
   builder.AddQueryParameter("uploadType", "multipart");
   builder.AddQueryParameter("name", request.object_name());
@@ -1303,15 +1303,9 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
       std::move(builder).BuildRequest().MakeRequest(contents));
 }
 
-std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
-  auto generate_candidate = [this]() {
-    std::unique_lock<std::mutex> lk(mu_);
-    return GenerateMessageBoundaryCandidate(generator_);
-  };
-  if (!CurrentOptions().get<ValidateInsertObjectBoundary>()) {
-    return generate_candidate();
-  }
-  return GenerateMessageBoundary(text_to_avoid, generate_candidate);
+std::string CurlClient::MakeBoundary() {
+  std::unique_lock<std::mutex> lk(mu_);
+  return GenerateMessageBoundaryCandidate(generator_);
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(

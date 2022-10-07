@@ -286,30 +286,6 @@ struct IdempotencyPolicyOption {
   using Type = std::shared_ptr<IdempotencyPolicy>;
 };
 
-/**
- * Prevent
- *
- * The `InsertObject()` function often uses JSON multipart uploads, i.e, a
- * type of [single request upload] where the HTTP payload contains both the
- * metadata and data for the object. These uploads require a message boundary
- * that is not found in the payload. By default, the client library will
- * generate a random separator and optimistically assume it will not be found in
- * the payload. In the worst case scenario, an invalid separator would be
- * detected by the service, and result in an error.
- *
- * When this option is enabled the client library will validate the message,
- * if it finds a collision, it will repeatedly generate new random strings until
- * one that does not collide is found. The space of possible random strings is
- * large enough this should be found in one or two attempts.
- *
- * [single request upload]:
- * https://cloud.google.com/storage/docs/uploads-downloads [JSON multipart
- * uploads]: https://cloud.google.com/storage/docs/json_api/v1/objects/insert
- */
-struct ValidateInsertObjectBoundary {
-  using Type = bool;
-};
-
 /// The complete list of options accepted by `storage::Client`.
 using ClientOptionList = ::google::cloud::OptionList<
     RestEndpointOption, IamEndpointOption, Oauth2CredentialsOption,
@@ -319,7 +295,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
     TransferStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
     IdempotencyPolicyOption, CARootsFilePathOption,
-    ValidateInsertObjectBoundary, storage_experimental::HttpVersionOption>;
+    storage_experimental::HttpVersionOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

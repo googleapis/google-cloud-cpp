@@ -333,15 +333,9 @@ StatusOr<BucketMetadata> RestClient::LockBucketRetentionPolicy(
       std::move(builder).BuildRequest(), {absl::MakeConstSpan(std::string{})}));
 }
 
-std::string RestClient::PickBoundary(std::string const& text_to_avoid) {
-  auto generate_candidate = [this]() {
-    std::unique_lock<std::mutex> lk(mu_);
-    return GenerateMessageBoundaryCandidate(generator_);
-  };
-  if (!CurrentOptions().get<ValidateInsertObjectBoundary>()) {
-    return generate_candidate();
-  }
-  return GenerateMessageBoundary(text_to_avoid, generate_candidate);
+std::string RestClient::MakeBoundary() {
+  std::unique_lock<std::mutex> lk(mu_);
+  return GenerateMessageBoundaryCandidate(generator_);
 }
 
 StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
@@ -362,7 +356,7 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
   }
 
   // 2. Pick a separator that does not conflict with the request contents.
-  auto boundary = PickBoundary(request.contents());
+  auto boundary = MakeBoundary();
   builder.AddHeader("content-type", "multipart/related; boundary=" + boundary);
   builder.AddQueryParameter("uploadType", "multipart");
   builder.AddQueryParameter("name", request.object_name());
