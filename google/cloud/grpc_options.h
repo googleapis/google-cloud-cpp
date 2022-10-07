@@ -41,6 +41,13 @@ struct GrpcCredentialOption {
  * gRPC limits the number of simultaneous calls in progress on a channel to
  * 100. Increasing the number of channels thus increases the number of
  * operations that can be in progress in parallel.
+ *
+ * @note This option only applies when passed to the following functions:
+ * - `bigtable::MakeDataConnection()`
+ * - `pubsub::MakePublisherConnection()`
+ * - `pubsub::MakeSubscriberConnection()`
+ * - `spanner::MakeConnection()`
+ * - `storage_experimental::DefaultGrpcClient()`
  */
 struct GrpcNumChannelsOption {
   using Type = int;
