@@ -37,29 +37,15 @@ namespace {
 //  L1 Instruction 32 KiB (x48)
 //  L2 Unified 1024 KiB (x48)
 //  L3 Unified 39424 KiB (x2)
-// ---------------------------------------------------------------------------------------------
-// Benchmark                                                   Time             CPU   Iterations
-// ---------------------------------------------------------------------------------------------
-// ...
-// GenerateBoundaryFixture/GenerateBoundary_mean        20478679 ns     20475235 ns          100
-// GenerateBoundaryFixture/GenerateBoundary_median      20583724 ns     20580943 ns          100
-// GenerateBoundaryFixture/GenerateBoundary_stddev        335315 ns       335459 ns          100
-// GenerateBoundaryFixture/GenerateBoundary_cv              1.64 %          1.64 %           100
-// ...
-// GenerateBoundaryFixture/GenerateBoundaryOld_mean     20809894 ns     20806317 ns          100
-// GenerateBoundaryFixture/GenerateBoundaryOld_median   20520133 ns     20517279 ns          100
-// GenerateBoundaryFixture/GenerateBoundaryOld_stddev    1284277 ns      1284334 ns          100
-// GenerateBoundaryFixture/GenerateBoundaryOld_cv           6.17 %          6.17 %           100
-// ...
-// GenerateBoundaryFixture/WorstCase_mean              100747489 ns    100727911 ns          100
-// GenerateBoundaryFixture/WorstCase_median            101026913 ns    101006689 ns          100
-// GenerateBoundaryFixture/WorstCase_stddev              1285934 ns      1285884 ns          100
-// GenerateBoundaryFixture/WorstCase_cv                     1.28 %          1.28 %           100
-// ...
-// GenerateBoundaryFixture/BestCase_mean                 9584895 ns      9583080 ns          100
-// GenerateBoundaryFixture/BestCase_median               9598452 ns      9597243 ns          100
-// GenerateBoundaryFixture/BestCase_stddev                 90679 ns        90643 ns          100
-// GenerateBoundaryFixture/BestCase_cv                      0.95 %          0.95 %           100
+// Load Average: 8.44, 25.15, 23.46
+// -------------------------------------------------------------------------------------------------
+// Benchmark                                                       Time             CPU   Iterations
+// -------------------------------------------------------------------------------------------------
+// GenerateBoundaryFixture/GenerateBoundary                      505 ns          505 ns      1385317
+// GenerateBoundaryFixture/GenerateBoundaryWithValidation   20031391 ns     20025303 ns           35
+// GenerateBoundaryFixture/GenerateBoundaryOld              20133230 ns     20129379 ns           35
+// GenerateBoundaryFixture/WorstCase                       100998844 ns    100985746 ns            7
+// GenerateBoundaryFixture/BestCase                          9739599 ns      9736802 ns           69
 // clang-format on
 
 auto constexpr kMessageSize = 128 * 1024 * 1024;
@@ -97,6 +83,15 @@ class GenerateBoundaryFixture : public ::benchmark::Fixture {
 };
 
 BENCHMARK_F(GenerateBoundaryFixture, GenerateBoundary)
+(benchmark::State& state) {
+  auto make_string = [this]() { return GenerateCandidate(); };
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(make_string());
+  }
+}
+
+BENCHMARK_F(GenerateBoundaryFixture, GenerateBoundaryWithValidation)
 (benchmark::State& state) {
   auto make_string = [this]() { return GenerateCandidate(); };
 

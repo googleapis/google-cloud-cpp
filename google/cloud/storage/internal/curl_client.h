@@ -200,7 +200,7 @@ class CurlClient : public RawClient,
   /// Insert an object using uploadType=multipart.
   StatusOr<ObjectMetadata> InsertObjectMediaMultipart(
       InsertObjectMediaRequest const& request);
-  std::string PickBoundary(std::string const& text_to_avoid);
+  std::string MakeBoundary();
 
   /// Insert an object using uploadType=media.
   StatusOr<ObjectMetadata> InsertObjectMediaSimple(

@@ -1249,8 +1249,8 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   AddOptionsWithSkip<CurlRequestBuilder, ContentType> no_content_type{builder};
   request.ForEachOption(no_content_type);
 
-  // 2. Pick a separator that does not conflict with the request contents.
-  auto boundary = PickBoundary(request.contents());
+  // 2. create a random separator which is unlikely to exist in the payload.
+  auto const boundary = MakeBoundary();
   builder.AddHeader("content-type: multipart/related; boundary=" + boundary);
   builder.AddQueryParameter("uploadType", "multipart");
   builder.AddQueryParameter("name", request.object_name());
@@ -1303,18 +1303,9 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
       std::move(builder).BuildRequest().MakeRequest(contents));
 }
 
-std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
-  // We need to find a string that is *not* found in `text_to_avoid`, we pick
-  // a string at random, and see if it is in `text_to_avoid`, if it is, we grow
-  // the string with random characters and start from where we last found a
-  // the candidate.  Eventually we will find something, though it might be
-  // larger than `text_to_avoid`.  And we only make (approximately) one pass
-  // over `text_to_avoid`.
-  auto generate_candidate = [this]() {
-    std::unique_lock<std::mutex> lk(mu_);
-    return GenerateMessageBoundaryCandidate(generator_);
-  };
-  return GenerateMessageBoundary(text_to_avoid, generate_candidate);
+std::string CurlClient::MakeBoundary() {
+  std::unique_lock<std::mutex> lk(mu_);
+  return GenerateMessageBoundaryCandidate(generator_);
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(

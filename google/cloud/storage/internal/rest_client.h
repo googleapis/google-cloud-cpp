@@ -183,7 +183,7 @@ class RestClient : public RawClient,
   StatusOr<ObjectMetadata> InsertObjectMediaSimple(
       InsertObjectMediaRequest const& request);
 
-  std::string PickBoundary(std::string const& text_to_avoid);
+  std::string MakeBoundary();
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectXml(
       ReadObjectRangeRequest const& request);
 
