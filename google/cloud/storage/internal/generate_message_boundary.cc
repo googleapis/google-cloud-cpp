@@ -33,10 +33,11 @@ std::string GenerateMessageBoundary(
 
 std::string GenerateMessageBoundaryCandidate(
     google::cloud::internal::DefaultPRNG& generator) {
-  auto candidate = std::string{
-      "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
-  std::shuffle(candidate.begin(), candidate.end(), generator);
-  return candidate;
+  auto constexpr kCandidateLength = 64;
+  return google::cloud::internal::Sample(generator, kCandidateLength,
+                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                         "abcdefghijklmnopqrstuvwxyz"
+                                         "0123456789");
 }
 
 }  // namespace internal

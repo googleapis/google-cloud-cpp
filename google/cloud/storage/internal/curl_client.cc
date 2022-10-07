@@ -1304,16 +1304,13 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
 }
 
 std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
-  // We need to find a string that is *not* found in `text_to_avoid`, we pick
-  // a string at random, and see if it is in `text_to_avoid`, if it is, we grow
-  // the string with random characters and start from where we last found a
-  // the candidate.  Eventually we will find something, though it might be
-  // larger than `text_to_avoid`.  And we only make (approximately) one pass
-  // over `text_to_avoid`.
   auto generate_candidate = [this]() {
     std::unique_lock<std::mutex> lk(mu_);
     return GenerateMessageBoundaryCandidate(generator_);
   };
+  if (!CurrentOptions().get<ValidateInsertObjectBoundary>()) {
+    return generate_candidate();
+  }
   return GenerateMessageBoundary(text_to_avoid, generate_candidate);
 }
 

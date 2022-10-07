@@ -338,6 +338,9 @@ std::string RestClient::PickBoundary(std::string const& text_to_avoid) {
     std::unique_lock<std::mutex> lk(mu_);
     return GenerateMessageBoundaryCandidate(generator_);
   };
+  if (!CurrentOptions().get<ValidateInsertObjectBoundary>()) {
+    return generate_candidate();
+  }
   return GenerateMessageBoundary(text_to_avoid, generate_candidate);
 }
 
