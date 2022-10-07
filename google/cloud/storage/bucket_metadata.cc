@@ -13,11 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
-#include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
-#include "google/cloud/storage/internal/bucket_requests.h"
-#include "google/cloud/storage/internal/metadata_parser.h"
-#include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/ios_flags_saver.h"
@@ -84,60 +80,6 @@ nlohmann::json ActionAsPatch(LifecycleRuleAction const& a) {
 }
 
 }  // namespace
-
-std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
-  os << "CorsEntry={";
-  char const* sep = "";
-  if (rhs.max_age_seconds.has_value()) {
-    os << sep << "max_age_seconds=" << *rhs.max_age_seconds;
-    sep = ", ";
-  }
-  return os << sep << "method=[" << absl::StrJoin(rhs.method, ", ")
-            << "], origin=[" << absl::StrJoin(rhs.origin, ", ")
-            << "], response_header=["
-            << absl::StrJoin(rhs.response_header, ", ") << "]}";
-}
-
-std::ostream& operator<<(std::ostream& os,
-                         UniformBucketLevelAccess const& rhs) {
-  google::cloud::internal::IosFlagsSaver save_format(os);
-  return os << "UniformBucketLevelAccess={enabled=" << std::boolalpha
-            << rhs.enabled << ", locked_time="
-            << google::cloud::internal::FormatRfc3339(rhs.locked_time) << "}";
-}
-
-std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs) {
-  os << "BucketIamConfiguration={";
-  char const* sep = "";
-  if (rhs.public_access_prevention.has_value()) {
-    os << sep << "public_access_prevention=" << *rhs.public_access_prevention;
-    sep = ", ";
-  }
-  if (rhs.uniform_bucket_level_access.has_value()) {
-    os << sep
-       << "uniform_bucket_level_access=" << *rhs.uniform_bucket_level_access;
-    return os << "}";
-  }
-  return os << "}";
-}
-
-std::ostream& operator<<(std::ostream& os, BucketLogging const& rhs) {
-  return os << "BucketLogging={log_bucket=" << rhs.log_bucket
-            << ", log_object_prefix=" << rhs.log_object_prefix << "}";
-}
-
-std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs) {
-  return os << "BucketRetentionPolicy={retention_period="
-            << rhs.retention_period.count() << "s, effective_time="
-            << google::cloud::internal::FormatRfc3339(rhs.effective_time)
-            << ", locked=" << rhs.is_locked << "}";
-}
-
-std::ostream& operator<<(std::ostream& os,
-                         BucketCustomPlacementConfig const& rhs) {
-  return os << "BucketCustomPlacementConfig=["
-            << absl::StrJoin(rhs.data_locations, ", ") << "]";
-}
 
 bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
   return lhs.acl_ == rhs.acl_                                               //
