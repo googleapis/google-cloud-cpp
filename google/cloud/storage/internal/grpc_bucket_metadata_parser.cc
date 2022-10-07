@@ -102,6 +102,9 @@ google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs) {
     *result.mutable_custom_placement_config() =
         ToProto(rhs.custom_placement_config());
   }
+  if (rhs.has_autoclass()) {
+    *result.mutable_autoclass() = ToProto(rhs.autoclass());
+  }
   return result;
 }
 
@@ -181,8 +184,30 @@ storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs) {
     metadata.set_custom_placement_config(
         FromProto(rhs.custom_placement_config()));
   }
+  if (rhs.has_autoclass()) {
+    metadata.set_autoclass(FromProto(rhs.autoclass()));
+  }
 
   return metadata;
+}
+
+google::storage::v2::Bucket::Autoclass ToProto(
+    storage::BucketAutoclass const& rhs) {
+  google::storage::v2::Bucket::Autoclass result;
+  result.set_enabled(rhs.enabled);
+  *result.mutable_toggle_time() =
+      google::cloud::internal::ToProtoTimestamp(rhs.toggle_time);
+  return result;
+}
+
+storage::BucketAutoclass FromProto(
+    google::storage::v2::Bucket::Autoclass const& rhs) {
+  storage::BucketAutoclass result{rhs.enabled()};
+  if (rhs.has_toggle_time()) {
+    result.toggle_time =
+        google::cloud::internal::ToChronoTimePoint(rhs.toggle_time());
+  }
+  return result;
 }
 
 google::storage::v2::Bucket::Billing ToProto(

@@ -68,6 +68,10 @@ BucketMetadata CreateBucketMetadataForTest() {
         "etag": "AYX="
       }
       ],
+      "autoclass": {
+        "enabled": true,
+        "toggleTime": "2022-10-07T01:02:03Z"
+      },
       "billing": {
         "requesterPays": true
       },
@@ -178,6 +182,14 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(2, actual.acl().size());
   EXPECT_EQ("acl-id-0", actual.acl().at(0).id());
   EXPECT_EQ("acl-id-1", actual.acl().at(1).id());
+
+  auto const expected_autoclass_toggle =
+      google::cloud::internal::ParseRfc3339("2022-10-07T01:02:03Z");
+  ASSERT_STATUS_OK(expected_autoclass_toggle);
+  ASSERT_TRUE(actual.has_autoclass());
+  EXPECT_EQ(actual.autoclass(),
+            BucketAutoclass(true, *expected_autoclass_toggle));
+
   EXPECT_TRUE(actual.billing().requester_pays);
   EXPECT_EQ(2, actual.cors().size());
   auto expected_cors_0 =
@@ -302,6 +314,12 @@ TEST(BucketMetadataTest, IOStream) {
   // acl()
   EXPECT_THAT(actual, HasSubstr("acl-id-0"));
   EXPECT_THAT(actual, HasSubstr("acl-id-1"));
+
+  // autoclass()
+  EXPECT_THAT(
+      actual,
+      HasSubstr("autoclass={enabled=true, toggle_time=2022-10-07T01:02:03Z}"));
+
   // billing()
   EXPECT_THAT(actual, HasSubstr("enabled=true"));
 
@@ -382,6 +400,15 @@ TEST(BucketMetadataTest, ToJsonString) {
   EXPECT_EQ(2, actual["acl"].size()) << actual;
   EXPECT_EQ("user-test-user", actual["acl"][0].value("entity", ""));
   EXPECT_EQ("user-test-user2", actual["acl"][1].value("entity", ""));
+
+  // autoclass()
+  ASSERT_TRUE(actual.contains("autoclass"));
+  auto const expected_autoclass = nlohmann::json{
+      {"enabled", true},
+      // "toggleTime" is OUTPUT_ONLY and thus not included in the
+      // JSON string for create/update.
+  };
+  EXPECT_EQ(actual["autoclass"], expected_autoclass);
 
   // billing()
   ASSERT_EQ(1U, actual.count("billing")) << actual;
@@ -571,6 +598,32 @@ TEST(BucketMetadataTest, SetAcl) {
   copy.set_acl(std::move(acl));
   EXPECT_NE(expected, copy);
   EXPECT_EQ("READER", copy.acl().at(0).role());
+}
+
+/// @test Verify we can change the autoclass configuration in BucketMetadata.
+TEST(BucketMetadataTest, SetAutoclass) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  ASSERT_TRUE(copy.has_autoclass());
+  ASSERT_TRUE(copy.autoclass().enabled);
+  copy.set_autoclass(
+      BucketAutoclass{false, std::chrono::system_clock::time_point()});
+  EXPECT_NE(expected, copy);
+  ASSERT_TRUE(copy.has_autoclass());
+  ASSERT_FALSE(copy.autoclass().enabled);
+}
+
+/// @test Verify we can reset the autoclass configuration in BucketMetadata.
+TEST(BucketMetadataTest, ResetAutoclass) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_autoclass());
+  auto copy = expected;
+  copy.reset_autoclass();
+  EXPECT_FALSE(copy.has_autoclass());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("autoclass")));
 }
 
 /// @test Verify we can change the billing configuration in BucketMetadata.
@@ -943,6 +996,27 @@ TEST(BucketMetadataPatchBuilder, ResetAcl) {
   auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("acl")) << json;
   ASSERT_TRUE(json["acl"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetAutoclass) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetAutoclass(BucketAutoclass(true));
+
+  auto actual = builder.BuildPatch();
+  auto const json = nlohmann::json::parse(actual);
+  ASSERT_TRUE(json.contains("autoclass")) << json;
+  auto const expected_autoclass = nlohmann::json{{"enabled", true}};
+  EXPECT_EQ(expected_autoclass, json["autoclass"]);
+}
+
+TEST(BucketMetadataPatchBuilder, ResetAutoclass) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetAutoclass();
+
+  auto actual = builder.BuildPatch();
+  auto json = nlohmann::json::parse(actual);
+  ASSERT_TRUE(json.contains("autoclass")) << json;
+  ASSERT_TRUE(json["autoclass"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetBilling) {

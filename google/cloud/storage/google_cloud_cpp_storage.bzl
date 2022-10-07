@@ -19,6 +19,7 @@
 google_cloud_cpp_storage_hdrs = [
     "auto_finalize.h",
     "bucket_access_control.h",
+    "bucket_autoclass.h",
     "bucket_billing.h",
     "bucket_cors_entry.h",
     "bucket_custom_placement_config.h",
@@ -152,6 +153,7 @@ google_cloud_cpp_storage_hdrs = [
 google_cloud_cpp_storage_srcs = [
     "auto_finalize.cc",
     "bucket_access_control.cc",
+    "bucket_autoclass.cc",
     "bucket_cors_entry.cc",
     "bucket_custom_placement_config.cc",
     "bucket_iam_configuration.cc",

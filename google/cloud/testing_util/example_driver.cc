@@ -15,6 +15,7 @@
 #include "google/cloud/testing_util/example_driver.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
+#include "google/cloud/status.h"
 #include <iostream>
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -71,6 +72,10 @@ int Example::Run(int argc, char const* const argv[]) try {
 } catch (Usage const& u) {
   PrintUsage(argv[0], u.what());
   return 1;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  google::cloud::LogSink::Instance().Flush();
+  throw;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
   google::cloud::LogSink::Instance().Flush();

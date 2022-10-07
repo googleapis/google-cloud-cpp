@@ -25,6 +25,8 @@ add_library(
     auto_finalize.h
     bucket_access_control.cc
     bucket_access_control.h
+    bucket_autoclass.cc
+    bucket_autoclass.h
     bucket_billing.h
     bucket_cors_entry.cc
     bucket_cors_entry.h

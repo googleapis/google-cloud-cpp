@@ -83,6 +83,7 @@ nlohmann::json ActionAsPatch(LifecycleRuleAction const& a) {
 
 bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
   return lhs.acl_ == rhs.acl_                                               //
+         && lhs.autoclass_ == rhs.autoclass_                                //
          && lhs.billing_ == rhs.billing_                                    //
          && lhs.cors_ == rhs.cors_                                          //
          && lhs.custom_placement_config_ == rhs.custom_placement_config_    //
@@ -121,6 +122,9 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   os << absl::StrJoin(rhs.acl(), ", ", absl::StreamFormatter());
   os << "]";
 
+  if (rhs.has_autoclass()) {
+    os << ", autoclass=" << rhs.autoclass();
+  }
   if (rhs.has_billing()) {
     auto previous_flags = os.flags();
     os << ", billing.requesterPays=" << std::boolalpha
@@ -246,6 +250,18 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetAcl(
 
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetAcl() {
   impl_.RemoveField("acl");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetAutoclass(
+    BucketAutoclass const& v) {
+  impl_.AddSubPatch(
+      "autoclass", internal::PatchBuilder().SetBoolField("enabled", v.enabled));
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetAutoclass() {
+  impl_.RemoveField("autoclass");
   return *this;
 }
 

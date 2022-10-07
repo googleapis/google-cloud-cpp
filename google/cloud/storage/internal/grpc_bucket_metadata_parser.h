@@ -27,6 +27,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs);
 storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs);
 
+google::storage::v2::Bucket::Autoclass ToProto(
+    storage::BucketAutoclass const& rhs);
+storage::BucketAutoclass FromProto(
+    google::storage::v2::Bucket::Autoclass const& rhs);
+
 google::storage::v2::Bucket::Billing ToProto(storage::BucketBilling const& rhs);
 storage::BucketBilling FromProto(
     google::storage::v2::Bucket::Billing const& rhs);
