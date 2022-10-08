@@ -218,7 +218,8 @@ install(
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
-set(relative_mock_files mocks/mock_stream_range.h)
+set(relative_mock_files # cmake-format: sort
+                        mocks/mock_stream_range.h)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
     list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
