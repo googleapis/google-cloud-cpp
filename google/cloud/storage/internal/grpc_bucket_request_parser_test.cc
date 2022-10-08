@@ -85,6 +85,10 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
           storage_class: "NEARLINE"
           rpo: "ASYNC_TURBO"
           acl { entity: "allUsers" role: "READER" }
+          autoclass {
+            enabled: true
+            toggle_time {}
+          }
           billing { requester_pays: true }
           default_object_acl {
             entity: "user:test-user@example.com"
@@ -131,6 +135,7 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
           .set_name("test-bucket")
           .set_storage_class("NEARLINE")
           .set_location("us-central1")
+          .set_autoclass(storage::BucketAutoclass{true})
           .set_billing(storage::BucketBilling(true))
           .set_rpo(storage::RpoAsyncTurbo())
           .set_versioning(storage::BucketVersioning(true))
@@ -427,6 +432,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
             log_object_prefix: "test-log-prefix"
           }
           encryption { default_kms_key: "test-only-kms-key" }
+          autoclass { enabled: true }
           billing { requester_pays: true }
           retention_policy { retention_period: 123000 }
           iam_config {
@@ -501,6 +507,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
               storage::BucketLogging{"test-log-bucket", "test-log-prefix"})
           .SetEncryption(storage::BucketEncryption{
               /*.default_kms_key=*/"test-only-kms-key"})
+          .SetAutoclass(storage::BucketAutoclass{true})
           .SetBilling(storage::BucketBilling{/*.requester_pays=*/true})
           .SetRetentionPolicy(std::chrono::seconds(123000))
           .SetIamConfiguration(storage::BucketIamConfiguration{
@@ -523,8 +530,8 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
               UnorderedElementsAre(
                   "storage_class", "rpo", "acl", "default_object_acl",
                   "lifecycle", "cors", "default_event_based_hold", "labels",
-                  "website", "versioning", "logging", "encryption", "billing",
-                  "retention_policy", "iam_config"));
+                  "website", "versioning", "logging", "encryption", "autoclass",
+                  "billing", "retention_policy", "iam_config"));
 
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
@@ -544,6 +551,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllResets) {
       "bucket-name", storage::BucketMetadataPatchBuilder{}
                          .SetStorageClass("NEARLINE")
                          .ResetAcl()
+                         .ResetAutoclass()
                          .ResetBilling()
                          .ResetCors()
                          .ResetDefaultEventBasedHold()
@@ -567,8 +575,8 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllResets) {
               UnorderedElementsAre(
                   "storage_class", "rpo", "acl", "default_object_acl",
                   "lifecycle", "cors", "default_event_based_hold", "labels",
-                  "website", "versioning", "logging", "encryption", "billing",
-                  "retention_policy", "iam_config"));
+                  "website", "versioning", "logging", "encryption", "autoclass",
+                  "billing", "retention_policy", "iam_config"));
 
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
@@ -625,6 +633,7 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
             log_object_prefix: "test-log-prefix"
           }
           encryption { default_kms_key: "test-only-kms-key" }
+          autoclass { enabled: true }
           billing { requester_pays: true }
           retention_policy { retention_period: 123000 }
           iam_config {
@@ -697,6 +706,7 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
               storage::BucketLogging{"test-log-bucket", "test-log-prefix"})
           .set_encryption(storage::BucketEncryption{
               /*.default_kms_key=*/"test-only-kms-key"})
+          .set_autoclass(storage::BucketAutoclass{true})
           .set_billing(storage::BucketBilling{/*.requester_pays=*/true})
           .set_retention_policy(std::chrono::seconds(123000))
           .set_iam_configuration(storage::BucketIamConfiguration{
@@ -718,8 +728,8 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
               UnorderedElementsAre(
                   "storage_class", "rpo", "acl", "default_object_acl",
                   "lifecycle", "cors", "default_event_based_hold", "labels",
-                  "website", "versioning", "logging", "encryption", "billing",
-                  "retention_policy", "iam_config"));
+                  "website", "versioning", "logging", "encryption", "autoclass",
+                  "billing", "retention_policy", "iam_config"));
 
   // Clear the paths, which we already compared, and test the rest
   actual.mutable_update_mask()->clear_paths();

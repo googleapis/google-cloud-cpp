@@ -119,6 +119,10 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       public_access_prevention: "inherited"
     }
     etag: "test-etag"
+    autoclass {
+      enabled: true
+      toggle_time { seconds: 1665108184 nanos: 123456000 }
+    }
   )pb";
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
 
@@ -224,7 +228,11 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       },
       "publicAccessPrevention": "inherited"
     },
-    "etag": "test-etag"
+    "etag": "test-etag",
+    "autoclass": {
+      "enabled": true,
+      "toggleTime": "2022-10-07T02:03:04.123456000Z"
+    }
   })""");
   ASSERT_THAT(expected, IsOk());
 
@@ -237,6 +245,23 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
 
   auto const actual = ToProto(middle);
   EXPECT_THAT(actual, IsProtoEqual(input));
+}
+
+TEST(GrpcBucketMetadataParser, BucketAutoclassRoundtrip) {
+  auto constexpr kText = R"pb(
+    enabled: true
+    toggle_time { seconds: 1665108184 nanos: 123456000 }
+  )pb";
+  google::storage::v2::Bucket::Autoclass start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected_toggle =
+      google::cloud::internal::ParseRfc3339("2022-10-07T02:03:04.123456000Z");
+  ASSERT_STATUS_OK(expected_toggle);
+  auto const expected = storage::BucketAutoclass{true, *expected_toggle};
+  auto const middle = FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
 }
 
 TEST(GrpcBucketMetadataParser, BucketBillingRoundtrip) {

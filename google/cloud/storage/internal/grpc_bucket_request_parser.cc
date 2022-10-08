@@ -199,6 +199,15 @@ Status PatchIamConfig(Bucket& b, nlohmann::json const& i) {
   return Status{};
 }
 
+Status PatchAutoclass(Bucket& bucket, nlohmann::json const& p) {
+  if (p.is_null()) {
+    bucket.clear_autoclass();
+  } else {
+    bucket.mutable_autoclass()->set_enabled(p.value("enabled", false));
+  }
+  return Status{};
+}
+
 void UpdateAcl(Bucket& bucket, storage::BucketMetadata const& metadata) {
   for (auto const& a : metadata.acl()) {
     auto& acl = *bucket.add_acl();
@@ -299,6 +308,11 @@ void UpdateIamConfig(Bucket& bucket, storage::BucketMetadata const& metadata) {
     auto pap = i.public_access_prevention.value();
     iam_config.set_public_access_prevention(pap);
   }
+}
+
+void UpdateAutoclass(Bucket& bucket, storage::BucketMetadata const& metadata) {
+  if (!metadata.has_autoclass()) return;
+  bucket.mutable_autoclass()->set_enabled(metadata.autoclass().enabled);
 }
 
 }  // namespace
@@ -523,6 +537,7 @@ StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
       {"billing", "", PatchBilling},
       {"retentionPolicy", "retention_policy", PatchRetentionPolicy},
       {"iamConfiguration", "iam_config", PatchIamConfig},
+      {"autoclass", "", PatchAutoclass},
   };
 
   auto const& patch =
@@ -596,6 +611,8 @@ google::storage::v2::UpdateBucketRequest ToProto(
   UpdateRetentionPolicy(bucket, metadata);
   result.mutable_update_mask()->add_paths("iam_config");
   UpdateIamConfig(bucket, metadata);
+  result.mutable_update_mask()->add_paths("autoclass");
+  UpdateAutoclass(bucket, metadata);
 
   if (request.HasOption<storage::IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(
