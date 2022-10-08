@@ -96,19 +96,18 @@ void RunAll(std::vector<std::string> const& argv) {
   // once every two seconds. We will pause until that time before deleting the
   // bucket.
   auto constexpr kBucketPeriod = std::chrono::seconds(2);
-  auto pause = std::chrono::steady_clock::now() + kBucketPeriod;
   (void)client
       .CreateBucketForProject(
           bucket_name_enabled, project_id,
           gcs::BucketMetadata{}.set_autoclass(gcs::BucketAutoclass{true}))
       .value();
-  if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
-  pause = std::chrono::steady_clock::now() + kBucketPeriod;
+  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
   (void)client
       .CreateBucketForProject(
           bucket_name_disabled, project_id,
           gcs::BucketMetadata{}.set_autoclass(gcs::BucketAutoclass{false}))
       .value();
+  auto const pause = std::chrono::steady_clock::now() + kBucketPeriod;
 
   std::cout << "\nRunning GetAutoclass() example [enabled]" << std::endl;
   GetAutoclass(client, {bucket_name_enabled});
@@ -121,6 +120,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
   if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name_enabled);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
   (void)examples::RemoveBucketAndContents(client, bucket_name_disabled);
 }
 

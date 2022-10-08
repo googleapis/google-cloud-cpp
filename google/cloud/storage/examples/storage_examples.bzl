@@ -17,8 +17,8 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_examples = [
-    "storage_bucket_autoclass_samples.cc",
     "storage_bucket_acl_samples.cc",
+    "storage_bucket_autoclass_samples.cc",
     "storage_bucket_cors_samples.cc",
     "storage_bucket_default_kms_key_samples.cc",
     "storage_bucket_iam_samples.cc",
