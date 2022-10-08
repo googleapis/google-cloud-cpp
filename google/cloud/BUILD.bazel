@@ -189,11 +189,11 @@ load(":google_cloud_cpp_grpc_utils_benchmarks.bzl", "google_cloud_cpp_grpc_utils
     ],
 ) for test in google_cloud_cpp_grpc_utils_benchmarks]
 
-load(":google_cloud_cpp_mocks.bzl", "google_cloud_cpp_mocks_hdrs", "google_cloud_cpp_mocks_srcs")
+load(":google_cloud_cpp_mocks.bzl", "google_cloud_cpp_mocks_hdrs")
 
 cc_library(
     name = "google_cloud_cpp_mocks",
-    srcs = google_cloud_cpp_mocks_srcs,
+    srcs = [],
     hdrs = google_cloud_cpp_mocks_hdrs,
     visibility = [
         ":__subpackages__",
