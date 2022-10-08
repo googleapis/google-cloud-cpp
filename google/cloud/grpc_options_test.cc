@@ -107,6 +107,8 @@ TEST(GrpcChannelArguments, MakeChannelArguments) {
   expected.SetString("foo", "bar");
   expected.SetString("baz", "quux");
   expected.SetUserAgentPrefix("user_agent");
+  expected.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, 86400000);
+  expected.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, 60000);
 
   CheckGrpcChannelArguments(expected, internal::MakeChannelArguments(opts));
 }
