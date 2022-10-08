@@ -218,14 +218,11 @@ install(
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
-set(relative_mock_files # cmake-format: sort
-                        mocks/mock_stream_range.h)
-set(mock_files)
-foreach (file IN LISTS relative_mock_files)
-    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
-endforeach ()
 add_library(google_cloud_cpp_mocks INTERFACE)
-target_sources(google_cloud_cpp_mocks INTERFACE ${mock_files})
+set(google_cloud_cpp_mocks_hdrs # cmake-format: sort
+                                mocks/mock_stream_range.h)
+export_list_to_bazel("google_cloud_cpp_mocks.bzl" "google_cloud_cpp_mocks_hdrs"
+                     YEAR "2022")
 target_link_libraries(google_cloud_cpp_mocks INTERFACE google-cloud-cpp::common)
 set_target_properties(google_cloud_cpp_mocks PROPERTIES EXPORT_NAME
                                                         google-cloud-cpp::mocks)
@@ -238,10 +235,14 @@ target_compile_options(google_cloud_cpp_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(google-cloud-cpp::mocks ALIAS google_cloud_cpp_mocks)
 
-create_bazel_config(google_cloud_cpp_mocks YEAR "2022")
-
-google_cloud_cpp_install_headers("google_cloud_cpp_mocks"
-                                 "include/google/cloud")
+install(
+    TARGETS google_cloud_cpp_mocks
+    EXPORT google_cloud_cpp_common-targets
+    COMPONENT google_cloud_cpp_development)
+install(
+    FILES ${google_cloud_cpp_mocks_hdrs}
+    DESTINATION "include/google/cloud/mocks"
+    COMPONENT google_cloud_cpp_development)
 
 if (BUILD_TESTING)
     find_package(benchmark CONFIG REQUIRED)
