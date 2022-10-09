@@ -187,7 +187,7 @@ TEST(ConnectionOptionsTest, CreateChannelArgumentsWithChannelPool) {
 
   auto testing_pool = internal::GetStringChannelArgument(actual, "grpc.channel_pooling_domain");
   ASSERT_TRUE(testing_pool.has_value());
-  EXPECT_THAT(*testing_pool, StartsWith(conn_opts.channel_pool_domain()));
+  EXPECT_EQ(*testing_pool, "testing-pool");
 
   auto user_agent = internal::GetStringChannelArgument(actual, "grpc.primary_user_agent");
   ASSERT_TRUE(user_agent.has_value());
