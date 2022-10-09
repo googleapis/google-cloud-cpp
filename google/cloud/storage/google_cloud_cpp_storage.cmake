@@ -436,6 +436,8 @@ if (BUILD_TESTING)
         # cmake-format: sort
         auto_finalize_test.cc
         bucket_access_control_test.cc
+        bucket_cors_entry_test.cc
+        bucket_iam_configuration_test.cc
         bucket_metadata_test.cc
         client_bucket_acl_test.cc
         client_bucket_test.cc
