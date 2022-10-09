@@ -44,15 +44,23 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
     channel_arguments.SetUserAgentPrefix(absl::StrJoin(user_agent_prefix, " "));
   }
 
-  auto constexpr kDisableKeepaliveTime =
-    std::chrono::milliseconds(std::chrono::hours(24));
-  channel_arguments.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS,
-    static_cast<int>(kDisableKeepaliveTime.count()));
+  // Effectively disable keepalive messages.
+  if (!GetIntChannelArgument(channel_arguments,GRPC_ARG_KEEPALIVE_TIME_MS)) { 
+    auto constexpr kDisableKeepaliveTime =
+      std::chrono::milliseconds(std::chrono::hours(24));
+    channel_arguments.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS,
+      static_cast<int>(kDisableKeepaliveTime.count()));
+  }
 
-  auto constexpr kKeepaliveTimeout =
-    std::chrono::milliseconds(std::chrono::seconds(60));
-  channel_arguments.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
-    static_cast<int>(kKeepaliveTimeout.count()));
+  // Make gRPC set the TCP_USER_TIMEOUT socket option to a value that detects 
+  // broken servers more quickly.
+  if (!GetIntChannelArgument(channel_arguments,GRPC_ARG_KEEPALIVE_TIMEOUT_MS)) { 
+    auto constexpr kKeepaliveTimeout =
+      std::chrono::milliseconds(std::chrono::seconds(60));
+    channel_arguments.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
+      static_cast<int>(kKeepaliveTimeout.count()));
+  }
+
   return channel_arguments;
 }
 

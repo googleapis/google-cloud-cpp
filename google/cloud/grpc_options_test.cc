@@ -113,6 +113,41 @@ TEST(GrpcChannelArguments, MakeChannelArguments) {
   CheckGrpcChannelArguments(expected, internal::MakeChannelArguments(opts));
 }
 
+TEST(GrpcChannelArguments, MakeChannelArgumentsDefaults) {
+  grpc::ChannelArguments args;
+
+  // not present
+  EXPECT_FALSE(internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS));
+
+  // present
+  args.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, 86400000);
+  auto value = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS);
+  ASSERT_TRUE(value.has_value());
+  EXPECT_GT(value, std::chrono::milliseconds(std::chrono::hours(1)).count());
+
+  // not present
+  EXPECT_FALSE(internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS));
+
+  // present
+  args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, 60000);
+  auto value_timeout = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
+  ASSERT_TRUE(value_timeout.has_value());
+  EXPECT_GT(value_timeout, std::chrono::milliseconds(std::chrono::seconds(1)).count());
+}
+
+TEST(GrpcChannelArguments, MakeChannelArgumentsDefaults_checkOurDefaultsOnly) {
+  auto options = Options{};
+  auto args = internal::MakeChannelArguments(options);
+
+  auto value = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS);
+  ASSERT_TRUE(value.has_value());
+  EXPECT_EQ(value, std::chrono::milliseconds(std::chrono::hours(24)).count());
+
+  auto value_timeout = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
+  ASSERT_TRUE(value_timeout.has_value());
+  EXPECT_EQ(value_timeout, std::chrono::milliseconds(std::chrono::seconds(60)).count());
+}
+
 TEST(GrpcChannelArguments, GetIntChannelArgument) {
   grpc::ChannelArguments args;
   args.SetInt("key", 1);
