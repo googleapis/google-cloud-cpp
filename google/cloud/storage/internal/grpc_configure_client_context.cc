@@ -17,18 +17,18 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-void ApplyRoutingHeaders(grpc::ClientContext& context,
-                         InsertObjectMediaRequest const& request) {
+void ApplyRoutingHeaders(
+    grpc::ClientContext& context,
+    storage::internal::InsertObjectMediaRequest const& request) {
   context.AddMetadata("x-goog-request-params",
                       "bucket=projects/_/buckets/" + request.bucket_name());
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,
-                         UploadChunkRequest const& request) {
+                         storage::internal::UploadChunkRequest const& request) {
   static auto* bucket_regex =
       new std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize};
   std::smatch match;
@@ -37,8 +37,7 @@ void ApplyRoutingHeaders(grpc::ClientContext& context,
   }
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

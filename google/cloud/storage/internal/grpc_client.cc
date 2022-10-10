@@ -282,7 +282,7 @@ StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
     ListBucketsRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->ListBuckets(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -292,7 +292,7 @@ StatusOr<BucketMetadata> GrpcClient::CreateBucket(
     CreateBucketRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->CreateBucket(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -309,7 +309,7 @@ StatusOr<EmptyResponse> GrpcClient::DeleteBucket(
     DeleteBucketRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto status = stub_->DeleteBucket(context, proto);
   if (!status.ok()) return status;
   return EmptyResponse{};
@@ -319,7 +319,7 @@ StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
     UpdateBucketRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->UpdateBucket(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -336,7 +336,7 @@ StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->GetIamPolicy(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -346,7 +346,7 @@ StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->SetIamPolicy(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -356,7 +356,7 @@ StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->TestIamPermissions(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -366,7 +366,7 @@ StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->LockBucketRetentionPolicy(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -394,10 +394,10 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   auto context = absl::make_unique<grpc::ClientContext>();
   // The REST response is just the object metadata (aka the "resource"). In the
   // gRPC response the object metadata is in a "resource" field. Passing an
-  // extra prefix to ApplyQueryParameters sends the right filtering instructions
-  // to the gRPC API.
-  ApplyQueryParameters(*context, request, "resource");
-  ApplyRoutingHeaders(*context, request);
+  // extra prefix to storage_internal::ApplyQueryParameters sends the right
+  // filtering instructions to the gRPC API.
+  storage_internal::ApplyQueryParameters(*context, request, "resource");
+  storage_internal::ApplyRoutingHeaders(*context, request);
   auto stream = stub_->WriteObject(std::move(context));
 
   auto const& contents = request.contents();
@@ -470,7 +470,7 @@ StatusOr<ObjectMetadata> GrpcClient::CopyObject(
     CopyObjectRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "resource");
+  storage_internal::ApplyQueryParameters(context, request, "resource");
   auto response = stub_->RewriteObject(context, *proto);
   if (!response) return std::move(response).status();
   if (!response->done()) {
@@ -502,7 +502,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
         "ReadLast(0) is invalid in REST and produces incorrect output in gRPC");
   }
   auto context = absl::make_unique<grpc::ClientContext>();
-  ApplyQueryParameters(*context, request);
+  storage_internal::ApplyQueryParameters(*context, request);
   auto proto_request = storage_internal::ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
   auto stream = stub_->ReadObject(std::move(context), *proto_request);
@@ -531,7 +531,7 @@ StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
     ListObjectsRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->ListObjects(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response, CurrentOptions());
@@ -541,7 +541,7 @@ StatusOr<EmptyResponse> GrpcClient::DeleteObject(
     DeleteObjectRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->DeleteObject(context, proto);
   if (!response.ok()) return response;
   return EmptyResponse{};
@@ -552,7 +552,7 @@ StatusOr<ObjectMetadata> GrpcClient::UpdateObject(
   auto proto = storage_internal::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->UpdateObject(context, *proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response, CurrentOptions());
@@ -570,7 +570,7 @@ StatusOr<ObjectMetadata> GrpcClient::ComposeObject(
   auto proto = storage_internal::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->ComposeObject(context, *proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response, CurrentOptions());
@@ -581,7 +581,7 @@ StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(
   auto proto = storage_internal::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "resource");
+  storage_internal::ApplyQueryParameters(context, request, "resource");
   auto response = stub_->RewriteObject(context, *proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response, CurrentOptions());
@@ -593,7 +593,7 @@ StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(
   if (!proto_request) return std::move(proto_request).status();
 
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "resource");
+  storage_internal::ApplyQueryParameters(context, request, "resource");
   auto const timeout = CurrentOptions().get<TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
     context.set_deadline(std::chrono::system_clock::now() + timeout);
@@ -607,7 +607,7 @@ StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(
 StatusOr<QueryResumableUploadResponse> GrpcClient::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "resource");
+  storage_internal::ApplyQueryParameters(context, request, "resource");
   auto const timeout = CurrentOptions().get<TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
     context.set_deadline(std::chrono::system_clock::now() + timeout);
@@ -621,7 +621,7 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::QueryResumableUpload(
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "");
+  storage_internal::ApplyQueryParameters(context, request, "");
   auto const timeout = CurrentOptions().get<TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
     context.set_deadline(std::chrono::system_clock::now() + timeout);
@@ -649,8 +649,8 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
   };
 
   auto context = absl::make_unique<grpc::ClientContext>();
-  ApplyQueryParameters(*context, request, "resource");
-  ApplyRoutingHeaders(*context, request);
+  storage_internal::ApplyQueryParameters(*context, request, "resource");
+  storage_internal::ApplyRoutingHeaders(*context, request);
   auto writer = stub_->WriteObject(std::move(context));
 
   std::size_t const maximum_chunk_size =
@@ -995,7 +995,7 @@ StatusOr<ServiceAccount> GrpcClient::GetServiceAccount(
     GetProjectServiceAccountRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->GetServiceAccount(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -1005,7 +1005,7 @@ StatusOr<ListHmacKeysResponse> GrpcClient::ListHmacKeys(
     ListHmacKeysRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->ListHmacKeys(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -1015,7 +1015,7 @@ StatusOr<CreateHmacKeyResponse> GrpcClient::CreateHmacKey(
     CreateHmacKeyRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->CreateHmacKey(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -1025,7 +1025,7 @@ StatusOr<EmptyResponse> GrpcClient::DeleteHmacKey(
     DeleteHmacKeyRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->DeleteHmacKey(context, proto);
   if (!response.ok()) return response;
   return EmptyResponse{};
@@ -1035,7 +1035,7 @@ StatusOr<HmacKeyMetadata> GrpcClient::GetHmacKey(
     GetHmacKeyRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->GetHmacKey(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -1045,7 +1045,7 @@ StatusOr<HmacKeyMetadata> GrpcClient::UpdateHmacKey(
     UpdateHmacKeyRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->UpdateHmacKey(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -1056,7 +1056,7 @@ StatusOr<SignBlobResponse> GrpcClient::SignBlob(
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
   // This request does not have any options that require using
-  //     ApplyQueryParameters(context, request)
+  //     storage_internal::ApplyQueryParameters(context, request)
   auto response = iam_stub_->SignBlob(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -1066,7 +1066,7 @@ StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(
     ListNotificationsRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->ListNotifications(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -1076,7 +1076,7 @@ StatusOr<NotificationMetadata> GrpcClient::CreateNotification(
     CreateNotificationRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->CreateNotification(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -1086,7 +1086,7 @@ StatusOr<NotificationMetadata> GrpcClient::GetNotification(
     GetNotificationRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->GetNotification(context, proto);
   if (!response) return std::move(response).status();
   return storage_internal::FromProto(*response);
@@ -1096,7 +1096,7 @@ StatusOr<EmptyResponse> GrpcClient::DeleteNotification(
     DeleteNotificationRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   auto response = stub_->DeleteNotification(context, proto);
   if (!response.ok()) return response;
   return EmptyResponse{};
@@ -1106,7 +1106,7 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::GetBucketMetadataImpl(
     GetBucketMetadataRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   return stub_->GetBucket(context, proto);
 }
 
@@ -1115,7 +1115,7 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::PatchBucketImpl(
   auto proto = storage_internal::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   return stub_->UpdateBucket(context, *proto);
 }
 
@@ -1123,7 +1123,7 @@ StatusOr<google::storage::v2::Object> GrpcClient::GetObjectMetadataImpl(
     GetObjectMetadataRequest const& request) {
   auto proto = storage_internal::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   return stub_->GetObject(context, proto);
 }
 
@@ -1132,7 +1132,7 @@ StatusOr<google::storage::v2::Object> GrpcClient::PatchObjectImpl(
   auto proto = storage_internal::ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  storage_internal::ApplyQueryParameters(context, request);
   return stub_->UpdateObject(context, *proto);
 }
 
