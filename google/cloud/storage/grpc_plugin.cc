@@ -36,7 +36,7 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
         storage::internal::GrpcClient::Create(opts));
   }
   return storage::internal::ClientImplDetails::CreateClient(
-      storage::internal::HybridClient::Create(opts));
+      storage_internal::HybridClient::Create(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
