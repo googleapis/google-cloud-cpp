@@ -58,7 +58,8 @@ class GrpcClientFailuresTest
     if (grpc_config == "metadata") {
       client_ = GrpcClient::Create(DefaultOptionsGrpc(std::move(options)));
     } else {
-      client_ = HybridClient::Create(DefaultOptionsGrpc(std::move(options)));
+      client_ = storage_internal::HybridClient::Create(
+          DefaultOptionsGrpc(std::move(options)));
     }
   }
 

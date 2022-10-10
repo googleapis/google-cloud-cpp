@@ -21,126 +21,139 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-class HybridClient : public RawClient {
+class HybridClient : public storage::internal::RawClient {
  public:
   static std::shared_ptr<RawClient> Create(Options const& options);
   ~HybridClient() override = default;
 
-  ClientOptions const& client_options() const override;
+  storage::ClientOptions const& client_options() const override;
   Options options() const override;
 
-  StatusOr<ListBucketsResponse> ListBuckets(
-      ListBucketsRequest const& request) override;
-  StatusOr<BucketMetadata> CreateBucket(
-      CreateBucketRequest const& request) override;
-  StatusOr<BucketMetadata> GetBucketMetadata(
-      GetBucketMetadataRequest const& request) override;
-  StatusOr<EmptyResponse> DeleteBucket(DeleteBucketRequest const&) override;
-  StatusOr<BucketMetadata> UpdateBucket(
-      UpdateBucketRequest const& request) override;
-  StatusOr<BucketMetadata> PatchBucket(
-      PatchBucketRequest const& request) override;
-  StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
-      GetBucketIamPolicyRequest const& request) override;
-  StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
-      SetNativeBucketIamPolicyRequest const& request) override;
-  StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(
-      TestBucketIamPermissionsRequest const& request) override;
-  StatusOr<BucketMetadata> LockBucketRetentionPolicy(
-      LockBucketRetentionPolicyRequest const& request) override;
+  StatusOr<storage::internal::ListBucketsResponse> ListBuckets(
+      storage::internal::ListBucketsRequest const& request) override;
+  StatusOr<storage::BucketMetadata> CreateBucket(
+      storage::internal::CreateBucketRequest const& request) override;
+  StatusOr<storage::BucketMetadata> GetBucketMetadata(
+      storage::internal::GetBucketMetadataRequest const& request) override;
+  StatusOr<storage::internal::EmptyResponse> DeleteBucket(
+      storage::internal::DeleteBucketRequest const&) override;
+  StatusOr<storage::BucketMetadata> UpdateBucket(
+      storage::internal::UpdateBucketRequest const& request) override;
+  StatusOr<storage::BucketMetadata> PatchBucket(
+      storage::internal::PatchBucketRequest const& request) override;
+  StatusOr<storage::NativeIamPolicy> GetNativeBucketIamPolicy(
+      storage::internal::GetBucketIamPolicyRequest const& request) override;
+  StatusOr<storage::NativeIamPolicy> SetNativeBucketIamPolicy(
+      storage::internal::SetNativeBucketIamPolicyRequest const& request)
+      override;
+  StatusOr<storage::internal::TestBucketIamPermissionsResponse>
+  TestBucketIamPermissions(
+      storage::internal::TestBucketIamPermissionsRequest const& request)
+      override;
+  StatusOr<storage::BucketMetadata> LockBucketRetentionPolicy(
+      storage::internal::LockBucketRetentionPolicyRequest const& request)
+      override;
 
-  StatusOr<ObjectMetadata> InsertObjectMedia(
-      InsertObjectMediaRequest const& request) override;
-  StatusOr<ObjectMetadata> CopyObject(
-      CopyObjectRequest const& request) override;
-  StatusOr<ObjectMetadata> GetObjectMetadata(
-      GetObjectMetadataRequest const& request) override;
+  StatusOr<storage::ObjectMetadata> InsertObjectMedia(
+      storage::internal::InsertObjectMediaRequest const& request) override;
+  StatusOr<storage::ObjectMetadata> CopyObject(
+      storage::internal::CopyObjectRequest const& request) override;
+  StatusOr<storage::ObjectMetadata> GetObjectMetadata(
+      storage::internal::GetObjectMetadataRequest const& request) override;
 
-  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
-      ReadObjectRangeRequest const&) override;
+  StatusOr<std::unique_ptr<storage::internal::ObjectReadSource>> ReadObject(
+      storage::internal::ReadObjectRangeRequest const&) override;
 
-  StatusOr<ListObjectsResponse> ListObjects(ListObjectsRequest const&) override;
-  StatusOr<EmptyResponse> DeleteObject(DeleteObjectRequest const&) override;
-  StatusOr<ObjectMetadata> UpdateObject(
-      UpdateObjectRequest const& request) override;
-  StatusOr<ObjectMetadata> PatchObject(
-      PatchObjectRequest const& request) override;
-  StatusOr<ObjectMetadata> ComposeObject(
-      ComposeObjectRequest const& request) override;
-  StatusOr<RewriteObjectResponse> RewriteObject(
-      RewriteObjectRequest const&) override;
+  StatusOr<storage::internal::ListObjectsResponse> ListObjects(
+      storage::internal::ListObjectsRequest const&) override;
+  StatusOr<storage::internal::EmptyResponse> DeleteObject(
+      storage::internal::DeleteObjectRequest const&) override;
+  StatusOr<storage::ObjectMetadata> UpdateObject(
+      storage::internal::UpdateObjectRequest const& request) override;
+  StatusOr<storage::ObjectMetadata> PatchObject(
+      storage::internal::PatchObjectRequest const& request) override;
+  StatusOr<storage::ObjectMetadata> ComposeObject(
+      storage::internal::ComposeObjectRequest const& request) override;
+  StatusOr<storage::internal::RewriteObjectResponse> RewriteObject(
+      storage::internal::RewriteObjectRequest const&) override;
 
-  StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
-      ResumableUploadRequest const& request) override;
-  StatusOr<QueryResumableUploadResponse> QueryResumableUpload(
-      QueryResumableUploadRequest const& request) override;
-  StatusOr<EmptyResponse> DeleteResumableUpload(
-      DeleteResumableUploadRequest const& request) override;
-  StatusOr<QueryResumableUploadResponse> UploadChunk(
-      UploadChunkRequest const& request) override;
+  StatusOr<storage::internal::CreateResumableUploadResponse>
+  CreateResumableUpload(
+      storage::internal::ResumableUploadRequest const& request) override;
+  StatusOr<storage::internal::QueryResumableUploadResponse>
+  QueryResumableUpload(
+      storage::internal::QueryResumableUploadRequest const& request) override;
+  StatusOr<storage::internal::EmptyResponse> DeleteResumableUpload(
+      storage::internal::DeleteResumableUploadRequest const& request) override;
+  StatusOr<storage::internal::QueryResumableUploadResponse> UploadChunk(
+      storage::internal::UploadChunkRequest const& request) override;
 
-  StatusOr<ListBucketAclResponse> ListBucketAcl(
-      ListBucketAclRequest const& request) override;
-  StatusOr<BucketAccessControl> CreateBucketAcl(
-      CreateBucketAclRequest const&) override;
-  StatusOr<EmptyResponse> DeleteBucketAcl(
-      DeleteBucketAclRequest const&) override;
-  StatusOr<BucketAccessControl> GetBucketAcl(
-      GetBucketAclRequest const&) override;
-  StatusOr<BucketAccessControl> UpdateBucketAcl(
-      UpdateBucketAclRequest const&) override;
-  StatusOr<BucketAccessControl> PatchBucketAcl(
-      PatchBucketAclRequest const&) override;
+  StatusOr<storage::internal::ListBucketAclResponse> ListBucketAcl(
+      storage::internal::ListBucketAclRequest const& request) override;
+  StatusOr<storage::BucketAccessControl> CreateBucketAcl(
+      storage::internal::CreateBucketAclRequest const&) override;
+  StatusOr<storage::internal::EmptyResponse> DeleteBucketAcl(
+      storage::internal::DeleteBucketAclRequest const&) override;
+  StatusOr<storage::BucketAccessControl> GetBucketAcl(
+      storage::internal::GetBucketAclRequest const&) override;
+  StatusOr<storage::BucketAccessControl> UpdateBucketAcl(
+      storage::internal::UpdateBucketAclRequest const&) override;
+  StatusOr<storage::BucketAccessControl> PatchBucketAcl(
+      storage::internal::PatchBucketAclRequest const&) override;
 
-  StatusOr<ListObjectAclResponse> ListObjectAcl(
-      ListObjectAclRequest const& request) override;
-  StatusOr<ObjectAccessControl> CreateObjectAcl(
-      CreateObjectAclRequest const&) override;
-  StatusOr<EmptyResponse> DeleteObjectAcl(
-      DeleteObjectAclRequest const&) override;
-  StatusOr<ObjectAccessControl> GetObjectAcl(
-      GetObjectAclRequest const&) override;
-  StatusOr<ObjectAccessControl> UpdateObjectAcl(
-      UpdateObjectAclRequest const&) override;
-  StatusOr<ObjectAccessControl> PatchObjectAcl(
-      PatchObjectAclRequest const&) override;
+  StatusOr<storage::internal::ListObjectAclResponse> ListObjectAcl(
+      storage::internal::ListObjectAclRequest const& request) override;
+  StatusOr<storage::ObjectAccessControl> CreateObjectAcl(
+      storage::internal::CreateObjectAclRequest const&) override;
+  StatusOr<storage::internal::EmptyResponse> DeleteObjectAcl(
+      storage::internal::DeleteObjectAclRequest const&) override;
+  StatusOr<storage::ObjectAccessControl> GetObjectAcl(
+      storage::internal::GetObjectAclRequest const&) override;
+  StatusOr<storage::ObjectAccessControl> UpdateObjectAcl(
+      storage::internal::UpdateObjectAclRequest const&) override;
+  StatusOr<storage::ObjectAccessControl> PatchObjectAcl(
+      storage::internal::PatchObjectAclRequest const&) override;
 
-  StatusOr<ListDefaultObjectAclResponse> ListDefaultObjectAcl(
-      ListDefaultObjectAclRequest const& request) override;
-  StatusOr<ObjectAccessControl> CreateDefaultObjectAcl(
-      CreateDefaultObjectAclRequest const&) override;
-  StatusOr<EmptyResponse> DeleteDefaultObjectAcl(
-      DeleteDefaultObjectAclRequest const&) override;
-  StatusOr<ObjectAccessControl> GetDefaultObjectAcl(
-      GetDefaultObjectAclRequest const&) override;
-  StatusOr<ObjectAccessControl> UpdateDefaultObjectAcl(
-      UpdateDefaultObjectAclRequest const&) override;
-  StatusOr<ObjectAccessControl> PatchDefaultObjectAcl(
-      PatchDefaultObjectAclRequest const&) override;
+  StatusOr<storage::internal::ListDefaultObjectAclResponse>
+  ListDefaultObjectAcl(
+      storage::internal::ListDefaultObjectAclRequest const& request) override;
+  StatusOr<storage::ObjectAccessControl> CreateDefaultObjectAcl(
+      storage::internal::CreateDefaultObjectAclRequest const&) override;
+  StatusOr<storage::internal::EmptyResponse> DeleteDefaultObjectAcl(
+      storage::internal::DeleteDefaultObjectAclRequest const&) override;
+  StatusOr<storage::ObjectAccessControl> GetDefaultObjectAcl(
+      storage::internal::GetDefaultObjectAclRequest const&) override;
+  StatusOr<storage::ObjectAccessControl> UpdateDefaultObjectAcl(
+      storage::internal::UpdateDefaultObjectAclRequest const&) override;
+  StatusOr<storage::ObjectAccessControl> PatchDefaultObjectAcl(
+      storage::internal::PatchDefaultObjectAclRequest const&) override;
 
-  StatusOr<ServiceAccount> GetServiceAccount(
-      GetProjectServiceAccountRequest const&) override;
-  StatusOr<ListHmacKeysResponse> ListHmacKeys(
-      ListHmacKeysRequest const&) override;
-  StatusOr<CreateHmacKeyResponse> CreateHmacKey(
-      CreateHmacKeyRequest const&) override;
-  StatusOr<EmptyResponse> DeleteHmacKey(DeleteHmacKeyRequest const&) override;
-  StatusOr<HmacKeyMetadata> GetHmacKey(GetHmacKeyRequest const&) override;
-  StatusOr<HmacKeyMetadata> UpdateHmacKey(UpdateHmacKeyRequest const&) override;
-  StatusOr<SignBlobResponse> SignBlob(SignBlobRequest const&) override;
+  StatusOr<storage::ServiceAccount> GetServiceAccount(
+      storage::internal::GetProjectServiceAccountRequest const&) override;
+  StatusOr<storage::internal::ListHmacKeysResponse> ListHmacKeys(
+      storage::internal::ListHmacKeysRequest const&) override;
+  StatusOr<storage::internal::CreateHmacKeyResponse> CreateHmacKey(
+      storage::internal::CreateHmacKeyRequest const&) override;
+  StatusOr<storage::internal::EmptyResponse> DeleteHmacKey(
+      storage::internal::DeleteHmacKeyRequest const&) override;
+  StatusOr<storage::HmacKeyMetadata> GetHmacKey(
+      storage::internal::GetHmacKeyRequest const&) override;
+  StatusOr<storage::HmacKeyMetadata> UpdateHmacKey(
+      storage::internal::UpdateHmacKeyRequest const&) override;
+  StatusOr<storage::internal::SignBlobResponse> SignBlob(
+      storage::internal::SignBlobRequest const&) override;
 
-  StatusOr<ListNotificationsResponse> ListNotifications(
-      ListNotificationsRequest const&) override;
-  StatusOr<NotificationMetadata> CreateNotification(
-      CreateNotificationRequest const&) override;
-  StatusOr<NotificationMetadata> GetNotification(
-      GetNotificationRequest const&) override;
-  StatusOr<EmptyResponse> DeleteNotification(
-      DeleteNotificationRequest const&) override;
+  StatusOr<storage::internal::ListNotificationsResponse> ListNotifications(
+      storage::internal::ListNotificationsRequest const&) override;
+  StatusOr<storage::NotificationMetadata> CreateNotification(
+      storage::internal::CreateNotificationRequest const&) override;
+  StatusOr<storage::NotificationMetadata> GetNotification(
+      storage::internal::GetNotificationRequest const&) override;
+  StatusOr<storage::internal::EmptyResponse> DeleteNotification(
+      storage::internal::DeleteNotificationRequest const&) override;
 
  private:
   explicit HybridClient(Options const& options);
@@ -149,9 +162,8 @@ class HybridClient : public RawClient {
   std::shared_ptr<RawClient> rest_;
 };
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

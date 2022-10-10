@@ -31,9 +31,9 @@ namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::internal::GrpcClient;
-using ::google::cloud::storage::internal::HybridClient;
 using ::google::cloud::storage::internal::RestClient;
 using ::google::cloud::storage::internal::RetryClient;
+using ::google::cloud::storage_internal::HybridClient;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::IsNull;
 using ::testing::NotNull;
