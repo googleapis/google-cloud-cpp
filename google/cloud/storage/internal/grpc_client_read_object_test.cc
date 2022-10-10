@@ -26,9 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::cloud::storage::testing::MockObjectMediaStream;
@@ -64,15 +63,16 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
   EXPECT_CALL(*mock_cq, MakeRelativeTimer).Times(0);
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}
-                .set<DownloadStallTimeoutOption>(std::chrono::seconds(0))
-                .set<GrpcCompletionQueueOption>(cq));
+  auto client = storage::internal::GrpcClient::CreateMock(
+      mock,
+      Options{}
+          .set<storage::DownloadStallTimeoutOption>(std::chrono::seconds(0))
+          .set<GrpcCompletionQueueOption>(cq));
   // Normally the span is created by `storage::Client`, but we bypass that code
   // in this test.
   google::cloud::internal::OptionsSpan const span(client->options());
-  auto stream =
-      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
+  auto stream = client->ReadObject(
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);
   ASSERT_THAT(stream->get(), NotNull());
   std::vector<char> unused(1024);
@@ -108,15 +108,15 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
           make_status_or(std::chrono::system_clock::now())))));
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = GrpcClient::CreateMock(
+  auto client = storage::internal::GrpcClient::CreateMock(
       mock, Options{}
-                .set<DownloadStallTimeoutOption>(configured_timeout)
+                .set<storage::DownloadStallTimeoutOption>(configured_timeout)
                 .set<GrpcCompletionQueueOption>(cq));
   // Normally the span is created by `storage::Client`, but we bypass that code
   // in this test.
   google::cloud::internal::OptionsSpan const span(client->options());
-  auto stream =
-      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
+  auto stream = client->ReadObject(
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);
   ASSERT_THAT(stream->get(), NotNull());
   std::vector<char> unused(1024);
@@ -125,8 +125,7 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

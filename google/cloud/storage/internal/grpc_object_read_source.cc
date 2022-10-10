@@ -20,24 +20,24 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 GrpcObjectReadSource::GrpcObjectReadSource(TimerSource timer_source,
                                            std::unique_ptr<StreamingRpc> stream)
     : timer_source_(std::move(timer_source)), stream_(std::move(stream)) {}
 
-StatusOr<HttpResponse> GrpcObjectReadSource::Close() {
+StatusOr<storage::internal::HttpResponse> GrpcObjectReadSource::Close() {
   if (stream_) stream_ = nullptr;
   if (!status_.ok()) return status_;
-  return HttpResponse{HttpStatusCode::kOk, {}, {}};
+  return storage::internal::HttpResponse{
+      storage::internal::HttpStatusCode::kOk, {}, {}};
 }
 
 /// Read more data from the download, returning any HTTP headers and error
 /// codes.
-StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
-                                                      std::size_t n) {
+StatusOr<storage::internal::ReadSourceResult> GrpcObjectReadSource::Read(
+    char* buf, std::size_t n) {
   using google::storage::v2::ReadObjectResponse;
 
   auto buffer_manager = [buf, n](absl::string_view source, std::size_t offset) {
@@ -47,8 +47,8 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
     return std::make_pair(source.substr(nbytes), offset + nbytes);
   };
 
-  ReadSourceResult result;
-  result.response.status_code = HttpStatusCode::kContinue;
+  storage::internal::ReadSourceResult result;
+  result.response.status_code = storage::internal::HttpStatusCode::kContinue;
   std::tie(spill_view_, result.bytes_received) = buffer_manager(spill_view_, 0);
 
   while (result.bytes_received < n && stream_) {
@@ -82,7 +82,8 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
 }
 
 void GrpcObjectReadSource::HandleResponse(
-    ReadSourceResult& result, google::storage::v2::ReadObjectResponse response,
+    storage::internal::ReadSourceResult& result,
+    google::storage::v2::ReadObjectResponse response,
     BufferManager buffer_manager) {
   // The google.storage.v1.Storage documentation says this field can be
   // empty.
@@ -99,13 +100,14 @@ void GrpcObjectReadSource::HandleResponse(
     if (checksums.has_crc32c()) {
       result.hashes =
           Merge(std::move(result.hashes),
-                HashValues{
+                storage::internal::HashValues{
                     storage_internal::Crc32cFromProto(checksums.crc32c()), {}});
     }
     if (!checksums.md5_hash().empty()) {
-      result.hashes = Merge(
-          std::move(result.hashes),
-          HashValues{{}, storage_internal::MD5FromProto(checksums.md5_hash())});
+      result.hashes =
+          Merge(std::move(result.hashes),
+                storage::internal::HashValues{
+                    {}, storage_internal::MD5FromProto(checksums.md5_hash())});
     }
   }
   if (response.has_metadata()) {
@@ -119,8 +121,7 @@ void GrpcObjectReadSource::HandleResponse(
   }
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

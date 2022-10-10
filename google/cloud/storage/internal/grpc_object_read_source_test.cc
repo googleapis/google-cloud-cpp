@@ -24,9 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::cloud::internal::StreamingRpcMetadata;
@@ -203,8 +202,8 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
   auto mock = absl::make_unique<MockObjectMediaStream>();
   std::string const expected_payload =
       "The quick brown fox jumps over the lazy dog";
-  auto const expected_md5 = ComputeMD5Hash(expected_payload);
-  auto const expected_crc32c = ComputeCrc32cChecksum(expected_payload);
+  auto const expected_md5 = storage::ComputeMD5Hash(expected_payload);
+  auto const expected_crc32c = storage::ComputeCrc32cChecksum(expected_payload);
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
@@ -371,8 +370,7 @@ TEST(GrpcObjectReadSource, StallTimeout) {
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
