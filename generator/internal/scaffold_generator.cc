@@ -296,8 +296,7 @@ cc_library(
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_$library$",
-        "//:common",
-        "//:grpc_utils",
+        "@com_google_googletest//:gtest",
     ],
 )
 )""";
