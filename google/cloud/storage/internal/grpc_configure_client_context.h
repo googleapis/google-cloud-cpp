@@ -23,9 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 /**
  * Inject request query parameters into grpc::ClientContext.
@@ -46,16 +45,17 @@ void ApplyQueryParameters(grpc::ClientContext& context, Request const& request,
   // the `UserIp` value into the `quota_user` field, and overwrite it if
   // `QuotaUser` is also set. A bit bizarre, but at least it is backwards
   // compatible.
-  if (request.template HasOption<QuotaUser>()) {
+  if (request.template HasOption<storage::QuotaUser>()) {
+    context.AddMetadata(
+        "x-goog-quota-user",
+        request.template GetOption<storage::QuotaUser>().value());
+  } else if (request.template HasOption<storage::UserIp>()) {
     context.AddMetadata("x-goog-quota-user",
-                        request.template GetOption<QuotaUser>().value());
-  } else if (request.template HasOption<UserIp>()) {
-    context.AddMetadata("x-goog-quota-user",
-                        request.template GetOption<UserIp>().value());
+                        request.template GetOption<storage::UserIp>().value());
   }
 
-  if (request.template HasOption<Fields>()) {
-    auto field_mask = request.template GetOption<Fields>().value();
+  if (request.template HasOption<storage::Fields>()) {
+    auto field_mask = request.template GetOption<storage::Fields>().value();
     if (!prefix.empty()) field_mask = prefix + "(" + field_mask + ")";
     context.AddMetadata("x-goog-fieldmask", std::move(field_mask));
   }
@@ -69,8 +69,9 @@ void ApplyQueryParameters(grpc::ClientContext& context, Request const& request,
  * for client side streaming. So we manually match and extract the headers in
  * this function.
  */
-void ApplyRoutingHeaders(grpc::ClientContext& context,
-                         InsertObjectMediaRequest const& request);
+void ApplyRoutingHeaders(
+    grpc::ClientContext& context,
+    storage::internal::InsertObjectMediaRequest const& request);
 
 /**
  * The generated `StorageMetadata` stub can not handle dynamic routing headers
@@ -78,11 +79,10 @@ void ApplyRoutingHeaders(grpc::ClientContext& context,
  * this function.
  */
 void ApplyRoutingHeaders(grpc::ClientContext& context,
-                         UploadChunkRequest const& request);
+                         storage::internal::UploadChunkRequest const& request);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
