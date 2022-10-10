@@ -54,7 +54,7 @@ $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY="projects/${env:GOOGLE_CLOUD_PROJECT
 $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${env:GOOGLE_CLOUD_PROJECT}/topics/gcs-changes"
 # We need a gzip file to test ReadObject() with decompressive transcoding
 #  https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
-$env:GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME="${env:PROJECT_ROOT}/ci/abi-dumps/google_cloud_cpp_storage.expected.abi.dump.gz"
+$env:GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME="${env:PROJECT_ROOT}/ci/data/fox.txt.gz"
 
 # Cloud Spanner configuration parameters
 $env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID="test-instance"

@@ -30,6 +30,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::testing::ElementsAreArray;
+using ::testing::StartsWith;
 
 class DecompressiveTranscodingIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -54,6 +55,9 @@ class DecompressiveTranscodingIntegrationTest
   std::string bucket_name_;
   std::string gzipped_contents_;
 };
+
+auto constexpr kFirstLine =
+    "000000001: The quick brown fox jumps over the lazy dog";
 
 TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadJson) {
   auto client = Client(
@@ -83,6 +87,8 @@ TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadJson) {
 
   // The whole point is to decompress the data and return something different.
   ASSERT_NE(decompressed.substr(0, 32), gzipped_contents().substr(0, 32));
+  // Verify the decompressed data looks right.
+  EXPECT_THAT(decompressed, StartsWith(kFirstLine));
 }
 
 TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadXml) {
@@ -112,6 +118,8 @@ TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadXml) {
 
   // The whole point is to decompress the data and return something different.
   ASSERT_NE(decompressed.substr(0, 32), gzipped_contents().substr(0, 32));
+  // Verify the decompressed data looks right.
+  EXPECT_THAT(decompressed, StartsWith(kFirstLine));
 }
 
 TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadCompressedJson) {
