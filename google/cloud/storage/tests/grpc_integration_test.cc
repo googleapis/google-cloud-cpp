@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/object_metadata_parser.h"
-#include "google/cloud/storage/object_stream.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -24,12 +22,6 @@
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <vector>
-
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-#include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/grpc_error_delegate.h"
-#include <grpcpp/grpcpp.h>
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 namespace google {
 namespace cloud {
@@ -259,3 +251,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
