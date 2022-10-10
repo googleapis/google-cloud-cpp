@@ -510,7 +510,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   // The default timer source is a no-op. It does not set a timer, and always
   // returns an indication that the timer expired.  The GrpcObjectReadSource
   // takes no action on expired timers.
-  GrpcObjectReadSource::TimerSource timer_source = [] {
+  storage_internal::GrpcObjectReadSource::TimerSource timer_source = [] {
     return make_ready_future(false);
   };
   auto const timeout = CurrentOptions().get<DownloadStallTimeoutOption>();
@@ -523,8 +523,8 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   }
 
   return std::unique_ptr<ObjectReadSource>(
-      absl::make_unique<GrpcObjectReadSource>(std::move(timer_source),
-                                              std::move(stream)));
+      absl::make_unique<storage_internal::GrpcObjectReadSource>(
+          std::move(timer_source), std::move(stream)));
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(

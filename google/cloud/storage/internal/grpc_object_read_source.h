@@ -26,9 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 /**
  * A data source for storage::ObjectReadStream using gRPC.
@@ -40,7 +39,7 @@ namespace internal {
  * storage::internal::ReadObjectStreambuf), read chunks from gRPC through this
  * class.
  */
-class GrpcObjectReadSource : public ObjectReadSource {
+class GrpcObjectReadSource : public storage::internal::ObjectReadSource {
  public:
   using StreamingRpc = ::google::cloud::internal::StreamingReadRpc<
       google::storage::v2::ReadObjectResponse>;
@@ -57,18 +56,19 @@ class GrpcObjectReadSource : public ObjectReadSource {
   bool IsOpen() const override { return static_cast<bool>(stream_); }
 
   /// Actively close a download, even if not all the data has been read.
-  StatusOr<HttpResponse> Close() override;
+  StatusOr<storage::internal::HttpResponse> Close() override;
 
   /// Read more data from the download, returning any HTTP headers and error
   /// codes.
-  StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override;
+  StatusOr<storage::internal::ReadSourceResult> Read(char* buf,
+                                                     std::size_t n) override;
 
  private:
   using BufferManager =
       absl::FunctionRef<std::pair<absl::string_view, std::size_t>(
           absl::string_view, std::size_t)>;
 
-  void HandleResponse(ReadSourceResult& result,
+  void HandleResponse(storage::internal::ReadSourceResult& result,
                       google::storage::v2::ReadObjectResponse response,
                       BufferManager buffer_manager);
 
@@ -85,9 +85,8 @@ class GrpcObjectReadSource : public ObjectReadSource {
   google::cloud::Status status_;
 };
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
