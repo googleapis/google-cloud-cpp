@@ -70,7 +70,7 @@ export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/clo
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
 # We need a gzip file to test ReadObject() with decompressive transcoding
 #  https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
-export GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME="${PROJECT_ROOT}/ci/abi-dumps/google_cloud_cpp_storage.expected.abi.dump.gz"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME="${PROJECT_ROOT}/ci/data/fox.txt.gz"
 
 # Cloud Spanner configuration parameters
 export GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID="test-instance"
