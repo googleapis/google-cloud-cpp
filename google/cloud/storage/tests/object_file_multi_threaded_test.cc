@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -21,7 +22,6 @@
 #include <cstdio>
 #include <fstream>
 #include <future>
-#include <regex>
 #include <thread>
 
 namespace google {
@@ -53,17 +53,21 @@ class ObjectFileMultiThreadedTest
     return kCount;
   }
 
-  std::vector<std::string> CreateObjectNames() {
-    std::vector<std::string> object_names(object_count_);
-    // Use MakeRandomFilename() because the same name is used for
-    // the destination file.
-    std::generate_n(object_names.begin(), object_names.size(),
-                    [this] { return MakeRandomFilename(); });
-    return object_names;
+  struct Names {
+    std::string object_name;
+    std::string filename;
+  };
+
+  std::vector<Names> CreateNames() {
+    std::vector<Names> names(object_count_);
+    std::generate_n(names.begin(), names.size(), [this] {
+      return Names{MakeRandomObjectName(), MakeRandomFilename()};
+    });
+    return names;
   }
 
   Status CreateSomeObjects(Client client,
-                           std::vector<std::string> const& object_names,
+                           std::vector<Names> const& object_names,
                            int thread_count, int modulo) {
     auto contents = [this] {
       std::unique_lock<std::mutex> lk(mu_);
@@ -76,8 +80,8 @@ class ObjectFileMultiThreadedTest
         std::unique_lock<std::mutex> lk(mu_);
         std::cout << '.' << std::flush;
       }
-      auto metadata =
-          client.InsertObject(bucket_name_, n, contents, IfGenerationMatch(0));
+      auto metadata = client.InsertObject(bucket_name_, n.object_name, contents,
+                                          IfGenerationMatch(0));
       if (metadata) continue;
       // kAlreadyExists is acceptable, it happens if (1) a retry attempt
       // succeeds, but returns kUnavailable or a similar error (these can be
@@ -89,13 +93,12 @@ class ObjectFileMultiThreadedTest
     return Status();
   }
 
-  void CreateObjects(Client const& client,
-                     std::vector<std::string> const& object_names) {
+  void CreateObjects(Client const& client, std::vector<Names> const& names) {
     // Parallelize the object creation too because it can be slow.
     int const thread_count = ThreadCount();
-    auto create_some_objects = [this, &client, &object_names,
+    auto create_some_objects = [this, &client, &names,
                                 thread_count](int modulo) {
-      return CreateSomeObjects(client, object_names, thread_count, modulo);
+      return CreateSomeObjects(client, names, thread_count, modulo);
     };
     std::vector<std::future<Status>> tasks(thread_count);
     int modulo = 0;
@@ -109,7 +112,7 @@ class ObjectFileMultiThreadedTest
   }
 
   Status DeleteSomeObjects(Client client,
-                           std::vector<std::string> const& object_names,
+                           std::vector<Names> const& object_names,
                            int thread_count, int modulo) {
     int index = 0;
     Status status;
@@ -119,7 +122,7 @@ class ObjectFileMultiThreadedTest
         std::unique_lock<std::mutex> lk(mu_);
         std::cout << '.' << std::flush;
       }
-      auto result = client.DeleteObject(bucket_name_, name);
+      auto result = client.DeleteObject(bucket_name_, name.object_name);
       if (result.ok()) continue;
       // kNotFound is acceptable, it happens if (1) a retry attempt succeeds,
       // but returns kUnavailable or a similar error, (2) the next retry attempt
@@ -130,13 +133,12 @@ class ObjectFileMultiThreadedTest
     return status;
   }
 
-  void DeleteObjects(Client const& client,
-                     std::vector<std::string> const& object_names) {
+  void DeleteObjects(Client const& client, std::vector<Names> const& names) {
     // Parallelize the object deletion too because it can be slow.
     int const thread_count = ThreadCount();
-    auto delete_some_objects = [this, &client, &object_names,
+    auto delete_some_objects = [this, &client, &names,
                                 thread_count](int modulo) {
-      return DeleteSomeObjects(client, object_names, thread_count, modulo);
+      return DeleteSomeObjects(client, names, thread_count, modulo);
     };
     std::vector<std::future<Status>> tasks(thread_count);
     int modulo = 0;
@@ -158,24 +160,25 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto const object_names = CreateObjectNames();
+  auto const names = CreateNames();
   std::cout << "Create test objects " << std::flush;
-  ASSERT_NO_FATAL_FAILURE(CreateObjects(*client, object_names));
+  ASSERT_NO_FATAL_FAILURE(CreateObjects(*client, names));
   std::cout << " DONE\n";
 
   // Create multiple threads, each downloading a portion of the objects.
   auto const thread_count = ThreadCount();
   auto download_some_objects = [this, thread_count, &client,
-                                &object_names](int modulo) {
+                                &names](int modulo) {
     std::cout << '+' << std::flush;
     int index = 0;
-    for (auto const& name : object_names) {
+    for (auto const& name : names) {
       if (index++ % thread_count != modulo) continue;
       if (modulo == 0) {
         std::unique_lock<std::mutex> lk(mu_);
         std::cout << '.' << std::flush;
       }
-      auto status = client->DownloadToFile(bucket_name_, name, name);
+      auto status =
+          client->DownloadToFile(bucket_name_, name.object_name, name.filename);
       if (!status.ok()) return status;  // stop on the first error
     }
     return Status();
@@ -192,12 +195,12 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
   }
   std::cout << " DONE\n";
 
-  for (auto const& name : object_names) {
-    EXPECT_EQ(0, std::remove(name.c_str()));
+  for (auto const& name : names) {
+    EXPECT_EQ(0, std::remove(name.filename.c_str()));
   }
 
   std::cout << "Delete test objects " << std::flush;
-  ASSERT_NO_FATAL_FAILURE(DeleteObjects(*client, object_names));
+  ASSERT_NO_FATAL_FAILURE(DeleteObjects(*client, names));
   std::cout << " DONE\n";
 }
 

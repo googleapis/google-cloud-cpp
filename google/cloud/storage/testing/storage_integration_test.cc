@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/internal/filesystem.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/grpc_plugin.h"
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
@@ -158,7 +159,8 @@ std::string StorageIntegrationTest::MakeRandomObjectName() {
 }
 
 std::string StorageIntegrationTest::MakeRandomFilename() {
-  return storage::testing::MakeRandomFileName(generator_);
+  return google::cloud::internal::PathAppend(
+      ::testing::TempDir(), storage::testing::MakeRandomFileName(generator_));
 }
 
 std::string StorageIntegrationTest::LoremIpsum() {
