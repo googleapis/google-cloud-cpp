@@ -113,29 +113,7 @@ TEST(GrpcChannelArguments, MakeChannelArguments) {
   CheckGrpcChannelArguments(expected, internal::MakeChannelArguments(opts));
 }
 
-TEST(GrpcChannelArguments, MakeChannelArgumentsDefaults_checkUserSettings) {
-  grpc::ChannelArguments args;
-
-  // not present
-  EXPECT_FALSE(internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS));
-
-  // present
-  args.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, 86400000);
-  auto keepalive_time = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS);
-  ASSERT_TRUE(keepalive_time.has_value());
-  EXPECT_GT(keepalive_time, std::chrono::milliseconds(std::chrono::hours(1)).count());
-
-  // not present
-  EXPECT_FALSE(internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS));
-
-  // present
-  args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, 60000);
-  auto keepalive_timeout = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
-  ASSERT_TRUE(keepalive_timeout.has_value());
-  EXPECT_GT(keepalive_timeout, std::chrono::milliseconds(std::chrono::seconds(1)).count());
-}
-
-TEST(GrpcChannelArguments, MakeChannelArgumentsDefaults_checkNativeSettings) {
+TEST(GrpcChannelArguments, MakeChannelArgumentsOverrideDefaults) {
   grpc::ChannelArguments args;
   args.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, 1000);
   args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, 2000);
@@ -148,38 +126,6 @@ TEST(GrpcChannelArguments, MakeChannelArgumentsDefaults_checkNativeSettings) {
   auto keepalive_timeout = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
   ASSERT_TRUE(keepalive_timeout.has_value());
   EXPECT_EQ(keepalive_timeout, 2000);
-}
-
-TEST(GrpcChannelArguments, MakeChannelArgumentsDefaults_checkNativeSettingsOverridingOurDefaults) {
-  grpc::ChannelArguments argsNative;
-  argsNative.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, 1000);
-  argsNative.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, 2000);
-  auto optionsWithNative = Options{}.set<GrpcChannelArgumentsNativeOption>(argsNative);
-
-  // now what we expect, 1000/2000 not our defaults
-  auto options = Options{};
-  auto args = internal::MakeChannelArguments(options);
-
-  auto keepalive_time = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS);
-  ASSERT_TRUE(keepalive_time.has_value());
-  EXPECT_EQ(keepalive_time, 1000); // TODO: expecting 1000, but failing
-
-  auto keepalive_timeout = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
-  ASSERT_TRUE(keepalive_timeout.has_value());
-  EXPECT_EQ(keepalive_timeout, 2000); // TODO: expecting 2000, but failing with: Which is: 8-byte object <01-00 00-00 60-EA 00-00>
-}
-
-TEST(GrpcChannelArguments, MakeChannelArgumentsDefaults_checkOurDefaultsOnly) {
-  auto options = Options{};
-  auto args = internal::MakeChannelArguments(options);
-
-  auto keepalive_time = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS);
-  ASSERT_TRUE(keepalive_time.has_value());
-  EXPECT_EQ(keepalive_time, std::chrono::milliseconds(std::chrono::hours(24)).count());
-
-  auto keepalive_timeout = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
-  ASSERT_TRUE(keepalive_timeout.has_value());
-  EXPECT_EQ(keepalive_timeout, std::chrono::milliseconds(std::chrono::seconds(60)).count());
 }
 
 TEST(GrpcChannelArguments, GetIntChannelArgument) {
