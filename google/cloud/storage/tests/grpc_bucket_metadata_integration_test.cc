@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -40,8 +39,6 @@ using ::testing::Not;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
-// When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
-// actually just run against the regular GCS REST API. That is fine.
 class GrpcBucketMetadataIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
@@ -146,5 +143,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
