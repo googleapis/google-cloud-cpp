@@ -171,7 +171,8 @@ TEST(ConnectionOptionsTest, CreateChannelArgumentsDefault) {
 
   auto actual = conn_opts.CreateChannelArguments();
 
-  auto user_agent = internal::GetStringChannelArgument(actual, "grpc.primary_user_agent");
+  auto user_agent =
+      internal::GetStringChannelArgument(actual, "grpc.primary_user_agent");
   ASSERT_TRUE(user_agent.has_value());
   // The gRPC library adds its own version to the user-agent string, so we only
   // check that our component appears in it.
@@ -185,11 +186,13 @@ TEST(ConnectionOptionsTest, CreateChannelArgumentsWithChannelPool) {
 
   auto actual = conn_opts.CreateChannelArguments();
 
-  auto testing_pool = internal::GetStringChannelArgument(actual, "grpc.channel_pooling_domain");
+  auto testing_pool =
+      internal::GetStringChannelArgument(actual, "grpc.channel_pooling_domain");
   ASSERT_TRUE(testing_pool.has_value());
   EXPECT_EQ(*testing_pool, "testing-pool");
 
-  auto user_agent = internal::GetStringChannelArgument(actual, "grpc.primary_user_agent");
+  auto user_agent =
+      internal::GetStringChannelArgument(actual, "grpc.primary_user_agent");
   ASSERT_TRUE(user_agent.has_value());
   // The gRPC library adds its own version to the user-agent string, so we only
   // check that our component appears in it.

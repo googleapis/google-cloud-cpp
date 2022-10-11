@@ -107,8 +107,10 @@ TEST(GrpcChannelArguments, MakeChannelArguments) {
   expected.SetString("foo", "bar");
   expected.SetString("baz", "quux");
   expected.SetUserAgentPrefix("user_agent");
-  expected.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, std::chrono::milliseconds(std::chrono::hours(24)).count());
-  expected.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, std::chrono::milliseconds(std::chrono::seconds(60)).count());
+  expected.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS,
+                  std::chrono::milliseconds(std::chrono::hours(24)).count());
+  expected.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
+                  std::chrono::milliseconds(std::chrono::seconds(60)).count());
 
   CheckGrpcChannelArguments(expected, internal::MakeChannelArguments(opts));
 }
@@ -119,11 +121,13 @@ TEST(GrpcChannelArguments, MakeChannelArgumentsOverrideDefaults) {
   args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, 2000);
   auto options = Options{}.set<GrpcChannelArgumentsNativeOption>(args);
 
-  auto keepalive_time = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS);
+  auto keepalive_time =
+      internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS);
   ASSERT_TRUE(keepalive_time.has_value());
   EXPECT_EQ(keepalive_time, 1000);
 
-  auto keepalive_timeout = internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
+  auto keepalive_timeout =
+      internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
   ASSERT_TRUE(keepalive_timeout.has_value());
   EXPECT_EQ(keepalive_timeout, 2000);
 }
