@@ -122,7 +122,7 @@ future<StatusOr<std::string>> AsyncConnectionImpl::AsyncStartResumableWrite(
 
 std::shared_ptr<AsyncConnection> MakeAsyncConnection(CompletionQueue cq,
                                                      Options options) {
-  options = storage::internal::DefaultOptionsGrpc(std::move(options));
+  options = storage_internal::DefaultOptionsGrpc(std::move(options));
   auto stub = CreateStorageStub(cq, options);
   return MakeAsyncConnection(std::move(cq), std::move(stub),
                              std::move(options));

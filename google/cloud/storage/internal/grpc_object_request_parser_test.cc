@@ -318,11 +318,10 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLastZero) {
   auto const actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
-  auto client = storage::internal::GrpcClient::Create(
-      storage::internal::DefaultOptionsGrpc(
-          Options{}
-              .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-              .set<EndpointOption>("localhost:1")));
+  auto client = GrpcClient::Create(DefaultOptionsGrpc(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<EndpointOption>("localhost:1")));
   StatusOr<std::unique_ptr<storage::internal::ObjectReadSource>> reader =
       client->ReadObject(req);
   EXPECT_THAT(reader, StatusIs(StatusCode::kOutOfRange));

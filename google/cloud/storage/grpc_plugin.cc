@@ -30,10 +30,9 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
     return google::cloud::storage::Client(std::move(opts));
   }
   if (config == "metadata") {
-    opts =
-        google::cloud::storage::internal::DefaultOptionsGrpc(std::move(opts));
+    opts = google::cloud::storage_internal::DefaultOptionsGrpc(std::move(opts));
     return storage::internal::ClientImplDetails::CreateClient(
-        storage::internal::GrpcClient::Create(opts));
+        storage_internal::GrpcClient::Create(opts));
   }
   return storage::internal::ClientImplDetails::CreateClient(
       storage_internal::HybridClient::Create(opts));

@@ -30,6 +30,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::DownloadStallTimeoutOption;
 using ::google::cloud::storage::testing::MockObjectMediaStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -63,7 +64,7 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
   EXPECT_CALL(*mock_cq, MakeRelativeTimer).Times(0);
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = storage::internal::GrpcClient::CreateMock(
+  auto client = GrpcClient::CreateMock(
       mock,
       Options{}
           .set<storage::DownloadStallTimeoutOption>(std::chrono::seconds(0))
@@ -108,7 +109,7 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
           make_status_or(std::chrono::system_clock::now())))));
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = storage::internal::GrpcClient::CreateMock(
+  auto client = GrpcClient::CreateMock(
       mock, Options{}
                 .set<storage::DownloadStallTimeoutOption>(configured_timeout)
                 .set<GrpcCompletionQueueOption>(cq));

@@ -52,9 +52,8 @@ auto constexpr kAuthority = "storage.googleapis.com";
 std::shared_ptr<AsyncConnection> MakeTestConnection(
     CompletionQueue cq, std::shared_ptr<storage::testing::MockStorageStub> mock,
     Options options = {}) {
-  return MakeAsyncConnection(
-      std::move(cq), std::move(mock),
-      storage::internal::DefaultOptionsGrpc(std::move(options)));
+  return MakeAsyncConnection(std::move(cq), std::move(mock),
+                             DefaultOptionsGrpc(std::move(options)));
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncDeleteObject) {

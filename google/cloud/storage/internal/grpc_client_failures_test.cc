@@ -56,10 +56,11 @@ class GrpcClientFailuresTest
             .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
             .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
     if (grpc_config == "metadata") {
-      client_ = GrpcClient::Create(DefaultOptionsGrpc(std::move(options)));
+      client_ = storage_internal::GrpcClient::Create(
+          storage_internal::DefaultOptionsGrpc(std::move(options)));
     } else {
       client_ = storage_internal::HybridClient::Create(
-          DefaultOptionsGrpc(std::move(options)));
+          storage_internal::DefaultOptionsGrpc(std::move(options)));
     }
   }
 
