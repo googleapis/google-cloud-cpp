@@ -32,6 +32,7 @@ using ::testing::ContainsRegex;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::NotNull;
+using ms = std::chrono::milliseconds;
 using ThreadPool = internal::AutomaticallyCreatedBackgroundThreads;
 
 // Tests a generic option by setting it, then getting it.
@@ -108,9 +109,9 @@ TEST(GrpcChannelArguments, MakeChannelArguments) {
   expected.SetString("baz", "quux");
   expected.SetUserAgentPrefix("user_agent");
   expected.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS,
-                  std::chrono::milliseconds(std::chrono::hours(24)).count());
+                  static_cast<int>(ms(std::chrono::hours(24)).count()));
   expected.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
-                  std::chrono::milliseconds(std::chrono::seconds(60)).count());
+                  static_cast<int>(ms(std::chrono::seconds(60)).count()));
 
   CheckGrpcChannelArguments(expected, internal::MakeChannelArguments(opts));
 }
@@ -185,7 +186,6 @@ TEST(GrpcOptionList, GrpcBackgroundThreadPoolSizeOption) {
 }
 
 TEST(GrpcOptionList, GrpcCompletionQueueOption) {
-  using ms = std::chrono::milliseconds;
   CompletionQueue cq;
   auto background = internal::MakeBackgroundThreadsFactory(
       Options{}.set<GrpcCompletionQueueOption>(cq))();
