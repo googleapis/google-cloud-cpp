@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) try {
       std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
   auto response = client.ListClusters(location);
   if (!response) throw std::runtime_error(response.status().message());
-  for (auto c : response->clusters()) {
+  for (auto const& c : response->clusters()) {
     std::cout << c.DebugString() << "\n";
   }
 
