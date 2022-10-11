@@ -141,7 +141,7 @@ StatusOr<std::string> MakeDecimalRep(std::string s, bool const has_nan,
   char const* e = p + s.size();
 
   // Consume any sign part.
-  auto sign_part = absl::string_view(p, 0);
+  auto sign_part = absl::string_view{};
   if (p != e && (*p == '+' || *p == '-')) {
     sign_part = absl::string_view(p++, 1);
   }
@@ -152,7 +152,7 @@ StatusOr<std::string> MakeDecimalRep(std::string s, bool const has_nan,
   auto int_part = absl::string_view(ip, p - ip);
 
   // Consume any fractional part.
-  auto frac_part = absl::string_view(p, 0);
+  auto frac_part = absl::string_view{};
   if (p != e && *p == '.') {
     char const* fp = p++;
     for (; p != e && IsDigit(*p); ++p) continue;
