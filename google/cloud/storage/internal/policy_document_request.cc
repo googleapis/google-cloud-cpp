@@ -221,9 +221,11 @@ std::string PolicyDocumentV4Request::Credentials() const {
 std::vector<PolicyDocumentCondition> PolicyDocumentV4Request::GetAllConditions()
     const {
   std::vector<PolicyDocumentCondition> conditions;
-  for (auto const& field : extension_fields_) {
-    conditions.push_back(PolicyDocumentCondition({field.first, field.second}));
-  }
+  conditions.reserve(extension_fields_.size());
+  std::transform(extension_fields_.begin(), extension_fields_.end(),
+                 std::back_inserter(conditions), [](auto const& f) {
+                   return PolicyDocumentCondition({f.first, f.second});
+                 });
   std::sort(conditions.begin(), conditions.end());
   auto const& document = policy_document();
   std::copy(document.conditions.begin(), document.conditions.end(),
