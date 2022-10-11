@@ -25,7 +25,7 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc")
 else ()
     add_library(
-        google_cloud_cpp_storage_grpc
+        google_cloud_cpp_storage_grpc # cmake-format: sort
         async_client.cc
         async_client.h
         async_object_responses.h
