@@ -15,6 +15,7 @@
 #include "google/cloud/storage/parallel_upload.h"
 #include "absl/memory/memory.h"
 #include <nlohmann/json.hpp>
+#include <algorithm>
 #include <sstream>
 
 namespace google {
@@ -237,10 +238,12 @@ ParallelUploadPersistentState ParallelUploadStateImpl::ToPersistentState()
   std::unique_lock<std::mutex> lk(mu_);
 
   std::vector<ParallelUploadPersistentState::Stream> streams;
-  for (auto const& stream : streams_) {
-    streams.emplace_back(ParallelUploadPersistentState::Stream{
-        stream.object_name, stream.resumable_session_id});
-  }
+  streams.reserve(streams_.size());
+  std::transform(streams_.begin(), streams_.end(), std::back_inserter(streams),
+                 [](auto const& s) {
+                   return ParallelUploadPersistentState::Stream{
+                       s.object_name, s.resumable_session_id};
+                 });
 
   return ParallelUploadPersistentState{
       destination_object_name_,
