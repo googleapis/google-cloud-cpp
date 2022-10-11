@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -59,8 +58,9 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   auto copy_name = MakeRandomObjectName();
   auto compose_name = MakeRandomObjectName();
 
+  // Use the full projection to get consistent behavior out of gRPC and REST.
   auto insert = client->InsertObject(bucket_name, object_name, LoremIpsum(),
-                                     IfGenerationMatch(0));
+                                     IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
@@ -123,5 +123,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC

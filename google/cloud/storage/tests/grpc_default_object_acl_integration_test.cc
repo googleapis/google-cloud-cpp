@@ -37,8 +37,6 @@ using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
-// When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
-// actually just run against the regular GCS REST API. That is fine.
 class GrpcDefaultObjectAclIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
