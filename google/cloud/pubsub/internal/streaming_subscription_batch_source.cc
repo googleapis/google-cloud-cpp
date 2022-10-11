@@ -511,8 +511,8 @@ SplitModifyAckDeadline(google::pubsub::v1::ModifyAckDeadlineRequest request,
 
     auto begin = source.begin();
     auto end = std::next(source.begin(), max_ack_ids);
-    r.mutable_ack_ids()->Add(std::make_move_iterator(begin),
-                             std::make_move_iterator(end));
+    r.mutable_ack_ids()->Reserve(max_ack_ids);
+    for (auto& i = begin; i != end; ++i) r.add_ack_ids(std::move(*i));
     source.erase(begin, end);
     result.push_back(std::move(r));
   }

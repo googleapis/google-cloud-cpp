@@ -1131,7 +1131,7 @@ TEST(StreamingSubscriptionBatchSourceTest, SplitModifyAckDeadlineSmall) {
   request.set_subscription(
       "projects/test-project/subscriptions/test-subscription");
   request.set_ack_deadline_seconds(12345);
-  request.mutable_ack_ids()->Add(bulk_nacks.begin(), bulk_nacks.end());
+  for (auto id : bulk_nacks) request.add_ack_ids(std::move(id));
 
   auto const actual = SplitModifyAckDeadline(request, kMaxIds);
   EXPECT_THAT(actual, ElementsAre(IsProtoEqual(request)));
@@ -1148,7 +1148,7 @@ TEST(StreamingSubscriptionBatchSourceTest, SplitModifyAckDeadline) {
   request.set_subscription(
       "projects/test-project/subscriptions/test-subscription");
   request.set_ack_deadline_seconds(12345);
-  request.mutable_ack_ids()->Add(bulk_nacks.begin(), bulk_nacks.end());
+  for (auto id : bulk_nacks) request.add_ack_ids(std::move(id));
 
   std::vector<ModifyRequest> expected(3);
   for (auto& e : expected) {
