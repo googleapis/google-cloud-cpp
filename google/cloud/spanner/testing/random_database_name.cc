@@ -31,15 +31,14 @@ std::string RandomDatabasePrefix(std::chrono::system_clock::time_point tp) {
 std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator,
                                std::chrono::system_clock::time_point tp) {
   // A database ID must be between 2 and 30 characters, fitting the regular
-  // expression `[a-z][a-z0-9_-]*[a-z0-9]`
+  // expression `[a-z][a-z0-9_-]*[a-z0-9]`. We omit underscores and hyphens
+  // from the generated suffix to aid readability.
   std::size_t const max_size = 30;
   auto const prefix = RandomDatabasePrefix(tp);
-  auto size = static_cast<int>(max_size - 1 - prefix.size());
+  auto const suffix_size = static_cast<int>(max_size - prefix.size());
   return prefix +
          google::cloud::internal::Sample(
-             generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
-         google::cloud::internal::Sample(
-             generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
+             generator, suffix_size, "abcdefghijlkmnopqrstuvwxyz0123456789");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -29,18 +29,17 @@ std::string RandomId(std::string prefix, std::size_t max_size,
   prefix.push_back('-');
   prefix.append(internal::FormatUtcDate(now));
   prefix.push_back('-');
-  auto size = static_cast<int>(max_size - 1 - prefix.size());
-  return prefix +
-         internal::Sample(generator, size,
-                          "abcdefghijlkmnopqrstuvwxyz0123456789-") +
-         internal::Sample(generator, 1, "abcdefghijlkmnopqrstuvwxyz");
+  auto const suffix_size = static_cast<int>(max_size - prefix.size());
+  return prefix + internal::Sample(generator, suffix_size,
+                                   "abcdefghijlkmnopqrstuvwxyz0123456789");
 }
 
 }  // namespace
 
 std::string RandomInstanceName(internal::DefaultPRNG& generator) {
   // An instance ID must be between 2 and 64 characters, matching the
-  // regular expression `[a-z][-a-z0-9]*[a-z0-9]`.
+  // regular expression `[a-z][-a-z0-9]*[a-z0-9]`.  We omit hyphens from
+  // the generated suffix to aid readability.
   return RandomId("temporary-instance", 64, generator);
 }
 
@@ -48,6 +47,7 @@ std::string RandomInstanceConfigName(internal::DefaultPRNG& generator) {
   // An instance-config ID must be between 2 and 64 characters, matching the
   // regular expression `custom-[-a-z0-9]*[a-z0-9]`. The `custom-` prefix
   // is required to avoid name conflicts with Google-managed configurations.
+  // We omit hyphens from the generated suffix to aid readability.
   return RandomId("custom-temporary-config", 64, generator);
 }
 
