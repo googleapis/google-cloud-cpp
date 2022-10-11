@@ -87,7 +87,8 @@ BENCHMARK_F(GenerateBoundaryFixture, GenerateBoundary)
   auto make_string = [this]() { return GenerateCandidate(); };
 
   for (auto _ : state) {
-    benchmark::DoNotOptimize(make_string());
+    auto unused = make_string();
+    benchmark::DoNotOptimize(unused);
   }
 }
 
@@ -96,7 +97,8 @@ BENCHMARK_F(GenerateBoundaryFixture, GenerateBoundaryWithValidation)
   auto make_string = [this]() { return GenerateCandidate(); };
 
   for (auto _ : state) {
-    benchmark::DoNotOptimize(GenerateMessageBoundary(message(), make_string));
+    auto unused = GenerateMessageBoundary(message(), make_string);
+    benchmark::DoNotOptimize(unused);
   }
 }
 
@@ -112,7 +114,8 @@ BENCHMARK_F(GenerateBoundaryFixture, GenerateBoundaryOld)
   };
 
   for (auto _ : state) {
-    benchmark::DoNotOptimize(old(message()));
+    auto unused = old(message());
+    benchmark::DoNotOptimize(unused);
   }
 }
 
@@ -124,7 +127,8 @@ BENCHMARK_F(GenerateBoundaryFixture, WorstCase)
   };
 
   for (auto _ : state) {
-    benchmark::DoNotOptimize(test(message()));
+    auto unused = test(message());
+    benchmark::DoNotOptimize(unused);
   }
 }
 
@@ -139,7 +143,8 @@ BENCHMARK_F(GenerateBoundaryFixture, BestCase)
   };
 
   for (auto _ : state) {
-    benchmark::DoNotOptimize(test(message()));
+    auto unused = test(message());
+    benchmark::DoNotOptimize(unused);
   }
 }
 

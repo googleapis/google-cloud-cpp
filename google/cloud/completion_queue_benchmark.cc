@@ -89,7 +89,8 @@ void BM_Baseline(benchmark::State& state) {
   };
 
   for (auto _ : state) {
-    benchmark::DoNotOptimize(runner(state.range(1)));
+    auto unused = runner(state.range(1));
+    benchmark::DoNotOptimize(unused);
   }
   state.SetComplexityN(state.range(1));
 }
@@ -115,7 +116,8 @@ void BM_CompletionQueueRunAsync(benchmark::State& state) {
   };
 
   for (auto _ : state) {
-    benchmark::DoNotOptimize(runner(state.range(1)));
+    auto unused = runner(state.range(1));
+    benchmark::DoNotOptimize(unused);
   }
   state.SetComplexityN(state.range(1));
   cq.Shutdown();
