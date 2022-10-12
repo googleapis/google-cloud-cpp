@@ -17,9 +17,11 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -36,6 +38,7 @@ using ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
 using ::google::cloud::internal::RunAsyncBase;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
@@ -44,6 +47,7 @@ using ::testing::AtLeast;
 using ::testing::AtMost;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
+using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Property;
 using ::testing::Return;
@@ -115,6 +119,7 @@ std::shared_ptr<StreamingSubscriptionBatchSource> MakeTestBatchSource(
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
   auto opts = DefaultSubscriberOptions(pubsub_testing::MakeTestOptions(
       Options{}
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
           .set<pubsub::MaxOutstandingMessagesOption>(100)
           .set<pubsub::MaxOutstandingBytesOption>(100 * 1024 * 1024L)
           .set<pubsub::MaxHoldTimeOption>(std::chrono::seconds(300))));
@@ -1118,6 +1123,208 @@ TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesWithRetry) {
   aseq.PopFront().set_value(true);  // Finish()
 
   EXPECT_THAT(done.get(), IsOk());
+}
+
+TEST(StreamingSubscriptionBatchSourceTest, SplitModifyAckDeadlineSmall) {
+  auto constexpr kMaxIds = 3;
+
+  std::vector<std::string> bulk_nacks{"fake-001", "fake-002", "fake-003"};
+  ModifyRequest request;
+  request.set_subscription(
+      "projects/test-project/subscriptions/test-subscription");
+  request.set_ack_deadline_seconds(12345);
+  for (auto id : bulk_nacks) request.add_ack_ids(std::move(id));
+
+  auto const actual = SplitModifyAckDeadline(request, kMaxIds);
+  EXPECT_THAT(actual, ElementsAre(IsProtoEqual(request)));
+}
+
+TEST(StreamingSubscriptionBatchSourceTest, SplitModifyAckDeadline) {
+  auto constexpr kMaxIds = 3;
+
+  std::vector<std::string> bulk_nacks{
+      "fake-001", "fake-002", "fake-003", "fake-004",
+      "fake-005", "fake-006", "fake-007",
+  };
+  ModifyRequest request;
+  request.set_subscription(
+      "projects/test-project/subscriptions/test-subscription");
+  request.set_ack_deadline_seconds(12345);
+  for (auto id : bulk_nacks) request.add_ack_ids(std::move(id));
+
+  std::vector<ModifyRequest> expected(3);
+  for (auto& e : expected) {
+    e.set_subscription(request.subscription());
+    e.set_ack_deadline_seconds(request.ack_deadline_seconds());
+  }
+  expected[0].add_ack_ids("fake-001");
+  expected[0].add_ack_ids("fake-002");
+  expected[0].add_ack_ids("fake-003");
+
+  expected[1].add_ack_ids("fake-004");
+  expected[1].add_ack_ids("fake-005");
+  expected[1].add_ack_ids("fake-006");
+
+  expected[2].add_ack_ids("fake-007");
+
+  auto const actual = SplitModifyAckDeadline(std::move(request), kMaxIds);
+  EXPECT_THAT(actual,
+              ElementsAre(IsProtoEqual(expected[0]), IsProtoEqual(expected[1]),
+                          IsProtoEqual(expected[2])));
+}
+
+std::unique_ptr<pubsub_testing::MockAsyncPullStream> MakeUnusedStream(
+    bool enable_exactly_once) {
+  auto start_response = []() { return make_ready_future(true); };
+  auto write_response = [](google::pubsub::v1::StreamingPullRequest const&,
+                           grpc::WriteOptions const&) {
+    return make_ready_future(true);
+  };
+  auto read_response = [enable_exactly_once]() {
+    using Response = ::google::pubsub::v1::StreamingPullResponse;
+    Response response;
+    if (enable_exactly_once) {
+      response.mutable_subscription_properties()
+          ->set_exactly_once_delivery_enabled(true);
+    }
+    return make_ready_future(absl::make_optional(std::move(response)));
+  };
+  auto finish_response = []() { return make_ready_future(Status{}); };
+
+  auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+  EXPECT_CALL(*stream, Start).WillOnce(start_response);
+  EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
+  EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+  EXPECT_CALL(*stream, Finish).Times(AtMost(1)).WillRepeatedly(finish_response);
+  return stream;
+}
+
+TEST(StreamingSubscriptionBatchSourceTest, BulkNackMultipleRequests) {
+  auto constexpr kMaxIds =
+      StreamingSubscriptionBatchSource::kMaxAckIdsPerMessage;
+
+  std::vector<std::vector<std::string>> groups;
+  auto make_ids = [](std::string const& prefix, int count) {
+    std::vector<std::string> ids(count);
+    std::generate(ids.begin(), ids.end(), [&prefix, count = 0]() mutable {
+      return prefix + std::to_string(++count);
+    });
+    return ids;
+  };
+  groups.push_back(make_ids("group-1-", kMaxIds));
+  groups.push_back(make_ids("group-2-", kMaxIds));
+  groups.push_back(make_ids("group-3-", 2));
+
+  auto make_on_modify = [](std::vector<std::string> e) {
+    return [expected_ids = std::move(e)](auto, auto, auto const& request) {
+      EXPECT_THAT(request.ack_ids(), ElementsAreArray(expected_ids));
+      return make_ready_future(Status{});
+    };
+  };
+
+  AutomaticallyCreatedBackgroundThreads background;
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::StreamingPullRequest const&) {
+        return MakeUnusedStream(false);
+      });
+
+  EXPECT_CALL(
+      *mock,
+      AsyncModifyAckDeadline(
+          _, _,
+          Property(&ModifyRequest::subscription,
+                   "projects/test-project/subscriptions/test-subscription")))
+      .WillOnce(make_on_modify(groups[0]))
+      .WillOnce(make_on_modify(groups[1]))
+      .WillOnce(make_on_modify(groups[2]));
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+
+  auto done = shutdown->Start({});
+  uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
+
+  std::vector<std::string> nacks;
+  for (auto& ids : groups) {
+    nacks.insert(nacks.end(), ids.begin(), ids.end());
+  }
+
+  uut->BulkNack(nacks);
+
+  shutdown->MarkAsShutdown("test", {});
+}
+
+void CheckExtendLeasesMultipleRequests(bool enable_exactly_once) {
+  auto constexpr kMaxIds =
+      StreamingSubscriptionBatchSource::kMaxAckIdsPerMessage;
+
+  std::vector<std::vector<std::string>> groups;
+  auto make_ids = [](std::string const& prefix, int count) {
+    std::vector<std::string> ids(count);
+    std::generate(ids.begin(), ids.end(), [&prefix, count = 0]() mutable {
+      return prefix + std::to_string(++count);
+    });
+    return ids;
+  };
+  groups.push_back(make_ids("group-1-", kMaxIds));
+  groups.push_back(make_ids("group-2-", kMaxIds));
+  groups.push_back(make_ids("group-3-", 2));
+
+  auto make_on_modify = [](std::vector<std::string> e) {
+    return [expected_ids = std::move(e)](auto, auto, auto const& request) {
+      EXPECT_THAT(request.ack_ids(), ElementsAreArray(expected_ids));
+      return make_ready_future(Status{});
+    };
+  };
+
+  AutomaticallyCreatedBackgroundThreads background;
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::StreamingPullRequest const&) {
+        return MakeUnusedStream(enable_exactly_once);
+      });
+
+  EXPECT_CALL(
+      *mock,
+      AsyncModifyAckDeadline(
+          _, _,
+          Property(&ModifyRequest::subscription,
+                   "projects/test-project/subscriptions/test-subscription")))
+      .WillOnce(make_on_modify(groups[0]))
+      .WillOnce(make_on_modify(groups[1]))
+      .WillOnce(make_on_modify(groups[2]));
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+
+  auto done = shutdown->Start({});
+  uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
+
+  std::vector<std::string> acks;
+  for (auto& ids : groups) {
+    acks.insert(acks.end(), ids.begin(), ids.end());
+  }
+
+  uut->ExtendLeases(acks, std::chrono::seconds(60));
+
+  shutdown->MarkAsShutdown("test", {});
+}
+
+TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesMultipleRequests) {
+  CheckExtendLeasesMultipleRequests(false);
+}
+
+TEST(StreamingSubscriptionBatchSourceTest,
+     ExtendLeasesMultipleRequestsWithExactlyOnce) {
+  CheckExtendLeasesMultipleRequests(true);
 }
 
 }  // namespace
