@@ -69,6 +69,8 @@ add_library(
     internal/openssl_util.cc
     internal/openssl_util.h
     internal/rest_client.h
+    internal/rest_context.cc
+    internal/rest_context.h
     internal/rest_options.h
     internal/rest_parse_json_error.cc
     internal/rest_parse_json_error.h
@@ -201,6 +203,7 @@ if (BUILD_TESTING)
         internal/oauth2_refreshing_credentials_wrapper_test.cc
         internal/oauth2_service_account_credentials_test.cc
         internal/openssl_util_test.cc
+        internal/rest_context_test.cc
         internal/rest_parse_json_error_test.cc
         internal/rest_request_test.cc
         internal/rest_response_test.cc
