@@ -139,6 +139,10 @@
 ./include/google/cloud/dataproc/internal
 ./include/google/cloud/dataproc/mocks
 ./include/google/cloud/dataproc/v1
+./include/google/cloud/datastream
+./include/google/cloud/datastream/internal
+./include/google/cloud/datastream/mocks
+./include/google/cloud/datastream/v1
 ./include/google/cloud/debugger
 ./include/google/cloud/debugger/internal
 ./include/google/cloud/debugger/mocks
@@ -475,6 +479,7 @@
 ./lib64/cmake/google_cloud_cpp_datamigration
 ./lib64/cmake/google_cloud_cpp_dataplex
 ./lib64/cmake/google_cloud_cpp_dataproc
+./lib64/cmake/google_cloud_cpp_datastream
 ./lib64/cmake/google_cloud_cpp_debugger
 ./lib64/cmake/google_cloud_cpp_dialogflow_cx
 ./lib64/cmake/google_cloud_cpp_dialogflow_es
