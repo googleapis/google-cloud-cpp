@@ -46,14 +46,16 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/beyondcorp/clientgateways/v1:clientgateways_cc_grpc"
   )"
   ["bigquery"]="$(
+    # This is long enough that it needs to be kept in alphabetical order
     printf ",%s" \
-      "@com_google_googleapis//google/cloud/bigquery/v2:bigquery_cc_grpc" \
-      "@com_google_googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc" \
-      "@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc" \
-      "@com_google_googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc" \
-      "@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc" \
-      "@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub_cc_grpc"
+      "@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/migration/v2:migration_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/v2:bigquery_cc_grpc"
   )"
   ["bigtable"]="$(
     printf ",%s" \
