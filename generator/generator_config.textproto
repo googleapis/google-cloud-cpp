@@ -461,6 +461,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Datastream
+service {
+  service_proto_path: "google/cloud/datastream/v1/datastream.proto"
+  product_path: "google/cloud/datastream"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Dialogflow CX
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/environment.proto"
