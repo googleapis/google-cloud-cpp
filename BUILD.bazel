@@ -62,6 +62,7 @@ GA_LIBRARIES = [
     "datamigration",
     "dataplex",
     "dataproc",
+    "datastream",
     "debugger",
     "dialogflow_cx",
     "dialogflow_es",

@@ -114,8 +114,7 @@ if (BUILD_TESTING)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:datastream_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+            GOOGLE_CLOUD_CPP_TEST_REGION)
     set_tests_properties(datastream_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
