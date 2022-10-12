@@ -46,17 +46,6 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   // to send and/or receive those queries.
   args.SetInt(GRPC_ARG_DNS_ENABLE_SRV_QUERIES, 0);
 
-  // Effectively disable keepalive messages.
-  auto constexpr kDisableKeepaliveTime =
-      std::chrono::milliseconds(std::chrono::hours(24));
-  args.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS,
-              static_cast<int>(kDisableKeepaliveTime.count()));
-  // Make gRPC set the TCP_USER_TIMEOUT socket option to a value that detects
-  // broken servers more quickly.
-  auto constexpr kKeepaliveTimeout =
-      std::chrono::milliseconds(std::chrono::seconds(60));
-  args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
-              static_cast<int>(kKeepaliveTimeout.count()));
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 

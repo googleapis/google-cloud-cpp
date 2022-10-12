@@ -171,16 +171,12 @@ TEST(ConnectionOptionsTest, CreateChannelArgumentsDefault) {
 
   auto actual = conn_opts.CreateChannelArguments();
 
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  grpc_channel_args test_args = actual.c_channel_args();
-  ASSERT_EQ(1, test_args.num_args);
-  ASSERT_EQ(GRPC_ARG_STRING, test_args.args[0].type);
-  EXPECT_EQ("grpc.primary_user_agent", std::string(test_args.args[0].key));
+  auto user_agent =
+      internal::GetStringChannelArgument(actual, "grpc.primary_user_agent");
+  ASSERT_TRUE(user_agent.has_value());
   // The gRPC library adds its own version to the user-agent string, so we only
   // check that our component appears in it.
-  EXPECT_THAT(std::string(test_args.args[0].value.string),
-              StartsWith(conn_opts.user_agent_prefix()));
+  EXPECT_THAT(*user_agent, StartsWith(conn_opts.user_agent_prefix()));
 }
 
 TEST(ConnectionOptionsTest, CreateChannelArgumentsWithChannelPool) {
@@ -190,26 +186,17 @@ TEST(ConnectionOptionsTest, CreateChannelArgumentsWithChannelPool) {
 
   auto actual = conn_opts.CreateChannelArguments();
 
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  grpc_channel_args test_args = actual.c_channel_args();
-  ASSERT_EQ(2, test_args.num_args);
-  ASSERT_EQ(GRPC_ARG_STRING, test_args.args[0].type);
-  ASSERT_EQ(GRPC_ARG_STRING, test_args.args[1].type);
+  auto testing_pool =
+      internal::GetStringChannelArgument(actual, "grpc.channel_pooling_domain");
+  ASSERT_TRUE(testing_pool.has_value());
+  EXPECT_EQ(*testing_pool, "testing-pool");
 
-  // There is no (AFAICT) guarantee on the order of the arguments in this array,
-  // and the C types are hard to work with. Capture the arguments in a map to
-  // make it easier to work with them.
-  std::map<std::string, std::string> args;
-  for (std::size_t i = 0; i != test_args.num_args; ++i) {
-    args[test_args.args[i].key] = test_args.args[i].value.string;
-  }
-
-  EXPECT_EQ("testing-pool", args["grpc.channel_pooling_domain"]);
+  auto user_agent =
+      internal::GetStringChannelArgument(actual, "grpc.primary_user_agent");
+  ASSERT_TRUE(user_agent.has_value());
   // The gRPC library adds its own version to the user-agent string, so we only
   // check that our component appears in it.
-  EXPECT_THAT(args["grpc.primary_user_agent"],
-              StartsWith(conn_opts.user_agent_prefix()));
+  EXPECT_THAT(*user_agent, StartsWith(conn_opts.user_agent_prefix()));
 }
 
 TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
