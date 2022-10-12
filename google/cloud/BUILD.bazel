@@ -92,6 +92,35 @@ load(":google_cloud_cpp_common_benchmarks.bzl", "google_cloud_cpp_common_benchma
     ],
 ) for benchmark in google_cloud_cpp_common_benchmarks]
 
+load(":google_cloud_cpp_protobuf_utils.bzl", "google_cloud_cpp_protobuf_utils_hdrs", "google_cloud_cpp_protobuf_utils_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_protobuf_utils",
+    srcs = google_cloud_cpp_protobuf_utils_srcs,
+    hdrs = google_cloud_cpp_protobuf_utils_hdrs,
+    visibility = ["//:__subpackages__"],
+    deps = [
+        ":google_cloud_cpp_common",
+        "@com_google_googleapis//:googleapis_system_includes",
+        "@com_google_googleapis//google/rpc:error_details_cc_proto",
+        "@com_google_googleapis//google/rpc:status_cc_proto",
+        "@com_google_protobuf//:protobuf",
+    ],
+)
+
+load(":google_cloud_cpp_protobuf_utils_unit_tests.bzl", "google_cloud_cpp_protobuf_utils_unit_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_protobuf_utils",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "@com_google_googleapis//google/spanner/v1:spanner_cc_proto",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_protobuf_utils_unit_tests]
+
 load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
 
 cc_library(
@@ -109,6 +138,7 @@ cc_library(
     ],
     deps = [
         ":google_cloud_cpp_common",
+        ":google_cloud_cpp_protobuf_utils",
         "@com_github_grpc_grpc//:grpc++",
         "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/memory",

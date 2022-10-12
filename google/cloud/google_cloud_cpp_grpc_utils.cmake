@@ -72,7 +72,6 @@ add_library(
     internal/grpc_request_metadata.h
     internal/grpc_service_account_authentication.cc
     internal/grpc_service_account_authentication.h
-    internal/log_wrapper.cc
     internal/log_wrapper.h
     internal/minimal_iam_credentials_stub.cc
     internal/minimal_iam_credentials_stub.h
@@ -103,6 +102,7 @@ target_link_libraries(
            google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_error_details_protos
            google-cloud-cpp::rpc_status_protos
+           google-cloud-cpp::protobuf_utils
            google-cloud-cpp::common
            gRPC::grpc++
            gRPC::grpc)
