@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/async_sequencer.h"
@@ -118,6 +119,7 @@ std::shared_ptr<StreamingSubscriptionBatchSource> MakeTestBatchSource(
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
   auto opts = DefaultSubscriberOptions(pubsub_testing::MakeTestOptions(
       Options{}
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
           .set<pubsub::MaxOutstandingMessagesOption>(100)
           .set<pubsub::MaxOutstandingBytesOption>(100 * 1024 * 1024L)
           .set<pubsub::MaxHoldTimeOption>(std::chrono::seconds(300))));
