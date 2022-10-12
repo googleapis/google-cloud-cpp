@@ -159,6 +159,42 @@ service {
 
 # BigQuery
 service {
+  service_proto_path: "google/cloud/bigquery/analyticshub/v1/analyticshub.proto"
+  product_path: "google/cloud/bigquery"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/bigquery/connection/v1/connection.proto"
+  product_path: "google/cloud/bigquery"
+  initial_copyright_year: "2022"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_ENDPOINT"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/bigquery/datatransfer/v1/datatransfer.proto"
+  product_path: "google/cloud/bigquery"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/bigquery/migration/v2/migration_service.proto"
+  product_path: "google/cloud/bigquery"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/bigquery/reservation/v1/reservation.proto"
+  product_path: "google/cloud/bigquery"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/bigquery/storage/v1/storage.proto"
   product_path: "google/cloud/bigquery"
   initial_copyright_year: "2021"
@@ -176,36 +212,7 @@ service {
 }
 
 service {
-  service_proto_path: "google/cloud/bigquery/connection/v1/connection.proto"
-  product_path: "google/cloud/bigquery"
-  initial_copyright_year: "2022"
-  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_ENDPOINT"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/cloud/bigquery/reservation/v1/reservation.proto"
-  product_path: "google/cloud/bigquery"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/cloud/bigquery/datatransfer/v1/datatransfer.proto"
-  product_path: "google/cloud/bigquery"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
   service_proto_path: "google/cloud/bigquery/v2/model.proto"
-  product_path: "google/cloud/bigquery"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/cloud/bigquery/analyticshub/v1/analyticshub.proto"
   product_path: "google/cloud/bigquery"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
