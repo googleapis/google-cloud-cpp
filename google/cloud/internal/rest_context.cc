@@ -41,7 +41,7 @@ RestContext& RestContext::AddHeader(
 
 std::vector<std::string> RestContext::GetHeader(std::string header) const {
   std::transform(header.begin(), header.end(), header.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
+                 [](auto c) { return std::tolower(c); });
   auto iter = headers_.find(header);
   if (iter == headers_.end()) {
     return {};

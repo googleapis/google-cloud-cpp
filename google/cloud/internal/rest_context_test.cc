@@ -22,8 +22,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::Not;
+using ::testing::Pair;
 
 class RestContextTest : public ::testing::Test {
  protected:
@@ -40,12 +42,10 @@ TEST_F(RestContextTest, RvalueBuilder) {
                      .AddHeader("header1", "value1")
                      .AddHeader(std::make_pair("header2", "value2a"))
                      .AddHeader("header2", "value2b");
-  EXPECT_THAT(
-      context.headers(),
-      Contains(std::make_pair("header1", std::vector<std::string>{"value1"})));
   EXPECT_THAT(context.headers(),
-              Contains(std::make_pair(
-                  "header2", std::vector<std::string>{"value2a", "value2b"})));
+              Contains(Pair("header1", ElementsAre("value1"))));
+  EXPECT_THAT(context.headers(),
+              Contains(Pair("header2", ElementsAre("value2a", "value2b"))));
 }
 
 TEST_F(RestContextTest, GetHeaderNotFound) {
