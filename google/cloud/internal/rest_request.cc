@@ -25,6 +25,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RestRequest::RestRequest() = default;
 RestRequest::RestRequest(std::string path) : path_(std::move(path)) {}
+RestRequest::RestRequest(RestContext const& rest_context)
+    : headers_(rest_context.headers()) {}
 RestRequest::RestRequest(std::string path, HttpHeaders headers)
     : path_(std::move(path)), headers_(std::move(headers)) {}
 RestRequest::RestRequest(std::string path, HttpParameters parameters)
