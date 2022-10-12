@@ -304,6 +304,13 @@ TEST_F(InstanceAdminClientTest, InstanceConfigUserManaged) {
                 Eq("updated-value"));
   }
 
+  // TODO(#10006): Temporarily refrain from creating an Instance
+  // that uses the custom InstanceConfig until we can figure out why
+  // the DeleteInstanceConfig() is now failing with "Cannot remove
+  // <name> since it is used by 1 instance(s)." Even retrying the
+  // DeleteInstanceConfig() every second continues to fail, like the
+  // DeleteInstance() is never going to take effect.
+#if 0
   std::string instance_id = spanner_testing::RandomInstanceName(generator_);
   Instance in(project, instance_id);
   auto instance =
@@ -323,6 +330,7 @@ TEST_F(InstanceAdminClientTest, InstanceConfigUserManaged) {
     EXPECT_EQ(instance->labels().at("label-key"), "label-value");
     EXPECT_THAT(client_.DeleteInstance(instance->name()), IsOk());
   }
+#endif
 
   EXPECT_THAT(client_.DeleteInstanceConfig(user_config->name()), IsOk());
 }
