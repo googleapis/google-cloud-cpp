@@ -3,7 +3,7 @@
 @mainpage Google Cloud Deploy API C++ Client Library
 
 An idiomatic C++ client library for the [Google Cloud Deploy API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+to deliver continuously to Google Kubernetes Engine and Anthos.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).

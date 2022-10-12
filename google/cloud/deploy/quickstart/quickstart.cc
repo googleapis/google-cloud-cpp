@@ -12,27 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/deploy/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/deploy/cloud_deploy_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace deploy = ::google::cloud::deploy;
-  auto client = deploy::Client(deploy::MakeConnection(/* EDIT HERE */));
+  auto client = deploy::CloudDeployClient(deploy::MakeCloudDeployConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListDeliveryPipelines(parent)) {
+    if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
 
   return 0;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
