@@ -89,7 +89,6 @@ google_cloud_cpp_grpc_utils_srcs = [
     "internal/grpc_impersonate_service_account.cc",
     "internal/grpc_request_metadata.cc",
     "internal/grpc_service_account_authentication.cc",
-    "internal/log_wrapper.cc",
     "internal/minimal_iam_credentials_stub.cc",
     "internal/populate_grpc_options.cc",
     "internal/streaming_read_rpc.cc",

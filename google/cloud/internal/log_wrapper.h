@@ -19,6 +19,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/log_wrapper_helpers.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
@@ -32,19 +33,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-std::string DebugString(google::protobuf::Message const& m,
-                        TracingOptions const& options);
-
-std::string DebugString(Status const& status, TracingOptions const& options);
-
-std::string DebugString(std::string s, TracingOptions const& options);
-
-char const* DebugFutureStatus(std::future_status s);
-
-// Create a unique ID that can be used to match asynchronous requests/response
-// pairs.
-std::string RequestIdForLogging();
 
 template <typename T>
 struct IsStatusOr : public std::false_type {};
