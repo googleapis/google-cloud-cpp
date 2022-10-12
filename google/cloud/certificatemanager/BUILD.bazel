@@ -38,6 +38,7 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
+        "@com_google_googleapis//google/cloud/certificatemanager/logging/v1:logging_cc_grpc",
         "@com_google_googleapis//google/cloud/certificatemanager/v1:certificatemanager_cc_grpc",
     ],
 )

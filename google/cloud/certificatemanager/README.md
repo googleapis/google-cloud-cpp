@@ -1,7 +1,8 @@
 # Certificate Manager API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Certificate Manager API][cloud-service-docs], a service to \<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Certificate Manager API][cloud-service-docs], a service to
+acquire and manage TLS (SSL) certificates for use with Cloud Load Balancing.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -31,8 +32,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/certificatemanager/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/certificatemanager/certificate_manager_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -43,16 +43,19 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace certificatemanager = ::google::cloud::certificatemanager;
-  auto client = certificatemanager::Client(
-      certificatemanager::MakeConnection(/* EDIT HERE */));
+  auto client = certificatemanager::CertificateManagerClient(
+      certificatemanager::MakeCertificateManagerConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
+  for (auto r : client.ListCertificates(parent)) {
+    if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
 
   return 0;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
@@ -88,7 +91,7 @@ as well as how to properly format your code.
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 
-[cloud-service-docs]: https://cloud.google.com/certificatemanager
+[cloud-service-docs]: https://cloud.google.com/certificate-manager
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-certificatemanager/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/certificatemanager

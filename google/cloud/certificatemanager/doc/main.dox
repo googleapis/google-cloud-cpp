@@ -3,7 +3,7 @@
 @mainpage Certificate Manager API C++ Client Library
 
 An idiomatic C++ client library for the [Certificate Manager API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+to acquire and manage TLS (SSL) certificates for use with Cloud Load Balancing.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -92,7 +92,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/certificatemanager
+[cloud-service-docs]: https://cloud.google.com/certificate-manager
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

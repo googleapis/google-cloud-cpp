@@ -46,6 +46,7 @@ GA_LIBRARIES = [
     "beyondcorp",
     "billing",
     "binaryauthorization",
+    "certificatemanager",
     "channel",
     "cloudbuild",
     "composer",

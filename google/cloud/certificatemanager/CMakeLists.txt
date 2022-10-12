@@ -120,9 +120,7 @@ if (BUILD_TESTING)
         NAME certificatemanager_quickstart
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:certificatemanager_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+            $<TARGET_FILE:certificatemanager_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(certificatemanager_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
