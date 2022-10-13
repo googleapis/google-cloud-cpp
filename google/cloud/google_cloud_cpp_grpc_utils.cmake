@@ -165,7 +165,7 @@ google_cloud_cpp_add_pkgconfig(
     "gRPC Utilities for the Google Cloud C++ Client Library"
     "Provides gRPC Utilities for the Google Cloud C++ Client Library."
     "google_cloud_cpp_common"
-    " google-cloud-cpp_protobuf_utils"
+    " google_cloud_cpp_protobuf_utils"
     " google_cloud_cpp_iam_protos"
     " google_cloud_cpp_longrunning_operations_protos"
     " google_cloud_cpp_rpc_status_protos"
@@ -293,8 +293,7 @@ if (BUILD_TESTING)
         target_link_libraries(
             ${target}
             PRIVATE google-cloud-cpp::grpc_utils
-                google-cloud-cpp::protobuf_utils
-                google-cloud-cpp::common
+                    google-cloud-cpp::protobuf_utils google-cloud-cpp::common
                     benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
