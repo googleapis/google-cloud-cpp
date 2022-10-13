@@ -58,6 +58,7 @@ GA_LIBRARIES = [
     "dataproc",
     "datastream",
     "debugger",
+    "deploy",
     "dialogflow_cx",
     "dialogflow_es",
     "dlp",

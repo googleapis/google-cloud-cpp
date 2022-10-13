@@ -85,6 +85,7 @@ declare -A -r LIBRARIES=(
   ["dataproc"]="@com_google_googleapis//google/cloud/dataproc/v1:dataproc_cc_grpc"
   ["datastream"]="@com_google_googleapis//google/cloud/datastream/v1:datastream_cc_grpc"
   ["debugger"]="@com_google_googleapis//google/devtools/clouddebugger/v2:clouddebugger_cc_grpc"
+  ["deploy"]="@com_google_googleapis//google/cloud/deploy/v1:deploy_cc_grpc"
   ["dialogflow"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_cc_grpc"
   ["dialogflow_cx"]="@com_google_googleapis//google/cloud/dialogflow/cx/v3:cx_cc_grpc"
   ["dlp"]="@com_google_googleapis//google/privacy/dlp/v2:dlp_cc_grpc"

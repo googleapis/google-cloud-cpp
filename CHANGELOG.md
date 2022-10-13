@@ -124,6 +124,7 @@ We are happy to announce the following GA libraries.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Datastream API](/google/cloud/datastream/README.md)
+- [Cloud Deploy API](/google/cloud/deploy/README.md)
 
 In addition, these existing libraries are now GA:
 

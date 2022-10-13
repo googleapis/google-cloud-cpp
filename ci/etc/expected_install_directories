@@ -148,6 +148,10 @@
 ./include/google/cloud/debugger
 ./include/google/cloud/debugger/internal
 ./include/google/cloud/debugger/mocks
+./include/google/cloud/deploy
+./include/google/cloud/deploy/internal
+./include/google/cloud/deploy/mocks
+./include/google/cloud/deploy/v1
 ./include/google/cloud/dialogflow
 ./include/google/cloud/dialogflow/cx
 ./include/google/cloud/dialogflow/cx/v3
@@ -483,6 +487,7 @@
 ./lib64/cmake/google_cloud_cpp_dataproc
 ./lib64/cmake/google_cloud_cpp_datastream
 ./lib64/cmake/google_cloud_cpp_debugger
+./lib64/cmake/google_cloud_cpp_deploy
 ./lib64/cmake/google_cloud_cpp_dialogflow_cx
 ./lib64/cmake/google_cloud_cpp_dialogflow_es
 ./lib64/cmake/google_cloud_cpp_dlp
