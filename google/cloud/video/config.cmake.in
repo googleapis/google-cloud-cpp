@@ -20,7 +20,3 @@ find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_video-targets.cmake")
-
-if (NOT TARGET google-cloud-cpp::experimental-video)
-    add_library(google-cloud-cpp::experimental-video ALIAS google-cloud-cpp::video)
-endif ()
