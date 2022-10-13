@@ -176,7 +176,7 @@ std::string CleanupDebugData(char const* data, std::size_t size) {
   auto const n = (std::min)(size, kMaxDebugLength);
   auto text = std::string{data, n};
   std::transform(text.begin(), text.end(), text.begin(),
-                 [](auto c) { return std::isprint(c) ? c : '.'; });
+                 [](unsigned char c) { return std::isprint(c) ? c : '.'; });
   return text;
 }
 
@@ -250,7 +250,7 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
     header_value = std::string(separator + 2, data + size - 2);
   }
   std::transform(header_name.begin(), header_name.end(), header_name.begin(),
-                 [](char x) { return std::tolower(x); });
+                 [](unsigned char x) { return std::tolower(x); });
   received_headers.emplace(std::move(header_name), std::move(header_value));
   return size;
 }

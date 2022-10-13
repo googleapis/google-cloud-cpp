@@ -26,7 +26,7 @@ std::string BinaryDataAsDebugString(char const* data, std::size_t size,
   auto dump = std::string{
       data, max_output_bytes == 0 ? size : std::min(size, max_output_bytes)};
   std::transform(dump.begin(), dump.end(), dump.begin(),
-                 [](auto c) { return std::isprint(c) ? c : '.'; });
+                 [](unsigned char c) { return std::isprint(c) ? c : '.'; });
   if (max_output_bytes == 0 || size <= max_output_bytes) return dump;
   return dump + "...<truncated>...";
 }

@@ -39,7 +39,9 @@ inline bool IsSpace(char ch) {
   return std::isspace(static_cast<unsigned char>(ch)) != 0;
 }
 
-inline char ToLower(char ch) { return static_cast<char>(std::tolower(ch)); }
+inline char ToLower(char ch) {
+  return static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
+}
 
 bool IsNaN(std::string const& rep) {
   char const* np = "nan";

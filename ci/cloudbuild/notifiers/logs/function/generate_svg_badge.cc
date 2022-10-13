@@ -82,7 +82,7 @@ std::string GenerateSvgBadge(std::string const& build_name,
   auto label = "gcb:" + build_name;
   auto message = status;
   std::transform(message.begin(), message.end(), message.begin(),
-                 [](auto c) { return static_cast<char>(std::tolower(c)); });
+                 [](unsigned char c) { return std::tolower(c); });
 
   auto textbox_width = [](std::string const& text) {
     auto constexpr kPadding = 10;
