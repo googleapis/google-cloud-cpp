@@ -655,7 +655,8 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
   if (curl_closed_) {
     OnTransferDone();
     status = google::cloud::rest_internal::AsStatus(
-        static_cast<HttpStatusCode>(http_code_), {});
+        static_cast<HttpStatusCode>(http_code_),
+        std::string(spill_.data(), spill_offset_));
     TRACE_STATE() << ", status=" << status << ", http code=" << http_code_
                   << "\n";
 
