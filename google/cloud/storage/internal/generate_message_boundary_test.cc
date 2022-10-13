@@ -42,7 +42,7 @@ TEST(GenerateMessageBoundaryTest, Candidate) {
     ASSERT_THAT(candidate, Not(IsEmpty()));
     EXPECT_LE(candidate.size(), kMaxBoundarySize);
     auto f = std::find_if(candidate.begin(), candidate.end(),
-                          [](char c) { return std::isalnum(c) == 0; });
+                          [](unsigned char c) { return std::isalnum(c) == 0; });
     EXPECT_TRUE(f == candidate.end())
         << "found non-alphanumeric character in " << candidate;
   }

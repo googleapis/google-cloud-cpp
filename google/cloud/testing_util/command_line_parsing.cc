@@ -61,8 +61,9 @@ std::chrono::seconds ParseDuration(std::string const& val) {
 
 absl::optional<bool> ParseBoolean(std::string const& val) {
   auto lower = val;
-  std::transform(lower.begin(), lower.end(), lower.begin(),
-                 [](char x) { return static_cast<char>(std::tolower(x)); });
+  std::transform(
+      lower.begin(), lower.end(), lower.begin(),
+      [](unsigned char x) { return static_cast<char>(std::tolower(x)); });
   if (lower == "true") return true;
   if (lower == "false") return false;
   return {};

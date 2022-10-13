@@ -31,15 +31,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-inline bool IsDigit(char ch) {
+inline bool IsDigit(unsigned char ch) {
   return std::isdigit(static_cast<unsigned char>(ch)) != 0;
 }
 
-inline bool IsSpace(char ch) {
+inline bool IsSpace(unsigned char ch) {
   return std::isspace(static_cast<unsigned char>(ch)) != 0;
 }
 
-inline char ToLower(char ch) { return static_cast<char>(std::tolower(ch)); }
+inline char ToLower(unsigned char ch) {
+  return static_cast<char>(std::tolower(ch));
+}
 
 bool IsNaN(std::string const& rep) {
   char const* np = "nan";
