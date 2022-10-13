@@ -30,14 +30,6 @@ EXPERIMENTAL_LIBRARIES = [
 ]
 
 TRANSITION_LIBRARIES = [
-    # Declared GA circa 2022-08-17
-    "baremetalsolution",
-    "beyondcorp",
-    "optimization",
-    "run",
-    "video",
-    # Declared GA on 2022-07-18
-    "osconfig",
 ]
 
 GA_LIBRARIES = [
@@ -50,6 +42,8 @@ GA_LIBRARIES = [
     "asset",
     "assuredworkloads",
     "automl",
+    "baremetalsolution",
+    "beyondcorp",
     "billing",
     "binaryauthorization",
     "channel",
@@ -86,7 +80,9 @@ GA_LIBRARIES = [
     "networkconnectivity",
     "networkmanagement",
     "notebooks",
+    "optimization",
     "orgpolicy",
+    "osconfig",
     "oslogin",
     "policytroubleshooter",
     "privateca",
@@ -96,6 +92,7 @@ GA_LIBRARIES = [
     "resourcemanager",
     "resourcesettings",
     "retail",
+    "run",
     "scheduler",
     "secretmanager",
     "securitycenter",
@@ -112,6 +109,7 @@ GA_LIBRARIES = [
     "tpu",
     "trace",
     "translate",
+    "video",
     "videointelligence",
     "vision",
     "vmmigration",
