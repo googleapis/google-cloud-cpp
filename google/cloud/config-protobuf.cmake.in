@@ -13,8 +13,9 @@
 # limitations under the License.
 
 include(CMakeFindDependencyMacro)
+find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_common)
 find_dependency(absl)
 find_dependency(protobuf)
 
-include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_protobuf_internal-targets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_protobuf_utils-targets.cmake")
