@@ -104,6 +104,10 @@
 ./include/google/cloud/binaryauthorization/internal
 ./include/google/cloud/binaryauthorization/mocks
 ./include/google/cloud/binaryauthorization/v1
+./include/google/cloud/certificatemanager
+./include/google/cloud/certificatemanager/internal
+./include/google/cloud/certificatemanager/mocks
+./include/google/cloud/certificatemanager/v1
 ./include/google/cloud/channel
 ./include/google/cloud/channel/internal
 ./include/google/cloud/channel/mocks
@@ -475,6 +479,7 @@
 ./lib64/cmake/google_cloud_cpp_bigtable
 ./lib64/cmake/google_cloud_cpp_billing
 ./lib64/cmake/google_cloud_cpp_binaryauthorization
+./lib64/cmake/google_cloud_cpp_certificatemanager
 ./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_cloudbuild
 ./lib64/cmake/google_cloud_cpp_composer

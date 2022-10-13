@@ -292,6 +292,14 @@ service {
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
+# Certificate Manager
+service {
+  service_proto_path: "google/cloud/certificatemanager/v1/certificate_manager.proto"
+  product_path: "google/cloud/certificatemanager"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Cloud Build
 service {
   service_proto_path: "google/devtools/cloudbuild/v1/cloudbuild.proto"

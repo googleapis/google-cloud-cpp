@@ -15,6 +15,7 @@ bigquery
 bigtable
 billing
 binaryauthorization
+certificatemanager
 channel
 cloudbuild
 composer
