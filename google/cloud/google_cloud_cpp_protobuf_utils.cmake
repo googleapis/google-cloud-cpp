@@ -38,7 +38,6 @@ add_library(google-cloud-cpp::protobuf_utils ALIAS
 
 create_bazel_config(google_cloud_cpp_protobuf_utils YEAR 2022)
 
-
 # Export the CMake targets to make it easy to create configuration files.
 install(
     EXPORT google_cloud_cpp_protobuf_utils-targets
@@ -73,8 +72,7 @@ google_cloud_cpp_install_headers(google_cloud_cpp_protobuf_utils
 google_cloud_cpp_add_pkgconfig(
     protobuf_utils "Protobuf Utilities for the Google Cloud C++ Client Library"
     "Provides Protobuf Utilities for the Google Cloud C++ Client Library."
-    "google_cloud_cpp_common"
-    " google_cloud_cpp_rpc_status_protos")
+    "google_cloud_cpp_common" " google_cloud_cpp_rpc_status_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
