@@ -22,19 +22,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 Subscriber::Subscriber(std::shared_ptr<SubscriberConnection> connection,
                        Options opts)
     : connection_(std::move(connection)),
-      options_(google::cloud::internal::MergeOptions(std::move(opts),
-                                                     connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 
 future<Status> Subscriber::Subscribe(ApplicationCallback cb, Options opts) {
-  google::cloud::internal::OptionsSpan span(
-      google::cloud::internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Subscribe({std::move(cb)});
 }
 
 future<Status> Subscriber::Subscribe(ExactlyOnceApplicationCallback cb,
                                      Options opts) {
-  google::cloud::internal::OptionsSpan span(
-      google::cloud::internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExactlyOnceSubscribe({std::move(cb)});
 }
 

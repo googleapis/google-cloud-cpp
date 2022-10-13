@@ -164,14 +164,14 @@ TEST(SubscriberTest, OptionsFunctionOverrides) {
                                  .set<TestOptionC>("test-c")));
   EXPECT_CALL(*mock, Subscribe).WillOnce([](auto const&) {
     auto const& current = google::cloud::internal::CurrentOptions();
-    EXPECT_EQ(current.get<TestOptionA>(), "override-a");
+    EXPECT_EQ(current.get<TestOptionA>(), "override-a1");
     EXPECT_EQ(current.get<TestOptionB>(), "override-b1");
     EXPECT_EQ(current.get<TestOptionC>(), "test-c");
     return make_ready_future(Status{});
   });
   EXPECT_CALL(*mock, ExactlyOnceSubscribe).WillOnce([](auto const&) {
     auto const& current = google::cloud::internal::CurrentOptions();
-    EXPECT_EQ(current.get<TestOptionA>(), "override-a");
+    EXPECT_EQ(current.get<TestOptionA>(), "override-a2");
     EXPECT_EQ(current.get<TestOptionB>(), "override-b2");
     EXPECT_EQ(current.get<TestOptionC>(), "test-c");
     return make_ready_future(Status{});
@@ -180,12 +180,16 @@ TEST(SubscriberTest, OptionsFunctionOverrides) {
   Subscriber subscriber(mock, Options{}.set<TestOptionA>("override-a"));
   ASSERT_STATUS_OK(subscriber
                        .Subscribe([](Message const&, AckHandler const&) {},
-                                  Options{}.set<TestOptionB>("override-b1"))
+                                  Options{}
+                                      .set<TestOptionA>("override-a1")
+                                      .set<TestOptionB>("override-b1"))
                        .get());
   ASSERT_STATUS_OK(
       subscriber
           .Subscribe([](Message const&, ExactlyOnceAckHandler const&) {},
-                     Options{}.set<TestOptionB>("override-b2"))
+                     Options{}
+                         .set<TestOptionA>("override-a2")
+                         .set<TestOptionB>("override-b2"))
           .get());
 }
 
