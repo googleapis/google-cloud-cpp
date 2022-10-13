@@ -125,6 +125,10 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Datastream API](/google/cloud/datastream/README.md)
 
+In addition, these existing libraries are now GA:
+
+- [Cloud Batch](/google/cloud/batch/README.md)
+
 ## v2.3.0 - 2022-10
 
 ### New Libraries
