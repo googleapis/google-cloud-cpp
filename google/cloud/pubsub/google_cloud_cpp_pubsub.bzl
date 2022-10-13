@@ -125,6 +125,7 @@ google_cloud_cpp_pubsub_srcs = [
     "schema_admin_connection.cc",
     "snapshot.cc",
     "snapshot_builder.cc",
+    "subscriber.cc",
     "subscriber_connection.cc",
     "subscriber_options.cc",
     "subscription.cc",

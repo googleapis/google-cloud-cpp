@@ -78,6 +78,9 @@ class SubscriberConnection {
    * simplify the use of mocks.
    */
   virtual future<Status> ExactlyOnceSubscribe(ExactlyOnceSubscribeParams p);
+
+  /// Returns the configuration parameters for this object
+  virtual Options options() { return Options{}; }
 };
 
 /**

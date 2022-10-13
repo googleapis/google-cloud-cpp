@@ -90,8 +90,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class Subscriber {
  public:
-  explicit Subscriber(std::shared_ptr<SubscriberConnection> connection)
-      : connection_(std::move(connection)) {}
+  explicit Subscriber(std::shared_ptr<SubscriberConnection> connection,
+                      Options opts = {});
 
   /**
    * Creates a new session to receive messages from @p subscription.
@@ -114,14 +114,15 @@ class Subscriber {
    * @snippet samples.cc subscribe
    *
    * @param cb the callable invoked when messages are received.
+   * @param opts any option overrides to use in this call.  These options take
+   *   precedence over the options passed in the constructor, and over any
+   *   options provided in the `PublisherConnection` initialization.
    * @return a future that is satisfied when the session will no longer receive
    *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
    *     terminate the session and satisfy the future.
    */
-  future<Status> Subscribe(ApplicationCallback cb) {
-    return connection_->Subscribe({std::move(cb)});
-  }
+  future<Status> Subscribe(ApplicationCallback cb, Options opts = {});
 
   /**
    * Creates a new session to receive messages from @p subscription using
@@ -145,17 +146,20 @@ class Subscriber {
    * @snippet samples.cc exactly-once-subscribe
    *
    * @param cb the callable invoked when messages are received.
+   * @param opts any option overrides to use in this call.  These options take
+   *   precedence over the options passed in the constructor, and over any
+   *   options provided in the `PublisherConnection` initialization.
    * @return a future that is satisfied when the session will no longer receive
    *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
    *     terminate the session and satisfy the future.
    */
-  future<Status> Subscribe(ExactlyOnceApplicationCallback cb) {
-    return connection_->ExactlyOnceSubscribe({std::move(cb)});
-  }
+  future<Status> Subscribe(ExactlyOnceApplicationCallback cb,
+                           Options opts = {});
 
  private:
   std::shared_ptr<SubscriberConnection> connection_;
+  google::cloud::Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

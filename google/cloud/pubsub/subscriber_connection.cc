@@ -48,16 +48,18 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
   ~SubscriberConnectionImpl() override = default;
 
   future<Status> Subscribe(SubscribeParams p) override {
-    return CreateSubscriptionSession(subscription_, opts_, stub_,
-                                     background_->cq(), MakeClientId(),
-                                     std::move(p.callback));
+    return CreateSubscriptionSession(
+        subscription_, google::cloud::internal::CurrentOptions(), stub_,
+        background_->cq(), MakeClientId(), std::move(p.callback));
   }
 
   future<Status> ExactlyOnceSubscribe(ExactlyOnceSubscribeParams p) override {
-    return CreateSubscriptionSession(subscription_, opts_, stub_,
-                                     background_->cq(), MakeClientId(),
-                                     std::move(p.callback));
+    return CreateSubscriptionSession(
+        subscription_, google::cloud::internal::CurrentOptions(), stub_,
+        background_->cq(), MakeClientId(), std::move(p.callback));
   }
+
+  Options options() override { return opts_; }
 
  private:
   std::string MakeClientId() {
