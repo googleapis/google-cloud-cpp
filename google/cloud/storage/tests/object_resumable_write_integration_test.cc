@@ -312,7 +312,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
       AnyOf(Eq(StatusCode::kFailedPrecondition), Eq(StatusCode::kAborted)))
       << " status=" << os.metadata().status();
 
-  if (UsingEmulator() && os.metadata().status().code() == StatusCode::kFailedPrecondition) {
+  if (UsingEmulator() &&
+      os.metadata().status().code() == StatusCode::kFailedPrecondition) {
     auto constexpr kErrorMessage =
         R"""(Permanent error UploadChunk: {"error":{"code":412,"message":"{\"error\": {\"errors\": [{\"domain\": \"global\", \"message\": \"ifGenerationMatch validation failed. Expected = 0 vs Actual =)""";
     EXPECT_THAT(os.metadata().status().message(), HasSubstr(kErrorMessage));
