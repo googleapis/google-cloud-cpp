@@ -114,6 +114,9 @@ class Subscriber {
    * @snippet samples.cc subscribe
    *
    * @param cb the callable invoked when messages are received.
+   * @param opts any option overrides to use in this call.  These options take
+   *   precedence over the options passed in the constructor, and over any
+   *   options provided in the `PublisherConnection` initialization.
    * @return a future that is satisfied when the session will no longer receive
    *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
@@ -143,6 +146,9 @@ class Subscriber {
    * @snippet samples.cc exactly-once-subscribe
    *
    * @param cb the callable invoked when messages are received.
+   * @param opts any option overrides to use in this call.  These options take
+   *   precedence over the options passed in the constructor, and over any
+   *   options provided in the `PublisherConnection` initialization.
    * @return a future that is satisfied when the session will no longer receive
    *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
