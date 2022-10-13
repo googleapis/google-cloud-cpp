@@ -28,6 +28,7 @@ namespace {
 using ::testing::AnyOf;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 class ObjectResumableWriteIntegrationTest
@@ -310,6 +311,14 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
       os.metadata().status().code(),
       AnyOf(Eq(StatusCode::kFailedPrecondition), Eq(StatusCode::kAborted)))
       << " status=" << os.metadata().status();
+
+  if (UsingEmulator() && os.metadata().status().code() == StatusCode::kFailedPrecondition) {
+    auto constexpr kErrorMessage =
+        R"""(Permanent error UploadChunk: {"error":{"code":412,"message":"{\"error\": {\"errors\": [{\"domain\": \"global\", \"message\": \"ifGenerationMatch validation failed. Expected = 0 vs Actual =)""";
+    EXPECT_THAT(os.metadata().status().message(), HasSubstr(kErrorMessage));
+    EXPECT_THAT(os.metadata().status().error_info().domain(), IsEmpty());
+    EXPECT_THAT(os.metadata().status().error_info().reason(), IsEmpty());
+  }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
