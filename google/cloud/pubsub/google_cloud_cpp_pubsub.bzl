@@ -135,4 +135,5 @@ google_cloud_cpp_pubsub_srcs = [
     "topic_admin_client.cc",
     "topic_admin_connection.cc",
     "topic_builder.cc",
+    "subscriber.cc",
 ]

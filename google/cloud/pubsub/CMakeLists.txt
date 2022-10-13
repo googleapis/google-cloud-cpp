@@ -128,6 +128,7 @@ add_library(
     snapshot.h
     snapshot_builder.cc
     snapshot_builder.h
+    subscriber.cc
     subscriber.h
     subscriber_connection.cc
     subscriber_connection.h
