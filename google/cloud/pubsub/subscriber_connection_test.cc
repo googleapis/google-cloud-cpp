@@ -87,6 +87,7 @@ TEST(SubscriberConnectionTest, Basic) {
     waiter.set_value();
   };
   std::thread t([&cq] { cq.Run(); });
+  google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->Subscribe({handler});
   waiter.get_future().wait();
   response.cancel();
@@ -132,6 +133,7 @@ TEST(SubscriberConnectionTest, ExactlyOnce) {
     waiter.set_value();
   };
   std::thread t([&cq] { cq.Run(); });
+  google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->ExactlyOnceSubscribe({callback});
   waiter.get_future().wait();
   response.cancel();
@@ -187,6 +189,7 @@ TEST(SubscriberConnectionTest, PullFailure) {
 
   auto subscriber = MakeTestSubscriberConnection(subscription, mock);
   auto handler = [&](Message const&, AckHandler const&) {};
+  google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->Subscribe({handler});
   EXPECT_THAT(response.get(),
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
@@ -227,6 +230,7 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
     waiter.set_value();
   };
   std::thread t([&cq] { cq.Run(); });
+  google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->Subscribe({handler});
   waiter.get_future().wait();
   response.cancel();
@@ -283,6 +287,7 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
     if (received_one.test_and_set()) return;
     waiter.set_value();
   };
+  google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->Subscribe({handler});
   waiter.get_future().wait();
   response.cancel();
