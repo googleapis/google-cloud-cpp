@@ -15,10 +15,7 @@
 #include "google/cloud/pubsub/topic_admin_connection.h"
 #include "google/cloud/pubsub/internal/create_channel.h"
 #include "google/cloud/pubsub/internal/defaults.h"
-#include "google/cloud/pubsub/internal/publisher_auth.h"
-#include "google/cloud/pubsub/internal/publisher_logging.h"
-#include "google/cloud/pubsub/internal/publisher_metadata.h"
-#include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/pubsub/internal/publisher_stub_factory.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -233,24 +230,6 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
   Options options_;
 };
 
-// Decorates a TopicAdminStub. This works for both mock and real stubs.
-std::shared_ptr<pubsub_internal::PublisherStub> DecorateTopicAdminStub(
-    Options const& opts,
-    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
-    std::shared_ptr<pubsub_internal::PublisherStub> stub) {
-  if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<pubsub_internal::PublisherAuth>(std::move(auth),
-                                                            std::move(stub));
-  }
-  stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
-  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
-    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<pubsub_internal::PublisherLogging>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>());
-  }
-  return stub;
-}
-
 }  // namespace
 
 TopicAdminConnection::~TopicAdminConnection() = default;
@@ -309,13 +288,7 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(Options opts) {
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
 
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      background->cq(), opts);
-
-  auto stub = pubsub_internal::CreateDefaultPublisherStub(auth->CreateChannel(
-      opts.get<EndpointOption>(), internal::MakeChannelArguments(opts)));
-
-  stub = DecorateTopicAdminStub(opts, std::move(auth), std::move(stub));
+  auto stub = pubsub_internal::MakeDefaultPublisherStub(background->cq(), opts);
   return std::make_shared<TopicAdminConnectionImpl>(
       std::move(background), std::move(stub), std::move(opts));
 }
@@ -339,9 +312,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<pubsub::TopicAdminConnection> MakeTestTopicAdminConnection(
     Options const& opts, std::shared_ptr<PublisherStub> stub) {
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      background->cq(), opts);
-  stub = pubsub::DecorateTopicAdminStub(opts, std::move(auth), std::move(stub));
+  stub = pubsub_internal::MakeTestPublisherStub(background->cq(), opts,
+                                                {std::move(stub)});
   return std::make_shared<pubsub::TopicAdminConnectionImpl>(
       std::move(background), std::move(stub), opts);
 }
