@@ -324,9 +324,11 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
     auto constexpr kProdErrorMessage =
         R"""(Permanent error UploadChunk: At least one of the pre-conditions you specified did not hold.)""";
     EXPECT_THAT(os.metadata().status().message(), HasSubstr(kProdErrorMessage));
-    EXPECT_THAT(os.metadata().status().error_info().domain(), Eq("global"));
-    EXPECT_THAT(os.metadata().status().error_info().reason(),
-                Eq("conditionNotMet"));
+    if (!UsingGrpc()) {
+      EXPECT_THAT(os.metadata().status().error_info().domain(), Eq("global"));
+      EXPECT_THAT(os.metadata().status().error_info().reason(),
+                  Eq("conditionNotMet"));
+    }
   }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
