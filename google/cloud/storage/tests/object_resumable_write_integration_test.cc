@@ -314,11 +314,19 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
 
   if (UsingEmulator() &&
       os.metadata().status().code() == StatusCode::kFailedPrecondition) {
-    auto constexpr kErrorMessage =
+    auto constexpr kEmulatorErrorMessage =
         R"""(Permanent error UploadChunk: {"error":{"code":412,"message":"{\"error\": {\"errors\": [{\"domain\": \"global\", \"message\": \"ifGenerationMatch validation failed. Expected = 0 vs Actual =)""";
-    EXPECT_THAT(os.metadata().status().message(), HasSubstr(kErrorMessage));
+    EXPECT_THAT(os.metadata().status().message(),
+                HasSubstr(kEmulatorErrorMessage));
     EXPECT_THAT(os.metadata().status().error_info().domain(), IsEmpty());
     EXPECT_THAT(os.metadata().status().error_info().reason(), IsEmpty());
+  } else if (os.metadata().status().code() == StatusCode::kFailedPrecondition) {
+    auto constexpr kProdErrorMessage =
+        R"""(Permanent error UploadChunk: At least one of the pre-conditions you specified did not hold.)""";
+    EXPECT_THAT(os.metadata().status().message(), HasSubstr(kProdErrorMessage));
+    EXPECT_THAT(os.metadata().status().error_info().domain(), Eq("global"));
+    EXPECT_THAT(os.metadata().status().error_info().reason(),
+                Eq("conditionNotMet"));
   }
 
   auto status = client->DeleteObject(bucket_name_, object_name);

@@ -106,7 +106,7 @@ class CurlImpl {
 
   // Cleanup the CURL handles, leaving them ready for reuse.
   void CleanupHandles();
-  // Copy any available data from the spill buffer to `buffer_`
+  // Copy any available data from the spill buffer to `remaining_buffer_`
   std::size_t DrainSpillBuffer();
   // Use libcurl to perform at least part of the request.
   StatusOr<int> PerformWork();
@@ -161,8 +161,10 @@ class CurlImpl {
   // Track when status and headers from the response are received.
   bool all_headers_received_ = false;
 
-  // Track the usage of the buffer provided to Read.
-  absl::Span<char> buffer_;
+  // Track the usage of the output Span provided to Read. As bytes are read from
+  // the connection to the user provided buffer, this variable is overwritten to
+  // represent the remaining space in the user provided buffer.
+  absl::Span<char> remaining_buffer_;
 
   // libcurl(1) will never pass a block larger than CURL_MAX_WRITE_SIZE to
   // `WriteCallback()`:
