@@ -72,6 +72,8 @@ add_library(
     internal/publisher_round_robin.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
+    internal/publisher_stub_factory.cc
+    internal/publisher_stub_factory.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
     internal/schema_auth.cc

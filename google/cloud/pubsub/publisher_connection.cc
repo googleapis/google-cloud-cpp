@@ -20,16 +20,11 @@
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_connection.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
-#include "google/cloud/pubsub/internal/publisher_auth.h"
-#include "google/cloud/pubsub/internal/publisher_logging.h"
-#include "google/cloud/pubsub/internal/publisher_metadata.h"
-#include "google/cloud/pubsub/internal/publisher_round_robin.h"
-#include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/pubsub/internal/publisher_stub_factory.h"
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
 #include "google/cloud/pubsub/internal/sequential_batch_sink.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/future_void.h"
 #include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/log.h"
 #include <memory>
@@ -39,26 +34,6 @@ namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-
-std::shared_ptr<pubsub_internal::PublisherStub> DecoratePublisherStub(
-    Options const& opts,
-    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
-    std::vector<std::shared_ptr<pubsub_internal::PublisherStub>> children) {
-  std::shared_ptr<pubsub_internal::PublisherStub> stub =
-      std::make_shared<pubsub_internal::PublisherRoundRobin>(
-          std::move(children));
-  if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<pubsub_internal::PublisherAuth>(std::move(auth),
-                                                            std::move(stub));
-  }
-  stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
-  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
-    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<pubsub_internal::PublisherLogging>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>());
-  }
-  return stub;
-}
 
 std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
     pubsub::Topic topic, Options opts,
@@ -122,17 +97,8 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
                                  PublisherOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultPublisherOptions(std::move(opts));
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      background->cq(), opts);
-  std::vector<std::shared_ptr<pubsub_internal::PublisherStub>> children(
-      opts.get<GrpcNumChannelsOption>());
-  int id = 0;
-  std::generate(children.begin(), children.end(), [&id, &opts, &auth] {
-    return pubsub_internal::CreateDefaultPublisherStub(
-        auth->CreateChannel(opts.get<EndpointOption>(),
-                            pubsub_internal::MakeChannelArguments(opts, id++)));
-  });
-  auto stub = DecoratePublisherStub(opts, std::move(auth), std::move(children));
+  auto stub =
+      pubsub_internal::MakeRoundRobinPublisherStub(background->cq(), opts);
   return ConnectionFromDecoratedStub(std::move(topic), std::move(opts),
                                      std::move(background), std::move(stub));
 }
@@ -159,10 +125,8 @@ std::shared_ptr<pubsub::PublisherConnection> MakeTestPublisherConnection(
     pubsub::Topic topic, Options opts,
     std::vector<std::shared_ptr<PublisherStub>> stubs) {
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      background->cq(), opts);
-  auto stub =
-      pubsub::DecoratePublisherStub(opts, std::move(auth), std::move(stubs));
+  auto stub = pubsub_internal::MakeTestPublisherStub(background->cq(), opts,
+                                                     std::move(stubs));
   return pubsub::ConnectionFromDecoratedStub(std::move(topic), std::move(opts),
                                              std::move(background),
                                              std::move(stub));
