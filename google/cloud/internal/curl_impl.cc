@@ -30,7 +30,8 @@
 // `TRACE_STATE()` macro is only needed by the library developers when
 // troubleshooting this class.
 #define TRACE_STATE()                                                       \
-  GCP_LOG(TRACE) << __func__ << "(), buffer_.size()=" << buffer_.size()     \
+  GCP_LOG(TRACE) << __func__ << "(), remaining_buffer_.size()="             \
+                 << remaining_buffer_.size()                                \
                  << ", spill_.max_size()=" << spill_.max_size()             \
                  << ", spill_offset_=" << spill_offset_                     \
                  << ", closing=" << closing_ << ", closed=" << curl_closed_ \
@@ -192,7 +193,7 @@ CurlImpl::CurlImpl(CurlHandle handle,
       download_stall_timeout_(0),
       handle_(std::move(handle)),
       multi_(factory_->CreateMultiHandle()),
-      buffer_({nullptr, 0}),
+      remaining_buffer_({nullptr, 0}),
       options_(std::move(options)) {
   CurlInitializeOnce(options_);
   ApplyOptions(options_);
@@ -275,7 +276,7 @@ std::size_t CurlImpl::WriteAllBytesToSpillBuffer(void* ptr, std::size_t size,
 
 std::size_t CurlImpl::WriteToUserBuffer(void* ptr, std::size_t size,
                                         std::size_t nmemb) {
-  if (buffer_.empty()) {
+  if (remaining_buffer_.empty()) {
     TRACE_STATE()
         << " buffer_offset_ >= buffer_size_ *** PAUSING HANDLE *** << \n";
     paused_ = true;
@@ -287,7 +288,7 @@ std::size_t CurlImpl::WriteToUserBuffer(void* ptr, std::size_t size,
   // of absl::Span<char>.
   // Use the spill buffer first, if there is any...
   (void)DrainSpillBuffer();
-  std::size_t free = buffer_.size();
+  std::size_t free = remaining_buffer_.size();
   if (free == 0) {
     TRACE_STATE()
         << " (buffer_size_ - buffer_offset_) == 0 *** PAUSING HANDLE *** \n";
@@ -299,8 +300,8 @@ std::size_t CurlImpl::WriteToUserBuffer(void* ptr, std::size_t size,
 
   // Copy the full contents of `ptr` into the application buffer.
   if (size * nmemb < free) {
-    buffer_ =
-        WriteToBuffer(std::move(buffer_),
+    remaining_buffer_ =
+        WriteToBuffer(std::move(remaining_buffer_),
                       absl::Span<char>(static_cast<char*>(ptr), size * nmemb));
 
     TRACE_STATE() << ", copy full"
@@ -309,8 +310,9 @@ std::size_t CurlImpl::WriteToUserBuffer(void* ptr, std::size_t size,
   }
 
   // Copy as much as possible from `ptr` into the application buffer.
-  buffer_ = WriteToBuffer(std::move(buffer_),
-                          absl::Span<char>(static_cast<char*>(ptr), free));
+  remaining_buffer_ =
+      WriteToBuffer(std::move(remaining_buffer_),
+                    absl::Span<char>(static_cast<char*>(ptr), free));
   // The rest goes into the spill buffer.
   spill_offset_ = size * nmemb - free;
   std::memcpy(spill_.data(), static_cast<char*>(ptr) + free, spill_offset_);
@@ -340,7 +342,7 @@ std::size_t CurlImpl::WriteCallback(void* ptr, std::size_t size,
   // Any payload bytes sequestered in the spill buffer will be the first
   // returned to the user on attempts to read the payload. Only after the spill
   // buffer has been emptied will we read more from handle_.
-  if (!all_headers_received_ && buffer_.empty()) {
+  if (!all_headers_received_ && remaining_buffer_.empty()) {
     all_headers_received_ = true;
     http_code_ = handle_.GetResponseCode();
     return WriteAllBytesToSpillBuffer(ptr, size, nmemb);
@@ -451,12 +453,12 @@ Status CurlImpl::OnTransferError(Status status) {
 
 std::size_t CurlImpl::DrainSpillBuffer() {
   handle_.FlushDebug(__func__);
-  std::size_t free = buffer_.size();
+  std::size_t free = remaining_buffer_.size();
   auto copy_count = (std::min)(free, spill_offset_);
   if (copy_count > 0) {
     TRACE_STATE() << ", drain n=" << copy_count << " from spill\n";
-    buffer_ =
-        WriteToBuffer(buffer_, absl::Span<char>(spill_.data(), copy_count));
+    remaining_buffer_ = WriteToBuffer(
+        remaining_buffer_, absl::Span<char>(spill_.data(), copy_count));
     // TODO(#7958): Consider making the spill buffer a circular buffer and then
     // we could remove this memmove step.
     std::memmove(spill_.data(), spill_.data() + copy_count,
@@ -610,7 +612,7 @@ StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> output) {
 
 StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
   TRACE_STATE() << "begin\n";
-  buffer_ = output;
+  remaining_buffer_ = output;
   // Before calling `Wait()` copy any data from the spill buffer into the
   // application buffer. It is possible that `Wait()` will never call
   // `WriteCallback()`, for example, because the Read() or Peek() closed the
@@ -637,33 +639,46 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
     if (!status.ok()) return OnTransferError(std::move(status));
   }
 
-  if (buffer_.empty()) {
+  if (remaining_buffer_.empty()) {
     // Once we have received the status and all the headers, we have read
     // enough to satisfy calls to any of RestResponse's methods, and we can
     // stop reading until we have a user buffer to write the payload.
     status = PerformWorkUntil(
         [this] { return curl_closed_ || paused_ || all_headers_received_; });
   } else {
-    status = PerformWorkUntil(
-        [this] { return curl_closed_ || paused_ || buffer_.empty(); });
+    status = PerformWorkUntil([this] {
+      return curl_closed_ || paused_ || remaining_buffer_.empty();
+    });
   }
 
   TRACE_STATE() << ", status=" << status << "\n";
   if (!status.ok()) return OnTransferError(std::move(status));
-  bytes_read = output.size() - buffer_.size();
+  bytes_read = output.size() - remaining_buffer_.size();
 
   if (curl_closed_) {
     OnTransferDone();
+    // Make a cheap Status to check for failures.
     status = google::cloud::rest_internal::AsStatus(
-        static_cast<HttpStatusCode>(http_code_),
-        std::string(spill_.data(), spill_offset_));
+        static_cast<HttpStatusCode>(http_code_), {});
     TRACE_STATE() << ", status=" << status << ", http code=" << http_code_
                   << "\n";
-
     if (status.ok() ||
         internal::Contains(ignored_http_error_codes_, http_code_)) {
       return bytes_read;
     }
+
+    // libcurl has closed the connection, and it's possible an error has
+    // occurred. We can no longer read any more bytes from this closed
+    // connection, but we may have a payload with additional diagnostics in the
+    // user provided buffer and/or the spill buffer. We need to relay all we
+    // have to the user.
+    std::string payload;
+    if (output.data() != nullptr) {
+      payload.append(output.data(), bytes_read);
+    }
+    payload.append(spill_.data(), spill_offset_);
+    status = google::cloud::rest_internal::AsStatus(
+        static_cast<HttpStatusCode>(http_code_), std::move(payload));
     return status;
   }
   TRACE_STATE() << ", http code=" << http_code_ << "\n";
