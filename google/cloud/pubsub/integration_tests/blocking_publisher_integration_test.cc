@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/blocking_publisher_connection.h"
+#include "google/cloud/pubsub/blocking_publisher.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
@@ -72,9 +72,9 @@ TEST_F(BlockingPublisherIntegrationTest, Basic) {
                   .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                   .set<internal::UseInsecureChannelOption>(true);
   }
-  auto publisher = MakeBlockingPublisherConnection(options);
-  auto publish = publisher->Publish(
-      {topic_, MessageBuilder().SetData("test data").Build()});
+  auto publisher = BlockingPublisher(MakeBlockingPublisherConnection(options));
+  auto publish =
+      publisher.Publish(topic_, MessageBuilder().SetData("test data").Build());
   ASSERT_STATUS_OK(publish);
 }
 

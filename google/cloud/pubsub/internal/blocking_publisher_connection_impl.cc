@@ -33,12 +33,13 @@ BlockingPublisherConnectionImpl::BlockingPublisherConnectionImpl(
 
 StatusOr<std::string> BlockingPublisherConnectionImpl::Publish(
     PublishParams p) {
+  auto const& current = internal::CurrentOptions();
   google::pubsub::v1::PublishRequest request;
   request.set_topic(p.topic.FullName());
   *request.add_messages() = ToProto(std::move(p.message));
   auto response = RetryLoop(
-      options_.get<pubsub::RetryPolicyOption>()->clone(),
-      options_.get<pubsub::BackoffPolicyOption>()->clone(),
+      current.get<pubsub::RetryPolicyOption>()->clone(),
+      current.get<pubsub::BackoffPolicyOption>()->clone(),
       Idempotency::kIdempotent,
       [this](grpc::ClientContext& context,
              google::pubsub::v1::PublishRequest const& request) {
