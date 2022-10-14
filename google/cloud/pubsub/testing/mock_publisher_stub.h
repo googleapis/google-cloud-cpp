@@ -79,6 +79,10 @@ class MockPublisherStub : public pubsub_internal::PublisherStub {
                std::unique_ptr<grpc::ClientContext>,
                google::pubsub::v1::PublishRequest const&),
               (override));
+
+  MOCK_METHOD(StatusOr<google::pubsub::v1::PublishResponse>, Publish,
+              (grpc::ClientContext&, google::pubsub::v1::PublishRequest const&),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

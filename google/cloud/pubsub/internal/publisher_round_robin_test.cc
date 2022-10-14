@@ -227,6 +227,26 @@ TEST(PublisherRoundRobinTest, AsyncPublish) {
   }
 }
 
+TEST(PublisherRoundRobinTest, Publish) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, Publish)
+          .WillOnce(
+              Return(make_status_or(google::pubsub::v1::PublishResponse{})));
+    }
+  }
+  PublisherRoundRobin stub(AsPlainStubs(mocks));
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    grpc::ClientContext context;
+    google::pubsub::v1::PublishRequest request;
+    request.set_topic("test-topic-name");
+    auto status = stub.Publish(context, request);
+    EXPECT_STATUS_OK(status);
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

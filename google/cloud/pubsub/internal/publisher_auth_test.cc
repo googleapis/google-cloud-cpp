@@ -189,6 +189,23 @@ TEST(PublisherAuthTest, AsyncPublish) {
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST(PublisherAuthTest, Publish) {
+  auto mock = std::make_shared<MockPublisherStub>();
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto under_test = PublisherAuth(MakeTypicalMockAuth(), mock);
+  google::pubsub::v1::PublishRequest request;
+  grpc::ClientContext ctx;
+  auto auth_failure = under_test.Publish(ctx, request);
+  EXPECT_THAT(ctx.credentials(), IsNull());
+  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+
+  auto auth_success = under_test.Publish(ctx, request);
+  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
+  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

@@ -126,6 +126,17 @@ PublisherLogging::AsyncPublish(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::PublishResponse> PublisherLogging::Publish(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PublishRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::PublishRequest const& request) {
+        return child_->Publish(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

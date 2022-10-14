@@ -71,6 +71,10 @@ class PublisherRoundRobin : public PublisherStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::PublishRequest const& request) override;
 
+  StatusOr<google::pubsub::v1::PublishResponse> Publish(
+      grpc::ClientContext& context,
+      google::pubsub::v1::PublishRequest const& request) override;
+
  private:
   std::shared_ptr<PublisherStub> Child();
 
