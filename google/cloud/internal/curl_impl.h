@@ -132,7 +132,6 @@ class CurlImpl {
   std::uint32_t download_stall_minimum_rate_ = 1;
   std::string http_version_;
   std::int32_t http_code_;
-  std::set<std::int32_t> ignored_http_error_codes_;
 
   // Explicitly closing the handle happens in two steps.
   // 1. This class needs to notify libcurl that the transfer is terminated by

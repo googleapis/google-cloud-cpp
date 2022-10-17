@@ -634,7 +634,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObjectXml(
 
   auto response = storage_rest_client_->Get(std::move(builder).BuildRequest());
   if (!response.ok()) return std::move(response).status();
-
+  if (IsHttpError((*response)->StatusCode())) {
+    return rest::AsStatus(std::move(**response));
+  }
   return std::unique_ptr<ObjectReadSource>(
       new RestObjectReadSource(*std::move(response)));
 }
@@ -667,6 +669,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
 
   auto response = storage_rest_client_->Get(std::move(builder).BuildRequest());
   if (!response.ok()) return response.status();
+  if (IsHttpError((*response)->StatusCode())) {
+    return rest::AsStatus(std::move(**response));
+  }
 
   return std::unique_ptr<ObjectReadSource>(
       new RestObjectReadSource(*std::move(response)));

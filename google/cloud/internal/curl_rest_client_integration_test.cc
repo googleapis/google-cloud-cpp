@@ -28,7 +28,6 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -146,31 +145,6 @@ TEST_F(RestClientIntegrationTest, Get) {
   auto body = ReadAll(std::move(payload));
   EXPECT_STATUS_OK(body);
   EXPECT_GT(body->size(), 0);
-}
-
-TEST_F(RestClientIntegrationTest, GetWithIgnoredErrorCode) {
-  options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client =
-      MakeDefaultRestClient(url_, Options{}.set<IgnoredHttpErrorCodes>({308}));
-  RestRequest request;
-  request.SetPath("status/308");
-  auto response_status = RetryRestRequest([&] { return client->Get(request); });
-  ASSERT_STATUS_OK(response_status);
-  auto response = std::move(response_status.value());
-  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kResumeIncomplete));
-  EXPECT_GT(response->Headers().size(), 0);
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
-  EXPECT_STATUS_OK(body);
-}
-
-TEST_F(RestClientIntegrationTest, GetWithNonIgnoredErrorCode) {
-  options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = MakeDefaultRestClient(url_, {});
-  RestRequest request;
-  request.SetPath("status/308");
-  auto response_status = RetryRestRequest([&] { return client->Get(request); });
-  EXPECT_THAT(response_status, Not(IsOk()));
 }
 
 TEST_F(RestClientIntegrationTest, Delete) {
