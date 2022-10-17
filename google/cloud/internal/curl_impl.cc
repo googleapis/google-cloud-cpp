@@ -342,6 +342,8 @@ std::size_t CurlImpl::WriteCallback(void* ptr, std::size_t size,
   if (!all_headers_received_ && buffer_.empty()) {
     all_headers_received_ = true;
     http_code_ = handle_.GetResponseCode();
+    // Capture the peer (the HTTP server), used for troubleshooting.
+    received_headers_.emplace(":curl-peer", handle_.GetPeer());
     return WriteAllBytesToSpillBuffer(ptr, size, nmemb);
   }
   return WriteToUserBuffer(ptr, size, nmemb);
@@ -419,8 +421,6 @@ void CurlImpl::SetUrl(
 
 void CurlImpl::OnTransferDone() {
   http_code_ = handle_.GetResponseCode();
-  // Capture the peer (the HTTP server), used for troubleshooting.
-  received_headers_.emplace(":curl-peer", handle_.GetPeer());
   TRACE_STATE() << "\n";
 
   // handle_ was removed from multi_ as part of the transfer completing in
@@ -656,7 +656,6 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
     return bytes_read;
   }
   TRACE_STATE() << ", http code=" << http_code_ << "\n";
-  received_headers_.emplace(":curl-peer", handle_.GetPeer());
   return bytes_read;
 }
 
