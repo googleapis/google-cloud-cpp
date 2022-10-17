@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Publish messages to the Cloud Pub/Sub service.
  *
- * This class is used to publish message to a given topic, with a fixed
+ * This class is used to publish messages to a fixed topic, with a fixed
  * configuration such as credentials, batching, background threads, etc.
  * Applications that publish messages to multiple topics need to create separate
  * instances of this class. Applications wanting to publish events with
