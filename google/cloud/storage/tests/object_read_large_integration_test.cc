@@ -28,6 +28,8 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+// This test depends on Linux-specific features.
+#if GTEST_OS_LINUX
 using ::google::cloud::internal::GetEnv;
 
 class ObjectReadLargeIntegrationTest
@@ -69,7 +71,6 @@ TEST_F(ObjectReadLargeIntegrationTest, LimitedMemoryGrowth) {
     ASSERT_STATUS_OK(meta);
     ScheduleForDelete(*meta);
   }
-  if (!GTEST_OS_LINUX) GTEST_SKIP();
 
   auto constexpr kBufferSize = 128 * 1024;
   auto constexpr kRssTolerance = 32 * 1024 * 1024;
@@ -88,6 +89,7 @@ TEST_F(ObjectReadLargeIntegrationTest, LimitedMemoryGrowth) {
   }
   EXPECT_STATUS_OK(reader.status());
 }
+#endif  // GTEST_OS_LINUX
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
