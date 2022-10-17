@@ -386,10 +386,6 @@ TEST_F(ClientOptionsTest, DefaultOptions) {
   EXPECT_EQ(o.get<rest::EnableCurlSigpipeHandlerOption>(),
             o.get<EnableCurlSigpipeHandlerOption>());
 
-  EXPECT_THAT(o.get<rest::IgnoredHttpErrorCodes>(),
-              UnorderedElementsAre(rest::kResumeIncomplete,
-                                   rest::kClientClosedRequest));
-
   EXPECT_FALSE(o.has<rest::HttpVersionOption>());
   EXPECT_FALSE(o.has<rest::CAPathOption>());
 }

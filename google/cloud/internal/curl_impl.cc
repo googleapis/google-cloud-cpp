@@ -181,7 +181,6 @@ void CurlImpl::ApplyOptions(Options const& options) {
   transfer_stall_minimum_rate_ = options.get<TransferStallMinimumRateOption>();
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
   transfer_stall_minimum_rate_ = options.get<DownloadStallMinimumRateOption>();
-  ignored_http_error_codes_ = options.get<IgnoredHttpErrorCodes>();
 }
 
 CurlImpl::CurlImpl(CurlHandle handle,
@@ -654,16 +653,7 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
 
   if (curl_closed_) {
     OnTransferDone();
-    status = google::cloud::rest_internal::AsStatus(
-        static_cast<HttpStatusCode>(http_code_), {});
-    TRACE_STATE() << ", status=" << status << ", http code=" << http_code_
-                  << "\n";
-
-    if (status.ok() ||
-        internal::Contains(ignored_http_error_codes_, http_code_)) {
-      return bytes_read;
-    }
-    return status;
+    return bytes_read;
   }
   TRACE_STATE() << ", http code=" << http_code_ << "\n";
   received_headers_.emplace(":curl-peer", handle_.GetPeer());

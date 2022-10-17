@@ -49,7 +49,7 @@ StatusCode MapHttpCodeToStatus3xx(std::int32_t code) {
     //   is a success status.
     //
     // This level of complexity / detail is something that the caller should
-    // handle, that is what `IgnoredHttpErrorCodes` are for.
+    // handle.
     return StatusCode::kFailedPrecondition;
   }
   if (code == HttpStatusCode::kNotModified) {
