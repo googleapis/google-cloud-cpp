@@ -14,10 +14,12 @@
 
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/curl_http_payload.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
@@ -28,10 +30,14 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::ContainsOnce;
+using ::testing::_;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::NotNull;
+using ::testing::Pair;
 
 class RestClientIntegrationTest : public ::testing::Test {
  protected:
@@ -418,6 +424,31 @@ TEST_F(RestClientIntegrationTest, PostFormData) {
   EXPECT_THAT((*form)[form_pair_1.first], Eq(form_pair_1.second));
   EXPECT_THAT((*form)[form_pair_2.first], Eq(form_pair_2.second));
   EXPECT_THAT((*form)[form_pair_3.first], Eq(form_pair_3.second));
+}
+
+TEST_F(RestClientIntegrationTest, PeerPseudoHeader) {
+  auto client = MakeDefaultRestClient(url_, {});
+  RestRequest request;
+  request.SetPath("stream/100");
+  auto response_status = RetryRestRequest([&] { return client->Get(request); });
+  ASSERT_STATUS_OK(response_status);
+  auto response = *std::move(response_status);
+  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+  EXPECT_THAT(response->Headers(), ContainsOnce(Pair(":curl-peer", _)));
+
+  // Reading in small buffers used to cause errors.
+  auto payload = std::move(*response).ExtractPayload();
+  auto constexpr kBufferSize = 16;
+  char buffer[kBufferSize];
+  while (true) {
+    auto bytes = payload->Read(absl::MakeSpan(buffer, kBufferSize));
+    ASSERT_STATUS_OK(bytes);
+    if (*bytes == 0) break;
+  }
+  auto* payload_impl =
+      dynamic_cast<rest_internal::CurlHttpPayload*>(payload.get());
+  ASSERT_THAT(payload_impl, NotNull());
+  EXPECT_THAT(payload_impl->headers(), ContainsOnce(Pair(":curl-peer", _)));
 }
 
 }  // namespace
