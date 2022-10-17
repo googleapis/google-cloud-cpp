@@ -30,6 +30,7 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::HasSubstr;
 
@@ -115,6 +116,63 @@ TEST(BlockingPublisherConnectionTest, Logging) {
   ASSERT_STATUS_OK(response);
 
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("Publish")));
+}
+
+TEST(BlockingPublisherConnectionTest, HandlePermanentError) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce(
+          [](grpc::ClientContext&, google::pubsub::v1::PublishRequest const&) {
+            return Status(StatusCode::kPermissionDenied, "uh-oh");
+          });
+
+  auto publisher = MakeTestPublisherConnection(mock);
+  auto response = publisher->Publish(
+      {topic, MessageBuilder{}.SetData("test-message-0").Build()});
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+}
+
+TEST(BlockingPublisherConnectionTest, HandleTooManyTransients) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+
+  EXPECT_CALL(*mock, Publish)
+      .WillRepeatedly(
+          [](grpc::ClientContext&, google::pubsub::v1::PublishRequest const&) {
+            return Status(StatusCode::kUnavailable, "try-again");
+          });
+
+  auto publisher = MakeTestPublisherConnection(mock);
+  auto response = publisher->Publish(
+      {topic, MessageBuilder{}.SetData("test-message-0").Build()});
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
+}
+
+TEST(BlockingPublisherConnectionTest, HandleTransient) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce(
+          [](grpc::ClientContext&, google::pubsub::v1::PublishRequest const&) {
+            return Status(StatusCode::kUnavailable, "try-again");
+          })
+      .WillOnce(
+          [](grpc::ClientContext&, google::pubsub::v1::PublishRequest const&) {
+            google::pubsub::v1::PublishResponse response;
+            response.add_message_ids("test-message-id");
+            return response;
+          });
+
+  auto publisher = MakeTestPublisherConnection(mock);
+  auto response = publisher->Publish(
+      {topic, MessageBuilder{}.SetData("test-message-0").Build()});
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(*response, "test-message-id");
 }
 
 }  // namespace
