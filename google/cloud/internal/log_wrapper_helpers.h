@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,12 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_LOG_WRAPPER_HELPERS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_LOG_WRAPPER_HELPERS_H
 
-#include "google/cloud/log.h"
-#include "google/cloud/status_or.h"
+#include "google/cloud/status.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/protobuf/message.h>
-#include <chrono>
 #include <future>
 #include <string>
 
