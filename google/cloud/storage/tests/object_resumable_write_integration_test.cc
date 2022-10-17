@@ -28,6 +28,7 @@ namespace {
 using ::testing::AnyOf;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 class ObjectResumableWriteIntegrationTest
@@ -311,6 +312,13 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
       AnyOf(Eq(StatusCode::kFailedPrecondition), Eq(StatusCode::kAborted)))
       << " status=" << os.metadata().status();
 
+  if (os.metadata().status().code() == StatusCode::kFailedPrecondition &&
+      !UsingEmulator() && !UsingGrpc()) {
+    EXPECT_THAT(os.metadata().status().message(), Not(IsEmpty()));
+    EXPECT_EQ(os.metadata().status().error_info().domain(), "global");
+    EXPECT_EQ(os.metadata().status().error_info().reason(), "conditionNotMet");
+  }
+
   auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
@@ -433,8 +441,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
     offset += n;
   }
 
-  // This operation should fail because the x-upload-content-length header does
-  // not match the amount of data sent in the upload.
+  // This operation should fail because the x-upload-content-length header
+  // does not match the amount of data sent in the upload.
   os.Close();
   EXPECT_TRUE(os.bad());
   EXPECT_FALSE(os.metadata().ok());

@@ -95,20 +95,10 @@ struct DownloadStallMinimumRateOption {
   using Type = std::int32_t;
 };
 
-/**
- * Some services appropriate Http error codes for their own use. If any such
- * error codes need to be treated as non-failures, this option can indicate
- * which codes.
- */
-struct IgnoredHttpErrorCodes {
-  using Type = std::set<std::int32_t>;
-};
-
 /// The complete list of options accepted by `CurlRestClient`
 using RestOptionList = ::google::cloud::OptionList<
     UserIpOption, TransferStallTimeoutOption, TransferStallMinimumRateOption,
-    DownloadStallTimeoutOption, DownloadStallMinimumRateOption,
-    IgnoredHttpErrorCodes>;
+    DownloadStallTimeoutOption, DownloadStallMinimumRateOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
