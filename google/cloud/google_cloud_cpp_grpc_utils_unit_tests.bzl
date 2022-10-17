@@ -42,6 +42,7 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "internal/grpc_channel_credentials_authentication_test.cc",
     "internal/grpc_request_metadata_test.cc",
     "internal/grpc_service_account_authentication_test.cc",
+    "internal/log_wrapper_helpers_test.cc",
     "internal/log_wrapper_test.cc",
     "internal/minimal_iam_credentials_stub_test.cc",
     "internal/populate_grpc_options_test.cc",
