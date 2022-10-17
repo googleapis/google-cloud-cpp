@@ -98,10 +98,10 @@ class BlockingPublisher {
    * by changing the retry policy, please see the example below.
    *
    * @par Example
-   * @snippet samples.cc blocking-publish
+   * @snippet blocking_samples.cc blocking-publish
    *
    * @par Example
-   * @snippet samples.cc blocking-publish-no-retry
+   * @snippet blocking_samples.cc blocking-publish-no-retry
    *
    * @return On success, the server-assigned ID of the message. IDs are
    *     guaranteed to be unique within the topic.

@@ -44,6 +44,30 @@ void BlockingPublish(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void BlockingPublishNoRetry(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{"blocking-publish-no-retry <project-id> <topic-id>"};
+  }
+  //! [blocking-publish-no-retry]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](std::string project_id, std::string topic_id) {
+    auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    auto publisher =
+        pubsub::BlockingPublisher(pubsub::MakeBlockingPublisherConnection());
+    auto id = publisher.Publish(
+        topic, pubsub::MessageBuilder().SetData("Hello World!").Build(),
+        google::cloud::Options{}.set<pubsub::RetryPolicyOption>(
+            pubsub::LimitedErrorCountRetryPolicy(/*maximum_failures=*/0)
+                .clone()));
+    if (!id) return;  // Without retries, errors are likely.
+    std::cout << "Hello World successfully published on topic "
+              << topic.FullName() << " with id " << *id << "\n";
+  }
+  //! [blocking-publish-no-retry]
+  (argv.at(0), argv.at(1));
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
 
@@ -81,6 +105,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
 
   Example example({
       {"blocking-publish", BlockingPublish},
+      {"blocking-publish-no-retry", BlockingPublishNoRetry},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
