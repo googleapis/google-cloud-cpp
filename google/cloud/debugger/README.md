@@ -35,7 +35,6 @@ this library.
 ```cc
 #include "google/cloud/debugger/debugger2_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -46,12 +45,12 @@ int main(int argc, char* argv[]) try {
   namespace debugger = ::google::cloud::debugger;
   auto client = debugger::Debugger2Client(debugger::MakeDebugger2Connection());
   auto response = client.ListDebuggees(argv[1], "quickstart");
-  if (!response) throw std::runtime_error(response.status().message());
+  if (!response) throw std::move(response).status();
   std::cout << response->DebugString() << "\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

@@ -36,7 +36,6 @@ this library.
 #include "google/cloud/videointelligence/video_intelligence_client.h"
 #include <google/protobuf/util/time_util.h>
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   auto constexpr kDefaultUri = "gs://cloud-samples-data/video/animals.mp4";
@@ -71,7 +70,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "DONE\n";
 
   auto response = future.get();
-  if (!response) throw std::runtime_error(response.status().message());
+  if (!response) throw std::move(response).status();
 
   for (auto const& result : response->annotation_results()) {
     using ::google::protobuf::util::TimeUtil;
@@ -86,8 +85,8 @@ int main(int argc, char* argv[]) try {
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

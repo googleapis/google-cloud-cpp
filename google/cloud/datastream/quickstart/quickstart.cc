@@ -15,7 +15,6 @@
 #include "google/cloud/datastream/datastream_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -37,8 +36,5 @@ int main(int argc, char* argv[]) try {
   return 0;
 } catch (google::cloud::Status const& status) {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }

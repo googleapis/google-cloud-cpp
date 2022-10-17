@@ -35,7 +35,6 @@ this library.
 ```cc
 #include "google/cloud/language/language_client.h"
 #include <iostream>
-#include <stdexcept>
 
 auto constexpr kText = R"""(
 Four score and seven years ago our fathers brought forth on this
@@ -58,7 +57,7 @@ int main(int argc, char* argv[]) try {
   document.set_language("en-US");
 
   auto response = client.AnalyzeEntities(document);
-  if (!response) throw std::runtime_error(response.status().message());
+  if (!response) throw std::move(response).status();
 
   for (auto const& entity : response->entities()) {
     if (entity.type() != language::v1::Entity::NUMBER) continue;
@@ -66,8 +65,8 @@ int main(int argc, char* argv[]) try {
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

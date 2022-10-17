@@ -14,7 +14,6 @@
 
 #include "google/cloud/tasks/cloud_tasks_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -26,12 +25,13 @@ int main(int argc, char* argv[]) try {
   auto client = tasks::CloudTasksClient(tasks::MakeCloudTasksConnection());
   auto const parent =
       std::string("projects/") + argv[1] + "/locations/" + argv[2];
-  for (auto const& queue : client.ListQueues(parent)) {
-    std::cout << queue.value().DebugString() << "\n";
+  for (auto queue : client.ListQueues(parent)) {
+    if (!queue) throw std::move(queue).status();
+    std::cout << queue->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

@@ -35,7 +35,6 @@ this library.
 #include "google/cloud/websecurityscanner/web_security_scanner_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -50,13 +49,13 @@ int main(int argc, char* argv[]) try {
   google::cloud::websecurityscanner::v1::ListScanConfigsRequest request;
   request.set_parent(project.FullName());
   for (auto c : client.ListScanConfigs(request)) {
-    if (!c) throw std::runtime_error(c.status().message());
+    if (!c) throw std::move(c).status();
     std::cout << c->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

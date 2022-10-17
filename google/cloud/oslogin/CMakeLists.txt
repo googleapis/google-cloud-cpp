@@ -115,7 +115,7 @@ if (BUILD_TESTING)
     set_tests_properties(
         oslogin_quickstart
         PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
-                   "Permanent error in GetLoginProfile:")
+                   "Permanent error in.*GetLoginProfile:")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.

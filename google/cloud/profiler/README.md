@@ -40,7 +40,6 @@ this library.
 #include "google/cloud/profiler/profiler_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -60,12 +59,12 @@ int main(int argc, char* argv[]) try {
   deployment.set_target("quickstart");
 
   auto profile = client.CreateProfile(req);
-  if (!profile) throw std::runtime_error(profile.status().message());
+  if (!profile) throw std::move(profile).status();
   std::cout << profile->DebugString() << "\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

@@ -35,7 +35,6 @@ this library.
 #include "google/cloud/servicedirectory/registration_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -50,13 +49,13 @@ int main(int argc, char* argv[]) try {
   auto const project = google::cloud::Project(argv[1]);
   auto const parent = project.FullName() + "/locations/" + argv[2];
   for (auto ns : client.ListNamespaces(parent)) {
-    if (!ns) throw std::runtime_error(ns.status().message());
+    if (!ns) throw std::move(ns).status();
     std::cout << ns->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

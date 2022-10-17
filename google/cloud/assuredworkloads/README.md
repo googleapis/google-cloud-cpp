@@ -34,7 +34,6 @@ this library.
 ```cc
 #include "google/cloud/assuredworkloads/assured_workloads_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -49,13 +48,13 @@ int main(int argc, char* argv[]) try {
       std::string("organizations/") + argv[1] + "/locations/" + argv[2];
 
   for (auto w : client.ListWorkloads(parent)) {
-    if (!w) throw std::runtime_error(w.status().message());
+    if (!w) throw std::move(w).status();
     std::cout << w->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

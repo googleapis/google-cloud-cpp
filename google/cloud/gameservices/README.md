@@ -34,7 +34,6 @@ this library.
 ```cc
 #include "google/cloud/gameservices/game_server_clusters_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 4) {
@@ -49,13 +48,13 @@ int main(int argc, char* argv[]) try {
   auto const realm = "projects/" + std::string(argv[1]) + "/locations/" +
                      std::string(argv[2]) + "/realms/" + std::string(argv[3]);
   for (auto r : client.ListGameServerClusters(realm)) {
-    if (!r) throw std::runtime_error(r.status().message());
+    if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

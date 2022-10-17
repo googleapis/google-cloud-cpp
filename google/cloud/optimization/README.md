@@ -36,7 +36,6 @@ this library.
 #include "google/cloud/common_options.h"
 #include "google/cloud/project.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -71,12 +70,12 @@ int main(int argc, char* argv[]) try {
   auto fut = client.BatchOptimizeTours(req);
   std::cout << "Request sent to the service...\n";
   auto resp = fut.get();
-  if (!resp) throw std::runtime_error(resp.status().message());
+  if (!resp) throw std::move(resp).status();
   std::cout << "Solution written to: " << destination << "\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

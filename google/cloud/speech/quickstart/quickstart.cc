@@ -15,7 +15,6 @@
 #include "google/cloud/speech/speech_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   auto constexpr kDefaultUri = "gs://cloud-samples-data/speech/hello.wav";
@@ -35,11 +34,11 @@ int main(int argc, char* argv[]) try {
   google::cloud::speech::v1::RecognitionAudio audio;
   audio.set_uri(uri);
   auto response = client.Recognize(config, audio);
-  if (!response) throw std::runtime_error(response.status().message());
+  if (!response) throw std::move(response).status();
   std::cout << response->DebugString() << "\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

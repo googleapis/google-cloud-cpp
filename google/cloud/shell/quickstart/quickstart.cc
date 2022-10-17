@@ -14,7 +14,6 @@
 
 #include "google/cloud/shell/cloud_shell_client.h"
 #include <iostream>
-#include <stdexcept>
 #include <string>
 
 int main(int argc, char* argv[]) try {
@@ -29,11 +28,11 @@ int main(int argc, char* argv[]) try {
 
   auto const name = "users/" + std::string{argv[1]} + "/environments/default";
   auto env = client.GetEnvironment(name);
-  if (!env) throw std::runtime_error(env.status().message());
+  if (!env) throw std::move(env).status();
   std::cout << env->DebugString() << "\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

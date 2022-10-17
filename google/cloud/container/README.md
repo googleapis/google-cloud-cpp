@@ -34,7 +34,6 @@ this library.
 ```cc
 #include "google/cloud/container/cluster_manager_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -49,14 +48,14 @@ int main(int argc, char* argv[]) try {
   auto const location =
       std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
   auto response = client.ListClusters(location);
-  if (!response) throw std::runtime_error(response.status().message());
+  if (!response) throw std::move(response).status();
   for (auto const& c : response->clusters()) {
     std::cout << c.DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

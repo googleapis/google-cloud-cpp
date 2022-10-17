@@ -36,7 +36,6 @@ this library.
 #include "google/cloud/documentai/document_processor_client.h"
 #include <fstream>
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 5) {
@@ -66,12 +65,12 @@ int main(int argc, char* argv[]) try {
   doc.set_content(std::string{std::istreambuf_iterator<char>(is), {}});
 
   auto resp = client.ProcessDocument(std::move(req));
-  if (!resp) throw std::runtime_error(resp.status().message());
+  if (!resp) throw std::move(resp).status();
   std::cout << resp->document().text() << "\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

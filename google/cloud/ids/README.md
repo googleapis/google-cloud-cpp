@@ -38,7 +38,6 @@ this library.
 ```cc
 #include "google/cloud/ids/ids_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -51,13 +50,13 @@ int main(int argc, char* argv[]) try {
 
   auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
   for (auto ep : client.ListEndpoints(parent)) {
-    if (!ep) throw std::runtime_error(ep.status().message());
+    if (!ep) throw std::move(ep).status();
     std::cout << ep->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```
