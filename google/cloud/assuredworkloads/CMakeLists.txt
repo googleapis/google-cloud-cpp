@@ -124,7 +124,7 @@ if (BUILD_TESTING)
         PROPERTIES
             LABELS "integration-test;quickstart" ENVIRONMENT
             GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT}
-            PASS_REGULAR_EXPRESSION "Permanent error in ListWorkloads:")
+            PASS_REGULAR_EXPRESSION "Permanent error in.*ListWorkloads:")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.
