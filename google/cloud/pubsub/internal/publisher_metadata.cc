@@ -91,6 +91,13 @@ PublisherMetadata::AsyncPublish(
   return child_->AsyncPublish(cq, std::move(context), request);
 }
 
+StatusOr<google::pubsub::v1::PublishResponse> PublisherMetadata::Publish(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PublishRequest const& request) {
+  SetMetadata(context, "topic=" + request.topic());
+  return child_->Publish(context, request);
+}
+
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context,
                                     std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

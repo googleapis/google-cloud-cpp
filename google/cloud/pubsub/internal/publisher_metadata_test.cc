@@ -364,6 +364,37 @@ TEST_F(PublisherMetadataTest, AsyncPublish) {
   }
 }
 
+TEST_F(PublisherMetadataTest, Publish) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::PublishRequest const& request) {
+        IsContextMDValid(context, "google.pubsub.v1.Publisher.Publish",
+                         request);
+        return make_status_or(google::pubsub::v1::PublishResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::PublishRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::PublishResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::PublishRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::PublishResponse{});
+      });
+
+  PublisherMetadata stub(mock);
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::PublishRequest request;
+    request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
+    auto status = stub.Publish(context, request);
+    EXPECT_STATUS_OK(status);
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

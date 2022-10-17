@@ -78,6 +78,12 @@ PublisherRoundRobin::AsyncPublish(
   return Child()->AsyncPublish(cq, std::move(context), request);
 }
 
+StatusOr<google::pubsub::v1::PublishResponse> PublisherRoundRobin::Publish(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PublishRequest const& request) {
+  return Child()->Publish(context, request);
+}
+
 std::shared_ptr<PublisherStub> PublisherRoundRobin::Child() {
   std::lock_guard<std::mutex> lk(mu_);
   auto child = children_[current_];

@@ -104,6 +104,14 @@ PublisherAuth::AsyncPublish(google::cloud::CompletionQueue& cq,
       });
 }
 
+StatusOr<google::pubsub::v1::PublishResponse> PublisherAuth::Publish(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PublishRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->Publish(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

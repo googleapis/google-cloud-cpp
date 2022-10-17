@@ -178,6 +178,21 @@ TEST_F(PublisherLoggingTest, AsyncPublish) {
       Contains(AllOf(HasSubstr("AsyncPublish"), HasSubstr("test-topic-name"))));
 }
 
+TEST_F(PublisherLoggingTest, Publish) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce(Return(make_status_or(google::pubsub::v1::PublishResponse{})));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  grpc::ClientContext context;
+  google::pubsub::v1::PublishRequest request;
+  request.set_topic("test-topic-name");
+  auto status = stub.Publish(context, request);
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(
+      log_.ExtractLines(),
+      Contains(AllOf(HasSubstr("Publish"), HasSubstr("test-topic-name"))));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
