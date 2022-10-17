@@ -34,7 +34,6 @@ this library.
 ```cc
 #include "google/cloud/cloudbuild/cloud_build_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -47,13 +46,13 @@ int main(int argc, char* argv[]) try {
       cloudbuild::CloudBuildClient(cloudbuild::MakeCloudBuildConnection());
   auto const* filter = R"""(status="WORKING")""";  // List only running builds
   for (auto b : client.ListBuilds(argv[1], filter)) {
-    if (!b) throw std::runtime_error(b.status().message());
+    if (!b) throw std::move(b).status();
     std::cout << b->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

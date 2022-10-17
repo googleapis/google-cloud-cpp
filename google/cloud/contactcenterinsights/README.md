@@ -35,7 +35,6 @@ this library.
 #include "google/cloud/contactcenterinsights/contact_center_insights_client.h"
 #include <google/protobuf/util/time_util.h>
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -50,7 +49,7 @@ int main(int argc, char* argv[]) try {
   auto const parent =
       std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
   for (auto c : client.ListConversations(parent)) {
-    if (!c) throw std::runtime_error(c.status().message());
+    if (!c) throw std::move(c).status();
 
     using ::google::protobuf::util::TimeUtil;
     std::cout << c->name() << "\n";
@@ -59,8 +58,8 @@ int main(int argc, char* argv[]) try {
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

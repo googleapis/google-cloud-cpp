@@ -36,7 +36,6 @@ this library.
 ```cc
 #include "google/cloud/vision/image_annotator_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   auto constexpr kDefaultUri =
@@ -66,7 +65,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::vision::v1::BatchAnnotateImagesRequest batch_request;
   *batch_request.add_requests() = std::move(request);
   auto batch = client.BatchAnnotateImages(batch_request);
-  if (!batch) throw std::runtime_error(batch.status().message());
+  if (!batch) throw std::move(batch).status();
 
   // Find the longest annotation and print it
   auto result = std::string{};
@@ -80,8 +79,8 @@ int main(int argc, char* argv[]) try {
   std::cout << "The image contains this text: " << result << "\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

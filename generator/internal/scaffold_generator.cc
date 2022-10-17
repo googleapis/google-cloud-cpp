@@ -796,7 +796,6 @@ void GenerateQuickstartSkeleton(
 #include "google/cloud/$library$/ EDIT HERE .h"
 #include "google/cloud/project.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -810,13 +809,13 @@ int main(int argc, char* argv[]) try {
 
   auto const project = google::cloud::Project(argv[1]);
   for (auto r : client.List/*EDIT HERE*/(project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
+    if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 )""";

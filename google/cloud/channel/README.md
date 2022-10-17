@@ -35,7 +35,6 @@ this library.
 ```cc
 #include "google/cloud/channel/cloud_channel_client.h"
 #include <iostream>
-#include <stdexcept>
 #include <string>
 
 int main(int argc, char* argv[]) try {
@@ -52,13 +51,13 @@ int main(int argc, char* argv[]) try {
   auto request = google::cloud::channel::v1::ListProductsRequest{};
   request.set_account(std::string("accounts/") + argv[1]);
   for (auto r : client.ListProducts(std::move(request))) {
-    if (!r) throw std::runtime_error(r.status().message());
+    if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

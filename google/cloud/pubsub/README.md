@@ -34,7 +34,6 @@ this library.
 ```cc
 #include "google/cloud/pubsub/publisher.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -53,12 +52,12 @@ int main(int argc, char* argv[]) try {
       publisher
           .Publish(pubsub::MessageBuilder{}.SetData("Hello World!").Build())
           .get();
-  if (!id) throw std::runtime_error(id.status().message());
+  if (!id) throw std::move(id).status();
   std::cout << "Hello World published with id=" << *id << "\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

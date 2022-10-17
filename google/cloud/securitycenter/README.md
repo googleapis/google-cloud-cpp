@@ -35,7 +35,6 @@ this library.
 #include "google/cloud/securitycenter/security_center_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -49,13 +48,13 @@ int main(int argc, char* argv[]) try {
 
   auto const project = google::cloud::Project(argv[1]);
   for (auto c : client.ListSources(project.FullName())) {
-    if (!c) throw std::runtime_error(c.status().message());
+    if (!c) throw std::move(c).status();
     std::cout << c->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```

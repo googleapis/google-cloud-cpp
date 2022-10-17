@@ -14,7 +14,6 @@
 
 #include "google/cloud/recommender/recommender_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -31,12 +30,12 @@ int main(int argc, char* argv[]) try {
       std::string("projects/") + argv[1] + "/locations/" + argv[2] +
       "/recommenders/google.compute.instance.MachineTypeRecommender";
   for (auto r : client.ListRecommendations(parent)) {
-    if (!r) throw std::runtime_error(r.status().message());
+    if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

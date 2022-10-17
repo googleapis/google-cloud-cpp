@@ -35,7 +35,6 @@ this library.
 ```cc
 #include "google/cloud/dialogflow_cx/agents_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -51,13 +50,13 @@ int main(int argc, char* argv[]) try {
 
   auto const location = "projects/" + project + "/locations/" + region;
   for (auto a : client.ListAgents(location)) {
-    if (!a) throw std::runtime_error(a.status().message());
+    if (!a) throw std::move(a).status();
     std::cout << a->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 ```
