@@ -72,8 +72,9 @@ add_library(
     internal/grpc_request_metadata.h
     internal/grpc_service_account_authentication.cc
     internal/grpc_service_account_authentication.h
-    internal/log_wrapper.cc
     internal/log_wrapper.h
+    internal/log_wrapper_helpers.cc
+    internal/log_wrapper_helpers.h
     internal/minimal_iam_credentials_stub.cc
     internal/minimal_iam_credentials_stub.h
     internal/populate_grpc_options.cc
@@ -241,6 +242,7 @@ if (BUILD_TESTING)
         internal/grpc_channel_credentials_authentication_test.cc
         internal/grpc_request_metadata_test.cc
         internal/grpc_service_account_authentication_test.cc
+        internal/log_wrapper_helpers_test.cc
         internal/log_wrapper_test.cc
         internal/minimal_iam_credentials_stub_test.cc
         internal/populate_grpc_options_test.cc

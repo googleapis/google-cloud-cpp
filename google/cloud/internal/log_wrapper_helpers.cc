@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/log_wrapper_helpers.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/status_payload_keys.h"
 #include "absl/time/time.h"
+#include "google/rpc/error_details.pb.h"
+#include "google/rpc/status.pb.h"
+#include <google/protobuf/any.pb.h>
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/timestamp.pb.h>
-#include <google/rpc/error_details.pb.h>
 #include <atomic>
 #include <sstream>
 
