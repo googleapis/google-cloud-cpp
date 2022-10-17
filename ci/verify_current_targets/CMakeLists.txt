@@ -19,7 +19,7 @@ project(verify-exported-targets CXX)
 
 # We list the common libraries first because we want to load their packages
 # early.
-set(common_libraries common protobuf_utils grpc_utils)
+set(common_libraries common grpc_utils)
 
 # Add GA libraries to this list, the only difference is the name of the CMake
 # targets

@@ -73,6 +73,8 @@ add_library(
     internal/grpc_service_account_authentication.cc
     internal/grpc_service_account_authentication.h
     internal/log_wrapper.h
+    internal/log_wrapper_helpers.cc
+    internal/log_wrapper_helpers.h
     internal/minimal_iam_credentials_stub.cc
     internal/minimal_iam_credentials_stub.h
     internal/populate_grpc_options.cc
@@ -102,7 +104,6 @@ target_link_libraries(
            google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_error_details_protos
            google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::protobuf_utils
            google-cloud-cpp::common
            gRPC::grpc++
            gRPC::grpc)
@@ -165,7 +166,6 @@ google_cloud_cpp_add_pkgconfig(
     "gRPC Utilities for the Google Cloud C++ Client Library"
     "Provides gRPC Utilities for the Google Cloud C++ Client Library."
     "google_cloud_cpp_common"
-    " google_cloud_cpp_protobuf_utils"
     " google_cloud_cpp_iam_protos"
     " google_cloud_cpp_longrunning_operations_protos"
     " google_cloud_cpp_rpc_status_protos"
@@ -193,7 +193,6 @@ function (google_cloud_cpp_grpc_utils_add_test fname labels)
         PRIVATE google-cloud-cpp::grpc_utils
                 google_cloud_cpp_testing_grpc
                 google_cloud_cpp_testing
-                google-cloud-cpp::protobuf_utils
                 google-cloud-cpp::common
                 google-cloud-cpp::iam_protos
                 google-cloud-cpp::bigtable_protos
@@ -243,6 +242,7 @@ if (BUILD_TESTING)
         internal/grpc_channel_credentials_authentication_test.cc
         internal/grpc_request_metadata_test.cc
         internal/grpc_service_account_authentication_test.cc
+        internal/log_wrapper_helpers_test.cc
         internal/log_wrapper_test.cc
         internal/minimal_iam_credentials_stub_test.cc
         internal/populate_grpc_options_test.cc
@@ -292,8 +292,7 @@ if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target}
-            PRIVATE google-cloud-cpp::grpc_utils
-                    google-cloud-cpp::protobuf_utils google-cloud-cpp::common
+            PRIVATE google-cloud-cpp::grpc_utils google-cloud-cpp::common
                     benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
