@@ -35,7 +35,7 @@ TEST(SchemaAuthTest, CreateSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, CreateSchema)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
-  auto under_test = SchemaAuth(MakeTypicalMockAuth(), mock);
+  auto under_test = SchemaServiceAuth(MakeTypicalMockAuth(), mock);
   grpc::ClientContext ctx;
   google::pubsub::v1::CreateSchemaRequest request;
   auto auth_failure = under_test.CreateSchema(ctx, request);
@@ -51,7 +51,7 @@ TEST(SchemaAuthTest, GetSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, GetSchema)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
-  auto under_test = SchemaAuth(MakeTypicalMockAuth(), mock);
+  auto under_test = SchemaServiceAuth(MakeTypicalMockAuth(), mock);
   grpc::ClientContext ctx;
   google::pubsub::v1::GetSchemaRequest request;
   auto auth_failure = under_test.GetSchema(ctx, request);
@@ -67,7 +67,7 @@ TEST(SchemaAuthTest, ListSchemas) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, ListSchemas)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
-  auto under_test = SchemaAuth(MakeTypicalMockAuth(), mock);
+  auto under_test = SchemaServiceAuth(MakeTypicalMockAuth(), mock);
   grpc::ClientContext ctx;
   google::pubsub::v1::ListSchemasRequest request;
   auto auth_failure = under_test.ListSchemas(ctx, request);
@@ -83,7 +83,7 @@ TEST(SchemaAuthTest, DeleteSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, DeleteSchema)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
-  auto under_test = SchemaAuth(MakeTypicalMockAuth(), mock);
+  auto under_test = SchemaServiceAuth(MakeTypicalMockAuth(), mock);
   grpc::ClientContext ctx;
   google::pubsub::v1::DeleteSchemaRequest request;
   auto auth_failure = under_test.DeleteSchema(ctx, request);
@@ -99,7 +99,7 @@ TEST(SchemaAuthTest, ValidateSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, ValidateSchema)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
-  auto under_test = SchemaAuth(MakeTypicalMockAuth(), mock);
+  auto under_test = SchemaServiceAuth(MakeTypicalMockAuth(), mock);
   grpc::ClientContext ctx;
   google::pubsub::v1::ValidateSchemaRequest request;
   auto auth_failure = under_test.ValidateSchema(ctx, request);
@@ -115,7 +115,7 @@ TEST(SchemaAuthTest, ValidateMessage) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, ValidateMessage)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
-  auto under_test = SchemaAuth(MakeTypicalMockAuth(), mock);
+  auto under_test = SchemaServiceAuth(MakeTypicalMockAuth(), mock);
   grpc::ClientContext ctx;
   google::pubsub::v1::ValidateMessageRequest request;
   auto auth_failure = under_test.ValidateMessage(ctx, request);

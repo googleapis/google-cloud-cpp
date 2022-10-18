@@ -26,11 +26,11 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A Decorator for `SchemaStub` that logs each request and response.
+ * A Decorator for `SchemaServiceStub` that logs each request and response.
  */
-class SchemaMetadata : public SchemaStub {
+class SchemaServiceMetadata : public SchemaServiceStub {
  public:
-  explicit SchemaMetadata(std::shared_ptr<SchemaStub> child);
+  explicit SchemaServiceMetadata(std::shared_ptr<SchemaServiceStub> child);
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       grpc::ClientContext& context,
@@ -55,7 +55,7 @@ class SchemaMetadata : public SchemaStub {
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
 
-  std::shared_ptr<SchemaStub> child_;
+  std::shared_ptr<SchemaServiceStub> child_;
   std::string x_goog_api_client_;
 };
 

@@ -20,32 +20,34 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SchemaMetadata::SchemaMetadata(std::shared_ptr<SchemaStub> child)
+SchemaServiceMetadata::SchemaServiceMetadata(
+    std::shared_ptr<SchemaServiceStub> child)
     : child_(std::move(child)),
       x_goog_api_client_(google::cloud::internal::ApiClientHeader()) {}
 
-StatusOr<google::pubsub::v1::Schema> SchemaMetadata::CreateSchema(
+StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::CreateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSchemaRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->CreateSchema(context, request);
 }
 
-StatusOr<google::pubsub::v1::Schema> SchemaMetadata::GetSchema(
+StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::GetSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSchemaRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetSchema(context, request);
 }
 
-StatusOr<google::pubsub::v1::ListSchemasResponse> SchemaMetadata::ListSchemas(
+StatusOr<google::pubsub::v1::ListSchemasResponse>
+SchemaServiceMetadata::ListSchemas(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSchemasRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListSchemas(context, request);
 }
 
-Status SchemaMetadata::DeleteSchema(
+Status SchemaServiceMetadata::DeleteSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -53,7 +55,7 @@ Status SchemaMetadata::DeleteSchema(
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
-SchemaMetadata::ValidateSchema(
+SchemaServiceMetadata::ValidateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
@@ -61,15 +63,15 @@ SchemaMetadata::ValidateSchema(
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
-SchemaMetadata::ValidateMessage(
+SchemaServiceMetadata::ValidateMessage(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateMessageRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ValidateMessage(context, request);
 }
 
-void SchemaMetadata::SetMetadata(grpc::ClientContext& context,
-                                 std::string const& request_params) {
+void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   context.AddMetadata("x-goog-api-client", x_goog_api_client_);
   auto const& options = internal::CurrentOptions();

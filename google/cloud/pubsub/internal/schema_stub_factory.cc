@@ -20,9 +20,9 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(
+std::shared_ptr<SchemaServiceStub> CreateDefaultSchemaStub(
     std::shared_ptr<grpc::Channel> channel) {
-  return std::make_shared<DefaultSchemaStub>(
+  return std::make_shared<DefaultSchemaServiceStub>(
       google::pubsub::v1::SchemaService::NewStub(std::move(channel)));
 }
 

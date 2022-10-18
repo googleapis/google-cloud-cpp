@@ -26,13 +26,13 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A Decorator for `SchemaStub` that logs each request and response.
+ * A Decorator for `SchemaServiceStub` that logs each request and response.
  */
-class SchemaAuth : public SchemaStub {
+class SchemaServiceAuth : public SchemaServiceStub {
  public:
-  SchemaAuth(
+  SchemaServiceAuth(
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<SchemaStub> child)
+      std::shared_ptr<SchemaServiceStub> child)
       : auth_(std::move(auth)), child_(std::move(child)) {}
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
@@ -56,7 +56,7 @@ class SchemaAuth : public SchemaStub {
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
-  std::shared_ptr<SchemaStub> child_;
+  std::shared_ptr<SchemaServiceStub> child_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

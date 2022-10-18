@@ -22,7 +22,7 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<google::pubsub::v1::Schema> DefaultSchemaStub::CreateSchema(
+StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::CreateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSchemaRequest const& request) {
   google::pubsub::v1::Schema response;
@@ -31,7 +31,7 @@ StatusOr<google::pubsub::v1::Schema> DefaultSchemaStub::CreateSchema(
   return response;
 }
 
-StatusOr<google::pubsub::v1::Schema> DefaultSchemaStub::GetSchema(
+StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::GetSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSchemaRequest const& request) {
   google::pubsub::v1::Schema response;
@@ -41,7 +41,7 @@ StatusOr<google::pubsub::v1::Schema> DefaultSchemaStub::GetSchema(
 }
 
 StatusOr<google::pubsub::v1::ListSchemasResponse>
-DefaultSchemaStub::ListSchemas(
+DefaultSchemaServiceStub::ListSchemas(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSchemasRequest const& request) {
   google::pubsub::v1::ListSchemasResponse response;
@@ -50,7 +50,7 @@ DefaultSchemaStub::ListSchemas(
   return response;
 }
 
-Status DefaultSchemaStub::DeleteSchema(
+Status DefaultSchemaServiceStub::DeleteSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
   google::protobuf::Empty response;
@@ -60,7 +60,7 @@ Status DefaultSchemaStub::DeleteSchema(
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
-DefaultSchemaStub::ValidateSchema(
+DefaultSchemaServiceStub::ValidateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
   google::pubsub::v1::ValidateSchemaResponse response;
@@ -70,7 +70,7 @@ DefaultSchemaStub::ValidateSchema(
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
-DefaultSchemaStub::ValidateMessage(
+DefaultSchemaServiceStub::ValidateMessage(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateMessageRequest const& request) {
   google::pubsub::v1::ValidateMessageResponse response;

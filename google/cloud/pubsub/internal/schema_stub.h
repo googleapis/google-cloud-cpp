@@ -28,16 +28,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Define the interface for the gRPC wrapper.
  *
- * We wrap the gRPC-generated `SchemaStub` to:
+ * We wrap the gRPC-generated `SchemaServiceStub` to:
  *   - Return a `StatusOr<T>` instead of using a `grpc::Status` and an "output
  *     parameter" for the response.
  *   - To be able to mock the stubs.
  *   - To be able to decompose some functionality (logging, adding metadata
  *     information) into layers.
  */
-class SchemaStub {
+class SchemaServiceStub {
  public:
-  virtual ~SchemaStub() = default;
+  virtual ~SchemaServiceStub() = default;
 
   /// Creates a schema.
   virtual StatusOr<google::pubsub::v1::Schema> CreateSchema(
@@ -70,12 +70,12 @@ class SchemaStub {
       google::pubsub::v1::ValidateMessageRequest const& request) = 0;
 };
 
-class DefaultSchemaStub : public SchemaStub {
+class DefaultSchemaServiceStub : public SchemaServiceStub {
  public:
-  explicit DefaultSchemaStub(
+  explicit DefaultSchemaServiceStub(
       std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface> impl)
       : grpc_stub_(std::move(impl)) {}
-  ~DefaultSchemaStub() override = default;
+  ~DefaultSchemaServiceStub() override = default;
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       grpc::ClientContext& context,
