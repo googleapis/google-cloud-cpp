@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/subscriber_metadata.h"
+#include "google/cloud/pubsub/internal/subscriber_metadata_decorator.h"
 #include "google/cloud/internal/api_client_header.h"
 
 namespace google {

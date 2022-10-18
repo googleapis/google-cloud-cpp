@@ -14,9 +14,9 @@
 
 #include "google/cloud/pubsub/internal/publisher_stub_factory.h"
 #include "google/cloud/pubsub/internal/create_channel.h"
-#include "google/cloud/pubsub/internal/publisher_auth.h"
-#include "google/cloud/pubsub/internal/publisher_logging.h"
-#include "google/cloud/pubsub/internal/publisher_metadata.h"
+#include "google/cloud/pubsub/internal/publisher_auth_decorator.h"
+#include "google/cloud/pubsub/internal/publisher_logging_decorator.h"
+#include "google/cloud/pubsub/internal/publisher_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_round_robin.h"
 #include "google/cloud/log.h"
 
