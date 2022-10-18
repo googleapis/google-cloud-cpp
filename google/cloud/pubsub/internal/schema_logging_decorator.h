@@ -26,12 +26,12 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A Decorator for `SchemaStub` that logs each request and response.
+ * A Decorator for `SchemaServiceStub` that logs each request and response.
  */
-class SchemaLogging : public SchemaStub {
+class SchemaServiceLogging : public SchemaServiceStub {
  public:
-  SchemaLogging(std::shared_ptr<SchemaStub> child,
-                TracingOptions tracing_options)
+  SchemaServiceLogging(std::shared_ptr<SchemaServiceStub> child,
+                       TracingOptions tracing_options)
       : child_(std::move(child)),
         tracing_options_(std::move(tracing_options)) {}
 
@@ -55,7 +55,7 @@ class SchemaLogging : public SchemaStub {
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
  private:
-  std::shared_ptr<SchemaStub> child_;
+  std::shared_ptr<SchemaServiceStub> child_;
   TracingOptions tracing_options_;
 };
 

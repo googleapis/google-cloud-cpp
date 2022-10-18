@@ -22,7 +22,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::LogWrapper;
 
-StatusOr<google::pubsub::v1::Schema> SchemaLogging::CreateSchema(
+StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::CreateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSchemaRequest const& request) {
   return LogWrapper(
@@ -33,7 +33,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaLogging::CreateSchema(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::Schema> SchemaLogging::GetSchema(
+StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::GetSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSchemaRequest const& request) {
   return LogWrapper(
@@ -44,7 +44,8 @@ StatusOr<google::pubsub::v1::Schema> SchemaLogging::GetSchema(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::ListSchemasResponse> SchemaLogging::ListSchemas(
+StatusOr<google::pubsub::v1::ListSchemasResponse>
+SchemaServiceLogging::ListSchemas(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSchemasRequest const& request) {
   return LogWrapper(
@@ -55,7 +56,7 @@ StatusOr<google::pubsub::v1::ListSchemasResponse> SchemaLogging::ListSchemas(
       context, request, __func__, tracing_options_);
 }
 
-Status SchemaLogging::DeleteSchema(
+Status SchemaServiceLogging::DeleteSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
   return LogWrapper(
@@ -67,7 +68,7 @@ Status SchemaLogging::DeleteSchema(
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
-SchemaLogging::ValidateSchema(
+SchemaServiceLogging::ValidateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
   return LogWrapper(
@@ -79,7 +80,7 @@ SchemaLogging::ValidateSchema(
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
-SchemaLogging::ValidateMessage(
+SchemaServiceLogging::ValidateMessage(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateMessageRequest const& request) {
   return LogWrapper(

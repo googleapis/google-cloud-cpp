@@ -25,9 +25,9 @@ namespace pubsub_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A class to mock pubsub_internal::SchemaStub
+ * A class to mock pubsub_internal::SchemaServiceStub
  */
-class MockSchemaStub : public pubsub_internal::SchemaStub {
+class MockSchemaStub : public pubsub_internal::SchemaServiceStub {
  public:
   ~MockSchemaStub() override = default;
 

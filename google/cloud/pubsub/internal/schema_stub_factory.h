@@ -24,18 +24,18 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Create a SchemaStub using a pre-configured channel.
-std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(
+/// Create a SchemaServiceStub using a pre-configured channel.
+std::shared_ptr<SchemaServiceStub> CreateDefaultSchemaStub(
     std::shared_ptr<grpc::Channel> channel);
 
 /**
- * Creates a SchemaStub configured with @p opts and @p channel_id.
+ * Creates a SchemaServiceStub configured with @p opts and @p channel_id.
  *
  * @p channel_id should be unique among all stubs in the same Connection pool,
  * to ensure they use different underlying connections.
  */
-std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(Options const& opts,
-                                                    int channel_id);
+std::shared_ptr<SchemaServiceStub> CreateDefaultSchemaStub(Options const& opts,
+                                                           int channel_id);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
