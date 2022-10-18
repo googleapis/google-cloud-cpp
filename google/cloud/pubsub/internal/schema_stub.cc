@@ -21,74 +21,63 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
 
-class DefaultSchemaStub : public SchemaStub {
- public:
-  explicit DefaultSchemaStub(
-      std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface> impl)
-      : impl_(std::move(impl)) {}
+StatusOr<google::pubsub::v1::Schema> DefaultSchemaStub::CreateSchema(
+    grpc::ClientContext& context,
+    google::pubsub::v1::CreateSchemaRequest const& request) {
+  google::pubsub::v1::Schema response;
+  auto status = grpc_stub_->CreateSchema(&context, request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return response;
+}
 
-  ~DefaultSchemaStub() override = default;
+StatusOr<google::pubsub::v1::Schema> DefaultSchemaStub::GetSchema(
+    grpc::ClientContext& context,
+    google::pubsub::v1::GetSchemaRequest const& request) {
+  google::pubsub::v1::Schema response;
+  auto status = grpc_stub_->GetSchema(&context, request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return response;
+}
 
-  StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      grpc::ClientContext& context,
-      google::pubsub::v1::CreateSchemaRequest const& request) override {
-    google::pubsub::v1::Schema response;
-    auto status = impl_->CreateSchema(&context, request, &response);
-    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-    return response;
-  }
+StatusOr<google::pubsub::v1::ListSchemasResponse>
+DefaultSchemaStub::ListSchemas(
+    grpc::ClientContext& context,
+    google::pubsub::v1::ListSchemasRequest const& request) {
+  google::pubsub::v1::ListSchemasResponse response;
+  auto status = grpc_stub_->ListSchemas(&context, request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return response;
+}
 
-  StatusOr<google::pubsub::v1::Schema> GetSchema(
-      grpc::ClientContext& context,
-      google::pubsub::v1::GetSchemaRequest const& request) override {
-    google::pubsub::v1::Schema response;
-    auto status = impl_->GetSchema(&context, request, &response);
-    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-    return response;
-  }
+Status DefaultSchemaStub::DeleteSchema(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DeleteSchemaRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteSchema(&context, request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return Status{};
+}
 
-  StatusOr<google::pubsub::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& context,
-      google::pubsub::v1::ListSchemasRequest const& request) override {
-    google::pubsub::v1::ListSchemasResponse response;
-    auto status = impl_->ListSchemas(&context, request, &response);
-    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-    return response;
-  }
+StatusOr<google::pubsub::v1::ValidateSchemaResponse>
+DefaultSchemaStub::ValidateSchema(
+    grpc::ClientContext& context,
+    google::pubsub::v1::ValidateSchemaRequest const& request) {
+  google::pubsub::v1::ValidateSchemaResponse response;
+  auto status = grpc_stub_->ValidateSchema(&context, request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return response;
+}
 
-  Status DeleteSchema(
-      grpc::ClientContext& context,
-      google::pubsub::v1::DeleteSchemaRequest const& request) override {
-    google::protobuf::Empty response;
-    auto status = impl_->DeleteSchema(&context, request, &response);
-    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-    return Status{};
-  }
-
-  StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      grpc::ClientContext& context,
-      google::pubsub::v1::ValidateSchemaRequest const& request) override {
-    google::pubsub::v1::ValidateSchemaResponse response;
-    auto status = impl_->ValidateSchema(&context, request, &response);
-    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      grpc::ClientContext& context,
-      google::pubsub::v1::ValidateMessageRequest const& request) override {
-    google::pubsub::v1::ValidateMessageResponse response;
-    auto status = impl_->ValidateMessage(&context, request, &response);
-    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-    return response;
-  }
-
- private:
-  std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface> impl_;
-};
-}  // namespace
+StatusOr<google::pubsub::v1::ValidateMessageResponse>
+DefaultSchemaStub::ValidateMessage(
+    grpc::ClientContext& context,
+    google::pubsub::v1::ValidateMessageRequest const& request) {
+  google::pubsub::v1::ValidateMessageResponse response;
+  auto status = grpc_stub_->ValidateMessage(&context, request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return response;
+}
 
 std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(
     std::shared_ptr<grpc::Channel> channel) {

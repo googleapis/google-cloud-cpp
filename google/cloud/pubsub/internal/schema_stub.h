@@ -18,7 +18,7 @@
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
-#include <google/pubsub/v1/schema.pb.h>
+#include <google/pubsub/v1/schema.grpc.pb.h>
 
 namespace google {
 namespace cloud {
@@ -68,6 +68,41 @@ class SchemaStub {
   virtual StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
       grpc::ClientContext& context,
       google::pubsub::v1::ValidateMessageRequest const& request) = 0;
+};
+
+class DefaultSchemaStub : public SchemaStub {
+ public:
+  explicit DefaultSchemaStub(
+      std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface> impl)
+      : grpc_stub_(std::move(impl)) {}
+  ~DefaultSchemaStub() override = default;
+
+  StatusOr<google::pubsub::v1::Schema> CreateSchema(
+      grpc::ClientContext& context,
+      google::pubsub::v1::CreateSchemaRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::Schema> GetSchema(
+      grpc::ClientContext& context,
+      google::pubsub::v1::GetSchemaRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::ListSchemasResponse> ListSchemas(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ListSchemasRequest const& request) override;
+
+  Status DeleteSchema(
+      grpc::ClientContext& context,
+      google::pubsub::v1::DeleteSchemaRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ValidateSchemaRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ValidateMessageRequest const& request) override;
+
+ private:
+  std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface> grpc_stub_;
 };
 
 /**
