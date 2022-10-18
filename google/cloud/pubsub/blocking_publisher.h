@@ -24,11 +24,12 @@ namespace google {
 namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Publish messages to the Cloud Pub/Sub service.
  *
  * This class is used to publish messages to any given topic. It is intended
- * for low-volume publishers: applications sending less than one message per
+ * for low-volume publishers. Applications sending less than one message per
  * second may find this class easier to use than `Publisher`, which can handle
  * thousands of messages per second.
  *
@@ -65,7 +66,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
  * contains the expected result. Please consult the #google::cloud::StatusOr
  * documentation for more details.
- *
  */
 class BlockingPublisher {
  public:
