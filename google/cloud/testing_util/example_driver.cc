@@ -61,9 +61,13 @@ int Example::Run(int argc, char const* const argv[]) try {
 
   std::string const command_name = argv[1];
   auto command = commands_.find(command_name);
-  if (commands_.end() == command) {
+  if (commands_.end() == command && command_name != "--help") {
     PrintUsage(argv[0], "Unknown command: " + command_name);
     return 1;
+  }
+  else if(commands_.end() == command && command_name == "--help") {
+    PrintUsage(argv[0], "");
+    return 0;
   }
 
   command->second({argv + 2, argv + argc});
