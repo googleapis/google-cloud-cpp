@@ -105,12 +105,6 @@ class DefaultSchemaStub : public SchemaStub {
   std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface> grpc_stub_;
 };
 
-/**
- * Creates a SchemaStub with a pre-configured channel.
- */
-std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(
-    std::shared_ptr<grpc::Channel> channel);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

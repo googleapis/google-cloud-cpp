@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
-#include "google/cloud/pubsub/internal/create_channel.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
@@ -188,18 +187,6 @@ StatusOr<google::pubsub::v1::SeekResponse> DefaultSubscriberStub::Seek(
   auto status = grpc_stub_->Seek(&context, request, &response);
   if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
   return response;
-}
-
-/// Create a SubscriberStub using a pre-configured channel.
-std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
-    std::shared_ptr<grpc::Channel> channel) {
-  return std::make_shared<DefaultSubscriberStub>(
-      google::pubsub::v1::Subscriber::NewStub(std::move(channel)));
-}
-
-std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
-                                                            int channel_id) {
-  return CreateDefaultSubscriberStub(CreateChannel(opts, channel_id));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

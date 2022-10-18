@@ -88,6 +88,8 @@ add_library(
     internal/schema_metadata_decorator.h
     internal/schema_stub.cc
     internal/schema_stub.h
+    internal/schema_stub_factory.cc
+    internal/schema_stub_factory.h
     internal/sequential_batch_sink.cc
     internal/sequential_batch_sink.h
     internal/session_shutdown_manager.cc
@@ -104,6 +106,8 @@ add_library(
     internal/subscriber_round_robin.h
     internal/subscriber_stub.cc
     internal/subscriber_stub.h
+    internal/subscriber_stub_factory.cc
+    internal/subscriber_stub_factory.h
     internal/subscription_batch_source.h
     internal/subscription_concurrency_control.cc
     internal/subscription_concurrency_control.h

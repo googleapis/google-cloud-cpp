@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/internal/subscriber_logging_decorator.h"
 #include "google/cloud/pubsub/internal/subscriber_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/subscriber_round_robin.h"
+#include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
