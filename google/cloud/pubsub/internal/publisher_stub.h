@@ -42,56 +42,56 @@ class PublisherStub {
 
   /// Create a new topic.
   virtual StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::Topic const& request) = 0;
 
   /// Update the configuration of an existing topic.
   virtual StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::UpdateTopicRequest const& request) = 0;
 
   /// Publish a batch of messages.
   virtual StatusOr<google::pubsub::v1::PublishResponse> Publish(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::PublishRequest const& request) = 0;
 
   /// Get information about an existing topic.
   virtual StatusOr<google::pubsub::v1::Topic> GetTopic(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::GetTopicRequest const& request) = 0;
 
   /// List existing topics.
   virtual StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ListTopicsRequest const& request) = 0;
 
   /// List subscriptions for a topic.
   virtual StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
   ListTopicSubscriptions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ListTopicSubscriptionsRequest const& request) = 0;
 
   /// List snapshots for a topic.
   virtual StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
   ListTopicSnapshots(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ListTopicSnapshotsRequest const& request) = 0;
 
   /// Delete a topic.
   virtual Status DeleteTopic(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::DeleteTopicRequest const& request) = 0;
 
   /// Detach a subscription.
   virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
   DetachSubscription(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::DetachSubscriptionRequest const& request) = 0;
 
   /// Publish a batch of messages.
   virtual future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> client_context,
+      std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::PublishRequest const& request) = 0;
 };
 
@@ -143,7 +143,7 @@ class DefaultPublisherStub : public PublisherStub {
 
   future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> client_context,
+      std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::PublishRequest const& request) override;
 
  private:

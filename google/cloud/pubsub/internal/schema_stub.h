@@ -78,27 +78,27 @@ class DefaultSchemaServiceStub : public SchemaServiceStub {
   ~DefaultSchemaServiceStub() override = default;
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& client_context,
       google::pubsub::v1::CreateSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> GetSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& client_context,
       google::pubsub::v1::GetSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& context,
+      grpc::ClientContext& client_context,
       google::pubsub::v1::ListSchemasRequest const& request) override;
 
   Status DeleteSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& client_context,
       google::pubsub::v1::DeleteSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& client_context,
       google::pubsub::v1::ValidateSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& client_context,
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
  private:
