@@ -20,6 +20,7 @@ google_cloud_cpp_pubsub_hdrs = [
     "ack_handler.h",
     "application_callback.h",
     "backoff_policy.h",
+    "blocking_publisher.h",
     "blocking_publisher_connection.h",
     "connection_options.h",
     "exactly_once_ack_handler.h",
@@ -89,6 +90,7 @@ google_cloud_cpp_pubsub_hdrs = [
 
 google_cloud_cpp_pubsub_srcs = [
     "ack_handler.cc",
+    "blocking_publisher.cc",
     "blocking_publisher_connection.cc",
     "connection_options.cc",
     "exactly_once_ack_handler.cc",

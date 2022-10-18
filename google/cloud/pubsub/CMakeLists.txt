@@ -40,6 +40,8 @@ add_library(
     ack_handler.h
     application_callback.h
     backoff_policy.h
+    blocking_publisher.cc
+    blocking_publisher.h
     blocking_publisher_connection.cc
     blocking_publisher_connection.h
     connection_options.cc
@@ -195,6 +197,7 @@ add_library(google_cloud_cpp_pubsub_mocks INTERFACE)
 set(google_cloud_cpp_pubsub_mocks_hdrs
     # cmake-format: sort
     mocks/mock_ack_handler.h
+    mocks/mock_blocking_publisher_connection.h
     mocks/mock_exactly_once_ack_handler.h
     mocks/mock_publisher_connection.h
     mocks/mock_schema_admin_connection.h
@@ -256,6 +259,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         # cmake-format: sort
         ack_handler_test.cc
         blocking_publisher_connection_test.cc
+        blocking_publisher_test.cc
         exactly_once_ack_handler_test.cc
         internal/batching_publisher_connection_test.cc
         internal/default_batch_sink_test.cc
