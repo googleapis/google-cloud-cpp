@@ -32,17 +32,6 @@ StatusOr<google::pubsub::v1::Topic> PublisherLogging::CreateTopic(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::Topic> PublisherLogging::GetTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::GetTopicRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::pubsub::v1::GetTopicRequest const& request) {
-        return child_->GetTopic(context, request);
-      },
-      context, request, __func__, tracing_options_);
-}
-
 StatusOr<google::pubsub::v1::Topic> PublisherLogging::UpdateTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateTopicRequest const& request) {
@@ -54,6 +43,28 @@ StatusOr<google::pubsub::v1::Topic> PublisherLogging::UpdateTopic(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::PublishResponse> PublisherLogging::Publish(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PublishRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::PublishRequest const& request) {
+        return child_->Publish(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::pubsub::v1::Topic> PublisherLogging::GetTopic(
+    grpc::ClientContext& context,
+    google::pubsub::v1::GetTopicRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::GetTopicRequest const& request) {
+        return child_->GetTopic(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::pubsub::v1::ListTopicsResponse> PublisherLogging::ListTopics(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicsRequest const& request) {
@@ -61,29 +72,6 @@ StatusOr<google::pubsub::v1::ListTopicsResponse> PublisherLogging::ListTopics(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::ListTopicsRequest const& request) {
         return child_->ListTopics(context, request);
-      },
-      context, request, __func__, tracing_options_);
-}
-
-Status PublisherLogging::DeleteTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::DeleteTopicRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::pubsub::v1::DeleteTopicRequest const& request) {
-        return child_->DeleteTopic(context, request);
-      },
-      context, request, __func__, tracing_options_);
-}
-
-StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-PublisherLogging::DetachSubscription(
-    grpc::ClientContext& context,
-    google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::pubsub::v1::DetachSubscriptionRequest const& request) {
-        return child_->DetachSubscription(context, request);
       },
       context, request, __func__, tracing_options_);
 }
@@ -112,6 +100,29 @@ PublisherLogging::ListTopicSnapshots(
       context, request, __func__, tracing_options_);
 }
 
+Status PublisherLogging::DeleteTopic(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DeleteTopicRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::DeleteTopicRequest const& request) {
+        return child_->DeleteTopic(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+PublisherLogging::DetachSubscription(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DetachSubscriptionRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::DetachSubscriptionRequest const& request) {
+        return child_->DetachSubscription(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherLogging::AsyncPublish(
     google::cloud::CompletionQueue& cq,
@@ -124,17 +135,6 @@ PublisherLogging::AsyncPublish(
         return child_->AsyncPublish(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
-}
-
-StatusOr<google::pubsub::v1::PublishResponse> PublisherLogging::Publish(
-    grpc::ClientContext& context,
-    google::pubsub::v1::PublishRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::pubsub::v1::PublishRequest const& request) {
-        return child_->Publish(context, request);
-      },
-      context, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
