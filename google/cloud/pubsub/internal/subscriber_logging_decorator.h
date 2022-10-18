@@ -103,27 +103,6 @@ class SubscriberLogging : public SubscriberStub {
   bool trace_streams_;
 };
 
-class LoggingAsyncPullStream : public SubscriberStub::AsyncPullStream {
- public:
-  LoggingAsyncPullStream(std::shared_ptr<SubscriberStub::AsyncPullStream> child,
-                         TracingOptions tracing_options,
-                         std::string request_id);
-
-  void Cancel() override;
-  future<bool> Start() override;
-  future<absl::optional<google::pubsub::v1::StreamingPullResponse>> Read()
-      override;
-  future<bool> Write(google::pubsub::v1::StreamingPullRequest const&,
-                     grpc::WriteOptions) override;
-  future<bool> WritesDone() override;
-  future<Status> Finish() override;
-
- private:
-  std::shared_ptr<SubscriberStub::AsyncPullStream> child_;
-  TracingOptions tracing_options_;
-  std::string request_id_;
-};
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
