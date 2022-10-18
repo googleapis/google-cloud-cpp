@@ -30,20 +30,29 @@ StatusOr<google::pubsub::v1::Topic> DefaultPublisherStub::CreateTopic(
   return response;
 }
 
-StatusOr<google::pubsub::v1::Topic> DefaultPublisherStub::GetTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::GetTopicRequest const& request) {
-  google::pubsub::v1::Topic response;
-  auto status = grpc_stub_->GetTopic(&context, request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-  return response;
-}
-
 StatusOr<google::pubsub::v1::Topic> DefaultPublisherStub::UpdateTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateTopicRequest const& request) {
   google::pubsub::v1::Topic response;
   auto status = grpc_stub_->UpdateTopic(&context, request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return response;
+}
+
+StatusOr<google::pubsub::v1::PublishResponse> DefaultPublisherStub::Publish(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PublishRequest const& request) {
+  google::pubsub::v1::PublishResponse response;
+  auto status = grpc_stub_->Publish(&context, request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return response;
+}
+
+StatusOr<google::pubsub::v1::Topic> DefaultPublisherStub::GetTopic(
+    grpc::ClientContext& context,
+    google::pubsub::v1::GetTopicRequest const& request) {
+  google::pubsub::v1::Topic response;
+  auto status = grpc_stub_->GetTopic(&context, request, &response);
   if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
   return response;
 }
@@ -54,25 +63,6 @@ DefaultPublisherStub::ListTopics(
     google::pubsub::v1::ListTopicsRequest const& request) {
   google::pubsub::v1::ListTopicsResponse response;
   auto status = grpc_stub_->ListTopics(&context, request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-  return response;
-}
-
-Status DefaultPublisherStub::DeleteTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::DeleteTopicRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTopic(&context, request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-  return {};
-}
-
-StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-DefaultPublisherStub::DetachSubscription(
-    grpc::ClientContext& context,
-    google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  google::pubsub::v1::DetachSubscriptionResponse response;
-  auto status = grpc_stub_->DetachSubscription(&context, request, &response);
   if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
   return response;
 }
@@ -98,6 +88,25 @@ DefaultPublisherStub::ListTopicSnapshots(
   return response;
 }
 
+Status DefaultPublisherStub::DeleteTopic(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DeleteTopicRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteTopic(&context, request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return {};
+}
+
+StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+DefaultPublisherStub::DetachSubscription(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DetachSubscriptionRequest const& request) {
+  google::pubsub::v1::DetachSubscriptionResponse response;
+  auto status = grpc_stub_->DetachSubscription(&context, request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return response;
+}
+
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 DefaultPublisherStub::AsyncPublish(
     google::cloud::CompletionQueue& cq,
@@ -110,15 +119,6 @@ DefaultPublisherStub::AsyncPublish(
         return grpc_stub_->AsyncPublish(context, request, cq);
       },
       request, std::move(context));
-}
-
-StatusOr<google::pubsub::v1::PublishResponse> DefaultPublisherStub::Publish(
-    grpc::ClientContext& context,
-    google::pubsub::v1::PublishRequest const& request) {
-  google::pubsub::v1::PublishResponse response;
-  auto status = grpc_stub_->Publish(&context, request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

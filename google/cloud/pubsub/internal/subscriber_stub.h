@@ -66,11 +66,6 @@ class SubscriberStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) = 0;
 
-  /// Modify the push configuration of an existing subscription.
-  virtual Status ModifyPushConfig(
-      grpc::ClientContext& client_context,
-      google::pubsub::v1::ModifyPushConfigRequest const& request) = 0;
-
   using AsyncPullStream = ::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>;
@@ -80,22 +75,10 @@ class SubscriberStub {
       google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::pubsub::v1::StreamingPullRequest const& request) = 0;
 
-  /// Acknowledge exactly one message.
-  virtual future<Status> AsyncAcknowledge(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::AcknowledgeRequest const& request) = 0;
-
-  /// Modify the acknowledgement deadline for many messages.
-  virtual future<Status> AsyncModifyAckDeadline(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
-
-  /// Create a new snapshot.
-  virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+  /// Modify the push configuration of an existing subscription.
+  virtual Status ModifyPushConfig(
       grpc::ClientContext& client_context,
-      google::pubsub::v1::CreateSnapshotRequest const& request) = 0;
+      google::pubsub::v1::ModifyPushConfigRequest const& request) = 0;
 
   /// Get information about an existing snapshot.
   virtual StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
@@ -106,6 +89,11 @@ class SubscriberStub {
   virtual StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
       grpc::ClientContext& client_context,
       google::pubsub::v1::ListSnapshotsRequest const& request) = 0;
+
+  /// Create a new snapshot.
+  virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::CreateSnapshotRequest const& request) = 0;
 
   /// Update an existing snapshot.
   virtual StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
@@ -121,6 +109,18 @@ class SubscriberStub {
   virtual StatusOr<google::pubsub::v1::SeekResponse> Seek(
       grpc::ClientContext& client_context,
       google::pubsub::v1::SeekRequest const& request) = 0;
+
+  /// Acknowledge exactly one message.
+  virtual future<Status> AsyncAcknowledge(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::AcknowledgeRequest const& request) = 0;
+
+  /// Modify the acknowledgement deadline for many messages.
+  virtual future<Status> AsyncModifyAckDeadline(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
 };
 
 class DefaultSubscriberStub : public SubscriberStub {
@@ -151,10 +151,6 @@ class DefaultSubscriberStub : public SubscriberStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
 
-  Status ModifyPushConfig(
-      grpc::ClientContext& client_context,
-      google::pubsub::v1::ModifyPushConfigRequest const& request) override;
-
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>
@@ -162,30 +158,24 @@ class DefaultSubscriberStub : public SubscriberStub {
       google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::pubsub::v1::StreamingPullRequest const& request) override;
 
-  future<Status> AsyncAcknowledge(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::AcknowledgeRequest const& request) override;
-
-  future<Status> AsyncModifyAckDeadline(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override;
-
-  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+  Status ModifyPushConfig(
       grpc::ClientContext& client_context,
-      google::pubsub::v1::CreateSnapshotRequest const& request) override;
+      google::pubsub::v1::ModifyPushConfigRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::GetSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ListSnapshotsRequest const& request) override;
 
+  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+      grpc::ClientContext& context,
+      google::pubsub::v1::CreateSnapshotRequest const& request) override;
+
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::UpdateSnapshotRequest const& request) override;
 
   Status DeleteSnapshot(
@@ -195,6 +185,16 @@ class DefaultSubscriberStub : public SubscriberStub {
   StatusOr<google::pubsub::v1::SeekResponse> Seek(
       grpc::ClientContext& client_context,
       google::pubsub::v1::SeekRequest const& request) override;
+
+  future<Status> AsyncModifyAckDeadline(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override;
+
+  future<Status> AsyncAcknowledge(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::AcknowledgeRequest const& request) override;
 
  private:
   std::unique_ptr<google::pubsub::v1::Subscriber::StubInterface> grpc_stub_;

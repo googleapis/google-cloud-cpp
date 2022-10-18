@@ -81,17 +81,6 @@ Status SubscriberLogging::DeleteSubscription(
       context, request, __func__, tracing_options_);
 }
 
-Status SubscriberLogging::ModifyPushConfig(
-    grpc::ClientContext& context,
-    google::pubsub::v1::ModifyPushConfigRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::pubsub::v1::ModifyPushConfigRequest const& request) {
-        return child_->ModifyPushConfig(context, request);
-      },
-      context, request, __func__, tracing_options_);
-}
-
 std::unique_ptr<SubscriberStub::AsyncPullStream>
 SubscriberLogging::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
@@ -107,39 +96,24 @@ SubscriberLogging::AsyncStreamingPull(
       std::move(stream), tracing_options_, request_id);
 }
 
-future<Status> SubscriberLogging::AsyncAcknowledge(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::pubsub::v1::AcknowledgeRequest const& request) {
-  return LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
-             google::pubsub::v1::AcknowledgeRequest const& request) {
-        return child_->AsyncAcknowledge(cq, std::move(context), request);
-      },
-      cq, std::move(context), request, __func__, tracing_options_);
-}
-
-future<Status> SubscriberLogging::AsyncModifyAckDeadline(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-  return LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
-             google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-        return child_->AsyncModifyAckDeadline(cq, std::move(context), request);
-      },
-      cq, std::move(context), request, __func__, tracing_options_);
-}
-
-StatusOr<google::pubsub::v1::Snapshot> SubscriberLogging::CreateSnapshot(
+Status SubscriberLogging::ModifyPushConfig(
     grpc::ClientContext& context,
-    google::pubsub::v1::CreateSnapshotRequest const& request) {
+    google::pubsub::v1::ModifyPushConfigRequest const& request) {
   return LogWrapper(
       [this](grpc::ClientContext& context,
-             google::pubsub::v1::CreateSnapshotRequest const& request) {
-        return child_->CreateSnapshot(context, request);
+             google::pubsub::v1::ModifyPushConfigRequest const& request) {
+        return child_->ModifyPushConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::pubsub::v1::Snapshot> SubscriberLogging::GetSnapshot(
+    grpc::ClientContext& context,
+    google::pubsub::v1::GetSnapshotRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::GetSnapshotRequest const& request) {
+        return child_->GetSnapshot(context, request);
       },
       context, request, __func__, tracing_options_);
 }
@@ -156,13 +130,13 @@ SubscriberLogging::ListSnapshots(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::Snapshot> SubscriberLogging::GetSnapshot(
+StatusOr<google::pubsub::v1::Snapshot> SubscriberLogging::CreateSnapshot(
     grpc::ClientContext& context,
-    google::pubsub::v1::GetSnapshotRequest const& request) {
+    google::pubsub::v1::CreateSnapshotRequest const& request) {
   return LogWrapper(
       [this](grpc::ClientContext& context,
-             google::pubsub::v1::GetSnapshotRequest const& request) {
-        return child_->GetSnapshot(context, request);
+             google::pubsub::v1::CreateSnapshotRequest const& request) {
+        return child_->CreateSnapshot(context, request);
       },
       context, request, __func__, tracing_options_);
 }
@@ -198,6 +172,32 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberLogging::Seek(
         return child_->Seek(context, request);
       },
       context, request, __func__, tracing_options_);
+}
+
+future<Status> SubscriberLogging::AsyncModifyAckDeadline(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+  return LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+        return child_->AsyncModifyAckDeadline(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<Status> SubscriberLogging::AsyncAcknowledge(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::pubsub::v1::AcknowledgeRequest const& request) {
+  return LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::pubsub::v1::AcknowledgeRequest const& request) {
+        return child_->AsyncAcknowledge(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 LoggingAsyncPullStream::LoggingAsyncPullStream(

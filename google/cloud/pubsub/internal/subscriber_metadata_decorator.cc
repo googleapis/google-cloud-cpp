@@ -63,13 +63,6 @@ Status SubscriberMetadata::DeleteSubscription(
   return child_->DeleteSubscription(context, request);
 }
 
-Status SubscriberMetadata::ModifyPushConfig(
-    grpc::ClientContext& context,
-    google::pubsub::v1::ModifyPushConfigRequest const& request) {
-  SetMetadata(context, "subscription=" + request.subscription());
-  return child_->ModifyPushConfig(context, request);
-}
-
 std::unique_ptr<SubscriberStub::AsyncPullStream>
 SubscriberMetadata::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
@@ -79,27 +72,18 @@ SubscriberMetadata::AsyncStreamingPull(
   return child_->AsyncStreamingPull(cq, std::move(context), request);
 }
 
-future<Status> SubscriberMetadata::AsyncAcknowledge(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::pubsub::v1::AcknowledgeRequest const& request) {
-  SetMetadata(*context, "subscription=" + request.subscription());
-  return child_->AsyncAcknowledge(cq, std::move(context), request);
-}
-
-future<Status> SubscriberMetadata::AsyncModifyAckDeadline(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-  SetMetadata(*context, "subscription=" + request.subscription());
-  return child_->AsyncModifyAckDeadline(cq, std::move(context), request);
-}
-
-StatusOr<google::pubsub::v1::Snapshot> SubscriberMetadata::CreateSnapshot(
+Status SubscriberMetadata::ModifyPushConfig(
     grpc::ClientContext& context,
-    google::pubsub::v1::CreateSnapshotRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->CreateSnapshot(context, request);
+    google::pubsub::v1::ModifyPushConfigRequest const& request) {
+  SetMetadata(context, "subscription=" + request.subscription());
+  return child_->ModifyPushConfig(context, request);
+}
+
+StatusOr<google::pubsub::v1::Snapshot> SubscriberMetadata::GetSnapshot(
+    grpc::ClientContext& context,
+    google::pubsub::v1::GetSnapshotRequest const& request) {
+  SetMetadata(context, "snapshot=" + request.snapshot());
+  return child_->GetSnapshot(context, request);
 }
 
 StatusOr<google::pubsub::v1::ListSnapshotsResponse>
@@ -110,11 +94,11 @@ SubscriberMetadata::ListSnapshots(
   return child_->ListSnapshots(context, request);
 }
 
-StatusOr<google::pubsub::v1::Snapshot> SubscriberMetadata::GetSnapshot(
+StatusOr<google::pubsub::v1::Snapshot> SubscriberMetadata::CreateSnapshot(
     grpc::ClientContext& context,
-    google::pubsub::v1::GetSnapshotRequest const& request) {
-  SetMetadata(context, "snapshot=" + request.snapshot());
-  return child_->GetSnapshot(context, request);
+    google::pubsub::v1::CreateSnapshotRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->CreateSnapshot(context, request);
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberMetadata::UpdateSnapshot(
@@ -136,6 +120,22 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberMetadata::Seek(
     google::pubsub::v1::SeekRequest const& request) {
   SetMetadata(context, "subscription=" + request.subscription());
   return child_->Seek(context, request);
+}
+
+future<Status> SubscriberMetadata::AsyncModifyAckDeadline(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+  SetMetadata(*context, "subscription=" + request.subscription());
+  return child_->AsyncModifyAckDeadline(cq, std::move(context), request);
+}
+
+future<Status> SubscriberMetadata::AsyncAcknowledge(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::pubsub::v1::AcknowledgeRequest const& request) {
+  SetMetadata(*context, "subscription=" + request.subscription());
+  return child_->AsyncAcknowledge(cq, std::move(context), request);
 }
 
 void SubscriberMetadata::SetMetadata(grpc::ClientContext& context,

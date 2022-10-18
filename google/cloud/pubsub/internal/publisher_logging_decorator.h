@@ -36,25 +36,21 @@ class PublisherLogging : public PublisherStub {
       grpc::ClientContext& context,
       google::pubsub::v1::Topic const& request) override;
 
-  StatusOr<google::pubsub::v1::Topic> GetTopic(
-      grpc::ClientContext& context,
-      google::pubsub::v1::GetTopicRequest const& request) override;
-
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
       grpc::ClientContext& context,
       google::pubsub::v1::UpdateTopicRequest const& request) override;
 
+  StatusOr<google::pubsub::v1::PublishResponse> Publish(
+      grpc::ClientContext& context,
+      google::pubsub::v1::PublishRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::Topic> GetTopic(
+      grpc::ClientContext& context,
+      google::pubsub::v1::GetTopicRequest const& request) override;
+
   StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
       grpc::ClientContext& context,
       google::pubsub::v1::ListTopicsRequest const& request) override;
-
-  Status DeleteTopic(
-      grpc::ClientContext& context,
-      google::pubsub::v1::DeleteTopicRequest const& request) override;
-
-  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
-      grpc::ClientContext& context,
-      google::pubsub::v1::DetachSubscriptionRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
   ListTopicSubscriptions(
@@ -66,13 +62,17 @@ class PublisherLogging : public PublisherStub {
       grpc::ClientContext& context,
       google::pubsub::v1::ListTopicSnapshotsRequest const& request) override;
 
+  Status DeleteTopic(
+      grpc::ClientContext& context,
+      google::pubsub::v1::DeleteTopicRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
+      grpc::ClientContext& context,
+      google::pubsub::v1::DetachSubscriptionRequest const& request) override;
+
   future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::PublishRequest const& request) override;
-
-  StatusOr<google::pubsub::v1::PublishResponse> Publish(
-      grpc::ClientContext& context,
       google::pubsub::v1::PublishRequest const& request) override;
 
  private:
