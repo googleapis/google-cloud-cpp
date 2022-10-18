@@ -20,12 +20,10 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::internal::LogWrapper;
-
 StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::CreateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSchemaRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::CreateSchemaRequest const& request) {
         return child_->CreateSchema(context, request);
@@ -36,7 +34,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::CreateSchema(
 StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::GetSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSchemaRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::GetSchemaRequest const& request) {
         return child_->GetSchema(context, request);
@@ -48,7 +46,7 @@ StatusOr<google::pubsub::v1::ListSchemasResponse>
 SchemaServiceLogging::ListSchemas(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSchemasRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::ListSchemasRequest const& request) {
         return child_->ListSchemas(context, request);
@@ -59,7 +57,7 @@ SchemaServiceLogging::ListSchemas(
 Status SchemaServiceLogging::DeleteSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::DeleteSchemaRequest const& request) {
         return child_->DeleteSchema(context, request);
@@ -71,7 +69,7 @@ StatusOr<google::pubsub::v1::ValidateSchemaResponse>
 SchemaServiceLogging::ValidateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::ValidateSchemaRequest const& request) {
         return child_->ValidateSchema(context, request);
@@ -83,7 +81,7 @@ StatusOr<google::pubsub::v1::ValidateMessageResponse>
 SchemaServiceLogging::ValidateMessage(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateMessageRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::ValidateMessageRequest const& request) {
         return child_->ValidateMessage(context, request);

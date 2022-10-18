@@ -20,11 +20,9 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::internal::LogWrapper;
-
 StatusOr<google::pubsub::v1::Topic> PublisherLogging::CreateTopic(
     grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::Topic const& request) {
         return child_->CreateTopic(context, request);
@@ -35,7 +33,7 @@ StatusOr<google::pubsub::v1::Topic> PublisherLogging::CreateTopic(
 StatusOr<google::pubsub::v1::Topic> PublisherLogging::UpdateTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateTopicRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::UpdateTopicRequest const& request) {
         return child_->UpdateTopic(context, request);
@@ -46,7 +44,7 @@ StatusOr<google::pubsub::v1::Topic> PublisherLogging::UpdateTopic(
 StatusOr<google::pubsub::v1::PublishResponse> PublisherLogging::Publish(
     grpc::ClientContext& context,
     google::pubsub::v1::PublishRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::PublishRequest const& request) {
         return child_->Publish(context, request);
@@ -57,7 +55,7 @@ StatusOr<google::pubsub::v1::PublishResponse> PublisherLogging::Publish(
 StatusOr<google::pubsub::v1::Topic> PublisherLogging::GetTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::GetTopicRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::GetTopicRequest const& request) {
         return child_->GetTopic(context, request);
@@ -68,7 +66,7 @@ StatusOr<google::pubsub::v1::Topic> PublisherLogging::GetTopic(
 StatusOr<google::pubsub::v1::ListTopicsResponse> PublisherLogging::ListTopics(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicsRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::ListTopicsRequest const& request) {
         return child_->ListTopics(context, request);
@@ -80,7 +78,7 @@ StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 PublisherLogging::ListTopicSubscriptions(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
         return child_->ListTopicSubscriptions(context, request);
@@ -92,7 +90,7 @@ StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 PublisherLogging::ListTopicSnapshots(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
         return child_->ListTopicSnapshots(context, request);
@@ -103,7 +101,7 @@ PublisherLogging::ListTopicSnapshots(
 Status PublisherLogging::DeleteTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteTopicRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::DeleteTopicRequest const& request) {
         return child_->DeleteTopic(context, request);
@@ -115,7 +113,7 @@ StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 PublisherLogging::DetachSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::DetachSubscriptionRequest const& request) {
         return child_->DetachSubscription(context, request);
@@ -128,7 +126,7 @@ PublisherLogging::AsyncPublish(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::pubsub::v1::PublishRequest const& request) {
-  return LogWrapper(
+  return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
              google::pubsub::v1::PublishRequest const& request) {
