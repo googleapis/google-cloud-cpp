@@ -12,23 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_METADATA_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_METADATA_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_LOGGING_DECORATOR_H
 
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/tracing_options.h"
 #include <memory>
-#include <string>
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PublisherMetadata : public PublisherStub {
+class PublisherLogging : public PublisherStub {
  public:
-  explicit PublisherMetadata(std::shared_ptr<PublisherStub> child);
+  PublisherLogging(std::shared_ptr<PublisherStub> child,
+                   TracingOptions tracing_options)
+      : child_(std::move(child)),
+        tracing_options_(std::move(tracing_options)) {}
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       grpc::ClientContext& context,
@@ -74,11 +76,8 @@ class PublisherMetadata : public PublisherStub {
       google::pubsub::v1::PublishRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-
   std::shared_ptr<PublisherStub> child_;
-  std::string x_goog_api_client_;
+  TracingOptions tracing_options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -86,4 +85,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_METADATA_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_LOGGING_DECORATOR_H

@@ -66,12 +66,12 @@ add_library(
     internal/flow_controlled_publisher_connection.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
-    internal/publisher_auth.cc
-    internal/publisher_auth.h
-    internal/publisher_logging.cc
-    internal/publisher_logging.h
-    internal/publisher_metadata.cc
-    internal/publisher_metadata.h
+    internal/publisher_auth_decorator.cc
+    internal/publisher_auth_decorator.h
+    internal/publisher_logging_decorator.cc
+    internal/publisher_logging_decorator.h
+    internal/publisher_metadata_decorator.cc
+    internal/publisher_metadata_decorator.h
     internal/publisher_round_robin.cc
     internal/publisher_round_robin.h
     internal/publisher_stub.cc
@@ -80,12 +80,12 @@ add_library(
     internal/publisher_stub_factory.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
-    internal/schema_auth.cc
-    internal/schema_auth.h
-    internal/schema_logging.cc
-    internal/schema_logging.h
-    internal/schema_metadata.cc
-    internal/schema_metadata.h
+    internal/schema_auth_decorator.cc
+    internal/schema_auth_decorator.h
+    internal/schema_logging_decorator.cc
+    internal/schema_logging_decorator.h
+    internal/schema_metadata_decorator.cc
+    internal/schema_metadata_decorator.h
     internal/schema_stub.cc
     internal/schema_stub.h
     internal/sequential_batch_sink.cc
@@ -94,12 +94,12 @@ add_library(
     internal/session_shutdown_manager.h
     internal/streaming_subscription_batch_source.cc
     internal/streaming_subscription_batch_source.h
-    internal/subscriber_auth.cc
-    internal/subscriber_auth.h
-    internal/subscriber_logging.cc
-    internal/subscriber_logging.h
-    internal/subscriber_metadata.cc
-    internal/subscriber_metadata.h
+    internal/subscriber_auth_decorator.cc
+    internal/subscriber_auth_decorator.h
+    internal/subscriber_logging_decorator.cc
+    internal/subscriber_logging_decorator.h
+    internal/subscriber_metadata_decorator.cc
+    internal/subscriber_metadata_decorator.h
     internal/subscriber_round_robin.cc
     internal/subscriber_round_robin.h
     internal/subscriber_stub.cc

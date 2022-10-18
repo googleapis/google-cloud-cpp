@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_AUTH_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_AUTH_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_METADATA_DECORATOR_H
 
 #include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -28,12 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * A Decorator for `SchemaStub` that logs each request and response.
  */
-class SchemaAuth : public SchemaStub {
+class SchemaMetadata : public SchemaStub {
  public:
-  SchemaAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<SchemaStub> child)
-      : auth_(std::move(auth)), child_(std::move(child)) {}
+  explicit SchemaMetadata(std::shared_ptr<SchemaStub> child);
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       grpc::ClientContext& context,
@@ -55,8 +52,11 @@ class SchemaAuth : public SchemaStub {
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
+
   std::shared_ptr<SchemaStub> child_;
+  std::string x_goog_api_client_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -64,4 +64,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_AUTH_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_METADATA_DECORATOR_H

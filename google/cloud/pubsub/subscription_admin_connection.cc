@@ -14,9 +14,9 @@
 
 #include "google/cloud/pubsub/subscription_admin_connection.h"
 #include "google/cloud/pubsub/internal/defaults.h"
-#include "google/cloud/pubsub/internal/subscriber_auth.h"
-#include "google/cloud/pubsub/internal/subscriber_logging.h"
-#include "google/cloud/pubsub/internal/subscriber_metadata.h"
+#include "google/cloud/pubsub/internal/subscriber_auth_decorator.h"
+#include "google/cloud/pubsub/internal/subscriber_logging_decorator.h"
+#include "google/cloud/pubsub/internal/subscriber_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/credentials.h"

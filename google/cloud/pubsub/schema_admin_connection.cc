@@ -14,9 +14,9 @@
 
 #include "google/cloud/pubsub/schema_admin_connection.h"
 #include "google/cloud/pubsub/internal/defaults.h"
-#include "google/cloud/pubsub/internal/schema_auth.h"
-#include "google/cloud/pubsub/internal/schema_logging.h"
-#include "google/cloud/pubsub/internal/schema_metadata.h"
+#include "google/cloud/pubsub/internal/schema_auth_decorator.h"
+#include "google/cloud/pubsub/internal/schema_logging_decorator.h"
+#include "google/cloud/pubsub/internal/schema_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"

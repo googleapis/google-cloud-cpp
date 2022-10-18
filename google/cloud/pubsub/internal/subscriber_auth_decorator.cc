@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/subscriber_auth.h"
+#include "google/cloud/pubsub/internal/subscriber_auth_decorator.h"
 #include "google/cloud/internal/async_read_write_stream_auth.h"
 
 namespace google {

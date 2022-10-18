@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/schema_logging.h"
+#include "google/cloud/pubsub/internal/schema_logging_decorator.h"
 #include "google/cloud/pubsub/testing/mock_schema_stub.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
