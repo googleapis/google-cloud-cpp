@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/internal/schema_logging_decorator.h"
 #include "google/cloud/pubsub/internal/schema_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/schema_stub.h"
+#include "google/cloud/pubsub/internal/schema_stub_factory.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/credentials.h"

@@ -83,6 +83,17 @@ std::shared_ptr<PublisherStub> MakeTestPublisherStub(
   return DecoratePublisherStub(options, std::move(auth), std::move(stub));
 }
 
+std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
+                                                          int channel_id) {
+  return CreateDefaultPublisherStub(CreateChannel(opts, channel_id));
+}
+
+std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
+    std::shared_ptr<grpc::Channel> channel) {
+  return std::make_shared<DefaultPublisherStub>(
+      google::pubsub::v1::Publisher::NewStub(std::move(channel)));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

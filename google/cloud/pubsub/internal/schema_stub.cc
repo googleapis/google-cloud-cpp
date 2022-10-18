@@ -79,12 +79,6 @@ DefaultSchemaStub::ValidateMessage(
   return response;
 }
 
-std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(
-    std::shared_ptr<grpc::Channel> channel) {
-  return std::make_shared<DefaultSchemaStub>(
-      google::pubsub::v1::SchemaService::NewStub(std::move(channel)));
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

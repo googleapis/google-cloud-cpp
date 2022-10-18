@@ -200,19 +200,6 @@ class DefaultSubscriberStub : public SubscriberStub {
   std::unique_ptr<google::pubsub::v1::Subscriber::StubInterface> grpc_stub_;
 };
 
-/// Create a SubscriberStub using a pre-configured channel.
-std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
-    std::shared_ptr<grpc::Channel> channel);
-
-/**
- * Creates a SubscriberStub configured with @p opts and @p channel_id.
- *
- * @p channel_id should be unique among all stubs in the same Connection pool,
- * to ensure they use different underlying connections.
- */
-std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
-                                                            int channel_id);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

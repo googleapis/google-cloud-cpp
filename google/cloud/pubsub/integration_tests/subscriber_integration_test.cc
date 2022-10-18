@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
+#include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription.h"

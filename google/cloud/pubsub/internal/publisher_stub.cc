@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/publisher_stub.h"
-#include "google/cloud/pubsub/internal/create_channel.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 
@@ -120,17 +119,6 @@ StatusOr<google::pubsub::v1::PublishResponse> DefaultPublisherStub::Publish(
   auto status = grpc_stub_->Publish(&context, request, &response);
   if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
   return response;
-}
-
-std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
-                                                          int channel_id) {
-  return CreateDefaultPublisherStub(CreateChannel(opts, channel_id));
-}
-
-std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
-    std::shared_ptr<grpc::Channel> channel) {
-  return std::make_shared<DefaultPublisherStub>(
-      google::pubsub::v1::Publisher::NewStub(std::move(channel)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
