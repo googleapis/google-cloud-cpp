@@ -13,14 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscriber_logging_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-using ::google::cloud::internal::DebugString;
 
 StatusOr<google::pubsub::v1::Subscription>
 SubscriberLogging::CreateSubscription(
@@ -85,14 +84,18 @@ SubscriberLogging::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::pubsub::v1::StreamingPullRequest const& request) {
+  using LoggingStream =
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::pubsub::v1::StreamingPullRequest,
+          google::pubsub::v1::StreamingPullResponse>;
   auto request_id = google::cloud::internal::RequestIdForLogging();
-  auto prefix = std::string(__func__) + "(" + request_id + ")";
-  GCP_LOG(DEBUG) << prefix
-                 << " << request=" << DebugString(request, tracing_options_);
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncStreamingPull(cq, std::move(context), request);
-  if (!trace_streams_) return stream;
-  return absl::make_unique<LoggingAsyncPullStream>(
-      std::move(stream), tracing_options_, request_id);
+  if (trace_streams_) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
 }
 
 Status SubscriberLogging::ModifyPushConfig(
@@ -197,89 +200,6 @@ future<Status> SubscriberLogging::AsyncAcknowledge(
         return child_->AsyncAcknowledge(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
-}
-
-LoggingAsyncPullStream::LoggingAsyncPullStream(
-    std::shared_ptr<SubscriberStub::AsyncPullStream> child,
-    TracingOptions tracing_options, std::string request_id)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
-      request_id_(std::move(request_id)) {}
-
-void LoggingAsyncPullStream::Cancel() {
-  auto prefix = std::string(__func__) + "(" + request_id_ + ")";
-  GCP_LOG(DEBUG) << prefix << " <<";
-  child_->Cancel();
-  GCP_LOG(DEBUG) << prefix << " >>";
-}
-
-future<bool> LoggingAsyncPullStream::Start() {
-  auto prefix = std::string(__func__) + "(" + request_id_ + ")";
-  GCP_LOG(DEBUG) << prefix << " <<";
-  return child_->Start().then([prefix](future<bool> f) {
-    auto r = f.get();
-    GCP_LOG(DEBUG) << prefix << " >> response=" << r;
-    return r;
-  });
-}
-
-future<absl::optional<google::pubsub::v1::StreamingPullResponse>>
-LoggingAsyncPullStream::Read() {
-  auto prefix = std::string(__func__) + "(" + request_id_ + ")";
-  GCP_LOG(DEBUG) << prefix << " <<";
-  auto const& options = tracing_options_;
-  return child_->Read().then(
-      [prefix, options](
-          future<absl::optional<google::pubsub::v1::StreamingPullResponse>> f) {
-        auto response = f.get();
-        if (!response) {
-          GCP_LOG(DEBUG) << prefix << " >> response={}";
-        } else {
-          GCP_LOG(DEBUG) << prefix
-                         << " >> response=" << DebugString(*response, options);
-        }
-        return response;
-      });
-}
-
-future<bool> LoggingAsyncPullStream::Write(
-    google::pubsub::v1::StreamingPullRequest const& request,
-    grpc::WriteOptions options) {
-  auto prefix = std::string(__func__) + "(" + request_id_ + ")";
-  GCP_LOG(DEBUG) << prefix
-                 << " << request=" << DebugString(request, tracing_options_)
-                 << ", options={is_write_through=" << options.is_write_through()
-                 << ", is_last_message=" << options.is_last_message()
-                 << ", is_corked=" << options.is_corked()
-                 << ", buffer_hint=" << options.get_buffer_hint()
-                 << ", no_compression=" << options.get_no_compression() << "}";
-  return child_->Write(request, std::move(options))
-      .then([prefix](future<bool> f) {
-        auto r = f.get();
-        GCP_LOG(DEBUG) << prefix << " >> response=" << r;
-        return r;
-      });
-}
-
-future<bool> LoggingAsyncPullStream::WritesDone() {
-  auto prefix = std::string(__func__) + "(" + request_id_ + ")";
-  GCP_LOG(DEBUG) << prefix << " <<";
-  return child_->WritesDone().then([prefix](future<bool> f) {
-    auto r = f.get();
-    GCP_LOG(DEBUG) << prefix << " >> response=" << r;
-    return r;
-  });
-}
-
-future<Status> LoggingAsyncPullStream::Finish() {
-  auto prefix = std::string(__func__) + "(" + request_id_ + ")";
-  auto const& opts = tracing_options_;
-  GCP_LOG(DEBUG) << prefix << " <<";
-  return child_->Finish().then([prefix, opts](future<Status> f) {
-    auto r = f.get();
-    GCP_LOG(DEBUG) << prefix << " >> status=" << DebugString(r, opts);
-    return r;
-  });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
