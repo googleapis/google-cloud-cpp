@@ -79,18 +79,19 @@ Status SubscriberLogging::DeleteSubscription(
       context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<SubscriberStub::AsyncPullStream>
+std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
+    google::pubsub::v1::StreamingPullRequest,
+    google::pubsub::v1::StreamingPullResponse>>
 SubscriberLogging::AsyncStreamingPull(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::pubsub::v1::StreamingPullRequest const& request) {
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
           google::pubsub::v1::StreamingPullRequest,
           google::pubsub::v1::StreamingPullResponse>;
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncStreamingPull(cq, std::move(context), request);
+  auto stream = child_->AsyncStreamingPull(cq, std::move(context));
   if (trace_streams_) {
     stream = absl::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));

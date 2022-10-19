@@ -24,11 +24,12 @@ using ::testing::AtLeast;
 using ::testing::AtMost;
 
 std::unique_ptr<pubsub_testing::MockAsyncPullStream> FakeAsyncStreamingPull(
-    google::cloud::CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>,
-    google::pubsub::v1::StreamingPullRequest const&) {
+    google::cloud::CompletionQueue const& completion_queue,
+    std::unique_ptr<grpc::ClientContext>) {
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
   using us = std::chrono::microseconds;
 
+  auto cq = completion_queue;
   auto start_response = [cq]() mutable {
     return cq.MakeRelativeTimer(us(10)).then([](TimerFuture) { return true; });
   };

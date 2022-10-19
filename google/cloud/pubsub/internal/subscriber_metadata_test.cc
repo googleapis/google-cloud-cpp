@@ -36,6 +36,11 @@ using ::testing::Pair;
 
 class SubscriberMetadataTest : public ::testing::Test {
  protected:
+  std::multimap<std::string, std::string> GetMetadata(
+      grpc::ClientContext& context) {
+    return validate_metadata_fixture_.GetMetadata(context);
+  }
+
   void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
                         google::protobuf::Message const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
@@ -266,23 +271,21 @@ TEST_F(SubscriberMetadataTest, ModifyPushConfig) {
 TEST_F(SubscriberMetadataTest, AsyncStreamingPull) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce(
-          [this](google::cloud::CompletionQueue&,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::pubsub::v1::StreamingPullRequest const& request) {
-            IsContextMDValid(
-                *context, "google.pubsub.v1.Subscriber.StreamingPull", request);
-            return absl::make_unique<pubsub_testing::MockAsyncPullStream>();
-          })
-      .WillOnce([this](google::cloud::CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
-                       google::pubsub::v1::StreamingPullRequest const&) {
+      .WillOnce([this](google::cloud::CompletionQueue const&,
+                       std::unique_ptr<grpc::ClientContext> context) {
+        auto metadata = GetMetadata(*context);
+        EXPECT_THAT(metadata,
+                    Contains(Pair("x-goog-api-client",
+                                  google::cloud::internal::ApiClientHeader())));
+        return absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+      })
+      .WillOnce([this](google::cloud::CompletionQueue const&,
+                       std::unique_ptr<grpc::ClientContext> context) {
         ValidateNoUserProject(*context);
         return absl::make_unique<pubsub_testing::MockAsyncPullStream>();
       })
-      .WillOnce([this](google::cloud::CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
-                       google::pubsub::v1::StreamingPullRequest const&) {
+      .WillOnce([this](google::cloud::CompletionQueue const&,
+                       std::unique_ptr<grpc::ClientContext> context) {
         ValidateTestUserProject(*context);
         return absl::make_unique<pubsub_testing::MockAsyncPullStream>();
       });
@@ -291,11 +294,8 @@ TEST_F(SubscriberMetadataTest, AsyncStreamingPull) {
   for (auto const* user_project : {"", "", "test-project"}) {
     internal::OptionsSpan span(TestOptions(user_project));
     google::cloud::CompletionQueue cq;
-    google::pubsub::v1::StreamingPullRequest request;
-    request.set_subscription(
-        pubsub::Subscription("test-project", "test-subscription").FullName());
-    auto stream = stub.AsyncStreamingPull(
-        cq, absl::make_unique<grpc::ClientContext>(), request);
+    auto stream =
+        stub.AsyncStreamingPull(cq, absl::make_unique<grpc::ClientContext>());
     EXPECT_TRUE(stream);
   }
 }

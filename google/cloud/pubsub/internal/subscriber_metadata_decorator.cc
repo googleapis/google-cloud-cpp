@@ -62,14 +62,14 @@ Status SubscriberMetadata::DeleteSubscription(
   SetMetadata(context, "subscription=" + request.subscription());
   return child_->DeleteSubscription(context, request);
 }
-
-std::unique_ptr<SubscriberStub::AsyncPullStream>
+std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
+    google::pubsub::v1::StreamingPullRequest,
+    google::pubsub::v1::StreamingPullResponse>>
 SubscriberMetadata::AsyncStreamingPull(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::pubsub::v1::StreamingPullRequest const& request) {
-  SetMetadata(*context, "subscription=" + request.subscription());
-  return child_->AsyncStreamingPull(cq, std::move(context), request);
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context);
+  return child_->AsyncStreamingPull(cq, std::move(context));
 }
 
 Status SubscriberMetadata::ModifyPushConfig(
@@ -141,6 +141,10 @@ future<Status> SubscriberMetadata::AsyncAcknowledge(
 void SubscriberMetadata::SetMetadata(grpc::ClientContext& context,
                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
+  SetMetadata(context);
+}
+
+void SubscriberMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", x_goog_api_client_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

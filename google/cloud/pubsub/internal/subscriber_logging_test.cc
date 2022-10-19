@@ -128,9 +128,8 @@ TEST_F(SubscriberLoggingTest, ModifyPushConfig) {
 TEST_F(SubscriberLoggingTest, AsyncStreamingPull) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([](google::cloud::CompletionQueue&,
-                   std::unique_ptr<grpc::ClientContext>,
-                   google::pubsub::v1::StreamingPullRequest const&) {
+      .WillOnce([](google::cloud::CompletionQueue const&,
+                   std::unique_ptr<grpc::ClientContext>) {
         auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Cancel).Times(1);
         EXPECT_CALL(*stream, Start).WillOnce([&] {
@@ -164,8 +163,8 @@ TEST_F(SubscriberLoggingTest, AsyncStreamingPull) {
 
   google::pubsub::v1::StreamingPullRequest request;
   request.set_subscription("test-subscription-name");
-  auto stream = stub.AsyncStreamingPull(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+  auto stream =
+      stub.AsyncStreamingPull(cq, absl::make_unique<grpc::ClientContext>());
   EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("AsyncStreamingPull")));
 
   EXPECT_TRUE(stream->Start().get());
