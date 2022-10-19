@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/tracing_options.h"
 #include <memory>
+#include <set>
 #include <string>
 
 namespace google {
@@ -29,10 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SubscriberLogging : public SubscriberStub {
  public:
   SubscriberLogging(std::shared_ptr<SubscriberStub> child,
-                    TracingOptions tracing_options, bool trace_streams)
-      : child_(std::move(child)),
-        tracing_options_(std::move(tracing_options)),
-        trace_streams_(trace_streams) {}
+                    TracingOptions tracing_options,
+                    std::set<std::string> components);
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       grpc::ClientContext& context,
@@ -101,7 +100,7 @@ class SubscriberLogging : public SubscriberStub {
  private:
   std::shared_ptr<SubscriberStub> child_;
   TracingOptions tracing_options_;
-  bool trace_streams_;
+  std::set<std::string> components_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -44,7 +44,7 @@ TEST_F(SubscriberLoggingTest, CreateSubscription) {
   EXPECT_CALL(*mock, CreateSubscription)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Subscription{})));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::Subscription subscription;
   auto status = stub.CreateSubscription(context, subscription);
@@ -57,7 +57,7 @@ TEST_F(SubscriberLoggingTest, GetSubscription) {
   EXPECT_CALL(*mock, GetSubscription)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Subscription{})));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::GetSubscriptionRequest request;
   auto status = stub.GetSubscription(context, request);
@@ -70,7 +70,7 @@ TEST_F(SubscriberLoggingTest, UpdateSubscription) {
   EXPECT_CALL(*mock, UpdateSubscription)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Subscription{})));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::UpdateSubscriptionRequest request;
   auto status = stub.UpdateSubscription(context, request);
@@ -84,7 +84,7 @@ TEST_F(SubscriberLoggingTest, ListSubscriptions) {
       .WillOnce(Return(
           make_status_or(google::pubsub::v1::ListSubscriptionsResponse{})));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::ListSubscriptionsRequest request;
   request.set_project("test-project-name");
@@ -99,7 +99,7 @@ TEST_F(SubscriberLoggingTest, DeleteSubscription) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, DeleteSubscription).WillOnce(Return(Status{}));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::DeleteSubscriptionRequest request;
   request.set_subscription("test-subscription-name");
@@ -114,7 +114,7 @@ TEST_F(SubscriberLoggingTest, ModifyPushConfig) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, ModifyPushConfig).WillOnce(Return(Status{}));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::ModifyPushConfigRequest request;
   request.set_subscription("test-subscription-name");
@@ -158,7 +158,7 @@ TEST_F(SubscriberLoggingTest, AsyncStreamingPull) {
         return stream;
       });
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         true);
+                         {"rpc-streams"});
   google::cloud::CompletionQueue cq;
 
   google::pubsub::v1::StreamingPullRequest request;
@@ -201,7 +201,7 @@ TEST_F(SubscriberLoggingTest, AsyncAcknowledge) {
         return make_ready_future(Status{});
       });
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   google::cloud::CompletionQueue cq;
   google::pubsub::v1::AcknowledgeRequest request;
   request.set_subscription("test-subscription-name");
@@ -223,7 +223,7 @@ TEST_F(SubscriberLoggingTest, AsyncModifyAckDeadline) {
         return make_ready_future(Status{});
       });
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   google::cloud::CompletionQueue cq;
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription("test-subscription-name");
@@ -241,7 +241,7 @@ TEST_F(SubscriberLoggingTest, CreateSnapshot) {
   EXPECT_CALL(*mock, CreateSnapshot)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Snapshot{})));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::CreateSnapshotRequest request;
   auto status = stub.CreateSnapshot(context, request);
@@ -254,7 +254,7 @@ TEST_F(SubscriberLoggingTest, GetSnapshot) {
   EXPECT_CALL(*mock, GetSnapshot)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Snapshot{})));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::GetSnapshotRequest request;
   auto status = stub.GetSnapshot(context, request);
@@ -268,7 +268,7 @@ TEST_F(SubscriberLoggingTest, ListSnapshots) {
       .WillOnce(
           Return(make_status_or(google::pubsub::v1::ListSnapshotsResponse{})));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::ListSnapshotsRequest request;
   request.set_project("test-project-name");
@@ -284,7 +284,7 @@ TEST_F(SubscriberLoggingTest, UpdateSnapshot) {
   EXPECT_CALL(*mock, UpdateSnapshot)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Snapshot{})));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::UpdateSnapshotRequest request;
   auto status = stub.UpdateSnapshot(context, request);
@@ -296,7 +296,7 @@ TEST_F(SubscriberLoggingTest, DeleteSnapshot) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, DeleteSnapshot).WillOnce(Return(Status{}));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::DeleteSnapshotRequest request;
   auto status = stub.DeleteSnapshot(context, request);
@@ -309,7 +309,7 @@ TEST_F(SubscriberLoggingTest, Seek) {
   EXPECT_CALL(*mock, Seek)
       .WillOnce(Return(make_status_or(google::pubsub::v1::SeekResponse{})));
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
-                         false);
+                         {});
   grpc::ClientContext context;
   google::pubsub::v1::SeekRequest request;
   request.set_subscription("test-subscription-name");

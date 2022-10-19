@@ -42,8 +42,8 @@ TEST_F(SchemaLoggingTest, CreateSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, CreateSchema)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Schema{})));
-  SchemaServiceLogging stub(mock,
-                            TracingOptions{}.SetOptions("single_line_mode"));
+  SchemaServiceLogging stub(
+      mock, TracingOptions{}.SetOptions("single_line_mode"), {});
   grpc::ClientContext context;
   google::pubsub::v1::CreateSchemaRequest request;
   auto status = stub.CreateSchema(context, request);
@@ -55,8 +55,8 @@ TEST_F(SchemaLoggingTest, GetSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, GetSchema)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Schema{})));
-  SchemaServiceLogging stub(mock,
-                            TracingOptions{}.SetOptions("single_line_mode"));
+  SchemaServiceLogging stub(
+      mock, TracingOptions{}.SetOptions("single_line_mode"), {});
   grpc::ClientContext context;
   google::pubsub::v1::GetSchemaRequest request;
   auto status = stub.GetSchema(context, request);
@@ -69,8 +69,8 @@ TEST_F(SchemaLoggingTest, ListSchemas) {
   EXPECT_CALL(*mock, ListSchemas)
       .WillOnce(
           Return(make_status_or(google::pubsub::v1::ListSchemasResponse{})));
-  SchemaServiceLogging stub(mock,
-                            TracingOptions{}.SetOptions("single_line_mode"));
+  SchemaServiceLogging stub(
+      mock, TracingOptions{}.SetOptions("single_line_mode"), {});
   grpc::ClientContext context;
   google::pubsub::v1::ListSchemasRequest request;
   auto status = stub.ListSchemas(context, request);
@@ -81,8 +81,8 @@ TEST_F(SchemaLoggingTest, ListSchemas) {
 TEST_F(SchemaLoggingTest, DeleteSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, DeleteSchema).WillOnce(Return(Status{}));
-  SchemaServiceLogging stub(mock,
-                            TracingOptions{}.SetOptions("single_line_mode"));
+  SchemaServiceLogging stub(
+      mock, TracingOptions{}.SetOptions("single_line_mode"), {});
   grpc::ClientContext context;
   google::pubsub::v1::DeleteSchemaRequest request;
   auto status = stub.DeleteSchema(context, request);
@@ -95,8 +95,8 @@ TEST_F(SchemaLoggingTest, ValidateSchema) {
   EXPECT_CALL(*mock, ValidateSchema)
       .WillOnce(
           Return(make_status_or(google::pubsub::v1::ValidateSchemaResponse{})));
-  SchemaServiceLogging stub(mock,
-                            TracingOptions{}.SetOptions("single_line_mode"));
+  SchemaServiceLogging stub(
+      mock, TracingOptions{}.SetOptions("single_line_mode"), {});
   grpc::ClientContext context;
   google::pubsub::v1::ValidateSchemaRequest request;
   auto status = stub.ValidateSchema(context, request);
@@ -109,8 +109,8 @@ TEST_F(SchemaLoggingTest, ValidateMessage) {
   EXPECT_CALL(*mock, ValidateMessage)
       .WillOnce(Return(
           make_status_or(google::pubsub::v1::ValidateMessageResponse{})));
-  SchemaServiceLogging stub(mock,
-                            TracingOptions{}.SetOptions("single_line_mode"));
+  SchemaServiceLogging stub(
+      mock, TracingOptions{}.SetOptions("single_line_mode"), {});
   grpc::ClientContext context;
   google::pubsub::v1::ValidateMessageRequest request;
   auto status = stub.ValidateMessage(context, request);

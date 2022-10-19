@@ -270,8 +270,7 @@ std::shared_ptr<pubsub_internal::SubscriberStub> DecorateSubscriptionAdminStub(
   if (internal::Contains(tracing, "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::SubscriberLogging>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>(),
-        internal::Contains(tracing, "rpc-streams"));
+        std::move(stub), opts.get<GrpcTracingOptionsOption>(), tracing);
   }
   return stub;
 }

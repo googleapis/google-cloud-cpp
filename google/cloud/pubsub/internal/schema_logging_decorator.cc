@@ -20,6 +20,13 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+SchemaServiceLogging::SchemaServiceLogging(
+    std::shared_ptr<SchemaServiceStub> child, TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
+      components_(std::move(components)) {}
+
 StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::CreateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSchemaRequest const& request) {
