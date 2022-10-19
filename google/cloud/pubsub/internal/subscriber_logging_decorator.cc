@@ -21,6 +21,13 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+SubscriberLogging::SubscriberLogging(std::shared_ptr<SubscriberStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
+      components_(std::move(components)) {}
+
 StatusOr<google::pubsub::v1::Subscription>
 SubscriberLogging::CreateSubscription(
     grpc::ClientContext& context,
@@ -92,7 +99,7 @@ SubscriberLogging::AsyncStreamingPull(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncStreamingPull(cq, std::move(context));
-  if (trace_streams_) {
+  if (components_.count("rpc-streams") > 0) {
     stream = absl::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }

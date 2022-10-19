@@ -19,6 +19,8 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/tracing_options.h"
 #include <memory>
+#include <set>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -31,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SchemaServiceLogging : public SchemaServiceStub {
  public:
   SchemaServiceLogging(std::shared_ptr<SchemaServiceStub> child,
-                       TracingOptions tracing_options)
-      : child_(std::move(child)),
-        tracing_options_(std::move(tracing_options)) {}
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       grpc::ClientContext& context,
@@ -57,6 +58,7 @@ class SchemaServiceLogging : public SchemaServiceStub {
  private:
   std::shared_ptr<SchemaServiceStub> child_;
   TracingOptions tracing_options_;
+  std::set<std::string> components_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

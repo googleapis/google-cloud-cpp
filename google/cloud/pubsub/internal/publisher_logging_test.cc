@@ -43,7 +43,8 @@ TEST_F(PublisherLoggingTest, CreateTopic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, CreateTopic)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Topic{})));
-  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                        {});
   grpc::ClientContext context;
   google::pubsub::v1::Topic topic;
   topic.set_name("test-topic-name");
@@ -56,7 +57,8 @@ TEST_F(PublisherLoggingTest, GetTopic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, GetTopic)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Topic{})));
-  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                        {});
   grpc::ClientContext context;
   google::pubsub::v1::GetTopicRequest request;
   request.set_topic("test-topic-name");
@@ -69,7 +71,8 @@ TEST_F(PublisherLoggingTest, UpdateTopic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, UpdateTopic)
       .WillOnce(Return(make_status_or(google::pubsub::v1::Topic{})));
-  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                        {});
   grpc::ClientContext context;
   google::pubsub::v1::UpdateTopicRequest request;
   request.mutable_topic()->set_name("test-topic-name");
@@ -83,7 +86,8 @@ TEST_F(PublisherLoggingTest, ListTopics) {
   EXPECT_CALL(*mock, ListTopics)
       .WillOnce(
           Return(make_status_or(google::pubsub::v1::ListTopicsResponse{})));
-  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                        {});
   grpc::ClientContext context;
   google::pubsub::v1::ListTopicsRequest request;
   request.set_project("test-project-name");
@@ -97,7 +101,8 @@ TEST_F(PublisherLoggingTest, ListTopics) {
 TEST_F(PublisherLoggingTest, DeleteTopic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, DeleteTopic).WillOnce(Return(Status{}));
-  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                        {});
   grpc::ClientContext context;
   google::pubsub::v1::DeleteTopicRequest request;
   request.set_topic("test-topic-name");
@@ -113,7 +118,8 @@ TEST_F(PublisherLoggingTest, DetachSubscription) {
   EXPECT_CALL(*mock, DetachSubscription)
       .WillOnce(Return(
           make_status_or(google::pubsub::v1::DetachSubscriptionResponse{})));
-  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                        {});
   grpc::ClientContext context;
   google::pubsub::v1::DetachSubscriptionRequest request;
   request.set_subscription("test-subscription-name");
@@ -129,7 +135,8 @@ TEST_F(PublisherLoggingTest, ListTopicSubscriptions) {
   EXPECT_CALL(*mock, ListTopicSubscriptions)
       .WillOnce(Return(make_status_or(
           google::pubsub::v1::ListTopicSubscriptionsResponse{})));
-  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                        {});
   grpc::ClientContext context;
   google::pubsub::v1::ListTopicSubscriptionsRequest request;
   request.set_topic("test-topic-name");
@@ -145,7 +152,8 @@ TEST_F(PublisherLoggingTest, ListTopicSnapshots) {
   EXPECT_CALL(*mock, ListTopicSnapshots)
       .WillOnce(Return(
           make_status_or(google::pubsub::v1::ListTopicSnapshotsResponse{})));
-  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                        {});
   grpc::ClientContext context;
   google::pubsub::v1::ListTopicSnapshotsRequest request;
   request.set_topic("test-topic-name");
@@ -165,7 +173,8 @@ TEST_F(PublisherLoggingTest, AsyncPublish) {
         return make_ready_future(
             make_status_or(google::pubsub::v1::PublishResponse{}));
       });
-  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                        {});
   google::cloud::CompletionQueue cq;
   google::pubsub::v1::PublishRequest request;
   request.set_topic("test-topic-name");
@@ -182,7 +191,8 @@ TEST_F(PublisherLoggingTest, Publish) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, Publish)
       .WillOnce(Return(make_status_or(google::pubsub::v1::PublishResponse{})));
-  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                        {});
   grpc::ClientContext context;
   google::pubsub::v1::PublishRequest request;
   request.set_topic("test-topic-name");

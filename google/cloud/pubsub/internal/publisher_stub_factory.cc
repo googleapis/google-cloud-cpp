@@ -38,7 +38,8 @@ std::shared_ptr<pubsub_internal::PublisherStub> DecoratePublisherStub(
   if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::PublisherLogging>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>());
+        std::move(stub), opts.get<GrpcTracingOptionsOption>(),
+        opts.get<TracingComponentsOption>());
   }
   return stub;
 }

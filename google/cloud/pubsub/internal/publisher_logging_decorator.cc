@@ -20,6 +20,13 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+PublisherLogging::PublisherLogging(std::shared_ptr<PublisherStub> child,
+                                   TracingOptions tracing_options,
+                                   std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
+      components_(std::move(components)) {}
+
 StatusOr<google::pubsub::v1::Topic> PublisherLogging::CreateTopic(
     grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
   return google::cloud::internal::LogWrapper(
