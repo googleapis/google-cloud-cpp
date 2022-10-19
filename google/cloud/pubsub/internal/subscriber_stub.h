@@ -42,28 +42,28 @@ class SubscriberStub {
 
   /// Create a new subscription.
   virtual StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::Subscription const& request) = 0;
 
   /// Get full metadata information about a subscription.
   virtual StatusOr<google::pubsub::v1::Subscription> GetSubscription(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::GetSubscriptionRequest const& request) = 0;
 
   /// Update an existing subscription.
   virtual StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::UpdateSubscriptionRequest const& request) = 0;
 
   /// List existing subscriptions.
   virtual StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
   ListSubscriptions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ListSubscriptionsRequest const& request) = 0;
 
   /// Delete a subscription.
   virtual Status DeleteSubscription(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) = 0;
 
   using AsyncPullStream = ::google::cloud::AsyncStreamingReadWriteRpc<
@@ -77,37 +77,37 @@ class SubscriberStub {
 
   /// Modify the push configuration of an existing subscription.
   virtual Status ModifyPushConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ModifyPushConfigRequest const& request) = 0;
 
   /// Get information about an existing snapshot.
   virtual StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::GetSnapshotRequest const& request) = 0;
 
   /// List existing snapshots.
   virtual StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ListSnapshotsRequest const& request) = 0;
 
   /// Create a new snapshot.
   virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::CreateSnapshotRequest const& request) = 0;
 
   /// Update an existing snapshot.
   virtual StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::UpdateSnapshotRequest const& request) = 0;
 
   /// Delete a snapshot.
   virtual Status DeleteSnapshot(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::DeleteSnapshotRequest const& request) = 0;
 
   /// Seeks an existing subscription to a point in time or a snapshot.
   virtual StatusOr<google::pubsub::v1::SeekResponse> Seek(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::SeekRequest const& request) = 0;
 
   /// Acknowledge exactly one message.
@@ -163,19 +163,19 @@ class DefaultSubscriberStub : public SubscriberStub {
       google::pubsub::v1::ModifyPushConfigRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& client_context,
       google::pubsub::v1::GetSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& client_context,
       google::pubsub::v1::ListSnapshotsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& client_context,
       google::pubsub::v1::CreateSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& client_context,
       google::pubsub::v1::UpdateSnapshotRequest const& request) override;
 
   Status DeleteSnapshot(
