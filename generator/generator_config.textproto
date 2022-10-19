@@ -1097,6 +1097,38 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Cloud Pub/Sub
+service {
+  service_proto_path: "google/pubsub/v1/pubsub.proto"
+  product_path: "google/cloud/pubsub"
+  initial_copyright_year: "2022"
+  retryable_status_codes: []
+  omit_client: true
+  omit_connection: true
+  omit_stub_factory: true
+  omitted_rpcs: [
+    "Pull",
+    "Acknowledge",
+    "ModifyAckDeadline"
+  ],
+  gen_async_rpcs: [
+    "StreamingPull",
+    "Acknowledge",
+    "ModifyAckDeadline",
+    "Publish"
+  ]
+}
+
+service {
+  service_proto_path: "google/pubsub/v1/schema.proto"
+  product_path: "google/cloud/pubsub"
+  initial_copyright_year: "2022"
+  retryable_status_codes: []
+  omit_client: true
+  omit_connection: true
+  omit_stub_factory: true
+}
+
 # Pub/Sub Lite
 service {
   service_proto_path: "google/cloud/pubsublite/v1/admin.proto"

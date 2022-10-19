@@ -81,8 +81,6 @@ expected_dirs+=(
   ./include/google/cloud/orgpolicy/v1
   # no RPC services in google/cloud/oslogin/common
   ./include/google/cloud/oslogin/common
-  ./include/google/cloud/pubsub
-  ./include/google/cloud/pubsub/internal
   ./include/google/cloud/pubsub/mocks
   # no gRPC services in google/cloud/recommender/logging
   ./include/google/cloud/recommender/logging
@@ -103,8 +101,6 @@ expected_dirs+=(
   ./include/google/identity/accesscontextmanager/type
   ./include/google/logging/type
   ./include/google/longrunning
-  ./include/google/pubsub
-  ./include/google/pubsub/v1
   ./include/google/rpc
   ./include/google/spanner/v1
   ./include/google/type
@@ -114,7 +110,6 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grafeas
   ./lib64/cmake/google_cloud_cpp_grpc_utils
-  ./lib64/cmake/google_cloud_cpp_pubsub
   ./lib64/cmake/google_cloud_cpp_rest_internal
   ./lib64/cmake/google_cloud_cpp_spanner
   ./lib64/pkgconfig
