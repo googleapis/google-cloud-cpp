@@ -80,15 +80,14 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::pubsub::v1::StreamingPullRequest,
     google::pubsub::v1::StreamingPullResponse>>
 DefaultSubscriberStub::AsyncStreamingPull(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::pubsub::v1::StreamingPullRequest const&) {
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>(
       cq, std::move(context),
-      [this](grpc::ClientContext* client_context, grpc::CompletionQueue* cq) {
-        return grpc_stub_->PrepareAsyncStreamingPull(client_context, cq);
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncStreamingPull(context, cq);
       });
 }
 

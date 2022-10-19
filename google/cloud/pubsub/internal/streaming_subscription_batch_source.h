@@ -59,7 +59,9 @@ class StreamingSubscriptionBatchSource
   void ExtendLeases(std::vector<std::string> ack_ids,
                     std::chrono::seconds extension) override;
 
-  using AsyncPullStream = SubscriberStub::AsyncPullStream;
+  using AsyncPullStream = google::cloud::AsyncStreamingReadWriteRpc<
+      google::pubsub::v1::StreamingPullRequest,
+      google::pubsub::v1::StreamingPullResponse>;
 
   enum class StreamState {
     kNull,

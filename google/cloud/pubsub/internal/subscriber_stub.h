@@ -66,14 +66,12 @@ class SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) = 0;
 
-  using AsyncPullStream = ::google::cloud::AsyncStreamingReadWriteRpc<
-      google::pubsub::v1::StreamingPullRequest,
-      google::pubsub::v1::StreamingPullResponse>;
-
   /// Start a bi-directional stream to read messages and send ack/nacks.
-  virtual std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
-      google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-      google::pubsub::v1::StreamingPullRequest const& request) = 0;
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::pubsub::v1::StreamingPullRequest,
+      google::pubsub::v1::StreamingPullResponse>>
+  AsyncStreamingPull(google::cloud::CompletionQueue const& cq,
+                     std::unique_ptr<grpc::ClientContext> context) = 0;
 
   /// Modify the push configuration of an existing subscription.
   virtual Status ModifyPushConfig(
@@ -154,9 +152,8 @@ class DefaultSubscriberStub : public SubscriberStub {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>
-  AsyncStreamingPull(
-      google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-      google::pubsub::v1::StreamingPullRequest const& request) override;
+  AsyncStreamingPull(google::cloud::CompletionQueue const&,
+                     std::unique_ptr<grpc::ClientContext>) override;
 
   Status ModifyPushConfig(
       grpc::ClientContext& client_context,

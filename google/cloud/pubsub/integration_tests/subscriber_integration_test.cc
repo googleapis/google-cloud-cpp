@@ -180,9 +180,10 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
   request.set_max_outstanding_messages(1000);
   request.set_stream_ack_deadline_seconds(600);
 
-  auto stream = [&stub, &request](CompletionQueue cq) {
-    return stub->AsyncStreamingPull(
-        cq, absl::make_unique<grpc::ClientContext>(), request);
+  auto stream = [&stub](CompletionQueue const& cq) {
+    auto context = absl::make_unique<grpc::ClientContext>();
+
+    return stub->AsyncStreamingPull(cq, std::move(context));
   }(background.cq());
 
   ASSERT_TRUE(stream->Start().get());

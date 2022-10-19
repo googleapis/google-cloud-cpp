@@ -203,8 +203,10 @@ void StreamingSubscriptionBatchSource::StartStream(
   // these steps in an asynchronous retry loop.
 
   auto request = InitialRequest();
-  auto stream = stub_->AsyncStreamingPull(
-      cq_, absl::make_unique<grpc::ClientContext>(), request);
+  auto context = absl::make_unique<grpc::ClientContext>();
+  context->AddMetadata("x-goog-request-params",
+                       "subscription=" + request.subscription());
+  auto stream = stub_->AsyncStreamingPull(cq_, std::move(context));
   if (!stream) {
     OnRetryFailure(Status(StatusCode::kUnknown, "null stream"));
     return;

@@ -50,10 +50,11 @@ class SubscriberMetadata : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
 
-  std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::StreamingPullRequest const& request) override;
+  std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
+      google::pubsub::v1::StreamingPullRequest,
+      google::pubsub::v1::StreamingPullResponse>>
+  AsyncStreamingPull(google::cloud::CompletionQueue const& cq,
+                     std::unique_ptr<grpc::ClientContext> context) override;
 
   Status ModifyPushConfig(
       grpc::ClientContext& context,
@@ -96,6 +97,7 @@ class SubscriberMetadata : public SubscriberStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SubscriberStub> child_;
   std::string x_goog_api_client_;

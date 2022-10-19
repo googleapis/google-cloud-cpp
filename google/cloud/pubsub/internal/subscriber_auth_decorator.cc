@@ -61,19 +61,19 @@ Status SubscriberAuth::DeleteSubscription(
   return child_->DeleteSubscription(context, request);
 }
 
-std::unique_ptr<SubscriberStub::AsyncPullStream>
+std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
+    google::pubsub::v1::StreamingPullRequest,
+    google::pubsub::v1::StreamingPullResponse>>
 SubscriberAuth::AsyncStreamingPull(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::pubsub::v1::StreamingPullRequest const& request) {
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>;
 
   auto& child = child_;
-  auto call = [child, cq,
-               request](std::unique_ptr<grpc::ClientContext> ctx) mutable {
-    return child->AsyncStreamingPull(cq, std::move(ctx), request);
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) mutable {
+    return child->AsyncStreamingPull(cq, std::move(ctx));
   };
   return absl::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));

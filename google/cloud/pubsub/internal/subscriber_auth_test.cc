@@ -142,9 +142,8 @@ TEST(SubscriberAuthTest, AsyncStreamingPullFailedAuth) {
       });
   auto under_test = SubscriberAuth(auth, mock);
   google::cloud::CompletionQueue cq;
-  google::pubsub::v1::StreamingPullRequest request;
   auto auth_failure = under_test.AsyncStreamingPull(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, absl::make_unique<grpc::ClientContext>());
   ASSERT_FALSE(auth_failure->Start().get());
   EXPECT_THAT(auth_failure->Finish().get(),
               StatusIs(StatusCode::kInvalidArgument));
@@ -159,7 +158,7 @@ TEST(SubscriberAuthTest, AsyncStreamingPullAuthSuccess) {
   auto mock =
       std::make_shared<StrictMock<pubsub_testing::MockSubscriberStub>>();
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([](::testing::Unused, ::testing::Unused, ::testing::Unused) {
+      .WillOnce([](::testing::Unused, ::testing::Unused) {
         return absl::make_unique<ErrorStream>(
             Status(StatusCode::kPermissionDenied, "uh-oh"));
       });
@@ -172,9 +171,8 @@ TEST(SubscriberAuthTest, AsyncStreamingPullAuthSuccess) {
       });
   auto under_test = SubscriberAuth(auth, mock);
   google::cloud::CompletionQueue cq;
-  google::pubsub::v1::StreamingPullRequest request;
   auto auth_failure = under_test.AsyncStreamingPull(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, absl::make_unique<grpc::ClientContext>());
   ASSERT_FALSE(auth_failure->Start().get());
   EXPECT_THAT(auth_failure->Finish().get(),
               StatusIs(StatusCode::kPermissionDenied));
