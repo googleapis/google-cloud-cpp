@@ -61,21 +61,21 @@ int Example::Run(int argc, char const* const argv[]) try {
 
   std::string const command_name = argv[1];
   auto command = commands_.find(command_name);
-  if (commands_.end() == command && command_name != "--help") {
-    PrintUsage(argv[0], "Unknown command: " + command_name);
-    return 1;
-  }
-  else if(commands_.end() == command && command_name == "--help") {
-    PrintUsage(argv[0], "");
-    return 0;
-  }
+    if (commands_.end() == command) {
+        if (command_name == "--help") {
+            PrintUsage(argv[0], "");
+            return 0;
+        }
+        PrintUsage(argv[0], "Unknown command: " + command_name);
+        return 1;
+    }
 
   command->second({argv + 2, argv + argc});
 
   return 0;
 } catch (Usage const& u) {
   PrintUsage(argv[0], u.what());
-  return 1;
+  return 0;
 } catch (google::cloud::Status const& status) {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
   google::cloud::LogSink::Instance().Flush();
@@ -89,9 +89,16 @@ int Example::Run(int argc, char const* const argv[]) try {
 void Example::PrintUsage(std::string const& cmd, std::string const& msg) {
   auto last_slash = cmd.find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
+  if(msg.length() != 0) {
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
             << full_usage_ << "\n";
+  }
+  else {
+      std::cerr <<"Usage: " << program << " <command> [arguments]\n\n"
+            << "Commands:\n"
+            << full_usage_ << "\n";
+  }
 }
 
 void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
