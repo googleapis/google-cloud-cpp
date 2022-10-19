@@ -281,6 +281,8 @@
 ./include/google/cloud/profiler
 ./include/google/cloud/profiler/internal
 ./include/google/cloud/profiler/mocks
+./include/google/cloud/pubsub
+./include/google/cloud/pubsub/internal
 ./include/google/cloud/pubsublite
 ./include/google/cloud/pubsublite/internal
 ./include/google/cloud/pubsublite/mocks
@@ -450,6 +452,8 @@
 ./include/google/privacy
 ./include/google/privacy/dlp
 ./include/google/privacy/dlp/v2
+./include/google/pubsub
+./include/google/pubsub/v1
 ./include/google/spanner
 ./include/google/spanner/admin
 ./include/google/spanner/admin/database
@@ -523,6 +527,7 @@
 ./lib64/cmake/google_cloud_cpp_policytroubleshooter
 ./lib64/cmake/google_cloud_cpp_privateca
 ./lib64/cmake/google_cloud_cpp_profiler
+./lib64/cmake/google_cloud_cpp_pubsub
 ./lib64/cmake/google_cloud_cpp_pubsublite
 ./lib64/cmake/google_cloud_cpp_recommender
 ./lib64/cmake/google_cloud_cpp_redis
