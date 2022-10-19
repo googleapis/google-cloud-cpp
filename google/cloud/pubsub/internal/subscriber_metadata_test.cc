@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/subscriber_metadata.h"
+#include "google/cloud/pubsub/internal/subscriber_metadata_decorator.h"
 #include "google/cloud/pubsub/snapshot.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/schema_auth.h"
+#include "google/cloud/pubsub/internal/schema_auth_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 
 namespace google {
@@ -20,7 +20,7 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<google::pubsub::v1::Schema> SchemaAuth::CreateSchema(
+StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::CreateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -28,7 +28,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaAuth::CreateSchema(
   return child_->CreateSchema(context, request);
 }
 
-StatusOr<google::pubsub::v1::Schema> SchemaAuth::GetSchema(
+StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::GetSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -36,7 +36,8 @@ StatusOr<google::pubsub::v1::Schema> SchemaAuth::GetSchema(
   return child_->GetSchema(context, request);
 }
 
-StatusOr<google::pubsub::v1::ListSchemasResponse> SchemaAuth::ListSchemas(
+StatusOr<google::pubsub::v1::ListSchemasResponse>
+SchemaServiceAuth::ListSchemas(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSchemasRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -44,7 +45,7 @@ StatusOr<google::pubsub::v1::ListSchemasResponse> SchemaAuth::ListSchemas(
   return child_->ListSchemas(context, request);
 }
 
-Status SchemaAuth::DeleteSchema(
+Status SchemaServiceAuth::DeleteSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -52,7 +53,8 @@ Status SchemaAuth::DeleteSchema(
   return child_->DeleteSchema(context, request);
 }
 
-StatusOr<google::pubsub::v1::ValidateSchemaResponse> SchemaAuth::ValidateSchema(
+StatusOr<google::pubsub::v1::ValidateSchemaResponse>
+SchemaServiceAuth::ValidateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -61,7 +63,7 @@ StatusOr<google::pubsub::v1::ValidateSchemaResponse> SchemaAuth::ValidateSchema(
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
-SchemaAuth::ValidateMessage(
+SchemaServiceAuth::ValidateMessage(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateMessageRequest const& request) {
   auto status = auth_->ConfigureContext(context);

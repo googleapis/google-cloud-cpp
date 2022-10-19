@@ -40,6 +40,8 @@ add_library(
     ack_handler.h
     application_callback.h
     backoff_policy.h
+    blocking_publisher.cc
+    blocking_publisher.h
     blocking_publisher_connection.cc
     blocking_publisher_connection.h
     connection_options.cc
@@ -66,12 +68,12 @@ add_library(
     internal/flow_controlled_publisher_connection.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
-    internal/publisher_auth.cc
-    internal/publisher_auth.h
-    internal/publisher_logging.cc
-    internal/publisher_logging.h
-    internal/publisher_metadata.cc
-    internal/publisher_metadata.h
+    internal/publisher_auth_decorator.cc
+    internal/publisher_auth_decorator.h
+    internal/publisher_logging_decorator.cc
+    internal/publisher_logging_decorator.h
+    internal/publisher_metadata_decorator.cc
+    internal/publisher_metadata_decorator.h
     internal/publisher_round_robin.cc
     internal/publisher_round_robin.h
     internal/publisher_stub.cc
@@ -80,30 +82,34 @@ add_library(
     internal/publisher_stub_factory.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
-    internal/schema_auth.cc
-    internal/schema_auth.h
-    internal/schema_logging.cc
-    internal/schema_logging.h
-    internal/schema_metadata.cc
-    internal/schema_metadata.h
+    internal/schema_auth_decorator.cc
+    internal/schema_auth_decorator.h
+    internal/schema_logging_decorator.cc
+    internal/schema_logging_decorator.h
+    internal/schema_metadata_decorator.cc
+    internal/schema_metadata_decorator.h
     internal/schema_stub.cc
     internal/schema_stub.h
+    internal/schema_stub_factory.cc
+    internal/schema_stub_factory.h
     internal/sequential_batch_sink.cc
     internal/sequential_batch_sink.h
     internal/session_shutdown_manager.cc
     internal/session_shutdown_manager.h
     internal/streaming_subscription_batch_source.cc
     internal/streaming_subscription_batch_source.h
-    internal/subscriber_auth.cc
-    internal/subscriber_auth.h
-    internal/subscriber_logging.cc
-    internal/subscriber_logging.h
-    internal/subscriber_metadata.cc
-    internal/subscriber_metadata.h
+    internal/subscriber_auth_decorator.cc
+    internal/subscriber_auth_decorator.h
+    internal/subscriber_logging_decorator.cc
+    internal/subscriber_logging_decorator.h
+    internal/subscriber_metadata_decorator.cc
+    internal/subscriber_metadata_decorator.h
     internal/subscriber_round_robin.cc
     internal/subscriber_round_robin.h
     internal/subscriber_stub.cc
     internal/subscriber_stub.h
+    internal/subscriber_stub_factory.cc
+    internal/subscriber_stub_factory.h
     internal/subscription_batch_source.h
     internal/subscription_concurrency_control.cc
     internal/subscription_concurrency_control.h
@@ -191,6 +197,7 @@ add_library(google_cloud_cpp_pubsub_mocks INTERFACE)
 set(google_cloud_cpp_pubsub_mocks_hdrs
     # cmake-format: sort
     mocks/mock_ack_handler.h
+    mocks/mock_blocking_publisher_connection.h
     mocks/mock_exactly_once_ack_handler.h
     mocks/mock_publisher_connection.h
     mocks/mock_schema_admin_connection.h
@@ -252,6 +259,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         # cmake-format: sort
         ack_handler_test.cc
         blocking_publisher_connection_test.cc
+        blocking_publisher_test.cc
         exactly_once_ack_handler_test.cc
         internal/batching_publisher_connection_test.cc
         internal/default_batch_sink_test.cc

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIBER_AUTH_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIBER_AUTH_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIBER_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIBER_AUTH_DECORATOR_H
 
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/version.h"
@@ -52,28 +52,14 @@ class SubscriberAuth : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
 
-  Status ModifyPushConfig(
-      grpc::ClientContext& context,
-      google::pubsub::v1::ModifyPushConfigRequest const& request) override;
-
   std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::StreamingPullRequest const& request) override;
 
-  future<Status> AsyncAcknowledge(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::AcknowledgeRequest const& request) override;
-
-  future<Status> AsyncModifyAckDeadline(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override;
-
-  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+  Status ModifyPushConfig(
       grpc::ClientContext& context,
-      google::pubsub::v1::CreateSnapshotRequest const& request) override;
+      google::pubsub::v1::ModifyPushConfigRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
       grpc::ClientContext& context,
@@ -82,6 +68,10 @@ class SubscriberAuth : public SubscriberStub {
   StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
       grpc::ClientContext& context,
       google::pubsub::v1::ListSnapshotsRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+      grpc::ClientContext& context,
+      google::pubsub::v1::CreateSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
       grpc::ClientContext& context,
@@ -95,6 +85,16 @@ class SubscriberAuth : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::SeekRequest const& request) override;
 
+  future<Status> AsyncModifyAckDeadline(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override;
+
+  future<Status> AsyncAcknowledge(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::AcknowledgeRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<SubscriberStub> child_;
@@ -105,4 +105,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIBER_AUTH_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIBER_AUTH_DECORATOR_H

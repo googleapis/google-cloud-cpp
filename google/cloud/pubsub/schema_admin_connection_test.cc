@@ -40,7 +40,8 @@ using ::testing::HasSubstr;
 using ::testing::Return;
 
 std::shared_ptr<SchemaAdminConnection> MakeTestSchemaAdminConnection(
-    std::shared_ptr<pubsub_internal::SchemaStub> mock, Options opts = {}) {
+    std::shared_ptr<pubsub_internal::SchemaServiceStub> mock,
+    Options opts = {}) {
   opts = pubsub_internal::DefaultCommonOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
   return pubsub_internal::MakeTestSchemaAdminConnection(std::move(opts),

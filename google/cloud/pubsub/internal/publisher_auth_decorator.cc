@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/publisher_auth.h"
+#include "google/cloud/pubsub/internal/publisher_auth_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 
 namespace google {
@@ -27,14 +27,6 @@ StatusOr<google::pubsub::v1::Topic> PublisherAuth::CreateTopic(
   return child_->CreateTopic(context, request);
 }
 
-StatusOr<google::pubsub::v1::Topic> PublisherAuth::GetTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::GetTopicRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetTopic(context, request);
-}
-
 StatusOr<google::pubsub::v1::Topic> PublisherAuth::UpdateTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateTopicRequest const& request) {
@@ -43,29 +35,28 @@ StatusOr<google::pubsub::v1::Topic> PublisherAuth::UpdateTopic(
   return child_->UpdateTopic(context, request);
 }
 
+StatusOr<google::pubsub::v1::PublishResponse> PublisherAuth::Publish(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PublishRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->Publish(context, request);
+}
+
+StatusOr<google::pubsub::v1::Topic> PublisherAuth::GetTopic(
+    grpc::ClientContext& context,
+    google::pubsub::v1::GetTopicRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetTopic(context, request);
+}
+
 StatusOr<google::pubsub::v1::ListTopicsResponse> PublisherAuth::ListTopics(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListTopics(context, request);
-}
-
-Status PublisherAuth::DeleteTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::DeleteTopicRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->DeleteTopic(context, request);
-}
-
-StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-PublisherAuth::DetachSubscription(
-    grpc::ClientContext& context,
-    google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->DetachSubscription(context, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
@@ -86,6 +77,23 @@ PublisherAuth::ListTopicSnapshots(
   return child_->ListTopicSnapshots(context, request);
 }
 
+Status PublisherAuth::DeleteTopic(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DeleteTopicRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTopic(context, request);
+}
+
+StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+PublisherAuth::DetachSubscription(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DetachSubscriptionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DetachSubscription(context, request);
+}
+
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherAuth::AsyncPublish(google::cloud::CompletionQueue& cq,
                             std::unique_ptr<grpc::ClientContext> context,
@@ -102,14 +110,6 @@ PublisherAuth::AsyncPublish(google::cloud::CompletionQueue& cq,
         }
         return child->AsyncPublish(cq, *std::move(context), request);
       });
-}
-
-StatusOr<google::pubsub::v1::PublishResponse> PublisherAuth::Publish(
-    grpc::ClientContext& context,
-    google::pubsub::v1::PublishRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->Publish(context, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

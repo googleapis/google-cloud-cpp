@@ -18,7 +18,7 @@
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
-#include <google/pubsub/v1/schema.pb.h>
+#include <google/pubsub/v1/schema.grpc.pb.h>
 
 namespace google {
 namespace cloud {
@@ -28,16 +28,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Define the interface for the gRPC wrapper.
  *
- * We wrap the gRPC-generated `SchemaStub` to:
+ * We wrap the gRPC-generated `SchemaServiceStub` to:
  *   - Return a `StatusOr<T>` instead of using a `grpc::Status` and an "output
  *     parameter" for the response.
  *   - To be able to mock the stubs.
  *   - To be able to decompose some functionality (logging, adding metadata
  *     information) into layers.
  */
-class SchemaStub {
+class SchemaServiceStub {
  public:
-  virtual ~SchemaStub() = default;
+  virtual ~SchemaServiceStub() = default;
 
   /// Creates a schema.
   virtual StatusOr<google::pubsub::v1::Schema> CreateSchema(
@@ -70,11 +70,40 @@ class SchemaStub {
       google::pubsub::v1::ValidateMessageRequest const& request) = 0;
 };
 
-/**
- * Creates a SchemaStub with a pre-configured channel.
- */
-std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(
-    std::shared_ptr<grpc::Channel> channel);
+class DefaultSchemaServiceStub : public SchemaServiceStub {
+ public:
+  explicit DefaultSchemaServiceStub(
+      std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface> impl)
+      : grpc_stub_(std::move(impl)) {}
+  ~DefaultSchemaServiceStub() override = default;
+
+  StatusOr<google::pubsub::v1::Schema> CreateSchema(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::CreateSchemaRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::Schema> GetSchema(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::GetSchemaRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::ListSchemasResponse> ListSchemas(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ListSchemasRequest const& request) override;
+
+  Status DeleteSchema(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::DeleteSchemaRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ValidateSchemaRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ValidateMessageRequest const& request) override;
+
+ private:
+  std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface> grpc_stub_;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
