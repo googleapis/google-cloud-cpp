@@ -75,7 +75,7 @@ TEST(SchemaAdminConnectionTest, Create) {
         google::cloud::testing_util::ValidateMetadataFixture fixture;
         fixture.IsContextMDValid(
             context, "google.pubsub.v1.SchemaService.CreateSchema", request,
-            google::cloud::internal::ApiClientHeader());
+            google::cloud::internal::ApiClientHeader("generator"));
         return make_status_or(response);
       });
 

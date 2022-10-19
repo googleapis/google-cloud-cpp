@@ -276,12 +276,13 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
                           std::unique_ptr<grpc::ClientContext> context) {
         ValidateMetadataFixture fixture;
         auto metadata = fixture.GetMetadata(*context);
-        EXPECT_THAT(metadata,
-                    UnorderedElementsAre(
-                        Pair("x-goog-api-client",
-                             google::cloud::internal::ApiClientHeader()),
-                        Pair("x-goog-request-params",
-                             "subscription=" + subscription.FullName())));
+        EXPECT_THAT(
+            metadata,
+            UnorderedElementsAre(
+                Pair("x-goog-api-client",
+                     google::cloud::internal::ApiClientHeader("generator")),
+                Pair("x-goog-request-params",
+                     "subscription=" + subscription.FullName())));
         return FakeAsyncStreamingPull(cq, std::move(context));
       });
 
