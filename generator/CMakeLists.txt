@@ -55,6 +55,8 @@ add_library(
     internal/printer.h
     internal/retry_traits_generator.cc
     internal/retry_traits_generator.h
+    internal/round_robin_decorator_generator.cc
+    internal/round_robin_decorator_generator.h
     internal/scaffold_generator.cc
     internal/scaffold_generator.h
     internal/service_code_generator.cc

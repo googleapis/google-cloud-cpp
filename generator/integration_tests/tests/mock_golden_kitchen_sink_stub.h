@@ -169,6 +169,8 @@ class MockAsyncStreamingReadRpc
       future<absl::optional<::google::test::admin::database::v1::Response>>,
       Read, (), (override));
   MOCK_METHOD(future<Status>, Finish, (), (override));
+  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
+              (const, override));
 };
 
 class MockAsyncStreamingWriteRpc
@@ -185,6 +187,8 @@ class MockAsyncStreamingWriteRpc
   MOCK_METHOD(future<bool>, WritesDone, (), (override));
   MOCK_METHOD(future<StatusOr<::google::test::admin::database::v1::Response>>,
               Finish, (), (override));
+  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
+              (const, override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
