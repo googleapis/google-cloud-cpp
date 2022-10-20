@@ -818,7 +818,7 @@ TEST_F(MutationBatcherTest, ApplyCompletesImmediately) {
   batcher_raw_ptr->SetOnBulkApply([this] {
     // Simulate completion queue finishing this stream before control is
     // returned from AsyncBulkApplyImpl
-    std::async([this] {
+    auto pending = std::async([this] {
       cq_impl_->SimulateCompletion(true);
       // state == PROCESSING
       cq_impl_->SimulateCompletion(true);
@@ -826,7 +826,8 @@ TEST_F(MutationBatcherTest, ApplyCompletesImmediately) {
       cq_impl_->SimulateCompletion(false);
       // state == FINISHING
       cq_impl_->SimulateCompletion(true);
-    }).get();
+    });
+    pending.get();
   });
 
   EXPECT_CALL(*client_, PrepareAsyncMutateRows)
