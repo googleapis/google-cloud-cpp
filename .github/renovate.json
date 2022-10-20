@@ -34,7 +34,18 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["com_google_protobuf", "com_google_absl"],
+      "matchPackageNames": ["com_google_absl", "abseil/abseil-cpp"],
+      "groupName": "Abseil",
+      "versioning": "loose"
+    },
+    {
+      "matchPackageNames": ["com_google_protobuf", "protocolbuffers/protobuf"],
+      "groupName": "Protobuf",
+      "versioning": "loose"
+    },
+    {
+      "matchPackageNames": ["com_github_grpc_grpc", "grpc/grpc"],
+      "groupName": "gRPC",
       "versioning": "loose"
     },
     {
