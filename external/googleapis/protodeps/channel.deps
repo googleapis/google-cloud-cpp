@@ -6,6 +6,7 @@
 @com_google_googleapis//google/longrunning:operations_proto
 @com_google_googleapis//google/rpc:status_proto
 @com_google_googleapis//google/type:date_proto
+@com_google_googleapis//google/type:datetime_proto
 @com_google_googleapis//google/type:decimal_proto
 @com_google_googleapis//google/type:money_proto
 @com_google_googleapis//google/type:postal_address_proto
