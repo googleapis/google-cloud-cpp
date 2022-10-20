@@ -36,17 +36,20 @@
     {
       "matchPackageNames": ["com_google_absl", "abseil/abseil-cpp"],
       "groupName": "Abseil",
-      "versioning": "loose"
+      "versioning": "loose",
+      "ignoreUnstable": false
     },
     {
       "matchPackageNames": ["com_google_protobuf", "protocolbuffers/protobuf"],
       "groupName": "Protobuf",
-      "versioning": "loose"
+      "versioning": "loose",
+      "ignoreUnstable": false
     },
     {
       "matchPackageNames": ["com_github_grpc_grpc", "grpc/grpc"],
       "groupName": "gRPC",
-      "versioning": "loose"
+      "versioning": "loose",
+      "ignoreUnstable": false
     },
     {
       "matchManagers": ["pip_requirements"],
