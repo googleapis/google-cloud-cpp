@@ -89,16 +89,9 @@ int Example::Run(int argc, char const* const argv[]) try {
 void Example::PrintUsage(std::string const& cmd, std::string const& msg) {
   auto last_slash = cmd.find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
-  if(msg.length() != 0) {
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << full_usage_ << "\n";
-  }
-  else {
-      std::cerr <<"Usage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << full_usage_ << "\n";
-  }
+  if (!msg.empty()) std::cerr << msg << "\n";
+  std::cerr << "Usage: " << program << " <command> [arguments]\n\n"
+            << "Commands:\n" << full_usage_;
 }
 
 void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
