@@ -43,7 +43,7 @@ bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
 # TODO(#5821): The generator should run clang-format on its output files itself
 # so we don't need this extra step.
 io::log_h2 "Formatting generated code"
-git ls-files -z | grep -zE '\.(cc|h)$' |
+git ls-files -z -- '*.h' '*.cc' |
   xargs -P "$(nproc)" -n 1 -0 clang-format -i
 
 io::log_h2 "Updating protobuf lists/deps"
