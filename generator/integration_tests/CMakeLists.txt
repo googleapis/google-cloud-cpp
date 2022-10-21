@@ -123,9 +123,6 @@ set(google_cloud_cpp_generator_golden_tests
 export_list_to_bazel("google_cloud_cpp_generator_golden_tests.bzl"
                      "google_cloud_cpp_generator_golden_tests" YEAR "2020")
 
-# Create a custom target so we can say "build all the tests"
-add_custom_target(generator-golden-tests)
-
 foreach (fname ${google_cloud_cpp_generator_golden_tests})
     google_cloud_cpp_add_executable(target "google_cloud_cpp_generator_golden"
                                     "${fname}")
@@ -148,5 +145,4 @@ foreach (fname ${google_cloud_cpp_generator_golden_tests})
         target_compile_options(${target} PRIVATE "/bigobj")
     endif ()
     add_test(NAME ${target} COMMAND ${target})
-    add_dependencies(generator-golden-tests ${target})
 endforeach ()
