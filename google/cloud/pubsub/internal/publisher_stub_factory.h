@@ -34,6 +34,21 @@ std::shared_ptr<PublisherStub> MakeTestPublisherStub(
     google::cloud::CompletionQueue cq, Options const& options,
     std::vector<std::shared_ptr<PublisherStub>> mocks);
 
+/**
+ * Creates a PublisherStub configured with @p opts and @p channel_id.
+ *
+ * @p channel_id should be unique among all stubs in the same Connection pool,
+ * to ensure they use different underlying connections.
+ */
+std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
+                                                          int channel_id);
+
+/**
+ * Create a PublisherStub using a pre-configured channel.
+ */
+std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
+    std::shared_ptr<grpc::Channel> channel);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

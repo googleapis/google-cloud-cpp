@@ -14,9 +14,9 @@
 
 #include "google/cloud/pubsub/internal/publisher_stub_factory.h"
 #include "google/cloud/pubsub/internal/create_channel.h"
-#include "google/cloud/pubsub/internal/publisher_auth.h"
-#include "google/cloud/pubsub/internal/publisher_logging.h"
-#include "google/cloud/pubsub/internal/publisher_metadata.h"
+#include "google/cloud/pubsub/internal/publisher_auth_decorator.h"
+#include "google/cloud/pubsub/internal/publisher_logging_decorator.h"
+#include "google/cloud/pubsub/internal/publisher_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_round_robin.h"
 #include "google/cloud/log.h"
 
@@ -81,6 +81,17 @@ std::shared_ptr<PublisherStub> MakeTestPublisherStub(
   auto stub =
       std::make_shared<pubsub_internal::PublisherRoundRobin>(std::move(mocks));
   return DecoratePublisherStub(options, std::move(auth), std::move(stub));
+}
+
+std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
+                                                          int channel_id) {
+  return CreateDefaultPublisherStub(CreateChannel(opts, channel_id));
+}
+
+std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
+    std::shared_ptr<grpc::Channel> channel) {
+  return std::make_shared<DefaultPublisherStub>(
+      google::pubsub::v1::Publisher::NewStub(std::move(channel)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

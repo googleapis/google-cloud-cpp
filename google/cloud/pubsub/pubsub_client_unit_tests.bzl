@@ -19,6 +19,7 @@
 pubsub_client_unit_tests = [
     "ack_handler_test.cc",
     "blocking_publisher_connection_test.cc",
+    "blocking_publisher_test.cc",
     "exactly_once_ack_handler_test.cc",
     "internal/batching_publisher_connection_test.cc",
     "internal/default_batch_sink_test.cc",

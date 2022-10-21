@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_LOGGING_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_LOGGING_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_METADATA_DECORATOR_H
 
 #include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/tracing_options.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -26,14 +26,11 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A Decorator for `SchemaStub` that logs each request and response.
+ * A Decorator for `SchemaServiceStub` that logs each request and response.
  */
-class SchemaLogging : public SchemaStub {
+class SchemaServiceMetadata : public SchemaServiceStub {
  public:
-  SchemaLogging(std::shared_ptr<SchemaStub> child,
-                TracingOptions tracing_options)
-      : child_(std::move(child)),
-        tracing_options_(std::move(tracing_options)) {}
+  explicit SchemaServiceMetadata(std::shared_ptr<SchemaServiceStub> child);
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       grpc::ClientContext& context,
@@ -55,8 +52,11 @@ class SchemaLogging : public SchemaStub {
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
  private:
-  std::shared_ptr<SchemaStub> child_;
-  TracingOptions tracing_options_;
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
+
+  std::shared_ptr<SchemaServiceStub> child_;
+  std::string x_goog_api_client_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -64,4 +64,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_LOGGING_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_METADATA_DECORATOR_H

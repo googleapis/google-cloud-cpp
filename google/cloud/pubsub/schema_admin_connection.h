@@ -179,7 +179,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<pubsub::SchemaAdminConnection> MakeTestSchemaAdminConnection(
-    Options const& opts, std::shared_ptr<SchemaStub> stub);
+    Options const& opts, std::shared_ptr<SchemaServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

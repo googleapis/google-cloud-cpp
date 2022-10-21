@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/schema_metadata.h"
+#include "google/cloud/pubsub/internal/schema_metadata_decorator.h"
 #include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/testing/mock_schema_stub.h"
 #include "google/cloud/internal/api_client_header.h"
@@ -83,7 +83,7 @@ TEST_F(SchemaMetadataTest, CreateSchema) {
         return make_status_or(google::pubsub::v1::Schema{});
       });
 
-  SchemaMetadata stub(mock);
+  SchemaServiceMetadata stub(mock);
   for (auto const* user_project : {"", "", "test-project"}) {
     internal::OptionsSpan span(TestOptions(user_project));
     grpc::ClientContext context;
@@ -114,7 +114,7 @@ TEST_F(SchemaMetadataTest, GetSchema) {
         return make_status_or(google::pubsub::v1::Schema{});
       });
 
-  SchemaMetadata stub(mock);
+  SchemaServiceMetadata stub(mock);
   for (auto const* user_project : {"", "", "test-project"}) {
     internal::OptionsSpan span(TestOptions(user_project));
     grpc::ClientContext context;
@@ -145,7 +145,7 @@ TEST_F(SchemaMetadataTest, ListSchemas) {
         return make_status_or(google::pubsub::v1::ListSchemasResponse{});
       });
 
-  SchemaMetadata stub(mock);
+  SchemaServiceMetadata stub(mock);
   for (auto const* user_project : {"", "", "test-project"}) {
     internal::OptionsSpan span(TestOptions(user_project));
     grpc::ClientContext context;
@@ -176,7 +176,7 @@ TEST_F(SchemaMetadataTest, DeleteSchema) {
         return Status{};
       });
 
-  SchemaMetadata stub(mock);
+  SchemaServiceMetadata stub(mock);
   for (auto const* user_project : {"", "", "test-project"}) {
     internal::OptionsSpan span(TestOptions(user_project));
     grpc::ClientContext context;
@@ -208,7 +208,7 @@ TEST_F(SchemaMetadataTest, ValidateSchema) {
         return make_status_or(google::pubsub::v1::ValidateSchemaResponse{});
       });
 
-  SchemaMetadata stub(mock);
+  SchemaServiceMetadata stub(mock);
   for (auto const* user_project : {"", "", "test-project"}) {
     internal::OptionsSpan span(TestOptions(user_project));
     grpc::ClientContext context;
@@ -240,7 +240,7 @@ TEST_F(SchemaMetadataTest, ValidateMessage) {
         return make_status_or(google::pubsub::v1::ValidateMessageResponse{});
       });
 
-  SchemaMetadata stub(mock);
+  SchemaServiceMetadata stub(mock);
   for (auto const* user_project : {"", "", "test-project"}) {
     internal::OptionsSpan span(TestOptions(user_project));
     grpc::ClientContext context;

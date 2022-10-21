@@ -58,9 +58,9 @@ TEST(BlockingPublisherConnectionTest, Basic) {
       });
 
   auto publisher = MakeTestPublisherConnection(mock);
+  google::cloud::internal::OptionsSpan span(publisher->options());
   auto response = publisher->Publish(
       {topic, MessageBuilder{}.SetData("test-data-0").Build()});
-  google::cloud::internal::OptionsSpan span(publisher->options());
   ASSERT_STATUS_OK(response);
   EXPECT_EQ("test-message-id-0", *response);
 }
@@ -129,6 +129,7 @@ TEST(BlockingPublisherConnectionTest, HandlePermanentError) {
           });
 
   auto publisher = MakeTestPublisherConnection(mock);
+  google::cloud::internal::OptionsSpan span(publisher->options());
   auto response = publisher->Publish(
       {topic, MessageBuilder{}.SetData("test-message-0").Build()});
   EXPECT_THAT(response,
@@ -146,6 +147,7 @@ TEST(BlockingPublisherConnectionTest, HandleTooManyTransients) {
           });
 
   auto publisher = MakeTestPublisherConnection(mock);
+  google::cloud::internal::OptionsSpan span(publisher->options());
   auto response = publisher->Publish(
       {topic, MessageBuilder{}.SetData("test-message-0").Build()});
   EXPECT_THAT(response,
@@ -169,6 +171,7 @@ TEST(BlockingPublisherConnectionTest, HandleTransient) {
           });
 
   auto publisher = MakeTestPublisherConnection(mock);
+  google::cloud::internal::OptionsSpan span(publisher->options());
   auto response = publisher->Publish(
       {topic, MessageBuilder{}.SetData("test-message-0").Build()});
   ASSERT_STATUS_OK(response);
