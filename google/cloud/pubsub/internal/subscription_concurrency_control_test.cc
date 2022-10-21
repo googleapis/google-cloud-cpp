@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/testing/mock_subscription_message_source.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>

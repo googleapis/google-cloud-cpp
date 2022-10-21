@@ -59,6 +59,7 @@ oslogin
 policytroubleshooter
 privateca
 profiler
+pubsub
 pubsublite
 recommender
 redis

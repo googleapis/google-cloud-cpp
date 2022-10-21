@@ -59,6 +59,70 @@ cc_grpc_library(
     name = "google_cloud_cpp_generator_testing_cc_grpc",
     srcs = [":google_cloud_cpp_generator_testing_proto"],
     grpc_only = True,
-    visibility = [":__subpackages__"],
     deps = [":google_cloud_cpp_generator_testing_cc_proto"],
 )
+
+filegroup(
+    name = "golden_srcs",
+    srcs = glob([
+        "golden/*.cc",
+        "golden/internal/*.cc",
+    ]),
+)
+
+filegroup(
+    name = "golden_hdrs",
+    srcs = glob([
+        "golden/*.h",
+        "golden/internal/*.h",
+        "golden/mocks/*.h",
+    ]),
+)
+
+cc_library(
+    name = "google_cloud_cpp_generator_golden",
+    srcs = [
+        ":golden_srcs",
+    ],
+    hdrs = [
+        ":golden_hdrs",
+    ],
+    copts = [
+        "-I$(BINDIR)",
+    ],
+    deps = [
+        ":google_cloud_cpp_generator_testing_cc_grpc",
+        ":google_cloud_cpp_generator_testing_cc_proto",
+        "//:common",
+        "//:grpc_utils",
+        "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/strings",
+        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
+        "@com_google_protobuf//:protoc_lib",
+    ],
+)
+
+load(":google_cloud_cpp_generator_golden_tests.bzl", "google_cloud_cpp_generator_golden_tests")
+
+filegroup(
+    name = "test_mocks",
+    srcs = glob(["tests/mock_*.h"]),
+)
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [
+        test,
+        ":test_mocks",
+    ],
+    copts = [
+        "-I$(BINDIR)",
+    ],
+    deps = [
+        ":google_cloud_cpp_generator_golden",
+        "//:common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_generator_golden_tests]

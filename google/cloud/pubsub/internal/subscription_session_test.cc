@@ -103,9 +103,8 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
       });
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](google::cloud::CompletionQueue&,
-                          std::unique_ptr<grpc::ClientContext>,
-                          google::pubsub::v1::StreamingPullRequest const&) {
+      .WillRepeatedly([&](google::cloud::CompletionQueue const&,
+                          std::unique_ptr<grpc::ClientContext>) {
         auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Start).WillOnce([&] {
           return cq.MakeRelativeTimer(us(10)).then(
@@ -226,9 +225,8 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
       });
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](google::cloud::CompletionQueue&,
-                          std::unique_ptr<grpc::ClientContext>,
-                          google::pubsub::v1::StreamingPullRequest const&) {
+      .WillRepeatedly([&](google::cloud::CompletionQueue const&,
+                          std::unique_ptr<grpc::ClientContext>) {
         auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Start).WillOnce([&] {
           return cq.MakeRelativeTimer(us(10)).then([](auto) { return true; });
@@ -836,18 +834,18 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
   AsyncSequencer<bool> on_read;
   AsyncSequencer<Status> on_finish;
 
-  auto async_pull_mock = [&](google::cloud::CompletionQueue& cq,
-                             std::unique_ptr<grpc::ClientContext>,
-                             google::pubsub::v1::StreamingPullRequest const&) {
+  auto async_pull_mock = [&](google::cloud::CompletionQueue const& cq,
+                             std::unique_ptr<grpc::ClientContext>) {
     using us = std::chrono::microseconds;
     using F = future<StatusOr<std::chrono::system_clock::time_point>>;
     using Response = ::google::pubsub::v1::StreamingPullResponse;
-    auto start_response = [cq]() mutable {
-      return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
+    auto start_response = [q = cq]() mutable {
+      return q.MakeRelativeTimer(us(10)).then([](F) { return true; });
     };
-    auto write_response = [cq](google::pubsub::v1::StreamingPullRequest const&,
-                               grpc::WriteOptions const&) mutable {
-      return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
+    auto write_response = [q = cq](
+                              google::pubsub::v1::StreamingPullRequest const&,
+                              grpc::WriteOptions const&) mutable {
+      return q.MakeRelativeTimer(us(10)).then([](F) { return true; });
     };
     auto read_response = [&] {
       return on_read.PushBack("Read").then([](future<bool> f) {

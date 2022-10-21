@@ -96,12 +96,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::ListClustersResponse,google/container/v1/cluster_service.proto#L2502}
+  /// @googleapis_link{google::container::v1::ListClustersResponse,google/container/v1/cluster_service.proto#L2523}
   ///
   /// [google.container.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2483}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2504}
   /// [google.container.v1.ListClustersResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2502}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2523}
   ///
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       std::string const& parent, Options opts = {});
@@ -111,16 +111,16 @@ class ClusterManagerClient {
   /// zones.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::ListClustersRequest,google/container/v1/cluster_service.proto#L2483}
+  /// @googleapis_link{google::container::v1::ListClustersRequest,google/container/v1/cluster_service.proto#L2504}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::ListClustersResponse,google/container/v1/cluster_service.proto#L2502}
+  /// @googleapis_link{google::container::v1::ListClustersResponse,google/container/v1/cluster_service.proto#L2523}
   ///
   /// [google.container.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2483}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2504}
   /// [google.container.v1.ListClustersResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2502}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2523}
   ///
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       google::container::v1::ListClustersRequest const& request,
@@ -135,12 +135,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Cluster,google/container/v1/cluster_service.proto#L1357}
+  /// @googleapis_link{google::container::v1::Cluster,google/container/v1/cluster_service.proto#L1372}
   ///
   /// [google.container.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2084}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2105}
   /// [google.container.v1.Cluster]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1357}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1372}
   ///
   StatusOr<google::container::v1::Cluster> GetCluster(std::string const& name,
                                                       Options opts = {});
@@ -149,16 +149,16 @@ class ClusterManagerClient {
   /// Gets the details of a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::GetClusterRequest,google/container/v1/cluster_service.proto#L2084}
+  /// @googleapis_link{google::container::v1::GetClusterRequest,google/container/v1/cluster_service.proto#L2105}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Cluster,google/container/v1/cluster_service.proto#L1357}
+  /// @googleapis_link{google::container::v1::Cluster,google/container/v1/cluster_service.proto#L1372}
   ///
   /// [google.container.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2084}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2105}
   /// [google.container.v1.Cluster]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1357}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1372}
   ///
   StatusOr<google::container::v1::Cluster> GetCluster(
       google::container::v1::GetClusterRequest const& request,
@@ -188,12 +188,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2062}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2083}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> CreateCluster(
       std::string const& parent, google::container::v1::Cluster const& cluster,
@@ -216,16 +216,16 @@ class ClusterManagerClient {
   /// which CIDR range the cluster is using.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::CreateClusterRequest,google/container/v1/cluster_service.proto#L2062}
+  /// @googleapis_link{google::container::v1::CreateClusterRequest,google/container/v1/cluster_service.proto#L2083}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2062}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2083}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> CreateCluster(
       google::container::v1::CreateClusterRequest const& request,
@@ -241,12 +241,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2106}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2127}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> UpdateCluster(
       std::string const& name,
@@ -256,16 +256,16 @@ class ClusterManagerClient {
   /// Updates the settings of a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::UpdateClusterRequest,google/container/v1/cluster_service.proto#L2106}
+  /// @googleapis_link{google::container::v1::UpdateClusterRequest,google/container/v1/cluster_service.proto#L2127}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2106}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2127}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> UpdateCluster(
       google::container::v1::UpdateClusterRequest const& request,
@@ -275,16 +275,16 @@ class ClusterManagerClient {
   /// Updates the version and/or image type for the specified node pool.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::UpdateNodePoolRequest,google/container/v1/cluster_service.proto#L2131}
+  /// @googleapis_link{google::container::v1::UpdateNodePoolRequest,google/container/v1/cluster_service.proto#L2152}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.UpdateNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2131}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2152}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> UpdateNodePool(
       google::container::v1::UpdateNodePoolRequest const& request,
@@ -294,16 +294,16 @@ class ClusterManagerClient {
   /// Sets the autoscaling settings for the specified node pool.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetNodePoolAutoscalingRequest,google/container/v1/cluster_service.proto#L2224}
+  /// @googleapis_link{google::container::v1::SetNodePoolAutoscalingRequest,google/container/v1/cluster_service.proto#L2245}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetNodePoolAutoscalingRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2224}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2245}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetNodePoolAutoscaling(
       google::container::v1::SetNodePoolAutoscalingRequest const& request,
@@ -328,12 +328,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetLoggingServiceRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2254}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2275}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetLoggingService(
       std::string const& name, std::string const& logging_service,
@@ -343,16 +343,16 @@ class ClusterManagerClient {
   /// Sets the logging service for a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetLoggingServiceRequest,google/container/v1/cluster_service.proto#L2254}
+  /// @googleapis_link{google::container::v1::SetLoggingServiceRequest,google/container/v1/cluster_service.proto#L2275}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetLoggingServiceRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2254}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2275}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetLoggingService(
       google::container::v1::SetLoggingServiceRequest const& request,
@@ -377,12 +377,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetMonitoringServiceRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2289}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2310}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetMonitoringService(
       std::string const& name, std::string const& monitoring_service,
@@ -392,16 +392,16 @@ class ClusterManagerClient {
   /// Sets the monitoring service for a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetMonitoringServiceRequest,google/container/v1/cluster_service.proto#L2289}
+  /// @googleapis_link{google::container::v1::SetMonitoringServiceRequest,google/container/v1/cluster_service.proto#L2310}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetMonitoringServiceRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2289}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2310}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetMonitoringService(
       google::container::v1::SetMonitoringServiceRequest const& request,
@@ -419,12 +419,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetAddonsConfigRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2324}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2345}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetAddonsConfig(
       std::string const& name,
@@ -435,16 +435,16 @@ class ClusterManagerClient {
   /// Sets the addons for a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetAddonsConfigRequest,google/container/v1/cluster_service.proto#L2324}
+  /// @googleapis_link{google::container::v1::SetAddonsConfigRequest,google/container/v1/cluster_service.proto#L2345}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetAddonsConfigRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2324}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2345}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetAddonsConfig(
       google::container::v1::SetAddonsConfigRequest const& request,
@@ -468,12 +468,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetLocationsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2350}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2371}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetLocations(
       std::string const& name, std::vector<std::string> const& locations,
@@ -486,16 +486,16 @@ class ClusterManagerClient {
   /// instead.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetLocationsRequest,google/container/v1/cluster_service.proto#L2350}
+  /// @googleapis_link{google::container::v1::SetLocationsRequest,google/container/v1/cluster_service.proto#L2371}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetLocationsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2350}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2371}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetLocations(
       google::container::v1::SetLocationsRequest const& request,
@@ -519,12 +519,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.UpdateMasterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2381}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2402}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> UpdateMaster(
       std::string const& name, std::string const& master_version,
@@ -534,16 +534,16 @@ class ClusterManagerClient {
   /// Updates the master for a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::UpdateMasterRequest,google/container/v1/cluster_service.proto#L2381}
+  /// @googleapis_link{google::container::v1::UpdateMasterRequest,google/container/v1/cluster_service.proto#L2402}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.UpdateMasterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2381}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2402}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> UpdateMaster(
       google::container::v1::UpdateMasterRequest const& request,
@@ -555,16 +555,16 @@ class ClusterManagerClient {
   /// setting the password.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetMasterAuthRequest,google/container/v1/cluster_service.proto#L2415}
+  /// @googleapis_link{google::container::v1::SetMasterAuthRequest,google/container/v1/cluster_service.proto#L2436}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetMasterAuthRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2415}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2436}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetMasterAuth(
       google::container::v1::SetMasterAuthRequest const& request,
@@ -587,12 +587,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2461}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2482}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> DeleteCluster(
       std::string const& name, Options opts = {});
@@ -609,16 +609,16 @@ class ClusterManagerClient {
   /// when the cluster was initially created.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::DeleteClusterRequest,google/container/v1/cluster_service.proto#L2461}
+  /// @googleapis_link{google::container::v1::DeleteClusterRequest,google/container/v1/cluster_service.proto#L2482}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2461}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2482}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> DeleteCluster(
       google::container::v1::DeleteClusterRequest const& request,
@@ -628,16 +628,16 @@ class ClusterManagerClient {
   /// Lists all operations in a project in a specific zone or all zones.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::ListOperationsRequest,google/container/v1/cluster_service.proto#L2535}
+  /// @googleapis_link{google::container::v1::ListOperationsRequest,google/container/v1/cluster_service.proto#L2556}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::ListOperationsResponse,google/container/v1/cluster_service.proto#L2576}
+  /// @googleapis_link{google::container::v1::ListOperationsResponse,google/container/v1/cluster_service.proto#L2597}
   ///
   /// [google.container.v1.ListOperationsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2535}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2556}
   /// [google.container.v1.ListOperationsResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2576}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2597}
   ///
   StatusOr<google::container::v1::ListOperationsResponse> ListOperations(
       google::container::v1::ListOperationsRequest const& request,
@@ -652,12 +652,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.GetOperationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2513}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2534}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> GetOperation(
       std::string const& name, Options opts = {});
@@ -666,16 +666,16 @@ class ClusterManagerClient {
   /// Gets the specified operation.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::GetOperationRequest,google/container/v1/cluster_service.proto#L2513}
+  /// @googleapis_link{google::container::v1::GetOperationRequest,google/container/v1/cluster_service.proto#L2534}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.GetOperationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2513}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2534}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> GetOperation(
       google::container::v1::GetOperationRequest const& request,
@@ -691,7 +691,7 @@ class ClusterManagerClient {
   ///     backoff policies.
   ///
   /// [google.container.v1.CancelOperationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2554}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2575}
   ///
   Status CancelOperation(std::string const& name, Options opts = {});
 
@@ -699,12 +699,12 @@ class ClusterManagerClient {
   /// Cancels the specified operation.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::CancelOperationRequest,google/container/v1/cluster_service.proto#L2554}
+  /// @googleapis_link{google::container::v1::CancelOperationRequest,google/container/v1/cluster_service.proto#L2575}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.container.v1.CancelOperationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2554}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2575}
   ///
   Status CancelOperation(
       google::container::v1::CancelOperationRequest const& request,
@@ -718,12 +718,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::ServerConfig,google/container/v1/cluster_service.proto#L2604}
+  /// @googleapis_link{google::container::v1::ServerConfig,google/container/v1/cluster_service.proto#L2625}
   ///
   /// [google.container.v1.GetServerConfigRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2586}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2607}
   /// [google.container.v1.ServerConfig]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2604}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2625}
   ///
   StatusOr<google::container::v1::ServerConfig> GetServerConfig(
       std::string const& name, Options opts = {});
@@ -732,16 +732,16 @@ class ClusterManagerClient {
   /// Returns configuration info about the Google Kubernetes Engine service.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::GetServerConfigRequest,google/container/v1/cluster_service.proto#L2586}
+  /// @googleapis_link{google::container::v1::GetServerConfigRequest,google/container/v1/cluster_service.proto#L2607}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::ServerConfig,google/container/v1/cluster_service.proto#L2604}
+  /// @googleapis_link{google::container::v1::ServerConfig,google/container/v1/cluster_service.proto#L2625}
   ///
   /// [google.container.v1.GetServerConfigRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2586}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2607}
   /// [google.container.v1.ServerConfig]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2604}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2625}
   ///
   StatusOr<google::container::v1::ServerConfig> GetServerConfig(
       google::container::v1::GetServerConfigRequest const& request,
@@ -754,16 +754,16 @@ class ClusterManagerClient {
   /// clusters.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::GetJSONWebKeysRequest,google/container/v1/cluster_service.proto#L3764}
+  /// @googleapis_link{google::container::v1::GetJSONWebKeysRequest,google/container/v1/cluster_service.proto#L3785}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::GetJSONWebKeysResponse,google/container/v1/cluster_service.proto#L3801}
+  /// @googleapis_link{google::container::v1::GetJSONWebKeysResponse,google/container/v1/cluster_service.proto#L3822}
   ///
   /// [google.container.v1.GetJSONWebKeysRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3764}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3785}
   /// [google.container.v1.GetJSONWebKeysResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3801}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3822}
   ///
   StatusOr<google::container::v1::GetJSONWebKeysResponse> GetJSONWebKeys(
       google::container::v1::GetJSONWebKeysRequest const& request,
@@ -778,12 +778,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::ListNodePoolsResponse,google/container/v1/cluster_service.proto#L3258}
+  /// @googleapis_link{google::container::v1::ListNodePoolsResponse,google/container/v1/cluster_service.proto#L3279}
   ///
   /// [google.container.v1.ListNodePoolsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2690}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2711}
   /// [google.container.v1.ListNodePoolsResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3258}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3279}
   ///
   StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
       std::string const& parent, Options opts = {});
@@ -792,16 +792,16 @@ class ClusterManagerClient {
   /// Lists the node pools for a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::ListNodePoolsRequest,google/container/v1/cluster_service.proto#L2690}
+  /// @googleapis_link{google::container::v1::ListNodePoolsRequest,google/container/v1/cluster_service.proto#L2711}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::ListNodePoolsResponse,google/container/v1/cluster_service.proto#L3258}
+  /// @googleapis_link{google::container::v1::ListNodePoolsResponse,google/container/v1/cluster_service.proto#L3279}
   ///
   /// [google.container.v1.ListNodePoolsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2690}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2711}
   /// [google.container.v1.ListNodePoolsResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3258}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3279}
   ///
   StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
       google::container::v1::ListNodePoolsRequest const& request,
@@ -817,12 +817,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::NodePool,google/container/v1/cluster_service.proto#L2773}
+  /// @googleapis_link{google::container::v1::NodePool,google/container/v1/cluster_service.proto#L2794}
   ///
   /// [google.container.v1.GetNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2712}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2733}
   /// [google.container.v1.NodePool]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2773}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2794}
   ///
   StatusOr<google::container::v1::NodePool> GetNodePool(std::string const& name,
                                                         Options opts = {});
@@ -831,16 +831,16 @@ class ClusterManagerClient {
   /// Retrieves the requested node pool.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::GetNodePoolRequest,google/container/v1/cluster_service.proto#L2712}
+  /// @googleapis_link{google::container::v1::GetNodePoolRequest,google/container/v1/cluster_service.proto#L2733}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::NodePool,google/container/v1/cluster_service.proto#L2773}
+  /// @googleapis_link{google::container::v1::NodePool,google/container/v1/cluster_service.proto#L2794}
   ///
   /// [google.container.v1.GetNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2712}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2733}
   /// [google.container.v1.NodePool]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2773}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2794}
   ///
   StatusOr<google::container::v1::NodePool> GetNodePool(
       google::container::v1::GetNodePoolRequest const& request,
@@ -857,12 +857,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.CreateNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2637}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2658}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> CreateNodePool(
       std::string const& parent,
@@ -872,16 +872,16 @@ class ClusterManagerClient {
   /// Creates a node pool for a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::CreateNodePoolRequest,google/container/v1/cluster_service.proto#L2637}
+  /// @googleapis_link{google::container::v1::CreateNodePoolRequest,google/container/v1/cluster_service.proto#L2658}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.CreateNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2637}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2658}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> CreateNodePool(
       google::container::v1::CreateNodePoolRequest const& request,
@@ -897,12 +897,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.DeleteNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2663}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2684}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> DeleteNodePool(
       std::string const& name, Options opts = {});
@@ -911,16 +911,16 @@ class ClusterManagerClient {
   /// Deletes a node pool from a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::DeleteNodePoolRequest,google/container/v1/cluster_service.proto#L2663}
+  /// @googleapis_link{google::container::v1::DeleteNodePoolRequest,google/container/v1/cluster_service.proto#L2684}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.DeleteNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2663}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2684}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> DeleteNodePool(
       google::container::v1::DeleteNodePoolRequest const& request,
@@ -931,12 +931,12 @@ class ClusterManagerClient {
   /// complete.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::CompleteNodePoolUpgradeRequest,google/container/v1/cluster_service.proto#L3217}
+  /// @googleapis_link{google::container::v1::CompleteNodePoolUpgradeRequest,google/container/v1/cluster_service.proto#L3238}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.container.v1.CompleteNodePoolUpgradeRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3217}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3238}
   ///
   Status CompleteNodePoolUpgrade(
       google::container::v1::CompleteNodePoolUpgradeRequest const& request,
@@ -953,12 +953,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.RollbackNodePoolUpgradeRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3227}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3248}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
       std::string const& name, Options opts = {});
@@ -968,16 +968,16 @@ class ClusterManagerClient {
   /// This makes no changes if the last upgrade successfully completed.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::RollbackNodePoolUpgradeRequest,google/container/v1/cluster_service.proto#L3227}
+  /// @googleapis_link{google::container::v1::RollbackNodePoolUpgradeRequest,google/container/v1/cluster_service.proto#L3248}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.RollbackNodePoolUpgradeRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3227}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3248}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
       google::container::v1::RollbackNodePoolUpgradeRequest const& request,
@@ -987,16 +987,16 @@ class ClusterManagerClient {
   /// Sets the NodeManagement options for a node pool.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetNodePoolManagementRequest,google/container/v1/cluster_service.proto#L3156}
+  /// @googleapis_link{google::container::v1::SetNodePoolManagementRequest,google/container/v1/cluster_service.proto#L3177}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetNodePoolManagementRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3156}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3177}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetNodePoolManagement(
       google::container::v1::SetNodePoolManagementRequest const& request,
@@ -1006,16 +1006,16 @@ class ClusterManagerClient {
   /// Sets labels on a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetLabelsRequest,google/container/v1/cluster_service.proto#L3419}
+  /// @googleapis_link{google::container::v1::SetLabelsRequest,google/container/v1/cluster_service.proto#L3440}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3419}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3440}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetLabels(
       google::container::v1::SetLabelsRequest const& request,
@@ -1032,12 +1032,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetLegacyAbacRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3453}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3474}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetLegacyAbac(
       std::string const& name, bool enabled, Options opts = {});
@@ -1046,16 +1046,16 @@ class ClusterManagerClient {
   /// Enables or disables the ABAC authorization mechanism on a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetLegacyAbacRequest,google/container/v1/cluster_service.proto#L3453}
+  /// @googleapis_link{google::container::v1::SetLegacyAbacRequest,google/container/v1/cluster_service.proto#L3474}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetLegacyAbacRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3453}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3474}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetLegacyAbac(
       google::container::v1::SetLegacyAbacRequest const& request,
@@ -1070,12 +1070,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.StartIPRotationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3479}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3500}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> StartIPRotation(
       std::string const& name, Options opts = {});
@@ -1084,16 +1084,16 @@ class ClusterManagerClient {
   /// Starts master IP rotation.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::StartIPRotationRequest,google/container/v1/cluster_service.proto#L3479}
+  /// @googleapis_link{google::container::v1::StartIPRotationRequest,google/container/v1/cluster_service.proto#L3500}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.StartIPRotationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3479}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3500}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> StartIPRotation(
       google::container::v1::StartIPRotationRequest const& request,
@@ -1108,12 +1108,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.CompleteIPRotationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3504}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3525}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> CompleteIPRotation(
       std::string const& name, Options opts = {});
@@ -1122,16 +1122,16 @@ class ClusterManagerClient {
   /// Completes master IP rotation.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::CompleteIPRotationRequest,google/container/v1/cluster_service.proto#L3504}
+  /// @googleapis_link{google::container::v1::CompleteIPRotationRequest,google/container/v1/cluster_service.proto#L3525}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.CompleteIPRotationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3504}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3525}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> CompleteIPRotation(
       google::container::v1::CompleteIPRotationRequest const& request,
@@ -1143,16 +1143,16 @@ class ClusterManagerClient {
   /// [NodePool.locations][google.container.v1.NodePool.locations].
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetNodePoolSizeRequest,google/container/v1/cluster_service.proto#L3186}
+  /// @googleapis_link{google::container::v1::SetNodePoolSizeRequest,google/container/v1/cluster_service.proto#L3207}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetNodePoolSizeRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3186}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3207}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetNodePoolSize(
       google::container::v1::SetNodePoolSizeRequest const& request,
@@ -1169,12 +1169,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3588}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3609}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetNetworkPolicy(
       std::string const& name,
@@ -1185,16 +1185,16 @@ class ClusterManagerClient {
   /// Enables or disables Network Policy for a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetNetworkPolicyRequest,google/container/v1/cluster_service.proto#L3588}
+  /// @googleapis_link{google::container::v1::SetNetworkPolicyRequest,google/container/v1/cluster_service.proto#L3609}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3588}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3609}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetNetworkPolicy(
       google::container::v1::SetNetworkPolicyRequest const& request,
@@ -1216,12 +1216,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetMaintenancePolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3613}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3634}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
       std::string const& project_id, std::string const& zone,
@@ -1242,12 +1242,12 @@ class ClusterManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetMaintenancePolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3613}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3634}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
       std::string const& name,
@@ -1258,16 +1258,16 @@ class ClusterManagerClient {
   /// Sets the maintenance policy for a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetMaintenancePolicyRequest,google/container/v1/cluster_service.proto#L3613}
+  /// @googleapis_link{google::container::v1::SetMaintenancePolicyRequest,google/container/v1/cluster_service.proto#L3634}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1909}
   ///
   /// [google.container.v1.SetMaintenancePolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3613}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3634}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1888}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1909}
   ///
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
       google::container::v1::SetMaintenancePolicyRequest const& request,
@@ -1277,16 +1277,16 @@ class ClusterManagerClient {
   /// Lists subnetworks that are usable for creating clusters in a project.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::ListUsableSubnetworksRequest,google/container/v1/cluster_service.proto#L3947}
+  /// @googleapis_link{google::container::v1::ListUsableSubnetworksRequest,google/container/v1/cluster_service.proto#L3974}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::container::v1::UsableSubnetwork,google/container/v1/cluster_service.proto#L4019}
+  /// @googleapis_link{google::container::v1::UsableSubnetwork,google/container/v1/cluster_service.proto#L4046}
   ///
   /// [google.container.v1.ListUsableSubnetworksRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3947}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3974}
   /// [google.container.v1.UsableSubnetwork]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L4019}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L4046}
   ///
   StreamRange<google::container::v1::UsableSubnetwork> ListUsableSubnetworks(
       google::container::v1::ListUsableSubnetworksRequest request,

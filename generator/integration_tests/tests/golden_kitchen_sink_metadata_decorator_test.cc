@@ -21,7 +21,7 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_stub.h"
+#include "generator/integration_tests/tests/mock_golden_kitchen_sink_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 

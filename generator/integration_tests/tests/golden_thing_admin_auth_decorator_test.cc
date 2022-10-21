@@ -15,8 +15,8 @@
 #include "generator/integration_tests/golden/internal/golden_thing_admin_auth_decorator.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_stub.h"
 #include "generator/integration_tests/test.pb.h"
+#include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 

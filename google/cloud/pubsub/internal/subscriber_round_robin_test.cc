@@ -161,9 +161,8 @@ TEST(SubscriberRoundRobinTest, AsyncStreamingPull) {
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
       EXPECT_CALL(*m, AsyncStreamingPull)
-          .WillOnce([](google::cloud::CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext>,
-                       google::pubsub::v1::StreamingPullRequest const&) {
+          .WillOnce([](google::cloud::CompletionQueue const&,
+                       std::unique_ptr<grpc::ClientContext>) {
             return absl::make_unique<pubsub_testing::MockAsyncPullStream>();
           });
     }
@@ -171,10 +170,8 @@ TEST(SubscriberRoundRobinTest, AsyncStreamingPull) {
   SubscriberRoundRobin stub(AsPlainStubs(mocks));
   google::cloud::CompletionQueue cq;
   for (std::size_t i = 0; i != kRepeats * mocks.size(); ++i) {
-    google::pubsub::v1::StreamingPullRequest request;
-    request.set_subscription("test-subscription-name");
-    auto stream = stub.AsyncStreamingPull(
-        cq, absl::make_unique<grpc::ClientContext>(), request);
+    auto stream =
+        stub.AsyncStreamingPull(cq, absl::make_unique<grpc::ClientContext>());
   }
 }
 

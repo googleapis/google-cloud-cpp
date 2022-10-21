@@ -37,7 +37,9 @@ using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Pair;
 using ::testing::StartsWith;
+using ::testing::UnorderedElementsAre;
 
 std::shared_ptr<SubscriberConnection> MakeTestSubscriberConnection(
     Subscription subscription,
@@ -45,6 +47,9 @@ std::shared_ptr<SubscriberConnection> MakeTestSubscriberConnection(
   opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
   opts = pubsub_internal::DefaultSubscriberOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
+  // The CI scripts set an environment variable that overrides this option. We
+  // are not interested in this behavior for this test.
+  opts.unset<google::cloud::UserProjectOption>();
   std::vector<std::shared_ptr<pubsub_internal::SubscriberStub>> children{
       std::move(mock)};
   return MakeTestSubscriberConnection(std::move(subscription), std::move(opts),
@@ -164,19 +169,18 @@ TEST(SubscriberConnectionTest, PullFailure) {
       });
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly([](google::cloud::CompletionQueue& cq,
-                         std::unique_ptr<grpc::ClientContext>,
-                         google::pubsub::v1::StreamingPullRequest const&) {
+      .WillRepeatedly([](google::cloud::CompletionQueue const& cq,
+                         std::unique_ptr<grpc::ClientContext>) {
         using TimerFuture =
             future<StatusOr<std::chrono::system_clock::time_point>>;
         using us = std::chrono::microseconds;
 
-        auto start_response = [cq]() mutable {
-          return cq.MakeRelativeTimer(us(10)).then(
+        auto start_response = [q = cq]() mutable {
+          return q.MakeRelativeTimer(us(10)).then(
               [](TimerFuture) { return false; });
         };
-        auto finish_response = [cq]() mutable {
-          return cq.MakeRelativeTimer(us(10)).then([](TimerFuture) {
+        auto finish_response = [q = cq]() mutable {
+          return q.MakeRelativeTimer(us(10)).then([](TimerFuture) {
             return Status{StatusCode::kPermissionDenied, "uh-oh"};
           });
         };
@@ -268,16 +272,19 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly(
-          [&](google::cloud::CompletionQueue& cq,
-              std::unique_ptr<grpc::ClientContext> context,
-              google::pubsub::v1::StreamingPullRequest const& request) {
-            ValidateMetadataFixture fixture;
-            fixture.IsContextMDValid(
-                *context, "google.pubsub.v1.Subscriber.Pull", request,
-                google::cloud::internal::ApiClientHeader());
-            return FakeAsyncStreamingPull(cq, std::move(context), request);
-          });
+      .WillRepeatedly([&](google::cloud::CompletionQueue const& cq,
+                          std::unique_ptr<grpc::ClientContext> context) {
+        ValidateMetadataFixture fixture;
+        auto metadata = fixture.GetMetadata(*context);
+        EXPECT_THAT(
+            metadata,
+            UnorderedElementsAre(
+                Pair("x-goog-api-client",
+                     google::cloud::internal::ApiClientHeader("generator")),
+                Pair("x-goog-request-params",
+                     "subscription=" + subscription.FullName())));
+        return FakeAsyncStreamingPull(cq, std::move(context));
+      });
 
   auto subscriber = MakeTestSubscriberConnection(subscription, mock);
   std::atomic_flag received_one{false};

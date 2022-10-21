@@ -94,7 +94,9 @@ class WebRiskServiceClient {
   /// for each list.
   ///
   /// @param threat_type  Required. The threat list to update. Only a single
-  /// ThreatType should be specified.
+  /// ThreatType should be specified
+  ///  per request. If you want to handle multiple ThreatTypes, you must make
+  ///  one request per ThreatType.
   /// @param version_token  The current version token of the client for the
   /// requested list (the
   ///  client version that was received from the last successful diff).
@@ -106,12 +108,12 @@ class WebRiskServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffResponse,google/cloud/webrisk/v1/webrisk.proto#L124}
+  /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffResponse,google/cloud/webrisk/v1/webrisk.proto#L127}
   ///
   /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L93}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L94}
   /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L124}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L127}
   ///
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
@@ -130,16 +132,16 @@ class WebRiskServiceClient {
   /// for each list.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffRequest,google/cloud/webrisk/v1/webrisk.proto#L93}
+  /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffRequest,google/cloud/webrisk/v1/webrisk.proto#L94}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffResponse,google/cloud/webrisk/v1/webrisk.proto#L124}
+  /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffResponse,google/cloud/webrisk/v1/webrisk.proto#L127}
   ///
   /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L93}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L94}
   /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L124}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L127}
   ///
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
@@ -159,12 +161,12 @@ class WebRiskServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisResponse,google/cloud/webrisk/v1/webrisk.proto#L184}
+  /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisResponse,google/cloud/webrisk/v1/webrisk.proto#L187}
   ///
   /// [google.cloud.webrisk.v1.SearchUrisRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L176}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L179}
   /// [google.cloud.webrisk.v1.SearchUrisResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L184}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L187}
   ///
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
       std::string const& uri,
@@ -179,16 +181,16 @@ class WebRiskServiceClient {
   /// empty response will be returned.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisRequest,google/cloud/webrisk/v1/webrisk.proto#L176}
+  /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisRequest,google/cloud/webrisk/v1/webrisk.proto#L179}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisResponse,google/cloud/webrisk/v1/webrisk.proto#L184}
+  /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisResponse,google/cloud/webrisk/v1/webrisk.proto#L187}
   ///
   /// [google.cloud.webrisk.v1.SearchUrisRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L176}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L179}
   /// [google.cloud.webrisk.v1.SearchUrisResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L184}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L187}
   ///
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
       google::cloud::webrisk::v1::SearchUrisRequest const& request,
@@ -204,17 +206,19 @@ class WebRiskServiceClient {
   /// @param hash_prefix  A hash prefix, consisting of the most significant 4-32
   /// bytes of a SHA256
   ///  hash. For JSON requests, this field is base64-encoded.
+  ///  Note that if this parameter is provided by a URI, it must be encoded
+  ///  using the web safe base64 variant (RFC 4648).
   /// @param threat_types  Required. The ThreatLists to search in. Multiple
   /// ThreatLists may be specified.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesResponse,google/cloud/webrisk/v1/webrisk.proto#L209}
+  /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesResponse,google/cloud/webrisk/v1/webrisk.proto#L214}
   ///
   /// [google.cloud.webrisk.v1.SearchHashesRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L200}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L203}
   /// [google.cloud.webrisk.v1.SearchHashesResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L209}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
   ///
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
       std::string const& hash_prefix,
@@ -229,16 +233,16 @@ class WebRiskServiceClient {
   /// hash match of a threat.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesRequest,google/cloud/webrisk/v1/webrisk.proto#L200}
+  /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesRequest,google/cloud/webrisk/v1/webrisk.proto#L203}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesResponse,google/cloud/webrisk/v1/webrisk.proto#L209}
+  /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesResponse,google/cloud/webrisk/v1/webrisk.proto#L214}
   ///
   /// [google.cloud.webrisk.v1.SearchHashesRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L200}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L203}
   /// [google.cloud.webrisk.v1.SearchHashesResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L209}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
   ///
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
       google::cloud::webrisk::v1::SearchHashesRequest const& request,
@@ -250,7 +254,8 @@ class WebRiskServiceClient {
   /// content, the site will be added to the [Google's Social Engineering
   /// lists](https://support.google.com/webmasters/answer/6350487/) in order to
   /// protect users that could get exposed to this threat in the future. Only
-  /// projects with CREATE_SUBMISSION_USERS visibility can use this method.
+  /// allowlisted projects can use this method during Early Access. Please reach
+  /// out to Sales or your customer engineer to obtain access.
   ///
   /// @param parent  Required. The name of the project that is making the
   /// submission. This string is in
@@ -260,12 +265,12 @@ class WebRiskServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::Submission,google/cloud/webrisk/v1/webrisk.proto#L335}
+  /// @googleapis_link{google::cloud::webrisk::v1::Submission,google/cloud/webrisk/v1/webrisk.proto#L344}
   ///
   /// [google.cloud.webrisk.v1.CreateSubmissionRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L341}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L350}
   /// [google.cloud.webrisk.v1.Submission]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L335}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L344}
   ///
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
       std::string const& parent,
@@ -278,19 +283,20 @@ class WebRiskServiceClient {
   /// content, the site will be added to the [Google's Social Engineering
   /// lists](https://support.google.com/webmasters/answer/6350487/) in order to
   /// protect users that could get exposed to this threat in the future. Only
-  /// projects with CREATE_SUBMISSION_USERS visibility can use this method.
+  /// allowlisted projects can use this method during Early Access. Please reach
+  /// out to Sales or your customer engineer to obtain access.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::webrisk::v1::CreateSubmissionRequest,google/cloud/webrisk/v1/webrisk.proto#L341}
+  /// @googleapis_link{google::cloud::webrisk::v1::CreateSubmissionRequest,google/cloud/webrisk/v1/webrisk.proto#L350}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::Submission,google/cloud/webrisk/v1/webrisk.proto#L335}
+  /// @googleapis_link{google::cloud::webrisk::v1::Submission,google/cloud/webrisk/v1/webrisk.proto#L344}
   ///
   /// [google.cloud.webrisk.v1.CreateSubmissionRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L341}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L350}
   /// [google.cloud.webrisk.v1.Submission]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L335}
+  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L344}
   ///
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request,

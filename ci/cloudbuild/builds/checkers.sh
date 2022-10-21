@@ -77,7 +77,7 @@ time {
 
 printf "%-50s" "Running check-include-guards:" >&2
 time {
-  git ls-files -z | grep -zE '\.h$' |
+  git ls-files -z -- '*.h' |
     xargs -0 awk -f "ci/check-include-guards.gawk"
 }
 
@@ -90,9 +90,8 @@ time {
 printf "%-50s" "Running Abseil header fixes:" >&2
 time {
   expressions=("-e" "'s;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";'")
-  git ls-files -z |
+  git ls-files -z -- '*.h' '*.cc' |
     grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
-    grep -zE '\.(h|cc)$' |
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
@@ -106,7 +105,7 @@ time {
   expressions=("-e" "'s/grpc::\([A-Z][A-Z_]\+\)/grpc::StatusCode::\1/g'")
   expressions+=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
   expressions+=("-e" "'s;#include <grpc++/;#include <grpcpp/;'")
-  git ls-files -z | grep -zE '\.(cc|h)$' |
+  git ls-files -z -- '*.h' '*.cc' |
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
@@ -127,7 +126,7 @@ time {
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
 printf "%-50s" "Running buildifier:" >&2
 time {
-  git ls-files -z | grep -zE '\.(BUILD|bzl|bazel)$' |
+  git ls-files -z -- '*.BUILD' '*.bzl' '*.bazel' |
     xargs -0 buildifier -mode=fix
 }
 
@@ -135,19 +134,19 @@ time {
 #    https://pypi.org/project/black/
 printf "%-50s" "Running black:" >&2
 time {
-  git ls-files -z | grep -z '\.py$' | xargs -0 python3 -m black --quiet
+  git ls-files -z -- '*.py' | xargs -0 python3 -m black --quiet
 }
 
 # Apply shfmt to format all shell scripts
 printf "%-50s" "Running shfmt:" >&2
 time {
-  git ls-files -z | grep -z '\.sh$' | xargs -0 shfmt -w
+  git ls-files -z -- '*.sh' | xargs -0 shfmt -w
 }
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
 printf "%-50s" "Running shellcheck:" >&2
 time {
-  git ls-files -z | grep -z '\.sh$' |
+  git ls-files -z -- '*.sh' |
     xargs -P "$(nproc)" -n 1 -0 shellcheck \
       --exclude=SC1090 \
       --exclude=SC1091 \
@@ -160,7 +159,7 @@ time {
 # different formatting output (sigh).
 printf "%-50s" "Running clang-format:" >&2
 time {
-  git ls-files -z | grep -zE '\.(cc|h)$' |
+  git ls-files -z -- '*.h' '*.cc' |
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
 }
 
@@ -168,7 +167,7 @@ time {
 #     https://github.com/cheshirekow/cmake_format
 printf "%-50s" "Running cmake-format:" >&2
 time {
-  git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
+  git ls-files -z -- 'CMakeLists.txt' '*.cmake' |
     xargs -P "$(nproc)" -n 1 -0 cmake-format -i
 }
 
@@ -194,7 +193,7 @@ time {
 printf "%-50s" "Running markdown formatter:" >&2
 time {
   # See `.mdformat.toml` for the configuration parameters.
-  git ls-files -z | grep -zE '(\.md)$' | xargs -P "$(nproc)" -n 1 -0 mdformat
+  git ls-files -z -- '*.md' | xargs -P "$(nproc)" -n 1 -0 mdformat
 }
 
 printf "%-50s" "Running doxygen landing-page updates:" >&2

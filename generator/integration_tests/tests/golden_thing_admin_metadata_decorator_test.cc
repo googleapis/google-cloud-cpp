@@ -16,7 +16,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_stub.h"
+#include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 
