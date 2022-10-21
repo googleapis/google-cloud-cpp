@@ -19,7 +19,7 @@
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_connection_impl.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_stub.h"
+#include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 

@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_auth_decorator.h"
-#include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/async_streaming_write_rpc_impl.h"
+#include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_stub.h"
+#include "generator/integration_tests/tests/mock_golden_kitchen_sink_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 
