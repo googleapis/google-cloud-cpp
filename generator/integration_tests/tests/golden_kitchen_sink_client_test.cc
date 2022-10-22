@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_connection.h"
+#include "generator/integration_tests/tests/mock_golden_kitchen_sink_stub.h"
 #include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/util/field_mask_util.h>
 #include <gmock/gmock.h>
@@ -31,25 +32,14 @@ namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::golden_internal::MockAsyncStreamingReadWriteRpc;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::test::admin::database::v1::AppendRowsRequest;
-using ::google::test::admin::database::v1::AppendRowsResponse;
+using ::google::test::admin::database::v1::Request;
+using ::google::test::admin::database::v1::Response;
 using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::UnorderedElementsAreArray;
-
-class MockAppendRowsStream
-    : public AsyncStreamingReadWriteRpc<AppendRowsRequest, AppendRowsResponse> {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<AppendRowsResponse>>, Read, (), (override));
-  MOCK_METHOD(future<bool>, Write,
-              (AppendRowsRequest const&, grpc::WriteOptions), (override));
-  MOCK_METHOD(future<bool>, WritesDone, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-};
 
 TEST(GoldenKitchenSinkClientTest, CopyMoveEquality) {
   auto conn1 =
@@ -219,7 +209,7 @@ TEST(GoldenKitchenSinkClientTest, ListLogs) {
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(GoldenKitchenSinkClientTest, TailLogEntries) {
+TEST(GoldenKitchenSinkClientTest, StreamingRead) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
     return Options{}
@@ -229,45 +219,37 @@ TEST(GoldenKitchenSinkClientTest, TailLogEntries) {
         .set<UserAgentProductsOption>({"override-me"});
   });
 
-  std::vector<std::string> expected_resource_names = {"projects/my-project"};
-  EXPECT_CALL(*mock, TailLogEntries)
+  EXPECT_CALL(*mock, StreamingRead)
       .Times(2)
-      .WillRepeatedly(
-          [expected_resource_names](
-              ::google::test::admin::database::v1::TailLogEntriesRequest const&
-                  request) {
-            auto const& current = internal::CurrentOptions();
-            EXPECT_TRUE(current.has<EndpointOption>());
-            EXPECT_TRUE(current.has<GrpcTracingOptionsOption>());
-            EXPECT_TRUE(current.has<UserAgentProductsOption>());
-            EXPECT_EQ(current.get<EndpointOption>(), "test-endpoint");
-            EXPECT_EQ(current.get<GrpcTracingOptionsOption>()
-                          .truncate_string_field_longer_than(),
-                      64);
-            EXPECT_THAT(current.get<UserAgentProductsOption>(),
-                        Contains("test-only/1.0"));
-            EXPECT_THAT(request.resource_names(),
-                        ElementsAreArray(expected_resource_names));
-            return google::cloud::internal::MakeStreamRange<
-                ::google::test::admin::database::v1::TailLogEntriesResponse>(
-                []() -> absl::variant<Status, ::google::test::admin::database::
-                                                  v1::TailLogEntriesResponse> {
-                  return Status(StatusCode::kPermissionDenied, "uh-oh");
-                });
-          });
+      .WillRepeatedly([](Request const& request) {
+        auto const& current = internal::CurrentOptions();
+        EXPECT_TRUE(current.has<EndpointOption>());
+        EXPECT_TRUE(current.has<GrpcTracingOptionsOption>());
+        EXPECT_TRUE(current.has<UserAgentProductsOption>());
+        EXPECT_EQ(current.get<EndpointOption>(), "test-endpoint");
+        EXPECT_EQ(current.get<GrpcTracingOptionsOption>()
+                      .truncate_string_field_longer_than(),
+                  64);
+        EXPECT_THAT(current.get<UserAgentProductsOption>(),
+                    Contains("test-only/1.0"));
+        EXPECT_THAT(request.stream(), "test-only-stream-name");
+        return google::cloud::internal::MakeStreamRange<Response>(
+            []() -> absl::variant<Status, Response> {
+              return Status(StatusCode::kPermissionDenied, "uh-oh");
+            });
+      });
   GoldenKitchenSinkClient client(
       std::move(mock), Options{}
                            .set<EndpointOption>("test-endpoint")
                            .set<UserAgentProductsOption>({"override-me-too"}));
   auto options = Options{}.set<UserAgentProductsOption>({"test-only/1.0"});
-  auto range = client.TailLogEntries(expected_resource_names, options);
+  auto range = client.StreamingRead("test-only-stream-name", options);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
-  ::google::test::admin::database::v1::TailLogEntriesRequest request;
-  *request.mutable_resource_names() = {expected_resource_names.begin(),
-                                       expected_resource_names.end()};
-  range = client.TailLogEntries(request, options);
+  auto request = Request{};
+  request.set_stream("test-only-stream-name");
+  range = client.StreamingRead(request, options);
   begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
@@ -307,7 +289,7 @@ TEST(GoldenKitchenSinkClientTest, ListServiceAccountKeys) {
   EXPECT_STATUS_OK(response);
 }
 
-TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
+TEST(GoldenKitchenSinkClientTest, AsyncStreamingReadWrite) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
     return Options{}
@@ -317,7 +299,7 @@ TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
         .set<UserAgentProductsOption>({"override-me"});
   });
 
-  EXPECT_CALL(*mock, AsyncAppendRows).WillOnce([](ExperimentalTag) {
+  EXPECT_CALL(*mock, AsyncStreamingReadWrite).WillOnce([](ExperimentalTag) {
     auto const& current = internal::CurrentOptions();
     EXPECT_TRUE(current.has<EndpointOption>());
     EXPECT_TRUE(current.has<GrpcTracingOptionsOption>());
@@ -329,24 +311,22 @@ TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
     EXPECT_THAT(current.get<UserAgentProductsOption>(),
                 Contains("test-only/1.0"));
 
-    auto stream = absl::make_unique<MockAppendRowsStream>();
+    auto stream = absl::make_unique<MockAsyncStreamingReadWriteRpc>();
     EXPECT_CALL(*stream, Start).WillOnce([] {
       return make_ready_future(true);
     });
     EXPECT_CALL(*stream, Write)
-        .WillOnce([](AppendRowsRequest const& r, grpc::WriteOptions) {
+        .WillOnce([](Request const& r, grpc::WriteOptions) {
           EXPECT_EQ(r.stream(), "test-only-request-stream");
           return make_ready_future(true);
         });
     EXPECT_CALL(*stream, Read)
         .WillOnce([] {
-          AppendRowsResponse response;
+          Response response;
           response.set_response("test-only-response");
           return make_ready_future(absl::make_optional(response));
         })
-        .WillOnce([] {
-          return make_ready_future(absl::optional<AppendRowsResponse>());
-        });
+        .WillOnce([] { return make_ready_future(absl::optional<Response>()); });
     EXPECT_CALL(*stream, Finish).WillOnce([] {
       return make_ready_future(Status(StatusCode::kUnavailable, "try-again"));
     });
@@ -356,11 +336,11 @@ TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
       std::move(mock), Options{}
                            .set<EndpointOption>("test-endpoint")
                            .set<UserAgentProductsOption>({"override-me-too"}));
-  auto stream = client.AsyncAppendRows(
+  auto stream = client.AsyncStreamingReadWrite(
       ExperimentalTag{},
       Options{}.set<UserAgentProductsOption>({"test-only/1.0"}));
   ASSERT_TRUE(stream->Start().get());
-  AppendRowsRequest request;
+  Request request;
   request.set_stream("test-only-request-stream");
   ASSERT_TRUE(stream->Write(request, grpc::WriteOptions()).get());
   auto read = stream->Read().get();

@@ -34,8 +34,10 @@ using ::google::cloud::golden_internal::GoldenKitchenSinkConnectionImpl;
 using ::google::cloud::golden_internal::GoldenKitchenSinkDefaultOptions;
 using ::google::cloud::golden_internal::GoldenKitchenSinkStub;
 using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
-using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
+using ::google::cloud::golden_internal::MockStreamingReadRpc;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::test::admin::database::v1::Request;
+using ::google::test::admin::database::v1::Response;
 using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -248,26 +250,6 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsTooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
-std::unique_ptr<MockTailLogEntriesStreamingReadRpc> MakeFailingReader(
-    Status status) {
-  auto reader = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
-  EXPECT_CALL(*reader, Read).WillOnce(Return(std::move(status)));
-  return reader;
-}
-
-TEST(GoldenKitchenSinkConnectionTest, TailLogEntriesPermanentError) {
-  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, TailLogEntries)
-      .WillOnce(Return(ByMove(MakeFailingReader(
-          Status(StatusCode::kPermissionDenied, "Permission Denied.")))));
-  auto conn = CreateTestingConnection(std::move(mock));
-  ::google::test::admin::database::v1::TailLogEntriesRequest request;
-  auto range = conn->TailLogEntries(request);
-  auto begin = range.begin();
-  ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
-}
-
 TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysSuccess) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   EXPECT_CALL(*mock, ListServiceAccountKeys)
@@ -306,18 +288,35 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysPermanentError) {
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
 
-TEST(GoldenKitchenSinkConnectionTest, AppendRowsError) {
+std::unique_ptr<MockStreamingReadRpc> MakeFailingReader(Status status) {
+  auto reader = absl::make_unique<MockStreamingReadRpc>();
+  EXPECT_CALL(*reader, Read).WillOnce(Return(std::move(status)));
+  return reader;
+}
+
+TEST(GoldenKitchenSinkConnectionTest, StreamingReadPermanentError) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
+  EXPECT_CALL(*mock, StreamingRead)
+      .WillOnce(Return(ByMove(MakeFailingReader(
+          Status(StatusCode::kPermissionDenied, "Permission Denied.")))));
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto range = conn->StreamingRead(Request{});
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
+TEST(GoldenKitchenSinkConnectionTest, StreamingReadWriteError) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   using ErrorStream =
-      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
-          google::test::admin::database::v1::AppendRowsRequest,
-          google::test::admin::database::v1::AppendRowsResponse>;
-  EXPECT_CALL(*mock, AsyncAppendRows).WillOnce([] {
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<Request,
+                                                                 Response>;
+  EXPECT_CALL(*mock, AsyncStreamingReadWrite).WillOnce([] {
     return absl::make_unique<ErrorStream>(
         Status{StatusCode::kUnavailable, "try-again"});
   });
   auto conn = CreateTestingConnection(std::move(mock));
-  auto stream = conn->AsyncAppendRows(ExperimentalTag{});
+  auto stream = conn->AsyncStreamingReadWrite(ExperimentalTag{});
   ASSERT_FALSE(stream->Start().get());
   auto status = stream->Finish().get();
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable, "try-again"));

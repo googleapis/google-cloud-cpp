@@ -31,10 +31,8 @@ using ::google::cloud::internal::AsyncGrpcOperation;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::test::admin::database::v1::TailLogEntriesRequest;
-using ::google::test::admin::database::v1::TailLogEntriesResponse;
-using ::google::test::admin::database::v1::WriteObjectRequest;
-using ::google::test::admin::database::v1::WriteObjectResponse;
+using ::google::test::admin::database::v1::Request;
+using ::google::test::admin::database::v1::Response;
 using ::testing::_;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -141,27 +139,17 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
        ::google::test::admin::database::v1::ListLogsRequest const& request,
        ::grpc::CompletionQueue* cq),
       (override));
-  MOCK_METHOD(::grpc::ClientReaderInterface<
-                  ::google::test::admin::database::v1::TailLogEntriesResponse>*,
-              TailLogEntriesRaw,
-              (::grpc::ClientContext * context,
-               ::google::test::admin::database::v1::TailLogEntriesRequest const&
-                   request),
+  MOCK_METHOD(::grpc::ClientReaderInterface<Response>*, StreamingReadRaw,
+              (::grpc::ClientContext * context, Request const& request),
               (override));
-  MOCK_METHOD(::grpc::ClientAsyncReaderInterface<
-                  ::google::test::admin::database::v1::TailLogEntriesResponse>*,
-              AsyncTailLogEntriesRaw,
-              (::grpc::ClientContext * context,
-               ::google::test::admin::database::v1::TailLogEntriesRequest const&
-                   request,
+  MOCK_METHOD(::grpc::ClientAsyncReaderInterface<Response>*,
+              AsyncStreamingReadRaw,
+              (::grpc::ClientContext * context, Request const& request,
                ::grpc::CompletionQueue* cq, void* tag),
               (override));
-  MOCK_METHOD(::grpc::ClientAsyncReaderInterface<
-                  ::google::test::admin::database::v1::TailLogEntriesResponse>*,
-              PrepareAsyncTailLogEntriesRaw,
-              (::grpc::ClientContext * context,
-               ::google::test::admin::database::v1::TailLogEntriesRequest const&
-                   request,
+  MOCK_METHOD(::grpc::ClientAsyncReaderInterface<Response>*,
+              PrepareAsyncStreamingReadRaw,
+              (::grpc::ClientContext * context, Request const& request,
                ::grpc::CompletionQueue* cq),
               (override));
   MOCK_METHOD(::grpc::Status, Omitted1,
@@ -242,39 +230,29 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
        ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
       (override));
 
-  using AppendRowsInterface = ::grpc::ClientReaderWriterInterface<
-      ::google::test::admin::database::v1::AppendRowsRequest,
-      ::google::test::admin::database::v1::AppendRowsResponse>;
-  using AppendRowsAsyncInterface = ::grpc::ClientAsyncReaderWriterInterface<
-      ::google::test::admin::database::v1::AppendRowsRequest,
-      ::google::test::admin::database::v1::AppendRowsResponse>;
-  MOCK_METHOD(AppendRowsInterface*, AppendRowsRaw,
+  using StreamingReadWriteInterface =
+      ::grpc::ClientReaderWriterInterface<Request, Response>;
+  using StreamingReadWriteAsyncInterface =
+      ::grpc::ClientAsyncReaderWriterInterface<Request, Response>;
+  MOCK_METHOD(StreamingReadWriteInterface*, StreamingReadWriteRaw,
               (::grpc::ClientContext * context), (override));
-  MOCK_METHOD(AppendRowsAsyncInterface*, AsyncAppendRowsRaw,
+  MOCK_METHOD(StreamingReadWriteAsyncInterface*, AsyncStreamingReadWriteRaw,
               (::grpc::ClientContext*, ::grpc::CompletionQueue*, void*),
               (override));
-  MOCK_METHOD(AppendRowsAsyncInterface*, PrepareAsyncAppendRowsRaw,
+  MOCK_METHOD(StreamingReadWriteAsyncInterface*,
+              PrepareAsyncStreamingReadWriteRaw,
               (::grpc::ClientContext*, ::grpc::CompletionQueue*), (override));
 
-  MOCK_METHOD((::grpc::ClientWriterInterface<
-                  ::google::test::admin::database::v1::WriteObjectRequest>*),
-              WriteObjectRaw,
-              (::grpc::ClientContext*,
-               ::google::test::admin::database::v1::WriteObjectResponse*),
+  MOCK_METHOD((::grpc::ClientWriterInterface<Request>*), StreamingWriteRaw,
+              (::grpc::ClientContext*, Response*), (override));
+  MOCK_METHOD((::grpc::ClientAsyncWriterInterface<Request>*),
+              AsyncStreamingWriteRaw,
+              (::grpc::ClientContext*, Response*, ::grpc::CompletionQueue*,
+               void*),
               (override));
-  MOCK_METHOD((::grpc::ClientAsyncWriterInterface<
-                  ::google::test::admin::database::v1::WriteObjectRequest>*),
-              AsyncWriteObjectRaw,
-              (::grpc::ClientContext*,
-               ::google::test::admin::database::v1::WriteObjectResponse*,
-               ::grpc::CompletionQueue*, void*),
-              (override));
-  MOCK_METHOD((::grpc::ClientAsyncWriterInterface<
-                  ::google::test::admin::database::v1::WriteObjectRequest>*),
-              PrepareAsyncWriteObjectRaw,
-              (::grpc::ClientContext*,
-               ::google::test::admin::database::v1::WriteObjectResponse*,
-               ::grpc::CompletionQueue*),
+  MOCK_METHOD((::grpc::ClientAsyncWriterInterface<Request>*),
+              PrepareAsyncStreamingWriteRaw,
+              (::grpc::ClientContext*, Response*, ::grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(
       ::grpc::Status, ExplicitRouting1,
@@ -396,39 +374,6 @@ TEST_F(GoldenKitchenSinkStubTest, ListLogs) {
   EXPECT_EQ(failure.status(), TransientError());
 }
 
-class MockTailLogEntriesResponse
-    : public ::grpc::ClientReaderInterface<TailLogEntriesResponse> {
- public:
-  MOCK_METHOD(::grpc::Status, Finish, (), (override));
-  MOCK_METHOD(bool, NextMessageSize, (uint32_t*), (override));
-  MOCK_METHOD(bool, Read, (TailLogEntriesResponse*), (override));
-  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
-};
-
-TEST_F(GoldenKitchenSinkStubTest, TailLogEntries) {
-  grpc::Status status;
-  auto success_response = absl::make_unique<MockTailLogEntriesResponse>();
-  auto failure_response = absl::make_unique<MockTailLogEntriesResponse>();
-  EXPECT_CALL(*success_response, Read).WillOnce(Return(false));
-  EXPECT_CALL(*success_response, Finish()).WillOnce(Return(status));
-  EXPECT_CALL(*failure_response, Read).WillOnce(Return(false));
-  EXPECT_CALL(*failure_response, Finish).WillOnce(Return(GrpcTransientError()));
-
-  TailLogEntriesRequest request;
-  EXPECT_CALL(*grpc_stub_, TailLogEntriesRaw)
-      .WillOnce(Return(success_response.release()))
-      .WillOnce(Return(failure_response.release()));
-  DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success_stream =
-      stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
-  auto success_status = absl::get<Status>(success_stream->Read());
-  EXPECT_THAT(success_status, IsOk());
-  auto failure_stream =
-      stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
-  auto failure_status = absl::get<Status>(failure_stream->Read());
-  EXPECT_THAT(failure_status, StatusIs(StatusCode::kUnavailable));
-}
-
 TEST_F(GoldenKitchenSinkStubTest, ListServiceAccountKeys) {
   grpc::Status status;
   grpc::ClientContext context;
@@ -443,24 +388,53 @@ TEST_F(GoldenKitchenSinkStubTest, ListServiceAccountKeys) {
   EXPECT_EQ(failure.status(), TransientError());
 }
 
+class MockStreamingReadResponse
+    : public ::grpc::ClientReaderInterface<Response> {
+ public:
+  MOCK_METHOD(::grpc::Status, Finish, (), (override));
+  MOCK_METHOD(bool, NextMessageSize, (uint32_t*), (override));
+  MOCK_METHOD(bool, Read, (Response*), (override));
+  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
+};
+
+TEST_F(GoldenKitchenSinkStubTest, StreamingRead) {
+  grpc::Status status;
+  auto success_response = absl::make_unique<MockStreamingReadResponse>();
+  auto failure_response = absl::make_unique<MockStreamingReadResponse>();
+  EXPECT_CALL(*success_response, Read).WillOnce(Return(false));
+  EXPECT_CALL(*success_response, Finish()).WillOnce(Return(status));
+  EXPECT_CALL(*failure_response, Read).WillOnce(Return(false));
+  EXPECT_CALL(*failure_response, Finish).WillOnce(Return(GrpcTransientError()));
+
+  Request request;
+  EXPECT_CALL(*grpc_stub_, StreamingReadRaw)
+      .WillOnce(Return(success_response.release()))
+      .WillOnce(Return(failure_response.release()));
+  DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
+  auto success_stream =
+      stub.StreamingRead(absl::make_unique<grpc::ClientContext>(), request);
+  auto success_status = absl::get<Status>(success_stream->Read());
+  EXPECT_THAT(success_status, IsOk());
+  auto failure_stream =
+      stub.StreamingRead(absl::make_unique<grpc::ClientContext>(), request);
+  auto failure_status = absl::get<Status>(failure_stream->Read());
+  EXPECT_THAT(failure_status, StatusIs(StatusCode::kUnavailable));
+}
+
 class MockWriteObjectResponse
     : public ::grpc::ClientWriterInterface<
-          google::test::admin::database::v1::WriteObjectRequest> {
+          google::test::admin::database::v1::Request> {
  public:
-  MOCK_METHOD(bool, Write,
-              (google::test::admin::database::v1::WriteObjectRequest const&,
-               grpc::WriteOptions),
-              (override));
+  MOCK_METHOD(bool, Write, (Request const&, grpc::WriteOptions), (override));
   MOCK_METHOD(bool, WritesDone, (), (override));
   MOCK_METHOD(::grpc::Status, Finish, (), (override));
 };
 
-TEST_F(GoldenKitchenSinkStubTest, WriteObject) {
+TEST_F(GoldenKitchenSinkStubTest, StreamingWrite) {
   auto context = absl::make_unique<grpc::ClientContext>();
-  google::test::admin::database::v1::WriteObjectRequest request;
-  EXPECT_CALL(*grpc_stub_, WriteObjectRaw(context.get(), _))
-      .WillOnce([](::grpc::ClientContext*,
-                   ::google::test::admin::database::v1::WriteObjectResponse*) {
+  Request request;
+  EXPECT_CALL(*grpc_stub_, StreamingWriteRaw(context.get(), _))
+      .WillOnce([](::grpc::ClientContext*, Response*) {
         auto stream = absl::make_unique<MockWriteObjectResponse>();
         EXPECT_CALL(*stream, Write).WillOnce(Return(true));
         EXPECT_CALL(*stream, WritesDone).WillOnce(Return(true));
@@ -468,28 +442,104 @@ TEST_F(GoldenKitchenSinkStubTest, WriteObject) {
         return stream.release();
       });
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto stream = stub.WriteObject(std::move(context));
-  EXPECT_TRUE(
-      stream->Write(google::test::admin::database::v1::WriteObjectRequest{},
-                    grpc::WriteOptions()));
+  auto stream = stub.StreamingWrite(std::move(context));
+  EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));
   EXPECT_THAT(stream->Close(), StatusIs(StatusCode::kOk));
 }
 
-class MockAsyncTailLogEntriesResponse
-    : public grpc::ClientAsyncReaderInterface<TailLogEntriesResponse> {
+class MockAsyncStreamingReadWriteResponse
+    : public grpc::ClientAsyncReaderWriterInterface<Request, Response> {
  public:
-  MOCK_METHOD(void, Read, (TailLogEntriesResponse*, void*), (override));
+  MOCK_METHOD(void, StartCall, (void*), (override));
+  MOCK_METHOD(void, Read, (Response*, void*), (override));
+  MOCK_METHOD(void, Write, (Request const&, grpc::WriteOptions, void*),
+              (override));
+  MOCK_METHOD(void, Write, (Request const&, void*), (override));
+  MOCK_METHOD(void, WritesDone, (void*), (override));
+  MOCK_METHOD(void, Finish, (grpc::Status*, void*), (override));
+  MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
+};
+
+TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWriteRead) {
+  grpc::Status status;
+  EXPECT_CALL(*grpc_stub_, PrepareAsyncStreamingReadWriteRaw)
+      .WillOnce([](grpc::ClientContext*, grpc::CompletionQueue*) {
+        auto stream = absl::make_unique<MockAsyncStreamingReadWriteResponse>();
+        EXPECT_CALL(*stream, StartCall).Times(1);
+        using ::testing::_;
+        EXPECT_CALL(*stream, Write(_, _, _)).Times(1);
+        EXPECT_CALL(*stream, WritesDone).Times(1);
+        EXPECT_CALL(*stream, Read).Times(2);
+        EXPECT_CALL(*stream, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status::OK;
+        });
+        return stream.release();  // gRPC assumes ownership of `stream`.
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  grpc::CompletionQueue grpc_cq;
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(ReturnRef(grpc_cq));
+
+  std::deque<std::shared_ptr<AsyncGrpcOperation>> operations;
+  auto notify_next_op = [&](bool ok) {
+    auto op = std::move(operations.front());
+    operations.pop_front();
+    op->Notify(ok);
+  };
+
+  EXPECT_CALL(*mock_cq, StartOperation)
+      .WillRepeatedly([&operations](std::shared_ptr<AsyncGrpcOperation> op,
+                                    absl::FunctionRef<void(void*)> call) {
+        void* tag = op.get();
+        operations.push_back(std::move(op));
+        call(tag);
+      });
+  google::cloud::CompletionQueue cq(mock_cq);
+
+  DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
+
+  auto stream = stub.AsyncStreamingReadWrite(
+      cq, absl::make_unique<grpc::ClientContext>());
+  auto start = stream->Start();
+  notify_next_op(true);
+  EXPECT_TRUE(start.get());
+
+  auto write = stream->Write(Request{}, grpc::WriteOptions{});
+  notify_next_op(true);
+  EXPECT_TRUE(write.get());
+
+  auto read0 = stream->Read();
+  notify_next_op(true);
+  EXPECT_TRUE(read0.get().has_value());
+
+  auto read1 = stream->Read();
+  notify_next_op(false);
+  EXPECT_FALSE(read1.get().has_value());
+
+  auto writes_done = stream->WritesDone();
+  notify_next_op(true);
+  EXPECT_TRUE(writes_done.get());
+
+  auto finish = stream->Finish();
+  notify_next_op(true);
+  EXPECT_THAT(finish.get(), IsOk());
+}
+
+class MockAsyncStreamingReadResponse
+    : public grpc::ClientAsyncReaderInterface<Response> {
+ public:
+  MOCK_METHOD(void, Read, (Response*, void*), (override));
   MOCK_METHOD(void, Finish, (grpc::Status*, void*), (override));
   MOCK_METHOD(void, StartCall, (void*), (override));
   MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
 };
 
-TEST_F(GoldenKitchenSinkStubTest, AsyncTailLogEntries) {
+TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingRead) {
   grpc::Status status;
-  EXPECT_CALL(*grpc_stub_, PrepareAsyncTailLogEntriesRaw)
-      .WillOnce([](grpc::ClientContext*, TailLogEntriesRequest const&,
+  EXPECT_CALL(*grpc_stub_, PrepareAsyncStreamingReadRaw)
+      .WillOnce([](grpc::ClientContext*, Request const&,
                    grpc::CompletionQueue*) {
-        auto stream = absl::make_unique<MockAsyncTailLogEntriesResponse>();
+        auto stream = absl::make_unique<MockAsyncStreamingReadResponse>();
         EXPECT_CALL(*stream, StartCall).Times(1);
         EXPECT_CALL(*stream, Read).Times(2);
         EXPECT_CALL(*stream, Finish).WillOnce([](grpc::Status* status, void*) {
@@ -520,8 +570,8 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncTailLogEntries) {
 
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
 
-  TailLogEntriesRequest request;
-  auto stream = stub.AsyncTailLogEntries(
+  Request request;
+  auto stream = stub.AsyncStreamingRead(
       cq, absl::make_unique<grpc::ClientContext>(), request);
   auto start = stream->Start();
   notify_next_op(true);
@@ -540,36 +590,35 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncTailLogEntries) {
   EXPECT_THAT(finish.get(), IsOk());
 }
 
-class MockAsyncWriteObjectResponse
-    : public grpc::ClientAsyncWriterInterface<WriteObjectRequest> {
+class MockAsyncStreamingWriteResponse
+    : public grpc::ClientAsyncWriterInterface<Request> {
  public:
   MOCK_METHOD(void, StartCall, (void*), (override));
-  MOCK_METHOD(void, Write,
-              (WriteObjectRequest const&, grpc::WriteOptions, void*),
+  MOCK_METHOD(void, Write, (Request const&, grpc::WriteOptions, void*),
               (override));
-  MOCK_METHOD(void, Write, (WriteObjectRequest const&, void*), (override));
+  MOCK_METHOD(void, Write, (Request const&, void*), (override));
   MOCK_METHOD(void, WritesDone, (void*), (override));
   MOCK_METHOD(void, Finish, (grpc::Status*, void*), (override));
   MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
 };
 
-TEST_F(GoldenKitchenSinkStubTest, AsyncWriteObject) {
+TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWrite) {
   grpc::Status status;
-  EXPECT_CALL(*grpc_stub_, PrepareAsyncWriteObjectRaw)
-      .WillOnce([](grpc::ClientContext*, WriteObjectResponse* response,
-                   grpc::CompletionQueue*) {
-        auto stream = absl::make_unique<MockAsyncWriteObjectResponse>();
-        EXPECT_CALL(*stream, StartCall).Times(1);
-        using ::testing::_;
-        EXPECT_CALL(*stream, Write(_, _, _)).Times(1);
-        EXPECT_CALL(*stream, WritesDone).Times(1);
-        EXPECT_CALL(*stream, Finish)
-            .WillOnce([response](grpc::Status* status, void*) {
-              response->set_response("Finish()");
-              *status = grpc::Status::OK;
-            });
-        return stream.release();  // gRPC assumes ownership of `stream`.
-      });
+  EXPECT_CALL(*grpc_stub_, PrepareAsyncStreamingWriteRaw)
+      .WillOnce(
+          [](grpc::ClientContext*, Response* response, grpc::CompletionQueue*) {
+            auto stream = absl::make_unique<MockAsyncStreamingWriteResponse>();
+            EXPECT_CALL(*stream, StartCall).Times(1);
+            using ::testing::_;
+            EXPECT_CALL(*stream, Write(_, _, _)).Times(1);
+            EXPECT_CALL(*stream, WritesDone).Times(1);
+            EXPECT_CALL(*stream, Finish)
+                .WillOnce([response](grpc::Status* status, void*) {
+                  response->set_response("Finish()");
+                  *status = grpc::Status::OK;
+                });
+            return stream.release();  // gRPC assumes ownership of `stream`.
+          });
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   grpc::CompletionQueue grpc_cq;
@@ -594,12 +643,12 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncWriteObject) {
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
 
   auto stream =
-      stub.AsyncWriteObject(cq, absl::make_unique<grpc::ClientContext>());
+      stub.AsyncStreamingWrite(cq, absl::make_unique<grpc::ClientContext>());
   auto start = stream->Start();
   notify_next_op(true);
   EXPECT_TRUE(start.get());
 
-  auto write = stream->Write(WriteObjectRequest{}, grpc::WriteOptions());
+  auto write = stream->Write(Request{}, grpc::WriteOptions());
   notify_next_op(true);
   EXPECT_TRUE(write.get());
 
