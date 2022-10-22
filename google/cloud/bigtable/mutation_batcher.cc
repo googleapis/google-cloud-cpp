@@ -177,19 +177,10 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
           // underlying operation completes very quickly, yielding the outer
           // `.then()` call synchronous. The deadlock would occur because the
           // mutex is held here and OnBulkApplyDone would try to reacquire it.
-          //
-          // We're not using a lambda here because in C++11 that would mean
-          // copying the `failed` vector.
-          struct Functor {
-            void operator()(CompletionQueue& cq) {
-              self->OnBulkApplyDone(cq, std::move(*batch), std::move(failed));
-            }
-
-            MutationBatcher* self;
-            std::shared_ptr<Batch> batch;
-            std::vector<FailedMutation> failed;
-          };
-          cq.RunAsync(Functor{this, std::move(batch), failed.get()});
+          cq.RunAsync([this, b = std::move(batch),
+                       f = failed.get()](CompletionQueue& cq) {
+            OnBulkApplyDone(cq, std::move(*b), std::move(f));
+          });
         });
     return true;
   }
