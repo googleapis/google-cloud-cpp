@@ -849,7 +849,8 @@ service GoldenKitchenSink {
   }
 
   // Tests the generator for streaming write RPCs (aka client-side streaming)
-  rpc StreamingWrite(stream Request) returns (Response) {}
+  rpc StreamingWrite(stream Request) returns (Response) {
+  }
 
   // Tests the generator for streaming read-write RPCs (aka bidir streaming)
   rpc StreamingReadWrite(stream Request) returns (stream Response) {
