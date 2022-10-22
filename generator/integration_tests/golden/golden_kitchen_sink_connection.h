@@ -76,19 +76,19 @@ class GoldenKitchenSinkConnection {
   virtual StreamRange<std::string>
   ListLogs(google::test::admin::database::v1::ListLogsRequest request);
 
-  virtual StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request);
-
   virtual StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);
 
   virtual Status
   DoNothing(google::protobuf::Empty const& request);
 
+  virtual StreamRange<google::test::admin::database::v1::Response>
+  StreamingRead(google::test::admin::database::v1::Request const& request);
+
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::test::admin::database::v1::AppendRowsRequest,
-      google::test::admin::database::v1::AppendRowsResponse>>
-  AsyncAppendRows(ExperimentalTag);
+      google::test::admin::database::v1::Request,
+      google::test::admin::database::v1::Response>>
+  AsyncStreamingReadWrite(ExperimentalTag);
 
   virtual Status
   ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request);

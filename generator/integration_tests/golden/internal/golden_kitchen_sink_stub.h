@@ -57,11 +57,6 @@ class GoldenKitchenSinkStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListLogsRequest const& request) = 0;
 
-  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
-  TailLogEntries(
-    std::unique_ptr<grpc::ClientContext> context,
-    google::test::admin::database::v1::TailLogEntriesRequest const& request) = 0;
-
   virtual StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
@@ -70,17 +65,22 @@ class GoldenKitchenSinkStub {
     grpc::ClientContext& context,
     google::protobuf::Empty const& request) = 0;
 
-  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::test::admin::database::v1::AppendRowsRequest,
-      google::test::admin::database::v1::AppendRowsResponse>>
-  AsyncAppendRows(
-      google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) = 0;
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
+  StreamingRead(
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::Request const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
-      google::test::admin::database::v1::WriteObjectRequest,
-      google::test::admin::database::v1::WriteObjectResponse>>
-  WriteObject(
+      google::test::admin::database::v1::Request,
+      google::test::admin::database::v1::Response>>
+  StreamingWrite(
+      std::unique_ptr<grpc::ClientContext> context) = 0;
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::test::admin::database::v1::Request,
+      google::test::admin::database::v1::Response>>
+  AsyncStreamingReadWrite(
+      google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context) = 0;
 
   virtual Status ExplicitRouting1(
@@ -92,15 +92,15 @@ class GoldenKitchenSinkStub {
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
-      google::test::admin::database::v1::TailLogEntriesResponse>>
-  AsyncTailLogEntries(
+      google::test::admin::database::v1::Response>>
+  AsyncStreamingRead(
       google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::test::admin::database::v1::TailLogEntriesRequest const& request) = 0;
+      google::test::admin::database::v1::Request const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
-      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>>
-  AsyncWriteObject(
+      google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
+  AsyncStreamingWrite(
       google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context) = 0;
 };
@@ -131,11 +131,6 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
     grpc::ClientContext& client_context,
     google::test::admin::database::v1::ListLogsRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
-  TailLogEntries(
-    std::unique_ptr<grpc::ClientContext> client_context,
-    google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
-
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
     grpc::ClientContext& client_context,
@@ -146,17 +141,22 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
     grpc::ClientContext& client_context,
     google::protobuf::Empty const& request) override;
 
-  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::test::admin::database::v1::AppendRowsRequest,
-      google::test::admin::database::v1::AppendRowsResponse>>
-  AsyncAppendRows(
-      google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) override;
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
+  StreamingRead(
+    std::unique_ptr<grpc::ClientContext> client_context,
+    google::test::admin::database::v1::Request const& request) override;
 
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
-      google::test::admin::database::v1::WriteObjectRequest,
-      google::test::admin::database::v1::WriteObjectResponse>>
-  WriteObject(
+      google::test::admin::database::v1::Request,
+      google::test::admin::database::v1::Response>>
+  StreamingWrite(
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::test::admin::database::v1::Request,
+      google::test::admin::database::v1::Response>>
+  AsyncStreamingReadWrite(
+      google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context) override;
 
   Status
@@ -170,15 +170,15 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
-      google::test::admin::database::v1::TailLogEntriesResponse>>
-  AsyncTailLogEntries(
+      google::test::admin::database::v1::Response>>
+  AsyncStreamingRead(
       google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
+      google::test::admin::database::v1::Request const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
-      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>>
-  AsyncWriteObject(
+      google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
+  AsyncStreamingWrite(
       google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context) override;
 
