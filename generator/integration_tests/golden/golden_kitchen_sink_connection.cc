@@ -59,16 +59,6 @@ StreamRange<std::string> GoldenKitchenSinkConnection::ListLogs(
       StreamRange<std::string>>();
 }
 
-StreamRange<google::test::admin::database::v1::TailLogEntriesResponse> GoldenKitchenSinkConnection::TailLogEntries(
-    google::test::admin::database::v1::TailLogEntriesRequest const&) {
-  return google::cloud::internal::MakeStreamRange<
-      google::test::admin::database::v1::TailLogEntriesResponse>(
-      []() -> absl::variant<Status,
-      google::test::admin::database::v1::TailLogEntriesResponse>{
-        return Status(StatusCode::kUnimplemented, "not implemented");}
-      );
-}
-
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkConnection::ListServiceAccountKeys(
     google::test::admin::database::v1::ListServiceAccountKeysRequest const&) {
@@ -81,14 +71,24 @@ GoldenKitchenSinkConnection::DoNothing(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::test::admin::database::v1::Response> GoldenKitchenSinkConnection::StreamingRead(
+    google::test::admin::database::v1::Request const&) {
+  return google::cloud::internal::MakeStreamRange<
+      google::test::admin::database::v1::Response>(
+      []() -> absl::variant<Status,
+      google::test::admin::database::v1::Response>{
+        return Status(StatusCode::kUnimplemented, "not implemented");}
+      );
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::test::admin::database::v1::AppendRowsRequest,
-    google::test::admin::database::v1::AppendRowsResponse>>
-GoldenKitchenSinkConnection::AsyncAppendRows(ExperimentalTag) {
+    google::test::admin::database::v1::Request,
+    google::test::admin::database::v1::Response>>
+GoldenKitchenSinkConnection::AsyncStreamingReadWrite(ExperimentalTag) {
   return absl::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
-          google::test::admin::database::v1::AppendRowsRequest,
-          google::test::admin::database::v1::AppendRowsResponse>>(
+          google::test::admin::database::v1::Request,
+          google::test::admin::database::v1::Response>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 

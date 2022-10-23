@@ -105,24 +105,6 @@ GoldenKitchenSinkConnectionImpl::ListLogs(google::test::admin::database::v1::Lis
       });
 }
 
-StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-GoldenKitchenSinkConnectionImpl::TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<golden::GoldenKitchenSinkRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-
-  auto factory = [stub](google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-    return stub->TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
-  };
-  auto resumable =
-      internal::MakeResumableStreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse, google::test::admin::database::v1::TailLogEntriesRequest>(
-          retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
-          factory,
-          GoldenKitchenSinkTailLogEntriesStreamingUpdater,
-          request);
-  return internal::MakeStreamRange(internal::StreamReader<google::test::admin::database::v1::TailLogEntriesResponse>(
-      [resumable]{return resumable->Read();}));
-}
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkConnectionImpl::ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   return google::cloud::internal::RetryLoop(
@@ -147,6 +129,24 @@ GoldenKitchenSinkConnectionImpl::DoNothing(google::protobuf::Empty const& reques
       request, __func__);
 }
 
+StreamRange<google::test::admin::database::v1::Response>
+GoldenKitchenSinkConnectionImpl::StreamingRead(google::test::admin::database::v1::Request const& request) {
+  auto& stub = stub_;
+  auto retry = std::shared_ptr<golden::GoldenKitchenSinkRetryPolicy const>(retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+
+  auto factory = [stub](google::test::admin::database::v1::Request const& request) {
+    return stub->StreamingRead(absl::make_unique<grpc::ClientContext>(), request);
+  };
+  auto resumable =
+      internal::MakeResumableStreamingReadRpc<google::test::admin::database::v1::Response, google::test::admin::database::v1::Request>(
+          retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
+          factory,
+          GoldenKitchenSinkStreamingReadStreamingUpdater,
+          request);
+  return internal::MakeStreamRange(internal::StreamReader<google::test::admin::database::v1::Response>(
+      [resumable]{return resumable->Read();}));
+}
 Status
 GoldenKitchenSinkConnectionImpl::ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return google::cloud::internal::RetryLoop(

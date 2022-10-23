@@ -22,6 +22,6 @@ service {
   omitted_rpcs: ["Omitted1", "GoldenKitchenSink.Omitted2"]
   service_endpoint_env_var: "GOLDEN_KITCHEN_SINK_ENDPOINT"
   emulator_endpoint_env_var: "GOLDEN_KITCHEN_SINK_EMULATOR_HOST"
-  gen_async_rpcs: ["GetDatabase", "DropDatabase", "TailLogEntries", "WriteObject"]
+  gen_async_rpcs: ["GetDatabase", "DropDatabase", "StreamingRead", "StreamingWrite"]
   retryable_status_codes: ["GoldenKitchenSink.kInternal", "kUnavailable", "GoldenThingAdmin.kDeadlineExceeded"]
 }

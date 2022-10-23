@@ -29,17 +29,17 @@ namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
-using ::google::cloud::golden_internal::MockWriteObjectStreamingWriteRpc;
+using ::google::cloud::golden_internal::MockStreamingReadRpc;
+using ::google::cloud::golden_internal::MockStreamingWriteRpc;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::test::admin::database::v1::TailLogEntriesResponse;
-using ::google::test::admin::database::v1::WriteObjectRequest;
-using ::google::test::admin::database::v1::WriteObjectResponse;
+using ::google::test::admin::database::v1::Request;
+using ::google::test::admin::database::v1::Response;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
+using ::testing::StartsWith;
 
 class LoggingDecoratorTest : public ::testing::Test {
  protected:
@@ -159,46 +159,6 @@ TEST_F(LoggingDecoratorTest, ListLogsError) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
-  auto mock_response = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
-  EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
-  EXPECT_CALL(*mock_, TailLogEntries)
-      .WillOnce(Return(ByMove(
-          std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-              google::test::admin::database::v1::TailLogEntriesResponse>>(
-              mock_response.release()))));
-  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
-  auto response = stub.TailLogEntries(
-      absl::make_unique<grpc::ClientContext>(),
-      google::test::admin::database::v1::TailLogEntriesRequest());
-  EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
-
-  auto const log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
-  EXPECT_THAT(log_lines, Not(Contains(HasSubstr("Read"))));
-}
-
-TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
-  auto mock_response = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
-  EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
-  EXPECT_CALL(*mock_, TailLogEntries)
-      .WillOnce(Return(ByMove(
-          std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-              google::test::admin::database::v1::TailLogEntriesResponse>>(
-              mock_response.release()))));
-  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
-  auto response = stub.TailLogEntries(
-      absl::make_unique<grpc::ClientContext>(),
-      google::test::admin::database::v1::TailLogEntriesRequest());
-  EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
-
-  auto const log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
-}
-
 TEST_F(LoggingDecoratorTest, ListServiceAccountKeys) {
   ::google::test::admin::database::v1::ListServiceAccountKeysResponse response;
   EXPECT_CALL(*mock_, ListServiceAccountKeys).WillOnce(Return(response));
@@ -228,74 +188,105 @@ TEST_F(LoggingDecoratorTest, ListServiceAccountKeysError) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorTest, WriteObject) {
-  EXPECT_CALL(*mock_, WriteObject)
+TEST_F(LoggingDecoratorTest, StreamingReadRpcNoRpcStreams) {
+  auto mock_response = absl::make_unique<MockStreamingReadRpc>();
+  EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
+  EXPECT_CALL(*mock_, StreamingRead)
+      .WillOnce(Return(ByMove(std::move(mock_response))));
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
+  auto response =
+      stub.StreamingRead(absl::make_unique<grpc::ClientContext>(), Request{});
+  EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("StreamingRead(")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
+  EXPECT_THAT(log_lines, Not(Contains(StartsWith("Read("))));
+}
+
+TEST_F(LoggingDecoratorTest, StreamingReadRpcWithRpcStreams) {
+  auto mock_response = absl::make_unique<MockStreamingReadRpc>();
+  EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
+  EXPECT_CALL(*mock_, StreamingRead)
+      .WillOnce(Return(ByMove(std::move(mock_response))));
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
+  auto response =
+      stub.StreamingRead(absl::make_unique<grpc::ClientContext>(), Request{});
+  EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("StreamingRead(")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
+  EXPECT_THAT(log_lines, Contains(StartsWith("Read(")));
+}
+
+TEST_F(LoggingDecoratorTest, StreamingWrite) {
+  EXPECT_CALL(*mock_, StreamingWrite)
       .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
-        auto stream = absl::make_unique<MockWriteObjectStreamingWriteRpc>();
+        auto stream = absl::make_unique<MockStreamingWriteRpc>();
         EXPECT_CALL(*stream, Write)
             .WillOnce(Return(true))
             .WillOnce(Return(false));
-        auto response = WriteObjectResponse{};
+        auto response = Response{};
         response.set_response("test-only");
         EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
         return stream;
       });
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
-  auto stream = stub.WriteObject(absl::make_unique<grpc::ClientContext>());
-  EXPECT_TRUE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
-  EXPECT_FALSE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  auto stream = stub.StreamingWrite(absl::make_unique<grpc::ClientContext>());
+  EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));
+  EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
   auto response = stream->Close();
   ASSERT_STATUS_OK(response);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->response(), "test-only");
 
   auto const log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("WriteObject")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("StreamingWrite(")));
   // The calls in the stream are not logged by default
-  EXPECT_THAT(log_lines, Not(Contains(HasSubstr("Write("))));
-  EXPECT_THAT(log_lines, Not(Contains(HasSubstr("Close("))));
+  EXPECT_THAT(log_lines, Not(Contains(StartsWith("Write("))));
+  EXPECT_THAT(log_lines, Not(Contains(StartsWith("Close("))));
 }
 
-TEST_F(LoggingDecoratorTest, WriteObjectFullTracing) {
-  EXPECT_CALL(*mock_, WriteObject)
+TEST_F(LoggingDecoratorTest, StreamingWriteFullTracing) {
+  EXPECT_CALL(*mock_, StreamingWrite)
       .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
-        auto stream = absl::make_unique<MockWriteObjectStreamingWriteRpc>();
+        auto stream = absl::make_unique<MockStreamingWriteRpc>();
         EXPECT_CALL(*stream, Write)
             .WillOnce(Return(true))
             .WillOnce(Return(false));
-        auto response = WriteObjectResponse{};
+        auto response = Response{};
         response.set_response("test-only");
         EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
         return stream;
       });
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
-  auto stream = stub.WriteObject(absl::make_unique<grpc::ClientContext>());
-  EXPECT_TRUE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
-  EXPECT_FALSE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  auto stream = stub.StreamingWrite(absl::make_unique<grpc::ClientContext>());
+  EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));
+  EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
   auto response = stream->Close();
   ASSERT_STATUS_OK(response);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->response(), "test-only");
 
   auto const log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("WriteObject")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("Write(")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("Close(")));
+  EXPECT_THAT(log_lines, Contains(StartsWith("StreamingWrite(")));
+  EXPECT_THAT(log_lines, Contains(StartsWith("Write(")));
+  EXPECT_THAT(log_lines, Contains(StartsWith("Close(")));
 }
 
-TEST_F(LoggingDecoratorTest, AsyncTailLogEntries) {
-  using ErrorStream = ::google::cloud::internal::AsyncStreamingReadRpcError<
-      TailLogEntriesResponse>;
-  EXPECT_CALL(*mock_, AsyncTailLogEntries)
+TEST_F(LoggingDecoratorTest, AsyncStreamingRead) {
+  using ErrorStream =
+      ::google::cloud::internal::AsyncStreamingReadRpcError<Response>;
+  EXPECT_CALL(*mock_, AsyncStreamingRead)
       .WillOnce(Return(ByMove(absl::make_unique<ErrorStream>(
           Status(StatusCode::kAborted, "uh-oh")))));
 
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
 
   google::cloud::CompletionQueue cq;
-  ::google::test::admin::database::v1::TailLogEntriesRequest request;
-  auto stream = stub.AsyncTailLogEntries(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+  auto stream = stub.AsyncStreamingRead(
+      cq, absl::make_unique<grpc::ClientContext>(), Request{});
 
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
@@ -303,15 +294,15 @@ TEST_F(LoggingDecoratorTest, AsyncTailLogEntries) {
   EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 
   auto const log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncTailLogEntries")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("Start(")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("Finish(")));
+  EXPECT_THAT(log_lines, Contains(StartsWith("AsyncStreamingRead(")));
+  EXPECT_THAT(log_lines, Contains(StartsWith("Start(")));
+  EXPECT_THAT(log_lines, Contains(StartsWith("Finish(")));
 }
 
-TEST_F(LoggingDecoratorTest, AsyncWriteObject) {
-  using ErrorStream = ::google::cloud::internal::AsyncStreamingWriteRpcError<
-      WriteObjectRequest, WriteObjectResponse>;
-  EXPECT_CALL(*mock_, AsyncWriteObject)
+TEST_F(LoggingDecoratorTest, AsyncStreamingWrite) {
+  using ErrorStream =
+      ::google::cloud::internal::AsyncStreamingWriteRpcError<Request, Response>;
+  EXPECT_CALL(*mock_, AsyncStreamingWrite)
       .WillOnce(Return(ByMove(absl::make_unique<ErrorStream>(
           Status(StatusCode::kAborted, "uh-oh")))));
 
@@ -319,7 +310,7 @@ TEST_F(LoggingDecoratorTest, AsyncWriteObject) {
 
   google::cloud::CompletionQueue cq;
   auto stream =
-      stub.AsyncWriteObject(cq, absl::make_unique<grpc::ClientContext>());
+      stub.AsyncStreamingWrite(cq, absl::make_unique<grpc::ClientContext>());
 
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
@@ -327,9 +318,9 @@ TEST_F(LoggingDecoratorTest, AsyncWriteObject) {
   EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 
   auto const log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncWriteObject")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("Start(")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("Finish(")));
+  EXPECT_THAT(log_lines, Contains(StartsWith("AsyncStreamingWrite(")));
+  EXPECT_THAT(log_lines, Contains(StartsWith("Start(")));
+  EXPECT_THAT(log_lines, Contains(StartsWith("Finish(")));
 }
 
 }  // namespace

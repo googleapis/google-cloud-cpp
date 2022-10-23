@@ -66,17 +66,6 @@ StatusOr<google::test::admin::database::v1::ListLogsResponse> GoldenKitchenSinkA
   return child_->ListLogs(context, request);
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
-GoldenKitchenSinkAuth::TailLogEntries(
-   std::unique_ptr<grpc::ClientContext> context,
-   google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
-      google::test::admin::database::v1::TailLogEntriesResponse>;
-  auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
-  return child_->TailLogEntries(std::move(context), request);
-}
-
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> GoldenKitchenSinkAuth::ListServiceAccountKeys(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
@@ -93,33 +82,44 @@ Status GoldenKitchenSinkAuth::DoNothing(
   return child_->DoNothing(context, request);
 }
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::test::admin::database::v1::AppendRowsRequest,
-    google::test::admin::database::v1::AppendRowsResponse>>
-GoldenKitchenSinkAuth::AsyncAppendRows(
-    google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
-  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-    google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>;
-
-  auto& child = child_;
-  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncAppendRows(cq, std::move(ctx));
-  };
-  return absl::make_unique<StreamAuth>(
-    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
+GoldenKitchenSinkAuth::StreamingRead(
+   std::unique_ptr<grpc::ClientContext> context,
+   google::test::admin::database::v1::Request const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::test::admin::database::v1::Response>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  return child_->StreamingRead(std::move(context), request);
 }
 
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
-    google::test::admin::database::v1::WriteObjectRequest,
-    google::test::admin::database::v1::WriteObjectResponse>>
-GoldenKitchenSinkAuth::WriteObject(
+    google::test::admin::database::v1::Request,
+    google::test::admin::database::v1::Response>>
+GoldenKitchenSinkAuth::StreamingWrite(
     std::unique_ptr<grpc::ClientContext> context) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
-      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>;
+      google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
-  return child_->WriteObject(std::move(context));
+  return child_->StreamingWrite(std::move(context));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::test::admin::database::v1::Request,
+    google::test::admin::database::v1::Response>>
+GoldenKitchenSinkAuth::AsyncStreamingReadWrite(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+    google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>;
+
+  auto& child = child_;
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncStreamingReadWrite(cq, std::move(ctx));
+  };
+  return absl::make_unique<StreamAuth>(
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 Status GoldenKitchenSinkAuth::ExplicitRouting1(
@@ -139,33 +139,33 @@ Status GoldenKitchenSinkAuth::ExplicitRouting2(
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
-    google::test::admin::database::v1::TailLogEntriesResponse>>
-GoldenKitchenSinkAuth::AsyncTailLogEntries(
+    google::test::admin::database::v1::Response>>
+GoldenKitchenSinkAuth::AsyncStreamingRead(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+    google::test::admin::database::v1::Request const& request) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
-    google::test::admin::database::v1::TailLogEntriesResponse>;
+    google::test::admin::database::v1::Response>;
 
   auto& child = child_;
   auto call = [child, cq, request](std::unique_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncTailLogEntries(cq, std::move(ctx), request);
+    return child->AsyncStreamingRead(cq, std::move(ctx), request);
   };
   return absl::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
-    google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>>
-GoldenKitchenSinkAuth::AsyncWriteObject(
+    google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
+GoldenKitchenSinkAuth::AsyncStreamingWrite(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
   using StreamAuth = google::cloud::internal::AsyncStreamingWriteRpcAuth<
-    google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>;
+    google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>;
 
   auto& child = child_;
   auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncWriteObject(cq, std::move(ctx));
+    return child->AsyncStreamingWrite(cq, std::move(ctx));
   };
   return absl::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
