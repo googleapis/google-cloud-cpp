@@ -134,9 +134,10 @@ future<Status> SubscriberRoundRobin::AsyncAcknowledge(
 }
 
 std::shared_ptr<SubscriberStub> SubscriberRoundRobin::Child() {
-  std::lock_guard<std::mutex> lk(mu_);
-  auto child = children_[current_];
+  std::unique_lock<std::mutex> lk(mu_);
+  auto const& child = children_[current_];
   current_ = (current_ + 1) % children_.size();
+  lk.unlock();
   return child;
 }
 
