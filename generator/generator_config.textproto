@@ -1106,6 +1106,7 @@ service {
   omit_client: true
   omit_connection: true
   omit_stub_factory: true
+  generate_round_robin_decorator: true
   omitted_rpcs: [
     "Pull",
     "Acknowledge",

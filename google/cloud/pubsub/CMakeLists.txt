@@ -74,8 +74,8 @@ add_library(
     internal/publisher_logging_decorator.h
     internal/publisher_metadata_decorator.cc
     internal/publisher_metadata_decorator.h
-    internal/publisher_round_robin.cc
-    internal/publisher_round_robin.h
+    internal/publisher_round_robin_decorator.cc
+    internal/publisher_round_robin_decorator.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
     internal/publisher_stub_factory.cc
@@ -104,8 +104,8 @@ add_library(
     internal/subscriber_logging_decorator.h
     internal/subscriber_metadata_decorator.cc
     internal/subscriber_metadata_decorator.h
-    internal/subscriber_round_robin.cc
-    internal/subscriber_round_robin.h
+    internal/subscriber_round_robin_decorator.cc
+    internal/subscriber_round_robin_decorator.h
     internal/subscriber_stub.cc
     internal/subscriber_stub.h
     internal/subscriber_stub_factory.cc
@@ -268,12 +268,10 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/extend_leases_with_retry_test.cc
         internal/flow_controlled_publisher_connection_test.cc
         internal/ordering_key_publisher_connection_test.cc
-        internal/publisher_round_robin_test.cc
         internal/rejects_with_ordering_key_test.cc
         internal/sequential_batch_sink_test.cc
         internal/session_shutdown_manager_test.cc
         internal/streaming_subscription_batch_source_test.cc
-        internal/subscriber_round_robin_test.cc
         internal/subscription_concurrency_control_test.cc
         internal/subscription_lease_management_test.cc
         internal/subscription_message_queue_test.cc
