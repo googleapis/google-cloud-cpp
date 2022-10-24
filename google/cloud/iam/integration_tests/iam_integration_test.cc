@@ -212,6 +212,19 @@ Options TestSuccessOptions() {
       std::make_shared<IAMIntegrationTestIdempotencyPolicy>());
 }
 
+template <typename Functor>
+google::cloud::internal::invoke_result_t<Functor> StatusRetryLoop(
+    Functor&& operation) {
+  using ReturnType = google::cloud::internal::invoke_result_t<Functor>;
+  ReturnType status;
+  for (auto delay : {10, 30, 60, 60}) {
+    status = operation();
+    if (status.ok()) break;
+    std::this_thread::sleep_for(std::chrono::seconds(delay));
+  }
+  return status;
+}
+
 TEST_F(IamIntegrationTest, ListServiceAccountsSuccess) {
   auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   auto expected_service_account = absl::StrCat(
@@ -365,9 +378,15 @@ TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
   ASSERT_STATUS_OK(get_response);
   EXPECT_GT(get_response->public_key_data().size(), 0);
 
-  auto list_response = client.ListServiceAccountKeys(
-      "projects/-/serviceAccounts/" + iam_service_account_,
-      {::google::iam::admin::v1::ListServiceAccountKeysRequest::USER_MANAGED});
+  // At this point, the key has been created and has been successfully retrieved
+  // via Get. If it doesn't appear in the List response it's likely a
+  // propagation delay, so try again.
+  auto list_response = StatusRetryLoop([&] {
+    return client.ListServiceAccountKeys(
+        "projects/-/serviceAccounts/" + iam_service_account_,
+        {::google::iam::admin::v1::ListServiceAccountKeysRequest::
+             USER_MANAGED});
+  });
   ASSERT_STATUS_OK(list_response);
   std::vector<std::string> key_names;
   for (auto const& key : list_response->keys()) {
@@ -513,19 +532,6 @@ TEST_F(IamIntegrationTest, GetServiceAccountProtoFailure) {
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetServiceAccount")));
-}
-
-template <typename Functor>
-google::cloud::internal::invoke_result_t<Functor> StatusRetryLoop(
-    Functor&& operation) {
-  using ReturnType = google::cloud::internal::invoke_result_t<Functor>;
-  ReturnType status;
-  for (auto delay : {10, 30, 60, 60}) {
-    status = operation();
-    if (status.ok()) break;
-    std::this_thread::sleep_for(std::chrono::seconds(delay));
-  }
-  return status;
 }
 
 TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
