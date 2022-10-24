@@ -211,6 +211,7 @@ cc_library(
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/types:span",
+        "@com_google_protobuf//:protobuf",
     ],
 )
 
@@ -223,6 +224,8 @@ load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_in
         ":google_cloud_cpp_rest_internal",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        "@com_google_googleapis//:googleapis_system_includes",
+        "@com_google_googleapis//google/iam/admin/v1:admin_cc_proto",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_unit_tests]
