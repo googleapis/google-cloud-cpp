@@ -94,6 +94,17 @@ Status DefaultSubscriberStub::DeleteSubscription(
   return google::cloud::Status();
 }
 
+StatusOr<google::pubsub::v1::PullResponse> DefaultSubscriberStub::Pull(
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::PullRequest const& request) {
+  google::pubsub::v1::PullResponse response;
+  auto status = grpc_stub_->Pull(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::pubsub::v1::StreamingPullRequest,
     google::pubsub::v1::StreamingPullResponse>>
