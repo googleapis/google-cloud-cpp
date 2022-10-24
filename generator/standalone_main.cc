@@ -234,6 +234,10 @@ int main(int argc, char** argv) {
     if (service.omit_stub_factory()) {
       args.emplace_back("--cpp_codegen_opt=omit_stub_factory=true");
     }
+    if (service.generate_round_robin_decorator()) {
+      args.emplace_back(
+          "--cpp_codegen_opt=generate_round_robin_decorator=true");
+    }
     args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
                       service.service_endpoint_env_var());
     args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +

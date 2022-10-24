@@ -33,6 +33,7 @@
 #include "generator/internal/options_generator.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/retry_traits_generator.h"
+#include "generator/internal/round_robin_decorator_generator.h"
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
 #include <google/api/routing.pb.h>
@@ -746,6 +747,16 @@ VarsDictionary CreateServiceVars(
   vars["metadata_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_metadata_decorator.h");
+
+  vars["round_robin_class_name"] =
+      absl::StrCat(descriptor.name(), "RoundRobin");
+  vars["round_robin_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_round_robin_decorator.cc");
+  vars["round_robin_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_round_robin_decorator.h");
+
   vars["mock_connection_class_name"] =
       absl::StrCat("Mock", descriptor.name(), "Connection");
   vars["mock_connection_header_path"] =
@@ -897,6 +908,15 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, service_vars, method_vars, context));
   code_generators.push_back(absl::make_unique<StubGenerator>(
       service, service_vars, method_vars, context));
+
+  auto const generate_round_robin_generator =
+      service_vars.find("generate_round_robin_decorator");
+  if (generate_round_robin_generator != service_vars.end() &&
+      generate_round_robin_generator->second == "true") {
+    code_generators.push_back(absl::make_unique<RoundRobinDecoratorGenerator>(
+        service, service_vars, method_vars, context));
+  }
+
   return code_generators;
 }
 
