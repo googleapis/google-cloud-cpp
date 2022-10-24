@@ -373,10 +373,10 @@ $round_robin_class_name$::AsyncCancelOperation(
 std::shared_ptr<$stub_class_name$>
 $round_robin_class_name$::Child() {
   std::unique_lock<std::mutex> lk(mu_);
-  auto const& child = children_[current_];
-  current_ = (current_ + 1) % children_.size();
+  auto const current = current_;
+  if (++current_ == children_.size()) current_ = 0;
   lk.unlock();
-  return child;
+  return children_[current];
 }
 )""");
 

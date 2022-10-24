@@ -180,10 +180,10 @@ GoldenThingAdminRoundRobin::AsyncCancelOperation(
 std::shared_ptr<GoldenThingAdminStub>
 GoldenThingAdminRoundRobin::Child() {
   std::unique_lock<std::mutex> lk(mu_);
-  auto const& child = children_[current_];
-  current_ = (current_ + 1) % children_.size();
+  auto const current = current_;
+  if (++current_ == children_.size()) current_ = 0;
   lk.unlock();
-  return child;
+  return children_[current];
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
