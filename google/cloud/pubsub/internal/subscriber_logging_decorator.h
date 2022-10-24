@@ -58,6 +58,10 @@ class SubscriberLogging : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
 
+  StatusOr<google::pubsub::v1::PullResponse> Pull(
+      grpc::ClientContext& context,
+      google::pubsub::v1::PullRequest const& request) override;
+
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>

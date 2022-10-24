@@ -61,6 +61,12 @@ Status SubscriberRoundRobin::DeleteSubscription(
   return Child()->DeleteSubscription(context, request);
 }
 
+StatusOr<google::pubsub::v1::PullResponse> SubscriberRoundRobin::Pull(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PullRequest const& request) {
+  return Child()->Pull(context, request);
+}
+
 std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
     google::pubsub::v1::StreamingPullRequest,
     google::pubsub::v1::StreamingPullResponse>>

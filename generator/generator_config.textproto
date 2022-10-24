@@ -1108,7 +1108,6 @@ service {
   omit_stub_factory: true
   generate_round_robin_decorator: true
   omitted_rpcs: [
-    "Pull",
     "Acknowledge",
     "ModifyAckDeadline"
   ],
