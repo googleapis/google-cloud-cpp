@@ -159,7 +159,6 @@ function (google_cloud_cpp_rest_internal_add_test fname labels)
     target_link_libraries(
         ${target}
         PRIVATE google-cloud-cpp::rest-internal
-                google-cloud-cpp::iam_protos
                 google_cloud_cpp_testing
                 google_cloud_cpp_testing_rest
                 google-cloud-cpp::common

@@ -40,14 +40,14 @@ include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_common.cmake")
 
 add_subdirectory(testing_util)
 
-if (GOOGLE_CLOUD_CPP_ENABLE_REST)
-    include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_rest_protobuf_internal.cmake")
-endif ()
-
 if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_grpc_utils.cmake")
 endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_REST)
     include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_rest_internal.cmake")
+endif ()
+
+if (GOOGLE_CLOUD_CPP_ENABLE_REST AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
+    include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_rest_protobuf_internal.cmake")
 endif ()
