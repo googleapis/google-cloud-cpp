@@ -211,7 +211,6 @@ cc_library(
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/types:span",
-        "@com_google_protobuf//:protobuf",
     ],
 )
 
@@ -225,7 +224,6 @@ load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_in
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@com_google_googleapis//:googleapis_system_includes",
-        "@com_google_googleapis//google/iam/admin/v1:admin_cc_proto",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_unit_tests]
@@ -271,3 +269,31 @@ load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_in
         "@com_google_benchmark//:benchmark_main",
     ],
 ) for benchmark in google_cloud_cpp_rest_internal_benchmarks]
+
+load(":google_cloud_cpp_rest_protobuf.bzl", "google_cloud_cpp_rest_protobuf_hdrs", "google_cloud_cpp_rest_protobuf_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_rest_protobuf",
+    srcs = google_cloud_cpp_rest_protobuf_srcs,
+    hdrs = google_cloud_cpp_rest_protobuf_hdrs,
+    visibility = ["//:__subpackages__"],
+    deps = [
+        ":google_cloud_cpp_common",
+        ":google_cloud_cpp_grpc_utils",
+        ":google_cloud_cpp_rest_internal",
+    ],
+)
+
+load(":google_cloud_cpp_rest_protobuf_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_unit_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_rest_protobuf",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_rest_protobuf_unit_tests]

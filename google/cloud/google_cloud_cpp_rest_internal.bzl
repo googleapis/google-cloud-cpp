@@ -48,7 +48,6 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/rest_parse_json_error.h",
     "internal/rest_request.h",
     "internal/rest_response.h",
-    "internal/rest_stub_helpers.h",
     "internal/unified_rest_credentials.h",
 ]
 

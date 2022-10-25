@@ -163,6 +163,10 @@ StatusOr<Response> Put(rest_internal::RestClient& client,
   return RestResponseToProto<Response>(std::move(**response));
 }
 
+// Temporary externally linkable symbol until such time as real object files
+// are required in the library or the library is declared header only.
+bool IsRestProtobufLibraryHeaderOnly();
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
