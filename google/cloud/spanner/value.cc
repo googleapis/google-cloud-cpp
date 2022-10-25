@@ -235,7 +235,15 @@ bool Value::TypeProtoIs(Bytes const&, google::spanner::v1::Type const& type) {
 }
 
 bool Value::TypeProtoIs(Json const&, google::spanner::v1::Type const& type) {
-  return type.code() == google::spanner::v1::TypeCode::JSON;
+  return type.code() == google::spanner::v1::TypeCode::JSON &&
+         type.type_annotation() == google::spanner::v1::TypeAnnotationCode::
+                                       TYPE_ANNOTATION_CODE_UNSPECIFIED;
+}
+
+bool Value::TypeProtoIs(JsonB const&, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::JSON &&
+         type.type_annotation() ==
+             google::spanner::v1::TypeAnnotationCode::PG_JSONB;
 }
 
 bool Value::TypeProtoIs(Numeric const&, google::spanner::v1::Type const& type) {
@@ -288,6 +296,15 @@ google::spanner::v1::Type Value::MakeTypeProto(Bytes const&) {
 google::spanner::v1::Type Value::MakeTypeProto(Json const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::JSON);
+  // Prefer to leave type_annotation unset over setting it to
+  // TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED.
+  return t;
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(JsonB const&) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::JSON);
+  t.set_type_annotation(google::spanner::v1::TypeAnnotationCode::PG_JSONB);
   return t;
 }
 
@@ -373,6 +390,12 @@ google::protobuf::Value Value::MakeValueProto(Bytes bytes) {
 }
 
 google::protobuf::Value Value::MakeValueProto(Json j) {
+  google::protobuf::Value v;
+  v.set_string_value(std::string(std::move(j)));
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(JsonB j) {
   google::protobuf::Value v;
   v.set_string_value(std::string(std::move(j)));
   return v;
@@ -507,6 +530,14 @@ StatusOr<Json> Value::GetValue(Json const&, google::protobuf::Value const& pv,
     return Status(StatusCode::kUnknown, "missing JSON");
   }
   return Json(pv.string_value());
+}
+
+StatusOr<JsonB> Value::GetValue(JsonB const&, google::protobuf::Value const& pv,
+                                google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing JSONB");
+  }
+  return JsonB(pv.string_value());
 }
 
 StatusOr<Numeric> Value::GetValue(Numeric const&,

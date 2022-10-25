@@ -525,7 +525,7 @@ void InformationSchema(
       R"""(
         CREATE TABLE Venues (
             VenueId  BIGINT NOT NULL PRIMARY KEY,
-            Name     CHARACTER VARYING(1024) NOT NULL,
+            Name     CHARACTER VARYING(1024),
             Revenue  NUMERIC,
             Picture  BYTEA
         )
@@ -690,6 +690,81 @@ void PartitionedDml(google::cloud::spanner::Client client) {
 }
 // [END spanner_postgresql_partitioned_dml]
 
+// [START spanner_postgresql_jsonb_add_column]
+void JsonbAddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
+                    google::cloud::spanner::Database const& database) {
+  std::vector<std::string> statements = {
+      R"""(
+        ALTER TABLE Venues
+            ADD COLUMN VenueDetails JSONB
+      )""",
+  };
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Added JSONB column to table Venues in database "
+            << database.FullName() << "\nNew DDL:\n"
+            << metadata->DebugString();
+}
+// [END spanner_postgresql_jsonb_add_column]
+
+// [START spanner_postgresql_jsonb_update_data]
+void JsonbUpdateData(google::cloud::spanner::Client client) {
+  auto venue19_details = google::cloud::spanner::JsonB(R"""(
+        {"rating": 9, "open": true}
+      )""");
+  // PG.JSONB takes the last value in the case of duplicate keys.
+  auto venue4_details = google::cloud::spanner::JsonB(R"""(
+        [
+          {"name": null, "available": true},
+          {"name": "room 2", "available": false, "name": "room 3"},
+          {
+            "main hall": {
+              "description": "this is the biggest space",
+              "size": 200
+            }
+          }
+        ]
+      )""");
+  auto venue42_details = google::cloud::spanner::JsonB(R"""(
+        {
+          "name": null,
+          "open": {"Monday": true, "Tuesday": false},
+          "tags": ["large", "airy"]
+        }
+      )""");
+  auto update_venues = google::cloud::spanner::InsertOrUpdateMutationBuilder(
+                           "Venues", {"VenueId", "VenueDetails"})
+                           .EmplaceRow(19, venue19_details)
+                           .EmplaceRow(4, venue4_details)
+                           .EmplaceRow(42, venue42_details)
+                           .Build();
+  auto commit_result =
+      client.Commit(google::cloud::spanner::Mutations{update_venues});
+  if (!commit_result) throw std::move(commit_result).status();
+  std::cout << "Updated data.\n";
+}
+// [END spanner_postgresql_jsonb_update_data]
+
+// [START spanner_postgresql_jsonb_query_parameter]
+void JsonbQueryWithParameter(google::cloud::spanner::Client client) {
+  auto sql = google::cloud::spanner::SqlStatement(
+      "SELECT VenueId, VenueDetails FROM Venues"
+      "  WHERE CAST(VenueDetails ->> 'rating' AS INTEGER) > $1",
+      {{"p1", google::cloud::spanner::Value(2)}});
+  using RowType =
+      std::tuple<std::int64_t, absl::optional<google::cloud::spanner::JsonB>>;
+  auto rows = client.ExecuteQuery(std::move(sql));
+  for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
+    std::cout << "VenueId: " << std::get<0>(*row) << ", ";
+    std::cout << "Details: " << std::string(std::get<1>(*row).value()) << "\n";
+  }
+}
+// [END spanner_postgresql_jsonb_query_parameter]
+
 void DropDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
                   google::cloud::spanner::Database const& database) {
   auto status = client.DropDatabase(database.FullName());
@@ -842,6 +917,9 @@ int RunOneCommand(std::vector<std::string> argv,
       {"numeric-data-type", Command(samples::NumericDataType)},
       {"information-schema", Command(samples::InformationSchema)},
       {"partitioned-dml", Command(samples::PartitionedDml)},
+      {"jsonb-add-column", Command(samples::JsonbAddColumn)},
+      {"jsonb-update-data", Command(samples::JsonbUpdateData)},
+      {"jsonb-query-with-parameter", Command(samples::JsonbQueryWithParameter)},
       {"drop-database", Command(samples::DropDatabase)},
       {"help", HelpCommand(commands)},
   };
@@ -949,6 +1027,15 @@ int RunAll() {
 
     SampleBanner("spanner_postgresql_partitioned_dml");
     samples::PartitionedDml(client);
+
+    SampleBanner("spanner_postgresql_jsonb_add_column");
+    samples::JsonbAddColumn(database_admin_client, database);
+
+    SampleBanner("spanner_postgresql_jsonb_update_data");
+    samples::JsonbUpdateData(client);
+
+    SampleBanner("spanner_postgresql_jsonb_query_parameter");
+    samples::JsonbQueryWithParameter(client);
   } catch (...) {
     // Try to clean up after a failure.
     samples::DropDatabase(database_admin_client, database);
