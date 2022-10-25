@@ -189,10 +189,9 @@ class AsyncRetryLoopImpl
 
   future<T> Start() {
     auto weak = std::weak_ptr<AsyncRetryLoopImpl>(this->shared_from_this());
-    auto const& options = CurrentOptions();
-    result_ = promise<T>([weak, options]() mutable {
+    result_ = promise<T>([weak]() mutable {
       if (auto self = weak.lock()) {
-        OptionsSpan span(std::move(options));
+        OptionsSpan span(self->options_);
         self->Cancel();
       }
     });
@@ -230,7 +229,7 @@ class AsyncRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     auto context = absl::make_unique<grpc::ClientContext>();
-    ConfigureContext(*context, CurrentOptions());
+    ConfigureContext(*context, options_);
     SetupContext<RetryPolicyType>::Setup(*retry_policy_, *context);
     SetPending(
         state.operation,
@@ -326,6 +325,7 @@ class AsyncRetryLoopImpl
   absl::decay_t<Functor> functor_;
   Request request_;
   char const* location_ = "unknown";
+  Options options_ = CurrentOptions();
   Status last_status_ = Status(StatusCode::kUnknown, "Retry policy exhausted");
   promise<T> result_;
 
