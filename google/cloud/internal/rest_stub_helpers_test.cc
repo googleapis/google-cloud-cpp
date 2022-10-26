@@ -230,6 +230,21 @@ auto constexpr kJsonUpdateRoleResponse = R"(
   }
 )";
 
+TEST(RestStubHelpers, ProtoRequestToJsonPayloadSuccess) {
+  std::string json_payload;
+  google::iam::admin::v1::UpdateRoleRequest proto_request;
+  proto_request.set_name("projects/project_name/roles/role_name");
+  google::iam::admin::v1::Role update_role;
+  update_role.set_name("update_role_name");
+  update_role.set_title("update_role_title");
+  update_role.set_description("update_role_description");
+  *proto_request.mutable_role() = update_role;
+
+  auto status = ProtoRequestToJsonPayload(proto_request, json_payload);
+  ASSERT_THAT(status, IsOk());
+  EXPECT_THAT(json_payload, Eq(kJsonUpdateRolePayload));
+}
+
 TEST(RestStubHelpers, Patch) {
   std::string json_response(kJsonUpdateRoleResponse);
   std::string json_request(kJsonUpdateRolePayload);

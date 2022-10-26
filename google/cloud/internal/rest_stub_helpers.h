@@ -33,11 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 Status RestResponseToProto(google::protobuf::Message& destination,
                            RestResponse&& rest_response);
 
+Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
+                                 std::string& json_payload);
+
 template <typename Response>
 StatusOr<Response> RestResponseToProto(RestResponse&& rest_response) {
-  if (rest_response.StatusCode() != HttpStatusCode::kOk) {
-    return AsStatus(std::move(rest_response));
-  }
   Response destination;
   auto status = RestResponseToProto(destination, std::move(rest_response));
   if (!status.ok()) return status;
@@ -86,11 +86,8 @@ StatusOr<Response> Patch(rest_internal::RestClient& client,
                          rest_internal::RestContext& rest_context,
                          Request const& request, std::string path) {
   std::string json_payload;
-  protobuf::util::Status proto_to_json_status =
-      protobuf::util::MessageToJsonString(request, &json_payload);
-  if (!proto_to_json_status.ok())
-    return Status{
-        StatusCode::kInternal, std::string{proto_to_json_status.message()}, {}};
+  auto status = ProtoRequestToJsonPayload(request, json_payload);
+  if (!status.ok()) return status;
   rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   rest_request.AddHeader("content-type", "application/json");
@@ -106,11 +103,8 @@ StatusOr<Response> Post(
     Request const& request, std::string path,
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
   std::string json_payload;
-  protobuf::util::Status proto_to_json_status =
-      protobuf::util::MessageToJsonString(request, &json_payload);
-  if (!proto_to_json_status.ok())
-    return Status{
-        StatusCode::kInternal, std::string{proto_to_json_status.message()}, {}};
+  auto status = ProtoRequestToJsonPayload(request, json_payload);
+  if (!status.ok()) return status;
   rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   for (auto& p : query_params) {
@@ -129,11 +123,8 @@ Status Post(
     Request const& request, std::string path,
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
   std::string json_payload;
-  protobuf::util::Status proto_to_json_status =
-      protobuf::util::MessageToJsonString(request, &json_payload);
-  if (!proto_to_json_status.ok())
-    return Status{
-        StatusCode::kInternal, std::string{proto_to_json_status.message()}, {}};
+  auto status = ProtoRequestToJsonPayload(request, json_payload);
+  if (!status.ok()) return status;
   rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   for (auto& p : query_params) {
@@ -151,11 +142,8 @@ StatusOr<Response> Put(rest_internal::RestClient& client,
                        rest_internal::RestContext& rest_context,
                        Request const& request, std::string path) {
   std::string json_payload;
-  protobuf::util::Status proto_to_json_status =
-      protobuf::util::MessageToJsonString(request, &json_payload);
-  if (!proto_to_json_status.ok())
-    return Status{
-        StatusCode::kInternal, std::string{proto_to_json_status.message()}, {}};
+  auto status = ProtoRequestToJsonPayload(request, json_payload);
+  if (!status.ok()) return status;
   rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   rest_request.AddHeader("content-type", "application/json");

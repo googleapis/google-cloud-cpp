@@ -21,14 +21,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Status RestResponseToProto(google::protobuf::Message& destination,
                            RestResponse&& rest_response) {
+  if (rest_response.StatusCode() != HttpStatusCode::kOk) {
+    return AsStatus(std::move(rest_response));
+  }
   auto json_response =
       rest_internal::ReadAll(std::move(rest_response).ExtractPayload());
   if (!json_response.ok()) return json_response.status();
   auto json_to_proto_status =
       google::protobuf::util::JsonStringToMessage(*json_response, &destination);
-  if (!json_to_proto_status.ok())
+  if (!json_to_proto_status.ok()) {
     return Status{
         StatusCode::kInternal, std::string{json_to_proto_status.message()}, {}};
+  }
+  return {};
+}
+
+Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
+                                 std::string& json_payload) {
+  protobuf::util::Status proto_to_json_status =
+      protobuf::util::MessageToJsonString(request, &json_payload);
+  if (!proto_to_json_status.ok()) {
+    return Status{
+        StatusCode::kInternal, std::string{proto_to_json_status.message()}, {}};
+  }
   return {};
 }
 
