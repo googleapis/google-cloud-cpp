@@ -223,7 +223,6 @@ load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_in
         ":google_cloud_cpp_rest_internal",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googleapis//:googleapis_system_includes",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_unit_tests]
@@ -270,12 +269,12 @@ load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_in
     ],
 ) for benchmark in google_cloud_cpp_rest_internal_benchmarks]
 
-load(":google_cloud_cpp_rest_protobuf.bzl", "google_cloud_cpp_rest_protobuf_hdrs", "google_cloud_cpp_rest_protobuf_srcs")
+load(":google_cloud_cpp_rest_protobuf_internal.bzl", "google_cloud_cpp_rest_protobuf_internal_hdrs", "google_cloud_cpp_rest_protobuf_internal_srcs")
 
 cc_library(
-    name = "google_cloud_cpp_rest_protobuf",
-    srcs = google_cloud_cpp_rest_protobuf_srcs,
-    hdrs = google_cloud_cpp_rest_protobuf_hdrs,
+    name = "google_cloud_cpp_rest_protobuf_internal",
+    srcs = google_cloud_cpp_rest_protobuf_internal_srcs,
+    hdrs = google_cloud_cpp_rest_protobuf_internal_hdrs,
     visibility = ["//:__subpackages__"],
     deps = [
         ":google_cloud_cpp_common",
@@ -284,16 +283,16 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_rest_protobuf_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_unit_tests")
+load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_internal_unit_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        ":google_cloud_cpp_rest_protobuf",
+        ":google_cloud_cpp_rest_protobuf_internal",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc",
         "@com_google_googletest//:gtest_main",
     ],
-) for test in google_cloud_cpp_rest_protobuf_unit_tests]
+) for test in google_cloud_cpp_rest_protobuf_internal_unit_tests]

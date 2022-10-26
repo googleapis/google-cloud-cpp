@@ -400,12 +400,10 @@ TEST(RestStubHelpers, PostWithEmptyResponse) {
   RestContext context;
   std::vector<std::pair<std::string, std::string>> params = {
       {"name", proto_request.name()}, {"foo", "bar"}};
-  auto result = Post<google::iam::admin::v1::Role>(
-      *mock_client, context, proto_request, "/v1/", params);
+  auto result = Post(*mock_client, context, proto_request, "/v1/", params);
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 
-  result = Post<google::iam::admin::v1::Role>(*mock_client, context,
-                                              proto_request, "/v1/", params);
+  result = Post(*mock_client, context, proto_request, "/v1/", params);
   EXPECT_THAT(result, IsOk());
 }
 

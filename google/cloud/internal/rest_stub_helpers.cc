@@ -19,7 +19,18 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-bool IsRestProtobufLibraryHeaderOnly() { return true; }
+Status RestResponseToProto(google::protobuf::Message& destination,
+                           RestResponse&& rest_response) {
+  auto json_response =
+      rest_internal::ReadAll(std::move(rest_response).ExtractPayload());
+  if (!json_response.ok()) return json_response.status();
+  auto json_to_proto_status =
+      google::protobuf::util::JsonStringToMessage(*json_response, &destination);
+  if (!json_to_proto_status.ok())
+    return Status{
+        StatusCode::kInternal, std::string{json_to_proto_status.message()}, {}};
+  return {};
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

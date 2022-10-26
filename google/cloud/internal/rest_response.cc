@@ -145,7 +145,6 @@ Status AsStatus(HttpStatusCode http_status_code, std::string payload) {
     return Status(status_code, "Received HTTP status code: " +
                                    std::to_string(http_status_code));
   }
-
   auto p =
       ParseJsonError(static_cast<int>(http_status_code), std::move(payload));
   return Status(status_code, std::move(p.first), std::move(p.second));

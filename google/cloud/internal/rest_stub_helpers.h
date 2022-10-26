@@ -30,18 +30,18 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+Status RestResponseToProto(google::protobuf::Message& destination,
+                           RestResponse&& rest_response);
+
 template <typename Response>
 StatusOr<Response> RestResponseToProto(RestResponse&& rest_response) {
   if (rest_response.StatusCode() != HttpStatusCode::kOk) {
     return AsStatus(std::move(rest_response));
   }
-  auto json_response =
-      rest_internal::ReadAll(std::move(rest_response).ExtractPayload());
-  if (!json_response.ok()) return json_response.status();
-  Response proto_response;
-  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
-      *json_response, &proto_response);
-  return proto_response;
+  Response destination;
+  auto status = RestResponseToProto(destination, std::move(rest_response));
+  if (!status.ok()) return status;
+  return destination;
 }
 
 template <typename Request>
@@ -142,6 +142,7 @@ Status Post(
   rest_request.AddHeader("content-type", "application/json");
   auto response =
       client.Post(rest_request, {absl::MakeConstSpan(json_payload)});
+  if (!response.ok()) return response.status();
   return AsStatus(std::move(**response));
 }
 
@@ -162,10 +163,6 @@ StatusOr<Response> Put(rest_internal::RestClient& client,
   if (!response.ok()) return response.status();
   return RestResponseToProto<Response>(std::move(**response));
 }
-
-// Temporary externally linkable symbol until such time as real object files
-// are required in the library or the library is declared header only.
-bool IsRestProtobufLibraryHeaderOnly();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
