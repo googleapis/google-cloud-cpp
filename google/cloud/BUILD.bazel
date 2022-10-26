@@ -268,3 +268,31 @@ load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_in
         "@com_google_benchmark//:benchmark_main",
     ],
 ) for benchmark in google_cloud_cpp_rest_internal_benchmarks]
+
+load(":google_cloud_cpp_rest_protobuf_internal.bzl", "google_cloud_cpp_rest_protobuf_internal_hdrs", "google_cloud_cpp_rest_protobuf_internal_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_rest_protobuf_internal",
+    srcs = google_cloud_cpp_rest_protobuf_internal_srcs,
+    hdrs = google_cloud_cpp_rest_protobuf_internal_hdrs,
+    visibility = ["//:__subpackages__"],
+    deps = [
+        ":google_cloud_cpp_common",
+        ":google_cloud_cpp_grpc_utils",
+        ":google_cloud_cpp_rest_internal",
+    ],
+)
+
+load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_internal_unit_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_rest_protobuf_internal",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_rest_protobuf_internal_unit_tests]
