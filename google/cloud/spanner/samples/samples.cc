@@ -2398,7 +2398,7 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
           spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
         spanner::SqlStatement update_statement(
             "UPDATE Venues SET Capacity = CAST(Capacity/4 AS INT64)"
-            " WHERE OutdoorVenue = false");
+            "  WHERE OutdoorVenue = false");
         // Sets the request tag to "app=concert,env=dev,action=update".
         // This will only be set on this request.
         auto update = client.ExecuteDml(
@@ -2767,7 +2767,7 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
             std::move(txn),
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
-                " WHERE SingerId = 1 AND AlbumId = 1"));
+                "  WHERE SingerId = 1 AND AlbumId = 1"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
@@ -2787,7 +2787,7 @@ void CommitWithPolicies(google::cloud::spanner::Client client) {
             std::move(txn),
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
-                " WHERE SingerId = 1 AND AlbumId = 1"));
+                "  WHERE SingerId = 1 AND AlbumId = 1"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       },
@@ -2816,7 +2816,7 @@ void ProfileDmlStandardUpdate(google::cloud::spanner::Client client) {
             std::move(txn),
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
-                " WHERE SingerId = 1 AND AlbumId = 1"));
+                "  WHERE SingerId = 1 AND AlbumId = 1"));
         if (!update) return std::move(update).status();
         dml_result = *std::move(update);
         return spanner::Mutations{};
@@ -2843,8 +2843,8 @@ void DmlStandardUpdateWithTimestamp(google::cloud::spanner::Client client) {
         auto update = client.ExecuteDml(
             std::move(txn),
             spanner::SqlStatement(
-                "UPDATE Albums SET LastUpdateTime = PENDING_COMMIT_TIMESTAMP() "
-                "WHERE SingerId = 1"));
+                "UPDATE Albums SET LastUpdateTime = PENDING_COMMIT_TIMESTAMP()"
+                "  WHERE SingerId = 1"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
@@ -2915,7 +2915,7 @@ void DmlPartitionedUpdate(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto result = client.ExecutePartitionedDml(
       spanner::SqlStatement("UPDATE Albums SET MarketingBudget = 100000"
-                            " WHERE SingerId > 1"));
+                            "  WHERE SingerId > 1"));
   if (!result) throw std::move(result).status();
   std::cout << "Update was successful [spanner_dml_partitioned_update]\n";
 }
@@ -2935,7 +2935,7 @@ void DmlBatchUpdate(google::cloud::spanner::Client client) {
                                   " VALUES (1, 3, 'Test Album Title', 10000)"),
             spanner::SqlStatement("UPDATE Albums"
                                   " SET MarketingBudget = MarketingBudget * 2"
-                                  " WHERE SingerId = 1 and AlbumId = 3")};
+                                  "  WHERE SingerId = 1 and AlbumId = 3")};
         auto result = client.ExecuteBatchDml(txn, statements);
         if (!result) return std::move(result).status();
         for (std::size_t i = 0; i < result->stats.size(); ++i) {
@@ -3055,8 +3055,8 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
   auto update_budget = [&](spanner::Transaction txn, std::int64_t album_id,
                            std::int64_t singer_id, std::int64_t budget) {
     auto sql = spanner::SqlStatement(
-        "UPDATE Albums SET MarketingBudget = @AlbumBudget "
-        "WHERE SingerId = @SingerId AND AlbumId = @AlbumId",
+        "UPDATE Albums SET MarketingBudget = @AlbumBudget"
+        "  WHERE SingerId = @SingerId AND AlbumId = @AlbumId",
         {{"AlbumBudget", spanner::Value(budget)},
          {"AlbumId", spanner::Value(album_id)},
          {"SingerId", spanner::Value(singer_id)}});
@@ -3494,8 +3494,9 @@ void StreamOf(google::cloud::spanner::Client client) {
 
   for (auto& row : spanner::StreamOf<RowType>(query)) {
     if (!row) throw std::move(row).status();
-    std::cout << "  FirstName: " << std::get<0>(*row)
-              << "\n  LastName: " << std::get<1>(*row) << "\n";
+    std::cout << "  SingerId: " << std::get<0>(*row) << "\n"
+              << "  FirstName: " << std::get<1>(*row) << "\n"
+              << "  LastName: " << std::get<2>(*row) << "\n";
   }
   std::cout << "end of results\n";
 }
