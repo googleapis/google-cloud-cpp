@@ -26,7 +26,7 @@ set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::resourcesettings_protos)
 
 find_package(gRPC REQUIRED)
-find_package(ProtobufWithTargets REQUIRED)
+find_package(Protobuf REQUIRED)
 find_package(absl CONFIG REQUIRED)
 
 include(GoogleCloudCppCommon)
