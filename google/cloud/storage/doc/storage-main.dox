@@ -148,6 +148,27 @@ using gcs = ::google::cloud::storage;
 }
 @endcode
 
+## Overriding the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. The `google::cloud::storage::RestEndpointOption` can be used in this
+case:
+
+@snippet storage_client_initialization_samples.cc set-client-endpoint
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]).  You can override the credentials using
+`google::cloud::UnifiedCredentialsOption`.  The following example shows how
+to explicitly load a service account key file.  This is not a recommended
+practice, as the key needs to be stored in plain text in the file system.
+Nevertheless, it illustrates how to change the authentication configuration:
+
+@snippet storage_client_initialization_samples.cc service-account-keyfile
+
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
