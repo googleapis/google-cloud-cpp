@@ -275,7 +275,7 @@ add_custom_target(doxygen-docs)
 find_package(absl CONFIG REQUIRED)
 if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
     find_package(gRPC REQUIRED QUIET)
-    find_package(ProtobufWithTargets REQUIRED QUIET)
+    find_package(Protobuf REQUIRED QUIET)
     add_subdirectory(external/googleapis)
 endif ()
 

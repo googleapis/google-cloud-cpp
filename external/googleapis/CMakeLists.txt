@@ -578,7 +578,6 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_googleapis-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_googleapis-config-version.cmake"
         "${PROJECT_SOURCE_DIR}/cmake/FindgRPC.cmake"
-        "${PROJECT_SOURCE_DIR}/cmake/FindProtobufWithTargets.cmake"
         "${PROJECT_SOURCE_DIR}/cmake/CompileProtos.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_googleapis"
     COMPONENT google_cloud_cpp_development)
