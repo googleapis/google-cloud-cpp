@@ -274,11 +274,10 @@ void CaseSensitivity(
   commit = client.Commit(
       [&client](google::cloud::spanner::Transaction txn)
           -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
-        auto sql = google::cloud::spanner::SqlStatement(
-            R"""(
-                INSERT INTO Singers (SingerId, "FirstName", "LastName")
-                    VALUES (3, 'Alice', 'Trentor')
-            )""");
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            INSERT INTO Singers (SingerId, "FirstName", "LastName")
+                VALUES (3, 'Alice', 'Trentor')
+        )""");
         auto insert = client.ExecuteDml(std::move(txn), std::move(sql));
         if (!insert) return std::move(insert).status();
         return google::cloud::spanner::Mutations{};
@@ -382,11 +381,10 @@ void OrderNulls(google::cloud::spanner::Client client) {
   auto commit = client.Commit(
       [&client](google::cloud::spanner::Transaction txn)
           -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
-        auto sql = google::cloud::spanner::SqlStatement(
-            R"""(
-                INSERT INTO Singers (SingerId, "FirstName", "LastName")
-                    VALUES (4, 'Cher', NULL)
-            )""");
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            INSERT INTO Singers (SingerId, "FirstName", "LastName")
+                VALUES (4, 'Cher', NULL)
+        )""");
         auto insert = client.ExecuteDml(std::move(txn), std::move(sql));
         if (!insert) return std::move(insert).status();
         return google::cloud::spanner::Mutations{};
