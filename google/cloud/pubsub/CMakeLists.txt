@@ -426,14 +426,13 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub"
     COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_add_pkgconfig(
-    pubsub_mocks "Mocks for the Google Cloud Pub/Sub C++ Client Library"
-    "Provides mock classes for the Google Cloud Pub/Sub C++ APIs."
-    "google_cloud_cpp_pubsub" " gtest")
+google_cloud_cpp_add_pkgconfig_interface(
+    pubsub_mocks "Google Cloud C++ Pub/Sub Mocks"
+    "Mocks for the Google Cloud Pub/Sub C++ Client Library"
+    "google_cloud_cpp_pubsub" " gmock_main")
 
 # Create and install the CMake configuration files.
-include(CMakePackageConfigHelpers)
-configure_file("config-mocks.cmake.in"
+configure_file("mocks-config.cmake.in"
                "google_cloud_cpp_pubsub_mocks-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_pubsub_mocks-config-version.cmake"
