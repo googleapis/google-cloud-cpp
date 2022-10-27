@@ -148,7 +148,7 @@ using gcs = ::google::cloud::storage;
 }
 @endcode
 
-## Overriding the default endpoint
+## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client
 library. The `google::cloud::storage::RestEndpointOption` can be used in this
