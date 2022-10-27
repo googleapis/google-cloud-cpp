@@ -30,66 +30,24 @@ class CredentialsVisitor;
 }  // namespace internal
 
 /**
- * The public interface for Google's Unified Auth Client (GUAC) library.
+ * An opaque representation of the authentication configuration.
  *
- * The Unified Auth Client library allows C++ applications to configure
- * authentication for both REST-based and gRPC-based client libraries. The
- * library public interface is (intentionally) very narrow. Applications
- * describe the type of authentication they want, the libraries used this
- * description to initialize the internal components used in the authentication
- * flows.
- *
- * A complete overview of authentication and authorization for Google Cloud is
- * outside the scope of this reference guide. We recommend the [IAM overview]
- * instead. The following brief introduction may help as you read the reference
- * documentation for components related to authentication:
- *
- * - The `Credentials` class and the factory functions that create
- *   `std::shared_ptr<Credentials>` objects are related to *authentication*.
- *   That is they allow you to define what *principal* is making RPCs to GCP.
- * - The problem of *authorization*, that is, what principals can perform what
- *   operations, is resolved by the [IAM Service] in GCP. If you need to use
- *   this service, the [C++ IAM client library] may be useful. Some services
- *   embed IAM operations in their APIs, in that case, the C++ client library
- *   for the service may be easier to use.
- * - There are two types of "principals" in GCP.
- *   - **Service Accounts**: is an account for an application or compute
- *     workload instead of an individual end user.
- *   - **Google Accounts**: represents a developer, an administrator, or any
- *     other person who interacts with Google Cloud.
- * - Most applications should use `GoogleDefaultCredentials()`. This allows your
- *   administrator to configure the service account used in your workload by
- *   setting the default service account in the GCP environment where your
- *   application is deployed (e.g. GCE, GKE, or Cloud Run).
- * - During development, `GoogleDefaultCredentials()` uses the
- *   `GOOGLE_APPLICATION_CREDENTIALS` environment variable to load an
- *   alternative service account key. The value of this environment variable is
- *   the full path of a file which contains the service account key.
- * - During development, if `GOOGLE_APPLICATION_CREDENTIALS` is not set then
- *   `GoogleDefaultCredentials()` will use the account configured via
- *   `gcloud auth application-default login`. This can be either a service
- *   account or a Google Account, such as the developer's account.
- * - Neither `google auth application-default` nor
- *   `GOOGLE_APPLICATION_CREDENTIALS` are recommended for production workloads.
- *
- * @par Limitations
- * The C++ GUAC library does not allow applications to create their own
- * credential types. It is not possible to extend the GUAC library without
- * changing internal components. If you need additional functionality please
- * file a [feature request] on GitHub. Likewise, creating the components that
- * implement (as opposed to *describing*) authentication flows are also
- * considered implementation details. If you would like to use them in your
- * own libraries please file a [feature request].
+ * Applications use factory functions to provide the authentication parameters
+ * (for example, a raw access token). The factory function encapsulates the
+ * parameters in an instance of this class. The interface in this class is
+ * (intentionally) very narrow. Only the internal components in the client
+ * libraries should need to access the details of this class.
  *
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
  *
  * @see https://cloud.google.com/iam for more information on the IAM Service.
  *
- * [feature request]: https://github.com/googleapis/google-cloud-cpp/issues
  * [IAM overview]: https://cloud.google.com/iam/docs/overview
  * [IAM Service]: https://cloud.google.com/iam/docs
  * [C++ IAM client library]: https://googleapis.dev/cpp/google-cloud-iam/latest/
+ *
+ * @ingroup guac
  */
 class Credentials {
  public:
@@ -98,6 +56,14 @@ class Credentials {
  private:
   friend class internal::CredentialsVisitor;
   virtual void dispatch(internal::CredentialsVisitor& visitor) = 0;
+};
+
+/**
+ * A wrapper to store credentials into an options
+ * @ingroup guac
+ */
+struct UnifiedCredentialsOption {
+  using Type = std::shared_ptr<Credentials>;
 };
 
 /**
@@ -112,6 +78,8 @@ class Credentials {
  * default credentials unnecessarily slows down the unit tests, and in some
  * CI environments the credentials may fail to load, creating confusing warnings
  * and sometimes even errors.
+ *
+ * @ingroup guac
  */
 std::shared_ptr<Credentials> MakeInsecureCredentials();
 
@@ -142,6 +110,8 @@ std::shared_ptr<Credentials> MakeInsecureCredentials();
  * [aip/4110]: https://google.aip.dev/auth/4110
  * [gcloud auth application-default]:
  * https://cloud.google.com/sdk/gcloud/reference/auth/application-default
+ *
+ * @ingroup guac
  */
 std::shared_ptr<Credentials> MakeGoogleDefaultCredentials();
 
@@ -154,6 +124,8 @@ std::shared_ptr<Credentials> MakeGoogleDefaultCredentials();
  *
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
+ *
+ * @ingroup guac
  */
 std::shared_ptr<Credentials> MakeAccessTokenCredentials(
     std::string const& access_token,
@@ -191,6 +163,8 @@ std::shared_ptr<Credentials> MakeAccessTokenCredentials(
  *     information on managing service account impersonation.
  * @see https://developers.google.com/identity/protocols/oauth2/scopes for
  *     authentication scopes in Google Cloud Platform.
+ *
+ * @ingroup guac
  */
 std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
     std::shared_ptr<Credentials> base_credentials,
@@ -228,28 +202,34 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
  * [service account]: https://cloud.google.com/iam/docs/overview#service_account
  * [service account key]:
  * https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-cpp
+ *
+ * @ingroup guac
  */
 std::shared_ptr<Credentials> MakeServiceAccountCredentials(
     std::string json_object);
 
-/// Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
+/**
+ * Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
+ * @ingroup guac
+ */
 struct DelegatesOption {
   using Type = std::vector<std::string>;
 };
 
-/// Configure the scopes for `MakeImpersonateServiceAccountCredentials()`
+/**
+ * Configure the scopes for `MakeImpersonateServiceAccountCredentials()`
+ * @ingroup guac
+ */
 struct ScopesOption {
   using Type = std::vector<std::string>;
 };
 
-/// Configure the access token lifetime
+/**
+ * Configure the access token lifetime
+ * @ingroup guac
+ */
 struct AccessTokenLifetimeOption {
   using Type = std::chrono::seconds;
-};
-
-/// A wrapper to store credentials into an options
-struct UnifiedCredentialsOption {
-  using Type = std::shared_ptr<Credentials>;
 };
 
 /**
@@ -290,12 +270,14 @@ struct UnifiedCredentialsOption {
  * [PEM format]: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
  * [grpc::SslCredentialsOptions]:
  * https://grpc.github.io/grpc/cpp/structgrpc_1_1_ssl_credentials_options.html
+ *
+ * @ingroup guac
  */
 struct CARootsFilePathOption {
   using Type = std::string;
 };
 
-/// A list of GUAC options.
+/// A list of  options related to authentication.
 using UnifiedCredentialsOptionList =
     OptionList<AccessTokenLifetimeOption, CARootsFilePathOption,
                DelegatesOption, ScopesOption, UnifiedCredentialsOption>;
