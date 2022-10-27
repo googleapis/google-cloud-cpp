@@ -148,3 +148,19 @@ foreach (fname ${google_cloud_cpp_generator_golden_tests})
     endif ()
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
+
+file(
+    GLOB
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "golden/samples/*.cc")
+foreach (fname IN LISTS samples_cc)
+    google_cloud_cpp_add_executable(target "generator" "${fname}")
+    target_link_libraries(
+        ${target}
+        PRIVATE google_cloud_cpp_generator_golden_testing
+                google_cloud_cpp_generator_golden google_cloud_cpp_testing
+                google_cloud_cpp_testing_grpc)
+    google_cloud_cpp_add_common_options(${target})
+    add_test(NAME ${target} COMMAND ${target})
+    set_tests_properties("${target}" PROPERTIES LABELS "integration-test")
+endforeach ()

@@ -123,6 +123,8 @@ void GenerateScaffold(
       {"quickstart/WORKSPACE.bazel", GenerateQuickstartWorkspace},
       {"quickstart/BUILD.bazel", GenerateQuickstartBuild},
       {"quickstart/.bazelrc", GenerateQuickstartBazelrc},
+      {"samples/BUILD.bazel", GenerateSamplesBuild},
+      {"samples/CMakeLists.txt", GenerateSamplesCMake},
   };
 
   auto const vars = ScaffoldVars(googleapis_path, service, experimental);
@@ -131,6 +133,7 @@ void GenerateScaffold(
   MakeDirectory(destination);
   MakeDirectory(destination + "doc/");
   MakeDirectory(destination + "quickstart/");
+  MakeDirectory(destination + "samples/");
   for (auto const& f : files) {
     std::ofstream os(destination + f.name);
     f.generator(os, vars);
@@ -1040,6 +1043,66 @@ build:macos --cxxopt=-std=c++14
 # runs inside a docker image or if one builds a quickstart and then builds
 # the project separately.
 build --experimental_convenience_symlinks=ignore
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateSamplesBuild(std::ostream& os,
+                          std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+licenses(["notice"])  # Apache 2.0
+
+[cc_test(
+    name = sample.replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+      "//:$library_prefix$$library$",
+      "//google/cloud/testing_util:google_cloud_cpp_testing_private"
+    ],
+) for sample in glob(["*.cc"])]
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateSamplesCMake(std::ostream& os,
+                          std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+if ((NOT BUILD_TESTING) OR (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS))
+  return()
+endif ()
+
+google_cloud_cpp_add_samples($library$)
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');

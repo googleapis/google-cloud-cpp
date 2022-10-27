@@ -90,6 +90,7 @@ cc_library(
     copts = [
         "-I$(BINDIR)",
     ],
+    visibility = [":__subpackages__"],
     deps = [
         ":google_cloud_cpp_generator_testing_cc_grpc",
         ":google_cloud_cpp_generator_testing_cc_proto",
@@ -126,3 +127,16 @@ filegroup(
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_generator_golden_tests]
+
+[cc_test(
+    name = sample.replace(".cc", "").replace("_", "/"),
+    srcs = [sample],
+    copts = [
+        "-I$(BINDIR)",
+    ],
+    tags = ["integration-test"],
+    deps = [
+        ":google_cloud_cpp_generator_golden",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob(["golden/samples/*.cc"])]

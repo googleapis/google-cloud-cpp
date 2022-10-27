@@ -300,6 +300,27 @@ TEST_F(ScaffoldGenerator, QuickstartBazelrc) {
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
 }
 
+TEST_F(ScaffoldGenerator, SamplesBuild) {
+  auto const vars = ScaffoldVars(path(), service(), false);
+  std::ostringstream os;
+  GenerateSamplesBuild(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
+}
+
+TEST_F(ScaffoldGenerator, SamplesCMake) {
+  auto const vars = ScaffoldVars(path(), service(), false);
+  std::ostringstream os;
+  GenerateSamplesCMake(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, HasSubstr("google_cloud_cpp_add_samples(test)"));
+  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
