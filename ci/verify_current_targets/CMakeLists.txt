@@ -30,6 +30,7 @@ set(ga_libraries
     iam
     logging
     pubsub
+    pubsub_mocks
     spanner
     storage)
 

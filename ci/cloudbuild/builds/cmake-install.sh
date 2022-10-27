@@ -110,6 +110,7 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grafeas
   ./lib64/cmake/google_cloud_cpp_grpc_utils
+  ./lib64/cmake/google_cloud_cpp_pubsub_mocks
   ./lib64/cmake/google_cloud_cpp_rest_internal
   ./lib64/cmake/google_cloud_cpp_rest_protobuf_internal
   ./lib64/cmake/google_cloud_cpp_spanner
