@@ -193,6 +193,7 @@ load(":google_cloud_cpp_mocks.bzl", "google_cloud_cpp_mocks_hdrs")
 
 cc_library(
     name = "google_cloud_cpp_mocks",
+    testonly = True,
     srcs = [],
     hdrs = google_cloud_cpp_mocks_hdrs,
     visibility = [

@@ -235,9 +235,15 @@ target_compile_options(google_cloud_cpp_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(google-cloud-cpp::mocks ALIAS google_cloud_cpp_mocks)
 
+# Export the CMake targets to make it easy to create configuration files.
+install(
+    EXPORT google_cloud_cpp_mocks-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_mocks"
+    COMPONENT google_cloud_cpp_development)
+
 install(
     TARGETS google_cloud_cpp_mocks
-    EXPORT google_cloud_cpp_common-targets
+    EXPORT google_cloud_cpp_mocks-targets
     COMPONENT google_cloud_cpp_development)
 install(
     FILES ${google_cloud_cpp_mocks_hdrs}
