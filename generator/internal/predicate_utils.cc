@@ -130,8 +130,8 @@ bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
 }
 
 bool HasRoutingHeader(MethodDescriptor const& method) {
-  auto result = ParseResourceRoutingHeader(method);
-  return result.has_value();
+  auto result = ParseHttpExtension(method);
+  return absl::holds_alternative<HttpExtensionInfo>(result);
 }
 
 }  // namespace generator_internal
