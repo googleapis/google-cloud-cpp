@@ -34,19 +34,13 @@ filegroup(
 
 filegroup(
     name = "mocks",
-    srcs = glob([
-        "mocks/*.h",
-    ]),
+    srcs = glob(["mocks/*.h"]),
 )
 
 cc_library(
     name = "google_cloud_cpp_asset",
-    srcs = [
-        ":srcs",
-    ],
-    hdrs = [
-        ":hdrs",
-    ],
+    srcs = [":srcs"],
+    hdrs = [":hdrs"],
     # TODO(#8145): Enable on windows.
     target_compatible_with = select({
         "@platforms//os:windows": ["@platforms//:incompatible"],
@@ -62,9 +56,7 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_asset_mocks",
-    hdrs = [
-        ":mocks",
-    ],
+    hdrs = [":mocks"],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_asset",
