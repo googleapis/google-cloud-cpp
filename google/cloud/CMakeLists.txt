@@ -49,5 +49,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
 endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_REST AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
-    include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_rest_protobuf_internal.cmake")
+    include(
+        "${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_rest_protobuf_internal.cmake"
+    )
 endif ()
