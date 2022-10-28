@@ -214,6 +214,63 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common"
     COMPONENT google_cloud_cpp_development)
 
+# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
+# for these, a regular library would not work on macOS (where the library needs
+# at least one .o file).
+add_library(google_cloud_cpp_mocks INTERFACE)
+set(google_cloud_cpp_mocks_hdrs # cmake-format: sort
+                                mocks/mock_stream_range.h)
+export_list_to_bazel("google_cloud_cpp_mocks.bzl" "google_cloud_cpp_mocks_hdrs"
+                     YEAR "2022")
+target_link_libraries(
+    google_cloud_cpp_mocks INTERFACE google-cloud-cpp::common GTest::gmock_main
+                                     GTest::gmock GTest::gtest)
+set_target_properties(google_cloud_cpp_mocks PROPERTIES EXPORT_NAME
+                                                        google-cloud-cpp::mocks)
+target_include_directories(
+    google_cloud_cpp_mocks
+    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+              $<INSTALL_INTERFACE:include>)
+target_compile_options(google_cloud_cpp_mocks
+                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+add_library(google-cloud-cpp::mocks ALIAS google_cloud_cpp_mocks)
+
+# Export the CMake targets to make it easy to create configuration files.
+install(
+    EXPORT google_cloud_cpp_mocks-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_mocks"
+    COMPONENT google_cloud_cpp_development)
+
+install(
+    TARGETS google_cloud_cpp_mocks
+    EXPORT google_cloud_cpp_mocks-targets
+    COMPONENT google_cloud_cpp_development)
+install(
+    FILES ${google_cloud_cpp_mocks_hdrs}
+    DESTINATION "include/google/cloud/mocks"
+    COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_add_pkgconfig_interface(
+    "mocks" "Google Cloud C++ Testing Library"
+    "Helpers for testing the Google Cloud C++ Client Libraries"
+    "google_cloud_cpp_common" " gmock_main")
+
+# Create and install the CMake configuration files.
+configure_file("mocks-config.cmake.in" "google_cloud_cpp_mocks-config.cmake"
+               @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_mocks-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY ExactVersion)
+
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_mocks-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_mocks-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_mocks"
+    COMPONENT google_cloud_cpp_development)
+
 if (BUILD_TESTING)
     find_package(benchmark CONFIG REQUIRED)
 
@@ -255,6 +312,7 @@ if (BUILD_TESTING)
         internal/utility_test.cc
         kms_key_name_test.cc
         log_test.cc
+        mocks/mock_stream_range_test.cc
         options_test.cc
         polling_policy_test.cc
         project_test.cc
@@ -272,8 +330,13 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing google-cloud-cpp::common
-                    absl::variant GTest::gmock_main GTest::gmock GTest::gtest)
+            PRIVATE google_cloud_cpp_testing
+                    google-cloud-cpp::common
+                    google-cloud-cpp::mocks
+                    absl::variant
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")

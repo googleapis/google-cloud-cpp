@@ -285,3 +285,11 @@ cc_library(
         "//google/cloud:google_cloud_cpp_grpc_utils_private",
     ],
 )
+
+cc_library(
+    name = "mocks",
+    testonly = True,
+    deps = [
+        "//google/cloud:google_cloud_cpp_mocks",
+    ],
+)

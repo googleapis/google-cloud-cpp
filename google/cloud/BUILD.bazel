@@ -74,6 +74,7 @@ load(
     }),
     deps = [
         ":google_cloud_cpp_common",
+        ":google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
@@ -187,6 +188,22 @@ load(":google_cloud_cpp_grpc_utils_benchmarks.bzl", "google_cloud_cpp_grpc_utils
         "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc",
     ],
 ) for test in google_cloud_cpp_grpc_utils_benchmarks]
+
+load(":google_cloud_cpp_mocks.bzl", "google_cloud_cpp_mocks_hdrs")
+
+cc_library(
+    name = "google_cloud_cpp_mocks",
+    testonly = True,
+    srcs = [],
+    hdrs = google_cloud_cpp_mocks_hdrs,
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
+    deps = [
+        ":google_cloud_cpp_common",
+    ],
+)
 
 load(":google_cloud_cpp_rest_internal.bzl", "google_cloud_cpp_rest_internal_hdrs", "google_cloud_cpp_rest_internal_srcs")
 
