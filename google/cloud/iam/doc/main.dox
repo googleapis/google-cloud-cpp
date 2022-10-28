@@ -121,6 +121,15 @@ there is no value.
 @par Example
 @snippet iam_samples.cc example-status-or
 
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+<!-- inject-endpoint-snippet-end -->
+
 ## Next Steps
 
 * @ref iam-mock
@@ -136,3 +145,9 @@ there is no value.
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
 */
+
+// <!-- inject-endpoint-pages-start -->
+// <!-- inject-endpoint-pages-end -->
+
+// <!-- inject-endpoint-pages-start -->
+// <!-- inject-endpoint-pages-end -->
