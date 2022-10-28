@@ -34,6 +34,7 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/retry_traits_generator.h"
 #include "generator/internal/round_robin_decorator_generator.h"
+#include "generator/internal/sample_generator.h"
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
 #include <google/api/routing.pb.h>
@@ -696,6 +697,11 @@ VarsDictionary CreateServiceVars(
   vars["client_header_path"] =
       absl::StrCat(vars["product_path"],
                    ServiceNameToFilePath(descriptor.name()), "_client.h");
+
+  vars["client_samples_cc_path"] = absl::StrCat(
+      vars["product_path"], "samples/",
+      ServiceNameToFilePath(descriptor.name()), "_client_samples.cc");
+
   vars["connection_class_name"] = absl::StrCat(descriptor.name(), "Connection");
   vars["connection_cc_path"] =
       absl::StrCat(vars["product_path"],
@@ -871,6 +877,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   auto const omit_client = service_vars.find("omit_client");
   if (omit_client == service_vars.end() || omit_client->second != "true") {
     code_generators.push_back(absl::make_unique<ClientGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<SampleGenerator>(
         service, service_vars, method_vars, context));
   }
   auto const omit_connection = service_vars.find("omit_connection");

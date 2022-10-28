@@ -39,6 +39,7 @@ google_cloud_cpp_generator_hdrs = [
     "internal/service_code_generator.h",
     "internal/stub_factory_generator.h",
     "internal/stub_generator.h",
+    "internal/sample_generator.h",
 ]
 
 google_cloud_cpp_generator_srcs = [
@@ -62,4 +63,5 @@ google_cloud_cpp_generator_srcs = [
     "internal/service_code_generator.cc",
     "internal/stub_factory_generator.cc",
     "internal/stub_generator.cc",
+    "internal/sample_generator.cc",
 ]
