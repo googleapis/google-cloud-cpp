@@ -1,11 +1,11 @@
 /*!
 @defgroup guac Authentication Components
 
-Most services in Google Cloud Platform requires the client to authenticate the
+Most services in Google Cloud Platform require the client to authenticate the
 requests. Notable exceptions include public buckets in GCS and public data
 sets in BigQuery. The C++ client libraries are automatically configured
-to use "Google Default Credentials", some applications may need to override this
-default. The functions and classes related to change the authentication
+to use "Google Default Credentials", but some applications may need to override
+this default. The functions and classes related to changing the authentication
 configuration are documented here.
 
 This document is not a general introduction to authentication for Google Cloud
@@ -22,7 +22,7 @@ associated with your deployment environment (GCE, Cloud Run, GKE, etc.)
 
 ## General Concepts
 
-As mentioned complete overview of authentication and authorization for Google
+As mentioned, a complete overview of authentication and authorization for Google
 Cloud is outside the scope of this document. The following brief introduction
 may help as you read the reference documentation for components related to
 authentication.
@@ -36,18 +36,19 @@ tokens using the contents of this file.
 
 Access tokens usually expire in about an hour. The client libraries
 automatically refresh these tokens when needed. The only exception is
-`MakeAccessTokenCredentials()` where the application provides the access token.
+`MakeAccessTokenCredentials()`, where the application provides the access token.
 
 ## Development Workstations
 
-During development the most common configuration to use Application Default
+During development the most common configurations that use Application Default
 Credentials are:
 
-1. Use the `gcloud auth application-default` to authentication using the
+1. Use the `gcloud auth application-default` to authenticate using the
    developer's account for authentication.
-1. Set `GOOGLE_APPLICATION_CREDENTIALS` environment variable to load a service
-   account key. The value of this environment variable is the full path of a
-   file which contains the service account key.
+1. Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to load a
+   service account key. The value of this environment variable is the full path
+   of a file that contains the service account key. Keep in mind the security
+   implications of keeping such a file as plain text in your filesystem.
 1. If you are using a GCE instance as your development environment, simply
    use the service account of the GCE machine to access GCP services.
 
