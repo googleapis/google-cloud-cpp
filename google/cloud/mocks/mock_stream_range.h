@@ -21,9 +21,33 @@
 
 namespace google {
 namespace cloud {
+/**
+ * Contains helpers for testing the Google Cloud C++ Client Libraries.
+ *
+ * The symbols defined in this namespace are offered for public consumption.
+ * They are not just for maintainers of the client library.
+ */
 namespace mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * Construct a `StreamRange<T>` for use in tests.
+ *
+ * @param values The successfully returned `T` values.
+ * @param final_status The final Status of the range. Defaults to an OK Status.
+ *
+ * @code
+ * auto sr = MakeStreamRange<T>({t1, t2});
+ * for (StatusOr<int> const& v : sr) {
+ *   // Yields t1 -> t2
+ * }
+ *
+ * sr = MakeStreamRange<T>({t1, t2}, BadStatus());
+ * for (StatusOr<int> const& v : sr) {
+ *   // Yields t1 -> t2 -> BadStatus()
+ * }
+ * @endcode
+ */
 template <typename T>
 StreamRange<T> MakeStreamRange(std::vector<T> values,
                                Status final_status = {}) {
