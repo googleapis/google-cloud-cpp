@@ -105,6 +105,16 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `GameServerClustersServiceClient`:
+
+@snippet game_server_clusters_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [GameServerClustersServiceClient](@ref GameServerClustersServiceClient-endpoint-snippet)
+ [GameServerConfigsServiceClient](@ref GameServerConfigsServiceClient-endpoint-snippet)
+ [GameServerDeploymentsServiceClient](@ref GameServerDeploymentsServiceClient-endpoint-snippet)
+ [RealmsServiceClient](@ref RealmsServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -123,4 +133,28 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page GameServerClustersServiceClient-endpoint-snippet Override GameServerClustersServiceClient Endpoint Configuration
+
+@snippet google/cloud/gameservices/samples/game_server_clusters_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page GameServerConfigsServiceClient-endpoint-snippet Override GameServerConfigsServiceClient Endpoint Configuration
+
+@snippet google/cloud/gameservices/samples/game_server_configs_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page GameServerDeploymentsServiceClient-endpoint-snippet Override GameServerDeploymentsServiceClient Endpoint Configuration
+
+@snippet google/cloud/gameservices/samples/game_server_deployments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page RealmsServiceClient-endpoint-snippet Override RealmsServiceClient Endpoint Configuration
+
+@snippet google/cloud/gameservices/samples/realms_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

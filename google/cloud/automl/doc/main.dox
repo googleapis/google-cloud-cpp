@@ -97,6 +97,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `AutoMlClient`:
+
+@snippet auto_ml_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [AutoMlClient](@ref AutoMlClient-endpoint-snippet)
+ [PredictionServiceClient](@ref PredictionServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -115,4 +123,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page AutoMlClient-endpoint-snippet Override AutoMlClient Endpoint Configuration
+
+@snippet google/cloud/automl/samples/auto_ml_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page PredictionServiceClient-endpoint-snippet Override PredictionServiceClient Endpoint Configuration
+
+@snippet google/cloud/automl/samples/prediction_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

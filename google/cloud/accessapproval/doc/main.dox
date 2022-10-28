@@ -94,6 +94,10 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `AccessApprovalClient`:
+
+@snippet access_approval_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -117,4 +121,10 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page AccessApprovalClient-endpoint-snippet Override AccessApprovalClient Endpoint Configuration
+
+@snippet google/cloud/accessapproval/samples/access_approval_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

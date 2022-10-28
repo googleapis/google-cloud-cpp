@@ -101,6 +101,15 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `ContentServiceClient`:
+
+@snippet content_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [ContentServiceClient](@ref ContentServiceClient-endpoint-snippet)
+ [DataplexServiceClient](@ref DataplexServiceClient-endpoint-snippet)
+ [MetadataServiceClient](@ref MetadataServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -119,4 +128,22 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page ContentServiceClient-endpoint-snippet Override ContentServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/samples/content_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page DataplexServiceClient-endpoint-snippet Override DataplexServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/samples/dataplex_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page MetadataServiceClient-endpoint-snippet Override MetadataServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/samples/metadata_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

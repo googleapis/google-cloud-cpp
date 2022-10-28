@@ -99,6 +99,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `AdminServiceClient`:
+
+@snippet admin_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [AdminServiceClient](@ref AdminServiceClient-endpoint-snippet)
+ [TopicStatsServiceClient](@ref TopicStatsServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -116,4 +124,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page AdminServiceClient-endpoint-snippet Override AdminServiceClient Endpoint Configuration
+
+@snippet google/cloud/pubsublite/samples/admin_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page TopicStatsServiceClient-endpoint-snippet Override TopicStatsServiceClient Endpoint Configuration
+
+@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

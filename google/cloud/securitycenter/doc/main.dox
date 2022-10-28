@@ -92,6 +92,10 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `SecurityCenterClient`:
+
+@snippet security_center_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -110,4 +114,10 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page SecurityCenterClient-endpoint-snippet Override SecurityCenterClient Endpoint Configuration
+
+@snippet google/cloud/securitycenter/samples/security_center_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

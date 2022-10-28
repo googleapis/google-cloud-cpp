@@ -97,6 +97,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `AgentEndpointServiceClient`:
+
+@snippet agent_endpoint_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [AgentEndpointServiceClient](@ref AgentEndpointServiceClient-endpoint-snippet)
+ [OsConfigServiceClient](@ref OsConfigServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -115,4 +123,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page AgentEndpointServiceClient-endpoint-snippet Override AgentEndpointServiceClient Endpoint Configuration
+
+@snippet google/cloud/osconfig/samples/agent_endpoint_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page OsConfigServiceClient-endpoint-snippet Override OsConfigServiceClient Endpoint Configuration
+
+@snippet google/cloud/osconfig/samples/os_config_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

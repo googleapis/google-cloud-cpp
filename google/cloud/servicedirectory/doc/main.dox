@@ -97,6 +97,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `LookupServiceClient`:
+
+@snippet lookup_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [LookupServiceClient](@ref LookupServiceClient-endpoint-snippet)
+ [RegistrationServiceClient](@ref RegistrationServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -115,4 +123,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page LookupServiceClient-endpoint-snippet Override LookupServiceClient Endpoint Configuration
+
+@snippet google/cloud/servicedirectory/samples/lookup_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page RegistrationServiceClient-endpoint-snippet Override RegistrationServiceClient Endpoint Configuration
+
+@snippet google/cloud/servicedirectory/samples/registration_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

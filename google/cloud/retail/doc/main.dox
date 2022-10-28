@@ -114,6 +114,18 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `CatalogServiceClient`:
+
+@snippet catalog_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [CatalogServiceClient](@ref CatalogServiceClient-endpoint-snippet)
+ [CompletionServiceClient](@ref CompletionServiceClient-endpoint-snippet)
+ [PredictionServiceClient](@ref PredictionServiceClient-endpoint-snippet)
+ [ProductServiceClient](@ref ProductServiceClient-endpoint-snippet)
+ [SearchServiceClient](@ref SearchServiceClient-endpoint-snippet)
+ [UserEventServiceClient](@ref UserEventServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -132,4 +144,40 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page CatalogServiceClient-endpoint-snippet Override CatalogServiceClient Endpoint Configuration
+
+@snippet google/cloud/retail/samples/catalog_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page CompletionServiceClient-endpoint-snippet Override CompletionServiceClient Endpoint Configuration
+
+@snippet google/cloud/retail/samples/completion_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page PredictionServiceClient-endpoint-snippet Override PredictionServiceClient Endpoint Configuration
+
+@snippet google/cloud/retail/samples/prediction_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ProductServiceClient-endpoint-snippet Override ProductServiceClient Endpoint Configuration
+
+@snippet google/cloud/retail/samples/product_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page SearchServiceClient-endpoint-snippet Override SearchServiceClient Endpoint Configuration
+
+@snippet google/cloud/retail/samples/search_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page UserEventServiceClient-endpoint-snippet Override UserEventServiceClient Endpoint Configuration
+
+@snippet google/cloud/retail/samples/user_event_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

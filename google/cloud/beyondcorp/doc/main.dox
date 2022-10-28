@@ -112,6 +112,17 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `AppConnectionsServiceClient`:
+
+@snippet app_connections_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [AppConnectionsServiceClient](@ref AppConnectionsServiceClient-endpoint-snippet)
+ [AppConnectorsServiceClient](@ref AppConnectorsServiceClient-endpoint-snippet)
+ [AppGatewaysServiceClient](@ref AppGatewaysServiceClient-endpoint-snippet)
+ [ClientConnectorServicesServiceClient](@ref ClientConnectorServicesServiceClient-endpoint-snippet)
+ [ClientGatewaysServiceClient](@ref ClientGatewaysServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -130,4 +141,34 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page AppConnectionsServiceClient-endpoint-snippet Override AppConnectionsServiceClient Endpoint Configuration
+
+@snippet google/cloud/beyondcorp/samples/app_connections_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page AppConnectorsServiceClient-endpoint-snippet Override AppConnectorsServiceClient Endpoint Configuration
+
+@snippet google/cloud/beyondcorp/samples/app_connectors_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page AppGatewaysServiceClient-endpoint-snippet Override AppGatewaysServiceClient Endpoint Configuration
+
+@snippet google/cloud/beyondcorp/samples/app_gateways_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ClientConnectorServicesServiceClient-endpoint-snippet Override ClientConnectorServicesServiceClient Endpoint Configuration
+
+@snippet google/cloud/beyondcorp/samples/client_connector_services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ClientGatewaysServiceClient-endpoint-snippet Override ClientGatewaysServiceClient Endpoint Configuration
+
+@snippet google/cloud/beyondcorp/samples/client_gateways_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

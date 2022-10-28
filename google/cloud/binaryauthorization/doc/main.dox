@@ -101,6 +101,15 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `BinauthzManagementServiceV1Client`:
+
+@snippet binauthz_management_service_v1_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [BinauthzManagementServiceV1Client](@ref BinauthzManagementServiceV1Client-endpoint-snippet)
+ [SystemPolicyV1Client](@ref SystemPolicyV1Client-endpoint-snippet)
+ [ValidationHelperV1Client](@ref ValidationHelperV1Client-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -119,4 +128,22 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page BinauthzManagementServiceV1Client-endpoint-snippet Override BinauthzManagementServiceV1Client Endpoint Configuration
+
+@snippet google/cloud/binaryauthorization/samples/binauthz_management_service_v1_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page SystemPolicyV1Client-endpoint-snippet Override SystemPolicyV1Client Endpoint Configuration
+
+@snippet google/cloud/binaryauthorization/samples/system_policy_v1_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ValidationHelperV1Client-endpoint-snippet Override ValidationHelperV1Client Endpoint Configuration
+
+@snippet google/cloud/binaryauthorization/samples/validation_helper_v1_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

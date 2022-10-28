@@ -127,6 +127,21 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `AlertPolicyServiceClient`:
+
+@snippet alert_policy_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [AlertPolicyServiceClient](@ref AlertPolicyServiceClient-endpoint-snippet)
+ [DashboardsServiceClient](@ref DashboardsServiceClient-endpoint-snippet)
+ [GroupServiceClient](@ref GroupServiceClient-endpoint-snippet)
+ [MetricServiceClient](@ref MetricServiceClient-endpoint-snippet)
+ [MetricsScopesClient](@ref MetricsScopesClient-endpoint-snippet)
+ [NotificationChannelServiceClient](@ref NotificationChannelServiceClient-endpoint-snippet)
+ [QueryServiceClient](@ref QueryServiceClient-endpoint-snippet)
+ [ServiceMonitoringServiceClient](@ref ServiceMonitoringServiceClient-endpoint-snippet)
+ [UptimeCheckServiceClient](@ref UptimeCheckServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -145,4 +160,58 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page AlertPolicyServiceClient-endpoint-snippet Override AlertPolicyServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/samples/alert_policy_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page DashboardsServiceClient-endpoint-snippet Override DashboardsServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/samples/dashboards_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page GroupServiceClient-endpoint-snippet Override GroupServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/samples/group_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page MetricServiceClient-endpoint-snippet Override MetricServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/samples/metric_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page MetricsScopesClient-endpoint-snippet Override MetricsScopesClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/samples/metrics_scopes_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page NotificationChannelServiceClient-endpoint-snippet Override NotificationChannelServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/samples/notification_channel_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page QueryServiceClient-endpoint-snippet Override QueryServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/samples/query_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ServiceMonitoringServiceClient-endpoint-snippet Override ServiceMonitoringServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/samples/service_monitoring_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page UptimeCheckServiceClient-endpoint-snippet Override UptimeCheckServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/samples/uptime_check_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

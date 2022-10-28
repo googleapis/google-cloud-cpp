@@ -98,6 +98,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `ContainerAnalysisClient`:
+
+@snippet container_analysis_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [ContainerAnalysisClient](@ref ContainerAnalysisClient-endpoint-snippet)
+ [GrafeasClient](@ref GrafeasClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -116,4 +124,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page ContainerAnalysisClient-endpoint-snippet Override ContainerAnalysisClient Endpoint Configuration
+
+@snippet google/cloud/containeranalysis/samples/container_analysis_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page GrafeasClient-endpoint-snippet Override GrafeasClient Endpoint Configuration
+
+@snippet google/cloud/containeranalysis/samples/grafeas_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

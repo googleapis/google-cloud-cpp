@@ -108,6 +108,15 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `LivestreamServiceClient`:
+
+@snippet livestream_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [LivestreamServiceClient](@ref LivestreamServiceClient-endpoint-snippet)
+ [TranscoderServiceClient](@ref TranscoderServiceClient-endpoint-snippet)
+ [VideoStitcherServiceClient](@ref VideoStitcherServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -128,4 +137,22 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page LivestreamServiceClient-endpoint-snippet Override LivestreamServiceClient Endpoint Configuration
+
+@snippet google/cloud/video/samples/livestream_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page TranscoderServiceClient-endpoint-snippet Override TranscoderServiceClient Endpoint Configuration
+
+@snippet google/cloud/video/samples/transcoder_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page VideoStitcherServiceClient-endpoint-snippet Override VideoStitcherServiceClient Endpoint Configuration
+
+@snippet google/cloud/video/samples/video_stitcher_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

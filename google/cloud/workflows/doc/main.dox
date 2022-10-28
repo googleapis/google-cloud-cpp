@@ -98,6 +98,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `ExecutionsClient`:
+
+@snippet executions_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [ExecutionsClient](@ref ExecutionsClient-endpoint-snippet)
+ [WorkflowsClient](@ref WorkflowsClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -115,4 +123,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page ExecutionsClient-endpoint-snippet Override ExecutionsClient Endpoint Configuration
+
+@snippet google/cloud/workflows/samples/executions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page WorkflowsClient-endpoint-snippet Override WorkflowsClient Endpoint Configuration
+
+@snippet google/cloud/workflows/samples/workflows_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

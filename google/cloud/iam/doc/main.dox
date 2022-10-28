@@ -128,6 +128,15 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `IAMClient`:
+
+@snippet iam_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [IAMClient](@ref IAMClient-endpoint-snippet)
+ [IAMCredentialsClient](@ref IAMCredentialsClient-endpoint-snippet)
+ [IAMPolicyClient](@ref IAMPolicyClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Next Steps
@@ -147,6 +156,24 @@ library to change this default.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page IAMClient-endpoint-snippet Override IAMClient Endpoint Configuration
+
+@snippet google/cloud/iam/samples/iam_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page IAMCredentialsClient-endpoint-snippet Override IAMCredentialsClient Endpoint Configuration
+
+@snippet google/cloud/iam/samples/iam_credentials_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page IAMPolicyClient-endpoint-snippet Override IAMPolicyClient Endpoint Configuration
+
+@snippet google/cloud/iam/samples/iam_policy_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->
 
 // <!-- inject-endpoint-pages-start -->

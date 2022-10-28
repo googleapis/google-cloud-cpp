@@ -159,6 +159,29 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `AgentsClient`:
+
+@snippet agents_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [AgentsClient](@ref AgentsClient-endpoint-snippet)
+ [AnswerRecordsClient](@ref AnswerRecordsClient-endpoint-snippet)
+ [ContextsClient](@ref ContextsClient-endpoint-snippet)
+ [ConversationDatasetsClient](@ref ConversationDatasetsClient-endpoint-snippet)
+ [ConversationModelsClient](@ref ConversationModelsClient-endpoint-snippet)
+ [ConversationProfilesClient](@ref ConversationProfilesClient-endpoint-snippet)
+ [ConversationsClient](@ref ConversationsClient-endpoint-snippet)
+ [DocumentsClient](@ref DocumentsClient-endpoint-snippet)
+ [EntityTypesClient](@ref EntityTypesClient-endpoint-snippet)
+ [EnvironmentsClient](@ref EnvironmentsClient-endpoint-snippet)
+ [FulfillmentsClient](@ref FulfillmentsClient-endpoint-snippet)
+ [IntentsClient](@ref IntentsClient-endpoint-snippet)
+ [KnowledgeBasesClient](@ref KnowledgeBasesClient-endpoint-snippet)
+ [ParticipantsClient](@ref ParticipantsClient-endpoint-snippet)
+ [SessionEntityTypesClient](@ref SessionEntityTypesClient-endpoint-snippet)
+ [SessionsClient](@ref SessionsClient-endpoint-snippet)
+ [VersionsClient](@ref VersionsClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -177,4 +200,106 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page AgentsClient-endpoint-snippet Override AgentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/agents_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page AnswerRecordsClient-endpoint-snippet Override AnswerRecordsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/answer_records_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ContextsClient-endpoint-snippet Override ContextsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/contexts_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ConversationDatasetsClient-endpoint-snippet Override ConversationDatasetsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/conversation_datasets_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ConversationModelsClient-endpoint-snippet Override ConversationModelsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/conversation_models_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ConversationProfilesClient-endpoint-snippet Override ConversationProfilesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/conversation_profiles_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ConversationsClient-endpoint-snippet Override ConversationsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/conversations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page DocumentsClient-endpoint-snippet Override DocumentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/documents_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page EntityTypesClient-endpoint-snippet Override EntityTypesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/entity_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page EnvironmentsClient-endpoint-snippet Override EnvironmentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/environments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page FulfillmentsClient-endpoint-snippet Override FulfillmentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/fulfillments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page IntentsClient-endpoint-snippet Override IntentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/intents_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page KnowledgeBasesClient-endpoint-snippet Override KnowledgeBasesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/knowledge_bases_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ParticipantsClient-endpoint-snippet Override ParticipantsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/participants_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page SessionEntityTypesClient-endpoint-snippet Override SessionEntityTypesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/session_entity_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page SessionsClient-endpoint-snippet Override SessionsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/sessions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page VersionsClient-endpoint-snippet Override VersionsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/versions_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->
