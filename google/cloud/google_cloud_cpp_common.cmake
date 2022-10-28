@@ -216,14 +216,15 @@ install(
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
-# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
-# that they need absolute paths for their sources.
+# at least one .o file).
 add_library(google_cloud_cpp_mocks INTERFACE)
 set(google_cloud_cpp_mocks_hdrs # cmake-format: sort
                                 mocks/mock_stream_range.h)
 export_list_to_bazel("google_cloud_cpp_mocks.bzl" "google_cloud_cpp_mocks_hdrs"
                      YEAR "2022")
-target_link_libraries(google_cloud_cpp_mocks INTERFACE google-cloud-cpp::common)
+target_link_libraries(
+    google_cloud_cpp_mocks INTERFACE google-cloud-cpp::common GTest::gmock_main
+                                     GTest::gmock GTest::gtest)
 set_target_properties(google_cloud_cpp_mocks PROPERTIES EXPORT_NAME
                                                         google-cloud-cpp::mocks)
 target_include_directories(
@@ -248,6 +249,26 @@ install(
 install(
     FILES ${google_cloud_cpp_mocks_hdrs}
     DESTINATION "include/google/cloud/mocks"
+    COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_add_pkgconfig_interface(
+    "mocks" "Google Cloud C++ Testing Library"
+    "Helpers for testing the Google Cloud C++ Client Libraries"
+    "google_cloud_cpp_common" " gmock_main")
+
+# Create and install the CMake configuration files.
+configure_file("mocks-config.cmake.in" "google_cloud_cpp_mocks-config.cmake"
+               @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_mocks-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY ExactVersion)
+
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_mocks-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_mocks-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_mocks"
     COMPONENT google_cloud_cpp_development)
 
 if (BUILD_TESTING)
