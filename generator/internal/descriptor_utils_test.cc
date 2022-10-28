@@ -810,6 +810,9 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_body", "*"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "default_idempotency", "kNonIdempotent"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method5", "method_rest_path",
+            "absl::StrCat(\"/v1/\",request.parent(),\"/databases\")"),
         // Method6
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_request_param_key", "name"),
@@ -857,7 +860,10 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_param_key", "namespace.name"),
         MethodVarsTestValues("google.protobuf.Service.Method8",
                              "method_request_param_value",
-                             "namespace_().name()")),
+                             "namespace_().name()"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method8", "method_rest_path",
+            "absl::StrCat(\"/v1/\",request.namespace_().name(),\"\")")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;

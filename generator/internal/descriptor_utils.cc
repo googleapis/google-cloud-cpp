@@ -252,6 +252,15 @@ void SetHttpResourceRoutingMethodVars(
                     VarsDictionary& method_vars)
         : method(method), method_vars(method_vars) {}
 
+    // This visitor handles the case where the url field contains a token
+    // surrounded by curly braces:
+    //   patch: "/v1/{parent=projects/*/instances/*}/databases\"
+    // In this case 'parent' is expected to be found as a field in the protobuf
+    // request message whose value matches the pattern 'projects/*/instances/*'.
+    // The request protobuf field can sometimes be nested a la:
+    //   post: "/v1/{instance.name=projects/*/locations/*/instances/*}"
+    // The emitted code needs to access the value via `request.parent()' and
+    // 'request.instance().name()`, respectively.
     void operator()(HttpExtensionInfo const& info) {
       method_vars["method_request_url_path"] = info.url_path;
       method_vars["method_request_url_substitution"] = info.url_substitution;
@@ -275,12 +284,19 @@ void SetHttpResourceRoutingMethodVars(
                        info.path_suffix, "\")");
     }
 
+    // This visitor handles the case where no request field is specified in the
+    // url:
+    //   get: "/v1/foo/bar"
     void operator()(HttpSimpleInfo const& info) {
       method_vars["method_http_verb"] = info.http_verb;
       method_vars["method_request_param_value"] = method.full_name();
       method_vars["method_rest_path"] = absl::StrCat("\"", info.url_path, "\"");
     }
 
+    // This visitor is an error diagnostic, in case we encounter an url that the
+    // generator does not currently parse. Emitting the method name causes code
+    // generation that does not compile and points to the proto location to be
+    // investigated.
     void operator()(absl::monostate) {
       method_vars["method_http_verb"] = method.full_name();
       method_vars["method_request_param_value"] = method.full_name();
