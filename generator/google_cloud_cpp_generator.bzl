@@ -35,11 +35,11 @@ google_cloud_cpp_generator_hdrs = [
     "internal/printer.h",
     "internal/retry_traits_generator.h",
     "internal/round_robin_decorator_generator.h",
+    "internal/sample_generator.h",
     "internal/scaffold_generator.h",
     "internal/service_code_generator.h",
     "internal/stub_factory_generator.h",
     "internal/stub_generator.h",
-    "internal/sample_generator.h",
 ]
 
 google_cloud_cpp_generator_srcs = [
@@ -59,9 +59,9 @@ google_cloud_cpp_generator_srcs = [
     "internal/predicate_utils.cc",
     "internal/retry_traits_generator.cc",
     "internal/round_robin_decorator_generator.cc",
+    "internal/sample_generator.cc",
     "internal/scaffold_generator.cc",
     "internal/service_code_generator.cc",
     "internal/stub_factory_generator.cc",
     "internal/stub_generator.cc",
-    "internal/sample_generator.cc",
 ]
