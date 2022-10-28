@@ -288,6 +288,7 @@ cc_library(
 
 cc_library(
     name = "mocks",
+    testonly = True,
     deps = [
         "//google/cloud:google_cloud_cpp_mocks",
     ],
