@@ -353,6 +353,8 @@ function (google_cloud_cpp_enable_features)
             if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
                 AND IS_DIRECTORY
                     "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}/samples"
+                AND EXISTS
+                    "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}/samples/CMakeLists.txt"
             )
                 add_subdirectory(google/cloud/${feature}/samples)
             endif ()
