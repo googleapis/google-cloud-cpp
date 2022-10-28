@@ -198,36 +198,9 @@ time {
 
 printf "%-50s" "Running doxygen landing-page updates:" >&2
 time {
-  # Update the service's endpoint environment variables.
-  for dox in google/cloud/*/doc/main.dox; do
-    lib="${dox%/doc/main.dox}"
-    inject_start="<!-- inject-endpoint-env-vars-start -->"
-    inject_end="<!-- inject-endpoint-env-vars-end -->"
-    env_vars=("")
-    for option_defaults_cc in "${lib}"/internal/*_option_defaults.cc; do
-      service="$(basename "${option_defaults_cc}" _option_defaults.cc)"
-      connection_h="${lib}/${service}_connection.h"
-      # Should we generate documentation for GOOGLE_CLOUD_CPP_.*_AUTHORITY too?
-      variable_re='GOOGLE_CLOUD_CPP_.*_ENDPOINT'
-      variable=$(grep -om1 "${variable_re}" "${option_defaults_cc}")
-      endpoint_re='"[^"]*?\.googleapis\.com"'
-      endpoint=$(grep -Pom1 "${endpoint_re}" "${option_defaults_cc}")
-      if grep -q 'location,' "${option_defaults_cc}"; then
-        endpoint="\"<location>-${endpoint:1:-1}\""
-      fi
-      make_connection_re='Make.*?Connection()'
-      make_connection=$(grep -Pom1 "${make_connection_re}" "${connection_h}")
-      env_vars+=("- \`${variable}=...\` overrides the")
-      env_vars+=("  \`EndpointOption\` (which defaults to ${endpoint})")
-      env_vars+=("  used by \`${make_connection}()\`.")
-      env_vars+=("")
-    done
-    sed -i -f - "${dox}" <<EOT
-/${inject_start}/,/${inject_end}/c \\
-${inject_start}\\
-$(printf '%s\\\n' "${env_vars[@]}")
-${inject_end}
-EOT
+  mapfile -t libraries < <(features::libraries)
+  for library in "${libraries[@]}"; do
+    ci/generate-markdown/update-library-landing-dox.sh "${library}"
   done
 }
 
