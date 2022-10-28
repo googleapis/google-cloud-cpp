@@ -50,35 +50,46 @@ the Cloud BigQuery C++ client library API.
 @include quickstart.cc
 @endparblock
 
-## API Notes
-
-The following are general notes about using the library.
-
-### Environment Variables
+## Environment Variables
 
 There are several environment variables that can be set to configure certain
 behaviors in the library.
 
-- `GOOGLE_CLOUD_CPP_BIGQUERY_READ_ENDPOINT=...` changes the default endpoint
-  (bigquerystorage.googleapis.com) used by `BigQueryReadConnection`.
+<!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_ENDPOINT=...` changes the default endpoint
-  (bigquerystorage.googleapis.com) used by `BigQueryWriteConnection`.
+- `GOOGLE_CLOUD_CPP_ANALYTICS_HUB_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "analyticshub.googleapis.com")
+  used by `MakeAnalyticsHubServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_ENDPOINT=...` changes the default endpoint
-  (bigqueryconnection.googleapis.com) used by `ConnectionServiceConnection`.
+- `GOOGLE_CLOUD_CPP_BIGQUERY_READ_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquerystorage.googleapis.com")
+  used by `MakeBigQueryReadConnection()`.
 
-- `GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_ENDPOINT=...` changes the default endpoint
-  (bigquerydatatransfer.googleapis.com) used by `DataTransferServiceConnection`.
+- `GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquerystorage.googleapis.com")
+  used by `MakeBigQueryWriteConnection()`.
 
-- `GOOGLE_CLOUD_CPP_MODEL_SERVICE_ENDPOINT=...` changes the default endpoint
-  (bigquery.googleapis.com) used by `ModelServiceConnection`.
+- `GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigqueryconnection.googleapis.com")
+  used by `MakeConnection()`.
 
-- `GOOGLE_CLOUD_CPP_RESERVATION_SERVICE_ENDPOINT=...` changes the default endpoint
-  (bigqueryreservation.googleapis.com) used by `ReservationServiceConnection`.
+- `GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquerydatatransfer.googleapis.com")
+  used by `MakeDataTransferServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_ANALYTICS_HUB_SERVICE_ENDPOINT=...` changes the default endpoint
-  (analyticshub.googleapis.com) used by `AnalyticsHubServiceConnection`.
+- `GOOGLE_CLOUD_CPP_MIGRATION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquerymigration.googleapis.com")
+  used by `MakeMigrationServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_MODEL_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquery.googleapis.com")
+  used by `MakeModelServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_RESERVATION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigqueryreservation.googleapis.com")
+  used by `MakeReservationServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
