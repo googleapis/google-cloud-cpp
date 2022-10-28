@@ -277,19 +277,13 @@ filegroup(
 
 filegroup(
     name = "mocks",
-    srcs = glob([
-        "mocks/*.h",
-    ]),
+    srcs = glob(["mocks/*.h"]),
 )
 
 cc_library(
     name = "google_cloud_cpp_$library$",
-    srcs = [
-        ":srcs",
-    ],
-    hdrs = [
-        ":hdrs",
-    ],
+    srcs = [":srcs"],
+    hdrs = [":hdrs"],
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
@@ -300,9 +294,7 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_$library$_mocks",
-    hdrs = [
-        ":mocks",
-    ],
+    hdrs = [":mocks"],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_$library$",
