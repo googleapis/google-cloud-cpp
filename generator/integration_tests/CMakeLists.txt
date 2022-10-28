@@ -98,8 +98,6 @@ target_link_libraries(
 
 set(google_cloud_cpp_generator_golden_tests
     # cmake-format: sort
-    golden/samples/golden_kitchen_sink_samples.cc
-    golden/samples/golden_thing_admin_samples.cc
     tests/golden_kitchen_sink_auth_decorator_test.cc
     tests/golden_kitchen_sink_client_test.cc
     tests/golden_kitchen_sink_connection_test.cc
