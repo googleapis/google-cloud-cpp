@@ -31,6 +31,11 @@ export GOOGLE_CLOUD_CPP_TEST_REGION="us-central1"
 # Some quickstart programs require a zone.
 export GOOGLE_CLOUD_CPP_TEST_ZONE="us-central1-a"
 
+# This file contains an invalidated service account key.  That is, the file is
+# in the right format for a service account, but it is not associated with a
+# valid service account or service account key.
+export GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE="${PROJECT_ROOT}/ci/etc/invalidated-keyfile.json"
+
 # Enable the self-test for the sample programs. Normally the example drivers
 # require the name of the example to run as a command-line argument, with this
 # environment variable the sample drivers run all the examples.
@@ -66,7 +71,6 @@ export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT="kokoro-run@${GOOGL
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY="projects/${GOOGLE_CLOUD_PROJECT}/locations/us/keyRings/gcs-testing-us-kr/cryptoKeys/integration-tests-key"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${GOOGLE_CLOUD_PROJECT}/topics/gcs-changes"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="fake-service-account-hmac@example.com"
-export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
 # We need a gzip file to test ReadObject() with decompressive transcoding
 #  https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
